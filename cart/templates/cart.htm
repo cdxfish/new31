@@ -1,0 +1,79 @@
+{% extends "shop.base.htm" %}
+
+{% block content %}
+        <div class="pWhite">
+            <form name="toCart" method="post" action="cart/">
+                <table width="100%" cellpadding="3" class="mBottom50">
+                    <tr>
+                        <th width="280px">商品名称</th>
+                        <th width="180px">商品规格</th>
+                        <th width="180px">价格</th>
+                        <th width="100px">数量</th>
+                        <th width="100px">小计</th>
+                        <th width="100px">操作</th>
+                    </tr>
+                    <tr>
+                        <td align="center">餐具</td>
+                        <td align="center">套</td>
+                        <td align="center">￥1.00 元</td>
+                        <td align="center" class="gNum">
+                            <span class="minus"> - </span>
+                            <input type="text" name="4678" value="1" size="1" />
+                            <span class="plus"> + </span>
+                        </td>
+                        <td align="center">￥1.00 元</td>
+                        <td align="center"><input type="button" value="删除" class="btnB bBtn" /></td>
+                    </tr>
+                    <tr>
+                        <td align="center">香浓巧克力</td>
+                        <td align="center">1.5磅：约16×16(cm)</td>
+                        <td align="center">￥189.00 元</td>
+                        <td align="center" class="gNum">
+                            <span class="minus"> - </span>
+                            <input type="text" name="4679" value="1" size="1" />
+                            <span class="plus"> + </span>
+                        </td>
+                        <td align="center">￥189.00 元</td>
+                        <td align="center"><input type="button" value="删除" class="btnB bBtn" /></td>
+                    </tr>
+                    <tr class="bLine">
+                        <td align="right" colspan="5"><span class="fBold font18">商品总价: ￥190.00 元 和 0 K金</span></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <a href="tag/" class="btnB bBtn">继续购物</a>
+                        </td>
+                        <td align="right" colspan="2"><a href="consignee/" class="btnB bBtn">结算</a></td>
+                    </tr>
+                </table>
+                <table width="100%">
+                    <tr>
+                        <td>除按蛋糕规格免费赠送的餐具数量外(详见下面说明），是否额外需要餐具？</td>
+                        <td>单价：1元/份</td>
+                        <td align="right"><input type="button" class="btnB bBtn" value="是的，我需要增加餐具" id="tableware" /></td>
+                    </tr>
+                    <tr>
+                        <td>是否额外购买生日套装(生日牌/冷烟花/蜡烛)？</td>
+                        <td>单价：3元/份</td>
+                        <td align="right"><input type="button" class="btnB bBtn" value="是的，我需要增加生日套装" id="birthday" /></td>
+                    </tr>
+                </table>
+            </form>
+            <h3>小提示：</h3>
+            <p>蓝圈内为免费配送范围，超出免费配送范围须加收10元，收费配送范围为红圈以内蓝圈以外。</p>
+            <p><br /></p>
+            <p><img src="/images/delivery_areas.jpg" /></p>
+            <p><br /></p>
+            <p>蛋糕规格及免费配送餐具：</p>
+            <ul class="specLi">
+                <li>1.0磅：约14×14(cm)&nbsp;&nbsp;适合2-3人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送3套餐具</li>
+                <li>1.5磅：约16×16(cm)&nbsp;&nbsp;适合5-6人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送6套餐具</li>
+                <li>2.5磅：约20×20(cm)&nbsp;&nbsp;适合8-9人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送10套餐具</li>
+                <li>3.5磅：约23×23(cm)&nbsp;&nbsp;适合12-13人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送15套餐具</li>
+                <li>5.5磅：约26×26(cm)&nbsp;&nbsp;适合18-22人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送25套餐具</li>
+                <li>10磅：约36×36(cm)&nbsp;&nbsp;&nbsp;适合35-40人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送40套餐具</li>
+            </ul>
+            <p>订购10磅(含)以上规格的蛋糕请与客服人员联系，订购电话：4000-5927-31</p>
+        </div>
+{% endblock %}
