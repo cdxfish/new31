@@ -1,7 +1,7 @@
 // 置顶工具条
 $(document).ready(function () {
-    // if(jQuery.browser.msie && jQuery.browser.version === "6.0") { }
-    // else {
+    if(jQuery.browser.msie && jQuery.browser.version === "6.0") { }
+    else {
         setInterval(
             function () {
             $(".intro li").eq(Math.floor(Math.random() * 10 / 3)).slideToggle("slow");
@@ -40,7 +40,7 @@ $(document).ready(function () {
                     });
                 }
         });
-    // }
+    }
 
     $(".pinStream a").mouseenter( function () {
         $(this).children('.floatInfo').stop().animate({
@@ -51,9 +51,10 @@ $(document).ready(function () {
             'bottom' : '-50px'
         }, 150);
     });
-    $(".messageBox").click(function () {
-        $(this).toggleClass("on").find(".messagePop").toggle();
-        event.stopPropagation();
+    $("#lnkTopMessage, #lnkTopSetting").click(function () {
+        $(this).toggleClass("on").next(".messagePop").toggle();
+        return false;
+        // event.stopPropagation();
     });
     backToTopEle();
 });

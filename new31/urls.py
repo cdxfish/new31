@@ -8,7 +8,8 @@ from django.contrib import admin
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', include('%s.urls' % settings.APPS[0])),
+    # url(r'^$', include('%s.urls' % settings.APPS[0])),
+    url(r'^(nn\/$|cs\/$|km\/$|^$)', include('%s.urls' % settings.APPS[0])),
     url(r'^css/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '%scss/' % settings.STATIC_ROOT}),
     url(r'^js/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static/js/'}),
     url(r'^(?P<path>.*\.ico)$', 'django.views.static.serve', {'document_root': 'static/'}),

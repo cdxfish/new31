@@ -118,6 +118,8 @@ APPS = [
     'shop',
     'cart',
     'tag',
+    'search',
+    'account',
 ]
 
 DANJO_APPS = [

@@ -1,0 +1,63 @@
+{% extends "shop.base.htm" %}
+
+{% block subMenu %}
+    <div class="subMenu">
+        <h4>设置</h4>
+        <ul>
+            <li><a href="/account/settings/" class="select" >基本资料</a></li>
+            <li><a href="/account/changepwd/">密码</a></li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block content %}
+        <div class="pWhite">
+            <form action="settings/" method="post">
+                <div class="box">
+                    <label>用户名：</label>
+                    <p>
+                        <span class="" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+                        <input data-val="true" data-val-remote="“用户名”无效。" data-val-remote-additionalfields="*.UserName" data-val-remote-url="/Account/SetNameValidation" data-val-required="请输入新的用户名" id="UserName" name="UserName" type="text" value="leiddx" />
+                    </p>
+                </div>
+                <div class="box">
+                    <label>生日：</label>
+                    <p>
+                        <span class="" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+                        <input data-val="true" data-val-remote="“用户名”无效。" data-val-remote-additionalfields="*.UserName" data-val-remote-url="/Account/SetNameValidation" data-val-required="请输入新的用户名" id="UserName" name="UserName" type="text" value="leiddx" />
+                    </p>
+                </div>
+                <div class="box">
+                    <label>邮　箱：</label>
+                    <p>
+                        <span class="" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                        <input data-val="true" data-val-required="请输入新邮箱。" id="Email" name="Email" type="text" value="leiddx@vip.qq.com" />
+                    </p>
+                </div>
+                <div class="btnBox">
+                    <input type="submit" class="btnG bBtn" value="保存">
+                </div>
+            </form>
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+
+                $("#fileUpload").change(function () {
+
+                    $("#linkUpload").hide();
+                    $("#linkUpload").next().hide();
+                    $("#linkUpload").next().next().show();
+                    $("#formUpload").submit();
+                });
+
+                $("#chk1,#chk2,#chk3").click(function () {
+                    if ($(this).attr("checked")) {
+                        $(this).attr("value", "1");
+                    } else {
+                        $(this).attr("value", "0");
+                    }
+                });
+            });
+        </script>
+        </div>
+{% endblock %}
