@@ -4,7 +4,8 @@ $(document).ready(function () {
     else {
         setInterval(
             function () {
-            $(".intro li").eq(Math.floor(Math.random() * 10 / 3)).slideToggle("slow");
+            var introLi = $(".intro li");
+            introLi.eq(Math.floor(Math.random() * 10 % introLi.length)).slideToggle("slow");
         }, 2000);
         $(window).scroll(function () {
                 var scrollTop = $("#scrollTop");
@@ -62,12 +63,12 @@ $(document).ready(function () {
 
 // 返回顶部按钮
 function backToTopEle(){
-    backToTopEle = $('<a href="javascript:void(0);" class="backToTop" title=\"返回顶部\"></a>').appendTo($("body"))
+    var backToTopEle = $('<a href="javascript:void(0);" class="backToTop" title=\"返回顶部\"></a>').appendTo($("body"))
         .click(function () {
             $("html, body").animate({
                 scrollTop : 0
             }, 300, "linear", function () {
-                backToTopEle.hide()
+                backToTopEle.hide();
             });
         });
     $(window).scroll(function () {
@@ -91,7 +92,7 @@ function clearMessageData() {
             alert(result.Message);
             return false;
         }
-    })
+    });
 }
 
 

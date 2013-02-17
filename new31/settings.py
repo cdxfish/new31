@@ -120,6 +120,7 @@ APPS = [
     'tag',
     'search',
     'account',
+    'checkout',
 ]
 
 DANJO_APPS = [

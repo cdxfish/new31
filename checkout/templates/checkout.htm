@@ -1,0 +1,77 @@
+{% extends "shop.base.htm" %}
+
+
+{% block content %}
+        <div class="pWhite">
+        <form action="/checkout/" method="post" name="to_checkout" id="toCheckout">
+             <h3>订单状态</h3>
+            <table width="100%" class="mBottom10">
+                <tr>
+                    <td width="100px">交易类型：</td>
+                    <td>普通销售订单</td>
+                </tr>
+                <tr>
+                    <td>付款方式：</td>
+                    <td><strong>支付宝</strong></td>
+                </tr>
+                <tr>
+                    <td>配送方式：</td>
+                    <td><strong>送货上门</strong></td>
+                </tr>
+            </table>
+            <h3>商品列表</h3>
+            <table width="100%" class="mBottom10">
+                <tr>
+                    <th>商品名称</th>
+                    <th>规格</th>
+                    <th>价格</th>
+                    <th>数量</th>
+                    <th>小计</th>
+                </tr>
+                <tr align="center" class="bLine">
+                    <td>生日套装(生日牌/冷烟花/蜡烛)</td>
+                    <td>套</td>
+                    <td>￥3.00 元<font color="red">( 折 )</font></td>
+                    <td>1</td>
+                    <td>￥3.00 元</td>
+                </tr>
+                <tr align="center" class="bLine">
+                    <td>香浓巧克力</td>
+                    <td>2.5磅：约18×18(cm)</td>
+                    <td>￥284.00 元<font color="red">( 折 )</font></td>
+                    <td>1</td>
+                    <td>￥284.00 元</td>
+                </tr>
+                <tr>
+                    <td colspan="5" align="right"><span class="fBold font18">总计: ￥287.00 元和0 K金</span></td>
+                </tr>
+            </table>
+            <h3>收货人信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/cart/consignee/" class="btnB sBtn">修改</a></h3>
+            <table width="100%" class="mBottom10">
+                <tr>
+                    <td width="100px">收货人姓名：</td>
+                    <td>韦超</td>
+                </tr>
+                <tr>
+                    <td>详细地址：</td>
+                    <td>[ 南宁&nbsp;&nbsp;邕宁区 ]&nbsp;&nbsp;南宁市桂雅路1号联盟新城一号楼119室</td>
+                </tr>
+                <tr>
+                    <td>电话：</td>
+                    <td>15177788120</td>
+                </tr>
+                <tr>
+                    <td>最佳收货时间：</td>
+                    <td>2012-11-17&nbsp;&nbsp;13:00 ~ 14:00</td>
+                </tr>
+                <tr>
+                    <td>备注：</td>
+                    <td>饿死了</td>
+                </tr>
+            </table>
+            <center>
+                <input type="submit" class="btnB bBtn" value="确认订单" />
+            </center>
+      </form>
+        </div>
+{% endblock %}
