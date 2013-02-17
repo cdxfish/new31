@@ -1,6 +1,6 @@
 // 置顶工具条
 $(document).ready(function () {
-    if(jQuery.browser.msie && jQuery.browser.version === "6.0") { }
+    if (jQuery.browser.msie && jQuery.browser.version === "6.0") {}
     else {
         setInterval(
             function () {
@@ -8,46 +8,46 @@ $(document).ready(function () {
             introLi.eq(Math.floor(Math.random() * 10 % introLi.length)).slideToggle("slow");
         }, 2000);
         $(window).scroll(function () {
-                var scrollTop = $("#scrollTop");
+            var scrollTop = $("#scrollTop");
 
-                var scrollTopPrevTop = scrollTop.prev().length > 0 ? scrollTop.prev().offset().top  + scrollTop.prev().outerHeight() : 0;
+            var scrollTopPrevTop = scrollTop.prev().length > 0 ? scrollTop.prev().offset().top + scrollTop.prev().outerHeight() : 0;
 
-                if ($(window).scrollTop() >= scrollTopPrevTop) {
+            if ($(window).scrollTop() >= scrollTopPrevTop) {
 
-                    var windowWidth = $(window).width();
+                var windowWidth = $(window).width();
 
-                    windowWidth < 928 && $(".intro").hide();
+                windowWidth < 928 && $(".intro").hide();
 
-                    var scrollTopWidth = windowWidth < 928 ? windowWidth - 20 : "928px";
-                    var scrollTopLeft = windowWidth - scrollTop.outerWidth() >= 0 ? (windowWidth - scrollTop.outerWidth()) / 2 : 0;
+                var scrollTopWidth = windowWidth < 928 ? windowWidth - 20 : "928px";
+                var scrollTopLeft = windowWidth - scrollTop.outerWidth() >= 0 ? (windowWidth - scrollTop.outerWidth()) / 2 : 0;
 
-                    scrollTop.css({
-                        "width" : scrollTopWidth,
-                        "position" : "fixed",
-                        "top" : "0",
-                        "left" : scrollTopLeft
-                    }).next("div:first").css({
-                        "padding-top" : scrollTop.outerHeight()
-                    });
+                scrollTop.css({
+                    "width" : scrollTopWidth,
+                    "position" : "fixed",
+                    "top" : "0",
+                    "left" : scrollTopLeft
+                }).next("div:first").css({
+                    "padding-top" : scrollTop.outerHeight()
+                });
 
-                } else {
-                    $(".intro").show();
-                    scrollTop.css({
-                        "width" : "928px",
-                        "position" : "relative",
-                        "left" : "0px"
-                    }).next().css({
-                        "padding-top" : "0px"
-                    });
-                }
+            } else {
+                $(".intro").show();
+                scrollTop.css({
+                    "width" : "928px",
+                    "position" : "relative",
+                    "left" : "0px"
+                }).next().css({
+                    "padding-top" : "0px"
+                });
+            }
         });
     }
 
-    $(".pinStream a").mouseenter( function () {
+    $(".pinStream a").mouseenter(function () {
         $(this).children('.floatInfo').stop().animate({
             'bottom' : '0px'
         }, 150);
-    }).mouseleave( function () {
+    }).mouseleave(function () {
         $(this).children('.floatInfo').stop().animate({
             'bottom' : '-50px'
         }, 150);
@@ -60,9 +60,8 @@ $(document).ready(function () {
     backToTopEle();
 });
 
-
 // 返回顶部按钮
-function backToTopEle(){
+function backToTopEle() {
     var backToTopEle = $('<a href="javascript:void(0);" class="backToTop" title=\"返回顶部\"></a>').appendTo($("body"))
         .click(function () {
             $("html, body").animate({
@@ -82,7 +81,6 @@ function backToTopEle(){
     });
 }
 
-
 //将所有新消息数擦除
 function clearMessageData() {
     $.post(URL_AJAX_GET_CLEAR_MESSAGE, function (result) {
@@ -95,9 +93,24 @@ function clearMessageData() {
     });
 }
 
-
 // 隐藏消息层
 function hideMessage() {
     $(".messageBox").removeClass("on");
     $(".messagePop").hide();
+}
+
+var w3c = (document.getElementById) ? true : false;
+var agt = navigator.userAgent.toLowerCase();
+var ie = ((agt.indexOf("msie") != -1) && (agt.indexOf("opera") == -1) && (agt.indexOf("omniweb") == -1));
+
+function IeTrueBody() {
+    return (document.compatMode && document.compatMode != "BackCompat") ? document.documentElement : document.body;
+}
+
+function GetScrollTop() {
+    return ie ? IeTrueBody().scrollTop : window.pageYOffset;
+}
+
+function GetScrollLeft() {
+    return ie ? IeTrueBody().scrollLeft : window.pageXOffset;
 }

@@ -1,4 +1,8 @@
 {% extends "shop.base.htm" %}
+{% block js %}
+    <script type="text/javascript" src="/js/shop/popup.js"></script>
+    <script type="text/javascript" src="/js/shop/airbum.tag.js"></script>
+{% endblock %}
 
 {% block content %}
         <p class="viewDown">向下滚动浏览</p>
@@ -25,8 +29,8 @@
                         <a href="/tag/truffle/" class="tags_a7cf50">truffle</a>
                     </div>
                     <div class="vote">
-                        <a class="btnLike" href="account/logon?ReturnUrl=http%3a%2f%2fwww.31kecake.com%2fsylsy%2fphotos%2fdate-2012-8%3fpid%3d276268754">喜欢</a>
-                        <a class="btnReplay" href="account/logon?ReturnUrl=http%3a%2f%2fwww.31kecake.com%2fsylsy%2fphotos%2fdate-2012-8%3fpid%3d276268754">购买(<span>0</span>)</a>
+                        <a class="btnLike" href="/ajax/like/?i=8754">喜欢</a>
+                        <a class="btnReplay" href="/cart/buy/?i=2312" onclick="buyBtn();return false;">购买(<span>0</span>)</a>
                     </div>
                 </div>
             </li>
@@ -47,8 +51,8 @@
                         <a href="/tag/微苦/" class="tags_a7cf50">微苦</a>
                     </div>
                     <div class="vote">
-                        <a class="btnLike" href="account/logon?ReturnUrl=http%3a%2f%2fwww.31kecake.com%2fsylsy%2fphotos%2fdate-2012-8%3fpid%3d276268754">喜欢</a>
-                        <a class="btnReplay" href="account/logon?ReturnUrl=http%3a%2f%2fwww.31kecake.com%2fsylsy%2fphotos%2fdate-2012-8%3fpid%3d276268754">购买(<span>0</span>)</a>
+                        <a class="btnLike" href="/ajax/like/?i=8754">喜欢</a>
+                        <a class="btnReplay" href="/cart/buy/?i=2312" onclick="buyBtn();return false;">购买(<span>0</span>)</a>
                     </div>
                 </div>
             </li>
@@ -75,8 +79,8 @@
                         <a href="/tag/10℃最佳食用/" class="tags_a7cf50">10℃最佳食用</a>
                     </div>
                     <div class="vote">
-                        <a class="btnLike" href="account/logon?ReturnUrl=http%3a%2f%2fwww.31kecake.com%2fsylsy%2fphotos%2fdate-2012-8%3fpid%3d276268754">喜欢</a>
-                        <a class="btnReplay" href="account/logon?ReturnUrl=http%3a%2f%2fwww.31kecake.com%2fsylsy%2fphotos%2fdate-2012-8%3fpid%3d276268754">购买(<span>0</span>)</a>
+                        <a class="btnLike" href="/ajax/like/?i=8754">喜欢</a>
+                        <a class="btnReplay" href="/cart/buy/?i=2312" onclick="buyBtn();return false;">购买(<span>0</span>)</a>
                         </div>
                 </div>
             </li>

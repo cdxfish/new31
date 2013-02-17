@@ -8,21 +8,21 @@
 .popup{ width:600px; border-radius:10px; background:#fff; padding:15px; z-index:10000; box-shadow:1px 2px 5px #000}
 .popup800{ width:760px; padding:20px 20px 5px 20px; position:relative;}
 
-.popup h4{line-height:12px; background:url(../images/line.gif) repeat-x 0 bottom; padding-bottom:15px; font-weight:bold}
+.popup h4{line-height:12px; background:url(/images/line.gif) repeat-x 0 bottom; padding-bottom:15px; font-weight:bold}
 .popup h5{ margin:0 0 20px 0}
-.popup .btn_close{ background:url(../images/btn_close.gif) no-repeat; display:block; width:22px; height:22px; text-indent:-9999em; float:right; margin-top:-32px}
-.popup800 .btn_close{ background:url(../images/btn_close.gif) no-repeat; display:block; width:22px; height:22px; text-indent:-9999em; float:right; margin:0 0 8px 0;}
+.popup .btn_close{ background:url(/images/btn_close.gif) no-repeat; display:block; width:22px;text-indent:-9999em; float:right; margin-top:-12px}
+.popup800 .btn_close{ background:url(/images/btn_close.gif) no-repeat; display:block; width:22px; height:22px; text-indent:-9999em; float:right; margin:0 0 8px 0;}
 .popup .box{ margin:20px 0; overflow:hidden;*zoom:1}
-.popup input{ width:460px; vertical-align:top; margin-right:5px; font-size:12px;height:16px; padding:10px 5px;}
+/* .popup input{ width:460px; vertical-align:top; margin-right:5px; font-size:12px;height:16px; padding:10px 5px;} */
 .popup p{ line-height:25px}
 .popup .btn_green_big,.popup .btn_white_big,.popup .btn_gray_big,.popup .btn_red_big,.popup .btn_disable_big{ padding:0 40px; height:34px; line-height:34px}
-.popup .menu{height:15px; line-height:15px; background:url(../images/line.gif) repeat-x 0 bottom; padding-bottom:15px;}
+.popup .menu{height:15px; line-height:15px; background:url(/images/line.gif) repeat-x 0 bottom; padding-bottom:15px;}
 .popup .menu li{ float:left; margin-right:20px}
 .popup .menu li a{ color:#666}
 .popup .menu li a.select,.popup .menu li a:hover{ font-weight:bold; border-bottom:3px solid #000; text-decoration:none}
 .popup .box .weibo li{ float:left; margin-right:20px}
 .popup .box .weibo li a{ display:inline-block; width:120px; height:50px}
-.popup .box .weibo li a.select{background:url(../images/ico_select.gif) no-repeat center}
+.popup .box .weibo li a.select{background:url(/images/ico_select.gif) no-repeat center}
 .popup .box .weibo li a.select img{opacity:0.2;filter:alpha(opacity=20)}
 .popup .box .email input{ width:524px; margin:0;_margin-top:-40px}
 .popup .box .email textarea{ width:524px; font-size:12px;_margin-top:-40px}
@@ -32,28 +32,28 @@
 .popup .box .photo_date{ float:left; margin-right:20px}
 .popup .box select{ min-width:80px; height:22px}
 .popup .box select.big{min-width:150px; vertical-align:top; font-weight:bold}
-.popup .box .new_album{margin-left:20px;padding-left:30px;background:url(../images/ico_kinds.png) no-repeat 0 -2px;font-weight:bold; font-size:14px}
+.popup .box .new_album{margin-left:20px;padding-left:30px;background:url(/images/ico_kinds.png) no-repeat 0 -2px;font-weight:bold; font-size:14px}
 .popup .box .loc_search ul{ height:210px; overflow:auto;}
 .popup .box .loc_search li{ height:32px; line-height:32px;overflow:hidden}
 .popup .box .loc_search li:hover{ background:#3376c3;color:#fff; cursor:pointer}
-.popup .box .loc_search li strong{ background:url(../images/ico_sel.png) no-repeat 0 -60px; padding-left:20px}
+.popup .box .loc_search li strong{ background:url(/images/ico_sel.png) no-repeat 0 -60px; padding-left:20px}
 .popup .box .loc_search li span{ margin-left:15px;}
-.popup .box .loc_search li .ico{ position:absolute;_position:relative;background:url(../images/ico_sel.png) no-repeat 0 10px;height:32px; line-height:32px; padding-left:30px; text-indent:-9999em;_background-position:0 0}
+.popup .box .loc_search li .ico{ position:absolute;_position:relative;background:url(/images/ico_sel.png) no-repeat 0 10px;height:32px; line-height:32px; padding-left:30px; text-indent:-9999em;_background-position:0 0}
 .popup .box .loc_search li.select .ico{ background-position:0 -20px; text-indent:0; color:#3376c3;_background-position:0 -30px}
 .popup .box .loc_search li:hover strong{ background-position:0 -85px}
 .popup .box .loc_map .map{width:600px;height:400px;background:#ccc; text-align:center}
-.popup .box .loc_map .map .notice{display:block;width:166px;height:31px;padding:10px;background:url(../images/mapping_notice.png) no-repeat top center;line-height:15px;color:#666;text-align:left}
-.popup .box .btn_group{display:inline-block;width:92px;height:34px; vertical-align:middle; padding-right:30px; overflow:hidden;padding-left:15px;background:url(../images/btn_group.png) no-repeat;line-height:34px}
+.popup .box .loc_map .map .notice{display:block;width:166px;height:31px;padding:10px;background:url(/images/mapping_notice.png) no-repeat top center;line-height:15px;color:#666;text-align:left}
+.popup .box .btn_group{display:inline-block;width:92px;height:34px; vertical-align:middle; padding-right:30px; overflow:hidden;padding-left:15px;background:url(/images/btn_group.png) no-repeat;line-height:34px}
 .popup .box .search_list{z-index:10000; min-width:300px;_width:100%}
 .popup .new_batch{ font-size:12px;width:200px}
-.popup .box .search_list ul{ background:url(../images/line.gif) repeat-x 0 bottom;overflow:hidden;*zoom:1; padding-bottom:5px}
+.popup .box .search_list ul{ background:url(/images/line.gif) repeat-x 0 bottom;overflow:hidden;*zoom:1; padding-bottom:5px}
 .popup .box .search_list li{height:25px;margin:0 5px;line-height:25px;color:#8B9193;float:left}
-.popup .btn_close2{ background:url(../images/btn_close.gif) no-repeat; display:block; width:23px; height:23px; text-indent:-9999em; position:absolute; right:10px;top:10px}
+.popup .btn_close2{ background:url(/images/btn_close.gif) no-repeat; display:block; width:23px; height:23px; text-indent:-9999em; position:absolute; right:10px;top:10px}
 .popup .photo_aside h4{ background:none; padding:0}
 .popup .photo_content .box .photo{ padding:0}
 .photoOver{ background:#222; overflow:hidden; border-radius:0; box-shadow:none; border:1px solid #666}
 .photoOver p a{ color:#fff}
-.photoOver .btn_close{ margin-top:0; background:url(../images/btn_close2.png) right center no-repeat}
+.photoOver .btn_close{ margin-top:0; background:url(/images/btn_close2.png) right center no-repeat}
 .photoOver h5 a{ color:#fff;font-size:14px}
 .photoOver .top img{ margin-right:15px}
 .photoOver .top .attAdd,.photoOver .top .attCancel{*margin-top:-25px}
@@ -70,10 +70,10 @@
 .userInfoShow .box ul{ width:700px; overflow:hidden;*zoom:1;margin-bottom:15px;_width:380px}
 .userInfoShow .box h4{ background:none; font-weight:normal}
 .userInfoShow .box li{ float:left; margin-right:15px}
-.userInfoShow .tipLeft{ position:absolute; left:-19px; top:20px; width:19px; height:17px; background:url(../images/tips.png) no-repeat}
-.userInfoShow .tipRight{ position:absolute; right:-19px; top:20px; width:19px; height:17px; background:url(../images/tips.png) -19px 0 no-repeat}
+.userInfoShow .tipLeft{ position:absolute; left:-19px; top:20px; width:19px; height:17px; background:url(/images/tips.png) no-repeat}
+.userInfoShow .tipRight{ position:absolute; right:-19px; top:20px; width:19px; height:17px; background:url(/images/tips.png) -19px 0 no-repeat}
 .addLinkBox{ width:450px;background:#fff; padding:0; position:relative; border-radius:0; overflow:hidden; box-shadow:none}
-.addLinkBox .del{ position:absolute; width:23px; height:23px; text-indent:-9999em; background:url(../images/btn_close2.png) no-repeat; right:0; top:10px}
+.addLinkBox .del{ position:absolute; width:23px; height:23px; text-indent:-9999em; background:url(/images/btn_close2.png) no-repeat; right:0; top:10px}
 .addLinkBox h4{ background:#eee; height:36px; line-height:36px; padding:0 20px; color:#666}
 .addLinkBox .box{ padding:20px 20px 0; margin:0}
 .addLinkBox ul{width:420px;}
@@ -90,12 +90,12 @@
 .loadingPop .loading_s{ width:auto; padding-left:22px}
 
 /*Added by Cln*/
-.img_pre{float:left;padding:0 85px 0 10px;width: 300px; background: url(../images/img_pre.gif) no-repeat 310px 100px; height: 450px; overflow-y: auto;}
+.img_pre{float:left;padding:0 85px 0 10px;width: 300px; background: url(/images/img_pre.gif) no-repeat 310px 100px; height: 450px; overflow-y: auto;}
 ul.weibo_list{float: right;margin-right:60px;}
 ul.weibo_list li{padding-bottom: 15px;}
 .grids_9{background: #f0f0f0;width: 490px;margin:15px 0;padding:10px;}
 .grids_9{} table tr td{padding:7px;}
-a.go_to{width: 80px; height: 20px; display: block; float: right; position: relative; margin-top:230px; right: -5px; background: url(../images/goto.gif) no-repeat center; padding:100px 3px 3px 3px;}
+a.go_to{width: 80px; height: 20px; display: block; float: right; position: relative; margin-top:230px; right: -5px; background: url(/images/goto.gif) no-repeat center; padding:100px 3px 3px 3px;}
 a.go_to:hover{background-color: #F1EEEF;}
 
 /**/
@@ -108,9 +108,15 @@ a.go_to:hover{background-color: #F1EEEF;}
 .shareSelectBox p{ text-align:center; color:#999;}
 .shareSelectBox .loading_black{ vertical-align:middle; margin:0 10px 0 0; text-indent:0}
 .shareYourPhotosL{ width:315px; height:450px; float:left; overflow:auto;}
-.shareYourPhotosR{ margin-left:330px; }
+/* .shareYourPhotosR{ margin-left:330px; } */
 .shareYourPhotosR ul{width:415px; *width:390px; overflow:hidden; _zoom:1; padding:0 0 10px 0;}
 .shareYourPhotosR li{ float:left; margin:13px 15px 13px 0;*margin:13px 10px 13px 0;}
 .shareYourPhotosR h3{ font-size:14px; font-weight:bold; margin:0 0 10px 0}
 .shareYourPhotosR h3 span{ font-size:14px; color:#999;}
 .shareYourPhotosR textarea{ width:375px; height:34px; border:1px solid #cfcaca; padding:8px;}
+
+.buySpc ul{/* width:415px; */ *width:390px; overflow:hidden; _zoom:1; padding:0 0 10px 0;}
+.buySpc li{ /* float:left;  */margin:5px 15px 5px 0;*margin:5px 10px 5px 0;}
+.buySpc h3{ font-size:14px; font-weight:bold; margin:0 0 10px 0}
+.buySpc h3 span{ font-size:14px; color:#999;}
+.buySpc textarea{ width:375px; height:34px; border:1px solid #cfcaca; padding:8px;}
