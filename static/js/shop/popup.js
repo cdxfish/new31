@@ -91,6 +91,16 @@ function dialog(res, obj) {
                     
                     item.width = 220;
                     item.fadeOut = -1;
+                } else if (item.className == "a") {
+                    
+                    var strAlert = "    <span class=\"\">" + item.title + "</span>  \r\n";
+                    
+                    $("#floatingLayer").html(strAlert);
+                    
+                    $("#floatingLayer").addClass("loadingPop");
+                    
+                    item.width = 220;
+                    item.fadeOut = -1;
                 } else {
                     
                     var imgClass = "pop_message_error";

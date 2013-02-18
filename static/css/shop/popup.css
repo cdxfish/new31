@@ -107,8 +107,8 @@ a.go_to:hover{background-color: #F1EEEF;}
 .shareSelectBox{ overflow:hidden; _zoom:1; background:#f0f0f0; border:2px dashed #d6d6d6; padding:15px; margin-bottom:20px; clear:both;}
 .shareSelectBox p{ text-align:center; color:#999;}
 .shareSelectBox .loading_black{ vertical-align:middle; margin:0 10px 0 0; text-indent:0}
-.shareYourPhotosL{ width:315px; height:450px; float:left; overflow:auto;}
-/* .shareYourPhotosR{ margin-left:330px; } */
+.shareYourPhotosL{ width:315px; /* height:450px;  */float:left; overflow:auto;}
+.shareYourPhotosR{ margin-left:330px; }
 .shareYourPhotosR ul{width:415px; *width:390px; overflow:hidden; _zoom:1; padding:0 0 10px 0;}
 .shareYourPhotosR li{ float:left; margin:13px 15px 13px 0;*margin:13px 10px 13px 0;}
 .shareYourPhotosR h3{ font-size:14px; font-weight:bold; margin:0 0 10px 0}
