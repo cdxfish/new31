@@ -1,13 +1,34 @@
 # Create your views here.
-from django.http import HttpResponse, HttpResponseRedirect
-from django.template import loader, Context
-import datetime
+from django.shortcuts import render_to_response
+from django.http import HttpResponseRedirect, HttpResponse
+import datetime, common, random, json
 
-def hello(request):
-    now = datetime.datetime.now()
-    t = loader.get_template('shop.htm')
-    html = t.render(Context({'current_date': now}))
-    return HttpResponse(html)
+def shop(request):
+    shop = common.shop()
+
+    title = shop.title()
+    boxList = randBox()
+
+
+    return render_to_response('shop.htm', locals())
+    # return HttpResponse(json.dumps(boxList))
 
 def returnFrist(request):
     return HttpResponseRedirect("../")
+
+
+
+def randBox():
+    boxList = []
+    for i in range(1, 10):
+        int(random.uniform(1,23))
+        a = {'class':'b1','name':'xiangnong','img':'/m/3133001s.jpg'}
+        b = {'class':'b1','name':'xiangnong','img':'/m/3133011s.jpg'}
+        c = {'class':'b2','name':'xiangnong','img':'/m/3133001b.jpg'}
+        box = [a, b, c]
+
+        random.shuffle(box)
+        
+        boxList.append(box)
+
+    return boxList
