@@ -1,21 +1,43 @@
 from django.db import models
+# from django.contrib.sites.models import *
 
 # Create your models here.
-class Publisher(models.Model):
+class Item(models.Model):
     name = models.CharField(max_length=30)
-    address = models.CharField(max_length=50)
-    city = models.CharField(max_length=60)
-    state_province = models.CharField(max_length=30)
-    country = models.CharField(max_length=50)
-    website = models.URLField()
+    sn = models.CharField(max_length=30)
+    add_time = models.DateTimeField()
+    shelf = models.BooleanField()
+    show = models.BooleanField()
+    desc = models.CharField(max_length=60)
+    keywords = models.CharField(max_length=30)
+    like = models.IntegerField()
+    click = models.CharField(max_length=30)
 
-class Author(models.Model):
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=40)
-    email = models.EmailField()
+class AttriBute(models.Model):
+    attr = models.CharField(max_length=30)
 
-class Book(models.Model):
-    title = models.CharField(max_length=100)
-    authors = models.ManyToManyField(Author)
-    publisher = models.ForeignKey(Publisher)
-    publication_date = models.DateField()
+class Discount(models.Model):
+    discount = models.CharField(max_length=30)
+
+class Tag(models.Model):
+    tag = models.CharField(max_length=30)
+
+class ItemAttr(models.Model):
+    name = models.ManyToManyField(Item)
+    attr = models.ManyToManyField(AttriBute)
+
+class ItemDiscount(models.Model):
+    name = models.ManyToManyField(Item)
+    discount = models.ManyToManyField(Discount)
+
+class ItemFee(models.Model):
+    name = models.ManyToManyField(Item)
+    amount = models.ManyToManyField(Discount)
+    type = models.FloatField()
+
+class ItemTag(models.Model):
+    tag = models.ManyToManyField(Tag)
+    name = models.ManyToManyField(Item)
+
+
+
