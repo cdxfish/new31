@@ -4,6 +4,9 @@ from django.db import models
 class AttriBute(models.Model):
     attr = models.CharField(max_length=30)
 
+    def __unicode__(self):
+        return u"%s" % self.attr
+
 class Discount(models.Model):
     discount = models.CharField(max_length=30)
 
@@ -16,3 +19,6 @@ class Ad(models.Model):
 class Config(models.Model):
     code = models.CharField(max_length=30)
     value = models.CharField(max_length=30)
+
+    def __unicode__(self):
+        return u"%s" % self.discount

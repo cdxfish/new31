@@ -1,6 +1,5 @@
 from django.contrib import admin
-# from mysite.books.models import Publisher, Author, Book
+from models import AttriBute, Discount
 
-# admin.site.register(Publisher)
-# admin.site.register(Author)
-# admin.site.register(Book)
+admin.site.register(AttriBute)
+admin.site.register(Discount)

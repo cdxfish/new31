@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 import datetime, common, random, json
 
+
 def shop(request):
     shop = common.shop()
 
