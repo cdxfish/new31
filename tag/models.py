@@ -5,7 +5,7 @@ from item.models import *
 
 class Tag(models.Model):
     tag = models.CharField(max_length=30)
-	
+
     def __unicode__(self):
         return u"%s" % self.tag
 

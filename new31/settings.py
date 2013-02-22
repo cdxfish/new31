@@ -7,15 +7,15 @@ DEBUG = not environ.get("APP_NAME", "")
 TEMPLATE_DEBUG = DEBUG
 
 if DEBUG:
-	# local
-	MYSQL_DB = "new31"
-	MYSQL_USER = "root"
-	MYSQL_PASS = 'xx003'
-	MYSQL_HOST_M = '127.0.0.1'
-	MYSQL_HOST_S = '127.0.0.1'
-	MYSQL_PORT = '3306'
+    # local
+    MYSQL_DB = 'new31'
+    MYSQL_USER = 'root'
+    MYSQL_PASS = '123456'
+    MYSQL_HOST_M = 'localhost'
+    MYSQL_HOST_S = 'localhost'
+    MYSQL_PORT = '3306'
 else:
-	# SAE
+    # SAE
     DEBUG = True
     import sae.const
     MYSQL_DB = sae.const.MYSQL_DB
