@@ -121,6 +121,7 @@ APPS = [
     'search',
     'account',
     'checkout',
+    'item',
 ]
 
 DANJO_APPS = [
