@@ -22,14 +22,14 @@ class ItemAttr(models.Model):
     attr = models.ManyToManyField(AttriBute)
 
     def __unicode__(self):
-        return u"%s - %s" % (self.name, self.attr.attr)
+        return u"%s - %s" % (self.name, self.attr)
 
 class ItemDiscount(models.Model):
     name = models.ManyToManyField(Item)
     discount = models.ManyToManyField(Discount)
 
     def __unicode__(self):
-        return u"%s - %s" % (self.name, self.discount.discount)
+        return u"%s - %s" % (self.name, self.discount)
 
 class ItemFee(models.Model):
     name = models.ManyToManyField(Item)
