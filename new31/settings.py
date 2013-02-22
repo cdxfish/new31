@@ -1,8 +1,29 @@
 # Django settings for new31 project.
 import os.path
 
-DEBUG = True
+from os import environ
+
+DEBUG = not environ.get("APP_NAME", "")
 TEMPLATE_DEBUG = DEBUG
+
+if DEBUG:
+	# local
+	MYSQL_DB = "new31"
+	MYSQL_USER = "root"
+	MYSQL_PASS = 'xx003'
+	MYSQL_HOST_M = '127.0.0.1'
+	MYSQL_HOST_S = '127.0.0.1'
+	MYSQL_PORT = '3306'
+else:
+	# SAE
+    DEBUG = True
+    import sae.const
+    MYSQL_DB = sae.const.MYSQL_DB
+    MYSQL_USER = sae.const.MYSQL_USER
+    MYSQL_PASS = sae.const.MYSQL_PASS
+    MYSQL_HOST_M = sae.const.MYSQL_HOST
+    MYSQL_HOST_S = sae.const.MYSQL_HOST_S
+    MYSQL_PORT = sae.const.MYSQL_PORT
 
 ADMINS = (
     ('leiddx.ErEli', 'leiddx@vip.qq.com'),
@@ -14,11 +35,11 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'new31',                      # Or path to database file if using sqlite3.
-        'USER': 'root',                      # Not used with sqlite3.
-        'PASSWORD': '123456',                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
+        'NAME': MYSQL_DB,                      # Or path to database file if using sqlite3.
+        'USER': MYSQL_USER,                      # Not used with sqlite3.
+        'PASSWORD': MYSQL_PASS,                  # Not used with sqlite3.
+        'HOST': MYSQL_HOST_M,                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': MYSQL_PORT,                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
