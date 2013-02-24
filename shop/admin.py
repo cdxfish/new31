@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import AttriBute, Discount
+from models import *
 
 admin.site.register(AttriBute)
 admin.site.register(Discount)

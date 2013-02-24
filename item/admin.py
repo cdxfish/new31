@@ -1,6 +1,5 @@
 from django.contrib import admin
-from models import Item, ItemAttr, ItemDiscount, ItemFee
-
+from models import *
 
 admin.site.register(Item)
 admin.site.register(ItemAttr)
