@@ -6,7 +6,7 @@ from shop.models import *
 class Item(models.Model):
     name = models.CharField(max_length=30)
     sn = models.CharField(max_length=30)
-    add_time = models.DateTimeField()
+    addTime = models.DateTimeField()
     shelf = models.BooleanField()
     show = models.BooleanField()
     desc = models.CharField(max_length=60)
@@ -18,24 +18,23 @@ class Item(models.Model):
         return u"%s - %s" % (self.name, self.sn)
 
 class ItemAttr(models.Model):
-    name = models.ManyToManyField(Item)
-    attr = models.ManyToManyField(AttriBute)
+    name = models.ForeignKey(Item)
+    value = models.ForeignKey(AttriBute)
 
     def __unicode__(self):
         return u"%s - %s" % (self.name, self.attr)
 
 class ItemDiscount(models.Model):
-    name = models.ManyToManyField(Item)
-    discount = models.ManyToManyField(Discount)
+    itemAttr = models.ForeignKey(ItemAttr)
+    discount = models.ForeignKey(Discount)
 
     def __unicode__(self):
         return u"%s - %s" % (self.name, self.discount)
 
 class ItemFee(models.Model):
-    name = models.ManyToManyField(Item)
-    amount = models.ManyToManyField(Discount)
-    type = models.FloatField()
+    itemAttr = models.ForeignKey(ItemAttr)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    type = models.SmallIntegerField()
 
     def __unicode__(self):
-        return u"%s" % self.name
-
+        return u"%s - %s" % (self.name, self.amount)
