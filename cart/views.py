@@ -1,18 +1,18 @@
-# Create your views here.
+#coding:utf-8
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
 from django.template import Context
 from django.http import HttpResponse
 import datetime
 
+# Create your views here.
+
 def cart(request):
     now = datetime.datetime.now()
-    t = get_template('cart.htm')
-    html = t.render(Context({'current_date': now}))
-    return HttpResponse(html)
+
+    return render_to_response('cart.htm', locals())
 
 def consignee(request):
     now = datetime.datetime.now()
-    t = get_template('consignee.htm')
-    html = t.render(Context({'current_date': now}))
-    return HttpResponse(html)
+
+    return render_to_response('consignee.htm', locals())

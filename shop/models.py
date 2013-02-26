@@ -1,3 +1,5 @@
+#coding:utf-8
+
 from django.db import models
 
 # Create your models here.
@@ -42,6 +44,12 @@ class Signature(models.Model):
     isOpen = models.BooleanField(max_length=60)
     vieworder = models.SmallIntegerField()
     limitNum = models.SmallIntegerField()
+
+    def __unicode__(self):
+        return u"%s" % self.value
+        
+class Image(models.Model):
+    value = models.ImageField(upload_to='/upload')
 
     def __unicode__(self):
         return u"%s" % self.value

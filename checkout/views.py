@@ -1,13 +1,14 @@
-# Create your views here.
+#coding:utf-8
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader, Context
 import datetime
 
-def hello(request):
+# Create your views here.
+
+def checkout(request):
     now = datetime.datetime.now()
-    t = loader.get_template('checkout.htm')
-    html = t.render(Context({'current_date': now}))
-    return HttpResponse(html)
+
+    return render_to_response('checkout.htm', locals())
 
 def returnFrist(request):
     return HttpResponseRedirect("../")

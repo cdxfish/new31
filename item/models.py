@@ -1,3 +1,4 @@
+#coding:utf-8
 from django.db import models
 from shop.models import *
 
@@ -15,14 +16,14 @@ class Item(models.Model):
     click = models.CharField(max_length=30)
 
     def __unicode__(self):
-        return u"%s - %s" % (self.name, self.sn)
+        return u"%s - %s [ shelf: %s ] [ show: %s ]" % (self.name, self.sn, self.shelf, self.show)
 
 class ItemAttr(models.Model):
     name = models.ForeignKey(Item)
     value = models.ForeignKey(AttriBute)
 
     def __unicode__(self):
-        return u"%s - %s" % (self.name, self.attr)
+        return u"%s - %s" % (self.name, self.value)
 
 class ItemDiscount(models.Model):
     itemAttr = models.ForeignKey(ItemAttr)
