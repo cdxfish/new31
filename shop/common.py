@@ -5,17 +5,15 @@ class Shop:
     def title(self,info=''):
         return info
 
-
     def printError(self,title='', message=''):
         from django.shortcuts import render_to_response
 
         return render_to_response('error.htm', {'title': title, 'message': message})
 
-shop = Shop()
 
 class Message:
-    info ="Hello comger"
-    message ="Hello comger"
+    info ='hello world'
+    message ='hello world'
 
     def info(self,info=''):
         self.info = info
@@ -31,5 +29,3 @@ class Message:
         from django.shortcuts import render_to_response
 
         return render_to_response('message.htm', {'info': self.info, 'message': self.message})
-
-msg = Message()

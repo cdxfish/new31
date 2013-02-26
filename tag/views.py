@@ -1,11 +1,9 @@
 #coding:utf-8
 # Create your views here.
-from django.http import HttpResponse, HttpResponseRedirect
-from django.template import loader, Context
-import datetime
+from django.shortcuts import render_to_response
+from shop.common import *
 
 def tag(request):
-    now = datetime.datetime.now()
 
     return render_to_response('tag.htm', locals())
 

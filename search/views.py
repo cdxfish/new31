@@ -1,12 +1,9 @@
 #coding:utf-8
-from django.http import HttpResponse, HttpResponseRedirect
-from django.template import loader, Context
-import datetime
-
+from django.shortcuts import render_to_response
+from shop.common import *
 # Create your views here.
 
 def search(request):
-    now = datetime.datetime.now()
 
     return render_to_response('search.htm', locals())
 

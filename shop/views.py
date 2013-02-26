@@ -1,14 +1,11 @@
 #coding:utf-8
 # Create your views here.
 from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect, HttpResponse
-import datetime, common, random, json
+import common, random, json
 
 
 def shop(request):
-    shop = common.shop()
 
-    title = shop.title()
     boxList = randBox()
 
 
