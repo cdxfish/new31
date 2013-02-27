@@ -7,6 +7,12 @@ $(document).ready(function () {
             var introLi = $(".intro li");
             introLi.eq(Math.floor(Math.random() * 10 % introLi.length)).slideToggle("slow");
         }, 2000);
+        if($(window).height() > $('body').height() )
+        {
+            var content =  $('#content')
+            var conHeight = $(window).height() - content.prev().offset().top - content.prev().outerHeight() - content.next().outerHeight() - content.outerHeight() + content.height();
+            content.css({'min-height': conHeight });
+        }
         $(window).scroll(function () {
             var scrollTop = $("#scrollTop");
 
@@ -37,7 +43,7 @@ $(document).ready(function () {
                     "position" : "relative",
                     "left" : "0px"
                 }).next().css({
-                    "padding-top" : "0px"
+                    "padding-top" : "30px"
                 });
             }
         });
