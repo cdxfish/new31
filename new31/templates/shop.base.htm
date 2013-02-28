@@ -46,8 +46,10 @@
                     </div>
                 </li>
                 <li><a href="/cart/">购物车</a></li>
+{% if request.user.is_authenticated %}
                 <li><a href="/account/login/">登录</a></li>
-<!--                 <li class="messageBox">
+{% else %}
+                <li class="messageBox">
                     <a id="lnkTopSetting" class="pic">设置<b></b></a>
                     <div id="pnlTopProfile" class="messagePop" style="display: none;">
                         <h3>leiddx</h3>
@@ -61,7 +63,8 @@
                         </div>
                         <a class="confirm" href="/account/logoff/">退出登录</a>
                    </div>
-                </li> -->
+                </li>
+{% endif %}
             </ul>
         </div>
     </div>
