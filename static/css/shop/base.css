@@ -232,7 +232,7 @@ background:-ms-linear-gradient(top, #980000 0%,#8a0000 45%,#8a0000 46%,#7e0000 1
 .toolBar li a:hover{color:#474531;background:#FFF;text-decoration:none;border-radius:2px;height:32px;line-height:32px;display:block;_float:left;text-shadow:none;border:none;}
 
 
-.toolBar li input{float:left;width:160px;height:20px;border:1px solid #CFCACA;border-radius:2px;box-shadow:none;background:#FFF;line-height:20px;text-indent:0;padding:0 5px;margin:5px 0 0}
+.toolBar li .topSearch{float:left;width:160px;height:20px;border:1px solid #CFCACA;border-radius:2px;box-shadow:none;background:#FFF;line-height:20px;text-indent:0;padding:0 5px;margin:5px 0 0}
 .toolBar li .btn_search{display:block;float:left;width:27px;height:20px;cursor:pointer;margin:6px 0 0 -28px;background:#e9eaea url(/images/ico_search.gif) no-repeat 5px;text-indent:-9999em;border:0 none;border-radius:0 2px 2px 0;border-left:1px solid #b6b6b6}
 .toolBar li .search_list{position:absolute;z-index:10000;min-width:124px;max-width:288px;_width:124px;margin-top:28px;*margin-left:-152px;padding:5px 0;background:#FFF;box-shadow:0 2px 3px #999;overflow:hidden;}
 .toolBar .search_list li{float:none;margin:0;height:22px;line-height:22px}
@@ -250,26 +250,26 @@ background:-ms-linear-gradient(top, #980000 0%,#8a0000 45%,#8a0000 46%,#7e0000 1
 .toolBar .on,.toolBar .on:hover{background:#FFF;border-radius:2px 2px 0 0;color:#474531;display:block;box-shadow: 0 2px 4px rgba(30, 25, 25, 0.5);}
 .toolBar .on span{background:#676767;border-radius:2px;padding:0 5px;line-height:24px}
 
-.toolBar .messagePop{position:absolute;z-index:999;width:180px;background:#FFF;box-shadow:0 2px 4px rgba(30, 25, 25, 0.5);overflow:hidden;right:0;top:32px;}
+.toolBar .messagePop{position:absolute;z-index:999;min-width:180px;background:#FFF;box-shadow:0 2px 4px rgba(30, 25, 25, 0.5);overflow:hidden;right:0;top:32px;}
 .toolBar .messagePop h3{font-size:12px;font-weight:bold;border-bottom:1px  solid #CECECE;line-height:32px;text-indent:12px;margin-bottom:10px}
 .toolBar .messagePop h4{font-size:14px;font-weight:bold;line-height:24px}
 .toolBar .messagePop li{float:none;width:100%;margin:0px;}
-/* .toolBar .messagePop li a,.toolBar .messagePop li a span{display:inline;padding:0} */
 .toolBar .messagePop li a{display:block;height:27px;line-height:27px;padding:0 10px;}
 .toolBar .messagePop li a:hover{display:block;background:#89706D;height:27px;line-height:27px;color:#FFF;padding:0 10px;}
 .toolBar .messagePop li em{line-height:14px;display:block;padding:0 10px;word-wrap:break-word;word-break:break-all;}
 .toolBar .messagePop li.email{border-bottom:1px solid #e5e5e5;height:30px;color:#999;}
 .toolBar .messagePop li.name a{font-weight:bold;font-size:14px;color:#000;height:27px;}
-
+#pnlTopProfile, #pnlTopMessage{_width:180px;}
 .toolBar .messageBox .messagePop .confirm{display:block;padding:0 10px;border-top:1px  solid #e5e5e5;text-align:right;}
 .toolBar .messageBox .messagePop .confirm:hover{_width:160px;background:#e5e5e5;color:#000;height:32px;line-height:32px}
 .toolBar .messagePop .picBig{padding:12px;}
 .toolBar .messagePop .picBig:hover{background:none;height:48px;_width:180px;}
 .toolBar .messagePop .picBig span{display:inline-block;color:#000;font-size:14px;font-weight:bold;vertical-align:top;margin-top:-8px;}
-.toolBar .messagePop .editBox{}
 .toolBar .messagePop .editBox li a{text-indent:0px;}
-.toolBar li a.pic{line-height:32px;height:32px;display:block;_width:30px;padding:0 15px 0 9px;}
-.toolBar li a.pic:hover{height:32px;margin:0;line-height:32px}
+.toolBar .messagePop .topLoginBox{min-width:200px;_width:200px;padding:10px;}
+.toolBar .messagePop .topLoginBox li{padding:5px 0px;}
+.toolBar li a.pic, .toolBar li a.login{line-height:32px;height:32px;display:block;_width:30px;padding:0 15px 0 9px;}
+.toolBar li a.pic:hover, .toolBar li a.login:hover{height:32px;margin:0;line-height:32px}
 .toolBar li a.pic b{border-color:#89706D #FAF7F7 #FAF7F7;border-style:solid;border-width:4px;font-size:0;height:0;line-height:0;position:absolute;bottom:9px;/*  right:5px;*/ width:0;}
 .toolBar li a.on b{border-color:#89706D #FFFfff #FFFfff;}
 

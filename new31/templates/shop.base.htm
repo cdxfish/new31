@@ -30,7 +30,7 @@
             <ul class="fr">
                 <li>
                     <form action="/search/" method="get">
-                        <input id="txtTopSearch" name="key" type="text" accesskey="s">
+                        <input id="txtTopSearch" name="key" type="text" accesskey="s" class="topSearch" />
                         <button type="submit" class="btn_search" title="搜索">搜索</button>
                     </form>
                 </li>
@@ -47,21 +47,34 @@
                 </li>
                 <li><a href="/cart/">购物车</a></li>
 {% if request.user.is_authenticated %}
-                <li><a href="/account/login/">登录</a></li>
-{% else %}
                 <li class="messageBox">
                     <a id="lnkTopSetting" class="pic">设置<b></b></a>
                     <div id="pnlTopProfile" class="messagePop" style="display: none;">
-                        <h3>leiddx</h3>
+                        <h3>{{ request.user}}</h3>
                         <div class="editBox">
                             <ul>
-                                <li class="email"><em>leiddx@vip.qq.com</em></li>
+                                <li class="email"><em>{{ request.user.email}}</em></li>
                                 <li><a href="/account/order/">我的订单</a></li>
                                 <li><a href="/account/settings/">个人设置</a></li>
                                 <li><a href="/account/changepwd/">修改密码</a></li>
                             </ul>
                         </div>
-                        <a class="confirm" href="/account/logoff/">退出登录</a>
+                        <a class="confirm" href="/account/logout/">退出登录</a>
+                   </div>
+                </li>
+{% else %}
+                <li class="messageBox">
+                    <a id="lnkTopLogin" class="login">登录</a>
+                    <div id="loginMessage" class="messagePop" style="display: none;">
+                        <div class="topLoginBox">
+                            <form action="/account/login/" method="post">{% csrf_token %}
+                                <ul>
+                                    <li><label for="UserName">帐号：</label><input name="username" type="text" placeholder="用户名/邮箱" id="UserName" /></li>
+                                    <li><label for="Password">密码：</label><input name="password" type="password" id="Password" /></li>
+                                    <li align="right"><input class="btnGr bBtn" type="submit" value="登录" /><input type="hidden" name="next" value="/" /></li>
+                                </ul>
+                            </form>
+                        </div>
                    </div>
                 </li>
 {% endif %}
