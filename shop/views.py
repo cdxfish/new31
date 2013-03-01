@@ -4,10 +4,9 @@ from django.shortcuts import render_to_response
 import common, random, json
 
 
-def shop(request):
+def shop(request, a):
 
-    boxList = randBox()
-
+    boxList = a
 
     return render_to_response('shop.htm', locals())
     # return HttpResponse(json.dumps(boxList))

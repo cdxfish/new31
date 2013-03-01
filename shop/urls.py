@@ -4,7 +4,12 @@ from django.conf import settings
 from views import *
 import os.path
 
+info = {
+    'a': randBox(),
+}
+
+
 urlpatterns = patterns('',
-    (r'^$', shop),
+    (r'^$', shop, info),
 )
 
