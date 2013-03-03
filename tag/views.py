@@ -1,12 +1,9 @@
 #coding:utf-8
-# Create your views here.
 from django.shortcuts import render_to_response
-from shop.common import *
+from django.template import RequestContext
 
-def tag(request, **kwargs):
+# Create your views here.
 
-    common = kwargs
-    return render_to_response('tag.htm', locals())
+def tag(request):
 
-def returnFrist(request):
-    return HttpResponseRedirect("../")
+    return render_to_response('tag.htm', locals(), context_instance=RequestContext(request))

@@ -1,16 +1,13 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 
 # Create your views here.
 
-def cart(request, template,**kwargs):
+def cart(request):
 
-    common = kwargs
+    return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
 
-    return render_to_response('%s.htm' % template, locals())
+def consignee(request):
 
-def consignee(request, **kwargs):
-
-    common = kwargs
-
-    return render_to_response('consignee.htm', locals())
+    return render_to_response('consignee.htm', locals(), context_instance=RequestContext(request))

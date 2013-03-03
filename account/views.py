@@ -1,16 +1,13 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
-from django.template import RequestContext
 from django.contrib import auth
+from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from account.models import *
-from shop.common import *
-import json
 
 # Create your views here.
 
-def login(request, **kwargs):
-    common = kwargs
+def login(request):
 
     if not request.user.is_authenticated():
         if request.method == 'POST':
@@ -27,42 +24,32 @@ def login(request, **kwargs):
                 return Message().info('错误').message('用户名或密码错误!').printMsg()
 
         else:
-            return render_to_response('login.htm')
+            return render_to_response('login.htm', locals(), context_instance=RequestContext(request))
 
     else:
         return HttpResponseRedirect("/")
 
-def logout(request, **kwargs):
-
-    common = kwargs
+def logout(request):
 
     auth.logout(request)
 
     return HttpResponseRedirect("/")
 
-def settings(request, **kwargs):
+def settings(request):
 
-    common = kwargs
+    return render_to_response('settings.htm', locals(), context_instance=RequestContext(request))
 
-    return render_to_response('settings.htm', locals())
+def changepwd(request):
 
-def changepwd(request, **kwargs):
+    return render_to_response('changepwd.htm', locals(), context_instance=RequestContext(request))
 
-    common = kwargs
+def orderList(request):
 
-    return render_to_response('changepwd.htm', locals())
+    return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
 
-def orderList(request, **kwargs):
+def orderDetail(request, orderSn):
 
-    common = kwargs
-
-    return render_to_response('orderlist.htm', locals())
-
-def orderDetail(request, **kwargs):
-
-    common = kwargs
-
-    return render_to_response('orderdetail.htm', locals())
+    return render_to_response('orderdetail.htm', locals(), context_instance=RequestContext(request))
 
 class UserInfo:
     newOrder = 0

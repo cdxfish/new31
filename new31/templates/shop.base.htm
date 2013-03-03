@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>{% block title %}{{ common.title}}{% endblock %} 31客——源自欧洲经典口味！</title>
+    <title>{% block title %}{{ title}}{% endblock %} 31客——源自欧洲经典口味！</title>
     <meta name="Keywords" content="{% block keywords %}31客,31客蛋糕,蛋糕{% endblock %}" />
     <meta name="Description" content="{% block description %}蛋糕电子商务{% endblock %}" />
     <link rel="stylesheet" href="/css/shop/base.css" />
@@ -35,12 +35,12 @@
                     </form>
                 </li>
                 <li class="messageBox">
-                    <a id="lnkTopMessage" href="/account/order" class="newMessage" title="新消息"><span id="spanTopMessage" title="新消息">{{common.user.messageCount}}</span></a>
+                    <a id="lnkTopMessage" href="/account/order" class="newMessage" title="新消息"><span id="spanTopMessage" title="新消息">{{user.messageCount}}</span></a>
                     <div id="pnlTopMessage" class="messagePop" style="display:none;">
                         <h3>新消息</h3>
                         <ul>
-                            <li><a href="/account/order/">新订单（ {{common.user.newOrder}} ）</a></li>
-                            <li><a href="/account/messages/">新留言（ {{common.user.newMessage}} ）</a></li>
+                            <li><a href="/account/order/">新订单（ {{user.newOrder}} ）</a></li>
+                            <li><a href="/account/messages/">新留言（ {{user.newMessage}} ）</a></li>
                         </ul>
                         <a class="confirm" href="javascript:void(0)" onclick="clearMessageData();return false;">我知道了</a>
                     </div>

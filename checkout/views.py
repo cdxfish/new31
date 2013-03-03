@@ -1,14 +1,9 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
-from shop.common import *
+from django.template import RequestContext
 
 # Create your views here.
 
-def checkout(request, **kwargs):
+def checkout(request):
 
-    common = kwargs
-
-    return render_to_response('checkout.htm', locals())
-
-def returnFrist(request):
-    return HttpResponseRedirect("../")
+    return render_to_response('checkout.htm', locals(), context_instance=RequestContext(request))

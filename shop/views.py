@@ -1,17 +1,16 @@
 #coding:utf-8
-# Create your views here.
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
 import random, json
+from account.views import UserInfo
 
+# Create your views here.
 
 def shop(request):
 
-
-    return render_to_response('shop.htm', locals(),context_instance=RequestContext(request))
-    # return HttpResponse(json.dumps(boxList))
-
+    return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))
+    # return HttpResponse(json.dumps(boxList.returnInfo()))
 
 def randBox():
     boxList = []
@@ -27,4 +26,3 @@ def randBox():
         boxList.append(box)
 
     return boxList
-    

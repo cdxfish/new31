@@ -1,5 +1,6 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
+from account.views import UserInfo
 
 class Message:
     info ='hello world'
@@ -20,11 +21,5 @@ class Message:
 
         return render_to_response('message.htm', {'info': self.info, 'message': self.message})
 
-
-class Shop:
-    title = '我什么都不知道'
-
-    def title(self, title):
-        self.title = title
-
-        return self
+def common(request):
+    return {'title':'hiahia', 'user': UserInfo().returnInfo(),}
