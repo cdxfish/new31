@@ -4,7 +4,9 @@ from shop.common import *
 
 # Create your views here.
 
-def checkout(request):
+def checkout(request, **kwargs):
+
+    common = kwargs
 
     return render_to_response('checkout.htm', locals())
 

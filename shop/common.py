@@ -1,4 +1,5 @@
 #coding:utf-8
+from django.shortcuts import render_to_response
 
 class Message:
     info ='hello world'
@@ -18,3 +19,12 @@ class Message:
         from django.shortcuts import render_to_response
 
         return render_to_response('message.htm', {'info': self.info, 'message': self.message})
+
+
+class Shop:
+    title = '我什么都不知道'
+
+    def title(self, title):
+        self.title = title
+
+        return self

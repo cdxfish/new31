@@ -1,13 +1,16 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
-from shop.common import *
 
 # Create your views here.
 
-def cart(request):
+def cart(request, template,**kwargs):
 
-    return render_to_response('cart.htm', locals())
+    common = kwargs
 
-def consignee(request):
+    return render_to_response('%s.htm' % template, locals())
+
+def consignee(request, **kwargs):
+
+    common = kwargs
 
     return render_to_response('consignee.htm', locals())

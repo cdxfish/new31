@@ -2,10 +2,16 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from settings import APPS
+from shop.common import *
+from account.views import UserInfo
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
+
+# common = {'title': Shop().title('桑心').title, 'user': UserInfo().returnInfo()}
+
+
 
 urlpatterns = patterns('',
     # Examples:
