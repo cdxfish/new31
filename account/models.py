@@ -1,27 +1,17 @@
 #coding:utf-8
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
-class User(models.Model):
-    user = models.CharField(max_length=30)
-    email = models.EmailField()
-    name = models.CharField(max_length=30)
-    password = models.CharField(max_length=32)
+class UserInfo(models.Model):
+    user = models.ForeignKey(User)
     birthmon = models.SmallIntegerField()
     birthday = models.SmallIntegerField()
     sex = models.SmallIntegerField()
-    lastlogin = models.DateTimeField()
-    lastip = models.IPAddressField()
     buycount = models.IntegerField()
-    regtime = models.DateTimeField()
-    type = models.SmallIntegerField()
-
-    def __unicode__(self):
-        return u"%s" % self.user
-
-class UserAddress(models.Model):
-    user = models.OneToOneField(User)
+    integral = models.IntegerField()
+    regtype = models.SmallIntegerField()
     consignee = models.CharField(max_length=30)
     city = models.CharField(max_length=32)
     block = models.CharField(max_length=32)
@@ -31,12 +21,4 @@ class UserAddress(models.Model):
     time = models.CharField(max_length=30)
 
     def __unicode__(self):
-        return u"%s - %s" % (self.consignee, self.address)
-        
-class UserBalance(models.Model):
-    user = models.OneToOneField(User)
-    integral = models.IntegerField()
-
-
-    def __unicode__(self):
-        return u"%s - %s" % (self.user, self.integral)
+        return u"%s" % self.user
