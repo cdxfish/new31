@@ -1,7 +1,6 @@
 #coding:utf-8
 from django.conf.urls import patterns, include, url
 from django.conf import settings
-from settings import APPS
 from shop.common import *
 from account.views import UserInfo
 
