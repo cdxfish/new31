@@ -25,6 +25,7 @@ $(document).ready(function () {
             introLi.eq(Math.floor(Math.random() * 10 % introLi.length)).slideToggle("slow");
         }, 2000);
         $(window).scroll(function () {
+
             var scrollTop = $("#scrollTop");
 
             var scrollTopPrevTop = scrollTop.prev().length > 0 ? scrollTop.prev().offset().top + scrollTop.prev().outerHeight() : 0;
@@ -57,6 +58,8 @@ $(document).ready(function () {
                     "padding-top" : "30px"
                 });
             }
+
+            GetMoreItem();
         });
     }
 
@@ -130,4 +133,26 @@ function GetScrollTop() {
 
 function GetScrollLeft() {
     return ie ? IeTrueBody().scrollLeft : window.pageXOffset;
+}
+
+function GetMoreItem() {
+    // alert('hello world');
+    var pinStream = $(".pinStream");
+
+    var scrollTop = GetScrollTop();
+    var winHeight = $(window).height();
+
+    var ulTop = pinStream.offset().top;
+    var ulHeight = pinStream.outerHeight();
+
+    if (scrollTop + winHeight + 100 >= ulTop + ulHeight) {
+        $.getJSON('/ajax/more/', function(data) {
+            pinStream.append(data);
+        });
+        pinStream.ajaxStart(function() {
+            $(this).append("<div class=\"moreLoading\"><span class=\"loading_black\"></span>努力加载中...</div>");
+        }).ajaxSuccess(function() {
+            $(".moreLoading").remove();
+        });
+    }
 }

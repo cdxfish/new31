@@ -10,51 +10,66 @@ import random, json, os
 # Create your views here.
 
 def shop(request):
-
-    itemList = ItemPin(10).sort()
+    itemList = ItemPin(10).buildItemList().sort(sortFun).itemList
 
     return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))
-    # return HttpResponse(json.dumps(itemList.returnInfo()))
+    # return HttpResponse(json.dumps(itemList))
 
+def sortFun(itemList):
+    [random.shuffle(i) for i in itemList]
+    return itemList
 
 class ItemPin:
     """瀑布流物品排序类"""
-    def __init__(self, rowSize=8, lineSize=3):
+    def __init__(self, rowSize=8, lineSize=3, orthClass='b2', baseClass='b1'):
        self.rowSize = rowSize
        self.lineSize = lineSize
+       self.orthClass = orthClass
+       self.baseClass = baseClass
 
-    def sort(self):      
-        item = Item.objects.filter(Q(sn__contains='3133')|Q(sn__contains='3155')|Q(sn__contains='3177')) 
-        # randomItem = int(random.uniform(1,item.count()))
+       self.itemList = []
+       self.itemQuery = Item.objects.filter(Q(sn__contains='3133') | Q(sn__contains='3155') | Q(sn__contains='3177')) 
 
-        itemList = []
+    def buildItemList(self):      
         for i in range(0, self.rowSize):
-            aItem = item[int(random.uniform(1,item.count()))]
-            bItem = item[int(random.uniform(1,item.count()))]
-            cItem = item[int(random.uniform(1,item.count()))]
 
-            while not os.path.isfile('%simages\\%ss.jpg' % (settings.MEDIA_ROOT, aItem.sn)):
-                aItem = item[int(random.uniform(1,item.count()))]
-            else:
-                aItem.img = '/m/%ss.jpg' % aItem.sn
+            lineItem = self.buildLineItem()
 
-            while not os.path.isfile('%simages\\%ss.jpg' % (settings.MEDIA_ROOT, bItem.sn)):
-                bItem = item[int(random.uniform(1,item.count()))]
-            else:
-                bItem.img = '/m/%ss.jpg' % bItem.sn
+            self.itemList.append(lineItem)
 
-            while not os.path.isfile('%simages\\%sb.jpg' % (settings.MEDIA_ROOT, cItem.sn)):
-                cItem = item[int(random.uniform(1,item.count()))]
-            else:
-                cItem.img = '/m/%sb.jpg' % cItem.sn
+        return self
 
-            a = {'class':'b1','name':aItem.name,'img':aItem.img}
-            b = {'class':'b1','name':bItem.name,'img':bItem.img}
-            c = {'class':'b2','name':cItem.name,'img':cItem.img}
-            box = [a, b, c]
+    def sort(self,function):
+        self.itemList = function(self.itemList)
+        # [random.shuffle(i) for i in self.itemList]
 
-            random.shuffle(box)
+        return self
 
-            itemList.append(box)
+    def randomItem(self):
+        randomItem = random.choice(self.itemQuery)
 
-        return itemList
+        while not os.path.isfile('%simages\\%ss.jpg' % (settings.MEDIA_ROOT, randomItem.sn)):
+            randomItem = random.choice(self.itemQuery)
+
+        item = {
+            'class': self.baseClass,    
+            'img': '/m/%ss.jpg' % randomItem.sn,
+            'name': randomItem.name,
+            'sn': randomItem.sn,
+        }
+       
+        return item
+
+    def buildLineItem(self):
+        lineItem = []
+        [lineItem.append(self.randomItem()) for i in range(0,self.lineSize)]
+
+        if os.path.isfile('%simages\\%sb.jpg' % (settings.MEDIA_ROOT, lineItem[0]['sn'])):
+
+            lineItem[0]['class'] = self.orthClass
+            lineItem[0]['img'] = '/m/%sb.jpg' % lineItem[0]['sn']
+
+        else:
+            lineItem.append(self.randomItem())
+
+        return lineItem
