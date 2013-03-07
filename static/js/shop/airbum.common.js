@@ -24,6 +24,9 @@ $(document).ready(function () {
             var introLi = $(".intro li");
             introLi.eq(Math.floor(Math.random() * 10 % introLi.length)).slideToggle("slow");
         }, 2000);
+
+        varI();
+
         $(window).scroll(function () {
 
             var scrollTop = $("#scrollTop");
@@ -58,16 +61,15 @@ $(document).ready(function () {
                     "padding-top" : "30px"
                 });
             }
-
             GetMoreItem();
         });
     }
 
-    $(".pinStream a").mouseenter(function () {
+    $(".pinStream a").live('mouseenter',function () {
         $(this).children('.floatInfo').stop().animate({
             'bottom' : '0px'
         }, 150);
-    }).mouseleave(function () {
+    }).live('mouseleave',function () {
         $(this).children('.floatInfo').stop().animate({
             'bottom' : '-50px'
         }, 150);
@@ -136,23 +138,59 @@ function GetScrollLeft() {
 }
 
 function GetMoreItem() {
-    // alert('hello world');
     var pinStream = $(".pinStream");
 
     var scrollTop = GetScrollTop();
     var winHeight = $(window).height();
 
-    var ulTop = pinStream.offset().top;
-    var ulHeight = pinStream.outerHeight();
+    var pinTop = pinStream.offset().top;
+    var pinHeight = pinStream.outerHeight();
 
-    if (scrollTop + winHeight + 100 >= ulTop + ulHeight) {
-        $.getJSON('/ajax/more/', function(data) {
-            pinStream.append(data);
-        });
-        pinStream.ajaxStart(function() {
-            $(this).append("<div class=\"moreLoading\"><span class=\"loading_black\"></span>努力加载中...</div>");
-        }).ajaxSuccess(function() {
-            $(".moreLoading").remove();
-        });
+    if(count() <= 5)
+    {
+        if (scrollTop + winHeight + 600 >= pinTop + pinHeight) {
+            $.getJSON('/ajax/more/', function(data) {
+
+                var appendHtm = '';
+                $.each(data,function(a,c){
+                    $.each(c,function(n,v){
+                        appendHtm +=        '<div class="'+ v.class+'">';
+                        appendHtm +=        '   <a href="/tag/'+v.sn+'/" target="_blank/" title="'+v.name+'">';
+                        appendHtm +=        '       <img src="'+v.img+'" alt="'+v.name+'" title="'+v.name+'" />';
+                        appendHtm +=        '       <span class="floatInfo">';
+                        appendHtm +=        '           <span class="price">￥ 189.00</span>';
+                        appendHtm +=        '           <span class="like_icon">0</span>';
+                        appendHtm +=        '           <span class="chat_icon">0</span>';
+                        appendHtm +=        '       </span>';
+                        appendHtm +=        '   </a>';
+                        appendHtm +=        '</div>';
+                    });
+
+                });
+
+                pinStream.append(appendHtm);
+
+            });
+            pinStream.ajaxStart(function() {
+                $(this).append("<div class=\"moreLoading\"><span class=\"loading_black\"></span>努力加载中...</div>");
+            }).ajaxSuccess(function() {
+                $(".moreLoading").remove();
+            });
+        }
+
+    }
+    else
+    {
+        // alert('done');
+
+    }
+
+}
+
+function varI() {
+    var i = 0;
+    count = function() {
+        i++;
+        return i
     }
 }
