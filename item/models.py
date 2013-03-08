@@ -5,7 +5,7 @@ from shop.models import *
 # Create your models here.
 
 class Item(models.Model):
-    name = models.CharField(max_length=30)
+    itemName = models.CharField(max_length=30)
     sn = models.CharField(max_length=30)
     addTime = models.DateTimeField()
     shelf = models.BooleanField()
@@ -16,26 +16,26 @@ class Item(models.Model):
     click = models.CharField(max_length=30)
 
     def __unicode__(self):
-        return u"%s - %s [ shelf: %s ] [ show: %s ]" % (self.name, self.sn, self.shelf, self.show)
+        return u"%s - %s [ shelf: %s ] [ show: %s ]" % (self.itemName, self.sn, self.shelf, self.show)
 
 class ItemAttr(models.Model):
-    name = models.ForeignKey(Item)
-    value = models.ForeignKey(AttriBute)
+    itemName = models.ForeignKey(Item)
+    attrValue = models.ForeignKey(AttriBute)
 
     def __unicode__(self):
-        return u"%s - %s" % (self.name, self.value)
+        return u"%s - %s" % (self.itemName, self.attrValue)
 
 class ItemDiscount(models.Model):
     itemAttr = models.ForeignKey(ItemAttr)
     discount = models.ForeignKey(Discount)
 
     def __unicode__(self):
-        return u"%s - %s" % (self.name, self.discount)
+        return u"%s - %s" % (self.itemAttr, self.discount)
 
 class ItemFee(models.Model):
     itemAttr = models.ForeignKey(ItemAttr)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    type = models.SmallIntegerField()
+    itemType = models.SmallIntegerField()
 
     def __unicode__(self):
-        return u"%s - %s" % (self.name, self.amount)
+        return u"%s - %s" % (self.itemAttr, self.amount)

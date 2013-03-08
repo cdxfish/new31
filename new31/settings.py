@@ -135,6 +135,17 @@ TEMPLATE_DIRS = (
     os.path.join(ROOT_PATH, 'templates').replace('\\','/'),
 )
 
+# TEMPLATE_CONTEXT_PROCESSORS = (
+#     'django.contrib.auth.context_processors.auth',
+#     'django.core.context_processors.debug',
+#     'django.core.context_processors.i18n',
+#     'django.core.context_processors.media',
+#     'django.core.context_processors.static',
+#     'django.contrib.messages.context_processors.messages',
+#     'shop.common.common',
+# )
+
+
 APPS = [
     'shop',
     'cart',
@@ -162,15 +173,6 @@ DANJO_APPS = [
 
 INSTALLED_APPS = tuple(DANJO_APPS)
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.contrib.messages.context_processors.messages',
-    'shop.common.common',
-)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

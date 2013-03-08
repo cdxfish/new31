@@ -3,17 +3,25 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
 from django.conf import settings 
-from django.db.models import Q
+from django.db.models import Q, Min
 from item.models import Item
 import random, json, os
 
 # Create your views here.
 
 def shop(request):
-    itemList = ItemPin(10).buildItemList().sort(sortFun).itemList
+    # itemList = ItemPin(10).buildItemList().sort(sortFun).itemList
 
-    return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))
-    # return HttpResponse(json.dumps(itemList))
+    itemQuery = Item.objects.select_related().get(id=1)
+    itemQueryss = []
+    for i in itemQuery.itemattr_set.all():
+        a = i.itemfee_set.all()
+        for b in a:
+            itemQueryss.append(b)
+
+
+    # return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))
+    return HttpResponse(itemQueryss[1].amount)
 
 def sortFun(itemList):
     [random.shuffle(i) for i in itemList]
@@ -48,14 +56,15 @@ class ItemPin:
     def randomItem(self):
         randomItem = random.choice(self.itemQuery)
 
-        while not os.path.isfile('%simages\\%ss.jpg' % (settings.MEDIA_ROOT, randomItem.sn)):
+        while not os.path.isfile('%simages\\%ss.jpg' % (settings.MEDIA_ROOT, randomItem.itemAttr.itemName.sn)):
             randomItem = random.choice(self.itemQuery)
 
         item = {
             'class': self.baseClass,    
-            'img': '/m/%ss.jpg' % randomItem.sn,
-            'name': randomItem.name,
-            'sn': randomItem.sn,
+            'img': '/m/%ss.jpg' % randomItem.itemAttr.itemName.sn,
+            'name': randomItem.itemAttr.itemName,
+            'sn': randomItem.itemAttr.itemName.sn,
+            'price':randomItem.amount,
         }
        
         return item
