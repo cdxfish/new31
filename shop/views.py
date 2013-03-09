@@ -9,20 +9,13 @@ import random, json, os
 
 # Create your views here.
 
+# APP For Shop UI
 def shop(request):
-    # itemList = ItemPin(10).buildItemList().sort(sortFun).itemList
+    itemList = ItemPin(10).buildItemList().sort(sortFun).itemList
 
-    itemQuery = Item.objects.select_related().get(id=1)
-    itemQueryss = []
-    for i in itemQuery.itemattr_set.all():
-        a = i.itemfee_set.all()
-        for b in a:
-            itemQueryss.append(b)
+    return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))
 
-
-    # return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))
-    return HttpResponse(itemQueryss[1].amount)
-
+# 排序方法
 def sortFun(itemList):
     [random.shuffle(i) for i in itemList]
     return itemList
@@ -36,8 +29,9 @@ class ItemPin:
        self.baseClass = baseClass
 
        self.itemList = []
-       self.itemQuery = Item.objects.filter(Q(sn__contains='3133') | Q(sn__contains='3155') | Q(sn__contains='3177')) 
+       self.itemQuery = Item.objects.select_related().filter(Q(sn__contains='3133') | Q(sn__contains='3155') | Q(sn__contains='3177'))  #初始化物品序列
 
+    # 获取物品数组
     def buildItemList(self):      
         for i in range(0, self.rowSize):
 
@@ -47,28 +41,33 @@ class ItemPin:
 
         return self
 
+    # 物品行排序方案,需传入一个函数对象
     def sort(self,function):
         self.itemList = function(self.itemList)
-        # [random.shuffle(i) for i in self.itemList]
 
         return self
 
+    # 从物品序列中随机获取一个物品,并以字典方式返回数据
     def randomItem(self):
         randomItem = random.choice(self.itemQuery)
 
-        while not os.path.isfile('%simages\\%ss.jpg' % (settings.MEDIA_ROOT, randomItem.itemAttr.itemName.sn)):
+        while not os.path.isfile('%simages\\%ss.jpg' % (settings.MEDIA_ROOT, randomItem.sn)):
             randomItem = random.choice(self.itemQuery)
 
         item = {
             'class': self.baseClass,    
-            'img': '/m/%ss.jpg' % randomItem.itemAttr.itemName.sn,
-            'name': randomItem.itemAttr.itemName,
-            'sn': randomItem.itemAttr.itemName.sn,
-            'price':randomItem.amount,
+            'img': '/m/%ss.jpg' % randomItem.sn,
+            'name': randomItem.itemName,
+            'sn': randomItem.sn,
+            'like': randomItem.like,
+            'click': randomItem.click,
+            # 'amount': '%.2f' % randomItem.itemattr_set.all()[0].itemfee_set.get().amount,
         }
        
-        return item
+        # return item
+        return self.varItemInfo(item)
 
+    # 初始化物品行
     def buildLineItem(self):
         lineItem = []
         [lineItem.append(self.randomItem()) for i in range(0,self.lineSize)]
@@ -82,3 +81,9 @@ class ItemPin:
             lineItem.append(self.randomItem())
 
         return lineItem
+
+    # 获取物品信息
+    def varItemInfo(self, item):
+        item['amount'] = '%.2f' % Item.objects.select_related().get(sn='3133001').itemattr_set.all()[0].itemfee_set.get().amount
+
+        return item

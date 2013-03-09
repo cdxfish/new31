@@ -13,7 +13,7 @@ class Item(models.Model):
     desc = models.CharField(max_length=60)
     keywords = models.CharField(max_length=30)
     like = models.IntegerField()
-    click = models.CharField(max_length=30)
+    click = models.IntegerField()
 
     def __unicode__(self):
         return u"%s - %s [ shelf: %s ] [ show: %s ]" % (self.itemName, self.sn, self.shelf, self.show)
@@ -24,6 +24,9 @@ class ItemAttr(models.Model):
 
     def __unicode__(self):
         return u"%s - %s" % (self.itemName, self.attrValue)
+
+    class Meta:
+        ordering = ['attrValue']
 
 class ItemDiscount(models.Model):
     itemAttr = models.ForeignKey(ItemAttr)
@@ -39,3 +42,6 @@ class ItemFee(models.Model):
 
     def __unicode__(self):
         return u"%s - %s" % (self.itemAttr, self.amount)
+
+    class Meta:
+        ordering = ['amount']        

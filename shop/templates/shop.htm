@@ -24,9 +24,10 @@
             <a href="/tag/{{ list.sn }}/" target="_blank/" title="{{ list.name }}">
                 <img src="{{ list.img }}" alt="{{ list.name }}" title="{{ list.name }}" />
                 <span class="floatInfo">
-                    <span class="price">￥ 189.00</span>
-                    <span class="like_icon">0</span>
-                    <span class="chat_icon">0</span>
+                    <span class="price">￥ {{ list.amount }}</span>
+                    <span class="like_icon">{{ list.like }}</span>
+                    <span class="name">{{ list.name }}</span>
+                    <!-- <span class="chat_icon">{{ list.click }}</span> -->
                 </span>
             </a>
         </div>

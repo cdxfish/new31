@@ -69,11 +69,13 @@ $(document).ready(function () {
         $(this).children('.floatInfo').stop().animate({
             'bottom' : '0px'
         }, 150);
-    }).live('mouseleave',function () {
-        $(this).children('.floatInfo').stop().animate({
-            'bottom' : '-50px'
-        }, 150);
     });
+    // .live('mouseleave',function () {
+    //     $(this).children('.floatInfo').stop().animate({
+    //         'bottom' : '-50px'
+    //     }, 150);
+    // });
+    
     $("#lnkTopMessage, #lnkTopSetting, #lnkTopLogin").click(function () {
         $(this).toggleClass("on").next(".messagePop").toggle();
         return false;
@@ -159,9 +161,9 @@ function GetMoreItem() {
                         appendHtm +=        '   <a href="/tag/'+v.sn+'/" target="_blank/" title="'+v.name+'">';
                         appendHtm +=        '       <img src="'+v.img+'" alt="'+v.name+'" title="'+v.name+'" />';
                         appendHtm +=        '       <span class="floatInfo">';
-                        appendHtm +=        '           <span class="price">￥ 189.00</span>';
-                        appendHtm +=        '           <span class="like_icon">0</span>';
-                        appendHtm +=        '           <span class="chat_icon">0</span>';
+                        appendHtm +=        '           <span class="price">￥ '+v.amount+'</span>';
+                        appendHtm +=        '           <span class="like_icon">'+v.like+'</span>';
+                        appendHtm +=        '           <span class="name">'+v.name+'</span>';
                         appendHtm +=        '       </span>';
                         appendHtm +=        '   </a>';
                         appendHtm +=        '</div>';
