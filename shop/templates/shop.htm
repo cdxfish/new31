@@ -20,14 +20,13 @@
     <script src="/js/shop/airbum.timeline.js" type="text/javascript"></script>
     <div class="pinStream clearfix">
 {% for line in itemList %}{% for list in line %}
-        <div class="{{ list.class }}">
-            <a href="/tag/{{ list.sn }}/" target="_blank/" title="{{ list.name }}">
-                <img src="{{ list.img }}" alt="{{ list.name }}" title="{{ list.name }}" />
+        <div class="{{ list.cssClass }}">
+            <a href="/tag/{{ list.itemName }}/" target="_blank/" title="{{ list.itemName }}">
+                <img src="{{ list.img }}" alt="{{ list.itemName }}" title="{{ list.itemName }}" />
                 <span class="floatInfo">
                     <span class="price">￥ {{ list.amount }}</span>
                     <span class="like_icon">{{ list.like }}</span>
-                    <span class="name">{{ list.name }}</span>
-                    <!-- <span class="chat_icon">{{ list.click }}</span> -->
+                    <span class="name">{{ list.itemName }}</span>
                 </span>
             </a>
         </div>

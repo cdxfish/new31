@@ -157,13 +157,13 @@ function GetMoreItem() {
                 var appendHtm = '';
                 $.each(data,function(a,c){
                     $.each(c,function(n,v){
-                        appendHtm +=        '<div class="'+ v.class+'">';
-                        appendHtm +=        '   <a href="/tag/'+v.sn+'/" target="_blank/" title="'+v.name+'">';
-                        appendHtm +=        '       <img src="'+v.img+'" alt="'+v.name+'" title="'+v.name+'" />';
+                        appendHtm +=        '<div class="'+ v.cssClass+'">';
+                        appendHtm +=        '   <a href="/tag/'+v.itemName+'/" target="_blank/" title="'+v.itemName+'">';
+                        appendHtm +=        '       <img src="'+v.img+'" alt="'+v.itemName+'" title="'+v.itemName+'" />';
                         appendHtm +=        '       <span class="floatInfo">';
                         appendHtm +=        '           <span class="price">￥ '+v.amount+'</span>';
                         appendHtm +=        '           <span class="like_icon">'+v.like+'</span>';
-                        appendHtm +=        '           <span class="name">'+v.name+'</span>';
+                        appendHtm +=        '           <span class="name">'+v.itemName+'</span>';
                         appendHtm +=        '       </span>';
                         appendHtm +=        '   </a>';
                         appendHtm +=        '</div>';

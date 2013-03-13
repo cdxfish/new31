@@ -55,9 +55,9 @@ class ItemPin:
             randomItem = random.choice(self.itemQuery)
 
         item = {
-            'class': self.baseClass,    
+            'cssClass': self.baseClass,    
             'img': '/m/%ss.jpg' % randomItem.sn,
-            'name': randomItem.itemName,
+            'itemName': randomItem.itemName,
             'sn': randomItem.sn,
             'like': randomItem.like,
             'click': randomItem.click,
@@ -74,7 +74,7 @@ class ItemPin:
 
         if os.path.isfile('%simages\\%sb.jpg' % (settings.MEDIA_ROOT, lineItem[0]['sn'])):
 
-            lineItem[0]['class'] = self.orthClass
+            lineItem[0]['cssClass'] = self.orthClass
             lineItem[0]['img'] = '/m/%sb.jpg' % lineItem[0]['sn']
 
         else:

@@ -155,6 +155,7 @@ APPS = [
     'checkout',
     'item',
     'ajax',
+    'office',
 ]
 
 DANJO_APPS = [
