@@ -1,0 +1,82 @@
+{% extends "office.base.htm" %}
+
+{% block title %}new31 管理系统{% endblock %}
+
+
+{% block content %}
+<table width="100%">
+        <tr>
+          <th colspan="4" align="left">订单统计信息</th>
+        </tr>
+        <tr>
+          <td width="15%"><a href="order.php?act=list&condition=110">待发货订单:</a></td>
+          <td width="35%"><strong style="color: red">21</strong></td>
+          <td width="15%"><a href="order.php?act=list&condition=0">未确认订单:</a></td>
+          <td width="35%"><strong>5</strong></td>
+        </tr>
+        <tr>
+          <td><a href="order.php?act=list&condition=10">待支付订单:</a></td>
+          <td><strong>34</strong></td>
+          <td><a href="order.php?act=list&condition=4">已成交订单数:</a></td>
+          <td><strong>6224</strong></td>
+        </tr>
+        <tr>
+          <td><a href="back_order.php">退款申请:</a></td>
+          <td><strong></strong></td>
+          <td><td>
+          </td></td>
+        </tr>
+      </table>
+      <table width="100%">
+        <tr>
+          <th colspan="4" align="left">访问统计</th>
+        </tr>
+        <tr>
+          <td width="15%">在线人数:</td>
+          <td width="35%"><strong>419</strong></td>
+          <td width="15%"><a href="members_feed.php">最新留言:</a></td>
+          <td width="35%"><strong>0</strong></td>
+        </tr>
+      </table>
+      <table width="100%">
+        <tr>
+          <th colspan="4" align="left">系统信息</th>
+        </tr>
+        <tr>
+          <td width="15%">服务器操作系统:</td>
+          <td width="35%">Linux (10.67.15.22)</td>
+          <td width="15%">Web 服务器:</td>
+          <td width="35%">Apache</td>
+        </tr>
+        <tr>
+          <td>PHP 版本:</td>
+          <td>5.3.8</td>
+          <td>MySQL 版本:</td>
+          <td>5.1.40-log</td>
+        </tr>
+        <tr>
+          <td>安全模式:</td>
+          <td>否</td>
+          <td>安全模式GID:</td>
+          <td>否</td>
+        </tr>
+        <tr>
+          <td>Socket 支持:</td>
+          <td>是</td>
+          <td>时区设置:</td>
+          <td>UTC</td>
+        </tr>
+        <tr>
+          <td>GD 版本:</td>
+          <td>GD2 ( JPEG GIF PNG)</td>
+          <td>Zlib 支持:</td>
+          <td>是</td>
+        </tr>
+        <tr>
+          <td>编码:</td>
+          <td>utf-8</td>
+          <td>文件上传的最大大小:</td>
+          <td>10M</td>
+        </tr>
+      </table>
+{% endblock %}

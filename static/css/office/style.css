@@ -1,18 +1,6 @@
-/*
-  Template Name:31kecake
-  Template URI:http://www.31kecake.com/
-  Description:31客.
-  Version:0.11.08
-  Author:leiddx
-  Author URI:http://www.31kecake.com/
-  Logo filename:logo.gif
-*/
-
-
-
 /* Overall: Start */
-
 body{
+  padding:5px;
   color: #FFFFFF;
   background:#278296;
   font: 12px "sans-serif", "Arial", "Verdana";
@@ -32,7 +20,7 @@ ul{
 }
 
 a{
-  /* white-space:nowrap; */
+  white-space:nowrap;
   color: #335B64;
   text-decoration: none;
 }
@@ -52,7 +40,6 @@ input{
   line-height:20px;
   border:solid 1px #CDCDCD;
   padding:0 0 0 1px;
-  /* border:expression((this.type == "text" ) ? 'solid 1px #CDCDCD':''); */
   vertical-align:bottom;
 }
 
@@ -68,7 +55,6 @@ p{
 input.button{
   color: #666;
   font-size: 12px;
-  /* font-weight: bold; */
   height:22px;
   padding: 0 2px 0 2px;
   margin:0 5px 0 5px;
@@ -110,63 +96,30 @@ input.button:active{
 /* Overall: End */
 
 
-#wrapper{
-  display:block;
-  overflow:auto;
-  height:auto;
-  min-width:889px;
-  width:expression((documentElement.clientWidth < 889) ? "889px" : "auto" );
-  /* margin:0 auto 0 0; */
-}
-
 /* navMenu: Start */
 
 #navMenu{
   display:block;
   float:left;
-  width:100px;
-  border: 5px solid #278296;
-  padding: 5px;
+  padding:5px 0px;
   color: #335B64;
   background:#FFFFFF;
+  position: fixed; 
+  top:5px; 
+  left:0px;
+  border: 1px solid #BBDDE5;
 }
 
 #navMenu li{
-  padding: 0 0 0 10px;
-  line-height: 16px;
-}
-
-.explode{
-  background: url(../images/menu_minus.gif) no-repeat 0px 3px;
+  padding:0 0 0 10px;
+  line-height:16px;
+  float:left;
+  margin:0 5px;
   font-weight: bold;
-}
-
-.collapse{
-  background: url(../images/menu_plus.gif) no-repeat 0px 3px;
-  font-weight: bold;
-}
-
-.children_nav{
-  background: url(../images/menu_arrow.gif) no-repeat 0px 3px;
-  font-weight: normal;
 }
 
 /* navMenu: End */
 
-
-/* main: Start */
-
-#main{
-  display:block;
-  position: absolute;
-  left:120px;
-  /* float:left; */
-  width:91%;
-  min-width:760px;
- /*  *width:expression((documentElement.clientWidth < 954) ? "779px" : documentElement.clientWidth -175 ); */
-  overflow:hidden;
-  padding: 0 0 20px 0;
-}
 
 /* header: Start */
 
@@ -174,8 +127,7 @@ input.button:active{
   display:block;
   float:left;
   width:100%;
-/*   *width:expression((documentElement.clientWidth < 954) ? "784px" : documentElement.clientWidth -170 ); */
-  padding:3px 0 0 0 ;
+  min-width: 640px;
 }
 
 #header a{
@@ -229,7 +181,6 @@ input.button:active{
 #header #toolsBar{
   display:block;
   float:left;
-  width:784px;
   font-weight: bold;
 }
 
@@ -257,26 +208,26 @@ input.button:active{
 /* header: End */
 
 
-/* info: Start */
+/* content: Start */
 
-#info{
+#content{
   display:block;
   float:left;
-  width:98.9%;
- /*  *width:expression((documentElement.clientWidth < 954) ? "773px" : documentElement.clientWidth -181 ); */
-  padding:3px;
+  width:99.9%;
+  min-width: 640px;
   margin:0 0 10px 0;
   background:#DDEEF2;
   color:#278296;
+  border: 1px solid #BBDDE5;
 }
 
-#info table{
+#content table{
   background: #EEF8F9;
   border:1px solid #BBDDE5;
   margin:0 0 15px;
 }
 
-#info table th{
+#content table th{
   padding:0 5px;
   line-height: 24px;
   background: #BBDDE5;
@@ -287,43 +238,43 @@ input.button:active{
   background-position: center right;
 }
 
-#info table .headerSortUp{
+#content table .headerSortUp{
   background-image: url(../images/s_asc.png);
 }
 
-#info table .headerSortDown{
+#content table .headerSortDown{
   background-image: url(../images/s_desc.png);
 }
 
-#info table td{
+#content table td{
   background:#FFFFFF;
   line-height:22px;
   padding:0 5px 0 5px;
   color:#192E32;
 }
 
-#info .tr_border_top_black td{
+#content .tr_border_top_black td{
   background-color: #F4FAFB;
   border-top: 1px solid #000;
 }
 
-#info a:hover{
+#content a:hover{
   color:#9D7250;
 }
 
-/* #info input{
+/* #content input{
   vertical-align: -10%;
 } */
 
-/* #info img{
+/* #content img{
   vertical-align: text-decoration;
 } */
 
-#info h3{
+#content h3{
   padding:3px;
 }
 
-#info #search{
+#content #search{
   background:#F4FAFB;
   border:1px solid #BBDDE5;
   color:#9CACAF;
@@ -332,29 +283,29 @@ input.button:active{
   margin:0 0 10px 0;
 }
 
-#info #search img,
-#info #search select,
-#info #search input
+#content #search img,
+#content #search select,
+#content #search input
 {
   vertical-align:bottom;
 }
 
-#info #search button,
-#info #search span
+#content #search button,
+#content #search span
 {
   vertical-align:-65%;
 }
 
-#info table button
+#content table button
 {
   vertical-align:-20%;
 }
 
-#info #search .button{
+#content #search .button{
   vertical-align:-55%;
 }
 
-#info #actionLink{
+#content #actionLink{
   display:block;
   height:24px;
   background: #F4FAFB;
@@ -364,7 +315,7 @@ input.button:active{
   margin: 0 0 10px 0;
 }
 
-#info #actionLink a{
+#content #actionLink a{
   color: #666;
   font-size: 12px;
   display:block;
@@ -378,7 +329,7 @@ input.button:active{
   background:#DDEEF2;
 }
 
-#info #actionLink a:active{
+#content #actionLink a:active{
   color: #666;
   font-size: 12px;
   display:block;
@@ -392,41 +343,41 @@ input.button:active{
   background:#DDEEF2;
 }
 
-#info #pageSize{
+#content #pageSize{
   vertical-align:-10%;
 }
 
-#info #pageLink{
+#content #pageLink{
   margin:0 1em 0 1em;
   padding-left: 1em;
   border-left: 1px solid #999;
 }
 
-#info #message{
+#content #message{
   background: #EEF8F9;
   border:1px solid #BBDDE5;
   margin:10px;
   padding:10px;
 }
 
-#info #message p, #info #message h1, #info #message ul{
+#content #message p, #content #message h1, #content #message ul{
   text-align:center;
 }
 
-#info #message p{
+#content #message p{
   line-height:24px;
 }
 
-#info #message h1{
+#content #message h1{
   color:#192E32;
   line-height:40px;
 }
 
-#info center{
+#content center{
   margin:10px;
 }
 
-#info center a{
+#content center a{
   color:#666;
   font-size:12px;
   padding:2px 5px 2px 5px;
@@ -438,15 +389,14 @@ input.button:active{
   background:#DDEEF2;
 }
 
-/* info: End */
+/* content: End */
 
 #footer{
   display:block;
   float:left;
-  width:98.9%;
-  /* *width:expression((documentElement.clientWidth < 954) ? "773px" : documentElement.clientWidth -181 ); */
-  height:auto;
-  padding:15px 2px 15px 2px;
+  width:99.9%;
+  min-width: 640px;  
+  padding:15px 0px;
   background:#DDEEF2;
   color:#9CACAF;
   border: 1px solid #BBDDE5;
@@ -455,8 +405,6 @@ input.button:active{
 #footer p{
   text-align:center;
 }
-
-/* main: End */
 
 
 /* neatDialog: Start */
@@ -636,4 +584,3 @@ input.button:active{
   margin: 0 0 10px 0;
   color:#9CACAF;
 }
-

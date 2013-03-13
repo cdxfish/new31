@@ -13,4 +13,4 @@ import random, json, os
 def index(request):
 
 
-    return render_to_response('index.htm', locals(), context_instance=RequestContext(request))
+    return render_to_response('office.htm', locals(), context_instance=RequestContext(request))
