@@ -57,6 +57,9 @@
                                 <li><a href="/account/order/">我的订单</a></li>
                                 <li><a href="/account/settings/">个人设置</a></li>
                                 <li><a href="/account/changepwd/">修改密码</a></li>
+{% if request.user.is_staff %}
+                                <li><a href="/office/">管理中心</a></li>
+{% endif %}
                             </ul>
                         </div>
                         <a class="confirm" href="/account/logout/">退出登录</a>

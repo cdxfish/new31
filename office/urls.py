@@ -4,6 +4,6 @@ from django.conf import settings
 from views import *
 
 urlpatterns = patterns('',
-    (r'^$', index),
+    (r'^$', checkLogin,{'defName':office}),
 )
 
