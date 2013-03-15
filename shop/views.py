@@ -11,6 +11,7 @@ import random, json, os
 
 # APP For Shop UI
 def shop(request):
+
     itemList = ItemPin(10).buildItemList().sort(sortFun).itemList
 
     return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))

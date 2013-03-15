@@ -1,7 +1,10 @@
 // 置顶工具条
 $(document).ready(function() {
+    var navMenuRight = 0;
+    var navMenu = $('#navMenu');
     $("#showNav").toggle(function() {
-        $('#navMenu').stop().animate({
+        navMenuRight = navMenu.css('right');
+        navMenu.stop().animate({
             'right': '0px'
         }, 150)
         $(this).css({
@@ -13,8 +16,9 @@ $(document).ready(function() {
     function() {
         $('.nav').removeClass('on');
         $('.messagePop').slideUp('fast');
-        $('#navMenu').stop().animate({
-            'right': '-760px'
+
+        navMenu.stop().animate({
+            'right': navMenuRight
         }, 150);
         $(this).css({
             'background': 'url(/images/ico_showmorer.png) no-repeat'

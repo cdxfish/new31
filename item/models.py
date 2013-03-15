@@ -5,22 +5,21 @@ from shop.models import *
 # Create your models here.
 
 class Item(models.Model):
-    itemName = models.CharField(max_length=30)
-    sn = models.CharField(max_length=30)
-    addTime = models.DateTimeField()
-    shelf = models.BooleanField()
-    show = models.BooleanField()
-    desc = models.CharField(max_length=60)
-    keywords = models.CharField(max_length=30)
-    like = models.IntegerField()
-    click = models.IntegerField()
+    itemName = models.CharField(u'商品名称', max_length=30, unique=True)
+    sn = models.IntegerField(u'货号', unique=True)
+    addTime = models.DateTimeField(u'添加时间', auto_now=True, auto_now_add=True)
+    shelf = models.BooleanField(u'上架', default=False)
+    show = models.BooleanField(u'商城可见', default=False)
+    desc = models.CharField(u'描述', max_length=60)
+    like = models.IntegerField(u'喜欢', default=0, editable=False)
+    click = models.IntegerField(u'点击', default=0, editable=False)
 
     def __unicode__(self):
         return u"%s - %s [ shelf: %s ] [ show: %s ]" % (self.itemName, self.sn, self.shelf, self.show)
 
 class ItemAttr(models.Model):
-    itemName = models.ForeignKey(Item)
-    attrValue = models.ForeignKey(AttriBute)
+    itemName = models.ForeignKey(Item, verbose_name=u'商品')
+    attrValue = models.ForeignKey(AttriBute, verbose_name=u'规格')
 
     def __unicode__(self):
         return u"%s - %s" % (self.itemName, self.attrValue)
@@ -29,16 +28,16 @@ class ItemAttr(models.Model):
         ordering = ['attrValue']
 
 class ItemDiscount(models.Model):
-    itemAttr = models.ForeignKey(ItemAttr)
-    discount = models.ForeignKey(Discount)
+    itemAttr = models.ForeignKey(ItemAttr, verbose_name=u'商品')
+    discount = models.ForeignKey(Discount, verbose_name=u'折扣')
 
     def __unicode__(self):
         return u"%s - %s" % (self.itemAttr, self.discount)
 
 class ItemFee(models.Model):
-    itemAttr = models.ForeignKey(ItemAttr)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    itemType = models.SmallIntegerField()
+    itemAttr = models.ForeignKey(ItemAttr, verbose_name=u'商品')
+    amount = models.DecimalField(u'单价', max_digits=10, decimal_places=2)
+    itemType = models.SmallIntegerField(u'类型')
 
     def __unicode__(self):
         return u"%s - %s" % (self.itemAttr, self.amount)
