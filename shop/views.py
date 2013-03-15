@@ -63,6 +63,7 @@ class ItemPin:
             'like': randomItem.like,
             'click': randomItem.click,
             # 'amount': '%.2f' % randomItem.itemattr_set.all()[0].itemfee_set.get().amount,
+            'amount': '%.2f' % 189,
         }
        
         # return item

@@ -17,6 +17,7 @@ class Item(models.Model):
     def __unicode__(self):
         return u"%s - %s [ shelf: %s ] [ show: %s ]" % (self.itemName, self.sn, self.shelf, self.show)
 
+
 class ItemAttr(models.Model):
     itemName = models.ForeignKey(Item, verbose_name=u'商品')
     attrValue = models.ForeignKey(AttriBute, verbose_name=u'规格')
@@ -26,16 +27,11 @@ class ItemAttr(models.Model):
 
     class Meta:
         ordering = ['attrValue']
+        unique_together=(("itemName","attrValue"),)           
 
-class ItemDiscount(models.Model):
-    itemAttr = models.ForeignKey(ItemAttr, verbose_name=u'商品')
-    discount = models.ForeignKey(Discount, verbose_name=u'折扣')
-
-    def __unicode__(self):
-        return u"%s - %s" % (self.itemAttr, self.discount)
 
 class ItemFee(models.Model):
-    itemAttr = models.ForeignKey(ItemAttr, verbose_name=u'商品')
+    itemAttr = models.ForeignKey(ItemAttr, verbose_name=u'规格', unique=True)
     amount = models.DecimalField(u'单价', max_digits=10, decimal_places=2)
     itemType = models.SmallIntegerField(u'类型')
 
@@ -44,3 +40,11 @@ class ItemFee(models.Model):
 
     class Meta:
         ordering = ['amount']        
+
+
+class ItemDiscount(models.Model):
+    itemFee = models.ForeignKey(ItemFee, verbose_name=u'单价', unique=True)
+    discount = models.ForeignKey(Discount, verbose_name=u'折扣')
+
+    def __unicode__(self):
+        return u"%s - %s" % (self.itemFee, self.discount)        

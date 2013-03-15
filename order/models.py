@@ -19,7 +19,7 @@ class OrderInfo(models.Model):
 
 
 class OrderLog(models.Model):
-    orderSn = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='orderSn')
+    order = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='order')
     orderStatus = models.SmallIntegerField(u'订单状态(操作前)', default=0, editable=False)
     user = models.CharField(u'管理员', max_length=30, editable=False)
     actionType = models.SmallIntegerField(u'操作', editable=False)
@@ -27,28 +27,28 @@ class OrderLog(models.Model):
     logTime = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True, editable=False)
 
     def __unicode__(self):
-        return u"%s - [a:%s][%s]" % ( self.orderSn, self.actionType, self.logTime )
+        return u"%s - [a:%s][%s]" % ( self.order, self.actionType, self.logTime )
         
     class Meta:
-        unique_together = (("orderSn","actionType"),)
+        unique_together = (("order","actionType"),)
         # verbose_name = u'订单日志'
 
 
 class OrderLineTime(models.Model):
-    orderSn = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='orderSn')
+    order = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='order')
     timeType = models.SmallIntegerField(u'时间类型')
     lineTime = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True)
 
     def __unicode__(self):
-        return u"%s - [t:%s][%s]" % ( self.orderSn, self.timeType, self.lineTime )
+        return u"%s - [t:%s][%s]" % ( self.order, self.timeType, self.lineTime )
         
     class Meta:
-        unique_together=(("orderSn","timeType"),)   
+        unique_together=(("order","timeType"),)   
         # verbose_name = u'订单时间线'             
 
 
 class OrderLogistics(models.Model):
-    orderSn = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='orderSn')
+    order = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='order')
     consignee = models.CharField(u'联系人', max_length=60)
     city = models.CharField(u'城市', max_length=60)
     block = models.CharField(u'区域', max_length=60)
@@ -61,57 +61,69 @@ class OrderLogistics(models.Model):
     deliveryman = models.CharField(u'物流师傅', max_length=60)
 
     def __unicode__(self):
-        return u"%s - [c:%s][%s:%s][%s]" % ( self.orderSn, self.consignee, self.signDate, self.signTime, self.tel )
+        return u"%s - [c:%s][%s:%s][%s]" % ( self.order, self.consignee, self.signDate, self.signTime, self.tel )
         
     # class Meta: 
         # verbose_name = u'订单物流信息'             
 
 
-class OrderPay(models.Model):
-    orderSn = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='orderSn')
-    payName = models.CharField(u'支付方式', max_length=30)
-    payStatus = models.SmallIntegerField(u'支付状态', default=0, editable=False)
+class OrderStatus(models.Model):
+    order = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='order')
+    orderStatus = models.SmallIntegerField(u'订单状态', default=0, editable=False)
 
     def __unicode__(self):
-        return u"%s - %s[p:%s]" % ( self.orderSn, self.payName, self.payStatus )    
+        return u"%s - [o:%s]" % ( self.order, self.orderStatus )    
 
     # class Meta:
         # verbose_name = u'订单支付'
 
+
 class OrderPay(models.Model):
-    orderSn = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='orderSn')
+    order = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='order')
+    payName = models.CharField(u'支付方式', max_length=30)
+    payStatus = models.SmallIntegerField(u'支付状态', default=0, editable=False)
+
+    def __unicode__(self):
+        return u"%s - %s[p:%s]" % ( self.order, self.payName, self.payStatus )    
+
+    # class Meta:
+        # verbose_name = u'订单支付'
+
+
+class OrderShip(models.Model):
+    order = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='order')
     shipName = models.CharField(u'物流方式', max_length=30, editable=False)
     shipStatus = models.SmallIntegerField(u'物流状态', default=0, editable=False)
 
     def __unicode__(self):
-        return u"%s - %s[p:%s]" % ( self.orderSn, self.payName, self.payStatus )    
+        return u"%s - %s[p:%s]" % ( self.order, self.payName, self.payStatus )    
 
     # class Meta:
         # verbose_name = u'订单物流'
 
 
 class OrderItem(models.Model):
-    orderSn = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='orderSn')
-    itemName = models.CharField(u'商品', max_length=30)
+    order = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='order')
+    item = models.CharField(u'商品', max_length=30)
     sn = models.CharField(u'货号', max_length=30)
 
     def __unicode__(self):
-        return u"%s - %s[%s]" % ( self.orderSn, self.itemName, self.sn )    
+        return u"%s - %s[%s]" % ( self.order, self.item, self.sn )    
 
     class Meta:
-        unique_together = (("orderSn","itemName"),)
+        unique_together = (("order","item"),)
         # verbose_name = u'订单商品'
 
 
 class OrderAttr(models.Model):
-    itemName = models.ForeignKey(OrderItem, verbose_name=u'商品')
+    item = models.ForeignKey(OrderItem, verbose_name=u'商品')
     attrValue = models.CharField(u'规格', max_length=30)
 
     def __unicode__(self):
-        return u"%s - %s" % ( self.itemName, self.attrValue )
+        return u"%s - %s" % ( self.item, self.attrValue )
 
     class Meta:
-        unique_together = (("itemName","attrValue"),)
+        unique_together = (("item","attrValue"),)
         # verbose_name = u'订单商品规格'
 
 
@@ -122,7 +134,7 @@ class OrderFee(models.Model):
     amount = models.DecimalField(u'单价', max_digits=10, decimal_places=2)
 
     def __unicode__(self):
-        return u"%s - %s [n:%s][t:%s][a:%s]" % ( self.itemName, self.itemAttr, self.number, self.itemType, self.amount )
+        return u"%s - [n:%s][t:%s][a:%s]" % ( self.itemAttr, self.number, self.itemType, self.amount )
     class Meta:
         unique_together = (("itemAttr","itemType"),)
         # verbose_name = u'订单商品价格'
@@ -134,7 +146,7 @@ class OrderDiscount(models.Model):
 
 
     def __unicode__(self):
-        return u"%s - %s折" % ( self.attrValue, self.discount )
+        return u"%s - %s折" % ( self.itemAttr, self.discount )
 
     # class Meta:
         # verbose_name = u'订单商品折扣'

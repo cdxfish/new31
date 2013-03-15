@@ -11,8 +11,12 @@ class Tag(models.Model):
         return u"%s" % self.tag
 
 class ItemTag(models.Model):
-    tag = models.ManyToManyField(Tag)
-    name = models.ManyToManyField(Item)
+    tag = models.ForeignKey(Tag)
+    item = models.ForeignKey(Item)
 
     def __unicode__(self):
-        return u"%s - %s" % (type(self.tag), self.tag.values)
+        return u"%s - %s" % (self.tag, self.item)
+
+    class Meta:
+    	ordering = ['tag','item']
+        unique_together=(("tag","item"),)           
