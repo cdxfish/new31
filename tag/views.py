@@ -7,3 +7,7 @@ from django.template import RequestContext
 def tag(request):
 
     return render_to_response('tag.htm', locals(), context_instance=RequestContext(request))
+
+def tagAdmin(request):
+
+	return render_to_response('tagadmin.htm', locals(), context_instance=RequestContext(request))

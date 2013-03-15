@@ -43,7 +43,7 @@ def changepwd(request):
 
     return render_to_response('changepwd.htm', locals(), context_instance=RequestContext(request))
 
-def orderList(request):
+def myOrder(request):
 
     return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
 

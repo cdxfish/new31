@@ -9,6 +9,6 @@ import random, json, os
 
 # APP For Shop UI
 
-def office(request):
+def orderList(request):
 
-	return render_to_response('office.htm', locals(), context_instance=RequestContext(request))
+	return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))

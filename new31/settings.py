@@ -156,6 +156,7 @@ APPS = [
     'item',
     'ajax',
     'office',
+    'order',
 ]
 
 DANJO_APPS = [

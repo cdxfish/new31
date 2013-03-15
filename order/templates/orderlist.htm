@@ -1,0 +1,59 @@
+{% extends "office.base.htm" %}
+
+{% block title %}new31 管理系统{% endblock %}
+
+
+{% block content %}
+      <table cellpadding="3" cellspacing="1" width="100%">
+        <tr>
+          <th colspan="4" align="left">订单统计信息</th>
+        </tr>
+        <tr>
+          <td width="15%"><a href="/office/order/0/">未确认订单:</a></td>
+          <td width="35%"><strong>5</strong></td>
+          <td width="15%"><a href="/office/order/10/">已确认订单:</a></td>
+          <td width="35%"><strong>34</strong></td>
+        </tr>
+        <tr>
+          <td><a href="/office/order/4/">待支付订单:</a></td>
+          <td><strong>6224</strong></td>
+          <td><a href="/office/order/back/">已完成订单:</a></td>
+          <td><strong></strong></td>
+        </tr>
+      </table>
+      <table cellpadding="3" cellspacing="1" width="100%">
+        <tr>
+          <th colspan="4" align="left">物流统计信息</th>
+        </tr>
+        <tr>
+          <td width="15%"><a href="/office/order/110/">待发货订单:</a></td>
+          <td width="35%"><strong style="color: red">21</strong></td>
+          <td width="15%"><a href="/office/order/0/">已发货订单:</a></td>
+          <td width="35%"><strong>5</strong></td>
+        </tr>
+        <tr>
+          <td><a href="/office/order/10/">已签订单:</a></td>
+          <td><strong>34</strong></td>
+          <td><a href="/office/order/4/">拒签订单:</a></td>
+          <td><strong>6224</strong></td>
+        </tr>
+      </table>
+      <table cellpadding="3" cellspacing="1" width="100%">
+        <tr>
+          <th colspan="4" align="left">工厂统计信息</th>
+        </tr>
+        <tr>
+          <td width="15%"><a href="/office/order/110/">生产请求:</a></td>
+          <td width="35%"><strong style="color: red">21</strong></td>
+          <td width="15%"><a href="/office/order/0/">已生产:</a></td>
+          <td width="35%"><strong>5</strong></td>
+        </tr>
+        <tr>
+          <td><a href="/office/order/10/">停产请求:</a></td>
+          <td><strong>34</strong></td>
+          <td><a href="/office/order/4/">已停产:</a></td>
+          <td><strong>6224</strong></td>
+        </tr>
+      </table>        
+
+{% endblock %}
