@@ -39,5 +39,23 @@ $(document).ready(function() {
         return false;
     });
 
+    $("#myTable").tablesorter();
+
+    // 表格鼠标移入移出特效
+    $(".odd").live("mouseover",
+
+    function() {
+        $(this).children().css({
+            background: "#CFC"
+        });
+        return false;
+    }).live("mouseout",
+
+    function() {
+        $(this).children().css({
+            background: "#FFF"
+        });
+        return false;
+    });
 
 })

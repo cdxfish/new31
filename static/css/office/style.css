@@ -78,6 +78,32 @@ input.button:active{
   cursor:pointer;
 }
 
+a.button{
+  color: #666;
+  font-size: 12px;
+  height:22px;
+  padding:2px 5px 2px 5px;
+  margin:0 5px 0 5px;
+  border:1px solid #278296;
+  border-right:2px solid #278296;
+  border-bottom:2px solid #278296;
+  background:#DDEEF2;
+  cursor:pointer;
+}
+
+a.button:active{
+  color: #666;
+  font-size: 12px;
+  height:22px;
+  padding:2px 5px 2px 5px;
+  margin:0 5px 0 5px;
+  border:1px solid #278296;
+  border-top:2px solid #278296;
+  border-left:2px solid #278296;
+  background:#DDEEF2;
+  cursor:pointer;
+}
+
 .tr_border_top_black td{
   background-color: #F4FAFB;
   border-top: 1px solid #000;
@@ -94,6 +120,9 @@ input.button:active{
 .wow_item_8{ color: RED !important; } /* epic (red) */
 
 .on{color: #EB8A3D;}
+.cp{cursor: pointer;}
+.fr{float: right;}
+.fl{float: left;}
 
 /* Overall: End */
 
@@ -142,7 +171,7 @@ input.button:active{
 /* header: Start */
 
 #header{
-  width:99.8%;
+  width:100%;
   min-width: 640px;
   min-height: 49px;  
 }
@@ -186,15 +215,6 @@ input.button:active{
   white-space:nowrap;
 }
 
-#header #otherBar li{
-  display:block;
-  float: left;
-  padding: 0 10px 0 10px;
-  margin: 3px 0 0 0;
-  border-left: 1px solid #FFF;
-  white-space:nowrap;
-}
-
 #header #toolsBar{
   display:block;
   float:left;
@@ -228,9 +248,10 @@ input.button:active{
 /* content: Start */
 
 #content{
-  width:99.8%;
-  min-width: 640px;
+  width:99.5%;
+  min-width:640px;
   margin:0 0 10px 0;
+  padding:3px;
   background:#DDEEF2;
   color:#278296;
   border: 1px solid #BBDDE5;
@@ -254,11 +275,11 @@ input.button:active{
 }
 
 #content table .headerSortUp{
-  background-image: url(../images/s_asc.png);
+  background-image: url(/images/s_asc.png);
 }
 
 #content table .headerSortDown{
-  background-image: url(../images/s_desc.png);
+  background-image: url(/images/s_desc.png);
 }
 
 #content table td{
@@ -407,9 +428,9 @@ input.button:active{
 /* content: End */
 
 #footer{
-  width:99.8%;
+  width:99.5%;
   min-width: 640px; 
-  padding:15px 0px;
+  padding:15px 3px;
   background:#DDEEF2;
   color:#9CACAF;
   border: 1px solid #BBDDE5;

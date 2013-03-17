@@ -8,7 +8,7 @@ class Item(models.Model):
     itemName = models.CharField(u'商品名称', max_length=30, unique=True)
     sn = models.IntegerField(u'货号', unique=True)
     addTime = models.DateTimeField(u'添加时间', auto_now=True, auto_now_add=True)
-    shelf = models.BooleanField(u'上架', default=False)
+    onLine = models.BooleanField(u'上架', default=False)
     show = models.BooleanField(u'商城可见', default=False)
     desc = models.CharField(u'描述', max_length=60)
     like = models.IntegerField(u'喜欢', default=0, editable=False)
