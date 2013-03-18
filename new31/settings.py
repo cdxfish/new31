@@ -5,6 +5,7 @@ import os
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 
 DEBUG = not os.environ.get("APP_NAME", "")
+
 TEMPLATE_DEBUG = DEBUG
 
 if DEBUG:
@@ -120,6 +121,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'new31.urls'
@@ -132,6 +134,7 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(ROOT_PATH, 'templates').replace('\\','/'),
+    'D:/Python27/Lib/site-packages/django_debug_toolbar-0.8.5-py2.7.egg/debug_toolbar/templates',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -171,11 +174,26 @@ DANJO_APPS = [
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
+    'debug_toolbar',
 ] + APPS
 
 
 INSTALLED_APPS = tuple(DANJO_APPS)
 
+
+INTERNAL_IPS = ('localhost',)
+
+DEBUG_TOOLBAR_PANELS = ( 
+        'debug_toolbar.panels.version.VersionDebugPanel',
+        'debug_toolbar.panels.timer.TimerDebugPanel',
+        'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
+        'debug_toolbar.panels.headers.HeaderDebugPanel',
+        'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
+        'debug_toolbar.panels.template.TemplateDebugPanel',
+        'debug_toolbar.panels.sql.SQLDebugPanel',
+        'debug_toolbar.panels.signals.SignalDebugPanel',
+        'debug_toolbar.panels.logger.LoggingPanel',
+)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
