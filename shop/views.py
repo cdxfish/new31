@@ -66,8 +66,7 @@ class ItemPin:
             'amount': '%.2f' % 189,
         }
        
-        # return item
-        return self.varItemInfo(item)
+        return item
 
     # 初始化物品行
     def buildLineItem(self):
@@ -83,9 +82,3 @@ class ItemPin:
             lineItem.append(self.randomItem())
 
         return lineItem
-
-    # 获取物品信息
-    def varItemInfo(self, item):
-        item['amount'] = '%.2f' % Item.objects.select_related().get(sn='3133001').itemattr_set.all()[0].itemfee_set.get().amount
-
-        return item
