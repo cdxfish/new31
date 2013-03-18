@@ -39,7 +39,7 @@ class ItemFee(models.Model):
         return u"%s - %s" % (self.itemAttr, self.amount)
 
     class Meta:
-        ordering = ['amount']        
+        ordering = ['amount']
 
 
 class ItemDiscount(models.Model):

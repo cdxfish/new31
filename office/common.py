@@ -5,7 +5,6 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.db.models import Q, Min
 import random, json, os
 
-
 # Create your views here.
 
 def base(request):
@@ -27,7 +26,6 @@ class BaseOffice:
 
     def __init__(self):
         pass
-
 
 
 class Purview:

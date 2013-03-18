@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.contrib import auth
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
+from message.views import *
 from account.models import *
 
 # Create your views here.
@@ -21,7 +22,7 @@ def login(request):
                 return HttpResponseRedirect("/")
             else:
                 # Show an error page
-                return Message().info('错误').message('用户名或密码错误!').printMsg()
+                return Message(request.META.get('HTTP_REFERER',"/")).autoRedirect().title('错误').message('用户名或密码错误!').printMsg()
 
         else:
             return render_to_response('login.htm', locals(), context_instance=RequestContext(request))
@@ -45,15 +46,11 @@ def changepwd(request):
 
 def myOrder(request):
 
-    return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
+    return render_to_response('myorder.htm', locals(), context_instance=RequestContext(request))
 
 def orderDetail(request, orderSn):
 
     return render_to_response('orderdetail.htm', locals(), context_instance=RequestContext(request))
-
-
-
-
 
 
 class UserInfo:

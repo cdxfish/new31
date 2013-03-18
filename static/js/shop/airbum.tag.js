@@ -81,26 +81,26 @@ function buyHtml(uploadShareImage, linkText, pageUrl, sinaUrl, qqUrl, sohuUrl) {
     share +='      <div class=\"buySpc\"><h3>请选择规格</h3>  \r\n';
     share +='        <table>  \r\n';
     share +='          <tr>  \r\n';
-    share +='             <td>1.5磅：约16×16(cm)</td>  \r\n';
+    share +='             <td>1.5磅 / 680g：约16×16(cm)</td>  \r\n';
     share +='             <td>￥179.00 元</td>  \r\n';
     share +='             <td><a href="/cart/buy/?i=456" class="btnB sBtn">购买</a></td>  \r\n';
     share +='          </tr>  \r\n';
     share +='          <tr>  \r\n';
-    share +='             <td>2.5磅：约18×18(cm)</td>  \r\n';
+    share +='             <td>2.5磅 / 1135g：约18×18(cm)</td>  \r\n';
     share +='             <td>￥284.00 元</td>  \r\n';
     share +='             <td><a href="/cart/buy/?i=456" class="btnB sBtn">购买</a></td>  \r\n';
     share +='          </tr>  \r\n';
     share +='          <tr>  \r\n';
-    share +='             <td>3.5磅：约20×20(cm)</td>  \r\n';
+    share +='             <td>3.5磅 / 1589g：约20×20(cm)</td>  \r\n';
     share +='             <td>￥417.00 元</td>  \r\n';
     share +='             <td><a href="/cart/buy/?i=456" class="btnB sBtn">购买</a></td>  \r\n';
     share +='          </tr>  \r\n';
     share +='          <tr>  \r\n';
-    share +='             <td>5.5磅：约26×26(cm)</td>  \r\n';
+    share +='             <td>5.5磅 / 2497g：约26×26(cm)</td>  \r\n';
     share +='             <td>￥634.00 元</td>  \r\n';
     share +='             <td><a href="/cart/buy/?i=456" class="btnB sBtn">购买</a></td>  \r\n';
     share +='          </tr>  \r\n';
-    share +='             <td>10.0磅：约36×36(cm)</td>  \r\n';
+    share +='             <td>10.0磅 / 4540g：约36×36(cm)</td>  \r\n';
     share +='             <td>￥1073.00 元</td>  \r\n';
     share +='             <td><a href="/cart/buy/?i=456" class="btnB sBtn">购买</a></td>  \r\n';
     share +='          </tr>  \r\n';
@@ -108,7 +108,7 @@ function buyHtml(uploadShareImage, linkText, pageUrl, sinaUrl, qqUrl, sohuUrl) {
     share +='      </div>  \r\n';
     share +='   </div>  \r\n';
 
-    dialog("share", [{ val: "share", text: share, isPanel: true, fadeOut: -1, width: 320}]);
+    dialog("share", [{ val: "share", text: share, isPanel: true, fadeOut: -1, width: 360}]);
 
     // $("#floatingLayer").addClass("popup800");
 

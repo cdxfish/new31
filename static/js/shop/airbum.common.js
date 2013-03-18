@@ -3,10 +3,6 @@ $(document).ready(function () {
     if ($(window).height() > $('body').height()) {
         var content = $('#content');
         var conHeight = $(window).height() - content.prev().offset().top - content.prev().outerHeight() - content.next().outerHeight() - content.outerHeight() + content.height();
-        // content.css({
-            // 'min-height' : conHeight,
-            // 'height' : conHeight
-        // });
         if (jQuery.browser.msie && jQuery.browser.version === "6.0") {
             content.css({
                 'height' : conHeight

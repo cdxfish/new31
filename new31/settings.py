@@ -4,7 +4,6 @@ import os
 
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 
-
 DEBUG = not os.environ.get("APP_NAME", "")
 TEMPLATE_DEBUG = DEBUG
 
@@ -149,6 +148,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 APPS = [
     'shop',
+    'message',
     'cart',
     'tag',
     'search',

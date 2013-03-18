@@ -8,4 +8,3 @@ import os.path
 urlpatterns = patterns('',
     (r'^$', shop),
 )
-
