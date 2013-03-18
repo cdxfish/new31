@@ -15,7 +15,7 @@ class Item(models.Model):
     click = models.IntegerField(u'点击', default=0, editable=False)
 
     def __unicode__(self):
-        return u"%s - %s [ shelf: %s ] [ show: %s ]" % (self.itemName, self.sn, self.shelf, self.show)
+        return u"%s - %s [ onLine: %s ] [ show: %s ]" % (self.itemName, self.sn, self.onLine, self.show)
 
 
 class ItemAttr(models.Model):

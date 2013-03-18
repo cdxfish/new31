@@ -2,6 +2,7 @@
 from django.shortcuts import render_to_response
 from account.views import UserInfo
 
+
 class Message:
     info ='hello world'
     message ='hello world'
@@ -21,5 +22,12 @@ class Message:
 
         return render_to_response('message.htm', {'info': self.info, 'message': self.message})
 
-def common(request):
-    return {'title':'hiahia', 'user': UserInfo().returnInfo(),}
+
+def base(request):
+    """
+    加载APP For Shop 基本信息类
+    """
+    if hasattr(request, 'user'):
+        request.user = UserInfo(request.user).returnInfo()
+
+    return {}

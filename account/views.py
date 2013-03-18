@@ -51,22 +51,29 @@ def orderDetail(request, orderSn):
 
     return render_to_response('orderdetail.htm', locals(), context_instance=RequestContext(request))
 
+
+
+
+
+
 class UserInfo:
-    newOrder = 0
-    newMessage = 0
-    messageCount = 0
 
-    def checkOrder(self):
-        self.newOrder = 2
-        return self.newOrder
+    def __init__(self, obj):
+        self.obj = obj
 
-    def checkMessage(self):
-        self.newMessage = 1
-        return self.newMessage
+    def newOrderCount(self):
+        self.obj.newOrderCount = 2
+        return self
+
+    def newMsgCount(self):
+        self.obj.newMsgCount = 1
+        return self
+
+    def allmsgCount(self):
+        self.obj.allmsgCount = self.newOrderCount().obj.newOrderCount + self.newMsgCount().obj.newMsgCount
+
+        return self
 
     def returnInfo(self):
-        self.messageCount = self.checkOrder() + self.checkMessage()
 
-        returnInfo = {'newOrder': self.newOrder, 'newMessage': self.newMessage, 'messageCount': self.messageCount, }
-
-        return returnInfo
+        return self.newOrderCount().newMsgCount().allmsgCount().obj

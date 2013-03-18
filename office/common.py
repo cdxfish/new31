@@ -8,6 +8,27 @@ import random, json, os
 
 # Create your views here.
 
+def base(request):
+    """
+    加载APP For Office 基本信息类
+    """
+    if hasattr(request, 'base'):
+        base = request.base
+    else:
+        request.base = BaseOffice()
+
+    return {}
+
+
+class BaseOffice:
+    """docstring for Base"""
+
+    actionTool = True
+
+    def __init__(self):
+        pass
+
+
 
 class Purview:
     """权限"""

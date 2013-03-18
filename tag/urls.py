@@ -5,6 +5,6 @@ from office.common import *
 
 urlpatterns = patterns('',
     (r'^$', Purview().check, {'appName':tag}),
-    (r'^[^admin]*\/$',Purview().check, {'appName':tag}),
+    (r'^[^admin]*\/$',tag),
     (r'^admin\/$', Purview().check,{'appName':tagAdmin}),
 )

@@ -131,9 +131,11 @@
         <span id="adminName">{{ request.user.username }} [ {% if request.user.is_superuser %}超级管理员{% else %}普通管理{% endif %} ]</span>
     </div>
     <div id="content">
-      <div id="actionLink">
+{% if request.base.actionTool %}{% block actionTool %}
+      <div id="actionTool">
         <a href="/item/new/">添加商品</a>
       </div>
+{% endblock %}{% endif %}
 {% block content %}{% endblock %}
     </div>
       <div id="footer">

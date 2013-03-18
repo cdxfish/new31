@@ -341,7 +341,7 @@ a.button:active{
   vertical-align:-55%;
 }
 
-#content #actionLink{
+#content #actionTool{
   display:block;
   height:24px;
   background: #F4FAFB;
@@ -351,7 +351,7 @@ a.button:active{
   margin: 0 0 10px 0;
 }
 
-#content #actionLink a{
+#content #actionTool a{
   color: #666;
   font-size: 12px;
   display:block;
@@ -365,7 +365,7 @@ a.button:active{
   background:#DDEEF2;
 }
 
-#content #actionLink a:active{
+#content #actionTool a:active{
   color: #666;
   font-size: 12px;
   display:block;
