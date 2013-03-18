@@ -134,7 +134,6 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(ROOT_PATH, 'templates').replace('\\','/'),
-    'D:/Python27/Lib/site-packages/django_debug_toolbar-0.8.5-py2.7.egg/debug_toolbar/templates',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -181,7 +180,7 @@ DANJO_APPS = [
 INSTALLED_APPS = tuple(DANJO_APPS)
 
 
-INTERNAL_IPS = ('localhost',)
+INTERNAL_IPS = ('127.0.0.1',)
 
 DEBUG_TOOLBAR_PANELS = ( 
         'debug_toolbar.panels.version.VersionDebugPanel',
