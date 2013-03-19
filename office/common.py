@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db.models import Q, Min
+from account.views import UserInfo
 import random, json, os
 
 # Create your views here.
@@ -22,7 +23,7 @@ def base(request):
 class BaseOffice:
     """docstring for Base"""
 
-    actionTool = True
+    actionTool = False
 
     def __init__(self):
         pass
@@ -45,10 +46,9 @@ class Purview:
 
     def isPurview(self,request, appName):
 
-        a = ['a','b','c']
-        b = 'a'
+        userPurview = UserInfo(request.user).purview().returnPurview()
 
-        if b in a:
+        if request.path in userPurview:
             return appName(request)
         else:
             return HttpResponseRedirect("/account/login/")

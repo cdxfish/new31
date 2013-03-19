@@ -9,6 +9,6 @@ def base(request):
     加载APP For Shop 基本信息类
     """
     if hasattr(request, 'user'):
-        request.user = UserInfo(request.user).returnInfo()
+        request.user = UserInfo(request.user).newOrderCount().newMsgCount().allmsgCount().returnInfo()
 
     return {}

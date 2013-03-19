@@ -18,7 +18,7 @@ if DEBUG:
     MYSQL_PORT = '3306'
 else:
     # SAE
-    DEBUG = True
+
     import sae.const
     MYSQL_DB = sae.const.MYSQL_DB
     MYSQL_USER = sae.const.MYSQL_USER
@@ -26,6 +26,8 @@ else:
     MYSQL_HOST_M = sae.const.MYSQL_HOST
     MYSQL_HOST_S = sae.const.MYSQL_HOST_S
     MYSQL_PORT = sae.const.MYSQL_PORT
+
+# DEBUG = True
 
 ADMINS = (
     ('leiddx.ErEli', 'leiddx@vip.qq.com'),

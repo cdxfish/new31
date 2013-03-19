@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class UserInfo(models.Model):
-    user = models.ForeignKey(User, verbose_name=u'用户')
+    user = models.ForeignKey(User, verbose_name=u'用户', unique=True)
     birthMon = models.SmallIntegerField(u'出生月')
     birthDay = models.SmallIntegerField(u'出生日')
     sex = models.SmallIntegerField(u'性别')
@@ -23,3 +23,11 @@ class UserInfo(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.user
+
+class UserPurview(models.Model):
+    user = models.ForeignKey(User, verbose_name=u'用户', unique=True)
+    value = models.TextField(u'权限表')
+
+    def __unicode__(self):
+        return u"%s" % self.user
+

@@ -71,6 +71,51 @@ class UserInfo:
 
         return self
 
+    def purview(self):
+        self.obj.purview = [
+                          '/office/',
+                          '/order/',
+                          '/back/',
+                          '/logistics/',
+                          '/produce/',
+                          '/inventory/',
+                          '/after/',
+                          '/tryeat/',
+                          '/applytryeat/',
+                          '/discount/',
+                          '/ticket/',
+                          '/integral/',
+                          '/party/',
+                          '/reconciliation/',
+                          '/approved/',
+                          '/reimburse/',
+                          '/statistics/',
+                          '/statssale/',
+                          '/member/',
+                          '/memberint/',
+                          '/purview/',
+                          '/adminlog/',
+                          '/system/',
+                          '/item/admin/',
+                          '/tag/admin/',
+                          '/specification/',
+                          '/price/',
+                          '/slide/',
+                          '/payment/',
+                          '/area/',
+                          '/signtime/',
+                          '/logistics/',
+                          '/area/',
+                          '/filecheck/',
+                        ]
+
+        return self
+
+    def returnPurview(self):
+
+        return self.obj.purview
+        # return dict.fromkeys(self.obj.purview,True) 
+
     def returnInfo(self):
 
-        return self.newOrderCount().newMsgCount().allmsgCount().obj
+        return self.obj
