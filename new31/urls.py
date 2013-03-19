@@ -8,9 +8,6 @@ from account.views import UserInfo
 from django.contrib import admin
 admin.autodiscover()
 
-# common = {'title': Shop().title('桑心').title, 'user': UserInfo().returnInfo()}
-
-
 
 urlpatterns = patterns('',
     # Examples:
@@ -21,7 +18,7 @@ urlpatterns = patterns('',
     url(r'^images/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '%s/images/' % settings.STATIC_ROOT}),
     url(r'^m/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '%simages/' % settings.MEDIA_ROOT}),
     url(r'^(?P<path>.*\.ico)$', 'django.views.static.serve', {'document_root': '%s/' % settings.STATIC_ROOT}),
-    
+
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
@@ -32,5 +29,5 @@ urlpatterns = patterns('',
 
 for i in settings.APPS[1:]:
   urlpatterns += patterns('',
-      (r'^%s/' % i , include( '%s.urls' % i)),
+      (r'^%s/' % i , include('%s.urls' % i)),
   )
