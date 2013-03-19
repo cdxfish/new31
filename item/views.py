@@ -18,6 +18,13 @@ def itemAdmin(request):
     return render_to_response('itemadmin.htm', locals(), context_instance=RequestContext(request))    
 
 
+def itemAdd(request):
+    itemList = ItemList().itemGetInfo().itemList
+
+    # return HttpResponse(json.dumps(itemList))
+    return render_to_response('itemadd.htm', locals(), context_instance=RequestContext(request))    
+
+
 
 
 class ItemList:

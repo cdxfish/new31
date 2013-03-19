@@ -1,0 +1,78 @@
+{% extends "office.base.htm" %}
+
+{% block title %}商品管理{% endblock %}
+
+{% block urHere %}<a href="/item/admin/">商品管理</a>{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/js/office/item.js"></script>
+{% endblock %}
+
+{% block content %}
+ <div class="form-row field-itemName">
+         <div>
+            <label for="id_itemName" class="required">商品名称:</label>
+                     <input id="id_itemName" type="text" class="vTextField" name="itemName" maxlength="30" />
+         </div>
+ </div>
+     
+         <div class="form-row field-sn">
+             
+             
+                 <div>
+                     
+                     
+                         <label for="id_sn" class="required">货号:</label>
+                         
+                             <input id="id_sn" type="text" class="vIntegerField" name="sn" />
+                         
+                     
+                     
+                 </div>
+             
+         </div>
+     
+         <div class="form-row field-onLine">
+             
+             
+                 <div>
+                     
+                     
+                         <input type="checkbox" name="onLine" id="id_onLine" /><label for="id_onLine" class="vCheckboxLabel">上架</label>
+                     
+                     
+                 </div>
+             
+         </div>
+     
+         <div class="form-row field-show">
+             
+             
+                 <div>
+                     
+                     
+                         <input type="checkbox" name="show" id="id_show" /><label for="id_show" class="vCheckboxLabel">商城可见</label>
+                     
+                     
+                 </div>
+             
+         </div>
+     
+         <div class="form-row field-desc">
+             
+             
+                 <div>
+                     
+                     
+                         <label for="id_desc" class="required">描述:</label>
+                         
+                             <input id="id_desc" type="text" class="vTextField" name="desc" maxlength="60" />
+                         
+                     
+                     
+                 </div>
+             
+         </div>
+     
+ </fieldset>
+{% endblock %}
