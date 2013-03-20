@@ -4,7 +4,8 @@ from views import *
 from office.common import *
 
 urlpatterns = patterns('',
-    (r'^$', Purview().check, {'appName':tag}),
-    (r'^[^admin]*\/$',tag),
     (r'^admin\/$', Purview().check,{'appName':tagAdmin}),
+    (r'^$',tag),
+    (r'^(?P<tag>.*)\/$',tag),
+
 )

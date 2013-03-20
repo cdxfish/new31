@@ -6,15 +6,23 @@ from item.models import *
 
 
 class tagManager(models.Manager):
-    def count(self, keyword):
-        return self.filter(title__icontains=keyword).count()
-        
     def allTag(self):
-        return self.all()
+
+        return self.select_related().all()
+
+    def randomTag(self, num = 10):
+
+        return self.select_related().order_by('?')[: num]
+
+    def getByTag(self, tag = '', num = 10):
+
+        return self.select_related().filter(tag__contains=tag)[: num]
+
+
 
 class Tag(models.Model):
     tag = models.CharField(max_length=30,unique=True)
-    item = models.ManyToManyField(Item)
+    itemName = models.ManyToManyField(Item)
     objects = tagManager()
 
     def __unicode__(self):

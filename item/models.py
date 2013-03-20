@@ -47,4 +47,12 @@ class ItemDiscount(models.Model):
     discount = models.ForeignKey(Discount, verbose_name=u'折扣')
 
     def __unicode__(self):
-        return u"%s - %s" % (self.itemFee, self.discount)        
+        return u"%s - %s" % (self.itemFee, self.discount)
+
+
+class ItemImg(models.Model):
+    itemName = models.ForeignKey(Item, verbose_name=u'商品')
+    img = models.ImageField(u'图片', upload_to='images')
+
+    def __unicode__(self):
+        return u"%s - %s" % (self.itemName, self.img)

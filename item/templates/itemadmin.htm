@@ -24,21 +24,16 @@
                 <th>货号</th>
                 <th>下架</th>
                 <th>是否显示</th>
-                <th>操作</th>
               </tr>
             </thead>
             <tbody>
 {% for i in itemList %}
               <tr class="odd">
                 <td align="center" class="goods_id cp">{{ i.id }}</td>
-                <td>{{ i.itemName }}</td>
+                <td><a href="/item/edit/{{ i.id }}/" title="编辑" class="editItem">{{ i.itemName }}</a></td>
                 <td align="center">{{ i.sn }}</td>
-                <td align="center" class="the_shelf cp"><img src="/images/{% if i.onLine %}yes{% else %}no{% endif %}.gif" /></td>
-                <td align="center" class="is_show cp"><img src="/images/{% if i.show %}yes{% else %}no{% endif %}.gif" /></td>
-                <td align="center">
-                  <a href="/item/edit/{{ i.id }}/" title="编辑" class="editItem"><img src="/images/icon_edit.gif" /></a>
-                  <a href="/item/del/{{ i.id }}/" title="删除" class="delItem"><img src="/images/icon_trash.gif" /></a>
-                </td>
+                <td align="center" class="onLine cp"><img src="/images/{% if i.onLine %}yes{% else %}no{% endif %}.gif" /></td>
+                <td align="center" class="show cp"><img src="/images/{% if i.show %}yes{% else %}no{% endif %}.gif" /></td>
               </tr>
 {% endfor %}
             </tbody>

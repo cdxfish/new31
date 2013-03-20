@@ -44,16 +44,9 @@
         <div class="tagsList">
           <h4>标签</h4>
           <div class="tagsBox">
-              <a href="/tag/慕斯/"class="tags_de13b5">慕斯</a>
-              <a href="/tag/奶酪/"class="tags_febe25">奶酪</a>
-              <a href="/tag/巧克力/"class="tags_febe25">巧克力</a>
-              <a href="/tag/乳酪/"class="tags_f98701">乳酪</a>
-              <a href="/tag/曲奇/"class="tags_f98701">曲奇</a>
-              <a href="/tag/松露/"class="tags_a7cf50">松露</a>
-              <a href="/tag/原味/"class="tags_de13b5">原味</a>
-              <a href="/tag/芒果/"class="tags_f98701">芒果</a>
-              <a href="/tag/派/"class="tags_ba0101">派</a>
-              <a href="/tag/芝士/"class="tags_8a60ba">芝士</a>
+{% for i in tagList %}
+              <a href="/tag/{{ i.tag }}/"class="tags_{{ i.colorClass }}">{{ i.tag }}</a>
+{% endfor %}
           </div>
         </div>
         <div class="buyList">

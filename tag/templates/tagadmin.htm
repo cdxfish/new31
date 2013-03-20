@@ -19,20 +19,15 @@
         <table cellpadding="3" cellspacing="1" width="100%" id="myTable">
             <thead>
               <tr>
-                <th>编号</th>
+                <th width="40px">编号</th>
                 <th>标签</th>
-                <th>操作</th>
               </tr>
             </thead>
             <tbody>
 {% for i in tagList %}
               <tr class="odd">
-                <td align="center" class="goods_id cp">{{ i.id }}</td>
-                <td>{{ i.tag }}</td>
-                <td align="center">
-                  <a href="/tag/edit/{{ i.id }}/" title="编辑" class="editItem"><img src="/images/icon_edit.gif" /></a>
-                  <a href="/tag/del/{{ i.id }}/" title="删除" class="delItem"><img src="/images/icon_trash.gif" /></a>
-                </td>
+                <td align="center">{{ i.id }}</td>
+                <td><a href="/tag/tag/{{ i.id }}/" title="编辑" class="editItem">{{ i.tag }}</a></td>
               </tr>
 {% endfor %}
             </tbody>

@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^js/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '%s/js/' % settings.STATIC_ROOT}),
     url(r'^images/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '%s/images/' % settings.STATIC_ROOT}),
     url(r'^m/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '%simages/' % settings.MEDIA_ROOT}),
+    url(r'^m/images/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     url(r'^(?P<path>.*\.ico)$', 'django.views.static.serve', {'document_root': '%s/' % settings.STATIC_ROOT}),
 
     # Uncomment the admin/doc line below to enable admin documentation:

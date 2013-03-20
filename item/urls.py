@@ -6,6 +6,6 @@ from office.common import *
 urlpatterns = patterns('',
     (r'^$', item),    
     (r'^admin\/$', Purview().check,{'appName':itemAdmin}),
-    (r'^admin\/$', Purview().check,{'appName':itemAdd}),
+    (r'^item\/$', Purview().check,{'appName':itemAdd}),
 )
 

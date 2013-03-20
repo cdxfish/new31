@@ -41,7 +41,7 @@ class SignTime(models.Model):
         return u"%s" % self.value
         
 class Image(models.Model):
-    value = models.ImageField(u'图片', upload_to='/upload')
+    value = models.ImageField(u'图片', upload_to='images',null=True,blank=True)
 
     def __unicode__(self):
         return u"%s" % self.value
