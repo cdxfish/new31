@@ -11,12 +11,20 @@
 {% block content %}
         <p class="viewDown">向下滚动浏览</p>
         <ul class="pinBox">
+{% if itemList %}
 {% for i in itemList %}
             <li><a href="/tag/{{ i.tag }}/" class="tags_{{ i.colorClass }}">itemTag: {{ i.tag }}</a></li>
 {% endfor %}
+{% else %}
+            <li>itemList: False</a></li>
+{% endif %}
+{% if tagList %}
 {% for i in tagList %}
             <li><a href="/tag/{{ i.tag }}/" class="tags_{{ i.colorClass }}">tag: {{ i.tag }}</a></li>
 {% endfor %}
+{% else %}
+            <li>tagList: False</a></li>
+{% endif %}
             <li>
                 <img alt="香浓巧克力" title="香浓巧克力" src="/m/DSC_3495.jpg" width="960px" />
                 <div class="pinSide960">

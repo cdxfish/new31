@@ -8,7 +8,7 @@ class UserInfo(models.Model):
     user = models.ForeignKey(User, verbose_name=u'用户', unique=True)
     birthMon = models.SmallIntegerField(u'出生月')
     birthDay = models.SmallIntegerField(u'出生日')
-    sex = models.SmallIntegerField(u'性别')
+    sex = models.CharField(u'性别',max_length=1, choices=(('M', 'Male'), ('F', 'Female')))
     buycount = models.IntegerField(u'购买次数', default=0, editable=False)
     integral = models.IntegerField(u'积分', default=0, editable=False)
     regType = models.SmallIntegerField(u'注册类型', default=0, editable=False)

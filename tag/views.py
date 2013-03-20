@@ -6,11 +6,16 @@ import models, random, json, os
 
 # Create your views here.
 
-def tag(request, tag = ''):
-
-    # itemList = models.Item.objects.get(itemName=tag).tag_set.all()
+def tag(request, tagTitle = ''):
     # tagList = Tag().getTagByTag(tag).tagList
-    tagList = Tag().getTagByItemName(itemName=tag).tagList
+    tagList = Tag().getTagByItemName(itemName=tagTitle).tagList
+
+    try:
+        itemList = models.Item.objects.get(itemName=tagTitle).itemimg_set.all()
+    except models.Item.DoesNotExist:
+        itemList = Tag().getItemByTagTitle(tagTitle)
+
+
 
     return render_to_response('tag.htm', locals(), context_instance=RequestContext(request))
 
@@ -44,16 +49,29 @@ class Tag:
         if tag: self.tagList = models.Tag.objects.getByTag(tag, num)
 
         if not self.tagList: self.getTagByItemName(tag, num)
-
+   
         if not self.tagList: self.random(num)
 
         return self
 
     def getTagByItemName(self, itemName = '', num = 1):
-        if itemName: tag = models.Item.objects.get(itemName=itemName).tag_set.all()[0].tag
+        try:
+            self.tagList =  models.Item.objects.select_related().get(itemName=itemName).tag_set.all()[: num]
 
-        if tag: self.tagList = self.getTagByTag(tag, num)
+        except models.Item.DoesNotExist:
+            self.tagList = models.Tag.objects.getByTag(itemName, num)
 
         if not self.tagList: self.random(num)
+
+        return self
+
+    def getItemByTagTitle(self, tagTitle = ''):
+        # try:
+        #     self.tagList =  models.Item.objects.select_related().get(itemName=itemName).tag_set.all()[: num]
+
+        # except models.Item.DoesNotExist:
+        #     self.tagList = models.Tag.objects.getByTag(itemName, num)
+
+        # if not self.tagList: self.random(num)
 
         return self

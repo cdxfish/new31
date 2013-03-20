@@ -16,13 +16,13 @@ class tagManager(models.Manager):
 
     def getByTag(self, tag = '', num = 10):
 
-        return self.select_related().filter(tag__contains=tag)[: num]
+        return self.select_related().filter(tag=tag)[: num]
 
 
 
 class Tag(models.Model):
     tag = models.CharField(max_length=30,unique=True)
-    itemName = models.ManyToManyField(Item)
+    item = models.ManyToManyField(Item)
     objects = tagManager()
 
     def __unicode__(self):
