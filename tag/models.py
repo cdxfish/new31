@@ -19,7 +19,6 @@ class tagManager(models.Manager):
         return self.select_related().filter(tag=tag)[: num]
 
 
-
 class Tag(models.Model):
     tag = models.CharField(max_length=30,unique=True)
     item = models.ManyToManyField(Item)
@@ -27,3 +26,6 @@ class Tag(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.tag
+
+    class Meta:
+        ordering = ['?']

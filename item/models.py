@@ -4,18 +4,41 @@ from shop.models import *
 
 # Create your models here.
 
+class itemManager(models.Manager):
+    def getItemByItemName(self, itemName = ''):
+
+        return self.select_related().get(itemName=itemName)
+
+    def getTagByItemName(self, itemName = ''):
+
+        return self.select_related().get(itemName=itemName)
+
+
 class Item(models.Model):
     itemName = models.CharField(u'商品名称', max_length=30, unique=True)
     sn = models.IntegerField(u'货号', unique=True)
     addTime = models.DateTimeField(u'添加时间', auto_now=True, auto_now_add=True)
     onLine = models.BooleanField(u'上架', default=False)
     show = models.BooleanField(u'商城可见', default=False)
-    desc = models.CharField(u'描述', max_length=60)
+
     like = models.IntegerField(u'喜欢', default=0, editable=False)
     click = models.IntegerField(u'点击', default=0, editable=False)
+    objects = itemManager()
 
     def __unicode__(self):
         return u"%s - %s [ onLine: %s ] [ show: %s ]" % (self.itemName, self.sn, self.onLine, self.show)
+
+
+class ItemDesc(models.Model):
+    itemName = models.ForeignKey(Item, verbose_name=u'商品')
+    desc = models.CharField(u'描述', max_length=60)
+
+    def __unicode__(self):
+        return u"%s - %s" % (self.itemName, self.desc)
+
+    class Meta:
+        ordering = ['?']
+        unique_together=(("itemName","desc"),)     
 
 
 class ItemAttr(models.Model):
@@ -56,3 +79,6 @@ class ItemImg(models.Model):
 
     def __unicode__(self):
         return u"%s - %s" % (self.itemName, self.img)
+    
+    class Meta:
+        ordering = ['?']

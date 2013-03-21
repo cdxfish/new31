@@ -11,11 +11,9 @@ def tag(request, tagTitle = ''):
     tagList = Tag().getTagByItemName(itemName=tagTitle).tagList
 
     try:
-        itemList = models.Item.objects.get(itemName=tagTitle).itemimg_set.all()
+        item = models.Item.objects.getItemByItemName(itemName=tagTitle)
     except models.Item.DoesNotExist:
         itemList = Tag().getItemByTagTitle(tagTitle)
-
-
 
     return render_to_response('tag.htm', locals(), context_instance=RequestContext(request))
 
@@ -31,17 +29,9 @@ class Tag:
 
     def __init__(self):
         self.tagList = []
-        self.color = ['DD9797','BA5252','D97D0F','E3BA9B','71BFCD','95BADD','A7CF50',]
 
     def random(self, num = 8):
         self.tagList = models.Tag.objects.randomTag(num)
-
-        return self
-
-    def tintTag(self, color = []):
-        if not color: color = self.color
-        for i in self.tagList:
-            i.colorClass = random.choice(color)
 
         return self
 

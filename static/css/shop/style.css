@@ -65,8 +65,10 @@
 .pinBox li{/* background:#FFFFFF; */margin-bottom:30px;width:100%;border-radius:1px;}
 .pinBox li h2{color:#666;}
 .pinBox li img{*position:relative;*float:left;*display:block;border-radius:3px;}
-.pinBox .pinSide475{background:#FFFFFF;padding:15px;width:470px;float:right;border-radius:3px;border:1px solid #D9D9D9}
+.pinBox .pinSide450{background:#FFFFFF;padding:15px;width:470px;float:right;border-radius:3px;border:1px solid #D9D9D9}
+.pinBox .pinSide450 .pinInfo{float:left;}
 .pinBox .pinSide960{background:#FFFFFF;padding:15px;min-height:165px;*height:165px;border-radius:3px;border:1px solid #D9D9D9}
+.pinBox .pinSide960 .pinInfo{float:right;}
 .pinBox .pinDes{/* display:block; */white-space:nowrap;width:470px;overflow:hidden;float:left;color:#999;padding:5px 0 10px 0;}
 .pinBox .pinInfo{color:#999;width:230px;padding:8px 0;display:block;}
 .pinBox .pinInfo .date, .pinBox .pinInfo .loc,.pinBox .pinInfo .camera,.pinBox .pinInfo .pv,.pinBox .pinInfo .like{background:url(/images/photoDes.png) no-repeat;padding-left:30px;margin-bottom:5px}

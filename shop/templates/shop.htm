@@ -45,7 +45,7 @@
           <h4>标签</h4>
           <div class="tagsBox">
 {% for i in tagList %}
-              <a href="/tag/{{ i.tag }}/"class="tags_{{ i.colorClass }}">{{ i.tag }}</a>
+              <a href="/tag/{{ i.tag }}/"class="tags_{{ tagsClass|random }}">{{ i.tag }}</a>
 {% endfor %}
           </div>
         </div>

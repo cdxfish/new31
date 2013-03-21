@@ -11,40 +11,22 @@
 {% block content %}
         <p class="viewDown">向下滚动浏览</p>
         <ul class="pinBox">
-{% if itemList %}
-{% for i in itemList %}
-            <li><a href="/tag/{{ i.tag }}/" class="tags_{{ i.colorClass }}">itemTag: {{ i.tag }}</a></li>
-{% endfor %}
-{% else %}
-            <li>itemList: False</a></li>
-{% endif %}
-{% if tagList %}
-{% for i in tagList %}
-            <li><a href="/tag/{{ i.tag }}/" class="tags_{{ i.colorClass }}">tag: {{ i.tag }}</a></li>
-{% endfor %}
-{% else %}
-            <li>tagList: False</a></li>
-{% endif %}
-            <li>
-                <img alt="香浓巧克力" title="香浓巧克力" src="/m/DSC_3495.jpg" width="960px" />
-                <div class="pinSide960">
-                    <h2>香浓巧克力</h2>
+{% if item %}
+{% for i in item.itemimg_set.all %}
+         <li>
+                <img alt="{{ i.itemName.itemName }}" title="{{ i.itemName.itemName }}" src="{{ i.img.url }}" width="{{ i.img.width }}px" />
+                <div class="pinSide{{ i.img.width }}">
+                    <h2>{{ i.itemName.itemName }}</h2>
                     <p class="pinDes">香软的特级巧克力遇上厚重的可可粉，其苦味所绽放出来的层层口感与香气。</p>
-                    <ul class="pinInfo fr">
-                        <li class="date">2012年8月22日</li>
-                        <li class="pv">浏览258</li>
-                        <li class="like">喜欢<span id="count_like_276268754">0</span></li>
+                    <ul class="pinInfo">
+                        <li class="date">{{ i.itemName.addTime }}</li>
+                        <li class="pv">浏览{{ i.itemName.click }}</li>
+                        <li class="like">喜欢<span id="count_like_276268754">{{ i.itemName.like }}</span></li>
                     </ul>
                     <div class="tags">
-                        <a href="/tag/淡奶油/" class="tags_febe25">淡奶油</a>
-                        <a href="/tag/可可粉/" class="tags_f98701">可可粉</a>
-                        <a href="/tag/巧克力/" class="tags_febe25">巧克力</a>
-                        <a href="/tag/比利时/" class="tags_de13b5">比利时</a>
-                        <a href="/tag/香浓/" class="tags_a7cf50">香浓</a>
-                        <a href="/tag/Chocolate/" class="tags_5067c8">Chocolate</a>
-                        <a href="/tag/法国/" class="tags_f98701">法国</a>
-                        <a href="/tag/cake/" class="tags_f98701">cake</a>
-                        <a href="/tag/truffle/" class="tags_a7cf50">truffle</a>
+{% for i in item.tag_set.all|slice:":9" %}
+                        <a href="/tag/{{ i.tag }}/" class="tags_{{ tagsClass|random }}">{{ i.tag }}</a>
+{% endfor %}
                     </div>
                     <div class="vote">
                         <a class="btnLike" href="/ajax/like/?i=8754">喜欢</a>
@@ -52,21 +34,37 @@
                     </div>
                 </div>
             </li>
+{% endfor %}
+{% else %}
+            <li>itemList: False</a></li>
+{% endif %}
             <li>
                 <img alt="香浓巧克力" title="香浓巧克力" src="/m/DSC_3500.jpg" width="450px" height="450px" />
-                <div class="pinSide475">
+                <div class="pinSide450">
                     <h2>香浓巧克力</h2>
                     <p class="pinDes">入口时，便在味蕾与身体之间纠缠不已，让原本就爱吃巧克力的你—爱不释手！</p>
-                    <ul class="pinInfo fl">
+                    <ul class="pinInfo">
                         <li class="date">2012年8月21日</li>
                         <li class="pv">浏览1121</li>
                         <li class="like">喜欢<span id="count_like_45689948">20</span></li>
                     </ul>
                     <div class="tags">
-                        <a href="/tag/黑纯巧克力/" class="tags_de13b5">黑纯巧克力</a>
-                        <a href="/tag/厚重/" class="tags_ba0101">厚重</a>
-                        <a href="/tag/0－5℃保藏12小时/" class="tags_5067c8">0－5℃保藏12小时</a>
-                        <a href="/tag/微苦/" class="tags_a7cf50">微苦</a>
+                        <a href="/tag/黑纯巧克力/" class="tags_DD9797">黑纯巧克力</a>
+                        <a href="/tag/厚重/" class="tags_BA5252">厚重</a>
+                        <a href="/tag/0－5℃保藏12小时/" class="tags_71BFCD">0－5℃保藏12小时</a>
+                        <a href="/tag/微苦/" class="tags_D97D0F">微苦</a>
+                        <a href="/tag/黑纯巧克力/" class="tags_DD9797">黑纯巧克力</a>
+                        <a href="/tag/厚重/" class="tags_95BADD">厚重</a>
+                        <a href="/tag/0－5℃保藏12小时/" class="tags_A7CF50">0－5℃保藏12小时</a>
+                        <a href="/tag/微苦/" class="tags_E3BA9B">微苦</a>
+                        <a href="/tag/黑纯巧克力/" class="tags_DD9797">黑纯巧克力</a>
+                        <a href="/tag/厚重/" class="tags_BA5252">厚重</a>
+                        <a href="/tag/0－5℃保藏12小时/" class="tags_71BFCD">0－5℃保藏12小时</a>
+                        <a href="/tag/微苦/" class="tags_D97D0F">微苦</a>
+                        <a href="/tag/黑纯巧克力/" class="tags_DD9797">黑纯巧克力</a>
+                        <a href="/tag/厚重/" class="tags_95BADD">厚重</a>
+                        <a href="/tag/0－5℃保藏12小时/" class="tags_A7CF50">0－5℃保藏12小时</a>
+                        <a href="/tag/微苦/" class="tags_E3BA9B">微苦</a>
                     </div>
                     <div class="vote">
                         <a class="btnLike" href="/ajax/like/?i=8754">喜欢</a>
@@ -85,16 +83,17 @@
                         <li class="like">喜欢<span id="count_like_276268754">0</span></li>
                     </ul>
                     <div class="tags">
-                        <a href="/tag/淡奶油/" class="tags_febe25">淡奶油</a>
-                        <a href="/tag/可可粉/" class="tags_f98701">可可粉</a>
-                        <a href="/tag/巧克力/" class="tags_febe25">巧克力</a>
-                        <a href="/tag/比利时/" class="tags_de13b5">比利时</a>
-                        <a href="/tag/香浓/" class="tags_a7cf50">香浓</a>
-                        <a href="/tag/Chocolate/" class="tags_5067c8">Chocolate</a>
-                        <a href="/tag/法国/" class="tags_f98701">法国</a>
-                        <a href="/tag/cake/" class="tags_f98701">cake</a>
-                        <a href="/tag/truffle/" class="tags_a7cf50">truffle</a>
-                        <a href="/tag/10℃最佳食用/" class="tags_a7cf50">10℃最佳食用</a>
+                        <a href="/tag/黑纯巧克力/" class="tags_DD9797">黑纯巧克力</a>
+                        <a href="/tag/厚重/" class="tags_BA5252">厚重</a>
+                        <a href="/tag/0－5℃保藏12小时/" class="tags_71BFCD">0－5℃保藏12小时</a>
+                        <a href="/tag/微苦/" class="tags_D97D0F">微苦</a>
+                        <a href="/tag/黑纯巧克力/" class="tags_DD9797">黑纯巧克力</a>
+                        <a href="/tag/厚重/" class="tags_95BADD">厚重</a>
+                        <a href="/tag/0－5℃保藏12小时/" class="tags_A7CF50">0－5℃保藏12小时</a>
+                        <a href="/tag/微苦/" class="tags_E3BA9B">微苦</a>
+                        <a href="/tag/黑纯巧克力/" class="tags_DD9797">黑纯巧克力</a>
+                        <a href="/tag/厚重/" class="tags_BA5252">厚重</a>
+                        <a href="/tag/0－5℃保藏12小时/" class="tags_71BFCD">0－5℃保藏12小时</a>
                     </div>
                     <div class="vote">
                         <a class="btnLike" href="/ajax/like/?i=8754">喜欢</a>
