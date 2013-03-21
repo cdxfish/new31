@@ -1,25 +1,27 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-import models, random, json, os
+from item.models import Item
 
 
 # Create your views here.
 
 def tag(request, tagTitle = ''):
-    # tagList = Tag().getTagByTag(tag).tagList
-    tagList = Tag().getTagByItemName(itemName=tagTitle).tagList
 
-    try:
-        item = models.Item.objects.getItemByItemName(itemName=tagTitle)
-    except models.Item.DoesNotExist:
-        itemList = Tag().getItemByTagTitle(tagTitle)
+    # d = dir(Item)
+
+    item = Item.objects.getItemByItemName(itemName=tagTitle)
+
+    # try:
+    #     item = models.Item.objects.getItemByItemName(itemName=tagTitle)
+    # except models.Item.DoesNotExist:
+    #     itemList = Tag().getItemByTagTitle(tagTitle)
 
     return render_to_response('tag.htm', locals(), context_instance=RequestContext(request))
 
 def tagAdmin(request):
 
-    tagList =  models.Tag.objects.allTag()
+    tagList =  Tag().objects.allTag()
 
     return render_to_response('tagadmin.htm', locals(), context_instance=RequestContext(request))
 

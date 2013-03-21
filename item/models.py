@@ -1,6 +1,7 @@
 #coding:utf-8
 from django.db import models
 from shop.models import *
+from tag.models import *
 
 # Create your models here.
 
@@ -20,9 +21,10 @@ class Item(models.Model):
     addTime = models.DateTimeField(u'添加时间', auto_now=True, auto_now_add=True)
     onLine = models.BooleanField(u'上架', default=False)
     show = models.BooleanField(u'商城可见', default=False)
-
     like = models.IntegerField(u'喜欢', default=0, editable=False)
     click = models.IntegerField(u'点击', default=0, editable=False)
+    tag = models.ManyToManyField(Tag, verbose_name=u'标签')
+
     objects = itemManager()
 
     def __unicode__(self):
@@ -79,6 +81,6 @@ class ItemImg(models.Model):
 
     def __unicode__(self):
         return u"%s - %s" % (self.itemName, self.img)
-    
+
     class Meta:
         ordering = ['?']

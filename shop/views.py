@@ -4,8 +4,8 @@ from django.template import RequestContext
 from django.http import HttpResponse
 from django.conf import settings 
 from django.db.models import Q, Min
-from item.models import Item
-from tag.views import Tag
+from item.models import *
+from tag.models import *
 import random, json, os
 
 # Create your views here.
@@ -14,7 +14,8 @@ import random, json, os
 def shop(request):
 
     itemList = ItemPin(10).buildItemList().sort(sortFun).itemList
-    tagList = Tag().random(10).tagList
+    # d = dir(Tag.objects.all())
+    tagList = Tag.objects.all()[:8]
 
     return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))
 

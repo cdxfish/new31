@@ -17,14 +17,14 @@
                 <img alt="{{ i.itemName.itemName }}" title="{{ i.itemName.itemName }}" src="{{ i.img.url }}" width="{{ i.img.width }}px" />
                 <div class="pinSide{{ i.img.width }}">
                     <h2>{{ i.itemName.itemName }}</h2>
-                    <p class="pinDes">香软的特级巧克力遇上厚重的可可粉，其苦味所绽放出来的层层口感与香气。</p>
+                    <p class="pinDes">{% for i in item.itemdesc_set.all|slice:":1" %}{{ i.desc }}{% endfor %}</p>
                     <ul class="pinInfo">
                         <li class="date">{{ i.itemName.addTime }}</li>
                         <li class="pv">浏览{{ i.itemName.click }}</li>
                         <li class="like">喜欢<span id="count_like_276268754">{{ i.itemName.like }}</span></li>
                     </ul>
                     <div class="tags">
-{% for i in item.tag_set.all|slice:":9" %}
+{% for i in item.tag.all|slice:":9" %}
                         <a href="/tag/{{ i.tag }}/" class="tags_{{ tagsClass|random }}">{{ i.tag }}</a>
 {% endfor %}
                     </div>

@@ -159,16 +159,16 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 APPS = [
     'shop',
-    'message',
-    'cart',
+    # 'message',
+    # 'cart',
     'tag',
-    'search',
+    # 'search',
     'account',
-    'checkout',
+    # 'checkout',
     'item',
     'ajax',
     'office',
-    'order',
+    # 'order',
 ]
 
 djangoAPPS = [
