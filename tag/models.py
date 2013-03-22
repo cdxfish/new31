@@ -4,14 +4,13 @@ from django.db import models
 # Create your models here.
 
 class tagManager(models.Manager):
-    def randomTag(self, num = 10):
+    def getRandom(self, num = 10):
 
         return self.order_by('?')[: num]
 
-    def getByTag(self, tag = '', num = 10):
+    def getTagByTagTitle(self, tag = ''):
 
-        return self.select_related().filter(tag=tag)[: num]
-
+        return self.select_related().filter(tag=tag)
 
 class Tag(models.Model):
     tag = models.CharField(u'标签', max_length=60,unique=True)

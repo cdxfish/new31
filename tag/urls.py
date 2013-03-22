@@ -7,5 +7,4 @@ urlpatterns = patterns('',
     (r'^admin\/$', Purview().check,{'appName':tagAdmin}),
     (r'^$',tag),
     (r'^(?P<tagTitle>.*)\/$',tag),
-
 )

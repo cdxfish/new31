@@ -14,7 +14,7 @@ import random, json, os
 def shop(request):
 
     itemList = ItemPin(10).buildItemList().sort(sortFun).itemList
-    # d = dir(Tag.objects.all())
+
     tagList = Tag.objects.all()[:8]
 
     return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))

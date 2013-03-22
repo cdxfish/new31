@@ -12,7 +12,13 @@ class itemManager(models.Manager):
 
     def getTagByItemName(self, itemName = ''):
 
-        return self.select_related().get(itemName=itemName)
+        return self.select_related().get(itemName=itemName).tag.all()
+
+
+class itemDescManager(models.Manager):
+    def random(self, itemName = ''):
+
+        return self.select_related().all()[0]
 
 
 class Item(models.Model):
@@ -34,6 +40,7 @@ class Item(models.Model):
 class ItemDesc(models.Model):
     itemName = models.ForeignKey(Item, verbose_name=u'商品')
     desc = models.CharField(u'描述', max_length=60)
+    objects = itemDescManager()
 
     def __unicode__(self):
         return u"%s - %s" % (self.itemName, self.desc)
