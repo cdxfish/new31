@@ -53,7 +53,7 @@ class GetItemByTag:
             self.item = self.randomItem()
 
 
-        # 检查当前item 是否存在图片. 未避免进入死循环,只对上架商品进行一次遍历.
+        # 检查当前item 是否存在图片. 避免进入死循环,只对上架商品进行一次遍历.
 
         if not self.item.itemimg_set.all():
             for i in self.itemQuery:
