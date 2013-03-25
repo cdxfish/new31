@@ -188,3 +188,43 @@ function dialog(res, obj) {
         }
     }
 }
+
+
+
+timeClosePopup = function(message, time) {
+    dialog("a", [{
+        val: "a",
+        title: message,
+        className: "a",
+        fadeOut: -1,
+        width: 220
+    }]);
+
+    setTimeout(
+
+    function() {
+        closePopupNow();
+    },
+    time);
+}
+
+ajax = function(data, f) {
+    if (data.error) {
+        share = data.message;
+        timeClosePopup(data.message, 1000);
+
+
+    } else {
+        // share = f(data);
+        dialog("share", [{
+            val: "share",
+            text: f(data),
+            isPanel: true,
+            fadeOut: -1,
+            width: 360
+        }]);
+
+    }
+
+
+}

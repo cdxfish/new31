@@ -147,7 +147,7 @@ function GetMoreItem() {
     if(count() <= 5)
     {
         if (scrollTop + winHeight + 600 >= pinTop + pinHeight) {
-            $.getJSON('/ajax/more/', function(data) {
+            $.getJSON('/ajax/moreitem/', function(data) {
                 iAdd();
 
                 var appendHtm = '';

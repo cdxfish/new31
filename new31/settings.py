@@ -160,7 +160,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 APPS = [
     'shop',
     'message',
-    # 'cart',
+    'cart',
     'tag',
     # 'search',
     'account',

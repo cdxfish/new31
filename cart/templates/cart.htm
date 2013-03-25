@@ -12,30 +12,20 @@
                         <th width="100px">小计</th>
                         <th width="100px">操作</th>
                     </tr>
+{% for i in cart.itemBuy %}
                     <tr>
-                        <td align="center">餐具</td>
-                        <td align="center">套</td>
-                        <td align="center">￥1.00 元</td>
+                        <td align="center">{{ i.item.itemAttr.itemName.itemName }}</td>
+                        <td align="center">{{ i.item.itemAttr.attrValue.attrValue }}</td>
+                        <td align="center">￥{{ i.item.amount }} 元</td>
                         <td align="center" class="gNum">
                             <span class="minus"> - </span>
-                            <input type="text" name="4678" value="1" size="1" />
+                            <input type="text" name="4678" value="{{ i.num }}" size="1" />
                             <span class="plus"> + </span>
                         </td>
-                        <td align="center">￥1.00 元</td>
+                        <td align="center">￥{{ i.item.subtotal }} 元</td>
                         <td align="center"><input type="button" value="删除" class="btnB bBtn" /></td>
                     </tr>
-                    <tr>
-                        <td align="center">香浓巧克力</td>
-                        <td align="center">1.5磅：约16×16(cm)</td>
-                        <td align="center">￥189.00 元</td>
-                        <td align="center" class="gNum">
-                            <span class="minus"> - </span>
-                            <input type="text" name="4679" value="1" size="1" />
-                            <span class="plus"> + </span>
-                        </td>
-                        <td align="center">￥189.00 元</td>
-                        <td align="center"><input type="button" value="删除" class="btnB bBtn" /></td>
-                    </tr>
+{% endfor %}
                     <tr class="bLine">
                         <td align="right" colspan="5"><span class="fBold font18">商品总价: ￥190.00 元 和 0 K金</span></td>
                         <td></td>

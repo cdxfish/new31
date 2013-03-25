@@ -64,7 +64,8 @@ class ItemAttr(models.Model):
 
 class ItemFee(models.Model):
     itemAttr = models.ForeignKey(ItemAttr, verbose_name=u'规格', unique=True)
-    amount = models.DecimalField(u'单价', max_digits=10, decimal_places=2)
+    amount = models.FloatField(u'单价')
+    # amount = models.DecimalField(u'单价', max_digits=10, decimal_places=2)
     itemType = models.SmallIntegerField(u'类型')
 
     def __unicode__(self):
@@ -72,6 +73,7 @@ class ItemFee(models.Model):
 
     class Meta:
         ordering = ['amount']
+        unique_together=(("itemAttr","amount","itemType"),)   
 
 
 class ItemDiscount(models.Model):

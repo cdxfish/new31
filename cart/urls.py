@@ -4,5 +4,6 @@ from views import *
 
 urlpatterns = patterns('',
     (r'^$', cart),
+    (r'^buy\/(?P<i>\d+)\/$', buy),
     (r'^consignee\/$', consignee),
 )

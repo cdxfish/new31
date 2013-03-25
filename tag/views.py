@@ -2,8 +2,8 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.db.models import Q, Min
-from item.models import Item
-from tag.models import Tag
+from item.models import *
+from tag.models import *
 import random
 
 
@@ -15,7 +15,7 @@ def tag(request, tagTitle = ''):
 
     item = GetItemByTag().getItem(tagTitle=tagTitle).item
 
-    # d = dir(item.itemdesc_set.random().desc)
+    d = dir(ItemFee.objects.get(id='1').itemAttr)
 
 
 
@@ -36,9 +36,6 @@ class GetItemByTag:
     def __init__(self):
        self.item = ''
        self.itemQuery = Item.objects.select_related().filter( \
-                            Q(sn__contains='3133') | \
-                            Q(sn__contains='3155') | \
-                            Q(sn__contains='3177') | \
                             Q(onLine=True) | \
                             Q(show=True))  #初始化物品序列
        self.tagQuery = Tag.objects.select_related().all()  #初始化物品序列
@@ -46,12 +43,14 @@ class GetItemByTag:
     def getItem(self, tagTitle = ''):
         try:
             self.item = self.itemQuery.get(itemName=tagTitle)
-            # self.item.update()
-        except Item.DoesNotExist:
-            self.item = self.tagQuery.get(tag=tagTitle).item_set.order_by('?').all()[0]
-        except:
-            self.item = self.randomItem()
 
+        except Item.DoesNotExist:
+            try:
+                self.item = self.tagQuery.get(tag=tagTitle).item_set.order_by('?').all()[0]
+            except:
+                self.item = self.randomItem()
+        else:
+            self.item = self.itemQuery.get(itemName=tagTitle)
 
         # 检查当前item 是否存在图片. 避免进入死循环,只对上架商品进行一次遍历.
 
