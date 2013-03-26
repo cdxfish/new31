@@ -5,5 +5,6 @@ from views import *
 urlpatterns = patterns('',
     (r'^moreitem\/$',ajaxLineItem),
     (r'^buy\/(?P<i>\d+)\/$',ajaxItemBuy),
+    (r'^clear\/(?P<i>\d+)\/$',ajaxItemClear),
     (r'^itemattr\/(?P<t>\d{1})(?P<i>\d+)\/$',ajaxItemAttr),
 )

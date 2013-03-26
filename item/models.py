@@ -14,6 +14,16 @@ class itemManager(models.Manager):
 
         return self.select_related().get(itemName=itemName).tag.all()
 
+    def getTagByItemFeeId(self, id = ''):
+
+        item = ItemFee.objects.select_related().get(id=id).itemAttr.itemName
+
+        if item.onLine and item.show:
+
+            return item
+        else:
+            raise ItemFee.DoesNotExist
+
 
 class itemDescManager(models.Manager):
     def random(self, itemName = ''):
@@ -64,8 +74,7 @@ class ItemAttr(models.Model):
 
 class ItemFee(models.Model):
     itemAttr = models.ForeignKey(ItemAttr, verbose_name=u'规格', unique=True)
-    amount = models.FloatField(u'单价')
-    # amount = models.DecimalField(u'单价', max_digits=10, decimal_places=2)
+    amount = models.DecimalField(u'单价', max_digits=10, decimal_places=2)
     itemType = models.SmallIntegerField(u'类型')
 
     def __unicode__(self):

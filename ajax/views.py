@@ -1,8 +1,9 @@
 #coding:utf-8
 from django.contrib import auth
 from django.http import HttpResponse
-from shop.views import *
+from django.core.exceptions import *
 from item.models import *
+from shop.views import *
 import json
 
 # Create your views here.
@@ -31,23 +32,52 @@ def ajaxItemAttr(request, i, t):
     return HttpResponse(json.dumps(data))
 
 def ajaxItemBuy(request, i):
-    if not request.session["buy"]:
+    if not request.session.get('buy'):
         request.session["buy"] = {}
 
     data = {}
     try:
+        buy = request.session["buy"]
         item = ItemFee.objects.get(id=i)
+
+        if not item.itemAttr.itemName.onLine or not item.itemAttr.itemName.show:
+            raise DatabaseError
+
+        if not i in buy:
+            buy.update({ i:1 })
+
         data['error'] = False
         data['message'] = ''
         data['item'] = {'id':item.id ,'attr':item.itemAttr.attrValue.attrValue ,'amount': '%s' % item.amount}
-        if not i in request.session["buy"]:
-            request.session["buy"].update({ i:1 })
+
+        request.session['buy'] = buy
 
         data['buy'] = request.session['buy']
     except:
         data['error'] = True
         data['message'] = '当前商品不存在'
+    
+    return HttpResponse(json.dumps(data))
 
-    # request.session['buy'].clear()
+def ajaxItemClear(request, i):
+    if not request.session.get('buy'):
+        request.session["buy"] = {}
+
+    data = {}
+    try:
+        buy = request.session["buy"]
+
+        if i in buy:
+            del buy[i]
+
+        data['error'] = False
+        data['message'] = ''
+
+        request.session['buy'] = buy
+
+        data['buy'] = request.session['buy']
+    except:
+        data['error'] = True
+        data['message'] = '当前商品不存在'
     
     return HttpResponse(json.dumps(data))

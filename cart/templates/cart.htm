@@ -1,40 +1,46 @@
 {% extends "shop.base.htm" %}
 
 {% block content %}
+                    {{ cart.itemBuy.count }}
         <div class="pWhite">
             <form name="toCart" method="post" action="cart/">
                 <table width="100%" cellpadding="3" class="mBottom50">
                     <tr>
-                        <th width="280px">商品名称</th>
-                        <th width="180px">商品规格</th>
-                        <th width="180px">价格</th>
-                        <th width="100px">数量</th>
-                        <th width="100px">小计</th>
-                        <th width="100px">操作</th>
+                        <th width="30%">商品名称</th>
+                        <th width="20%">商品规格</th>
+                        <th width="10%">价格</th>
+                        <th width="15%">数量</th>
+                        <th width="10%">小计</th>
+                        <th></th>
                     </tr>
+{% if cart.itemBuy %}
 {% for i in cart.itemBuy %}
-                    <tr>
-                        <td align="center">{{ i.item.itemAttr.itemName.itemName }}</td>
-                        <td align="center">{{ i.item.itemAttr.attrValue.attrValue }}</td>
-                        <td align="center">￥{{ i.item.amount }} 元</td>
-                        <td align="center" class="gNum">
-                            <span class="minus"> - </span>
-                            <input type="text" name="4678" value="{{ i.num }}" size="1" />
-                            <span class="plus"> + </span>
+                    <tr align="center">
+                        <td>{{ i.item.itemAttr.itemName.itemName }}</td>
+                        <td>{{ i.item.itemAttr.attrValue.attrValue }}</td>
+                        <td>￥{{ i.item.amount }} 元</td>
+                        <td class="gNum">
+                            <input type="text" name="{{ i.v }}" value="{{ i.num }}" size="1" />
                         </td>
-                        <td align="center">￥{{ i.item.subtotal }} 元</td>
-                        <td align="center"><input type="button" value="删除" class="btnB bBtn" /></td>
+                        <td>￥{{ i.subtotal|floatformat:2 }} 元</td>
+                        <td align="right"><a href="/cart/clear/{{ i.v }}/" class="btnB bBtn">删除</a></td>
                     </tr>
 {% endfor %}
                     <tr class="bLine">
-                        <td align="right" colspan="5"><span class="fBold font18">商品总价: ￥190.00 元 和 0 K金</span></td>
+                        <td align="right" colspan="5"><span class="fBold font18">商品总价: ￥{{ cart.countFee|floatformat:2 }} 元 和 0 K金</span></td>
                         <td></td>
                     </tr>
+{% else %}
+                    <tr class="bLine">
+                        <td align="center" colspan="6">您的购物车是空的</td>
+                    </tr>
+{% endif %}
+
                     <tr>
                         <td colspan="4">
                             <a href="/tag/" class="btnB bBtn">继续购物</a>
                         </td>
-                        <td align="right" colspan="2"><a href="consignee/" class="btnB bBtn">结算</a></td>
+                        <td align="right" colspan="2"><a href="/cart/consignee/" class="btnB bBtn">结算</a></td>
                     </tr>
                 </table>
                 <table width="100%">

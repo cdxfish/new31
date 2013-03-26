@@ -1,7 +1,7 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.db.models import Q, Min
+from django.db.models import Q
 from item.models import *
 from tag.models import *
 import random
