@@ -14,70 +14,53 @@ def ajaxLineItem(request):
     return HttpResponse(json.dumps(itemList))
 
 
-
-def ajaxItemAttr(request, i, t):
+def ajaxItemAttr(request, i, t = 1):
     data = {}
     try:
-        item = Item.objects.get(id=i).itemattr_set.all()
+        itemAttr = ItemAttr.objects.getAttrByItemId(id=i)
         data['error'] = False
         data['message'] = ''
-        data['item'] = []
-        for v in item:
-            data['item'].append( {'id':v.id ,'attr':v.attrValue.attrValue ,'amount': '%s' % v.itemfee_set.get(itemType=t).amount})
+        data['data'] = []
+        for v in itemAttr:
+            data['data'].append({'id':v.id ,'attr':v.attrValue.attrValue ,'amount': '%s' % v.itemfee_set.get(itemType=t).amount,'t': t })
     except:
         data['error'] = True
-        data['message'] = '当前商品不存在'
-
+        data['message'] = '当前商品已下架'
 
     return HttpResponse(json.dumps(data))
 
-def ajaxItemBuy(request, i):
-    if not request.session.get('buy'):
-        request.session["buy"] = {}
 
-    data = {}
+def ajaxCartItem(request, f, i, t = 1):
     try:
-        buy = request.session["buy"]
-        item = ItemFee.objects.get(id=i)
+        f(request, i, t)
 
-        if not item.itemAttr.itemName.onLine or not item.itemAttr.itemName.show:
-            raise DatabaseError
-
-        if not i in buy:
-            buy.update({ i:1 })
-
-        data['error'] = False
-        data['message'] = ''
-        data['item'] = {'id':item.id ,'attr':item.itemAttr.attrValue.attrValue ,'amount': '%s' % item.amount}
-
-        request.session['buy'] = buy
-
-        data['buy'] = request.session['buy']
+        return HttpResponse(AjaxRJson().error(False).data(request.session['itemCart']).jsonEn())
     except:
-        data['error'] = True
-        data['message'] = '当前商品不存在'
-    
-    return HttpResponse(json.dumps(data))
 
-def ajaxItemClear(request, i):
-    if not request.session.get('buy'):
-        request.session["buy"] = {}
+        return HttpResponse(AjaxRJson().error(True).message('当前商品已下架').data(request.session['itemCart']).jsonEn())
 
-    data = {}
-    try:
-        buy = request.session["buy"]
+class AjaxRJson:
+    """JSON 字典格式化"""
+    def __init__(self):
+        self.e = True
+        self.m = ''
+        self.d = {}
 
-        if i in buy:
-            del buy[i]
+    def jsonEn(self):
 
-        data['error'] = False
-        data['message'] = ''
+        return json.dumps({'error':self.e, 'message':self.m, 'data':self.d })
 
-        request.session['buy'] = buy
+    def error(self, e = True):
+        self.e = e
 
-        data['buy'] = request.session['buy']
-    except:
-        data['error'] = True
-        data['message'] = '当前商品不存在'
-    
-    return HttpResponse(json.dumps(data))
+        return self
+
+    def message(self, m):
+        self.m = m
+
+        return self
+
+    def data(self, d):
+        self.d = d
+
+        return self

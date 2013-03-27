@@ -4,7 +4,7 @@ from views import *
 
 urlpatterns = patterns('',
     (r'^$', cart),
-    (r'^buy\/(?P<i>\d+)\/$', buy),
-    (r'^clear\/(?P<i>\d+)\/$', clear),
+    (r'^buy\/(?P<t>\d{1})(?P<i>\d+)\/$', hCart, {'f': toCart}),
+    (r'^clear\/(?P<t>\d{1})(?P<i>\d+)\/$', hCart, {'f': clearCartItem}),
     (r'^consignee\/$', consignee),
 )

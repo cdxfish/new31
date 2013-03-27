@@ -14,21 +14,37 @@ class itemManager(models.Manager):
 
         return self.select_related().get(itemName=itemName).tag.all()
 
-    def getTagByItemFeeId(self, id = ''):
+    def getItemByItemAttrId(self, id = ''):
 
-        item = ItemFee.objects.select_related().get(id=id).itemAttr.itemName
+        item = ItemAttr.objects.select_related().get(id=id).itemName
 
         if item.onLine and item.show:
 
             return item
         else:
-            raise ItemFee.DoesNotExist
+            raise self.DoesNotExist
 
 
 class itemDescManager(models.Manager):
     def random(self, itemName = ''):
 
         return self.select_related().all()[0]
+
+
+class itemAttrManager(models.Manager):
+    def getAttrByItemId(self, id = ''):
+
+        return Item.objects.select_related().get(models.Q(id=id) & models.Q(onLine=True) & models.Q(show=True)).itemattr_set.all()
+
+    def getAttrByItemAttrId(self, id = ''):
+
+        itemAttr = ItemAttr.objects.select_related().get(id=id)
+
+        if itemAttr.itemName.onLine and itemAttr.itemName.show:
+
+            return itemAttr
+        else:
+            raise self.DoesNotExist
 
 
 class Item(models.Model):
@@ -63,6 +79,7 @@ class ItemDesc(models.Model):
 class ItemAttr(models.Model):
     itemName = models.ForeignKey(Item, verbose_name=u'商品')
     attrValue = models.ForeignKey(AttriBute, verbose_name=u'规格')
+    objects = itemAttrManager()
 
     def __unicode__(self):
         return u"%s - %s" % (self.itemName, self.attrValue)

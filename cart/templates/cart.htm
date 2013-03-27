@@ -1,7 +1,10 @@
 {% extends "shop.base.htm" %}
 
+{% block js %}
+    <script type="text/javascript" src="/js/shop/cart.configuration.js"></script>
+{% endblock %}
+
 {% block content %}
-                    {{ cart.itemBuy.count }}
         <div class="pWhite">
             <form name="toCart" method="post" action="cart/">
                 <table width="100%" cellpadding="3" class="mBottom50">
@@ -16,11 +19,11 @@
 {% if cart.itemBuy %}
 {% for i in cart.itemBuy %}
                     <tr align="center">
-                        <td>{{ i.item.itemAttr.itemName.itemName }}</td>
-                        <td>{{ i.item.itemAttr.attrValue.attrValue }}</td>
-                        <td>￥{{ i.item.amount }} 元</td>
-                        <td class="gNum">
-                            <input type="text" name="{{ i.v }}" value="{{ i.num }}" size="1" />
+                        <td>{{ i.item.itemName.itemName }}</td>
+                        <td>{{ i.item.attrValue }}</td>
+                        <td>￥{{ i.amount|floatformat:2 }} 元</td>
+                        <td>
+                            <input type="text" name="{{ i.v }}" value="{{ i.num }}" size="1" class="iNum" />
                         </td>
                         <td>￥{{ i.subtotal|floatformat:2 }} 元</td>
                         <td align="right"><a href="/cart/clear/{{ i.v }}/" class="btnB bBtn">删除</a></td>

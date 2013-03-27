@@ -113,7 +113,7 @@ buyBtn = function(data) {
         html += '          <tr>  \r\n';
         html += '             <td>' + v.attr + '</td>  \r\n';
         html += '             <td>￥' + v.amount + ' 元</td>  \r\n';
-        html += '             <td><a href="/cart/buy/' + v.id + '/" class="btnB sBtn">购买</a></td>  \r\n';
+        html += '             <td><a href="/cart/buy/'+ v.t + v.id + '/" class="btnB sBtn">购买</a></td>  \r\n';
         html += '          </tr>  \r\n';
     });
 

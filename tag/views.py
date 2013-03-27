@@ -10,15 +10,7 @@ import random
 # Create your views here.
 
 def tag(request, tagTitle = ''):
-    # item = Tag.objects.select_related().all().get(tag=tagTitle).item_set.all()[0]
-
-
     item = GetItemByTag().getItem(tagTitle=tagTitle).item
-
-    d = dir(ItemFee.objects.get(id='1').itemAttr)
-
-
-
 
     return render_to_response('tag.htm', locals(), context_instance=RequestContext(request))
 
