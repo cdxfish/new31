@@ -109,7 +109,7 @@ buyBtn = function(data) {
     html += '      <div class=\"buySpc\"><h3>请选择规格</h3>  \r\n';
     html += '        <table width="100%">  \r\n';
 
-    $.each(data.item, function(i, v) {
+    $.each(data.data, function(i, v) {
         html += '          <tr>  \r\n';
         html += '             <td>' + v.attr + '</td>  \r\n';
         html += '             <td>￥' + v.amount + ' 元</td>  \r\n';

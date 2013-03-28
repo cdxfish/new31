@@ -12,8 +12,6 @@ from message.views import *
 def cart(request):
     cart = Cart(request)
 
-    d = dir(ItemAttr.objects.getAttrByItemAttrId(1))
-    s = request.session.get('itemCart')
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
 
 def hCart(request, f, i, t = 1):
@@ -30,7 +28,7 @@ def consignee(request):
     return render_to_response('consignee.htm', locals(), context_instance=RequestContext(request))
 
 
-def toCart(request, i , t= 1):
+def buyToCart(request, i , t= 1):
     try:
         if not request.session['itemCart']:
             request.session["itemCart"] = {}
@@ -67,19 +65,47 @@ def clearCartItem(request, i , t= 1):
     except:
         raise Item.DoesNotExist
 
+def changeCartItem(request, i , t):
+    try:
+        if not request.session.get('itemCart'):
+            request.session["itemCart"] = {}
+        item = Item.objects.getItemByItemAttrId(id='%s' % i[1:])
+
+        itemCart = request.session["itemCart"]
+
+        if i in itemCart:
+            itemCart[i] = int(t)
+
+        request.session['itemCart'] = itemCart
+
+        return request
+    except:
+        raise Item.DoesNotExist
+
 
 class Cart:
     """docstring for Cart"""
     def __init__(self, request):
         self.itemBuy = []
         self.countFee = 0
-        if request.session.get('itemCart'):
-            for v, i in request.session['itemCart'].items():
-                # try:
-                itemAttr = ItemAttr.objects.getAttrByItemAttrId(id='%s' % v[1:])
-                amount = itemAttr.itemfee_set.get(itemType=v[0]).amount
-                subtotal = amount * i
-                self.countFee += subtotal
-                self.itemBuy.append({ 'item': itemAttr, 'amount': amount, 'num': i,'subtotal': subtotal, 'v': v })
-                # except:
-                #     pass
+        self.request = request
+        if self.request.session.get('itemCart'):
+            for v, i in self.request.session['itemCart'].items():
+                try:
+                    if len(v) < 2:
+                        raise Item.DoesNotExist
+                        
+                    itemAttr = ItemAttr.objects.getAttrByItemAttrId(id='%s' % v[1:])
+                    amount = itemAttr.itemfee_set.get(itemType=v[0]).amount
+                    subtotal = amount * i
+                    self.countFee += subtotal
+                    self.itemBuy.append({ 'item': itemAttr, 'amount': amount, 'num': i,'subtotal': subtotal, 'v': v })
+                except:
+                    pass
+
+    def cartItemSubtotal(self, i, t):
+        itemCart = self.request.session["itemCart"]
+        itemSubtotal = ItemAttr.objects.getAttrByItemAttrId(id='%s' % i[1:]).itemfee_set.get(itemType=i[0]).amount * int(t)
+
+        return itemSubtotal
+

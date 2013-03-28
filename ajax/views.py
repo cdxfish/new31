@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.core.exceptions import *
 from item.models import *
 from shop.views import *
+from cart.views import *
 import json
 
 # Create your views here.
@@ -38,6 +39,21 @@ def ajaxCartItem(request, f, i, t = 1):
     except:
 
         return HttpResponse(AjaxRJson().error(True).message('当前商品已下架').data(request.session['itemCart']).jsonEn())
+
+
+def ajaxCartItemNum(request, f, i, t):
+    try:
+        f(request, i, t)
+
+        c = Cart(request)
+
+        r ={'itemSubtotal': '%.2f' % c.cartItemSubtotal(i,t), 'subtotal': '%.2f' % c.countFee }
+
+        return HttpResponse(AjaxRJson().error(False).data(r).jsonEn())
+    except:
+
+        return HttpResponse(AjaxRJson().error(True).message('当前商品已下架').data(request.session['itemCart']).jsonEn())
+
 
 class AjaxRJson:
     """JSON 字典格式化"""

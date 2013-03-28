@@ -25,12 +25,12 @@
                         <td>
                             <input type="text" name="{{ i.v }}" value="{{ i.num }}" size="1" class="iNum" />
                         </td>
-                        <td>￥{{ i.subtotal|floatformat:2 }} 元</td>
+                        <td>￥<span class="st{{ i.v }}">{{ i.subtotal|floatformat:2 }}</span> 元</td>
                         <td align="right"><a href="/cart/clear/{{ i.v }}/" class="btnB bBtn">删除</a></td>
                     </tr>
 {% endfor %}
                     <tr class="bLine">
-                        <td align="right" colspan="5"><span class="fBold font18">商品总价: ￥{{ cart.countFee|floatformat:2 }} 元 和 0 K金</span></td>
+                        <td align="right" colspan="5"><span class="fBold font18">商品总价: ￥<span class="total">{{ cart.countFee|floatformat:2 }}</span> 元 和 0 K金</span></td>
                         <td></td>
                     </tr>
 {% else %}
@@ -50,12 +50,12 @@
                     <tr>
                         <td>除按蛋糕规格免费赠送的餐具数量外(详见下面说明），是否额外需要餐具？</td>
                         <td>单价：1元/份</td>
-                        <td align="right"><input type="button" class="btnB bBtn" value="是的，我需要增加餐具" id="tableware" /></td>
+                        <td align="right"><a href="/cart/buy/11/" class="btnB bBtn">是的，我需要增加餐具</a></td>
                     </tr>
                     <tr>
                         <td>是否额外购买生日套装(生日牌/冷烟花/蜡烛)？</td>
                         <td>单价：3元/份</td>
-                        <td align="right"><input type="button" class="btnB bBtn" value="是的，我需要增加生日套装" id="birthday" /></td>
+                        <td align="right"><a href="/cart/buy/12/" class="btnB bBtn">是的，我需要增加生日套装</a></td>
                     </tr>
                 </table>
             </form>
@@ -66,9 +66,9 @@
             <p><br /></p>
             <p>蛋糕规格及免费配送餐具：</p>
             <ul class="specLi">
-                <li>1.0磅：约14×14(cm)&nbsp;&nbsp;适合2-3人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送3套餐具</li>
-                <li>1.5磅：约16×16(cm)&nbsp;&nbsp;适合5-6人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送6套餐具</li>
-                <li>2.5磅：约20×20(cm)&nbsp;&nbsp;适合8-9人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送10套餐具</li>
+                <li>1.0磅：约14×14(cm)&nbsp;&nbsp;适合2-3人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送3套餐具</li>
+                <li>1.5磅：约16×16(cm)&nbsp;&nbsp;适合5-6人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送6套餐具</li>
+                <li>2.5磅：约20×20(cm)&nbsp;&nbsp;适合8-9人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送10套餐具</li>
                 <li>3.5磅：约23×23(cm)&nbsp;&nbsp;适合12-13人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送15套餐具</li>
                 <li>5.5磅：约26×26(cm)&nbsp;&nbsp;适合18-22人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送25套餐具</li>
                 <li>10磅：约36×36(cm)&nbsp;&nbsp;&nbsp;适合35-40人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送40套餐具</li>

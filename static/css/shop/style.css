@@ -23,6 +23,7 @@
 /*pinStream:Start*/
 
 .pinStream{width:764px;float:left;overflow:hidden;_zoom:1;}
+.pinStream a{display:block;height:100%}
 .pinStream .box{overflow:hidden;*zoom:1}
 .pinStream .b1,.b2,.b3{margin:0 3px 3px 0;float:left;overflow:hidden;position:relative;}
 .pinStream .b1{width:188px;height:188px}
@@ -50,6 +51,7 @@
 .locListName li img{margin-right:10px;width:30px;height:30px;vertical-align: -65%;}
 .tagsList li{display:block;float:left;}
 .buyList ul li{float:left;padding:0 3px 5px 4px;}
+/*.buyList ul li a{width:148px;height:148px;overflow: hidden;position: relative;}*/
 
 /*sideBar:End*/
 

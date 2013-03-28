@@ -27,7 +27,7 @@ else:
     MYSQL_HOST_S = sae.const.MYSQL_HOST_S
     MYSQL_PORT = sae.const.MYSQL_PORT
 
-# DEBUG = True
+# DEBUG = False
 
 ADMINS = (
     ('leiddx.ErEli', 'leiddx@vip.qq.com'),
@@ -128,7 +128,6 @@ djangoMidClass = [
 if DEBUG:
     djangoMidClass += ['debug_toolbar.middleware.DebugToolbarMiddleware',]
 
-
 MIDDLEWARE_CLASSES = tuple(djangoMidClass)
 
 
@@ -187,6 +186,9 @@ djangoAPPS = [
 if DEBUG:
     djangoAPPS += ['debug_toolbar',]
     INTERNAL_IPS = ('127.0.0.1',)
+    DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+}    
 
 INSTALLED_APPS = tuple(djangoAPPS)
 
