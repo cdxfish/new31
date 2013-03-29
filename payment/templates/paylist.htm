@@ -1,0 +1,40 @@
+{% extends "office.base.htm" %}
+
+{% block title %}支付方式{% endblock %}
+
+{% block urHere %} - <a href="/payment/">支付方式</a>{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/js/office/payment.js"></script>
+{% endblock %}
+
+{% block content %}
+        <div id="search">{% csrf_token %}
+          <form action="/payment/" metho="POST">
+            <img src="/images/icon_search.gif" border="0" alt="SEARCH" />
+            <input type="text" name="k" size="15" value="" />
+            <input type="submit" value=" 搜索 " class="button" />
+          </form>
+        </div>
+        <table cellpadding="3" cellspacing="1" width="100%" id="myTable">
+            <thead>
+              <tr>
+                <th width="40px">编号</th>
+                <th>标签</th>
+              </tr>
+            </thead>
+            <tbody>
+{% for i in tagList %}
+              <tr class="odd">
+                <td align="center">{{ i.id }}</td>
+                <td><a href="/tag/tag/{{ i.id }}/" title="编辑" class="editItem">{{ i.tag }}</a></td>
+              </tr>
+{% endfor %}
+            </tbody>
+              <tr>
+                <td align="right" nowrap="true" colspan="10">
+                  <div>共 {{ tagList|length }} 条记录</div>
+                </td>
+              </tr>
+        </table>
+{% endblock %}

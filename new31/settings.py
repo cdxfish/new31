@@ -121,6 +121,7 @@ djangoMidClass = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'account.middleware.UserMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -151,8 +152,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'django.contrib.messages.context_processors.messages',
-    'shop.common.base',
-    'office.common.base',
+    'shop.common.tagsClass',
 )
 
 
@@ -168,6 +168,7 @@ APPS = [
     'ajax',
     'office',
     # 'order',
+    'payment',
 ]
 
 djangoAPPS = [
