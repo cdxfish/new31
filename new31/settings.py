@@ -185,12 +185,12 @@ djangoAPPS = [
     'django.contrib.admindocs',
 ] + APPS
 
-# if DEBUG:
-    # djangoAPPS += ['debug_toolbar',]
-    # INTERNAL_IPS = ('127.0.0.1',)
-#     DEBUG_TOOLBAR_CONFIG = {
-#     'INTERCEPT_REDIRECTS': True,
-# }    
+if DEBUG:
+    djangoAPPS += ['debug_toolbar',]
+    INTERNAL_IPS = ('127.0.0.1',)
+    DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': True,
+}    
 
 INSTALLED_APPS = tuple(djangoAPPS)
 

@@ -76,3 +76,7 @@ INSERT INTO `tag_tag` (`tag`) VALUES
 ('派'),
 ('芒果'),
 ('芝士');
+
+INSERT INTO payment_pay ( `name`, cod, config, onLine) VALUES
+('货到付款', 'payafter', 'a', 1),
+('支付宝', 'alipay', 'a', 1);

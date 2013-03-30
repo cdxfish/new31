@@ -18,7 +18,7 @@
                             <td>
                                 <select name="pay" class="pay">
 {% for i in pay %}
-                                    <option value="{{ i.id }}">{{ i.name }}</option>
+                                    <option value="{{ i.id }}"{% ifequal i.id|floatformat request.session.c.pay %} selected{% endifequal %}>{{ i.name }}</option>
 {% endfor %}
                                 </select>
                                 (必填)
@@ -28,7 +28,7 @@
                             <td align="right">配送方式:</td>
                             <td>
                                 <select name="ship" class="ship">
-                                    <option value="1" selected>送货上门</option>
+                                    <option value="1">送货上门</option>
                                 </select>
                                 (必填)
                             </td>
@@ -42,16 +42,16 @@
                             <td>
                                 <select name="city" class="city">
                                     <option value="0">请选择城市</option>
-                                    <option value="1" selected>南宁</option>
+                                    <option value="1">南宁</option>
                                 </select>
                                 <select name="block" class="block">
                                     <option value="0">请选择区域</option>
-                                    <option value="2" selected>邕宁区</option>
-                                    <option value="3" >青秀区</option>
-                                    <option value="4" >兴宁区</option>
-                                    <option value="5" >良庆区</option>
-                                    <option value="6" >西乡塘区</option>
-                                    <option value="7" >江南区</option>
+                                    <option value="2">邕宁区</option>
+                                    <option value="3">青秀区</option>
+                                    <option value="4">兴宁区</option>
+                                    <option value="5">良庆区</option>
+                                    <option value="6">西乡塘区</option>
+                                    <option value="7">江南区</option>
                                 </select>
                                 (必填)
                             </td>
