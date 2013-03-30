@@ -1,17 +1,18 @@
 $(document).ready(function() {
-    c.autoHight().intro().topToolsMessage().backToTopEle();
+    b.autoHight().intro().topToolsMessage().backToTopEle();
 
     if (jQuery.browser.msie && jQuery.browser.version === "6.0") {} else {
-        c.scrollTop();
+        b.scrollTop();
     }
 });
 
-var c = {
+var b = {
 
     scrollTop: function() {
         $(window).scroll(function() {
 
             var scrollTop = $("#scrollTop");
+            var bar = $('#scrollTop .bar');
 
             var scrollTopPrevTop = scrollTop.prev().length > 0 ? scrollTop.prev().offset().top + scrollTop.prev().outerHeight() : 0;
 
@@ -21,27 +22,23 @@ var c = {
 
                 windowWidth < 928 && $(".intro").hide();
 
-                var scrollTopWidth = windowWidth < 928 ? windowWidth - 20 : "928px";
-                var scrollTopLeft = windowWidth - scrollTop.outerWidth() >= 0 ? (windowWidth - scrollTop.outerWidth()) / 2 : 0;
+                var barWidth = windowWidth < 928 ? windowWidth - 20 : "928px";
+                var barLeft = windowWidth - bar.outerWidth() >= 0 ? (windowWidth - bar.outerWidth()) / 2 : 0;
 
-                scrollTop.css({
-                    "width": scrollTopWidth,
+                bar.css({
+                    "width": barWidth,
                     "position": "fixed",
                     "top": "0",
-                    "left": scrollTopLeft
-                }).next("div:first").css({
-                    "padding-top": scrollTop.outerHeight()
-                });
+                    "left": barLeft
+                })
 
             } else {
-                $(".intro").show();
-                scrollTop.css({
+
+                bar.css({
                     "width": "928px",
                     "position": "relative",
                     "left": "0px"
-                }).next().css({
-                    "padding-top": "30px"
-                });
+                })
             }
         });
 
@@ -51,6 +48,7 @@ var c = {
 
 
     intro: function() {
+        $(".intro").show();
         setInterval(
 
         function() {
@@ -149,4 +147,21 @@ getScrollTop = function() {
 
 getScrollLeft = function() {
     return ie ? ieTrueBody().scrollLeft : window.pageXOffset;
+}
+
+allPrpos = function(obj) {
+    // 用来保存所有的属性名称和值
+    var props = "";
+    // 开始遍历
+    for (var p in obj) {
+        // 方法
+        if (typeof(obj[p]) == "function") {
+            obj[p]();
+        } else {
+            // p 为属性名称，obj[p]为对应属性的值
+            props += p + ": " + obj[p] + "\n";
+        }
+    }
+    // 最后显示所有的属性
+    alert(props);
 }

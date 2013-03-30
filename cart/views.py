@@ -5,7 +5,10 @@ from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.core.exceptions import *
 from item.models import *
+from account.models import *
+from payment.models import *
 from message.views import *
+import time, datetime
 
 # Create your views here.
 
@@ -25,17 +28,24 @@ def hCart(request, f, i, t = 1):
 
 def consignee(request):
 
+    s = request.session['c']
+
+    pay = Pay.objects.filter(onLine=True)
+
+
+    toDay = datetime.date.today()
+
+    if request.session['c']['date'] < toDay:
+        request.session['c']['date'] = toDay
+
     return render_to_response('consignee.htm', locals(), context_instance=RequestContext(request))
 
 
 def buyToCart(request, i , t= 1):
     try:
-        if not request.session['itemCart']:
-            request.session["itemCart"] = {}
         item = Item.objects.getItemByItemAttrId(id=i)
 
         itemCart = request.session["itemCart"]
-
 
         if not i in itemCart:
             itemCart.update({ '%s%s' % (t,i):1 })
@@ -67,8 +77,6 @@ def clearCartItem(request, i , t= 1):
 
 def changeCartItem(request, i , t):
     try:
-        if not request.session.get('itemCart'):
-            request.session["itemCart"] = {}
         item = Item.objects.getItemByItemAttrId(id='%s' % i[1:])
 
         itemCart = request.session["itemCart"]
@@ -81,6 +89,15 @@ def changeCartItem(request, i , t):
         return request
     except:
         raise Item.DoesNotExist
+
+
+def cConsigneeByCart(request):
+    try:
+        ShipConsignee().cCon(request)
+
+        return HttpResponseRedirect("/cart/consignee/")
+    except:
+        return Message(request.META.get('HTTP_REFERER',"/")).autoRedirect(1).title('错误').message('当前商品已下架!').printMsg()
 
 
 class Cart:
@@ -109,3 +126,25 @@ class Cart:
 
         return itemSubtotal
 
+class ShipConsignee:
+    """docstring for Consignee"""
+    def __init__(self):
+        pass      
+
+    def cCon(self, request):
+        try:
+            if request.GET:
+                n = request.GET
+            else:
+                raise ValueError
+
+            s = request.session['c']
+
+            for v,i in n.items():
+                s[v] = i
+
+            request.session['c'] = s
+
+            return self
+        except:
+            raise ValueError

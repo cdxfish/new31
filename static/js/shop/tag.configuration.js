@@ -1,125 +1,89 @@
 $(document).ready(function() {
     weiboShare();
     btnReplay();
-    btnLike();
+    like();
 });
 
 
 
 // 微博分享
-
 weiboShare = function() {
-    var weiboShare = $('<div class=\"weiboShare\"><a href=\"javascript:void(0);\" onclick=\"SharePhotos();\">微博分享</a></div>').appendTo($("body"))
+    var weiboShare = $('<div class="weiboShare"><a href="javascript:void(0);" >微博分享</a></div>').appendTo($("body"))
         .click(function() {
-        dialog("l", [{
-            val: "l",
-            title: "正在为你生成分享的图片，请稍候...",
-            className: "l",
-            fadeOut: -1,
-            width: 220
-        }]);
-        setTimeout(
 
-        function() {
-            ShareHtml('/m/DSC_3500.jpg');
-        },
-        1000);
-
-
+        $.dialog.loading('正在为你生成分享的图片，请稍候...').show(shareBtn());
 
     });
 
 }
+
+shareBtn = function() {
+    var h = '';
+    h += '   <a class="close" href="javascript:void(0);">关闭</a>';
+    h += '   <div class="box">  \r\n';
+    h += '      <div class="boxL"><img width="300px" src="/m/images/3133001p475a.jpg" alt=""/></div>  \r\n';
+    h += '      <div class="boxR"><h3>分享到</h3>  \r\n';
+    h += '          <ul>  \r\n';
+    h += '            <li><a target="_blank" href="sinaUrl"><img src="/images/t.sina.png" height="50px" width="120px" alt=""/></a></li>  \r\n';
+    h += '            <li><a target="_blank" href="qqUrl"><img src="/images/t.qq.png" height="50px" width="120px" alt=""/></a></li>  \r\n';
+    h += '          </ul>  \r\n';
+    h += '          <h3>分享地址<span>(适用于论坛博客)</span></h3>  \r\n';
+    h += '          <textarea><a href="pageUrl" target="_blank">linkText</a></textarea>  \r\n';
+    h += '      </div>  \r\n';
+    h += '   </div>  \r\n';
+    return h;
+
+}
+
+
+like = function() {
+
+    $('.btnLike').live('click',
+
+    function() {
+
+        $.dialog.message('衷心感谢您的喜欢！...');
+
+        return false;
+    });
+
+}
+
+
 
 btnReplay = function() {
 
     $('.btnReplay').live('click',
 
     function() {
-        var getURL = $(this).attr('href');
-        dialog("l", [{
-            val: "l",
-            title: "正在为您获取规格，请稍候...",
-            className: "l",
-            fadeOut: -1,
-            width: 220
-        }]);
 
-        getAttr(getURL);
+        $.dialog.loading('正在为您获取规格，请稍候');
 
-        return false;
-    });
-}
+        $.getJSON($(this).attr('href'),
 
-btnLike = function() {
+        function(data) {
+            $.dialog.dialogMsg(data, buyBtn);
 
-    $('.btnLike').live('click',
-
-    function() {
-        timeClosePopup('衷心感谢您的喜欢！', 1000);
+        });
 
         return false;
     });
-
 }
-
-
-ShareHtml = function(uploadShareImage, linkText, pageUrl, sinaUrl, qqUrl, sohuUrl) {
-
-    var share = '   <p><a class=\"btn_close\" href=\"javascript:void(0);\" onclick=\"closePopupNow();\">关闭</a></p>';
-    share += '   <div class=\"shareSelectBox\">  \r\n';
-    share += '      <div class=\"shareYourPhotosL\"><img width=\"300px\" src=\"' + uploadShareImage + '\" alt=\"\"/></div>  \r\n';
-    share += '      <div class=\"shareYourPhotosR\"><h3>分享到</h3>  \r\n';
-    share += '          <ul>  \r\n';
-    share += '            <li><a target=\"_blank\" href=\"" + sinaUrl + "\"><img src=\"' + '/images/t.sina.png' + '\" height=\"50\" width=\"120\" alt=\"\"/></a></li>  \r\n';
-    share += '            <li><a target=\"_blank\" href=\"" + qqUrl + "\"><img src=\"' + '/images/t.qq.png' + '\" height=\"50\" width=\"120\" alt=\"\"/></a></li>  \r\n';
-    share += '          </ul>  \r\n';
-    share += '          <h3>分享地址<span>(适用于论坛博客)</span></h3>  \r\n';
-    share += '          <textarea><a href=\"" + pageUrl + "\" target=\"_blank\">" + linkText + "</a></textarea>  \r\n';
-    share += '      </div>  \r\n';
-    share += '   </div>  \r\n';
-
-    dialog("share", [{
-        val: "share",
-        text: share,
-        isPanel: true,
-        fadeOut: -1,
-        width: 760
-    }]);
-
-    $("#floatingLayer").addClass("popup800");
-
-}
-
-getAttr = function(link) {
-
-    $.getJSON(link,
-
-    function(data) {
-        ajax(data, buyBtn);
-
-    });
-}
-
-
 
 buyBtn = function(data) {
-    var html = '   <p><a class=\"btn_close\" href=\"javascript:void(0);\" onclick=\"closePopupNow();\">关闭</a></p>';
-    html += '   <div class=\"shareSelectBox\">  \r\n';
-    html += '      <div class=\"buySpc\"><h3>请选择规格</h3>  \r\n';
+    var html = '';
+    html += '   <h3>请选择规格</h3>  \r\n';
     html += '        <table width="100%">  \r\n';
 
     $.each(data.data, function(i, v) {
         html += '          <tr>  \r\n';
         html += '             <td>' + v.attr + '</td>  \r\n';
         html += '             <td>￥' + v.amount + ' 元</td>  \r\n';
-        html += '             <td><a href="/cart/buy/'+ v.t + v.id + '/" class="btnB sBtn">购买</a></td>  \r\n';
+        html += '             <td><a href="/cart/buy/' + v.t + v.id + '/" class="btnB sBtn">购买</a></td>  \r\n';
         html += '          </tr>  \r\n';
     });
 
     html += '        </table>  \r\n';
-    html += '      </div>  \r\n';
-    html += '   </div>  \r\n';
 
     return html;
 }

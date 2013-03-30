@@ -95,7 +95,7 @@ class ItemFee(models.Model):
     itemType = models.SmallIntegerField(u'类型')
 
     def __unicode__(self):
-        return u"%s - %s" % (self.itemAttr, self.amount)
+        return u"%s - %s [%s]" % (self.itemAttr, self.amount, self.itemType)
 
     class Meta:
         ordering = ['amount']

@@ -8,11 +8,12 @@
     {% block meta %}{% endblock %}
     <link rel="stylesheet" href="/css/shop/base.css" />
     <link rel="stylesheet" href="/css/shop/style.css" />
-    <link rel="stylesheet" href="/css/shop/popup.css" />    
+    <link rel="stylesheet" href="/css/jquery.zebra_datepicker.css" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <script type="text/javascript" src="/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/popup.js"></script>
-    <script type="text/javascript" src="/js/shop/common.configuration.js"></script>
+    <script type="text/javascript" src="/js/jquery.zebra_datepicker.js"></script>
+    <script type="text/javascript" src="/js/jquery.dialog.js"></script>
+    <script type="text/javascript" src="/js/shop/base.configuration.js"></script>
 {% block js %}{% endblock %}
     <!--[if IE 6]>
     <script type="text/javascript" src="/js/DD_belatedPNG.js"></script>
@@ -90,18 +91,20 @@
 {% block scrollBox %}{% endblock %}
 {% block subMenu %}
     <div id="scrollTop">
-        <ul class="intro">
-            <li><p><span class="txt">喜欢就直接拨打电话吧，4000 - 5927 - 31。</span><br><span class="txtFrom">—— 31客</span></p></li>
-            <li><p><span class="txt">吃个31客的蛋糕，喝喝下午茶，最幸福了。</span><br><span class="txtFrom">—— 晴天浅唱（微博网友）</span></p></li>
-            <li><p><span class="txt">第一次吃到杏仁咖啡，叹为观止。</span><br><span class="txtFrom">—— 韦夏（当代生活报记者）</span></p></li>
-            <li><p><span class="txt">美食，同大家一齐分享。</span><br><span class="txtFrom">—— 31客</span></p></li>
-        </ul>
-        <ul class="menu">
-            <li><a  href="/tag/cake/">蛋糕</a></li>
-            <li><a href="/tag/cookie/">曲奇</a><span></span></li>
-            <li><a href="/tag/chocolate/">巧克力</a></li>
-            <li><a href="/tag/pie/">水果派</a></li>
-        </ul>
+        <div class="bar">
+            <ul class="intro">
+                <li><p><span class="txt">喜欢就直接拨打电话吧，4000 - 5927 - 31。</span><br><span class="txtFrom">—— 31客</span></p></li>
+                <li><p><span class="txt">吃个31客的蛋糕，喝喝下午茶，最幸福了。</span><br><span class="txtFrom">—— 晴天浅唱（微博网友）</span></p></li>
+                <li><p><span class="txt">第一次吃到杏仁咖啡，叹为观止。</span><br><span class="txtFrom">—— 韦夏（当代生活报记者）</span></p></li>
+                <li><p><span class="txt">美食，同大家一齐分享。</span><br><span class="txtFrom">—— 31客</span></p></li>
+            </ul>
+            <ul class="menu">
+                <li><a  href="/tag/cake/">蛋糕</a></li>
+                <li><a href="/tag/cookie/">曲奇</a><span></span></li>
+                <li><a href="/tag/chocolate/">巧克力</a></li>
+                <li><a href="/tag/pie/">水果派</a></li>
+            </ul>
+        </div>
     </div>
 {% endblock %}
     <div id="content" class="clearfix">

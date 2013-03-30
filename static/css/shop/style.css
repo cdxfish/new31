@@ -8,14 +8,14 @@
 .scrollBox{height:240px;overflow:hidden;width:928px;position:relative;margin:0 auto;padding:0 15px 15px 15px;border:solid #E5E5E5;border-width:0 1px 0px 1px;background:#FFFFFF;box-shadow:0px 2px #e9e9e9;*margin-top:-1px;}
 
 #fade_focus{display:block;float:left;width:930px;z-index:998;}
-.d1{border:#666666 0px solid;overflow:hidden;width:930px;position:relative;height:auto;background:#000000;}
-.loading{display:block;float:left;border:#666666 0px solid;font-weight:bold;font-size:12px;width:930px;color:#ffcc00;padding-top:30px;font-family:verdana, arial, helvetica, sans-serif;height:210px;background:#000000;text-align:center;}
-.d2{overflow:hidden;width:100%;height:240px;z-index:998;}
-.num_list{padding:0 4px;font-size:12px;left:0px;overflow:hidden;width:100%;color:#FFFFFF;bottom:-1px;position:absolute;height:20px;background:#FFFFFF;}
-.num_list span{display:inline-block;padding-left:6px;height:16px;}
-.button{font-weight:bold;font-size:13px;z-index:1000;right:0px;bottom:2px;font-family:arial, helvetica, sans-serif;position:absolute;}
-.bs1{display:block;float:left;padding:2px 6px;cursor:pointer;color:#FFFFFF;text-decoration:none;margin-right:3px;background:#666666;}
-.bs2{display:block;float:left;padding:2px 6px;cursor:pointer;color:#FFFFFF;text-decoration:none;margin-right:3px;background:#FF6633;}
+.scrollBox .d1{border:#666666 0px solid;overflow:hidden;width:930px;position:relative;height:auto;background:#000000;}
+.scrollBox .loading{display:block;float:left;border:#666666 0px solid;font-weight:bold;font-size:12px;width:930px;color:#ffcc00;padding-top:30px;font-family:verdana, arial, helvetica, sans-serif;height:210px;background:#000000;text-align:center;}
+.scrollBox .d2{overflow:hidden;width:100%;height:240px;z-index:998;}
+.scrollBox .num_list{padding:0 4px;font-size:12px;left:0px;overflow:hidden;width:100%;color:#FFFFFF;bottom:-1px;position:absolute;height:20px;background:#FFFFFF;}
+.scrollBox .num_list span{display:inline-block;padding-left:6px;height:16px;}
+.scrollBox .button{font-weight:bold;font-size:13px;z-index:1000;right:0px;bottom:2px;font-family:arial, helvetica, sans-serif;position:absolute;}
+.scrollBox .bs1{display:block;float:left;padding:2px 6px;cursor:pointer;color:#FFFFFF;text-decoration:none;margin-right:3px;background:#666666;}
+.scrollBox .bs2{display:block;float:left;padding:2px 6px;cursor:pointer;color:#FFFFFF;text-decoration:none;margin-right:3px;background:#FF6633;}
 
 /*scrollBox:End*/
 

@@ -19,7 +19,7 @@ def login(request):
                 # Correct password, and the user is marked "active"
                 auth.login(request, user)
                 # Redirect to a success page.
-                return HttpResponseRedirect("/")
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER',"/"))
             else:
                 # Show an error page
                 return Message(request.META.get('HTTP_REFERER',"/")).autoRedirect().title('错误').message('用户名或密码错误!').printMsg()
@@ -28,7 +28,7 @@ def login(request):
             return render_to_response('login.htm', locals(), context_instance=RequestContext(request))
 
     else:
-        return HttpResponseRedirect("/")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER',"/"))
 
 def logout(request):
 

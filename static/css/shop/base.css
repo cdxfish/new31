@@ -11,7 +11,7 @@ a.a_bg:hover{background:#EFF3FB;text-decoration:none}
 a:focus,input[type=button],input[type=submit],button{outline:none}
 table{border-collapse:collapse;border-spacing:0}
 table tr td{padding:7px;}
-textarea{overflow:auto;resize:none}
+textarea{overflow:auto;resize:none;border:1px solid #CCCCCC;color: #000000;}
 .clearfix{*zoom:1}
 .clearfix:after{display:block;visibility:hidden;clear:both;height:0;content:'.'}
 .cfff{color:#FFF}
@@ -277,7 +277,10 @@ background:-ms-linear-gradient(top, #980000 0%,#8a0000 45%,#8a0000 46%,#7e0000 1
 /*header:End*/
 
 /*scrollTop:Start*/
-#scrollTop{width:928px;height:40px;margin:0px auto;padding:10px 15px 10px 15px;border:solid #E5E5E5;border-width:0 1px 1px 1px;position:relative;box-shadow:0px 1px #E9E9E9;background:#FFF;z-index:997;}
+
+#scrollTop{height: 61px;}
+
+.bar{width:928px;height:40px;margin:0px auto;padding:10px 15px 10px 15px;border:solid #E5E5E5;border-width:0 1px 1px 1px;position:relative;box-shadow:0px 1px #E9E9E9;background:#FFF;z-index:997;}
 
 .intro{width:490px;height:100%;float:left;padding:0px;overflow:hidden;}
 .intro li{display:none;}
@@ -402,3 +405,25 @@ a:hover.backToTop{opacity:1;filter:Alpha(opacity=100)}
 .floatSearchPlaceBar input{margin:0 5px}
 .floatSearchPlaceBar input.txt{width:350px;}
 .floatSearchPlaceBar .loading_blue{vertical-align:middle}
+
+
+
+
+/*floatingLayer*/
+
+#maskLayer{display:none;position:fixed;background:#000; opacity:0.45;filter:alpha(opacity=75); width:100%;min-height:100%; left:0; top:0; z-index:9999; overflow:hidden}
+#floatingLayer{display:none;position:fixed;border-radius:10px; background:#fff; padding:10px 20px; z-index:10000; box-shadow:1px 2px 5px #000}
+#floatingLayer .close{ background:url(/images/btn_close.gif) no-repeat; display:block;height: 22px; width:22px;text-indent:-9999em; float:right; padding-bottom: 5px;}
+#floatingLayer .box{ overflow:hidden; _zoom:1; background:#f0f0f0; border:2px dashed #d6d6d6; padding:15px;margin-bottom: 10px; clear:both;}
+#floatingLayer .message{ text-align:center; width:220px}
+#floatingLayer .loading{ width:auto; padding-left:22px;background: url(/images/loading_s.gif) no-repeat;}
+
+#floatingLayer .boxL{ width:315px; /* height:450px;  */float:left; overflow:auto;}
+#floatingLayer .boxR{ margin-left:330px; }
+#floatingLayer .boxR ul{width:415px; *width:390px; overflow:hidden; _zoom:1; padding:0 0 10px 0;}
+#floatingLayer .boxR li{ float:left; margin:13px 15px 13px 0;*margin:13px 10px 13px 0;}
+#floatingLayer .boxR h3{ font-size:14px; font-weight:bold; margin:0 0 10px 0}
+#floatingLayer .boxR h3 span{ font-size:14px; color:#999;}
+#floatingLayer .boxR textarea{ width:375px; height:34px; border:1px solid #cfcaca; padding:8px;}
+
+/*floatingLayer*/

@@ -13,16 +13,12 @@ var cart = {
                     '/ajax/itemnum/' + thisValue + '/' + that.attr('name') + '/',
 
                 function(data) {
-                    if (data.error) {
-                        timeClosePopup(data.message, 1000);
+                    $.dialog.dialogMsgAndReload(data,
 
-                        window.location.reload();
-                    } else {
-                        $('.st' + that.attr('name')).text(data.data.itemSubtotal);
+                    function(data) {
+                        $('.st' + data.data.i).text(data.data.itemSubtotal);
                         $('.total').text(data.data.subtotal);
-
-                    }
-
+                    })
                 })
             } else {
                 that.val(1);

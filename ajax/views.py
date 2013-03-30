@@ -23,7 +23,10 @@ def ajaxItemAttr(request, i, t = 1):
         data['message'] = ''
         data['data'] = []
         for v in itemAttr:
-            data['data'].append({'id':v.id ,'attr':v.attrValue.attrValue ,'amount': '%s' % v.itemfee_set.get(itemType=t).amount,'t': t })
+            try:
+                data['data'].append({'id':v.id ,'attr':v.attrValue.attrValue ,'amount': '%s' % v.itemfee_set.get(itemType=t).amount,'t': t })
+            except:
+                pass
     except:
         data['error'] = True
         data['message'] = '当前商品已下架'
@@ -47,12 +50,21 @@ def ajaxCartItemNum(request, f, i, t):
 
         c = Cart(request)
 
-        r ={'itemSubtotal': '%.2f' % c.cartItemSubtotal(i,t), 'subtotal': '%.2f' % c.countFee }
+        r ={'itemSubtotal': '%.2f' % c.cartItemSubtotal(i,t), 'subtotal': '%.2f' % c.countFee, 'i': i }
 
         return HttpResponse(AjaxRJson().error(False).data(r).jsonEn())
     except:
 
         return HttpResponse(AjaxRJson().error(True).message('当前商品已下架').data(request.session['itemCart']).jsonEn())
+
+
+def cConsigneeByAjax(request):
+    try:
+        ShipConsignee().cCon(request)
+        return HttpResponse(AjaxRJson().error(False).jsonEn())
+    except:
+
+        return HttpResponse(AjaxRJson().error(True).message('无法填写表单').jsonEn())
 
 
 class AjaxRJson:
@@ -76,7 +88,7 @@ class AjaxRJson:
 
         return self
 
-    def data(self, d):
+    def data(self, d= {}):
         self.d = d
 
         return self

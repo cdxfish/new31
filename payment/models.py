@@ -10,7 +10,7 @@ class Pay(models.Model):
     onLine = models.BooleanField(u'上线')
 
     def __unicode__(self):
-        return u"%s - %s" % (self.name, slef.onLine)
+        return u"%s - %s" % (self.name, self.onLine)
 
     # class Meta:
         # verbose_name = u'支付方式'

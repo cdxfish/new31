@@ -10,6 +10,7 @@ import random
 # Create your views here.
 
 def tag(request, tagTitle = ''):
+    title = tagTitle
     item = GetItemByTag().getItem(tagTitle=tagTitle).item
 
     return render_to_response('tag.htm', locals(), context_instance=RequestContext(request))
