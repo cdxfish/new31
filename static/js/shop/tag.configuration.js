@@ -5,37 +5,6 @@ $(document).ready(function() {
 });
 
 
-
-// 微博分享
-weiboShare = function() {
-    var weiboShare = $('<div class="weiboShare"><a href="javascript:void(0);" >微博分享</a></div>').appendTo($("body"))
-        .click(function() {
-
-        $.dialog.loading('正在为你生成分享的图片，请稍候...').show(shareBtn());
-
-    });
-
-}
-
-shareBtn = function() {
-    var h = '';
-    h += '   <a class="close" href="javascript:void(0);">关闭</a>';
-    h += '   <div class="box">  \r\n';
-    h += '      <div class="boxL"><img width="300px" src="/m/images/3133001p475a.jpg" alt=""/></div>  \r\n';
-    h += '      <div class="boxR"><h3>分享到</h3>  \r\n';
-    h += '          <ul>  \r\n';
-    h += '            <li><a target="_blank" href="sinaUrl"><img src="/images/t.sina.png" height="50px" width="120px" alt=""/></a></li>  \r\n';
-    h += '            <li><a target="_blank" href="qqUrl"><img src="/images/t.qq.png" height="50px" width="120px" alt=""/></a></li>  \r\n';
-    h += '          </ul>  \r\n';
-    h += '          <h3>分享地址<span>(适用于论坛博客)</span></h3>  \r\n';
-    h += '          <textarea><a href="pageUrl" target="_blank">linkText</a></textarea>  \r\n';
-    h += '      </div>  \r\n';
-    h += '   </div>  \r\n';
-    return h;
-
-}
-
-
 like = function() {
 
     $('.btnLike').live('click',
@@ -57,12 +26,16 @@ btnReplay = function() {
 
     function() {
 
-        $.dialog.loading('正在为您获取规格，请稍候');
+        $(this).ajaxDialog(function(a) {
 
-        $.getJSON($(this).attr('href'),
+            $.getJSON(a.attr('href'),
 
-        function(data) {
-            $.dialog.dialogMsg(data, buyBtn);
+            function(data) {
+                $.dialog.dialogMsg(data, buyBtn, {
+                    width: 460
+                });
+
+            });
 
         });
 
@@ -86,4 +59,50 @@ buyBtn = function(data) {
     html += '        </table>  \r\n';
 
     return html;
+}
+
+
+// 微博分享
+weiboShare = function() {
+    var weiboShare = $('<div class="weiboShare"><a href="/weibo/" >微博分享</a></div>').appendTo($("body"))
+        .click(function() {
+
+        $(this).ajaxDialog(function(a) {
+
+            // $.getJSON(a.attr('href'),
+
+            // function(data) {
+                $.dialog.dialogMsg({
+                    error: false,
+                    data: {},
+                    message: ''
+                }, shareBtn, {
+                    width: 460
+                });
+
+            // });
+
+        });
+
+        return false;
+
+    });
+
+}
+
+shareBtn = function(data) {
+    var h = '';
+    h += '      <div class="weibo">';
+    h += '          <div class="weiboL"><img width="300px" src="/m/images/3133001p475a.jpg" alt=""/></div>  \r\n';
+    h += '          <div class="weiboR"><h3>分享到</h3>  \r\n';
+    h += '              <ul>  \r\n';
+    h += '                  <li><a target="_blank" href="sinaUrl"><img src="/images/t.sina.png" height="50px" width="120px" alt=""/></a></li>  \r\n';
+    h += '                  <li><a target="_blank" href="qqUrl"><img src="/images/t.qq.png" height="50px" width="120px" alt=""/></a></li>  \r\n';
+    h += '              </ul>  \r\n';
+    h += '              <h3>分享地址<span>(适用于论坛博客)</span></h3>  \r\n';
+    h += '              <textarea><a href="pageUrl" target="_blank">linkText</a></textarea>  \r\n';
+    h += '          </div>  \r\n';
+    h += '      </div>  \r\n';
+    return h;
+
 }

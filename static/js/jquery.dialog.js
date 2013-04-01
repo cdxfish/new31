@@ -12,13 +12,54 @@
 (function($) {
     $.extend({
         dialog: {
+            css: {
+                dialog: {
+                    'display': 'none',
+                    'z-index': 997,
+                    'background': 'none transparent scroll repeat 0% 0%',
+                    'width': '100%',
+                    'height': '100%',
+                    'position': 'absolute',
+                    'left': '0px',
+                    'top': '0px'
+                },
+                maskLayer: {
+                    'z-index': -1,
+                    'filter': 'alpha(opacity=75)',
+                    'left': '0px',
+                    'top': '0px',
+                    'position': 'absolute',
+                    'width': '100%',
+                    'height': '100%',
+                    'background-color': '#000',
+                    'opacity': 0.45,
+                    'overflow': 'hidden'
+                },
+                floatLayer: {
+                    'border-radius': '10px',
+                    'background': '#FFF',
+                    'padding': '10px 20px',
+                    'box-shadow': '1px 2px 5px #000',
+                    'z-index': 999,
+                    'height': 'auto',
+                    'margin-left': 'auto',
+                    'margin-right': 'auto',
+                    'position': 'fixed'
+                }
+
+            },
             maskLayer: function() {
-                $('body').append('<div id="floatingLayer"></div><div id="maskLayer"></div>');
+                $('body').append('<div id="dialog"><div id="maskLayer"></div><div id="floatLayer"></div></div>');
+                $('#dialog').css($.dialog.css.dialog).css({
+                    'height': $(document).height()
+                });
+                $('#maskLayer').css($.dialog.css.maskLayer);
+                $('#floatLayer').css($.dialog.css.floatLayer);
+
                 return this;
             },
             close: function() {
-                $("#maskLayer").hide();
-                $("#floatingLayer").hide();
+                $("#dialog").hide();
                 return this;
             },
             closeBtn: function() {
@@ -29,18 +70,40 @@
                 });
                 return this;
             },
-            show: function(h) {
-                $("#maskLayer").show();
-                $("#floatingLayer").html(h).fadeIn('fast').css({
-                    "top": (window.innerHeight - $("#floatingLayer").outerHeight() - 100) / 2,
-                    "left": (window.innerWidth - $("#floatingLayer").outerWidth()) / 2
-                });
+            showDialog: function(h, obj) {
+                var cssObj = obj ? obj : {};
+
+                document.getElementById("floatLayer").innerHTML = h;
+                $('#dialog').show();
+
+                var windowHeight = $(window).outerHeight();
+                var windowouterWidth = $('body').outerWidth();
+                var floatLayerHeight = $("#floatLayer").outerHeight() + 100;
+                var floatLayerouterWidth = $("#floatLayer").outerWidth();
+                var topPx = windowHeight < floatLayerHeight ? 0 : (windowHeight - floatLayerHeight) / 2;
+                var leftPx = windowouterWidth < floatLayerouterWidth ? 0 : (windowouterWidth - floatLayerouterWidth) / 2;
+
+                if (jQuery.browser.msie && jQuery.browser.version === "6.0") {
+
+
+                    $("#floatLayer").css({
+                        width: $("#floatLayer .box").outerWidth(),
+                        top: $(window).scrollTop() + 150,
+                        position: 'relative'
+                    }).css(cssObj);
+
+                } else {
+                    $("#floatLayer").css({
+                        top: topPx,
+                        left: leftPx
+                    });
+                }
+
                 return this;
             },
             delayClose: function(msg, t) {
                 var time = !t ? 1000 : t;
-                $("#floatingLayer").fadeOut(time);
-                $("#maskLayer").fadeOut(time);
+                $("#dialog").fadeOut(time);
                 return this;
             },
             dialogMsgAndReload: function(data, f, t) {
@@ -55,32 +118,42 @@
                 }
                 return this;
             },
-            loading: function(t) {
-                $.dialog.show('<span class="loading">' + t + '</span>')
+            loading: function(t, obj) {
+                var cssObj = obj ? obj : {
+                    width: 220
+                };
+                $.dialog.showDialog('<span class="loading" style="width:auto; padding-left:22px;background: url(/images/loading_s.gif) no-repeat;">' + t + '</span>', cssObj)
 
                 return this;
             },
-            message: function(msg, t) {
+            message: function(msg, t, obj) {
+                var cssObj = obj ? obj : {
+                    width: 220
+                };
                 var time = !t ? 1500 : t;
-                $.dialog.show('<span>' + msg + '</span>');
+
+
+                $.dialog.showDialog('<span class="message" style="text-align:center; width:220px">' + msg + '</span>', cssObj);
 
                 setTimeout('$.dialog.delayClose()', time);
 
                 return this;
             },
 
-            dialogMsg: function(data, f) {
+            dialogMsg: function(data, f, obj) {
+                var cssObj = obj ? obj : {};
                 if (data.error) {
                     $.dialog.message(data.message);
 
                 } else {
                     var h = '';
-                    h += '   <a class="close" href="javascript:void(0);">关闭</a>';
-                    h += '   <div class="box">  \r\n';
+                    h += '   <a class="close" href="javascript:void(0);" style="background:url(/images/btn_close.gif) no-repeat; display:block;height: 22px; width:22px;text-indent:-9999em; float:right; padding-bottom: 5px;">关闭</a>';
+                    h += '   <div class="box" style="overflow:hidden; _zoom:1; background:#f0f0f0; border:2px dashed #d6d6d6; padding:15px;margin-bottom: 10px; clear:both;">  \r\n';
                     h += f(data);
                     h += '      </div>  \r\n';
                     h += '   </div>  \r\n';
-                    $.dialog.show(h);
+
+                    $.dialog.showDialog(h, cssObj);
                 }
             },
 
@@ -94,12 +167,37 @@
                         f(data);
                     }
                 }
+            },
+
+            ajaxDialog: function(h, f, l) {
+                var f = f ? f : function() {};
+                var l = l ? l : '努力加载中请稍候，请稍候';
+                for (i in this) {
+                    alert(i);
+                }
+
+                $.dialog.loading(l);
+
+                f(h);
+
             }
 
         }
 
 
     });
+
+    $.fn.extend({
+        ajaxDialog: function(f, l) {
+            var f = f ? f : function() {};
+            var l = l ? l : '努力加载中请稍候，请稍候';
+
+            $.dialog.loading(l);
+
+            f(this);
+
+        }
+    })
 
 })(jQuery);
 

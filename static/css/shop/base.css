@@ -221,7 +221,7 @@ background:-ms-linear-gradient(top, #980000 0%,#8a0000 45%,#8a0000 46%,#7e0000 1
 
 /*header:Start*/
 
-#header{width:100%;min-width:960px;height:32px;padding:6px 0px;background:#FAF7F7;/* background:#FAF7F7;*/border-bottom:1px solid #CFCACA;box-shadow:0 0 3px #A7A3A3;z-index:998;position:relative;margin:0 auto}
+#header{width:100%;min-width:960px;height:32px;padding:6px 0px;background:#FAF7F7;/* background:#FAF7F7;*/border-bottom:1px solid #CFCACA;box-shadow:0 0 3px #A7A3A3;z-index:899;position:relative;margin:0 auto}
 .toolBar{width:960px;height:100%;margin:0 auto}
 .toolBar .logo{display:block;width:133px;height:100%;float:left;background:url(/images/logo.png) no-repeat 0 4px;}
 
@@ -250,7 +250,7 @@ background:-ms-linear-gradient(top, #980000 0%,#8a0000 45%,#8a0000 46%,#7e0000 1
 .toolBar .on,.toolBar .on:hover{background:#FFF;border-radius:2px 2px 0 0;color:#474531;display:block;box-shadow: 0 2px 4px rgba(30, 25, 25, 0.5);}
 .toolBar .on span{background:#676767;border-radius:2px;padding:0 5px;line-height:24px}
 
-.toolBar .messagePop{position:absolute;z-index:999;min-width:180px;background:#FFF;box-shadow:0 2px 4px rgba(30, 25, 25, 0.5);overflow:hidden;right:0;top:32px;}
+.toolBar .messagePop{position:absolute;z-index:899;min-width:180px;background:#FFF;box-shadow:0 2px 4px rgba(30, 25, 25, 0.5);overflow:hidden;right:0;top:32px;}
 .toolBar .messagePop h3{font-size:12px;font-weight:bold;border-bottom:1px  solid #CECECE;line-height:32px;text-indent:12px;margin-bottom:10px}
 .toolBar .messagePop h4{font-size:14px;font-weight:bold;line-height:24px}
 .toolBar .messagePop li{float:none;width:100%;margin:0px;}
@@ -280,7 +280,7 @@ background:-ms-linear-gradient(top, #980000 0%,#8a0000 45%,#8a0000 46%,#7e0000 1
 
 #scrollTop{height: 61px;}
 
-.bar{width:928px;height:40px;margin:0px auto;padding:10px 15px 10px 15px;border:solid #E5E5E5;border-width:0 1px 1px 1px;position:relative;box-shadow:0px 1px #E9E9E9;background:#FFF;z-index:997;}
+.bar{width:928px;height:40px;margin:0px auto;padding:10px 15px 10px 15px;border:solid #E5E5E5;border-width:0 1px 1px 1px;position:relative;box-shadow:0px 1px #E9E9E9;background:#FFF;z-index:898;}
 
 .intro{width:490px;height:100%;float:left;padding:0px;overflow:hidden;}
 .intro li{display:none;}
@@ -393,13 +393,10 @@ a:hover.backToTop{opacity:1;filter:Alpha(opacity=100)}
 .photoSingleNologin p a{font-size:14px;}
 .photoSingleNologin .btnG{margin:40px 0 0 0;padding:0 45px;}
 
-.weiboShare{position:fixed;right:0;top:165px;_position:absolute;z-index:10000111;}
+.weiboShare{position:fixed;right:0;top:165px;_position:absolute;z-index:996;}
 .weiboShare a{background:url(/images/weiboShare.png) 0 0 no-repeat;width:57px;height:65px;display:block;text-indent:-9999px;}
 .weiboShare a:hover{background-position:0 -76px}
 
-.goToLocation{position:fixed;right:0;top:235px;_position:absolute;z-index:10000111;}
-.goToLocation a{background:url(/images/weiboShare.png) 0 -152px no-repeat;width:57px;height:65px;display:block;text-indent:-9999px;}
-.goToLocation a:hover{background-position:0 -228px}
 
 .floatSearchPlaceBar{background:none repeat scroll 0 0 #fefefe;left:50%;margin-left:-240px;padding:10px;position:absolute;top:45px;width:480px;z-index:10000;}
 .floatSearchPlaceBar input{margin:0 5px}
@@ -409,21 +406,15 @@ a:hover.backToTop{opacity:1;filter:Alpha(opacity=100)}
 
 
 
-/*floatingLayer*/
+/*dialog*/
 
-#maskLayer{display:none;position:fixed;background:#000; opacity:0.45;filter:alpha(opacity=75); width:100%;min-height:100%; left:0; top:0; z-index:9999; overflow:hidden}
-#floatingLayer{display:none;position:fixed;border-radius:10px; background:#fff; padding:10px 20px; z-index:10000; box-shadow:1px 2px 5px #000}
-#floatingLayer .close{ background:url(/images/btn_close.gif) no-repeat; display:block;height: 22px; width:22px;text-indent:-9999em; float:right; padding-bottom: 5px;}
-#floatingLayer .box{ overflow:hidden; _zoom:1; background:#f0f0f0; border:2px dashed #d6d6d6; padding:15px;margin-bottom: 10px; clear:both;}
-#floatingLayer .message{ text-align:center; width:220px}
-#floatingLayer .loading{ width:auto; padding-left:22px;background: url(/images/loading_s.gif) no-repeat;}
+#floatLayer .weibo{width:730px;height:300px;}
+#floatLayer .weiboL{width:315px;float:left; overflow:auto;}
+#floatLayer .weiboR{width:415px;float:right; overflow:auto;}
+#floatLayer .weiboR ul{width:415px; *width:390px; overflow:hidden; _zoom:1; padding:0 0 10px 0;}
+#floatLayer .weiboR li{ float:left; margin:13px 15px 13px 0;*margin:13px 10px 13px 0;}
+#floatLayer .weiboR h3{ font-size:14px; font-weight:bold; margin:0 0 10px 0}
+#floatLayer .weiboR h3 span{ font-size:14px; color:#999;}
+#floatLayer .weiboR textarea{ width:375px; height:34px; border:1px solid #cfcaca; padding:8px;}
 
-#floatingLayer .boxL{ width:315px; /* height:450px;  */float:left; overflow:auto;}
-#floatingLayer .boxR{ margin-left:330px; }
-#floatingLayer .boxR ul{width:415px; *width:390px; overflow:hidden; _zoom:1; padding:0 0 10px 0;}
-#floatingLayer .boxR li{ float:left; margin:13px 15px 13px 0;*margin:13px 10px 13px 0;}
-#floatingLayer .boxR h3{ font-size:14px; font-weight:bold; margin:0 0 10px 0}
-#floatingLayer .boxR h3 span{ font-size:14px; color:#999;}
-#floatingLayer .boxR textarea{ width:375px; height:34px; border:1px solid #cfcaca; padding:8px;}
-
-/*floatingLayer*/
+/*dialog*/
