@@ -153,7 +153,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'django.contrib.messages.context_processors.messages',
-    'shop.common.tagsClass',
+    'tag.views.tagsClass',
 )
 
 
@@ -171,6 +171,7 @@ APPS = [
     # 'order',
     'payment',
     'spec',
+    'discount',
 ]
 
 djangoAPPS = [

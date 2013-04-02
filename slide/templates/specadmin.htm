@@ -1,0 +1,46 @@
+{% extends "office.base.htm" %}
+
+{% block title %}商品管理{% endblock %}
+
+{% block urHere %}<a href="/item/admin/">商品管理</a>{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/js/office/item.js"></script>
+{% endblock %}
+
+{% block content %}
+        <div id="search">{% csrf_token %}
+          <form action="/item/admin/" metho="POST">
+            <img src="/images/icon_search.gif" border="0" alt="SEARCH" />
+            <input type="text" name="k" size="15" value="" />
+            <input type="submit" value=" 搜索 " class="button" />
+          </form>
+        </div>
+        <table cellpadding="3" cellspacing="1" width="100%" id="myTable">
+            <thead>
+              <tr>
+                <th>编号</th>
+                <th>商品名称</th>
+                <th>货号</th>
+                <th>下架</th>
+                <th>是否显示</th>
+              </tr>
+            </thead>
+            <tbody>
+{% for i in itemList %}
+              <tr class="odd">
+                <td align="center" class="goods_id cp">{{ i.id }}</td>
+                <td><a href="/item/edit/{{ i.id }}/" title="编辑" class="editItem">{{ i.itemName }}</a></td>
+                <td align="center">{{ i.sn }}</td>
+                <td align="center" class="onLine cp"><img src="/images/{% if i.onLine %}yes{% else %}no{% endif %}.gif" /></td>
+                <td align="center" class="show cp"><img src="/images/{% if i.show %}yes{% else %}no{% endif %}.gif" /></td>
+              </tr>
+{% endfor %}
+            </tbody>
+              <tr>
+                <td align="right" nowrap="true" colspan="10">
+                  <div>共 {{ itemList|length }} 条记录</div>
+                </td>
+              </tr>
+        </table>
+{% endblock %}

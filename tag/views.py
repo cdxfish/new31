@@ -22,7 +22,9 @@ def tagAdmin(request):
     return render_to_response('tagadmin.htm', locals(), context_instance=RequestContext(request))
 
 
+def tagsClass(request):
 
+    return {'tagsClass':['DD9797','BA5252','D97D0F','E3BA9B','71BFCD','95BADD','A7CF50',]}
 
 
 class GetItemByTag:

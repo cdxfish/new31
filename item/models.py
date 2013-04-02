@@ -1,9 +1,9 @@
 #coding:utf-8
 
 from django.db import models
-from shop.models import *
 from tag.models import *
 from spec.models import *
+from discount.models import *
 
 # Create your models here.
 

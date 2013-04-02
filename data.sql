@@ -47,7 +47,7 @@ INSERT INTO `item_item` (`itemName`, `sn`) VALUES
 ( '奶酪芒果派', '3133022'),
 ( '杏仁优澈巧克力', '3177012');
 
-INSERT INTO `shop_attribute` (`attrValue`) VALUES
+INSERT INTO `spec_spec` (`value`) VALUES
 ('1.0磅：约16×16(cm)'),
 ('1.5磅：约20×20(cm)'),
 ('2.5磅：约23×23(cm)'),
@@ -56,7 +56,7 @@ INSERT INTO `shop_attribute` (`attrValue`) VALUES
 ('10.0磅：约39×39(cm)');
 
 
-INSERT INTO `shop_discount` (`discount`) VALUES
+INSERT INTO `discount_discount` (`discount`) VALUES
 ('10.0'),
 ('9.5'),
 ('9.0'),

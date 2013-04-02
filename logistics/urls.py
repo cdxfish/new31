@@ -1,9 +1,8 @@
 #coding:utf-8
 from django.conf.urls import patterns, include, url
-from django.conf import settings
 from views import *
-import os.path
+from office.common import *
 
 urlpatterns = patterns('',
-    (r'^$', shop),
+    (r'^admin\/$', Purview().check,{'appName':specAdmin}),
 )
