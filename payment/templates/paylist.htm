@@ -20,20 +20,22 @@
             <thead>
               <tr>
                 <th width="40px">编号</th>
-                <th>标签</th>
+                <th>名称</th>
+                <th>上线</th>
               </tr>
             </thead>
             <tbody>
-{% for i in tagList %}
-              <tr class="odd">
-                <td align="center">{{ i.id }}</td>
-                <td><a href="/tag/tag/{{ i.id }}/" title="编辑" class="editItem">{{ i.tag }}</a></td>
+{% for i in pay %}
+              <tr class="odd" align="center">
+                <td>{{ i.id }}</td>
+                <td align="left"><a href="/payment/{{ i.id }}/" title="{{ i.name }}">{{ i.name }}</a></td>
+                <td><a href="/payment/online/{{ i.id }}/" title="{{ i.onLine }}"><img src="/images/{% if i.onLine %}yes{% else %}no{% endif %}.gif" /></a></td>
               </tr>
 {% endfor %}
             </tbody>
               <tr>
                 <td align="right" nowrap="true" colspan="10">
-                  <div>共 {{ tagList|length }} 条记录</div>
+                  <div>共 {{ pay|length }} 条记录</div>
                 </td>
               </tr>
         </table>

@@ -76,9 +76,7 @@ weiboShare = function() {
                     error: false,
                     data: {},
                     message: ''
-                }, shareBtn, {
-                    width: 460
-                });
+                }, shareBtn);
 
             // });
 

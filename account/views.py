@@ -2,7 +2,7 @@
 from django.shortcuts import render_to_response
 from django.contrib import auth
 from django.template import RequestContext
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from message.views import *
 from account.models import *
 
@@ -15,7 +15,8 @@ def login(request):
             username = request.POST.get('username')
             password = request.POST.get('password')
             user = auth.authenticate(username=username, password=password)
-            if user is not None and user.is_active:
+
+            if user and user.is_active:
                 # Correct password, and the user is marked "active"
                 auth.login(request, user)
                 # Redirect to a success page.
@@ -28,7 +29,10 @@ def login(request):
             return render_to_response('login.htm', locals(), context_instance=RequestContext(request))
 
     else:
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER',"/"))
+        if '/account/login/' in request.META.get('HTTP_REFERER',"/"):
+            return HttpResponseRedirect('/')
+        else:
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER',"/"))
 
 def logout(request):
 

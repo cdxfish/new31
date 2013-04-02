@@ -1,7 +1,9 @@
 #coding:utf-8
+
 from django.db import models
 from shop.models import *
 from tag.models import *
+from spec.models import *
 
 # Create your models here.
 
@@ -14,9 +16,9 @@ class itemManager(models.Manager):
 
         return self.select_related().get(itemName=itemName).tag.all()
 
-    def getItemByItemAttrId(self, id = ''):
+    def getItemByItemSpecId(self, id = ''):
 
-        item = ItemAttr.objects.select_related().get(id=id).itemName
+        item = ItemSpec.objects.select_related().get(id=id).itemName
 
         if item.onLine and item.show:
 
@@ -31,18 +33,18 @@ class itemDescManager(models.Manager):
         return self.select_related().all()[0]
 
 
-class itemAttrManager(models.Manager):
-    def getAttrByItemId(self, id = ''):
+class itemSpecManager(models.Manager):
+    def getSpecByItemId(self, id = ''):
 
-        return Item.objects.select_related().get(models.Q(id=id) & models.Q(onLine=True) & models.Q(show=True)).itemattr_set.all()
+        return Item.objects.select_related().get(models.Q(id=id) & models.Q(onLine=True) & models.Q(show=True)).itemspec_set.all()
 
-    def getAttrByItemAttrId(self, id = ''):
+    def getSpecByItemSpecId(self, id = ''):
 
-        itemAttr = ItemAttr.objects.select_related().get(id=id)
+        itemSpec = ItemSpec.objects.select_related().get(id=id)
 
-        if itemAttr.itemName.onLine and itemAttr.itemName.show:
+        if itemSpec.itemName.onLine and itemSpec.itemName.show:
 
-            return itemAttr
+            return itemSpec
         else:
             raise self.DoesNotExist
 
@@ -76,30 +78,30 @@ class ItemDesc(models.Model):
         unique_together=(("itemName","desc"),)     
 
 
-class ItemAttr(models.Model):
+class ItemSpec(models.Model):
     itemName = models.ForeignKey(Item, verbose_name=u'商品')
-    attrValue = models.ForeignKey(AttriBute, verbose_name=u'规格')
-    objects = itemAttrManager()
+    spec = models.ForeignKey(Spec, verbose_name=u'规格')
+    objects = itemSpecManager()
 
     def __unicode__(self):
-        return u"%s - %s" % (self.itemName, self.attrValue)
+        return u"%s - %s" % (self.itemName, self.spec)
 
     class Meta:
-        ordering = ['attrValue']
-        unique_together=(("itemName","attrValue"),)           
+        ordering = ['spec']
+        unique_together=(("itemName","spec"),)           
 
 
 class ItemFee(models.Model):
-    itemAttr = models.ForeignKey(ItemAttr, verbose_name=u'规格', unique=True)
+    itemSpec = models.ForeignKey(ItemSpec, verbose_name=u'规格', unique=True)
     amount = models.DecimalField(u'单价', max_digits=10, decimal_places=2)
     itemType = models.SmallIntegerField(u'类型')
 
     def __unicode__(self):
-        return u"%s - %s [%s]" % (self.itemAttr, self.amount, self.itemType)
+        return u"%s - %s [%s]" % (self.itemSpec, self.amount, self.itemType)
 
     class Meta:
         ordering = ['amount']
-        unique_together=(("itemAttr","amount","itemType"),)   
+        unique_together=(("itemSpec","amount","itemType"),)   
 
 
 class ItemDiscount(models.Model):

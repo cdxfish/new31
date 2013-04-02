@@ -3,11 +3,6 @@
 from django.db import models
 
 # Create your models here.
-class AttriBute(models.Model):
-    attrValue = models.CharField(u'规格', max_length=30, unique=True)
-
-    def __unicode__(self):
-        return u"%s" % self.attrValue
 
 class Discount(models.Model):
     discount = models.DecimalField(u'折扣', max_digits=3, decimal_places=1)
