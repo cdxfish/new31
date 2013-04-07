@@ -104,8 +104,7 @@
         <div class="messagePop" style="display:none;">
           <ul>
             <li><a href="/item/item/">商品</a></li>
-            <li><a href="/item/spec/">规格</a></li>
-            <li><a href="/item/price/">价格</a></li>
+            <li><a href="/spec/">规格</a></li>
             <li><a href="/tag/tag/">标签</a></li>
             <li><a href="/slide/">首页幻灯片</a></li>
             <li><a href="/payment/">支付方式</a></li>
@@ -131,11 +130,22 @@
         <span id="adminName">{{ request.user.username }} [ {% if request.user.is_superuser %}超级管理员{% else %}普通管理{% endif %} ]</span>
     </div>
     <div id="content">
-{% if request.base.actionTool %}{% block actionTool %}
-      <div id="actionTool">
-        <a href="/item/new/">添加商品</a>
-      </div>
-{% endblock %}{% endif %}
+{% if request.action %}
+        <div id="tool">{% csrf_token %}
+{% if request.action.search %}
+          <form action="" metho="POST">
+            <img src="/images/icon_search.gif" border="0" alt="SEARCH" />
+            <input type="text" name="k" size="15" value="" />
+            <input type="submit" value=" 搜索 " class="button" />
+          </form>
+{% endif %}
+          <ul class="action">
+{% for i in action %}
+              <li><a href="/item/new/" class="button">添加商品</a></li>
+{% endfor %}
+          </ul>
+        </div>
+{% endif %}
 {% block content %}{% endblock %}
     </div>
       <div id="footer">

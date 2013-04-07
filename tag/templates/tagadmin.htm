@@ -9,18 +9,12 @@
 {% endblock %}
 
 {% block content %}
-        <div id="search">{% csrf_token %}
-          <form action="/tag/admin/" metho="POST">
-            <img src="/images/icon_search.gif" border="0" alt="SEARCH" />
-            <input type="text" name="k" size="15" value="" />
-            <input type="submit" value=" 搜索 " class="button" />
-          </form>
-        </div>
         <table cellpadding="3" cellspacing="1" width="100%" id="myTable">
             <thead>
               <tr>
                 <th width="40px">编号</th>
                 <th>标签</th>
+                <th>上线</th>
               </tr>
             </thead>
             <tbody>
@@ -28,6 +22,7 @@
               <tr class="odd">
                 <td align="center">{{ i.id }}</td>
                 <td><a href="/tag/tag/{{ i.id }}/" title="编辑" class="editItem">{{ i.tag }}</a></td>
+                <td align="center" class="onLine cp"><img src="/images/{% if i.onLine %}yes{% else %}no{% endif %}.gif" /></td>
               </tr>
 {% endfor %}
             </tbody>

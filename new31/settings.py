@@ -123,6 +123,7 @@ djangoMidClass = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'account.middleware.UserMiddleware',
     'cart.middleware.CartMiddleware',
+    'purview.middleware.ActionMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -172,6 +173,7 @@ APPS = [
     'payment',
     'spec',
     'discount',
+    'purview',
 ]
 
 djangoAPPS = [

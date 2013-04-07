@@ -7,6 +7,6 @@ from models import *
 # Create your views here.
 
 def specAdmin(request):
-    specList = Spec.objects.select_related().all()
-
+    specList = Spec.objects.select_related().all().order_by('id')
+ 
     return render_to_response('specadmin.htm', locals(), context_instance=RequestContext(request))    

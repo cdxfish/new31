@@ -1,33 +1,8 @@
 #coding:utf-8
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-from django.http import HttpResponseRedirect, HttpResponse
-from django.db.models import Q, Min
+from django.http import HttpResponseRedirect
 from account.views import UserInfo
-import random, json, os
 
 # Create your views here.
-
-def base(request):
-    """
-    加载APP For Office 基本信息类
-    """
-    if hasattr(request, 'base'):
-        base = request.base
-    else:
-        request.base = BaseOffice()
-
-    return {}
-
-
-class BaseOffice:
-    """docstring for Base"""
-
-    actionTool = False
-
-    def __init__(self):
-        pass
-
 
 class Purview:
     """权限"""
@@ -52,3 +27,11 @@ class Purview:
             return appName(request)
         else:
             return HttpResponseRedirect("/account/login/")
+
+
+class Ation:
+    """docstring for Ation"""
+
+    def action(self):
+
+        return True

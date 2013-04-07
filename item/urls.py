@@ -1,10 +1,8 @@
 #coding:utf-8
 from django.conf.urls import patterns, include, url
 from views import *
-from office.common import *
+from purview.views import *
 
 urlpatterns = patterns('',
-    (r'^admin\/$', Purview().check,{'appName':itemAdmin}),
-    (r'^item\/$', Purview().check,{'appName':itemAdd}),
+    (r'^item\/$', Purview().check,{'appName':itemAdmin}),
 )
-

@@ -9,21 +9,14 @@
 {% endblock %}
 
 {% block content %}
-        <div id="search">{% csrf_token %}
-          <form action="/item/admin/" metho="POST">
-            <img src="/images/icon_search.gif" border="0" alt="SEARCH" />
-            <input type="text" name="k" size="15" value="" />
-            <input type="submit" value=" 搜索 " class="button" />
-          </form>
-        </div>
         <table cellpadding="3" cellspacing="1" width="100%" id="myTable">
             <thead>
               <tr>
                 <th>编号</th>
                 <th>商品名称</th>
                 <th>货号</th>
-                <th>下架</th>
-                <th>是否显示</th>
+                <th>上线</th>
+                <th>前台是否显示</th>
               </tr>
             </thead>
             <tbody>
