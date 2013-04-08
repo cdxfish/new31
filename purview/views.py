@@ -1,6 +1,7 @@
 #coding:utf-8
 from django.http import HttpResponseRedirect
 from account.views import UserInfo
+from message.views import Message
 
 # Create your views here.
 
@@ -21,12 +22,11 @@ class Purview:
 
     def isPurview(self,request, appName):
 
-        userPurview = UserInfo(request.user).purview().returnPurview()
-
-        if request.path in userPurview:
+        if request.path in request.user.purview:
             return appName(request)
         else:
-            return HttpResponseRedirect("/account/login/")
+            return Message(request, request.META.get('HTTP_REFERER',"/")).autoRedirect(3). \
+        title('错误').message('权限不足，无法查看当前页面。').officeMsg()
 
 
 class Ation:

@@ -115,11 +115,6 @@ class UserInfo:
 
         return self
 
-    def returnPurview(self):
-
-        return self.obj.purview
-        # return dict.fromkeys(self.obj.purview,True) 
-
     def returnInfo(self):
 
         return self.obj

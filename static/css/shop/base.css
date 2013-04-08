@@ -319,6 +319,8 @@ background:-ms-linear-gradient(top, #980000 0%,#8a0000 45%,#8a0000 46%,#7e0000 1
 .pWhite h3{font-family:'Microsoft Yahei';padding:10px 0;}
 .pWhite p{line-height:30px;}
 
+#redirectionMsg{font-size:8px;color:#999;}
+
 
 .minus, .plus{
   cursor:pointer;

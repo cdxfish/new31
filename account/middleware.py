@@ -9,7 +9,7 @@ class UserMiddleware:
     def process_request(self, request):
 
         if hasattr(request, 'user'):
-            request.user = UserInfo(request.user).newOrderCount().newMsgCount().allmsgCount().returnInfo()
+            request.user = UserInfo(request.user).newOrderCount().newMsgCount().allmsgCount().purview().returnInfo()
 
         return None
 

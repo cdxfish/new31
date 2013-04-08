@@ -1,0 +1,16 @@
+{% extends "office.base.htm" %}
+
+{% block js %}{% include 'autojs.htm' %}{% endblock %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+  	  <div id="info">
+        <div id="message">
+          <h1>{{ message }}</h1>
+          <p id="redirectionMsg">如果您不进行操作，将在 <span id="spanSeconds">{{ speed }}</span> 秒后返回上一页。</p>
+          <ul>
+          </ul>
+        </div>
+      </div>
+{% endblock %}
