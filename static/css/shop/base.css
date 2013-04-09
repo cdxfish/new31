@@ -30,6 +30,7 @@ textarea{overflow:auto;resize:none;border:1px solid #CCCCCC;color: #000000;}
 a.grayFont:hover{color:#FFF;}
 .fsZero{font-size:0;}
 input[type=text],input[type=password],textarea{height:16px;padding:5px;border:1px solid #CFCACA;border-radius:2px;background:#FFF;}
+input{*height:16px;*padding:5px;*border:1px solid #CFCACA;*border-radius:2px;*background:#FFF;}
 textarea{height:80px;padding:5px;font-size:12px;line-height:1.4em}
 input:focus,textarea:focus{background:#FFF;box-shadow:1px 1px 3px #ccc inset;}
 header,footer,article,aside,section,nav,menu,hgroup{display:block;margin:0;padding:0}
@@ -221,7 +222,7 @@ background:-ms-linear-gradient(top, #980000 0%,#8a0000 45%,#8a0000 46%,#7e0000 1
 
 /*header:Start*/
 
-#header{width:100%;min-width:960px;height:32px;padding:6px 0px;background:#FAF7F7;/* background:#FAF7F7;*/border-bottom:1px solid #CFCACA;box-shadow:0 0 3px #A7A3A3;z-index:899;position:relative;margin:0 auto}
+#header{width:100%;min-width:960px;height:32px;padding:6px 0px;background:#FAF7F7;/* background:#FAF7F7;*/border-bottom:1px solid #CFCACA;box-shadow:0 0 3px #A7A3A3;z-index:899;position:relative;margin:0 auto;}
 .toolBar{width:960px;height:100%;margin:0 auto}
 .toolBar .logo{display:block;width:133px;height:100%;float:left;background:url(/images/logo.png) no-repeat 0 4px;}
 
@@ -268,6 +269,7 @@ background:-ms-linear-gradient(top, #980000 0%,#8a0000 45%,#8a0000 46%,#7e0000 1
 .toolBar .messagePop .editBox li a{text-indent:0px;}
 .toolBar .messagePop .topLoginBox{min-width:200px;_width:200px;padding:10px;}
 .toolBar .messagePop .topLoginBox li{padding:5px 0px;}
+.toolBar .messagePop .topLoginBox #Password{*width:149px;}
 .toolBar li a.pic, .toolBar li a.login{line-height:32px;height:32px;display:block;_width:30px;padding:0 15px 0 9px;}
 .toolBar li a.pic:hover, .toolBar li a.login:hover{height:32px;margin:0;line-height:32px}
 .toolBar li a.pic b{border-color:#89706D #FAF7F7 #FAF7F7;border-style:solid;border-width:4px;font-size:0;height:0;line-height:0;position:absolute;bottom:9px;/*  right:5px;*/ width:0;}

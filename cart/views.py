@@ -23,7 +23,7 @@ def hCart(request, f, i, t = 1):
 
         return HttpResponseRedirect("/cart/")
     except:
-        return Message(request.META.get('HTTP_REFERER',"/")).autoRedirect(1).title('错误').message('当前商品已下架!').printMsg()
+        return Message(request, request.META.get('HTTP_REFERER',"/")).autoRedirect(3).title('错误').message('当前商品已下架!').printMsg()
 
 
 def consignee(request):

@@ -4,6 +4,7 @@ $(document).ready(function() {
     if (jQuery.browser.msie && jQuery.browser.version === "6.0") {} else {
         b.scrollTop();
     }
+
 });
 
 var b = {

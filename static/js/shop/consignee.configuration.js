@@ -1,8 +1,14 @@
 $(document).ready(function() {
     c.noteObj($('.note')).note().submit().cCon();
-    $('.date').Zebra_DatePicker({
+    $('#date').Zebra_DatePicker({
         direction: true
     }); //日期选择控件
+
+
+    $('select').jgdDropdown({
+        clsLIExpand: false
+        // selected: 'RS'
+    });
 });
 
 
@@ -49,37 +55,37 @@ c = {
 
             var message = "";
 
-            if ($('.pay').val() == 0) {
+            if ($('#pay').val() == 0) {
                 message += '请选择支付方式!<br />';
             }
-            if ($('.ship').val() == 0) {
+            if ($('#ship').val() == 0) {
                 message += '请选择配送方式!<br />';
             }
-            if ($('.consignee').val() == 0) {
+            if ($('#consignee').val() == 0) {
                 message += '请填写收货人姓名!<br />';
             }
 
-            if ($('.city').val() == 0) {
+            if ($('#city').val() == 0) {
                 message += '请选择城市!<br />';
             }
 
-            if ($('.block').val() == 0) {
+            if ($('#block').val() == 0) {
                 message += '请选择区域!<br />';
             }
 
-            if ($('.address').val() == 0) {
+            if ($('#address').val() == 0) {
                 message += '请填写详细地址!<br />';
             }
 
-            if ($('.tel').val() == 0) {
+            if ($('#tel').val() == 0) {
                 message += '请填写联系电话!<br />';
             }
 
-            if ($('.date').val() == 0) {
+            if ($('#date').val() == 0) {
                 message += '请填写最佳送货日期!<br />';
             }
 
-            if ($('.time').val() == 0) {
+            if ($('#time').val() == 0) {
                 message += '请填写最佳送货时间!<br />';
             }
 
@@ -112,7 +118,7 @@ c = {
                 $.dialog.dialogMsgAndReload(data);
             })
 
-        })
+        });
         return this;
     }
 }

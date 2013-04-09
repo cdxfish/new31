@@ -2,7 +2,8 @@
 # Django settings for new31 project.
 import os
 
-ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+# ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+ROOT_PATH = os.path.dirname(os.path.dirname(__file__))
 
 DEBUG = not os.environ.get("APP_NAME", "")
 
@@ -72,7 +73,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.join(ROOT_PATH, '../media/').replace('\\','/')
+MEDIA_ROOT = os.path.join(ROOT_PATH, 'media/').replace('\\','/')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -84,7 +85,7 @@ MEDIA_URL = '/m/'
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
 
-STATIC_ROOT = os.path.join(ROOT_PATH, '../static/').replace('\\','/')
+STATIC_ROOT = os.path.join(ROOT_PATH, 'static/').replace('\\','/')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -144,7 +145,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(ROOT_PATH, 'templates').replace('\\','/'),
+    os.path.join(ROOT_PATH, 'new31/templates').replace('\\','/'),
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

@@ -28,7 +28,7 @@
                     'filter': 'alpha(opacity=75)',
                     'left': '0px',
                     'top': '0px',
-                    'position': 'absolute',
+                    'position': 'fixed',
                     'width': '100%',
                     'height': '100%',
                     'background-color': '#000',
@@ -83,6 +83,7 @@
                 var topPx = windowHeight < floatLayerHeight ? 0 : (windowHeight - floatLayerHeight) / 2;
                 var leftPx = windowouterWidth < floatLayerouterWidth ? 0 : (windowouterWidth - floatLayerouterWidth) / 2;
 
+                // 该死的IE
                 if (jQuery.browser.msie && jQuery.browser.version === "6.0") {
 
 
@@ -93,11 +94,16 @@
                     }).css(cssObj);
 
 
+                    $('#maskLayer').css({position:'absolute'})
+
+
                 } else {
                     $("#floatLayer").css({
                         top: topPx,
                         left: leftPx
                     });
+
+                    $('#maskLayer').css({position:'fixed'})
                 }
 
                 return this;
@@ -173,9 +179,6 @@
             ajaxDialog: function(h, f, l) {
                 var f = f ? f : function() {};
                 var l = l ? l : '努力加载中请稍候，请稍候';
-                for (i in this) {
-                    alert(i);
-                }
 
                 $.dialog.loading(l);
 
