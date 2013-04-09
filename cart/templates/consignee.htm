@@ -17,7 +17,7 @@
                             <td align="right">支付方式:</td>
                             <td>
                                 <select name="pay" id="pay">
-                                    <option value="0"{% if not request.session.c.pay|floatformat %} selected{% endif %}>请选择支付方式</option>
+                                    <option value="0"{% if not request.session.c.pay %} selected{% endif %}>请选择支付方式</option>
 {% for i in pay %}
                                     <option value="{{ i.id }}"{% ifequal i.id|floatformat request.session.c.pay %} selected{% endifequal %} >{{ i.name }}</option>
 {% endfor %}

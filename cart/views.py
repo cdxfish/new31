@@ -141,7 +141,11 @@ class ShipConsignee:
             s = request.session['c']
 
             for v,i in n.items():
-                s[v] = i
+                # 用于下拉框默认值,使得过滤器辨别为false
+                if i == '0':
+                    s[v] = 0
+                else:
+                    s[v] = i
 
             request.session['c'] = s
 
