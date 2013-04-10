@@ -2,7 +2,8 @@
 
 from django.http import HttpResponse
 from account.views import UserInfo
-from purview.views import Ation
+from message.views import Message
+from purview.views import *
 
 
 class ActionMiddleware:
@@ -16,3 +17,11 @@ class ActionMiddleware:
 
     # def process_response(self, request, response):
     #     pass
+
+
+class purviewMiddleware:
+    """权限中间件"""
+
+    def process_request(self, request):
+
+		return Purview(request).check()

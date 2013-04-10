@@ -23,7 +23,7 @@ def login(request):
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER',"/"))
             else:
                 # Show an error page
-                return Message(request.META.get('HTTP_REFERER',"/")).autoRedirect().title('错误').message('用户名或密码错误!').printMsg()
+                return Message(request.META.get('HTTP_REFERER',"/")).autoRedirect().title('错误').message('用户名或密码错误!').shopMsg()
 
         else:
             return render_to_response('login.htm', locals(), context_instance=RequestContext(request))

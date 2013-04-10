@@ -7,7 +7,7 @@ from django.template import RequestContext
 def message(request):
 
     return Message(request, request.META.get('HTTP_REFERER',"/")).autoRedirect(10). \
-        title('每个保安都是哲学家。他们每天都在提出哲学界的三个终极问题：').message('“你是谁？” “你从哪里来？” “你要到哪里去？”').printMsg()
+        title('每个保安都是哲学家。他们每天都在提出哲学界的三个终极问题：').message('“你是谁？” “你从哪里来？” “你要到哪里去？”').shopMsg()
 
 class Message:
     title ='Give Me Fire'
@@ -39,7 +39,7 @@ class Message:
 
         return self
 
-    def printMsg(self):
+    def shopMsg(self):
 
         return render_to_response('shopmsg.htm', \
             {'autoRedirect':self.autoRedirect, 'speed': self.speed, 'backUrl':self.backUrl, 'title': self.title, 'message': self.message, 'request': self.request}            )
