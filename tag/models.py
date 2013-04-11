@@ -14,6 +14,7 @@ class tagManager(models.Manager):
 
 class Tag(models.Model):
     tag = models.CharField(u'标签', max_length=60,unique=True)
+    onLine = models.BooleanField(u'上线', default=True)
     objects = tagManager()
 
     def __unicode__(self):

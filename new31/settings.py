@@ -123,15 +123,14 @@ djangoMidClass = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'account.middleware.UserMiddleware',
-    # 'purview.middleware.purviewMiddleware',
-    'purview.middleware.ActionMiddleware',
+    'purview.middleware.purviewMiddleware',
     'cart.middleware.CartMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 if DEBUG:
-    djangoMidClass += ['debug_toolbar.middleware.DebugToolbarMiddleware',    'purview.middleware.purviewMiddleware',]
+    djangoMidClass += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
 
 MIDDLEWARE_CLASSES = tuple(djangoMidClass)
 

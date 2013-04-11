@@ -6,19 +6,6 @@ from message.views import Message
 from purview.views import *
 
 
-class ActionMiddleware:
-
-    def process_request(self, request):
-
-        request.action = Ation().action()
-
-
-        return None
-
-    # def process_response(self, request, response):
-    #     pass
-
-
 class purviewMiddleware:
     """权限中间件"""
 

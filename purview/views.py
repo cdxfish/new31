@@ -48,14 +48,14 @@ class Purview:
                         ] #权限对照用列表,用于识别那些页面需要进行权限判定
 
     def check(self):
-        
-        return self.isStaff()
 
-    def isStaff(self):
+        return self.isPurview()
+
+    def isStaff(self,f):
 
         if self.request.user.is_authenticated() and self.request.user.is_staff :
             
-            return self.isPurview()
+            f(self.request)
 
         else:
             return HttpResponseRedirect("/account/login/")
@@ -64,15 +64,11 @@ class Purview:
 
         if self.request.path in self.purview: #进行权限页面对照,确认当前页面是否需要权限判定
 
+            if not self.request.user.is_authenticated() or not self.request.user.is_staff :
+
+                return HttpResponseRedirect("/account/login/")
+
             if not self.request.path in self.request.user.purview: #进行用户权限判定,确认当前用户是否有权进入该页面
 
                 return Message(self.request, self.request.META.get('HTTP_REFERER',"/")).autoRedirect(3000). \
             title('错误').message('权限不足，无法进行当前操作。').officeMsg()
-
-
-class Ation:
-    """docstring for Ation"""
-
-    def action(self):
-
-        return True
