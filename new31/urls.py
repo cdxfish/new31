@@ -11,12 +11,6 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^(nn\/$|cs\/$|km\/$|^$)', include('%s.urls' % settings.APPS[0])),
-    url(r'^css/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '%scss/' % settings.STATIC_ROOT}),
-    url(r'^js/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '%sjs/' % settings.STATIC_ROOT}),
-    url(r'^images/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '%simages/' % settings.STATIC_ROOT}),
-    url(r'^m/images/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '%simages/' % settings.MEDIA_ROOT}),
-    url(r'^m/(?P<path>.*)$', 'django.views.static.serve', {'document_root': '%simages/' % settings.MEDIA_ROOT}),
-    url(r'^(?P<path>.*\.ico)$', 'django.views.static.serve', {'document_root': '%s/' % settings.STATIC_ROOT}),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -30,3 +24,10 @@ for i in settings.APPS[1:]:
   urlpatterns += patterns('',
       (r'^%s/' % i , include('%s.urls' % i)),
   )
+
+
+if settings.DEBUG:
+    urlpatterns += patterns('', 
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+
+    )

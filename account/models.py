@@ -73,4 +73,4 @@ class UserInfo(models.Model):
     role = models.OneToOneField(Role, verbose_name=u'角色', blank=True, null=True)
 
     def __unicode__(self):
-        return u"%s [ %s%s ][ %s ][buycount: %s][integral: %s] - %s" % (self.user, self.get_birthMon_display(), self.get_birthDay_display(), self.get_sex_display(), self.buycount, self.integral, self.regTime)
+        return u"%s [ %s ] - %s" % (self.user, self.role, self.regTime)

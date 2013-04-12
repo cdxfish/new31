@@ -13,6 +13,12 @@ import random, json, os
 # APP For Shop UI
 def shop(request):
 
+    a = request.path
+
+    d = dir(request)
+
+    b = dir(request.path)
+
     itemList = ItemPin(10).buildItemList().sort(sortFun).itemList
 
     tagList = Tag.objects.all()[:8]
@@ -60,7 +66,7 @@ class ItemPin:
 
         item = {
             'cssClass': self.baseClass,    
-            'img': '/m/%ss.jpg' % randomItem.sn,
+            'img': '%simages/%ss.jpg' % (settings.MEDIA_URL, randomItem.sn),
             'itemName': randomItem.itemName,
             'sn': randomItem.sn,
             'like': randomItem.like,
@@ -79,7 +85,7 @@ class ItemPin:
         if os.path.isfile('%simages\\%sb.jpg' % (settings.MEDIA_ROOT, lineItem[0]['sn'])):
 
             lineItem[0]['cssClass'] = self.orthClass
-            lineItem[0]['img'] = '/m/%sb.jpg' % lineItem[0]['sn']
+            lineItem[0]['img'] = '%simages/%sb.jpg' % (settings.MEDIA_URL, lineItem[0]['sn'])
 
         else:
             lineItem.append(self.randomItem())

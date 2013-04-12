@@ -3,7 +3,7 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block js %}
-    <script type="text/javascript" src="/js/shop/shop.configuration.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}shop/js/shop.configuration.js"></script>
 {% endblock %}
 
 
@@ -12,12 +12,12 @@
         <div id="fadeFocus" style="display: block;">
             <div class="loading">Loading...<br /></div>
             <ul style="display:none;">
-              <li><a href="about.php?aid=22" target="_blank/" title="香浓巧克力"><img src="/m/afficheimg/userday12-31.jpg" width="930" height="240" /></a></li>
-              <li><img src="/m/afficheimg/sales.jpg" width="930" height="240" /></li>
-              <li><img src="/m/afficheimg/almond.jpg" width="930" height="240" /></li>
+              <li><a href="/tag/香浓巧克力/" target="_blank/" title="香浓巧克力"><img src="{{ MEDIA_URL }}images/afficheimg/userday12-31.jpg" width="930" height="240" /></a></li>
+              <li><img src="{{ MEDIA_URL }}images/afficheimg/sales.jpg" width="930" height="240" /></li>
+              <li><img src="{{ MEDIA_URL }}images/afficheimg/almond.jpg" width="930" height="240" /></li>
             </ul>
         </div>
-        <script type="text/javascript" src="/js/scroll.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/scroll.js"></script>
     </div>
 {% endblock %}
 
@@ -40,9 +40,9 @@
         <div class="locListName">
             <h4>其他城市</h4>
             <ul>
-                <li><img width="30" height="30" src="/images/004.ico" alt="中国,南宁" title="中国,南宁" /><a href="/nn/">南宁</a></li>
-                <li><img width="30" height="30" src="/images/005.ico" alt="中国,长沙" title="中国,长沙" /><a href="/cs/">长沙</a></li>
-                <li><img width="30" height="30" src="/images/012.ico" alt="中国,昆明" title="中国,昆明" /><a href="/km/">昆明</a></li>
+                <li><img width="30" height="30" src="{{ STATIC_URL }}images/004.ico" alt="中国,南宁" title="中国,南宁" /><a href="/nn/">南宁</a></li>
+                <li><img width="30" height="30" src="{{ STATIC_URL }}images/005.ico" alt="中国,长沙" title="中国,长沙" /><a href="/cs/">长沙</a></li>
+                <li><img width="30" height="30" src="{{ STATIC_URL }}images/012.ico" alt="中国,昆明" title="中国,昆明" /><a href="/km/">昆明</a></li>
             </ul>
         </div>
         <div class="tagsList">
@@ -56,66 +56,66 @@
         <div class="buyList">
             <h4>最近购买过的人</h4>
             <ul>
-                <li><a href="/tag/evanescence/"><img width="32" height="32" src="/images/s_50.png" alt="再见北方" title="再见北方" /></a></li>
+                <li><a href="/tag/evanescence/"><img width="32" height="32" src="{{ STATIC_URL }}images/s_50.png" alt="再见北方" title="再见北方" /></a></li>
                 <li>
-                    <a href="/tag/17352869/"><img width="32" height="32" src="/images/s_50.png" alt="蛮老碗" title="蛮老碗" /></a>
+                    <a href="/tag/17352869/"><img width="32" height="32" src="{{ STATIC_URL }}images/s_50.png" alt="蛮老碗" title="蛮老碗" /></a>
                 </li>
                 <li>
-                    <a href="/tag/zhangyaoxi/"><img width="32" height="32" src="/images/s_50.png" alt="张耀兮" title="张耀兮" /></a>
+                    <a href="/tag/zhangyaoxi/"><img width="32" height="32" src="{{ STATIC_URL }}images/s_50.png" alt="张耀兮" title="张耀兮" /></a>
                 </li>
                 <li>
-                    <a href="/tag/google/"><img width="32" height="32" src="/m/65d14999dd9441f48f5a31cc91ae2023_s_50.jpg" alt="心干情怨" title="心干情怨" /></a>
+                    <a href="/tag/google/"><img width="32" height="32" src="{{ MEDIA_URL }}images/65d14999dd9441f48f5a31cc91ae2023_s_50.jpg" alt="心干情怨" title="心干情怨" /></a>
                 </li>
                 <li>
-                    <a href="/tag/20863238/"><img width="32" height="32" src="/images/s_50.png" alt="英俊中年" title="英俊中年" /></a>
+                    <a href="/tag/20863238/"><img width="32" height="32" src="{{ STATIC_URL }}images/s_50.png" alt="英俊中年" title="英俊中年" /></a>
                 </li>
                 <li>
-                    <a href="/tag/kkkkkkkkkk/"><img width="32" height="32" src="/m/bae1c4be7f314052ba44c958fadf27d3_s_50.jpg" alt="句号姑娘" title="句号姑娘" /></a>
+                    <a href="/tag/kkkkkkkkkk/"><img width="32" height="32" src="{{ MEDIA_URL }}images/bae1c4be7f314052ba44c958fadf27d3_s_50.jpg" alt="句号姑娘" title="句号姑娘" /></a>
                 </li>
                 <li>
-                    <a href="/tag/20791081/"><img width="32" height="32" src="/images/s_50.png" alt="江国藩" title="江国藩" /></a>
+                    <a href="/tag/20791081/"><img width="32" height="32" src="{{ STATIC_URL }}images/s_50.png" alt="江国藩" title="江国藩" /></a>
                 </li>
                 <li>
-                    <a href="/tag/ers45678911"><img width="32" height="32" src="/m/e46802f9826f4c45bca3d1a0eceeb11e_s_50.jpg" alt="提亚碧玺工厂那些美丽石头" title="提亚碧玺工厂那些美丽石头" /></a>
+                    <a href="/tag/ers45678911"><img width="32" height="32" src="{{ MEDIA_URL }}images/e46802f9826f4c45bca3d1a0eceeb11e_s_50.jpg" alt="提亚碧玺工厂那些美丽石头" title="提亚碧玺工厂那些美丽石头" /></a>
                 </li>
                 <li>
-                    <a href="/tag/yonglovelin/"><img width="32" height="32" src="/m/894c969f2703451899e7874a86864ee3_s_50.jpg" alt="小绿女孩" title="小绿女孩" /></a>
+                    <a href="/tag/yonglovelin/"><img width="32" height="32" src="{{ MEDIA_URL }}images/894c969f2703451899e7874a86864ee3_s_50.jpg" alt="小绿女孩" title="小绿女孩" /></a>
                 </li>
                 <li>
-                    <a href="/tag/Joseph/"><img width="32" height="32" src="/m/ebaa41a38e5c48afb5b1c297ecc1fa8d_s_50.jpg" alt="joseph" title="joseph" /></a>
+                    <a href="/tag/Joseph/"><img width="32" height="32" src="{{ MEDIA_URL }}images/ebaa41a38e5c48afb5b1c297ecc1fa8d_s_50.jpg" alt="joseph" title="joseph" /></a>
                 </li>
             </ul>
         </div>
         <div class="buyList">
             <h4>热销</h4>
             <ul>
-                <li><a href="/tag/evanescence/"><img width="32" height="32" src="/m/3133015s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a></li>
+                <li><a href="/tag/evanescence/"><img width="32" height="32" src="{{ MEDIA_URL }}images/3133015s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a></li>
                 <li>
-                    <a href="/tag/17352869/"><img width="32" height="32" src="/m/3133017s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
+                    <a href="/tag/17352869/"><img width="32" height="32" src="{{ MEDIA_URL }}images/3133017s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
                 </li>
                 <li>
-                    <a href="/tag/zhangyaoxi/"><img width="32" height="32" src="/m/3133018s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
+                    <a href="/tag/zhangyaoxi/"><img width="32" height="32" src="{{ MEDIA_URL }}images/3133018s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
                 </li>
                 <li>
-                    <a href="/tag/google/"><img width="32" height="32" src="/m/3133018s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
+                    <a href="/tag/google/"><img width="32" height="32" src="{{ MEDIA_URL }}images/3133018s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
                 </li>
                 <li>
-                    <a href="/tag/20863238/"><img width="32" height="32" src="/m/3133005s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
+                    <a href="/tag/20863238/"><img width="32" height="32" src="{{ MEDIA_URL }}images/3133005s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
                 </li>
                 <li>
-                    <a href="/tag/kkkkkkkkkk/"><img width="32" height="32" src="/m/3133006s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
+                    <a href="/tag/kkkkkkkkkk/"><img width="32" height="32" src="{{ MEDIA_URL }}images/3133006s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
                 </li>
                 <li>
-                    <a href="/tag/20791081/"><img width="32" height="32" src="/m/3133004s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
+                    <a href="/tag/20791081/"><img width="32" height="32" src="{{ MEDIA_URL }}images/3133004s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
                 </li>
                 <li>
-                    <a href="/tag/ers45678911"><img width="32" height="32" src="/m/3133010s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
+                    <a href="/tag/ers45678911"><img width="32" height="32" src="{{ MEDIA_URL }}images/3133010s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
                 </li>
                 <li>
-                    <a href="/tag/yonglovelin/"><img width="32" height="32" src="/m/3133011s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
+                    <a href="/tag/yonglovelin/"><img width="32" height="32" src="{{ MEDIA_URL }}images/3133011s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
                 </li>
                 <li>
-                    <a href="/tag/Joseph/"><img width="32" height="32" src="/m/3133004s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
+                    <a href="/tag/Joseph/"><img width="32" height="32" src="{{ MEDIA_URL }}images/3133004s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
                 </li>
             </ul>
         </div>
