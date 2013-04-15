@@ -10,6 +10,9 @@ class Purview:
 
     def __init__(self, request):
         self.request = request
+        self.request.user.action = []
+        self.request.user.search = False
+
         self.purview = [
                           '/office/',
                           '/order/',
@@ -72,3 +75,11 @@ class Purview:
 
                 return Message(self.request, self.request.META.get('HTTP_REFERER',"/")).autoRedirect(3000). \
             title('错误').message('权限不足，无法进行当前操作。').officeMsg()
+
+            return self.pageAction()
+
+    def pageAction(self):
+        # 权限加持
+        self.request.user.action = self.request.user.userinfo.role.purview.get(path=self.request.path).sub_set.all()
+
+        return self

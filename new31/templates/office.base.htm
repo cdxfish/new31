@@ -5,11 +5,11 @@
     <title>{% block title %}{{ title}}{% endblock %} - 31客管理中心</title>
     <meta name="Keywords" content="{% block keywords %}31客,31客蛋糕,蛋糕{% endblock %}" />
     <meta name="Description" content="{% block description %}蛋糕电子商务{% endblock %}" />
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link href="/css/office/style.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/jquery.tablesorter.js"></script>
-    <script type="text/javascript" src="/js/office/base.js"></script>
+    <link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico" type="image/x-icon" />
+    <link href="{{ STATIC_URL }}office/css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}office/js/base.js"></script>
     {% block js %}{% endblock %}
 </head>          
 <body>
@@ -130,21 +130,25 @@
         <span id="adminName">{{ request.user.username }} [ {% if request.user.is_superuser %}超级管理员{% else %}普通管理{% endif %} ]</span>
     </div>
     <div id="content">
-{% if request.action %}
-        <div id="tool">{% csrf_token %}
-{% if request.action.search %}
-          <form action="" metho="POST">
-            <img src="/images/icon_search.gif" border="0" alt="SEARCH" />
-            <input type="text" name="k" size="15" value="" />
-            <input type="submit" value=" 搜索 " class="button" />
-          </form>
+{% if request.user.search or request.user.action %}
+        <div id="tool">
+{% if request.user.search %}
+            <div class="search">
+              <form action="" metho="POST">{% csrf_token %}
+                <img src="{{ STATIC_URL }}images/icon_search.gif" border="0" alt="SEARCH" />
+                <input type="text" name="k" size="15" value="" />
+                <input type="submit" value=" 搜索 " class="button" />
+              </form>
+            </div>
 {% endif %}
+{% if request.user.action %}
           <ul class="action">
-{% for i in action %}
-              <li><a href="/item/new/" class="button">添加商品</a></li>
+{% for i in request.user.action %}
+              <li><a href="{{ i.path }}" class="button">{{ i.name }}</a></li>
 {% endfor %}
           </ul>
         </div>
+{% endif %}
 {% endif %}
 {% block content %}{% endblock %}
     </div>

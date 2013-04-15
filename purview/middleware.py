@@ -11,4 +11,13 @@ class purviewMiddleware:
 
     def process_request(self, request):
 
-		return Purview(request).check()
+        Purview(request).check()
+
+        return None
+
+
+    # def process_response(self, request, response):
+
+    #     Purview(request).pageAction()
+
+    #     return HttpResponse(response)

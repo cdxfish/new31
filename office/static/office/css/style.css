@@ -157,7 +157,7 @@ a.button:active{
   width: 22px;
   height: 16px;
   padding: 0 10px 0 0;
-  background: url(/images/ico_showmorer.png) no-repeat;
+  background: url(/static/images/ico_showmorer.png) no-repeat;
 }
 
 #navMenu .messagePop{position:absolute;z-index:999;min-width:54px;background:#FFF;box-shadow:0 2px 4px rgba(30, 25, 25, 0.5);overflow:hidden;top:25px;left: 0;  border-radius: 3px;}
@@ -275,11 +275,11 @@ a.button:active{
 }
 
 #content table .headerSortUp{
-  background-image: url(/images/s_asc.png);
+  background-image: url(/static/images/s_asc.png);
 }
 
 #content table .headerSortDown{
-  background-image: url(/images/s_desc.png);
+  background-image: url(/static/images/s_desc.png);
 }
 
 #content table td{
@@ -309,6 +309,7 @@ a.button:active{
   font-size:14px;
   padding:7px 10px;
   margin:0 0 10px 0;
+  height: 22px;
 }
 
 #content #tool img,
@@ -324,10 +325,12 @@ a.button:active{
   vertical-align:-65%;
 }
 
+#content #tool .search{
+  float: left;
+}
+
 #content #tool .action{
   float: right;
-  position: relative;
-  top:-23px;
 }
 
 #content #tool li{

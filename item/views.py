@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
 from item.models import Item
+from django.contrib.auth.models import User
 import json
 
 # Create your views here.
@@ -13,6 +14,10 @@ def item(request):
 
 def itemAdmin(request):
     itemList = ItemList().itemGetInfo().itemList
+
+    a = request.user.userinfo.role.purview.get(path=request.path).sub_set.all()
+    d = dir(a)
+
 
     # return HttpResponse(json.dumps(itemList))
     return render_to_response('itemadmin.htm', locals(), context_instance=RequestContext(request))    
