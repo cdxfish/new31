@@ -13,7 +13,7 @@ class tagManager(models.Manager):
         return self.select_related().filter(tag=tag)
 
 class Tag(models.Model):
-    tag = models.CharField(u'标签', max_length=60,unique=True)
+    tag = models.CharField(u'标签', max_length=60, unique=True)
     onLine = models.BooleanField(u'上线', default=True)
     objects = tagManager()
 
