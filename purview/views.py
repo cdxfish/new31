@@ -80,6 +80,6 @@ class Purview:
 
     def pageAction(self):
         # 权限加持
-        self.request.user.action = self.request.user.userinfo.role.purview.get(path=self.request.path).sub_set.all()
+        # self.request.user.action = self.request.user.userinfo.role.purview.get(path=self.request.path).sub_set.all()
 
         return self

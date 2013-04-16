@@ -15,7 +15,7 @@ def item(request):
 def itemAdmin(request):
     itemList = ItemList().itemGetInfo().itemList
 
-    a = request.user.userinfo.role.purview.get(path=request.path).sub_set.all()
+    a = request.user
     d = dir(a)
 
 
