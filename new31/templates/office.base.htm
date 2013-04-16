@@ -11,6 +11,12 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}office/js/base.js"></script>
     {% block js %}{% endblock %}
+<!--[if IE 6]>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/DD_belatedPNG.js"></script>
+    <script type="text/javascript">
+        DD_belatedPNG.fix('img, .logo');
+    </script>
+<![endif]-->
 </head>          
 <body>
     <ul id="navMenu">
@@ -130,9 +136,9 @@
         <span id="adminName">{{ request.user.username }} [ {% if request.user.is_superuser %}超级管理员{% else %}普通管理{% endif %} ]</span>
     </div>
     <div id="content">
-{% if request.user.search or request.user.action %}
+{% if request.domTag.search or request.domElement %}
         <div id="tool">
-{% if request.user.search %}
+{% if request.domTag.search %}
             <div class="search">
               <form action="" metho="POST">{% csrf_token %}
                 <img src="{{ STATIC_URL }}images/icon_search.gif" border="0" alt="SEARCH" />
@@ -141,9 +147,9 @@
               </form>
             </div>
 {% endif %}
-{% if request.user.action %}
+{% if request.domElement %}
           <ul class="action">
-{% for i in request.user.action %}
+{% for i in request.domElement %}
               <li><a href="{{ i.path }}" class="button">{{ i.name }}</a></li>
 {% endfor %}
           </ul>

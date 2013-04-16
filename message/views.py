@@ -1,6 +1,7 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.conf import settings
 
 # Create your views here.
 
@@ -18,10 +19,12 @@ class Message:
     autoRedirect = False
 
     def __init__(self, request, url):
-        if url:
+        self.request = request
+
+
+        if url and (self.request.META.get('HTTP_REFERER',"/") != url):
             self.backUrl = url
 
-        self.request = request
 
     def autoRedirect(self, speed = 3):
         self.autoRedirect = True
@@ -40,11 +43,19 @@ class Message:
         return self
 
     def shopMsg(self):
-
-        return render_to_response('shopmsg.htm', \
-            {'autoRedirect':self.autoRedirect, 'speed': self.speed, 'backUrl':self.backUrl, 'title': self.title, 'message': self.message, 'request': self.request}            )
+        return self.printMsg('shopmsg')
 
     def officeMsg(self):
 
-        return render_to_response('officemsg.htm', \
-            {'autoRedirect':self.autoRedirect, 'speed': self.speed, 'backUrl':self.backUrl, 'title': self.title, 'message': self.message, 'request': self.request}            )
+        return self.printMsg('officemsg')
+
+
+    def printMsg(self, tempName):
+
+        autoRedirect = self.autoRedirect
+        speed = self.speed
+        backUrl = self.backUrl
+        title = self.title
+        message = self.message
+
+        return render_to_response('%s.htm' % tempName, locals(), context_instance=RequestContext(self.request))

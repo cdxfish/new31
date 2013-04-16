@@ -171,7 +171,8 @@ a.button:active{
 /* header: Start */
 
 #header{
-  width:100%;
+  width:99.5%;
+  *width:99.3%;
   min-width: 640px;
   min-height: 49px;  
 }
@@ -249,6 +250,7 @@ a.button:active{
 
 #content{
   width:99.5%;
+  *width:99.3%;
   min-width:640px;
   margin:0 0 10px 0;
   padding:3px;
@@ -307,7 +309,7 @@ a.button:active{
   border:1px solid #BBDDE5;
   color:#9CACAF;
   font-size:14px;
-  padding:7px 10px;
+  padding:7px 10px 9px 10px;
   margin:0 0 10px 0;
   height: 22px;
 }
@@ -394,6 +396,7 @@ a.button:active{
 
 #footer{
   width:99.5%;
+  *width:99.3%;
   min-width: 640px; 
   padding:15px 3px;
   background:#DDEEF2;

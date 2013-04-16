@@ -21,13 +21,13 @@ class Privilege(models.Model):
     element = models.ManyToManyField(Element, verbose_name=u'权限')
 
     def __unicode__(self):
-        return u"%s [ %s ][ onLine: %s ]" % (self.name, self.onLine)
+        return u"%s [ onLine: %s ]" % (self.name, self.onLine)
 
 
 class Role(models.Model):
     name = models.CharField(u'角色', max_length=32)
     onLine = models.BooleanField(u'上线', default=True)
-    purview = models.ForeignKey(Privilege, verbose_name=u'权限', blank=True, null=True)
+    privilege = models.ForeignKey(Privilege, verbose_name=u'权限', blank=True, null=True)
 
     def __unicode__(self):
         return u"%s [ onLine:%s ]" % (self.name, self.onLine)
