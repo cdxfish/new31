@@ -15,9 +15,6 @@ def item(request):
 def itemAdmin(request):
     itemList = ItemList().itemGetInfo().itemList
 
-    a = request.user.userinfo.role
-    d = dir(a)
-
     # return HttpResponse(json.dumps(itemList))
     return render_to_response('itemadmin.htm', locals(), context_instance=RequestContext(request))    
 

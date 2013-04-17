@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-        <table cellpadding="3" cellspacing="1" width="100%" id="myTable">
+        <table cellpadding="3" cellspacing="1" width="100%" class="sortTable">
             <thead>
               <tr>
                 <th>编号</th>
@@ -21,12 +21,12 @@
             </thead>
             <tbody>
 {% for i in itemList %}
-              <tr class="odd">
-                <td align="center" class="goods_id cp">{{ i.id }}</td>
+              <tr align="center">
+                <td class="cp">{{ i.id }}</td>
                 <td><a href="/item/edit/{{ i.id }}/" title="编辑" class="editItem">{{ i.itemName }}</a></td>
-                <td align="center">{{ i.sn }}</td>
-                <td align="center" class="onLine cp"><img src="{{ STATIC_URL }}images/{% if i.onLine %}yes{% else %}no{% endif %}.gif" /></td>
-                <td align="center" class="show cp"><img src="{{ STATIC_URL }}images/{% if i.show %}yes{% else %}no{% endif %}.gif" /></td>
+                <td>{{ i.sn }}</td>
+                <td class="onLine cp"><img src="{{ STATIC_URL }}images/{% if i.onLine %}yes{% else %}no{% endif %}.gif" /></td>
+                <td class="show cp"><img src="{{ STATIC_URL }}images/{% if i.show %}yes{% else %}no{% endif %}.gif" /></td>
               </tr>
 {% endfor %}
             </tbody>

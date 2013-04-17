@@ -1,61 +1,69 @@
 // 置顶工具条
 $(document).ready(function() {
-    var navMenuRight = 0;
-    var navMenu = $('#navMenu');
-    $("#showNav").toggle(function() {
-        navMenuRight = navMenu.css('right');
-        navMenu.stop().animate({
-            'right': '0px'
-        }, 150)
-        $(this).css({
-            'background': 'url(/static/images/ico_showmorel.png) no-repeat'
+    ob.nav().odd('#CFC');
+    $(".sortTable").tablesorter();
+
+    $('.date').Zebra_DatePicker({
+        direction: true
+    }); //日期选择控件
+})
+
+ob = {
+    // 表格鼠标移入移出特效
+    odd: function(c) {
+        $("table tr").bind('mouseover',
+
+        function() {
+             $(this).addClass('odd');
+        }).bind('mouseout',
+
+        function() {
+             $(this).removeClass('odd');
         });
-        return false;
+
+        return this;
     },
+    nav: function() {
 
-    function() {
-        $('.nav').removeClass('on');
-        $('.messagePop').slideUp('fast');
+        var navMenuRight = 0;
+        var navMenu = $('#navMenu');
+        $("#showNav").toggle(function() {
+            navMenuRight = navMenu.css('right');
+            navMenu.stop().animate({
+                'right': '0px'
+            }, 150)
+            $(this).css({
+                'background': 'url(/static/images/ico_showmorel.png) no-repeat'
+            });
+            return false;
+        },
 
-        navMenu.stop().animate({
-            'right': navMenuRight
-        }, 150);
-        $(this).css({
-            'background': 'url(/static/images/ico_showmorer.png) no-repeat'
-        });
-        return false;
-    })
-
-
-
-    $("#navMenu .nav").click(function() {
-        if (!$(this).is(".on")) {
+        function() {
             $('.nav').removeClass('on');
             $('.messagePop').slideUp('fast');
-        }
 
-        $(this).toggleClass('on').next(".messagePop").slideToggle('fast');
+            navMenu.stop().animate({
+                'right': navMenuRight
+            }, 150);
+            $(this).css({
+                'background': 'url(/static/images/ico_showmorer.png) no-repeat'
+            });
+            return false;
+        })
 
-        return false;
-    });
 
-    $("#myTable").tablesorter();
 
-    // 表格鼠标移入移出特效
-    $(".odd").live("mouseover",
+        $("#navMenu .nav").click(function() {
+            if (!$(this).is(".on")) {
+                $('.nav').removeClass('on');
+                $('.messagePop').slideUp('fast');
+            }
 
-    function() {
-        $(this).children().css({
-            background: "#CFC"
+            $(this).toggleClass('on').next(".messagePop").slideToggle('fast');
+
+            return false;
         });
-        return false;
-    }).live("mouseout",
 
-    function() {
-        $(this).children().css({
-            background: "#FFF"
-        });
-        return false;
-    });
-
-})
+        return this;
+    }
+}

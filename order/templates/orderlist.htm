@@ -4,56 +4,112 @@
 
 
 {% block content %}
-      <table cellpadding="3" cellspacing="1" width="100%">
-        <tr>
-          <th colspan="4" align="left">订单统计信息</th>
-        </tr>
-        <tr>
-          <td width="15%"><a href="/office/order/0/">未确认订单:</a></td>
-          <td width="35%"><strong>5</strong></td>
-          <td width="15%"><a href="/office/order/10/">已确认订单:</a></td>
-          <td width="35%"><strong>34</strong></td>
-        </tr>
-        <tr>
-          <td><a href="/office/order/4/">待支付订单:</a></td>
-          <td><strong>6224</strong></td>
-          <td><a href="/office/order/back/">已完成订单:</a></td>
-          <td><strong></strong></td>
-        </tr>
-      </table>
-      <table cellpadding="3" cellspacing="1" width="100%">
-        <tr>
-          <th colspan="4" align="left">物流统计信息</th>
-        </tr>
-        <tr>
-          <td width="15%"><a href="/office/order/110/">待发货订单:</a></td>
-          <td width="35%"><strong style="color: red">21</strong></td>
-          <td width="15%"><a href="/office/order/0/">已发货订单:</a></td>
-          <td width="35%"><strong>5</strong></td>
-        </tr>
-        <tr>
-          <td><a href="/office/order/10/">已签订单:</a></td>
-          <td><strong>34</strong></td>
-          <td><a href="/office/order/4/">拒签订单:</a></td>
-          <td><strong>6224</strong></td>
-        </tr>
-      </table>
-      <table cellpadding="3" cellspacing="1" width="100%">
-        <tr>
-          <th colspan="4" align="left">工厂统计信息</th>
-        </tr>
-        <tr>
-          <td width="15%"><a href="/office/order/110/">生产请求:</a></td>
-          <td width="35%"><strong style="color: red">21</strong></td>
-          <td width="15%"><a href="/office/order/0/">已生产:</a></td>
-          <td width="35%"><strong>5</strong></td>
-        </tr>
-        <tr>
-          <td><a href="/office/order/10/">停产请求:</a></td>
-          <td><strong>34</strong></td>
-          <td><a href="/office/order/4/">已停产:</a></td>
-          <td><strong>6224</strong></td>
-        </tr>
+      <div class="search" nowrap="true" colspan="3">
+          <form action="/order/" method="get">
+            <img src="{{ STATIC_URL }}images/icon_search.gif" border="0" alt="SEARCH" />
+            <select name="c">
+              <option value="-1" >全部</option>
+              <option value="0" selected >未确认</option>
+              <option value="1" >已确认</option>
+              <option value="2" >取消</option>
+              <option value="3" >无效</option>
+              <option value="4" >完成</option>
+              <option value="10" >未付款</option>
+              <option value="11" >已付款</option>
+              <option value="110" >未发货</option>
+              <option value="111" >已发货</option>
+              <option value="112" >已签收</option>
+              <option value="5" >订单停止</option>
+            </select>
+            <input type="text" name="s" size="7" value="{% if s %}{{ s }}{% else %}{% now "Y-m-d" %}{% endif %}" class="date">
+             <span>至</span>
+            <input type="text" name="e" size="7" value="{% if e %}{{ e }}{% else %}{% now "Y-m-d" %}{% endif %}" class="date">
+            <input type="text" name="k" size="15" value="{{ k }}" />
+            <input type="submit" value=" 搜索 " class="button" />
+          </form>
+      </div>
+      <table cellpadding="3" cellspacing="1" width="100%" class="sortTable">
+        <thead>
+          <tr>
+            <th width="80px">订单编号</th>
+            <th>收货时间</th>
+            <th>收货人</th>
+            <th>电话</th>
+            <th>地址</th>
+            <th>金额</th>
+            <th>订单状态</th>
+            <th width="50px">操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><a href="order.php?act=info&order_sn=2013661713737" class="order_sn">2013661713737</a></td>
+            <td align="center">2013-04-17 19:00 ~ 20:00</td>
+            <td align="center">梁丹</td>
+            <td align="center">13807805690   13307711766</td>
+            <td align="center"><a href="map.php?keyword=%E6%A1%83%E6%BA%90%E8%B7%AF%E5%95%86%E8%B4%B8%E9%87%91%E5%A4%A7%E9%99%A210%E6%A0%8B3%E5%8F%B7%E6%88%BF" target="_blank">桃源路商贸金大院10栋3号房</a></td>
+            <td align="center">￥194.00 元 和 0 K金</td>
+            <td align="center" class="order_status">未确认,未付款,未发货</td>
+            <td align="center" nowrap="nowrap" class="handler">
+            <a href="order.php?act=op_confirm&order_sn=2013661713737" class="op_confirm">确认</a>
+            <a href="order.php?act=new_order&order_sn=2013661713737" class="new_order">编辑</a>
+            <a href="order.php?act=op_invalid&order_sn=2013661713737" class="op_invalid">无效</a>
+            </td>
+          </tr>
+          <tr>
+            <td><a href="order.php?act=info&order_sn=2013661670048" class="order_sn">2013661670048</a></td>
+            <td align="center">2013-04-18 15:00 ~ 16:00</td>
+            <td align="center">韦丽</td>
+            <td align="center">13617718044</td>
+            <td align="center"><a href="map.php?keyword=%E6%B0%91%E6%97%8F%E5%A4%A7%E9%81%9399%E5%8F%B7ATAMI+KUVI+%E9%9F%A9%E5%9B%BD%E6%9C%8D%E9%A5%B0%E5%BA%97" target="_blank">民族大道99号ATAMI KUVI 韩国服饰店</a></td>
+            <td align="center">￥183.00 元 和 0 K金</td>
+            <td align="center" class="order_status">未确认,未付款,未发货</td>
+            <td align="center" nowrap="nowrap" class="handler">
+            <a href="order.php?act=op_confirm&order_sn=2013661670048" class="op_confirm">确认</a>
+            <a href="order.php?act=new_order&order_sn=2013661670048" class="new_order">编辑</a>
+            <a href="order.php?act=op_invalid&order_sn=2013661670048" class="op_invalid">无效</a>
+            </td>
+          </tr>
+          <tr>
+            <td><a href="order.php?act=info&order_sn=2013660934504" class="order_sn" style="color:red">2013660934504</a></td>
+            <td align="center">2013-04-18 10:00 ~ 11:00</td>
+            <td align="center">李石</td>
+            <td align="center">13152671746</td>
+            <td align="center"><a href="map.php?keyword=%E6%9C%9B%E5%B7%9E%E5%B2%AD2%E5%8F%B7" target="_blank">望州岭2号</a></td>
+            <td align="center">￥189.00 元 和 0 K金</td>
+            <td align="center" class="order_status">未确认,未付款,未发货</td>
+            <td align="center" nowrap="nowrap" class="handler">
+            <a href="order.php?act=op_confirm&order_sn=2013660934504" class="op_confirm">确认</a>
+            <a href="order.php?act=new_order&order_sn=2013660934504" class="new_order">编辑</a>
+            <a href="order.php?act=op_invalid&order_sn=2013660934504" class="op_invalid">无效</a>
+            </td>
+          </tr>
+          <tr>
+            <td><a href="order.php?act=info&order_sn=2013660791164" class="order_sn">2013660791164</a></td>
+            <td align="center">2013-04-21 17:00 ~ 18:00</td>
+            <td align="center">李先生 </td>
+            <td align="center">18977778608  13977178866</td>
+            <td align="center"><a href="map.php?keyword=%E6%98%9F%E5%85%89%E5%A4%A7%E9%81%9346%E5%8F%B7%E6%B1%9F%E5%8D%97%E9%A6%A8%E5%9B%AD%E5%B0%8F%E5%8C%BA7%E6%A0%8B3%E5%8D%95%E5%85%83402" target="_blank">星光大道46号江南馨园小区7栋3单元402</a></td>
+            <td align="center">￥189.00 元 和 0 K金</td>
+            <td align="center" class="order_status">未确认,未付款,未发货</td>
+            <td align="center" nowrap="nowrap" class="handler">
+            <a href="order.php?act=op_confirm&order_sn=2013660791164" class="op_confirm">确认</a>
+            <a href="order.php?act=new_order&order_sn=2013660791164" class="new_order">编辑</a>
+            <a href="order.php?act=op_invalid&order_sn=2013660791164" class="op_invalid">无效</a>
+            </td>
+          </tr>
+          </tbody>
+          <tr>
+            <td align="right" nowrap="true" colspan="10">
+              总计 4 条记录，共 1 页，当前第 1 页
+              <span id="pageLink">
+                <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p={{ p }}">第一页</a>
+                <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p={{ p }}">上一页</a>
+                <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p={{ p }}">下一页</a>
+                <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p={{ p }}">最末页</a>
+              </span>           
+            </td>
+          </tr>
       </table>        
 
 {% endblock %}

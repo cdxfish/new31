@@ -1,7 +1,7 @@
 {% if autoRedirect %}
 <script language="JavaScript">
 var seconds = {{ speed }};
-var defaultUrl = "{{ backUrl }}";
+var defaultUrl = 'javascript:history.go(-1)';
 
 onload = function()
 {

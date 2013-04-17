@@ -48,13 +48,16 @@ class GetItemByTag:
             self.item = self.itemQuery.get(itemName=tagTitle)
 
         # 检查当前item 是否存在图片. 避免进入死循环,只对上架商品进行一次遍历.
+        try:
+            if not self.item.itemimg_set.all():
+                for i in self.itemQuery:
+                    if self.item.itemimg_set.all():
+                        break
+                    else:
+                        self.item = self.randomItem()
 
-        if not self.item.itemimg_set.all():
-            for i in self.itemQuery:
-                if self.item.itemimg_set.all():
-                    break
-                else:
-                    self.item = self.randomItem()
+        except:
+            pass
 
         return self
 
@@ -63,4 +66,7 @@ class GetItemByTag:
 
 
     def randomItem(self):
-        return random.choice(self.itemQuery)
+        try:
+            return random.choice(self.itemQuery)
+        except:
+            pass

@@ -265,24 +265,26 @@ a.button:active{
   margin:0 0 15px;
 }
 
-#content table th{
-  padding:0 5px;
-  line-height: 24px;
-  background: #BBDDE5;
-  white-space: nowrap;
+#content .sortTable th{
   cursor: pointer;
-  /* background-image: url(../images/bg.gif); */
+  white-space: nowrap;
   background-repeat: no-repeat;
   background-position: center right;
 }
 
-#content table .headerSortUp{
+#content .sortTable .headerSortUp{
   background-image: url(/static/images/s_asc.png);
 }
 
-#content table .headerSortDown{
+#content .sortTable .headerSortDown{
   background-image: url(/static/images/s_desc.png);
 }
+
+#content .sortTable .odd td{
+  background:#CFC;
+}
+
+
 
 #content table td{
   background:#FFFFFF;
@@ -309,27 +311,10 @@ a.button:active{
   border:1px solid #BBDDE5;
   color:#9CACAF;
   font-size:14px;
-  padding:7px 10px 9px 10px;
-  margin:0 0 10px 0;
-  height: 22px;
+  margin:0 0 5px 0;
+  height: 24px;
 }
 
-#content #tool img,
-#content #tool select,
-#content #tool input
-{
-  vertical-align:bottom;
-}
-
-#content #tool button,
-#content #tool span
-{
-  vertical-align:-65%;
-}
-
-#content #tool .search{
-  float: left;
-}
 
 #content #tool .action{
   float: right;
@@ -340,19 +325,31 @@ a.button:active{
   line-height: 22px;
 }
 
-#content table button
-{
-  vertical-align:-20%;
+#content .search{
+  background:#FFFFFF;
+  border-top:1px solid #BBDDE5;
+  border-left: 1px solid #BBDDE5;
+  border-right: 1px solid #BBDDE5;
+  color:#9CACAF;
+  font-size:14px;
+  padding:2px 10px;
+  height: 22px;
 }
 
+#content .search img,
+#content .search select,
+#content .search input
+{
+  vertical-align:bottom;
+}
 
 #content #pageSize{
   vertical-align:-10%;
 }
 
 #content #pageLink{
-  margin:0 1em 0 1em;
-  padding-left: 1em;
+  margin:0 5px;
+  padding-left: 10px;
   border-left: 1px solid #999;
 }
 

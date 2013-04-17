@@ -65,4 +65,4 @@
 
 /* = ICON
 ----------------------------------------------------------------------------------------------------------------------*/
-button.Zebra_DatePicker_Icon                { width: 16px; height: 16px; background: url('zebra_datepicker/calendar.png') no-repeat left top; text-indent: -9000px; border: none; margin: 0 0 3px 5px; cursor: pointer }
+button.Zebra_DatePicker_Icon                { width: 16px; height: 16px; background: url('zebra_datepicker/calendar.png') no-repeat left top; text-indent: -9000px; border: none; margin: 3px 5px; cursor: pointer }

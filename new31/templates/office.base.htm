@@ -7,8 +7,13 @@
     <meta name="Description" content="{% block description %}蛋糕电子商务{% endblock %}" />
     <link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico" type="image/x-icon" />
     <link href="{{ STATIC_URL }}office/css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.zebra_datepicker.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.jgd.dropdown.min.css" />
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.zebra_datepicker.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.dialog.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jgd.dropdown.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}office/js/base.js"></script>
     {% block js %}{% endblock %}
 <!--[if IE 6]>
@@ -60,7 +65,7 @@
         <a href="/discount/" class="nav">促销管理</a>
         <div class="messagePop" style="display:none;">
           <ul>
-            <li><a href="/applytryeat/">试吃申请</a></li>
+            <li><a href="/applytryeat/">试吃</a></li>
             <li><a href="/discount/">会员折扣</a></li>
             <li><a href="/ticket/">蛋糕券</a></li>
             <li><a href="/integral/">积分换购</a></li>
@@ -127,8 +132,7 @@
     <div id="header">
         <div id="urHere"><a href="/office/" id="index">31kecake 管理中心</a> {% block urHere %}{% endblock %}</div>
         <ul id="toolsBar">
-          <li><a href="/order/new/">添加销售订单</a></li>
-          <li><a href="/freetest/">试吃任务</a></li>
+          <li><a href="/order/new/">新增订单</a></li>
           <li><a href="/inventory/">库存</a></li>
           <li><a href="/map/">地图</a></li>
           <li><a href="/shipments/">出货安排</a></li>
@@ -138,15 +142,6 @@
     <div id="content">
 {% if request.domTag.search or request.domElement %}
         <div id="tool">
-{% if request.domTag.search %}
-            <div class="search">
-              <form action="" metho="POST">{% csrf_token %}
-                <img src="{{ STATIC_URL }}images/icon_search.gif" border="0" alt="SEARCH" />
-                <input type="text" name="k" size="15" value="" />
-                <input type="submit" value=" 搜索 " class="button" />
-              </form>
-            </div>
-{% endif %}
 {% if request.domElement %}
           <ul class="action">
 {% for i in request.domElement %}
