@@ -43,7 +43,6 @@ class Purview:
                           '/price/',
                           '/slide/',
                           '/payment/',
-                          '/area/',
                           '/signtime/',
                           '/logistics/',
                           '/area/',

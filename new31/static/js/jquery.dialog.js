@@ -129,7 +129,7 @@
                 var cssObj = obj ? obj : {
                     width: 220
                 };
-                $.dialog.showDialog('<span class="loading" style="width:auto; padding-left:22px;background: url(/images/loading_s.gif) no-repeat;">' + t + '</span>', cssObj)
+                $.dialog.showDialog('<span class="loading" style="width:auto; padding-left:22px;background: url(/static/images/loading_s.gif) no-repeat;">' + t + '</span>', cssObj)
 
                 return this;
             },
@@ -154,7 +154,7 @@
 
                 } else {
                     var h = '';
-                    h += '   <div class="topBox" style="width:100%;height:22px;line-height:22px;padding-bottom: 5px;float:right;"><a class="close" href="javascript:void(0);" style="background:url(/images/btn_close.gif) no-repeat; display:block;height: 22px; width:22px;text-indent:-9999em;float:right;">关闭</a></div>';
+                    h += '   <div class="topBox" style="width:100%;height:22px;line-height:22px;padding-bottom: 5px;float:right;"><a class="close" href="javascript:void(0);" style="background:url(/static/images/btn_close.gif) no-repeat; display:block;height: 22px; width:22px;text-indent:-9999em;float:right;">关闭</a></div>';
                     h += '   <div class="box" style="overflow:hidden; _zoom:1; background:#f0f0f0; border:2px dashed #d6d6d6; padding:15px;margin-bottom: 10px; clear:both;">  \r\n';
                     h += f(data);
                     h += '      </div>  \r\n';

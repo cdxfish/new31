@@ -3,7 +3,7 @@
 {% block title %}收货人信息{% endblock %}
 
 {% block js %}
-    <script type="text/javascript" src="/js/shop/consignee.configuration.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}cart/js/consignee.configuration.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -26,12 +26,7 @@
                         </tr>
                         <tr>
                             <td align="right">配送方式:</td>
-                            <td>
-                                <select name="ship" id="ship">
-                                    <option value="0"{% if not request.session.c.ship %} selected{% endif %}>请选择支付方式</option>
-                                    <option value="1">送货上门</option>
-                                </select>
-                            </td>
+                            <td>市内免费送货上门</td>
                         </tr>
                         <tr>
                             <td align="right">收货人姓名:</td>
@@ -79,16 +74,9 @@
                             <td>
                                 <select name="time" id="time">
                                     <option value="0"{% if not request.session.c.time %} selected{% endif %}>请选择时间</option>
-                                    <option value="10:00 ~ 11:00" >10:00 ~ 11:00</option>
-                                    <option value="11:00 ~ 12:00" >11:00 ~ 12:00</option>
-                                    <option value="12:00 ~ 13:00" >12:00 ~ 13:00</option>
-                                    <option value="13:00 ~ 14:00" >13:00 ~ 14:00</option>
-                                    <option value="14:00 ~ 15:00" >14:00 ~ 15:00</option>
-                                    <option value="15:00 ~ 16:00" >15:00 ~ 16:00</option>
-                                    <option value="16:00 ~ 17:00" >16:00 ~ 17:00</option>
-                                    <option value="17:00 ~ 18:00" >17:00 ~ 18:00</option>
-                                    <option value="18:00 ~ 19:00" >18:00 ~ 19:00</option>
-                                    <option value="19:00 ~ 20:00" >19:00 ~ 20:00</option>
+{% for i in signtime %}
+                                    <option value="{{ i.id }}"{% ifequal i.id|floatformat request.session.c.time %} selected{% endifequal %} >{{ i.start|time:"H:i" }} - {{ i.end|time:"H:i" }}</option>
+{% endfor %}
                                 </select>
                             </td>
                         </tr>

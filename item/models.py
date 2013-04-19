@@ -94,10 +94,10 @@ class ItemSpec(models.Model):
 class ItemFee(models.Model):
     itemSpec = models.ForeignKey(ItemSpec, verbose_name=u'规格', unique=True)
     amount = models.DecimalField(u'单价', max_digits=10, decimal_places=2)
-    itemType = models.SmallIntegerField(u'类型')
+    itemType = models.SmallIntegerField(u'类型',choices=((1,u'零售价'),(2,u'积分换购价'),))
 
     def __unicode__(self):
-        return u"%s - %s [%s]" % (self.itemSpec, self.amount, self.itemType)
+        return u"%s - %s [%s]" % (self.itemSpec, self.amount, self.get_itemType_display())
 
     class Meta:
         ordering = ['amount']

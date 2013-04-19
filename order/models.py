@@ -44,7 +44,8 @@ class OrderLineTime(models.Model):
         
     class Meta:
         unique_together=(("order","timeType"),)   
-        # verbose_name = u'订单时间线'             
+        # verbose_name = u'订单时间线'
+        # 记录类似于下单时间.付款时间.发货时间等             
 
 
 class OrderLogistics(models.Model):

@@ -7,6 +7,7 @@ from django.core.exceptions import *
 from item.models import *
 from account.models import *
 from payment.models import *
+from signtime.models import *
 from message.views import *
 import time, datetime
 
@@ -31,6 +32,8 @@ def consignee(request):
     s = request.session['c']
 
     pay = Pay.objects.filter(onLine=True)
+    signtime = SignTime.objects.filter(onLine=True)
+
 
 
     toDay = datetime.date.today()
@@ -43,7 +46,7 @@ def consignee(request):
 
 def buyToCart(request, i , t= 1):
     try:
-        item = Item.objects.getItemByItemAttrId(id=i)
+        item = Item.objects.getItemByItemSpecId(id=i)
 
         itemCart = request.session["itemCart"]
 
@@ -112,17 +115,17 @@ class Cart:
                     if len(v) < 2:
                         raise Item.DoesNotExist
                         
-                    itemAttr = ItemAttr.objects.getAttrByItemAttrId(id='%s' % v[1:])
-                    amount = itemAttr.itemfee_set.get(itemType=v[0]).amount
+                    itemSpec = ItemSpec.objects.getSpecByItemSpecId(id='%s' % v[1:])
+                    amount = itemSpec.itemfee_set.get(itemType=v[0]).amount
                     subtotal = amount * i
                     self.countFee += subtotal
-                    self.itemBuy.append({ 'item': itemAttr, 'amount': amount, 'num': i,'subtotal': subtotal, 'v': v })
+                    self.itemBuy.append({ 'item': itemSpec, 'amount': amount, 'num': i,'subtotal': subtotal, 'v': v })
                 except:
                     pass
 
     def cartItemSubtotal(self, i, t):
         itemCart = self.request.session["itemCart"]
-        itemSubtotal = ItemAttr.objects.getAttrByItemAttrId(id='%s' % i[1:]).itemfee_set.get(itemType=i[0]).amount * int(t)
+        itemSubtotal = ItemSpec.objects.getSpecByItemSpecId(id='%s' % i[1:]).itemfee_set.get(itemType=i[0]).amount * int(t)
 
         return itemSubtotal
 

@@ -15,16 +15,17 @@ def ajaxLineItem(request):
     return HttpResponse(json.dumps(itemList))
 
 
-def ajaxItemAttr(request, i, t = 1):
+def ajaxItemSpec(request, i, t = 1):
     data = {}
+
     try:
-        itemAttr = ItemAttr.objects.getAttrByItemId(id=i)
+        itemSpec = ItemSpec.objects.getSpecByItemId(id=i)
         data['error'] = False
         data['message'] = ''
         data['data'] = []
-        for v in itemAttr:
+        for v in itemSpec:
             try:
-                data['data'].append({'id':v.id ,'attr':v.attrValue.attrValue ,'amount': '%s' % v.itemfee_set.get(itemType=t).amount,'t': t })
+                data['data'].append({'id':v.id ,'spec':v.spec.value ,'amount': '%s' % v.itemfee_set.get(itemType=t).amount,'t': t })
             except:
                 pass
     except:

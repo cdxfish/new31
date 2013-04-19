@@ -182,6 +182,8 @@ APPS = [
     'spec',
     'discount',
     'purview',
+    'signtime',
+    'area',
 ]
 
 djangoAPPS = [

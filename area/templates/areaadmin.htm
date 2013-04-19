@@ -1,0 +1,35 @@
+{% extends "office.base.htm" %}
+
+{% block title %}配送区域管理{% endblock %}
+
+{% block urHere %}<a href="/area/">配送区域管理</a>{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}area/js/area.js"></script>
+{% endblock %}
+
+{% block content %}
+        <table cellpadding="3" cellspacing="1" width="100%" id="myTable">
+            <thead>
+              <tr>
+                <th width="40px">编号</th>
+                <th>规格</th>
+                <th>上线</th>
+              </tr>
+            </thead>
+            <tbody>
+{% for i in specList %}
+              <tr class="odd">
+                <td align="center">{{ i.id }}</td>
+                <td><a href="/spec/{{ i.id }}/" title="编辑">{{ i.value }}</a></td>
+                <td align="center" class="onLine cp"><img src="/images/{% if i.onLine %}yes{% else %}no{% endif %}.gif" /></td>
+              </tr>
+{% endfor %}
+            </tbody>
+              <tr>
+                <td align="right" nowrap="true" colspan="10">
+                  <div>共 {{ specList|length }} 条记录</div>
+                </td>
+              </tr>
+        </table>
+{% endblock %}

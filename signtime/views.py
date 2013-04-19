@@ -6,7 +6,7 @@ from models import *
 
 # Create your views here.
 
-def specAdmin(request):
-    specList = Spec.objects.select_related().all()
+def signtimeAdmin(request):
+    signTime = SignTime.objects.select_related().all()
 
-    return render_to_response('specadmin.htm', locals(), context_instance=RequestContext(request))    
+    return render_to_response('signtimeadmin.htm', locals(), context_instance=RequestContext(request))

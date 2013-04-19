@@ -5,9 +5,9 @@ from django.db import models
 # Create your models here.
 
 class SignTime(models.Model):
-    value = models.CharField(u'收货时间', max_length=60, unique=True)
-    isOpen = models.BooleanField(u'是否可选', max_length=60)
-    vieworder = models.SmallIntegerField(u'排序')
+    start = models.TimeField(u'起始时间')
+    end = models.TimeField(u'结束时间')
+    onLine = models.BooleanField(u'上线')
 
     def __unicode__(self):
-        return u"%s" % self.value
+        return u"%s - %s [ onLine: %s ]" % (self.start, self.end, self.onLine)
