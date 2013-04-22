@@ -8,6 +8,7 @@ from item.models import *
 from account.models import *
 from payment.models import *
 from signtime.models import *
+from area.models import *
 from message.views import *
 import time, datetime
 
@@ -34,14 +35,27 @@ def consignee(request):
     pay = Pay.objects.filter(onLine=True)
     signtime = SignTime.objects.filter(onLine=True)
 
+    area = Area.objects.filter(onLine=True,sub=None)
 
 
-    toDay = datetime.date.today()
+    toDay = time.gmtime()
+    cDate = time.strptime(request.session['c']['date'], '%Y-%m-%d')
 
-    if request.session['c']['date'] < toDay:
-        request.session['c']['date'] = toDay
+    if cDate < toDay:
+        request.session['c']['date'] = '%s' % datetime.date.today()
 
     return render_to_response('consignee.htm', locals(), context_instance=RequestContext(request))
+
+
+def checkout(request):
+    cart = Cart(request)
+
+    pay = Pay.objects.get(onLine=True, id=request.session['c']['pay'])
+    time = SignTime.objects.get(onLine=True, id=request.session['c']['time'])
+
+    area = Area.objects.get(onLine=True, id=request.session['c']['area'])
+
+    return render_to_response('checkout.htm', locals(), context_instance=RequestContext(request))
 
 
 def buyToCart(request, i , t= 1):

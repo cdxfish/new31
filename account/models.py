@@ -64,13 +64,16 @@ class UserInfo(models.Model):
     integral = models.IntegerField(u'积分', default=0, editable=False)
     regType = models.SmallIntegerField(u'注册类型', default=0, editable=False)
     regTime = models.DateTimeField(u'注册时间', auto_now=True, auto_now_add=True, editable=False)
-    consignee = models.CharField(u'近期收货联系人', max_length=30, blank=True, null=True)
-    city = models.CharField(u'近期收货城市', max_length=32, blank=True, null=True)
-    block = models.CharField(u'近期收货区域', max_length=32, blank=True, null=True)
-    address = models.CharField(u'近期收货地址', max_length=120, blank=True, null=True)
-    tel = models.CharField(u'近期收货联系电话', max_length=60, blank=True, null=True)
-    note = models.CharField(u'备注', max_length=255, blank=True, null=True)
-    role = models.OneToOneField(Role, verbose_name=u'角色', blank=True, null=True)
 
     def __unicode__(self):
-        return u"%s [ %s ] - %s" % (self.user, self.role, self.regTime)
+        return u"%s [ %s ] - %s" % (self.user, self.regTime)
+
+class UserRole(models.Model):
+    """docstring for UserRole"""
+    user = models.OneToOneField(User, verbose_name=u'用户')
+    role = models.OneToOneField(Role, verbose_name=u'角色', blank=True, null=True)
+
+
+    def __unicode__(self):
+        return u"%s - %s" % (self.user, self.role)
+        

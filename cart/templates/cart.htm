@@ -22,7 +22,7 @@
 {% for i in cart.itemBuy %}
                     <tr align="center">
                         <td>{{ i.item.itemName.itemName }}</td>
-                        <td>{{ i.item.attrValue }}</td>
+                        <td>{{ i.item.spec }}</td>
                         <td>￥{{ i.amount|floatformat:2 }} 元</td>
                         <td>
                             <input type="text" name="{{ i.v }}" value="{{ i.num }}" size="1" class="iNum" />

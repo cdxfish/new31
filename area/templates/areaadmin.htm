@@ -13,22 +13,22 @@
             <thead>
               <tr>
                 <th width="40px">编号</th>
-                <th>规格</th>
+                <th>地区</th>
                 <th>上线</th>
               </tr>
             </thead>
             <tbody>
-{% for i in specList %}
+{% for i in areaList %}
               <tr class="odd">
                 <td align="center">{{ i.id }}</td>
-                <td><a href="/spec/{{ i.id }}/" title="编辑">{{ i.value }}</a></td>
-                <td align="center" class="onLine cp"><img src="/images/{% if i.onLine %}yes{% else %}no{% endif %}.gif" /></td>
+                <td><a href="/area/edit/{{ i.id }}/" title="编辑">{{ i.name }}</a></td>
+                <td align="center" class="onLine cp"><img src="{{ STATIC_URL }}images/{% if i.onLine %}yes{% else %}no{% endif %}.gif" /></td>
               </tr>
 {% endfor %}
             </tbody>
               <tr>
                 <td align="right" nowrap="true" colspan="10">
-                  <div>共 {{ specList|length }} 条记录</div>
+                  <div>共 {{ areaList|length }} 条记录</div>
                 </td>
               </tr>
         </table>

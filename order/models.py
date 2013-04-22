@@ -8,7 +8,7 @@ class OrderInfo(models.Model):
     user = models.CharField(u'会员', max_length=30, blank=True, null=True)
     note = models.CharField(u'备注', max_length=255, blank=True, null=True)
     referer = models.CharField(u'订单来源', max_length=30)
-    orderType = models.SmallIntegerField(u'订单类型')
+    orderType = models.SmallIntegerField(u'订单类型', choices=((1,u'普通销售订单'), (2,u'活动订单'),))
 
     def __unicode__(self):
         return u"%s" % self.orderSn

@@ -1,14 +1,5 @@
 $(document).ready(function() {
-    c.noteObj($('.note')).note().submit().cCon();
-    $('#date').Zebra_DatePicker({
-        direction: true
-    }); //日期选择控件
-
-
-    $('select').jgdDropdown({
-        clsLIExpand: false
-        // selected: 'RS'
-    });
+    c.noteObj($('#note')).note().cCon().submit();
 });
 
 
@@ -58,18 +49,16 @@ c = {
             if ($('#pay').val() == 0) {
                 message += '请选择支付方式!<br />';
             }
-            if ($('#ship').val() == 0) {
-                message += '请选择配送方式!<br />';
-            }
+
+            // if ($('#ship').val() == 0) {
+            //     message += '请选择配送方式!<br />';
+            // }
+
             if ($('#consignee').val() == 0) {
                 message += '请填写收货人姓名!<br />';
             }
 
-            if ($('#city').val() == 0) {
-                message += '请选择城市!<br />';
-            }
-
-            if ($('#block').val() == 0) {
+            if ($('#area').val() == 0) {
                 message += '请选择区域!<br />';
             }
 
@@ -90,7 +79,7 @@ c = {
             }
 
             if (message != 0) {
-                timeClosePopup(message, 3000);
+                $.dialog.message(message);
 
                 return false;
             } else {

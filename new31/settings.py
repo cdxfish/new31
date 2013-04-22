@@ -173,7 +173,6 @@ APPS = [
     'tag',
     'search',
     'account',
-    'checkout',
     'item',
     'ajax',
     'office',

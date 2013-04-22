@@ -82,7 +82,7 @@ class Purview:
 
         try:
             # 页面元素权限加持
-            role = self.request.user.userinfo.role
+            role = self.request.user.userrole.role
 
             if role.onLine:
                 privilege = role.privilege
@@ -92,7 +92,7 @@ class Purview:
 
                     for i in domElement:
                         try:
-                            element = self.request.user.userinfo.role.privilege.element.get(path=i.path)
+                            element = self.request.user.userrole.role.privilege.element.get(path=i.path)
                             if element.onLine:
                                 self.request.domElement.append(element)
                         except:
@@ -109,7 +109,7 @@ class Purview:
             raise AttributeError
 
     def msgPrint(self):
-        return Message(self.request, self.request.META.get('HTTP_REFERER',"/")).autoRedirect(3). \
+        return Message(self.request, self.request.META.get('HTTP_REFERER',"/")).autoRedirect(300). \
                 title('错误').message('权限不足，无法进行当前操作。').officeMsg()
 
     def redirectLogin(self):

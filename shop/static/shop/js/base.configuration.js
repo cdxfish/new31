@@ -4,6 +4,16 @@ $(document).ready(function() {
     if (jQuery.browser.msie && jQuery.browser.version === "6.0") {} else {
         b.scrollTop();
     }
+    
+    $('.date').Zebra_DatePicker({
+        direction: true
+    }); //日期选择控件
+
+
+    $('select').jgdDropdown({
+        clsLIExpand: false
+        // selected: 'RS'
+    });
 
 });
 

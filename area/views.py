@@ -7,6 +7,6 @@ from models import *
 # Create your views here.
 
 def areaAdmin(request):
-    # areaList = Spec.objects.select_related().all().order_by('id')
+    areaList = Area.objects.select_related().all().order_by('id')
  
     return render_to_response('areaadmin.htm', locals(), context_instance=RequestContext(request))    

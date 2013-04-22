@@ -4,8 +4,10 @@ from django.db import models
 
 # Create your models here.
 
-class Spec(models.Model):
-    value = models.CharField(u'规格', max_length=30, unique=True)
+class Area(models.Model):
+    name = models.CharField(u'区域', max_length=32, unique=True)
+    onLine = models.BooleanField(u'上线', default=True)
+    sub = models.ForeignKey("self",related_name='sub_set', verbose_name=u'从属', blank=True, null=True)
 
     def __unicode__(self):
-        return u"%s" % self.value
+        return u"%s [ onLine: %s] - %s" % (self.name, self.onLine, self.sub)

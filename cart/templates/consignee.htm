@@ -11,7 +11,7 @@
             <div class="mBottom50">
                 <h3>收货人信息</h3>
                 <p>（请填写详细收货地址及准确的最佳送货时间，以便更快捷将您订购的蛋糕送达！）</p>
-                <form action="/checkout/" method="post" name="checkout" id="checkout">
+                <form action="/cart/checkout/" method="POST" name="checkout" id="checkout">
                     <table width="100%">
                         <tr>
                             <td align="right">支付方式:</td>
@@ -33,40 +33,30 @@
                             <td><input name="consignee" type="text" value="{{ request.user.userinfo.consignee|default:request.session.c.consignee }}" id="consignee" /></td>
                         </tr>
                         <tr>
-                            <td align="right">配送城市:</td>
-                            <td>
-                                <select name="city" id="city">
-                                    <option value="0"{% if not request.session.c.city %} selected{% endif %}>请选择城市</option>
-                                    <option value="1">南宁</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
                             <td align="right">配送区域:</td>
                             <td>
-                                <select name="block" id="block">
-                                    <option value="0"{% if not request.session.c.block %} selected{% endif %}>请选择区域</option>
-                                    <option value="2">邕宁区</option>
-                                    <option value="3">青秀区</option>
-                                    <option value="4">兴宁区</option>
-                                    <option value="5">良庆区</option>
-                                    <option value="6">西乡塘区</option>
-                                    <option value="7">江南区</option>
+                                <select name="area" id="area">
+                                    <option value="0"{% if not request.session.c.area %} selected{% endif %}>请选择区域</option>
+{% for i in area %}
+{% for ii in i.sub_set.all %}
+                                    <option value="{{ ii.id }}"{% ifequal ii.id|floatformat request.session.c.area %} selected{% endifequal %}>{{ i.name }} - {{ ii.name }}</option>
+{% endfor %}
+{% endfor %}
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td align="right">详细地址:</td>
-                            <td width="90%"><input name="address" type="text" value="{{ request.user.userinfo.address|default:request.session.c.address }}" size="70" id="address" /></td>
+                            <td width="90%"><input name="address" type="text" value="{{ request.session.c.address }}" size="70" id="address" /></td>
                         </tr>
                         <tr>
                             <td align="right">联系电话:</td>
-                            <td><input name="tel" type="text" value="{{ request.user.userinfo.tel|default:request.session.c.tel }}" size="40" id="tel" />  ( 请填写多个号码，并用空格隔开。如：134XXXXXXXX 0771XXXXXXX )</td>
+                            <td><input name="tel" type="text" value="{{ request.session.c.tel }}" size="40" id="tel" />  ( 请填写多个号码，并用空格隔开。如：134XXXXXXXX 0771XXXXXXX )</td>
                         </tr>
                         <tr>
                             <td align="right">最佳收货日期:</td>
                             <td>
-                                <input name="date" type="text" value="{% if request.session.date %}{{ request.session.date|date:"Y-m-d" }}{% else %}{% now "Y-m-d" %}{% endif %}" id="date" />
+                                <input name="date" type="text" value="{% if request.session.c.date %}{{ request.session.c.date }}{% else %}{% now "Y-m-d" %}{% endif %}" id="date" class="date" />
                             </td>
                         </tr>
                         <tr>
@@ -86,6 +76,7 @@
                         </tr>
                     </table>
                     <center>
+                        {% csrf_token %}
                         <input type="submit" name="submit" value="确认" class="btnB bBtn" />
                     </center>
                 </form>
