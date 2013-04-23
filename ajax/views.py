@@ -61,7 +61,7 @@ def ajaxCartItemNum(request, f, i, t):
 
 def cConsigneeByAjax(request):
     try:
-        ShipConsignee().cCon(request)
+        ShipConsignee().cConFormGET(request)
         return HttpResponse(AjaxRJson().error(False).jsonEn())
     except:
 

@@ -8,6 +8,8 @@
     <div class="pWhite">
         <h3>{{ title }}</h3>
         <p>{{ message }}</p>
-      	<p id="redirectionMsg">如果您不进行操作，将在 <span id="spanSeconds">{{ speed }}</span> 秒后返回上一页。</p>
+{% if autoRedirect %}
+          <p id="redirectionMsg">如果您不进行操作，将在 <span id="spanSeconds">{{ speed }}</span> 秒后返回上一页。</p>
+{% endif %}
     </div>
 {% endblock %}

@@ -3,7 +3,7 @@
 
 {% block content %}
         <div class="pWhite">
-        <form action="/checkout/" method="post" name="to_checkout" id="toCheckout">
+        <form action="/order/submit/" method="post" name="to_checkout" id="toCheckout">
              <h3>订单状态</h3>
             <table width="100%" class="mBottom10">
                 <tr>
@@ -88,6 +88,7 @@
                 </tr>
             </table>
             <center>
+                {% csrf_token %}
                 <input type="submit" class="btnB bBtn" value="确认订单" />
             </center>
       </form>

@@ -8,7 +8,9 @@
   	  <div id="info">
         <div id="message">
           <h1>{{ message }}</h1>
+{% if autoRedirect %}
           <p id="redirectionMsg">如果您不进行操作，将在 <span id="spanSeconds">{{ speed }}</span> 秒后返回上一页。</p>
+{% endif %}
           <ul>
           </ul>
         </div>

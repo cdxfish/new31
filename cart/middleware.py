@@ -11,7 +11,7 @@ class CartMiddleware:
             request.session["itemCart"] = {}
 
         if not 'c' in request.session:
-            request.session['c'] = {'pay':0, 'ship':0, 'consignee':'', 'area': 0, 'address':'', 'tel':'', 'date': datetime.date.today(), 'time': 0,'note':'',}
+            request.session['c'] = {'pay':0, 'ship':0, 'consignee':'', 'area': 0, 'address':'', 'tel':'', 'date': '%s' % datetime.date.today(), 'time': 0,'note':'',}
 
         return None
 

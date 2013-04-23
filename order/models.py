@@ -8,7 +8,7 @@ class OrderInfo(models.Model):
     user = models.CharField(u'会员', max_length=30, blank=True, null=True)
     note = models.CharField(u'备注', max_length=255, blank=True, null=True)
     referer = models.CharField(u'订单来源', max_length=30)
-    orderType = models.SmallIntegerField(u'订单类型', choices=((1,u'普通销售订单'), (2,u'活动订单'),))
+    orderType = models.SmallIntegerField(u'订单类型', choices=((1,u'普通销售订单'), (2,u'活动订单'),),default=1,)
 
     def __unicode__(self):
         return u"%s" % self.orderSn
@@ -51,18 +51,18 @@ class OrderLineTime(models.Model):
 class OrderLogistics(models.Model):
     order = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='order')
     consignee = models.CharField(u'联系人', max_length=60)
-    city = models.CharField(u'城市', max_length=60)
-    block = models.CharField(u'区域', max_length=60)
+    area = models.CharField(u'配送区域', max_length=60)
     address = models.CharField(u'地址', max_length=255)
     tel = models.CharField(u'联系电话', max_length=60)
     signDate = models.DateField(u'收货日期')
-    signTime = models.CharField(u'收货时间', max_length=60)
+    signTimeStart = models.TimeField(u'起始时间')
+    signTimeEnd = models.TimeField(u'结束时间')
     logisDate = models.DateField(u'物流日期')
     logisTime = models.CharField(u'物流时间', max_length=60)
     deliveryman = models.CharField(u'物流师傅', max_length=60)
 
     def __unicode__(self):
-        return u"%s - [c:%s][%s:%s][%s]" % ( self.order, self.consignee, self.signDate, self.signTime, self.tel )
+        return u"%s - [c:%s][%s:%s - %s ][%s]" % ( self.order, self.consignee, self.signDate, self.signTime, self.signTimeEnd, self.tel )
         
     # class Meta: 
         # verbose_name = u'订单物流信息'             
@@ -116,38 +116,38 @@ class OrderItem(models.Model):
         # verbose_name = u'订单商品'
 
 
-class OrderAttr(models.Model):
+class OrderSpec(models.Model):
     item = models.ForeignKey(OrderItem, verbose_name=u'商品')
-    attrValue = models.CharField(u'规格', max_length=30)
+    spec = models.CharField(u'规格', max_length=30)
 
     def __unicode__(self):
-        return u"%s - %s" % ( self.item, self.attrValue )
+        return u"%s - %s" % ( self.item, self.spec )
 
     class Meta:
-        unique_together = (("item","attrValue"),)
+        unique_together = (("item","spec"),)
         # verbose_name = u'订单商品规格'
 
 
 class OrderFee(models.Model):
-    itemAttr = models.ForeignKey(OrderAttr, verbose_name=u'规格')
+    itemSpec = models.ForeignKey(OrderSpec, verbose_name=u'规格')
     number = models.SmallIntegerField(u'数量')
     itemType = models.SmallIntegerField(u'商品类型')
     amount = models.DecimalField(u'单价', max_digits=10, decimal_places=2)
 
     def __unicode__(self):
-        return u"%s - [n:%s][t:%s][a:%s]" % ( self.itemAttr, self.number, self.itemType, self.amount )
+        return u"%s - [n:%s][t:%s][a:%s]" % ( self.itemSpec, self.number, self.itemType, self.amount )
     class Meta:
-        unique_together = (("itemAttr","itemType"),)
+        unique_together = (("itemSpec","itemType"),)
         # verbose_name = u'订单商品价格'
 
 
 class OrderDiscount(models.Model):
-    itemAttr = models.ForeignKey(OrderFee, verbose_name=u'商品', unique=True)
+    itemSpec = models.ForeignKey(OrderFee, verbose_name=u'商品', unique=True)
     discount = models.DecimalField(u'折扣', max_digits=3, decimal_places=1)
 
 
     def __unicode__(self):
-        return u"%s - %s折" % ( self.itemAttr, self.discount )
+        return u"%s - %s折" % ( self.itemSpec, self.discount )
 
     # class Meta:
         # verbose_name = u'订单商品折扣'

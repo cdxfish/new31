@@ -9,12 +9,16 @@ from account.models import *
 from payment.models import *
 from signtime.models import *
 from area.models import *
+from order.models import *
 from message.views import *
 import time, datetime
 
 # Create your views here.
 
 def cart(request):
+    a = request.user
+    b = dir(a)
+
     cart = Cart(request)
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
@@ -30,13 +34,10 @@ def hCart(request, f, i, t = 1):
 
 def consignee(request):
 
-    s = request.session['c']
-
     pay = Pay.objects.filter(onLine=True)
     signtime = SignTime.objects.filter(onLine=True)
 
     area = Area.objects.filter(onLine=True,sub=None)
-
 
     toDay = time.gmtime()
     cDate = time.strptime(request.session['c']['date'], '%Y-%m-%d')
@@ -48,6 +49,14 @@ def consignee(request):
 
 
 def checkout(request):
+    # 配置当session
+    try:
+        ShipConsignee().cConFormPOST(request)
+
+    except:
+        return Message(request, request.META.get('HTTP_REFERER',"/")).autoRedirect(3).title('错误').message('请重新填写收货人信息!').shopMsg()
+
+
     cart = Cart(request)
 
     pay = Pay.objects.get(onLine=True, id=request.session['c']['pay'])
@@ -110,11 +119,11 @@ def changeCartItem(request, i , t):
 
 def cConsigneeByCart(request):
     try:
-        ShipConsignee().cCon(request)
+        ShipConsignee().cConFormGET(request)
 
         return HttpResponseRedirect("/cart/consignee/")
     except:
-        return Message(request.META.get('HTTP_REFERER',"/")).autoRedirect(1).title('错误').message('当前商品已下架!').printMsg()
+        return Message(request, request.META.get('HTTP_REFERER',"/")).autoRedirect(3).title('错误').message('无法保存信息!').shopMsg()
 
 
 class Cart:
@@ -148,10 +157,32 @@ class ShipConsignee:
     def __init__(self):
         pass      
 
-    def cCon(self, request):
+    def cConFormGET(self, request):
         try:
             if request.GET:
                 n = request.GET
+            else:
+                raise ValueError
+
+            s = request.session['c']
+
+            for v,i in n.items():
+                # 用于下拉框默认值,使得过滤器辨别为false
+                if i == '0':
+                    s[v] = 0
+                else:
+                    s[v] = i
+
+            request.session['c'] = s
+
+            return self
+        except:
+            raise ValueError
+
+    def cConFormPOST(self, request):
+        try:
+            if request.POST:
+                n = request.POST
             else:
                 raise ValueError
 
