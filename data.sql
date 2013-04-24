@@ -77,6 +77,16 @@ INSERT INTO `tag_tag` (`tag`) VALUES
 ('芒果'),
 ('芝士');
 
-INSERT INTO payment_pay ( `name`, cod, config, onLine) VALUES
+INSERT INTO `payment_pay` ( `name`, cod, config, onLine) VALUES
 ('货到付款', 'payafter', 'a', 1),
 ('支付宝', 'alipay', 'a', 1);
+
+INSERT INTO `area_area` (`id`, `name`, `onLine`, `sub_id`) VALUES
+(1, '南宁', 1, NULL),
+(2, '青秀区', 1, 1),
+(3, '西乡塘区', 1, 1),
+(4, '兴宁区', 1, 1);
+
+INSERT INTO `signtime_signtime` (`start`, `end`, `onLine`) VALUES
+('06:00:00', '07:00:00', 1),
+('07:00:00', '08:00:00', 1);

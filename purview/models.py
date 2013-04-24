@@ -18,7 +18,7 @@ class Element(models.Model):
 class Privilege(models.Model):
     name = models.CharField(u'名称', max_length=32, unique=True)
     onLine = models.BooleanField(u'上线', default=True)
-    element = models.ManyToManyField(Element, verbose_name=u'权限')
+    element = models.ManyToManyField(Element, verbose_name=u'权限', blank=True, null=True)
 
     def __unicode__(self):
         return u"%s [ onLine: %s ]" % (self.name, self.onLine)

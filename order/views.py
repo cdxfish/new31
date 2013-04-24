@@ -1,9 +1,12 @@
+# -*- coding:utf-8 -*-
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.db.models import Q, Min
 from message.views import *
+from area.models import *
+from signtime.models import *
 from models import *
 import random, json, os, time,datetime
 
@@ -24,7 +27,7 @@ def orderSubmit(request):
 
         orderId = OrderCon(request).orderSubmit().orderId
 
-        return Message(request, request.META.get('HTTP_REFERER',"/")).title('您已成功提交订单').message('感谢您在本店购物！请记住您的订单号: %d' % orderId).shopMsg()
+        return Message(request, request.META.get('HTTP_REFERER',"/")).title('您已成功提交订单').message('感谢您在本店购物！请记住您的订单号: %s' % orderId).shopMsg()
 
     else:
         return Message(request, request.META.get('HTTP_REFERER',"/")).title('错误').message('订单提交错误 !').shopMsg()
@@ -38,12 +41,11 @@ class OrderCon:
     def __init__(self, r):
         self.request = r
         self.orderId = 2013113082322
-        # self.order = None
 
     def orderSubmit(self):
 
         # 新订单锁定、插入基本信息
-        self.newOderSn().submitOrderInfo()
+        self.newOderSn().submitOrderInfo().submitOrderLogistics()
 
         return self
 
@@ -72,9 +74,7 @@ class OrderCon:
             except:
                 runOrder = False
 
-                self.order = OrderInfo(orderSn=self.orderId)
-
-                self.order.save()
+                self.order = OrderInfo.objects.create(orderSn=self.orderId)
                 
             else:
                 self.orderId += 1
@@ -86,9 +86,49 @@ class OrderCon:
 
         self.order.referer=r
         self.order.user= u if u else self.request.user.username
-        self.order.note= self.request.session['c']['note']
 
         self.order.save()
 
 
         return self
+
+    def submitOrderLogistics(self):
+
+
+
+        c = self.request.session['c']
+        try:
+            time = SignTime.objects.get(id=c['time'], onLine=True)
+
+            area = Area.objects.get(id= c['area'], onLine=True)
+        except:
+
+            raise
+        else:
+            logistics = OrderLogistics()
+
+            self.orderId = logistics
+
+            logistics.consignee = c['consignee']
+            logistics.area = '%s - %s' % (area.sub.name, area.name)
+            logistics.address = c['address']
+            logistics.tel = c['tel']
+            logistics.signDate = c['date']
+            logistics.signTimeStart = time.start
+            logistics.signTimeEnd = time.end
+
+            logistics.order = self.order
+
+            logistics.save()
+
+            # logistics.order.add(self.order)
+
+
+            # logistics.update(consignee= c['consignee'],area='%s - %s' % (area.sub.name, area.name))
+
+
+        return self
+
+    def raiseSubLogistics(self):
+        pass
+

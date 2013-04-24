@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 #coding:utf-8
 from django.db import models
 
@@ -6,12 +7,11 @@ from django.db import models
 class OrderInfo(models.Model):
     orderSn = models.BigIntegerField(u'订单号', primary_key=True, unique=True)
     user = models.CharField(u'会员', max_length=30, blank=True, null=True)
-    note = models.CharField(u'备注', max_length=255, blank=True, null=True)
     referer = models.CharField(u'订单来源', max_length=30)
     orderType = models.SmallIntegerField(u'订单类型', choices=((1,u'普通销售订单'), (2,u'活动订单'),),default=1,)
 
     def __unicode__(self):
-        return u"%s" % self.orderSn
+        return u"%s [ %s ][ %s ] - %s" % (self.orderSn, self.user, self.referer, self.get_orderType_display())
 
     class Meta:
         ordering = ['-orderSn']
@@ -19,11 +19,11 @@ class OrderInfo(models.Model):
 
 
 class OrderLog(models.Model):
-    order = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='order')
+    order = models.ForeignKey(OrderInfo, verbose_name=u'订单')
     orderStatus = models.SmallIntegerField(u'订单状态(操作前)', default=0, editable=False)
     user = models.CharField(u'管理员', max_length=30, editable=False)
     actionType = models.SmallIntegerField(u'操作', editable=False)
-    note = models.CharField(u'备注', max_length=255, blank=True, null=True)
+    note = models.CharField(u'备注', max_length=60, blank=True, null=True)
     logTime = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True, editable=False)
 
     def __unicode__(self):
@@ -35,7 +35,7 @@ class OrderLog(models.Model):
 
 
 class OrderLineTime(models.Model):
-    order = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='order')
+    order = models.ForeignKey(OrderInfo, verbose_name=u'订单')
     timeType = models.SmallIntegerField(u'时间类型')
     lineTime = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True)
 
@@ -49,7 +49,7 @@ class OrderLineTime(models.Model):
 
 
 class OrderLogistics(models.Model):
-    order = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='order')
+    order = models.OneToOneField(OrderInfo, verbose_name=u'订单')
     consignee = models.CharField(u'联系人', max_length=60)
     area = models.CharField(u'配送区域', max_length=60)
     address = models.CharField(u'地址', max_length=255)
@@ -57,19 +57,20 @@ class OrderLogistics(models.Model):
     signDate = models.DateField(u'收货日期')
     signTimeStart = models.TimeField(u'起始时间')
     signTimeEnd = models.TimeField(u'结束时间')
-    logisDate = models.DateField(u'物流日期')
-    logisTime = models.CharField(u'物流时间', max_length=60)
-    deliveryman = models.CharField(u'物流师傅', max_length=60)
+    logisDate = models.DateField(u'物流日期', blank=True, null=True)
+    logisTime = models.CharField(u'物流时间', max_length=60, blank=True, null=True)
+    deliveryman = models.CharField(u'物流师傅', max_length=60, blank=True, null=True)
+    note = models.CharField(u'备注', max_length=255, blank=True, null=True)
 
     def __unicode__(self):
-        return u"%s - [c:%s][%s:%s - %s ][%s]" % ( self.order, self.consignee, self.signDate, self.signTime, self.signTimeEnd, self.tel )
+        return u"%s - [ %s ][ %s  %s - %s ][ %s ]" % ( self.order, self.consignee, self.signDate, self.signTimeStart, self.signTimeEnd, self.tel )
         
     # class Meta: 
         # verbose_name = u'订单物流信息'             
 
 
 class OrderStatus(models.Model):
-    order = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='order')
+    order = models.OneToOneField(OrderInfo, verbose_name=u'订单')
     orderStatus = models.SmallIntegerField(u'订单状态', default=0, editable=False)
 
     def __unicode__(self):
@@ -80,7 +81,7 @@ class OrderStatus(models.Model):
 
 
 class OrderPay(models.Model):
-    order = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='order')
+    order = models.OneToOneField(OrderInfo, verbose_name=u'订单')
     payName = models.CharField(u'支付方式', max_length=30)
     payStatus = models.SmallIntegerField(u'支付状态', default=0, editable=False)
 
@@ -92,7 +93,7 @@ class OrderPay(models.Model):
 
 
 class OrderShip(models.Model):
-    order = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='order')
+    order = models.OneToOneField(OrderInfo, verbose_name=u'订单')
     shipName = models.CharField(u'物流方式', max_length=30, editable=False)
     shipStatus = models.SmallIntegerField(u'物流状态', default=0, editable=False)
 
@@ -104,7 +105,7 @@ class OrderShip(models.Model):
 
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(OrderInfo, verbose_name=u'订单', db_column='order')
+    order = models.ForeignKey(OrderInfo, verbose_name=u'订单')
     item = models.CharField(u'商品', max_length=30)
     sn = models.CharField(u'货号', max_length=30)
 
@@ -142,7 +143,7 @@ class OrderFee(models.Model):
 
 
 class OrderDiscount(models.Model):
-    itemSpec = models.ForeignKey(OrderFee, verbose_name=u'商品', unique=True)
+    itemSpec = models.OneToOneField(OrderFee, verbose_name=u'商品', unique=True)
     discount = models.DecimalField(u'折扣', max_digits=3, decimal_places=1)
 
 

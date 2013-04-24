@@ -16,9 +16,10 @@ import time, datetime
 # Create your views here.
 
 def cart(request):
-    a = request.user
-    b = dir(a)
 
+    a = request.session['c']
+
+    
     cart = Cart(request)
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
