@@ -123,26 +123,6 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.eggs.Loader',
 )
 
-djangoMidClass = [
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'account.middleware.UserMiddleware',
-    'purview.middleware.purviewMiddleware',
-    'cart.middleware.CartMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-if DEBUG:
-    djangoMidClass += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
-
-MIDDLEWARE_CLASSES = tuple(djangoMidClass)
-
-
-
 ROOT_URLCONF = 'new31.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -155,34 +135,91 @@ TEMPLATE_DIRS = (
     os.path.join(ROOT_PATH, 'new31/templates').replace('\\','/'),
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
+APPS = {
+    'shop':{
+            'tempContext':'',
+            'middleware':'',
+        },
+    'message':{
+            'tempContext':'',
+            'middleware':'message.middleware.MessageMiddleware',
+        },
+    'cart':{
+            'tempContext':'',
+            'middleware':'cart.middleware.CartMiddleware',
+        },
+    'tag':{
+            'tempContext':'tag.views.tagsClass',
+            'middleware':'',
+        },
+    'search':{
+            'tempContext':'',
+            'middleware':'',
+        },
+    'account':{
+            'tempContext':'',
+            'middleware':'account.middleware.UserMiddleware',
+        },
+    'item':{
+            'tempContext':'',
+            'middleware':'',
+        },
+    'ajax':{
+            'tempContext':'',
+            'middleware':'',
+        },
+    'office':{
+            'tempContext':'',
+            'middleware':'',
+        },
+    'order':{
+            'tempContext':'',
+            'middleware':'',
+        },
+    'payment':{
+            'tempContext':'',
+            'middleware':'',
+        },
+    'spec':{
+            'tempContext':'',
+            'middleware':'',
+        },
+    'discount':{
+            'tempContext':'',
+            'middleware':'',
+        },
+    'purview':{
+            'tempContext':'',
+            'middleware':'purview.middleware.purviewMiddleware',
+        },
+    'signtime':{
+            'tempContext':'',
+            'middleware':'',
+        },
+    'area':{
+            'tempContext':'',
+            'middleware':'',
+        },
+    }
+
+
+djangoMidClass = [
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    # Uncomment the next line for simple clickjacking protection:
+    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+djangoTempContext = [
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'django.contrib.messages.context_processors.messages',
-    'tag.views.tagsClass',
-)
-
-
-APPS = [
-    'shop',
-    'message',
-    'cart',
-    'tag',
-    'search',
-    'account',
-    'item',
-    'ajax',
-    'office',
-    'order',
-    'payment',
-    'spec',
-    'discount',
-    'purview',
-    'signtime',
-    'area',
 ]
 
 djangoAPPS = [
@@ -196,14 +233,33 @@ djangoAPPS = [
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-] + APPS
+]
+
+# for i in APPS:
+#     djangoAPPS.append(i)
+
+for i,v in APPS.items():
+
+    djangoAPPS.append(i)
+
+    if v['middleware']:
+        djangoMidClass.append(v['middleware'])
+
+    if v['tempContext']:
+        djangoTempContext.append(v['tempContext'])
+
 
 if DEBUG:
+    djangoMidClass += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
     djangoAPPS += ['debug_toolbar',]
     INTERNAL_IPS = ('127.0.0.1',)
     DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
-}    
+}
+
+MIDDLEWARE_CLASSES = tuple(djangoMidClass)
+
+TEMPLATE_CONTEXT_PROCESSORS = tuple(djangoTempContext)
 
 INSTALLED_APPS = tuple(djangoAPPS)
 

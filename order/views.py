@@ -1,4 +1,3 @@
-# -*- coding:utf-8 -*-
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -25,12 +24,10 @@ def orderList(request):
 def orderSubmit(request):
     if request.method == 'POST':
 
-        orderId = OrderCon(request).orderSubmit().orderId
-
-        return Message(request, request.META.get('HTTP_REFERER',"/")).title('您已成功提交订单').message('感谢您在本店购物！请记住您的订单号: %s' % orderId).shopMsg()
+        return OrderCon(request).orderSubmit()
 
     else:
-        return Message(request, request.META.get('HTTP_REFERER',"/")).title('错误').message('订单提交错误 !').shopMsg()
+        return Message(request).redirect().warning('订单提交方式错误 !').shopMsg()
 
 
 
@@ -44,10 +41,27 @@ class OrderCon:
 
     def orderSubmit(self):
 
-        # 新订单锁定、插入基本信息
-        self.newOderSn().submitOrderInfo().submitOrderLogistics()
+        # 新订单锁定
+        try:
+            self.newOderSn()
+        except :
+            return Message(self.request).redirect().error('无法插入订单号！').shopMsg()
 
-        return self
+        # 插入基本信息
+        try:
+            self.submitOrderInfo()
+        except :
+            return Message(self.request).redirect().error('无法插入订单基本信息！').shopMsg()
+
+        # 插入物流信息
+        try:
+            self.submitOrderLogistics()
+        except :
+            return Message(self.request).redirect(url='/cart/consignee/').error('收货信息有误，请重新填写！').shopMsg()
+
+
+        else: 
+            return Message(self.request).success('您已成功提交订单!').info('感谢您在本店购物！请记住您的订单号: %s' % self.orderId).shopMsg()
 
 
     # 获得新的订单编号
@@ -92,9 +106,10 @@ class OrderCon:
 
         return self
 
+
+    # 插入订单物流信息
+    @raiseSubLogistics
     def submitOrderLogistics(self):
-
-
 
         c = self.request.session['c']
         try:
@@ -102,12 +117,9 @@ class OrderCon:
 
             area = Area.objects.get(id= c['area'], onLine=True)
         except:
-
             raise
         else:
             logistics = OrderLogistics()
-
-            self.orderId = logistics
 
             logistics.consignee = c['consignee']
             logistics.area = '%s - %s' % (area.sub.name, area.name)
@@ -121,14 +133,15 @@ class OrderCon:
 
             logistics.save()
 
-            # logistics.order.add(self.order)
-
-
-            # logistics.update(consignee= c['consignee'],area='%s - %s' % (area.sub.name, area.name))
-
 
         return self
 
-    def raiseSubLogistics(self):
-        pass
+    def raiseSubLogistics(self, f):
 
+        def f
+            try:
+                f()
+            except :
+                return Message(self.request).redirect(url='/cart/consignee/').error('收货信息有误，请重新填写！').shopMsg()
+
+        return f

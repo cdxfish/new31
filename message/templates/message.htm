@@ -1,0 +1,52 @@
+{% extends request.session.msg.extendsHtm %}
+
+{% block content %}
+    <div class="pWhite">
+{% if messages %}
+{% for i in messages %}
+	        <h3>{{ i.tags }}</h3>
+	        <p>{{ i }}</p>
+{% endfor %}
+{% endif %}
+
+{% if request.session.msg.auto %}
+          	<p id="redirectionMsg">如果您不进行操作，将在 <span id="spanSeconds">{{ request.session.msg.auto }}</span> 秒后返回上一页。</p>
+			<script language="JavaScript">
+				var seconds = {{ request.session.msg.auto }};
+{% if request.session.msg.redirectUrl %}
+				var defaultUrl = '{{ request.session.msg.redirectUrl }}';
+{% else %}
+				var defaultUrl = 'javascript:history.go(-1)';
+{% endif %}
+
+				onload = function()
+				{
+				  if (defaultUrl == 'javascript:history.go(-1)' && window.history.length == 0)
+				  {
+				    document.getElementById('redirectionMsg').innerHTML = '';
+				    return;
+				  }
+
+				  window.setInterval(redirection, 1000);
+				}
+				function redirection()
+				{
+				  if (seconds <= 0)
+				  {
+				    window.clearInterval();
+				    return;
+				  }
+
+				  seconds --;
+				  document.getElementById('spanSeconds').innerHTML = seconds;
+
+				  if (seconds == 0)
+				  {
+				    window.clearInterval();
+				    location.href = defaultUrl;
+				  }
+				}
+			</script>
+{% endif %}
+    </div>
+{% endblock %}

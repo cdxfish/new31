@@ -1,62 +1,76 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.http import HttpResponseRedirect
 from django.conf import settings
+from django.contrib import messages
 
 # Create your views here.
 
-def message(request):
+def msg(request):
 
-    return Message(request, request.META.get('HTTP_REFERER',"/")).autoRedirect(10). \
-        title('每个保安都是哲学家。他们每天都在提出哲学界的三个终极问题：').message('“你是谁？” “你从哪里来？” “你要到哪里去？”').shopMsg()
+    return render_to_response('message.htm', locals(), context_instance=RequestContext(request))
 
 class Message:
-    def __init__(self, request, url):
+    def __init__(self, request):
         self.request = request
-        self.msgTitle ='Give Me Fire'
-        self.msg ='Hello World'
+        self.auto = False
 
-        self.speed = 3
+        self.redirectUrl = '/'
 
-        self.autoRe = False
-
+    def redirect(self, speed = 3, url=''):
+        self.auto = speed
 
         if url and (self.request.META.get('HTTP_REFERER',"/") != url):
-            self.backUrl = url
+            self.redirectUrl = url
         else:
-            self.backUrl = '/'
+            self.redirectUrl = '/'
 
-
-    def autoRedirect(self, speed = 3):
-        self.autoRe = True
-        self.speed = speed
 
         return self
 
-    def title(self,t=''):
-        self.msgTitle = t
+    def info(self,m=''):
+        messages.info(self.request, m)
 
         return self
 
-    def message(self,m=''):
-        self.msg = m
+    def error(self,m=''):
+        messages.error(self.request, m)
+
+        return self
+
+    def success(self,m=''):
+        messages.success(self.request, m)
+
+        return self    
+           
+    def warning(self,m=''):
+        messages.warning(self.request, m)
+
+        return self       
+        
+    def debug(self,m=''):
+        messages.debug(self.request, m)
 
         return self
 
     def shopMsg(self):
-        return self.printMsg('shopmsg')
+        return self.msg('shop')
 
     def officeMsg(self):
 
-        return self.printMsg('officemsg')
+        return self.msg('office')
 
 
-    def printMsg(self, tempName):
+    def msg(self, tempName= 'shop'):
 
-        autoRedirect = self.autoRe
-        speed = self.speed
-        backUrl = self.backUrl
-        title = self.msgTitle
-        message = self.msg
 
-        return render_to_response('%s.htm' % tempName, locals(), context_instance=RequestContext(self.request))
+        msg = {
+                'extendsHtm': "%s.base.htm" % tempName,
+                'auto': self.auto,
+                'redirectUrl': self.redirectUrl,
+            }
+
+        self.request.session['msg'] = msg
+
+        return HttpResponseRedirect('/message/')

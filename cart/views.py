@@ -2,24 +2,22 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
-from django.db.models import Q
+from django.contrib import messages
 from django.core.exceptions import *
-from item.models import *
+from django.db.models import Q
+from signtime.models import *
 from account.models import *
 from payment.models import *
-from signtime.models import *
+from message.views import *
+from item.models import *
 from area.models import *
 from order.models import *
-from message.views import *
 import time, datetime
 
 # Create your views here.
 
 def cart(request):
 
-    a = request.session['c']
-
-    
     cart = Cart(request)
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
@@ -30,7 +28,7 @@ def hCart(request, f, i, t = 1):
 
         return HttpResponseRedirect("/cart/")
     except:
-        return Message(request, request.META.get('HTTP_REFERER',"/")).autoRedirect(3).title('错误').message('当前商品已下架!').shopMsg()
+        return Message(request).redirect().warning('当前商品已下架').shopMsg()
 
 
 def consignee(request):
@@ -55,8 +53,7 @@ def checkout(request):
         ShipConsignee().cConFormPOST(request)
 
     except:
-        return Message(request, request.META.get('HTTP_REFERER',"/")).autoRedirect(3).title('错误').message('请重新填写收货人信息!').shopMsg()
-
+        return Message(request).redirect().warning('请重新填写收货人信息').shopMsg()
 
     cart = Cart(request)
 
@@ -124,7 +121,7 @@ def cConsigneeByCart(request):
 
         return HttpResponseRedirect("/cart/consignee/")
     except:
-        return Message(request, request.META.get('HTTP_REFERER',"/")).autoRedirect(3).title('错误').message('无法保存信息!').shopMsg()
+        return Message(request).redirect().warning('无法保存信息').shopMsg()
 
 
 class Cart:

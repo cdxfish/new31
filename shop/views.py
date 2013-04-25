@@ -7,17 +7,12 @@ from django.db.models import Q, Min
 from item.models import *
 from tag.models import *
 import random, json, os
+from django.contrib import messages
 
 # Create your views here.
 
 # APP For Shop UI
 def shop(request):
-
-    a = request.path
-
-    d = dir(request)
-
-    b = dir(request.path)
 
     itemList = ItemPin(10).buildItemList().sort(sortFun).itemList
 

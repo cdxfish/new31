@@ -10,7 +10,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^(nn\/$|cs\/$|km\/$|^$)', include('%s.urls' % settings.APPS[0])),
+    url(r'^(nn\/$|cs\/$|km\/$|^$)', include('%s.urls' % settings.APPS.keys()[0])),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -20,7 +20,7 @@ urlpatterns = patterns('',
 )
 
 
-for i in settings.APPS[1:]:
+for i in settings.APPS.keys()[1:]:
   urlpatterns += patterns('',
       (r'^%s/' % i , include('%s.urls' % i)),
   )
@@ -29,5 +29,5 @@ for i in settings.APPS[1:]:
 if settings.DEBUG:
     urlpatterns += patterns('', 
         url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
-
+        
     )
