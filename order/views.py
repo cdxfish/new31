@@ -1,13 +1,11 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponseRedirect
-from django.db.models import Q, Min
+from signtime.models import *
 from message.views import *
 from area.models import *
-from signtime.models import *
 from models import *
-import random, json, os, time,datetime
+import time
 
 # Create your views here.
 
@@ -24,7 +22,7 @@ def orderList(request):
 def orderSubmit(request):
     if request.method == 'POST':
 
-        return OrderCon(request).orderSubmit()
+        return OrderSubmit(request).submit()
 
     else:
         return Message(request).redirect().warning('订单提交方式错误 !').shopMsg()
@@ -33,13 +31,13 @@ def orderSubmit(request):
 
 
 
-class OrderCon:
+class OrderSubmit:
     """docstring for Order"""
     def __init__(self, r):
         self.request = r
         self.orderId = 2013113082322
 
-    def orderSubmit(self):
+    def submit(self):
 
         # 新订单锁定
         try:
@@ -108,40 +106,27 @@ class OrderCon:
 
 
     # 插入订单物流信息
-    @raiseSubLogistics
     def submitOrderLogistics(self):
 
         c = self.request.session['c']
-        try:
-            time = SignTime.objects.get(id=c['time'], onLine=True)
 
-            area = Area.objects.get(id= c['area'], onLine=True)
-        except:
-            raise
-        else:
-            logistics = OrderLogistics()
+        time = SignTime.objects.get(id=c['time'], onLine=True)
 
-            logistics.consignee = c['consignee']
-            logistics.area = '%s - %s' % (area.sub.name, area.name)
-            logistics.address = c['address']
-            logistics.tel = c['tel']
-            logistics.signDate = c['date']
-            logistics.signTimeStart = time.start
-            logistics.signTimeEnd = time.end
+        area = Area.objects.get(id= c['area'], onLine=True)
 
-            logistics.order = self.order
+        logistics = OrderLogistics()
 
-            logistics.save()
+        logistics.consignee = c['consignee']
+        logistics.area = '%s - %s' % (area.sub.name, area.name)
+        logistics.address = c['address']
+        logistics.tel = c['tel']
+        logistics.signDate = c['date']
+        logistics.signTimeStart = time.start
+        logistics.signTimeEnd = time.end
+        logistics.note = c['note']
 
+        logistics.order = self.order
+
+        logistics.save()
 
         return self
-
-    def raiseSubLogistics(self, f):
-
-        def f
-            try:
-                f()
-            except :
-                return Message(self.request).redirect(url='/cart/consignee/').error('收货信息有误，请重新填写！').shopMsg()
-
-        return f
