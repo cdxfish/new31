@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from signtime.models import *
 from message.views import *
+from cart.views import *
 from area.models import *
 from item.models import *
 from models import *
@@ -82,10 +83,11 @@ class OrderSubmit:
 
     def submitNewSn(self):
         # 新订单锁定
-        try:
-            self.newOderSn()
-        except:
-            self.errorMsg(Message(self.request).redirect().error('无法插入订单号！').shopMsg())
+        if not self.error:
+            try:
+                self.newOderSn()
+            except:
+                self.errorMsg(Message(self.request).redirect().error('无法插入订单号！').shopMsg())
 
         return self
 
@@ -105,10 +107,11 @@ class OrderSubmit:
 
     def submitInfo(self):
         # 插入基本信息
-        try:
-            self.submitOrderInfo()
-        except :
-            self.errorMsg(Message(self.request).redirect().error('无法插入订单基本信息！').shopMsg())
+        if not self.error:
+            try:
+                self.submitOrderInfo()
+            except :
+                self.errorMsg(Message(self.request).redirect().error('无法插入订单基本信息！').shopMsg())
 
         return self
 
@@ -143,14 +146,17 @@ class OrderSubmit:
 
     def submitLogistics(self):
         # 插入物流信息
-        try:
-            self.submitOrderLogistics()
-        except :
-            self.errorMsg(Message(self.request).redirect(url='/cart/consignee/').error('收货信息有误，请重新填写！').shopMsg())
+        if not self.error:
+            try:
+                self.submitOrderLogistics()
+            except :
+                self.errorMsg(Message(self.request).redirect(url='/cart/consignee/').error('收货信息有误，请重新填写！').shopMsg())
 
         return self
 
+
     def submitOrderItem(self):
+
         itemList = []
 
         for v, i in self.request.session['itemCart'].items():
@@ -166,19 +172,24 @@ class OrderSubmit:
 
         return self
 
+
     def submitItem(self):
         # 插入商品信息
-        try:
-            self.submitOrderItem()
+        if not self.error:
+            try:
+                self.submitOrderItem()
 
-        except :
-            self.errorMsg(Message(self.request).redirect(url='/cart/').error('当前购物车中已下架，请重新选择商品！').shopMsg())
+            except :
+                self.errorMsg(Message(self.request).redirect(url='/cart/').error('当前购物车中已下架，请重新选择商品！').shopMsg())
 
         return self
 
 
     def submitDone(self):
-        self.message = Message(self.request).success('您已成功提交订单!').info('感谢您在本店购物！请记住您的订单号: %s' % self.orderId).shopMsg()
+        if not self.error:
+            self.message = Message(self.request).success('您已成功提交订单!').info('感谢您在本店购物！请记住您的订单号: %s' % self.orderId).shopMsg()
+            Cart(self.request).clearCart()
+            ShipConsignee(self.request).clearConsignee()
 
         return self
 
@@ -190,4 +201,6 @@ class OrderSubmit:
         return self
 
     def delNewOrder(self):
-        pass
+        self.order.delete()
+
+        return self

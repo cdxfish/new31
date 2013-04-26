@@ -17,6 +17,7 @@ import time, datetime
 # Create your views here.
 
 def cart(request):
+    a = request.session.get('c')
 
     cart = Cart(request)
 
@@ -48,12 +49,12 @@ def consignee(request):
 
 
 def checkout(request):
-    # 配置当session
+    # 配置当前session
     try:
-        ShipConsignee().cConFormPOST(request)
+        ShipConsignee(request).cConFormPOST()
 
     except:
-        return Message(request).redirect().warning('请重新填写收货人信息').shopMsg()
+        return Message(request).redirect(url='/cart/consignee/').warning('请重新填写收货人信息').shopMsg()
 
     cart = Cart(request)
 
@@ -117,7 +118,7 @@ def changeCartItem(request, i , t):
 
 def cConsigneeByCart(request):
     try:
-        ShipConsignee().cConFormGET(request)
+        ShipConsignee(request).cConFormGET()
 
         return HttpResponseRedirect("/cart/consignee/")
     except:
@@ -130,8 +131,9 @@ class Cart:
         self.itemBuy = []
         self.countFee = 0
         self.request = request
-        if self.request.session.get('itemCart'):
-            for v, i in self.request.session['itemCart'].items():
+        itemCart = self.request.session.get('itemCart')
+        if itemCart:
+            for v, i in itemCart.items():
                 try:
                     if len(v) < 2:
                         raise Item.DoesNotExist
@@ -142,7 +144,10 @@ class Cart:
                     self.countFee += subtotal
                     self.itemBuy.append({ 'item': itemSpec, 'amount': amount, 'num': i,'subtotal': subtotal, 'v': v })
                 except:
-                    pass
+                    del itemCart[v]
+
+            self.request.session['itemCart'] = itemCart
+
 
     def cartItemSubtotal(self, i, t):
         itemCart = self.request.session["itemCart"]
@@ -150,19 +155,25 @@ class Cart:
 
         return itemSubtotal
 
+    def clearCart(self):
+        self.request.session['itemCart'] = {}
+
+        return self
+
 class ShipConsignee:
     """docstring for Consignee"""
-    def __init__(self):
-        pass      
+    def __init__(self, request):
+        self.request = request
+        self.c = {'pay':0, 'ship':0, 'consignee':'', 'area': 0, 'address':'', 'tel':'', 'date': '%s' % datetime.date.today(), 'time': 0,'note':'',}      
 
-    def cConFormGET(self, request):
+    def cConFormGET(self):
         try:
-            if request.GET:
-                n = request.GET
+            if self.request.GET:
+                n = self.request.GET
             else:
                 raise ValueError
 
-            s = request.session['c']
+            s = self.request.session['c']
 
             for v,i in n.items():
                 # 用于下拉框默认值,使得过滤器辨别为false
@@ -171,20 +182,20 @@ class ShipConsignee:
                 else:
                     s[v] = i
 
-            request.session['c'] = s
+            self.request.session['c'] = s
 
             return self
         except:
             raise ValueError
 
-    def cConFormPOST(self, request):
+    def cConFormPOST(self):
         try:
-            if request.POST:
-                n = request.POST
+            if self.request.POST:
+                n = self.request.POST
             else:
                 raise ValueError
 
-            s = request.session['c']
+            s = self.request.session['c']
 
             for v,i in n.items():
                 # 用于下拉框默认值,使得过滤器辨别为false
@@ -193,8 +204,13 @@ class ShipConsignee:
                 else:
                     s[v] = i
 
-            request.session['c'] = s
+            self.request.session['c'] = s
 
             return self
         except:
             raise ValueError
+
+    def clearConsignee(self):
+        self.request.session['c'] = self.c
+
+        return self
