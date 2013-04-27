@@ -42,7 +42,7 @@ class OrderSubmit:
         self.message = ''
 
     def submit(self):
-        self.submitNewSn().submitInfo().submitLogistics().submitItem().submitDone()
+        self.submitNewSn().submitInfo().submitLogistics().submitItem().submitSpec().submitDone()
 
         if self.error:
             self.delNewOrder()
@@ -185,11 +185,44 @@ class OrderSubmit:
         return self
 
 
+    def submitOrderSpec(self):
+        specList = []
+
+        for v, i in self.request.session['itemCart'].items():
+
+            spec = ItemSpec.objects.getSpecByItemSpecId(id='%s' % v[1:])
+
+            orderItem = OrderItem.objects.get(item=spec.itemName.itemName)
+
+            specList.append(OrderSpec(item=orderItem,spec=spec.spec))
+
+            # 删除重复项
+            specList = list(set(specList))
+
+        OrderSpec.objects.bulk_create(specList)
+
+        return self
+
+
+    def submitSpec(self):
+        # 插入商品信息
+        if not self.error:
+            # try:
+            #     self.submitOrderSpec()
+
+            # except :
+            #     self.errorMsg(Message(self.request).redirect(url='/cart/').error('当前购物车中已下架，请重新选择商品！').shopMsg())
+
+            self.submitOrderSpec()
+
+        return self
+
+
     def submitDone(self):
         if not self.error:
             self.message = Message(self.request).success('您已成功提交订单!').info('感谢您在本店购物！请记住您的订单号: %s' % self.orderId).shopMsg()
-            Cart(self.request).clearCart()
-            ShipConsignee(self.request).clearConsignee()
+            # Cart(self.request).clearCart()
+            # ShipConsignee(self.request).clearConsignee()
 
         return self
 
