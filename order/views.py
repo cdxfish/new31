@@ -8,6 +8,7 @@ from area.models import *
 from item.models import *
 from models import *
 import time
+from django.conf import settings
 
 # Create your views here.
 
@@ -38,16 +39,43 @@ class OrderSubmit:
     def __init__(self, r):
         self.request = r
         self.orderId = 2013113082322
+        self.orderItem = []
+        self.orderSpec = []
+        self.orderFee = []
+        self.orderDiscount = []
         self.error = False
         self.message = ''
 
     def submit(self):
-        self.submitNewSn().submitInfo().submitLogistics().submitItem().submitSpec().submitDone()
+        # 插入订单号占位！
+        # 插入订单基本信息
+        # 插入订单物流信息
+        # 插入订单商品信息
+        # 插入订单商品规格信息
+        # 插入订单商品价格信息
+        # 插入订单完成
+
+        if settings.DEBUG:
+            self.newOderSn().infoSubmit().logisticsSubmit().itemSubmit().submitDone()
+        else:
+            self.newSnForMsg().infoForMsg().logisticsForMsg().itemForMsg().submitDone()
 
         if self.error:
             self.delNewOrder()
 
         return self.message
+
+
+
+    def newSnForMsg(self):
+        # 新订单锁定
+        if not self.error:
+            try:
+                self.newOderSn()
+            except:
+                self.errorMsg(Message(self.request).redirect().error('无法插入订单号！').shopMsg())
+
+        return self
 
 
     # 获得新的订单编号
@@ -81,20 +109,20 @@ class OrderSubmit:
 
         return self
 
-    def submitNewSn(self):
-        # 新订单锁定
+
+    def infoForMsg(self):
+        # 插入基本信息
         if not self.error:
             try:
-                self.newOderSn()
-            except:
-                self.errorMsg(Message(self.request).redirect().error('无法插入订单号！').shopMsg())
+                self.infoSubmit()
+            except :
+                self.errorMsg(Message(self.request).redirect().error('无法插入订单基本信息，请重新提交订单或联系客服！').shopMsg())
 
         return self
 
 
-
     # 插入订单基本信息
-    def submitOrderInfo(self, u= '' , r ='网店订单'):
+    def infoSubmit(self, u= '' , r ='网店订单'):
 
         self.order.referer=r
         self.order.user= u if u else self.request.user.username
@@ -105,20 +133,19 @@ class OrderSubmit:
         return self
 
 
-    def submitInfo(self):
-        # 插入基本信息
+    def logisticsForMsg(self):
+        # 插入订单物流信息
         if not self.error:
             try:
-                self.submitOrderInfo()
+                self.logisticsSubmit()
             except :
-                self.errorMsg(Message(self.request).redirect().error('无法插入订单基本信息！').shopMsg())
+                self.errorMsg(Message(self.request).redirect(url='/cart/consignee/').error('收货信息有误，请重新填写！').shopMsg())
 
         return self
 
 
-
     # 插入订单物流信息
-    def submitOrderLogistics(self):
+    def logisticsSubmit(self):
 
         c = self.request.session['c']
 
@@ -144,85 +171,109 @@ class OrderSubmit:
         return self
 
 
-    def submitLogistics(self):
-        # 插入物流信息
+    def itemForMsg(self):
+        # 插入商品信息
         if not self.error:
             try:
-                self.submitOrderLogistics()
+                self.itemSubmit()
+
             except :
-                self.errorMsg(Message(self.request).redirect(url='/cart/consignee/').error('收货信息有误，请重新填写！').shopMsg())
+                self.errorMsg(Message(self.request).redirect(url='/cart/').error('当前购物车中商品已下降，请重新选择商品或联系客服！').shopMsg())
 
         return self
 
 
-    def submitOrderItem(self):
+    def itemSubmit(self):
 
-        itemList = []
+        self.orderItem = []
 
         for v, i in self.request.session['itemCart'].items():
 
             item = Item.objects.getItemByItemSpecId(id='%s' % v[1:])
 
-            itemList.append(OrderItem(order=self.order, item=item.itemName,sn=item.sn))
+            self.orderItem.append(OrderItem(order=self.order, name=item.name,sn=item.sn))
 
             # 删除重复项
-            itemList = list(set(itemList))
+            self.orderItem = list(set(self.orderItem))
 
-        OrderItem.objects.bulk_create(itemList)
+        OrderItem.objects.bulk_create(self.orderItem)
 
-        return self
+        return self.specForMsg()
 
 
-    def submitItem(self):
-        # 插入商品信息
+    def specForMsg(self):
+        # 插入商品规格信息
         if not self.error:
             try:
-                self.submitOrderItem()
+                return self.specSubmit()
 
             except :
-                self.errorMsg(Message(self.request).redirect(url='/cart/').error('当前购物车中已下架，请重新选择商品！').shopMsg())
+                self.errorMsg(Message(self.request).redirect(url='/cart/').error('当前购物车中商品规格有误，请重新选择商品或联系客服！').shopMsg())
 
         return self
 
-
-    def submitOrderSpec(self):
-        specList = []
+    def specSubmit(self):
+        self.orderSpec = []
 
         for v, i in self.request.session['itemCart'].items():
 
             spec = ItemSpec.objects.getSpecByItemSpecId(id='%s' % v[1:])
 
-            orderItem = OrderItem.objects.get(item=spec.itemName.itemName)
+            orderItem = OrderItem.objects.get(order=self.order, sn=spec.item.sn)
 
-            specList.append(OrderSpec(item=orderItem,spec=spec.spec))
+            sp = OrderSpec()
 
-            # 删除重复项
-            specList = list(set(specList))
+            sp.orderItem = orderItem
+            sp.spec = spec.spec
 
-        OrderSpec.objects.bulk_create(specList)
+            sp.save()
 
-        return self
-
-
-    def submitSpec(self):
-        # 插入商品信息
-        if not self.error:
-            # try:
-            #     self.submitOrderSpec()
-
-            # except :
-            #     self.errorMsg(Message(self.request).redirect(url='/cart/').error('当前购物车中已下架，请重新选择商品！').shopMsg())
-
-            self.submitOrderSpec()
+            self.feeForMsg(sp, spec, v, i)
 
         return self
 
 
-    def submitDone(self):
+    def feeForMsg(self, sp, spec, v, i):
+        # 插入商品价格信息
         if not self.error:
-            self.message = Message(self.request).success('您已成功提交订单!').info('感谢您在本店购物！请记住您的订单号: %s' % self.orderId).shopMsg()
-            # Cart(self.request).clearCart()
-            # ShipConsignee(self.request).clearConsignee()
+            try:
+                return self.feeSubmit(sp, spec, v, i)
+
+            except :
+                self.errorMsg(Message(self.request).redirect(url='/cart/').error('当前购物车中商品价格有误，请重新选择商品或联系客服！').shopMsg())
+
+        return self
+
+    def feeSubmit(self, sp, spec, v, i):
+
+        oFee = OrderFee()
+        oFee.orderSpec = sp
+        oFee.number = i
+        oFee.itemType = v[0]
+        oFee.amount = spec.itemfee_set.get(itemType=v[0]).amount
+        oFee.save()
+
+        return self.disForMsg(oFee, spec, v)
+
+
+    def disForMsg(self, oFee, spec, v):
+        # 插入商品折扣信息
+        if not self.error:
+            try:
+                return self.disSubmit(oFee, spec, v)
+
+            except :
+                self.errorMsg(Message(self.request).redirect(url='/cart/').error('当前购物车中商品折扣有误，请重新选择商品或联系客服！').shopMsg())
+
+        return self
+
+    def disSubmit(self, oFee, spec, v):
+        if v[0] == '1': 
+            dis = spec.itemfee_set.get(itemType=int(v[0])).itemdiscount_set.all()[0].discount.discount
+            oDis = OrderDiscount()
+            oDis.orderFee = oFee
+            oDis.discount = dis
+            oDis.save()
 
         return self
 
@@ -233,7 +284,17 @@ class OrderSubmit:
 
         return self
 
+
     def delNewOrder(self):
         self.order.delete()
+
+        return self
+
+
+    def submitDone(self):
+        if not self.error:
+            self.message = Message(self.request).success('您已成功提交订单!').info('感谢您在本店购物！请记住您的订单号: %s' % self.orderId).shopMsg()
+            # Cart(self.request).clearCart()
+            # ShipConsignee(self.request).clearConsignee()
 
         return self

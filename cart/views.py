@@ -24,12 +24,13 @@ def cart(request):
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
 
 def hCart(request, f, i, t = 1):
+
     try:
         f(request, i, t)
 
         return HttpResponseRedirect("/cart/")
     except:
-        return Message(request).redirect(request.META.get('HTTP_REFERER',"/")).warning('当前商品已下架').shopMsg()
+        return Message(request).redirect(url=request.META.get('HTTP_REFERER',"/")).warning('当前商品已下架').shopMsg()
 
 
 def consignee(request):
@@ -67,19 +68,17 @@ def checkout(request):
 
 
 def buyToCart(request, i , t= 1):
-    try:
-        item = Item.objects.getItemByItemSpecId(id=i)
+    
+    item = Item.objects.getItemByItemSpecId(id=i)
 
-        itemCart = request.session["itemCart"]
+    itemCart = request.session["itemCart"]
 
-        if not i in itemCart:
-            itemCart.update({ '%s%s' % (t,i):1 })
+    if not i in itemCart:
+        itemCart.update({ '%s%s' % (t,i):1 })
 
-        request.session['itemCart'] = itemCart
+    request.session['itemCart'] = itemCart
 
-        return request
-    except:
-        raise  Item.DoesNotExist
+    return request
 
 
 def clearCartItem(request, i , t= 1):

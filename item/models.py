@@ -10,15 +10,15 @@ from discount.models import *
 class itemManager(models.Manager):
     def getItemByItemName(self, itemName = ''):
 
-        return self.select_related().get(itemName=itemName)
+        return self.select_related().get(name=itemName)
 
     def getTagByItemName(self, itemName = ''):
 
-        return self.select_related().get(itemName=itemName).tag.all()
+        return self.select_related().get(name=itemName).tag.all()
 
     def getItemByItemSpecId(self, id = ''):
 
-        item = ItemSpec.objects.select_related().get(id=id).itemName
+        item = ItemSpec.objects.select_related().get(id=id).item
 
         if item.onLine and item.show:
 
@@ -42,7 +42,7 @@ class itemSpecManager(models.Manager):
 
         itemSpec = ItemSpec.objects.select_related().get(id=id)
 
-        if itemSpec.itemName.onLine and itemSpec.itemName.show:
+        if itemSpec.item.onLine and itemSpec.item.show:
 
             return itemSpec
         else:
@@ -50,7 +50,7 @@ class itemSpecManager(models.Manager):
 
 
 class Item(models.Model):
-    itemName = models.CharField(u'商品名称', max_length=30, unique=True)
+    name = models.CharField(u'商品名称', max_length=30, unique=True)
     sn = models.IntegerField(u'货号', unique=True)
     addTime = models.DateTimeField(u'添加时间', auto_now=True, auto_now_add=True)
     onLine = models.BooleanField(u'上架', default=False)
@@ -62,33 +62,33 @@ class Item(models.Model):
     objects = itemManager()
 
     def __unicode__(self):
-        return u"%s - %s [ onLine: %s ] [ show: %s ]" % (self.itemName, self.sn, self.onLine, self.show)
+        return u"%s - %s [ onLine: %s ] [ show: %s ]" % (self.name, self.sn, self.onLine, self.show)
 
 
 class ItemDesc(models.Model):
-    itemName = models.ForeignKey(Item, verbose_name=u'商品')
+    item = models.ForeignKey(Item, verbose_name=u'商品')
     desc = models.CharField(u'描述', max_length=60)
     objects = itemDescManager()
 
     def __unicode__(self):
-        return u"%s - %s" % (self.itemName, self.desc)
+        return u"%s - %s" % (self.item, self.desc)
 
     class Meta:
         ordering = ['?']
-        unique_together=(("itemName","desc"),)     
+        unique_together=(("item","desc"),)     
 
 
 class ItemSpec(models.Model):
-    itemName = models.ForeignKey(Item, verbose_name=u'商品')
+    item = models.ForeignKey(Item, verbose_name=u'商品')
     spec = models.ForeignKey(Spec, verbose_name=u'规格')
     objects = itemSpecManager()
 
     def __unicode__(self):
-        return u"%s - %s" % (self.itemName, self.spec)
+        return u"%s - %s" % (self.item, self.spec)
 
     class Meta:
         ordering = ['spec']
-        unique_together=(("itemName","spec"),)           
+        unique_together=(("item","spec"),)           
 
 
 class ItemFee(models.Model):
@@ -109,15 +109,15 @@ class ItemDiscount(models.Model):
     discount = models.ForeignKey(Discount, verbose_name=u'折扣')
 
     def __unicode__(self):
-        return u"%s - %s" % (self.itemFee, self.discount)
+        return u"%s - %s 折" % (self.itemFee, self.discount)
 
 
 class ItemImg(models.Model):
-    itemName = models.ForeignKey(Item, verbose_name=u'商品')
+    item = models.ForeignKey(Item, verbose_name=u'商品')
     img = models.ImageField(u'图片', upload_to='images')
 
     def __unicode__(self):
-        return u"%s - %s" % (self.itemName, self.img)
+        return u"%s - %s" % (self.item, self.img)
 
     class Meta:
         ordering = ['?']

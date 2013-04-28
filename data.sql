@@ -1,4 +1,4 @@
-INSERT INTO `item_item` (`itemName`, `sn`) VALUES
+INSERT INTO `item_item` (`name`, `sn`) VALUES
 ( '香浓巧克力', '3133001'),
 ( '德国烤奶酪', '3133002'),
 ( '蓝莓芝士', '3133010'),

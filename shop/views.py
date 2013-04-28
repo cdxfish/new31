@@ -62,7 +62,7 @@ class ItemPin:
         item = {
             'cssClass': self.baseClass,    
             'img': '%simages/%ss.jpg' % (settings.MEDIA_URL, randomItem.sn),
-            'itemName': randomItem.itemName,
+            'itemName': randomItem.name,
             'sn': randomItem.sn,
             'like': randomItem.like,
             'click': randomItem.click,

@@ -27,7 +27,7 @@
 {% if cart.itemBuy %}
 {% for i in cart.itemBuy %}
                     <tr align="center">
-                        <td>{{ i.item.itemName.itemName }}</td>
+                        <td>{{ i.item.item.name }}</td>
                         <td>{{ i.item.spec }}</td>
                         <td>￥{{ i.amount|floatformat:2 }} 元</td>
                         <td>{{ i.num }}</td>
