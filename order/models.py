@@ -1,6 +1,6 @@
-# -*- coding:utf-8 -*-
 #coding:utf-8
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -19,15 +19,19 @@ class OrderInfo(models.Model):
 
 
 class OrderLog(models.Model):
+    aType = (
+                (0,u'确认'),
+            )
+
+
     order = models.ForeignKey(OrderInfo, verbose_name=u'订单')
-    orderStatus = models.SmallIntegerField(u'订单状态(操作前)', default=0, editable=False)
-    user = models.CharField(u'管理员', max_length=30, editable=False)
-    actionType = models.SmallIntegerField(u'操作', editable=False)
+    user = models.ForeignKey(User, verbose_name=u'用户')
+    actionType = models.SmallIntegerField(u'操作', editable=False, choices=aType)
     note = models.CharField(u'备注', max_length=60, blank=True, null=True)
     logTime = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True, editable=False)
 
     def __unicode__(self):
-        return u"%s - [a:%s][%s]" % ( self.order, self.actionType, self.logTime )
+        return u"%s - [a:%s][%s]" % ( self.order, self.get_actionType_display(), self.logTime )
         
     class Meta:
         unique_together = (("order","actionType"),)
@@ -35,12 +39,26 @@ class OrderLog(models.Model):
 
 
 class OrderLineTime(models.Model):
+    tT = (
+            (0, u'下单'),
+            (1, u'确认'),
+            (2, u'取消'),
+            (3, u'无效'),
+            (4, u'完成'),
+            (5, u'停止'),
+            (6, u'发货'),
+            (7, u'签收'),
+            (8, u'拒签'),
+            (9, u'付款'),
+        )
+
+
     order = models.ForeignKey(OrderInfo, verbose_name=u'订单')
-    timeType = models.SmallIntegerField(u'时间类型')
+    timeType = models.SmallIntegerField(u'时间类型', default=0, choices=tT)
     lineTime = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True)
 
     def __unicode__(self):
-        return u"%s - [t:%s][%s]" % ( self.order, self.timeType, self.lineTime )
+        return u"%s - [ %s ][ %s ]" % ( self.order, self.get_timeType_display(), self.lineTime )
         
     class Meta:
         unique_together=(("order","timeType"),)   
@@ -70,35 +88,58 @@ class OrderLogistics(models.Model):
 
 
 class OrderStatus(models.Model):
+    oStatus =(
+                (0, u'未确认'), 
+                (1, u'已确认'), 
+                (2, u'已取消'),
+                (3, u'无效'),
+                (4, u'完成'),
+                (5, u'订单停止'),
+            )
+
     order = models.OneToOneField(OrderInfo, verbose_name=u'订单')
-    orderStatus = models.SmallIntegerField(u'订单状态', default=0, editable=False)
+    orderStatus = models.SmallIntegerField(u'订单状态', default=0, editable=False, choices=oStatus)
 
     def __unicode__(self):
-        return u"%s - [o:%s]" % ( self.order, self.orderStatus )    
+        return u"%s - [ %s ]" % ( self.order, self.get_orderStatus_display() )    
 
     # class Meta:
         # verbose_name = u'订单支付'
 
 
 class OrderPay(models.Model):
+    pStatus = (
+                (0, u'未付款'), 
+                (1, u'已付款'),
+            )
+
     order = models.OneToOneField(OrderInfo, verbose_name=u'订单')
     payName = models.CharField(u'支付方式', max_length=30)
-    payStatus = models.SmallIntegerField(u'支付状态', default=0, editable=False)
+    cod = models.CharField(u'代码', max_length=30)
+    payStatus = models.SmallIntegerField(u'支付状态', default=0, editable=False, choices=pStatus)
 
     def __unicode__(self):
-        return u"%s - %s[p:%s]" % ( self.order, self.payName, self.payStatus )    
+        return u"%s - %s [ %s ]" % ( self.order, self.payName, self.get_payStatus_display() )
 
     # class Meta:
         # verbose_name = u'订单支付'
 
 
 class OrderShip(models.Model):
+    sStatus = (
+                (0, u'未发'), 
+                (1, u'已发'), 
+                (2, u'拒签'), 
+                (3, u'已签'), 
+            )
+
     order = models.OneToOneField(OrderInfo, verbose_name=u'订单')
     shipName = models.CharField(u'物流方式', max_length=30, editable=False)
-    shipStatus = models.SmallIntegerField(u'物流状态', default=0, editable=False)
+    cod = models.CharField(u'代码', max_length=30)
+    shipStatus = models.SmallIntegerField(u'物流状态', default=0, editable=False, choices=sStatus)
 
     def __unicode__(self):
-        return u"%s - %s[p:%s]" % ( self.order, self.payName, self.payStatus )    
+        return u"%s - %s [ %s ]" % ( self.order, self.shipName, self.get_shipStatus_display() )    
 
     # class Meta:
         # verbose_name = u'订单物流'

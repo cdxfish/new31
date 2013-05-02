@@ -42,66 +42,26 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td><a href="order.php?act=info&order_sn=2013661713737" class="order_sn">2013661713737</a></td>
-            <td align="center">2013-04-17 19:00 ~ 20:00</td>
-            <td align="center">梁丹</td>
-            <td align="center">13807805690   13307711766</td>
-            <td align="center"><a href="map.php?keyword=%E6%A1%83%E6%BA%90%E8%B7%AF%E5%95%86%E8%B4%B8%E9%87%91%E5%A4%A7%E9%99%A210%E6%A0%8B3%E5%8F%B7%E6%88%BF" target="_blank">桃源路商贸金大院10栋3号房</a></td>
-            <td align="center">￥194.00 元 和 0 K金</td>
-            <td align="center" class="order_status">未确认,未付款,未发货</td>
-            <td align="center" nowrap="nowrap" class="handler">
-            <a href="order.php?act=op_confirm&order_sn=2013661713737" class="op_confirm">确认</a>
-            <a href="order.php?act=new_order&order_sn=2013661713737" class="new_order">编辑</a>
-            <a href="order.php?act=op_invalid&order_sn=2013661713737" class="op_invalid">无效</a>
+{% for i in oList %}
+          <tr align="center">
+            <td><a href="/order/{{ i.orderSn }}/">{{ i.orderSn }}</a></td>
+            <td>{{ i.orderlogistics.signDate|date:"Y-m-d" }} | {{ i.orderlogistics.signTimeStart|time:"H:i" }} - {{ i.orderlogistics.signTimeEnd|time:"H:i" }}</td>
+            <td>{{ i.orderlogistics.consignee }}</td>
+            <td>{{ i.orderlogistics.tel }}</td>
+            <td><a href="/map/?k={{ i.orderlogistics.address }}" target="_blank">{{ i.orderlogistics.address }}</a></td>
+            <td>￥194.00 元 和 0 K金</td>
+            <td>{{ i.orderstatus.get_orderStatus_display }}</td>
+            <td nowrap="nowrap">
+            <a href="/order/c/{{ i.orderSn }}/">确认</a>
+            <a href="/order/e/{{ i.orderSn }}/">编辑</a>
+            <a href="/order/i/{{ i.orderSn }}/">无效</a>
             </td>
           </tr>
-          <tr>
-            <td><a href="order.php?act=info&order_sn=2013661670048" class="order_sn">2013661670048</a></td>
-            <td align="center">2013-04-18 15:00 ~ 16:00</td>
-            <td align="center">韦丽</td>
-            <td align="center">13617718044</td>
-            <td align="center"><a href="map.php?keyword=%E6%B0%91%E6%97%8F%E5%A4%A7%E9%81%9399%E5%8F%B7ATAMI+KUVI+%E9%9F%A9%E5%9B%BD%E6%9C%8D%E9%A5%B0%E5%BA%97" target="_blank">民族大道99号ATAMI KUVI 韩国服饰店</a></td>
-            <td align="center">￥183.00 元 和 0 K金</td>
-            <td align="center" class="order_status">未确认,未付款,未发货</td>
-            <td align="center" nowrap="nowrap" class="handler">
-            <a href="order.php?act=op_confirm&order_sn=2013661670048" class="op_confirm">确认</a>
-            <a href="order.php?act=new_order&order_sn=2013661670048" class="new_order">编辑</a>
-            <a href="order.php?act=op_invalid&order_sn=2013661670048" class="op_invalid">无效</a>
-            </td>
-          </tr>
-          <tr>
-            <td><a href="order.php?act=info&order_sn=2013660934504" class="order_sn" style="color:red">2013660934504</a></td>
-            <td align="center">2013-04-18 10:00 ~ 11:00</td>
-            <td align="center">李石</td>
-            <td align="center">13152671746</td>
-            <td align="center"><a href="map.php?keyword=%E6%9C%9B%E5%B7%9E%E5%B2%AD2%E5%8F%B7" target="_blank">望州岭2号</a></td>
-            <td align="center">￥189.00 元 和 0 K金</td>
-            <td align="center" class="order_status">未确认,未付款,未发货</td>
-            <td align="center" nowrap="nowrap" class="handler">
-            <a href="order.php?act=op_confirm&order_sn=2013660934504" class="op_confirm">确认</a>
-            <a href="order.php?act=new_order&order_sn=2013660934504" class="new_order">编辑</a>
-            <a href="order.php?act=op_invalid&order_sn=2013660934504" class="op_invalid">无效</a>
-            </td>
-          </tr>
-          <tr>
-            <td><a href="order.php?act=info&order_sn=2013660791164" class="order_sn">2013660791164</a></td>
-            <td align="center">2013-04-21 17:00 ~ 18:00</td>
-            <td align="center">李先生 </td>
-            <td align="center">18977778608  13977178866</td>
-            <td align="center"><a href="map.php?keyword=%E6%98%9F%E5%85%89%E5%A4%A7%E9%81%9346%E5%8F%B7%E6%B1%9F%E5%8D%97%E9%A6%A8%E5%9B%AD%E5%B0%8F%E5%8C%BA7%E6%A0%8B3%E5%8D%95%E5%85%83402" target="_blank">星光大道46号江南馨园小区7栋3单元402</a></td>
-            <td align="center">￥189.00 元 和 0 K金</td>
-            <td align="center" class="order_status">未确认,未付款,未发货</td>
-            <td align="center" nowrap="nowrap" class="handler">
-            <a href="order.php?act=op_confirm&order_sn=2013660791164" class="op_confirm">确认</a>
-            <a href="order.php?act=new_order&order_sn=2013660791164" class="new_order">编辑</a>
-            <a href="order.php?act=op_invalid&order_sn=2013660791164" class="op_invalid">无效</a>
-            </td>
-          </tr>
+{% endfor %}
           </tbody>
           <tr>
             <td align="right" nowrap="true" colspan="10">
-              总计 4 条记录，共 1 页，当前第 1 页
+              总计 {{ oList|length }} 条记录，共 1 页，当前第 1 页
               <span id="pageLink">
                 <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p={{ p }}">第一页</a>
                 <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p={{ p }}">上一页</a>

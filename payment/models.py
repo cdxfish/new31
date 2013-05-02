@@ -3,11 +3,26 @@ from django.db import models
 
 # Create your models here.
 
+
+
+class payManager(models.Manager):
+    def getPayById(self, id = ''):
+
+        pay = Pay.objects.select_related().get(id=id)
+
+        if pay.onLine:
+
+            return pay
+        else:
+            raise self.DoesNotExist
+
 class Pay(models.Model):
     name = models.CharField(u'名字', max_length=30)
     cod = models.CharField(u'代码', max_length=30)
     config = models.TextField(u'配置')
     onLine = models.BooleanField(u'上线')
+
+    objects = payManager()
 
     def __unicode__(self):
         return u"%s - %s" % (self.name, self.onLine)

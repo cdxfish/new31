@@ -6,6 +6,7 @@ from message.views import *
 from cart.views import *
 from area.models import *
 from item.models import *
+from payment.models import *
 from models import *
 import time
 from django.conf import settings
@@ -19,6 +20,8 @@ def orderList(request):
     e = request.GET.get('e')
     k = request.GET.get('k') if request.GET.get('k') else ''
     p = request.GET.get('p') if request.GET.get('p') else 1
+
+    oList = OrderInfo.objects.select_related().all()[:150]
 
     return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
 
@@ -51,14 +54,33 @@ class OrderSubmit:
         # 插入订单基本信息
         # 插入订单物流信息
         # 插入订单商品信息
-        # 插入订单商品规格信息
-        # 插入订单商品价格信息
+        # 插入订单支付方式信息
+        # 插入订单送货方式信息
+        # 插入订单送货方式信息
+        # 插入订单订单状态
+        # 插入订单订单时间线
         # 插入订单完成
 
         if settings.DEBUG:
-            self.newOderSn().infoSubmit().logisticsSubmit().itemSubmit().submitDone()
+            self.newOderSn() \
+                .infoSubmit() \
+                .logisticsSubmit() \
+                .itemSubmit() \
+                .paySubmit() \
+                .shipSubmit() \
+                .oStartSubmit() \
+                .oLineSubmit() \
+                .submitDone()
         else:
-            self.newSnForMsg().infoForMsg().logisticsForMsg().itemForMsg().submitDone()
+            self.newSnForMsg() \
+                .infoForMsg() \
+                .logisticsForMsg() \
+                .itemForMsg() \
+                .payForMsg() \
+                .shipForMsg() \
+                .oStartForMsg() \
+                .oLineForMsg() \
+                .submitDone()
 
         if self.error:
             self.delNewOrder()
@@ -269,11 +291,108 @@ class OrderSubmit:
 
     def disSubmit(self, oFee, spec, v):
         if v[0] == '1': 
-            dis = spec.itemfee_set.get(itemType=int(v[0])).itemdiscount_set.all()[0].discount.discount
+
             oDis = OrderDiscount()
             oDis.orderFee = oFee
-            oDis.discount = dis
+            
+            if self.request.user.is_authenticated():
+                oDis.discount = spec.itemfee_set.get(itemType=int(v[0])).itemdiscount_set.all()[0].discount.discount
+            else:
+                oDis.discount = 10.0
+
             oDis.save()
+
+        return self
+
+
+    def payForMsg(self):
+        # 插入商品支付方式信息
+        if not self.error:
+            try:
+                return self.paySubmit()
+
+            except :
+                self.errorMsg(Message(self.request).redirect(url='/cart/consignee/').error('当前支付方式信息有误，请重新选择或联系客服！').shopMsg())
+
+        return self
+
+    def paySubmit(self):
+
+        pay = Pay.objects.getPayById(id=self.request.session['c']['pay'])
+
+        oPay = OrderPay()
+        oPay.order = self.order
+        oPay.payName = pay.name
+        oPay.cod = pay.cod
+
+        oPay.save()
+
+        return self
+
+
+    def shipForMsg(self):
+        # 插入商品送货方式信息
+        if not self.error:
+            try:
+                return self.shipSubmit()
+
+            except :
+                self.errorMsg(Message(self.request).redirect(url='/cart/consignee/').error('当前送货方式信息有误，请重新选择或联系客服！').shopMsg())
+
+        return self
+
+
+    def shipSubmit(self):
+
+        # ship = Pay.objects.getPayById(id=self.request.session['c']['ship'])
+
+        oShip = OrderShip()
+        oShip.order = self.order
+        # oShip.shipName = ship.name
+        # oShip.cod = ship.cod
+
+        oShip.shipName = u'市内免费送货上门'
+        oShip.cod = u'fditc'
+
+        oShip.save()
+
+        return self
+
+    def oStartForMsg(self):
+        # 插入订单状态信息
+        if not self.error:
+            try:
+                return self.oStartSubmit()
+
+            except :
+                self.errorMsg(Message(self.request).redirect(url='/cart/').error('无法正确配置当前订单状态，请重新下单或联系客服！').shopMsg())
+
+        return self
+
+    def oStartSubmit(self):
+        oStart = OrderStatus()
+        oStart.order = self.order
+
+        oStart.save()
+
+        return self
+
+    def oLineForMsg(self):
+        # 插入订单状态信息
+        if not self.error:
+            try:
+                return self.oLineSubmit()
+
+            except :
+                self.errorMsg(Message(self.request).redirect(url='/cart/').error('无法正确配置当前订单时间线，请重新下单或联系客服！').shopMsg())
+
+        return self
+
+    def oLineSubmit(self):
+        oOLT = OrderLineTime()
+        oOLT.order = self.order
+
+        oOLT.save()
 
         return self
 

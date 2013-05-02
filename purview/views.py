@@ -109,8 +109,7 @@ class Purview:
             raise AttributeError
 
     def msgPrint(self):
-        return Message(self.request, self.request.META.get('HTTP_REFERER',"/")).autoRedirect(300). \
-                title('错误').message('权限不足，无法进行当前操作。').officeMsg()
+        return Message(self.request).redirect(url=self.request.META.get('HTTP_REFERER',"/")).error('权限不足，无法进行当前操作。').officeMsg()
 
     def redirectLogin(self):
         return HttpResponseRedirect("/account/login/")

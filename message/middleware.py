@@ -14,6 +14,9 @@ class MessageMiddleware:
                                         'redirectUrl': '',
                                     }
 
+        if not request.user.is_authenticated():
+            request.session['msg']['extendsHtm'] = 'shop.base.htm'
+
         return None
 
     # def process_response(self, request, response):
