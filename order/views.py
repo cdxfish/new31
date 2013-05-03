@@ -4,6 +4,7 @@ from django.template import RequestContext
 from signtime.models import *
 from message.views import *
 from cart.views import *
+from office.func import *
 from area.models import *
 from item.models import *
 from payment.models import *
@@ -15,13 +16,17 @@ from django.conf import settings
 
 def orderList(request):
 
+
     c = request.GET.get('c') if request.GET.get('c') else 0
     s = request.GET.get('s')
     e = request.GET.get('e')
     k = request.GET.get('k') if request.GET.get('k') else ''
-    p = request.GET.get('p') if request.GET.get('p') else 1
+    p = int(request.GET.get('p')) if request.GET.get('p') > 0 else 1
 
-    oList = OrderInfo.objects.select_related().all()[:150]
+
+    oListAll = OrderInfo.objects.select_related().all()
+
+    oList = page(l=oListAll, p=p)
 
     return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
 
@@ -417,3 +422,23 @@ class OrderSubmit:
             # ShipConsignee(self.request).clearConsignee()
 
         return self
+
+
+
+
+# 订单列表权限加持
+class OrderListPurview:
+    """docstring for orderList"""
+    def __init__(self, oList, request):
+        self.oList = oList
+        self.element = Element.objects.get(path=request.path).sub_set.all()
+
+
+    def operation(self, order):
+
+        pass
+
+    # 获取订单可选操作项
+    def getElement(self):
+
+        pass

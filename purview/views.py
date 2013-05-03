@@ -1,5 +1,6 @@
 #coding:utf-8
 from django.http import HttpResponseRedirect
+from models import *
 from account.views import UserInfo
 from message.views import Message
 
@@ -65,6 +66,8 @@ class Purview:
     def isPurview(self):
 
         if self.request.path in self.purview: #进行权限页面对照,确认当前页面是否需要权限判定
+
+            self.request.element = Element.objects.get(path=self.request.path)
 
             if self.request.user.is_authenticated() and self.request.user.is_staff:
 

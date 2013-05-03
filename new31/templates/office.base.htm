@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>{% block title %}中心首页{% endblock %} - new31管理中心</title>
+    <title>{% block title %}{{ request.element.name }}{% endblock %} - new31管理中心</title>
     <meta name="Keywords" content="{% block keywords %}31客,31客蛋糕,蛋糕{% endblock %}" />
     <meta name="Description" content="{% block description %}蛋糕电子商务{% endblock %}" />
     <link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico" type="image/x-icon" />
@@ -30,7 +30,7 @@
         <a href="/order/" class="nav">订单管理</a>
         <div class="messagePop" style="display:none;">
           <ul>
-            <li><a href="/order/">销售</a></li>
+            <li><a href="/order/">订单</a></li>
             <li><a href="/back/">退货</a></li>
           </ul>
         </div>
@@ -140,16 +140,14 @@
         <span id="adminName">{{ request.user.username }} [ {% if request.user.is_superuser %}超级管理员{% else %}普通管理{% endif %} ]</span>
     </div>
     <div id="content">
-{% if request.domTag.search or request.domElement %}
+{% if request.element.pType %}
         <div id="tool">
-{% if request.domElement %}
           <ul class="action">
 {% for i in request.domElement %}
               <li><a href="{{ i.path }}" class="button">{{ i.name }}</a></li>
 {% endfor %}
           </ul>
         </div>
-{% endif %}
 {% endif %}
 {% block content %}{% endblock %}
     </div>

@@ -1,8 +1,6 @@
 #coding:utf-8
 
 from django.http import HttpResponse
-from account.views import UserInfo
-from message.views import Message
 from purview.views import *
 
 

@@ -1,25 +1,17 @@
 {% extends "office.base.htm" %}
 
-{% block title %}new31 管理系统{% endblock %}
-
-
 {% block content %}
       <div class="search" nowrap="true" colspan="3">
           <form action="/order/" method="get">
             <img src="{{ STATIC_URL }}images/icon_search.gif" border="0" alt="SEARCH" />
             <select name="c">
-              <option value="-1" >全部</option>
-              <option value="0" selected >未确认</option>
-              <option value="1" >已确认</option>
+              <option value="-1" selected>全部</option>
+              <option value="0" >新单</option>
+              <option value="1" >确认</option>
               <option value="2" >取消</option>
               <option value="3" >无效</option>
               <option value="4" >完成</option>
-              <option value="10" >未付款</option>
-              <option value="11" >已付款</option>
-              <option value="110" >未发货</option>
-              <option value="111" >已发货</option>
-              <option value="112" >已签收</option>
-              <option value="5" >订单停止</option>
+              <option value="5" >停止</option>
             </select>
             <input type="text" name="s" size="7" value="{% if s %}{{ s }}{% else %}{% now "Y-m-d" %}{% endif %}" class="date">
              <span>至</span>
@@ -36,7 +28,7 @@
             <th>收货人</th>
             <th>电话</th>
             <th>地址</th>
-            <th>金额</th>
+            <th>类型</th>
             <th>订单状态</th>
             <th width="50px">操作</th>
           </tr>
@@ -49,27 +41,29 @@
             <td>{{ i.orderlogistics.consignee }}</td>
             <td>{{ i.orderlogistics.tel }}</td>
             <td><a href="/map/?k={{ i.orderlogistics.address }}" target="_blank">{{ i.orderlogistics.address }}</a></td>
-            <td>￥194.00 元 和 0 K金</td>
-            <td>{{ i.orderstatus.get_orderStatus_display }}</td>
+            <td>{{ i.get_orderType_display }}</td>
+            <td>{{ i.orderstatus.get_orderStatus_display }} | {{ i.orderpay.get_payStatus_display }} | {{ i.ordership.get_shipStatus_display }}</td>
             <td nowrap="nowrap">
-            <a href="/order/c/{{ i.orderSn }}/">确认</a>
-            <a href="/order/e/{{ i.orderSn }}/">编辑</a>
-            <a href="/order/i/{{ i.orderSn }}/">无效</a>
+            <a href="/order/c/?sn={{ i.orderSn }}">确认</a>
+            <a href="/order/e/?sn={{ i.orderSn }}">编辑</a>
+            <a href="/order/i/?sn={{ i.orderSn }}">无效</a>
             </td>
           </tr>
 {% endfor %}
           </tbody>
           <tr>
             <td align="right" nowrap="true" colspan="10">
-              总计 {{ oList|length }} 条记录，共 1 页，当前第 1 页
+              总计 {{ oList.paginator.count }} 条记录，共 {{ oList.paginator.num_pages }} 页，当前第 {{ p }} 页
               <span id="pageLink">
-                <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p={{ p }}">第一页</a>
-                <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p={{ p }}">上一页</a>
-                <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p={{ p }}">下一页</a>
-                <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p={{ p }}">最末页</a>
+                <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p=1">第一页</a>
+{% if oList.has_previous %}
+                <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p={{ oList.previous_page_number }}">上一页</a>
+{% endif %}
+{% if oList.has_next %}
+                  <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p={{ oList.next_page_number }}">下一页</a>
+{% endif %}
               </span>           
             </td>
           </tr>
-      </table>        
-
+      </table>
 {% endblock %}

@@ -37,7 +37,7 @@ class GetItemByTag:
 
     def getItem(self, tagTitle = ''):
         try:
-            self.item = self.itemQuery.get(itemName=tagTitle)
+            self.item = self.itemQuery.get(name=tagTitle)
 
         except Item.DoesNotExist:
             try:
@@ -45,7 +45,7 @@ class GetItemByTag:
             except:
                 self.item = self.randomItem()
         else:
-            self.item = self.itemQuery.get(itemName=tagTitle)
+            self.item = self.itemQuery.get(name=tagTitle)
 
         # 检查当前item 是否存在图片. 避免进入死循环,只对上架商品进行一次遍历.
         try:

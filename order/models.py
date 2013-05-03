@@ -5,10 +5,11 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class OrderInfo(models.Model):
+    oType = ((0,u'普销'), (1,u'活动'), (2,u'积分'), )
     orderSn = models.BigIntegerField(u'订单号', primary_key=True, unique=True)
     user = models.CharField(u'会员', max_length=30, blank=True, null=True)
     referer = models.CharField(u'订单来源', max_length=30)
-    orderType = models.SmallIntegerField(u'订单类型', choices=((1,u'普通销售订单'), (2,u'活动订单'),),default=1,)
+    orderType = models.SmallIntegerField(u'订单类型', default=0, choices=oType,)
 
     def __unicode__(self):
         return u"%s [ %s ][ %s ] - %s" % (self.orderSn, self.user, self.referer, self.get_orderType_display())
@@ -22,7 +23,6 @@ class OrderLog(models.Model):
     aType = (
                 (0,u'确认'),
             )
-
 
     order = models.ForeignKey(OrderInfo, verbose_name=u'订单')
     user = models.ForeignKey(User, verbose_name=u'用户')
@@ -51,7 +51,6 @@ class OrderLineTime(models.Model):
             (8, u'拒签'),
             (9, u'付款'),
         )
-
 
     order = models.ForeignKey(OrderInfo, verbose_name=u'订单')
     timeType = models.SmallIntegerField(u'时间类型', default=0, choices=tT)
@@ -88,13 +87,13 @@ class OrderLogistics(models.Model):
 
 
 class OrderStatus(models.Model):
-    oStatus =(
-                (0, u'未确认'), 
-                (1, u'已确认'), 
-                (2, u'已取消'),
+    oStatus = (
+                (0, u'新单'), 
+                (1, u'确认'), 
+                (2, u'取消'),
                 (3, u'无效'),
                 (4, u'完成'),
-                (5, u'订单停止'),
+                (5, u'停止'),
             )
 
     order = models.OneToOneField(OrderInfo, verbose_name=u'订单')
@@ -109,8 +108,8 @@ class OrderStatus(models.Model):
 
 class OrderPay(models.Model):
     pStatus = (
-                (0, u'未付款'), 
-                (1, u'已付款'),
+                (0, u'未付'), 
+                (1, u'已付'),
             )
 
     order = models.OneToOneField(OrderInfo, verbose_name=u'订单')

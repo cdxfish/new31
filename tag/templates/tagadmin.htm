@@ -1,8 +1,6 @@
 {% extends "office.base.htm" %}
 
-{% block title %}标签管理{% endblock %}
-
-{% block urHere %}<a href="/tag/admin/">标签管理</a>{% endblock %}
+{% block urHere %}<a href="/tag/tag/">标签管理</a>{% endblock %}
 
 {% block js %}
     <script type="text/javascript" src="/js/office/tag.js"></script>
@@ -22,7 +20,7 @@
               <tr class="odd">
                 <td align="center">{{ i.id }}</td>
                 <td><a href="/tag/tag/{{ i.id }}/" title="编辑" class="editItem">{{ i.tag }}</a></td>
-                <td align="center" class="onLine cp"><img src="/images/{% if i.onLine %}yes{% else %}no{% endif %}.gif" /></td>
+                <td align="center" class="onLine cp"><img src="{{ STATIC_URL }}images/{% if i.onLine %}yes{% else %}no{% endif %}.gif" /></td>
               </tr>
 {% endfor %}
             </tbody>
