@@ -36,7 +36,7 @@ class itemDescManager(models.Manager):
 class itemSpecManager(models.Manager):
     def getSpecByItemId(self, id = ''):
 
-        return Item.objects.select_related().get(models.Q(id=id) & models.Q(onLine=True) & models.Q(show=True)).itemspec_set.all()
+        return Item.objects.select_related().get(id=id, onLine=True, show=True).itemspec_set.all()
 
     def getSpecByItemSpecId(self, id = ''):
 
@@ -81,6 +81,8 @@ class ItemDesc(models.Model):
 class ItemSpec(models.Model):
     item = models.ForeignKey(Item, verbose_name=u'商品')
     spec = models.ForeignKey(Spec, verbose_name=u'规格')
+    onLine = models.BooleanField(u'上线', default=False)
+    show = models.BooleanField(u'商城可见', default=False)
     objects = itemSpecManager()
 
     def __unicode__(self):

@@ -39,6 +39,22 @@ def orderSubmit(request):
         return Message(request).redirect().warning('订单提交方式错误 !').shopMsg()
 
 
+def newOrEditOrderUI(request):
+
+    pay = Pay.objects.filter(onLine=True)
+    signtime = SignTime.objects.filter(onLine=True)
+
+    area = Area.objects.filter(onLine=True,sub=None)
+
+    toDay = time.gmtime()
+    cDate = time.strptime(request.session['c']['date'], '%Y-%m-%d')
+
+    if cDate < toDay:
+        request.session['c']['date'] = '%s' % datetime.date.today()
+
+    return render_to_response('orderneworedit.htm', locals(), context_instance=RequestContext(request))
+
+
 
 
 

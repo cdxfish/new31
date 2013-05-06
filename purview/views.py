@@ -17,6 +17,7 @@ class Purview:
         self.purview = [
                           '/office/',
                           '/order/',
+                          '/order/new/',
                           '/back/',
                           '/logistics/',
                           '/produce/',
@@ -67,11 +68,11 @@ class Purview:
 
         if self.request.path in self.purview: #进行权限页面对照,确认当前页面是否需要权限判定
 
-            self.request.element = Element.objects.get(path=self.request.path)
-
             if self.request.user.is_authenticated() and self.request.user.is_staff:
 
                 try:
+                    self.request.element = Element.objects.get(path=self.request.path)
+
                     return self.domElement() #页面元素权限加持
 
                 except :

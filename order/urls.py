@@ -6,4 +6,5 @@ from views import *
 urlpatterns = patterns('',
     (r'^$', orderList),
     (r'^submit/$', orderSubmit),
+    (r'^new/$', newOrEditOrderUI),
 )
