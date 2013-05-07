@@ -1,7 +1,12 @@
 {% extends "office.base.htm" %}
 
+{% block js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}order/js/neweditorder.configuration.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}cart/js/consignee.configuration.js"></script>
+{% endblock %}
+
 {% block content %}
-        <form action="order.php" method="POST">
+        <form action="/order/submit/" method="POST" name="checkout" id="checkout">
           <h3>商品列表</h3>
           <table width="100%" cellpadding="3" cellspacing="1" id="goodsList">
             <tr>
@@ -26,13 +31,11 @@
               <td></td>
             </tr>
           </table>
-
         <h3>收货人信息</h3>
-        <form action="/cart/checkout/" method="POST" name="checkout" id="checkout">
             <table width="100%" cellpadding="3" cellspacing="1">
                 <tr>
                   <td width="100px" align="right">会员帐号：</td>
-                  <td><input name="user" type="text" value="" id="user" /><input type="button" value="检查会员是否存在" class="button" id="checkUser" /></td>
+                  <td><input name="user" type="text" value="{{ request.session.c.user }}" id="user" /><input type="button" value="检查会员是否存在" class="button" id="checkUser" /></td>
                 </tr>
                 <tr>
                     <td align="right">支付方式：</td>

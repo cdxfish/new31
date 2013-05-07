@@ -163,7 +163,7 @@ class ShipConsignee:
     """docstring for Consignee"""
     def __init__(self, request):
         self.request = request
-        self.c = {'pay':0, 'ship':0, 'consignee':'', 'area': 0, 'address':'', 'tel':'', 'date': '%s' % datetime.date.today(), 'time': 0,'note':'',}      
+        self.c = {'user':'', 'pay':0, 'ship':0, 'consignee':'', 'area': 0, 'address':'', 'tel':'', 'date': '%s' % datetime.date.today(), 'time': 0,'note':'',}      
 
     def cConFormGET(self):
         try:

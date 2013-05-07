@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>{% block title %}{{ request.element.name }}{% endblock %} - new31管理中心</title>
+    <title>{% block title %}{{ request.element.get_path_display }}{% endblock %} - new31管理中心</title>
     <meta name="Keywords" content="{% block keywords %}31客,31客蛋糕,蛋糕{% endblock %}" />
     <meta name="Description" content="{% block description %}蛋糕电子商务{% endblock %}" />
     <link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico" type="image/x-icon" />
@@ -57,7 +57,7 @@
         <div class="messagePop" style="display:none;">
           <ul>
             <li><a href="/after/">普销</a></li>
-            <li><a href="/tryeat//">试吃</a></li>
+            <li><a href="/tryeat/">试吃</a></li>
           </ul>
         </div>
       </li>
@@ -132,7 +132,7 @@
     <div id="header">
         <div id="urHere"><a href="/office/" id="index">31kecake 管理中心</a> {% block urHere %}{% endblock %}</div>
         <ul id="toolsBar">
-          <li><a href="/order/new/">新增订单</a></li>
+          <li><a href="/order/new/">新订单</a></li>
           <li><a href="/inventory/">库存</a></li>
           <li><a href="/map/">地图</a></li>
           <li><a href="/shipments/">出货安排</a></li>

@@ -1,7 +1,6 @@
 #coding:utf-8
 from django.http import HttpResponseRedirect
 from models import *
-from account.views import UserInfo
 from message.views import Message
 
 # Create your views here.
@@ -14,42 +13,13 @@ class Purview:
         self.request.domElement = []
         self.request.s = self.request.user.is_authenticated() and self.request.user.is_staff
 
-        self.purview = [
-                          '/office/',
-                          '/order/',
-                          '/order/new/',
-                          '/back/',
-                          '/logistics/',
-                          '/produce/',
-                          '/inventory/',
-                          '/after/',
-                          '/tryeat/',
-                          '/applytryeat/',
-                          '/discount/',
-                          '/ticket/',
-                          '/integral/',
-                          '/party/',
-                          '/reconciliation/',
-                          '/approved/',
-                          '/reimburse/',
-                          '/statistics/',
-                          '/statssale/',
-                          '/member/',
-                          '/memberint/',
-                          '/purview/',
-                          '/adminlog/',
-                          '/system/',
-                          '/item/item/',
-                          '/tag/tag/',
-                          '/spec/',
-                          '/price/',
-                          '/slide/',
-                          '/payment/',
-                          '/signtime/',
-                          '/logistics/',
-                          '/area/',
-                          '/filecheck/',
-                        ] #权限对照用列表,用于识别那些页面需要进行权限判定
+        p = []
+
+        for i in Element.pPath:
+            p.append(i[0])
+
+        self.purview = tuple(p)
+
 
     def check(self):
 

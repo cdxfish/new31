@@ -3,9 +3,7 @@ $(document).ready(function() {
     ob.nav().odd('#CFC');
     $(".sortTable").tablesorter();
 
-    $('.date').Zebra_DatePicker({
-        direction: true
-    }); //日期选择控件
+    $('.date').Zebra_DatePicker(); //日期选择控件
 })
 
 ob = {

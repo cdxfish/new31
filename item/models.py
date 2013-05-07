@@ -18,7 +18,7 @@ class itemManager(models.Manager):
 
     def getItemByItemSpecId(self, id = ''):
 
-        item = ItemSpec.objects.select_related().get(id=id).item
+        item = ItemSpec.objects.select_related().get(id=id,onLine=True,show=True).item
 
         if item.onLine and item.show:
 
@@ -86,7 +86,7 @@ class ItemSpec(models.Model):
     objects = itemSpecManager()
 
     def __unicode__(self):
-        return u"%s - %s" % (self.item, self.spec)
+        return u"%s - %s [ onLine: %s ][ show: %s ]" % (self.item, self.spec, self.onLine, self.show)
 
     class Meta:
         ordering = ['spec']

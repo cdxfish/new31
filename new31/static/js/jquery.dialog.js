@@ -44,7 +44,8 @@
                     'height': 'auto',
                     'margin-left': 'auto',
                     'margin-right': 'auto',
-                    'position': 'fixed'
+                    'position': 'fixed',
+                    'color': '#000'
                 }
 
             },
@@ -111,18 +112,6 @@
             delayClose: function(msg, t) {
                 var time = !t ? 1000 : t;
                 $("#dialog").fadeOut(time);
-                return this;
-            },
-            dialogMsgAndReload: function(data, f, t) {
-                var time = !t ? 1500 : t;
-                if (data.error) {
-                    timeClose(data.message, time);
-                    setTimeout('window.location.reload()', time);
-                } else {
-                    if (f) {
-                        f(data);
-                    }
-                }
                 return this;
             },
             loading: function(t, obj) {

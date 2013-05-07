@@ -1,6 +1,7 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.http import HttpResponseRedirect
 from signtime.models import *
 from message.views import *
 from cart.views import *
@@ -16,7 +17,6 @@ from django.conf import settings
 
 def orderList(request):
 
-
     c = request.GET.get('c') if request.GET.get('c') else 0
     s = request.GET.get('s')
     e = request.GET.get('e')
@@ -29,6 +29,7 @@ def orderList(request):
     oList = page(l=oListAll, p=p)
 
     return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
+
 
 def orderSubmit(request):
     if request.method == 'POST':
@@ -56,6 +57,16 @@ def newOrEditOrderUI(request):
 
 
 
+def adminOrderSubmit(request):
+
+    if request.method == 'POST':
+
+        return OrderSubmit(request).adminSubmit()
+
+    else:
+        return Message(request).redirect().warning('订单提交方式错误 !').shopMsg()
+
+
 
 
 class OrderSubmit:
@@ -71,6 +82,44 @@ class OrderSubmit:
         self.message = ''
 
     def submit(self):
+        # 插入订单号占位！
+        # 插入订单基本信息
+        # 插入订单物流信息
+        # 插入订单商品信息
+        # 插入订单支付方式信息
+        # 插入订单送货方式信息
+        # 插入订单送货方式信息
+        # 插入订单订单状态
+        # 插入订单订单时间线
+        # 插入订单完成
+
+        if settings.DEBUG:
+            self.newOderSn() \
+                .infoSubmit() \
+                .logisticsSubmit() \
+                .itemSubmit() \
+                .paySubmit() \
+                .shipSubmit() \
+                .oStartSubmit() \
+                .oLineSubmit() \
+                .submitDone()
+        else:
+            self.newSnForMsg() \
+                .infoForMsg() \
+                .logisticsForMsg() \
+                .itemForMsg() \
+                .payForMsg() \
+                .shipForMsg() \
+                .oStartForMsg() \
+                .oLineForMsg() \
+                .submitDone()
+
+        if self.error:
+            self.delNewOrder()
+
+        return self.message
+
+    def adminSubmit(self):
         # 插入订单号占位！
         # 插入订单基本信息
         # 插入订单物流信息

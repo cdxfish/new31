@@ -1,5 +1,6 @@
 #coding:utf-8
 from django.contrib import auth
+from django.conf import settings
 from django.http import HttpResponse
 from django.core.exceptions import *
 from item.models import *
@@ -58,6 +59,30 @@ def ajaxCartItemNum(request, f, i, t):
 
         return HttpResponse(AjaxRJson().error(True).message('当前商品已下架').data(request.session['itemCart']).jsonEn())
 
+def itemByKeyword(request, k=''):
+    if settings.DEBUG:
+
+        return getItemByKeyword()
+
+    else:
+
+        try:
+
+            return getItemByKeyword()
+        except:
+
+            return HttpResponse(AjaxRJson().error(True).message('未找到商品').data(request.session['itemCart']).jsonEn())
+
+
+def getItemByKeyword():
+    r = {}
+
+    for i in Item.objects.all():
+        r.update({ i.id: {'name':i.name, 'sn': i.sn} })
+
+
+    return HttpResponse(AjaxRJson().error(False).data(r).jsonEn())
+
 
 def cConsigneeByAjax(request):
     try:
@@ -66,6 +91,11 @@ def cConsigneeByAjax(request):
     except:
 
         return HttpResponse(AjaxRJson().error(True).message('无法填写表单').jsonEn())
+
+
+
+
+
 
 
 class AjaxRJson:
