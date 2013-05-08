@@ -1,7 +1,7 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from signtime.models import *
 from message.views import *
 from cart.views import *
@@ -10,7 +10,8 @@ from area.models import *
 from item.models import *
 from payment.models import *
 from models import *
-import time
+from forms import *
+import time, json
 from django.conf import settings
 
 # Create your views here.
@@ -41,6 +42,12 @@ def orderSubmit(request):
 
 
 def newOrEditOrderUI(request):
+    c = request.session['c']
+
+    consignee = {}
+
+    for i, v in c.items():
+        consignee.update({ i: v })
 
     pay = Pay.objects.filter(onLine=True)
     signtime = SignTime.objects.filter(onLine=True)
@@ -53,6 +60,11 @@ def newOrEditOrderUI(request):
     if cDate < toDay:
         request.session['c']['date'] = '%s' % datetime.date.today()
 
+    # consignee = {'address': c['address']}
+
+
+    form = ConsigneeForm(initial= consignee)
+
     return render_to_response('orderneworedit.htm', locals(), context_instance=RequestContext(request))
 
 
@@ -64,7 +76,21 @@ def adminOrderSubmit(request):
         return OrderSubmit(request).adminSubmit()
 
     else:
-        return Message(request).redirect().warning('订单提交方式错误 !').shopMsg()
+        return Message(request).redirect().warning('订单提交方式错误 !').officeMsg()
+
+
+def addItemToOrder(request):
+
+    if request.method == 'POST':
+
+        item = request.POST.getlist('i')
+
+
+
+        return HttpResponse(json.dumps(item))
+
+    else:
+        return Message(request).redirect().warning('订单提交方式错误 !').officeMsg()
 
 
 
@@ -87,7 +113,6 @@ class OrderSubmit:
         # 插入订单物流信息
         # 插入订单商品信息
         # 插入订单支付方式信息
-        # 插入订单送货方式信息
         # 插入订单送货方式信息
         # 插入订单订单状态
         # 插入订单订单时间线

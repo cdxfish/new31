@@ -1,6 +1,7 @@
 #coding:utf-8
 
 from django.db import models
+from django.db.models import Q
 from tag.models import *
 from spec.models import *
 from discount.models import *
@@ -10,11 +11,11 @@ from discount.models import *
 class itemManager(models.Manager):
     def getItemByItemName(self, itemName = ''):
 
-        return self.select_related().get(name=itemName)
+        return self.select_related().get(name=itemName, onLine=True)
 
     def getTagByItemName(self, itemName = ''):
 
-        return self.select_related().get(name=itemName).tag.all()
+        return self.select_related().get(name=itemName, onLine=True).tag.all()
 
     def getItemByItemSpecId(self, id = ''):
 
@@ -25,6 +26,9 @@ class itemManager(models.Manager):
             return item
         else:
             raise self.DoesNotExist
+    def getItemLikeNameOrSn(self, k=''):
+
+        return self.select_related().filter((Q(name__contains=k) | Q(sn__contains=k)) & Q(onLine=True))
 
 
 class itemDescManager(models.Manager):
@@ -40,7 +44,7 @@ class itemSpecManager(models.Manager):
 
     def getSpecByItemSpecId(self, id = ''):
 
-        itemSpec = ItemSpec.objects.select_related().get(id=id)
+        itemSpec = ItemSpec.objects.select_related().get(id=id, onLine=True)
 
         if itemSpec.item.onLine and itemSpec.item.show:
 
@@ -57,7 +61,7 @@ class Item(models.Model):
     show = models.BooleanField(u'商城可见', default=False)
     like = models.IntegerField(u'喜欢', default=0, editable=False)
     click = models.IntegerField(u'点击', default=0, editable=False)
-    tag = models.ManyToManyField(Tag, verbose_name=u'标签')
+    tag = models.ManyToManyField(Tag, verbose_name=u'标签', blank=True, null=True)
 
     objects = itemManager()
 

@@ -7,4 +7,5 @@ urlpatterns = patterns('',
     (r'^$', orderList),
     (r'^submit/$', orderSubmit),
     (r'^new/$', newOrEditOrderUI),
+    (r'^additemtoorder/$', addItemToOrder),
 )

@@ -1,6 +1,6 @@
 // 置顶工具条
 $(document).ready(function() {
-    ob.nav().odd('#CFC');
+    ob.nav().odd('#CFC').odds();
     $(".sortTable").tablesorter();
 
     $('.date').Zebra_DatePicker(); //日期选择控件
@@ -9,18 +9,47 @@ $(document).ready(function() {
 ob = {
     // 表格鼠标移入移出特效
     odd: function(c) {
-        $("table tr").bind('mouseover',
+        $("table tr").live('mouseover',
 
         function() {
-             $(this).addClass('odd');
-        }).bind('mouseout',
+            $(this).addClass('odd');
+        }).live('mouseout',
 
         function() {
-             $(this).removeClass('odd');
+            $(this).removeClass('odd');
         });
 
         return this;
     },
+
+    odds: function() {
+
+        $('.oddbox').live('click',
+
+        function(event) {
+            event.stopPropagation();
+        });
+
+        $("table tr").live('click',
+
+        function() {
+            var oddbox = $(this).find('.oddbox');
+
+            if (oddbox.length) {
+                if (oddbox.attr('checked') == 'checked') {
+
+                    oddbox.attr("checked", false);
+                } else {
+
+                    oddbox.attr("checked", true);
+                }
+            }
+
+            return false
+        });
+        return this
+    },
+
     nav: function() {
 
         var navMenuRight = 0;

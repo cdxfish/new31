@@ -38,7 +38,7 @@ aeog = {
                 message: ''
             };
             $.dialog.dialogMsg(data, aeog.sgBtn, {
-                width: 700
+                'width': 400
             });
         });
 
@@ -47,7 +47,7 @@ aeog = {
 
     sgBtn: function(data) {
         var html = '';
-        html += '   <h4><input type="text" name="keyword" /><input type="button" name="search" value=" 搜索 " id="goodsSearch" class="button" /></h4>  \r\n';
+        html += '   <h3 style="padding: 0 0 10px;"><input type="text" name="keyword" id="keyword" /><input type="button" name="search" value=" 搜索 " id="goodsSearch" class="button" /></h3>  \r\n';
 
         return html;
     },
@@ -58,16 +58,19 @@ aeog = {
 
         function() {
 
-            $(this).ajaxDialog(function(a) {
+            var keyword = $('#keyword').val();
 
-                var keyword = $('#keyword').val();
+            $(this).ajaxDialog(function(a) {
 
                 $.getJSON('/ajax/item/', {
                     k: keyword
                 },
 
                 function(data) {
-                    $.dialog.dialogMsg(data, aeog.sg)
+                    $.dialog.dialogMsg(data, aeog.sg, {
+                        'position': 'absolute',
+                        'width': 400
+                    });
 
                 });
 
@@ -82,7 +85,8 @@ aeog = {
         var html = '';
         html += aeog.sgBtn();
 
-        html += '        <table width="100%" cellpadding="3" cellspacing="1" id="searchGoodslist">  \r\n';
+        html += '        <form action="/order/additemtoorder/" method="POST">  \r\n';
+        html += '        <table width="100%" cellpadding="3" cellspacing="1" id="searchGoodslist" class="sortTable">  \r\n';
         html += '        <tr>  \r\n';
         html += '          <th width="20px"></th>  \r\n';
         html += '          <th>商品名称</th>  \r\n';
@@ -91,19 +95,20 @@ aeog = {
 
         $.each(data.data, function(i, v) {
             html += '    <tr>  \r\n';
-            html += '      <td align="center"><input type="checkbox" value="'+n.goods_id+'"></td>  \r\n';
-            html += '      <td>'+n.goods_name+'</td>  \r\n';
-            html += '      <td align="center">'+n.goods_sn+'</td>  \r\n';
+            html += '      <td align="center"><input type="checkbox" name="i" value="' + i + '" class="oddbox"></td>  \r\n';
+            html += '      <td>' + v.name + '</td>  \r\n';
+            html += '      <td align="center">' + v.sn + '</td>  \r\n';
             html += '    </tr>  \r\n';
         });
 
         html += '        </table>  \r\n';
-        html += '      <center>';
-        html += '        <input type="button" value="加入订单" class="button" id="addToOrder" />';
-        html += '      </center>';
+        html += '      <center>  \r\n';
+        html += csrf;
+        html += '        <input type="submit" value="加入订单" class="button" />  \r\n';
+        html += '      </center>  \r\n';
+        html += '      </form>  \r\n';
 
         return html;
     }
-
 
 }

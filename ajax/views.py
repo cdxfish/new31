@@ -59,25 +59,27 @@ def ajaxCartItemNum(request, f, i, t):
 
         return HttpResponse(AjaxRJson().error(True).message('当前商品已下架').data(request.session['itemCart']).jsonEn())
 
-def itemByKeyword(request, k=''):
+def itemByKeyword(request):
+    k = request.GET.get('k') if request.GET.get('k') else ''
+
     if settings.DEBUG:
 
-        return getItemByKeyword()
+        return getItemByKeyword(k)
 
     else:
 
         try:
 
-            return getItemByKeyword()
+            return getItemByKeyword(k)
         except:
 
             return HttpResponse(AjaxRJson().error(True).message('未找到商品').data(request.session['itemCart']).jsonEn())
 
 
-def getItemByKeyword():
+def getItemByKeyword(k):
     r = {}
 
-    for i in Item.objects.all():
+    for i in Item.objects.getItemLikeNameOrSn(k):
         r.update({ i.id: {'name':i.name, 'sn': i.sn} })
 
 

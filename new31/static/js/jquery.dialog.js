@@ -77,12 +77,6 @@
                 document.getElementById("floatLayer").innerHTML = h;
                 $('#dialog').show();
 
-                var windowHeight = $(window).outerHeight();
-                var windowouterWidth = $('body').outerWidth();
-                var floatLayerHeight = $("#floatLayer").outerHeight() + 100;
-                var floatLayerouterWidth = $("#floatLayer").outerWidth();
-                var topPx = windowHeight < floatLayerHeight ? 0 : (windowHeight - floatLayerHeight) / 2;
-                var leftPx = windowouterWidth < floatLayerouterWidth ? 0 : (windowouterWidth - floatLayerouterWidth) / 2;
 
                 // 该死的IE
                 if (jQuery.browser.msie && jQuery.browser.version === "6.0") {
@@ -95,20 +89,41 @@
                     }).css(cssObj);
 
 
-                    $('#maskLayer').css({position:'absolute'})
+                    $('#maskLayer').css({
+                        position: 'absolute'
+                    })
 
 
                 } else {
-                    $("#floatLayer").css({
-                        top: topPx,
-                        left: leftPx
-                    });
 
-                    $('#maskLayer').css({position:'fixed'})
+                    $("#floatLayer").css(cssObj);
+
+                    $.dialog.dialogCenter();
+
                 }
 
                 return this;
             },
+
+            dialogCenter: function() {
+
+                var windowHeight = $(window).outerHeight();
+                var windowouterWidth = $('body').outerWidth();
+                var floatLayerHeight = $("#floatLayer").outerHeight() + 100;
+                var floatLayerouterWidth = $("#floatLayer").outerWidth();
+                var topPx = windowHeight < floatLayerHeight ? 0 : (windowHeight - floatLayerHeight) / 2;
+                var leftPx = windowouterWidth < floatLayerouterWidth ? 0 : (windowouterWidth - floatLayerouterWidth) / 2;
+
+                $("#floatLayer").css({
+                    top: topPx,
+                    left: leftPx
+                });
+
+                $('#maskLayer').css({
+                    position: 'fixed'
+                })
+            },
+
             delayClose: function(msg, t) {
                 var time = !t ? 1000 : t;
                 $("#dialog").fadeOut(time);

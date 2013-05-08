@@ -17,9 +17,9 @@ import time, datetime
 # Create your views here.
 
 def cart(request):
-    a = request.session.get('c')
+    a = dir(request.POST)
 
-    cart = Cart(request)
+    cart = CartShow(request)
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
 
@@ -124,7 +124,7 @@ def cConsigneeByCart(request):
         return Message(request).redirect().warning('无法保存信息').shopMsg()
 
 
-class Cart:
+class CartShow:
     """docstring for Cart"""
     def __init__(self, request):
         self.itemBuy = []
@@ -158,6 +158,7 @@ class Cart:
         self.request.session['itemCart'] = {}
 
         return self
+
 
 class ShipConsignee:
     """docstring for Consignee"""
