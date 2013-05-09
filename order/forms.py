@@ -9,8 +9,12 @@ from signtime.models import *
 
 class ConsigneeForm(forms.ModelForm):
 
+    user = forms.CharField(label=u'会员帐号', required=False)
+
     pay = forms.ChoiceField(label=u'支付方式', choices=Pay.objects.getAll())
     time = forms.ChoiceField(label=u'最佳收货时间', choices=SignTime.objects.getAll())
+
+
 
     class Meta:
         model = OrderLogistics
@@ -23,3 +27,16 @@ class ConsigneeForm(forms.ModelForm):
             'area': forms.Select(choices=Area.objects.getAll()),  
             'signDate': forms.DateInput(attrs={'class': 'date'}),  
         } 
+
+
+def getForms(request):
+
+    c = request.session['c']
+
+    consignee = {}
+
+    for i, v in c.items():
+        consignee.update({ i: v })
+
+
+    return ConsigneeForm(initial= consignee)

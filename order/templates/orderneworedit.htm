@@ -35,18 +35,11 @@
             <table width="100%" cellpadding="3" cellspacing="1">
                 <tr>
                   <td width="100px" align="right">会员帐号：</td>
-                  <td><input name="user" type="text" value="{{ request.session.c.user }}" id="user" /><input type="button" value="检查会员是否存在" class="button" id="checkUser" /></td>
+                  <td>{{ form.user }}<input type="button" value="检查会员是否存在" class="button" id="checkUser" /></td>
                 </tr>
                 <tr>
                     <td align="right">支付方式：</td>
-                    <td>
-                        <select name="pay" id="pay">
-                            <option value="0"{% if not request.session.c.pay %} selected{% endif %}>请选择支付方式</option>
-{% for i in pay %}
-                            <option value="{{ i.id }}"{% ifequal i.id|floatformat request.session.c.pay %} selected{% endifequal %} >{{ i.name }}</option>
-{% endfor %}
-                        </select>
-                    </td>
+                    <td>{{ form.pay }}</td>
                 </tr>
                 <tr>
                     <td align="right">配送方式：</td>
@@ -54,49 +47,31 @@
                 </tr>
                 <tr>
                     <td align="right">收货人姓名：</td>
-                    <td><input name="consignee" type="text" value="{{ request.user.userinfo.consignee|default:request.session.c.consignee }}" id="consignee" /></td>
+                    <td>{{ form.consignee }}</td>
                 </tr>
                 <tr>
                     <td align="right">配送区域：</td>
-                    <td>
-                        <select name="area" id="area">
-                            <option value="0"{% if not request.session.c.area %} selected{% endif %}>请选择区域</option>
-{% for i in area %}
-{% for ii in i.sub_set.all %}
-                            <option value="{{ ii.id }}"{% ifequal ii.id|floatformat request.session.c.area %} selected{% endifequal %}>{{ i.name }} - {{ ii.name }}</option>
-{% endfor %}
-{% endfor %}
-                        </select>
-                    </td>
+                    <td>{{ form.area }}</td>
                 </tr>
                 <tr>
                     <td align="right">详细地址：</td>
-                    <td width="90%"><input name="address" type="text" value="{{ request.session.c.address }}" size="70" id="address" /></td>
+                    <td width="90%">{{ form.address }}</td>
                 </tr>
                 <tr>
                     <td align="right">联系电话：</td>
-                    <td><input name="tel" type="text" value="{{ request.session.c.tel }}" size="40" id="tel" />  ( 请填写多个号码，并用空格隔开。如：134XXXXXXXX 0771XXXXXXX )</td>
+                    <td>{{ form.tel }}</td>
                 </tr>
                 <tr>
                     <td align="right">最佳收货日期：</td>
-                    <td>
-                        <input name="date" type="text" value="{% if request.session.c.date %}{{ request.session.c.date }}{% else %}{% now "Y-m-d" %}{% endif %}" id="date" class="date" />
-                    </td>
+                    <td>{{ form.signDate }}</td>
                 </tr>
             <tr>
                 <td align="right">最佳收货时间：</td>
-                <td>
-                    <select name="time" id="time">
-                        <option value="0"{% if not request.session.c.time %} selected{% endif %}>请选择时间</option>
-{% for i in signtime %}
-                        <option value="{{ i.id }}"{% ifequal i.id|floatformat request.session.c.time %} selected{% endifequal %} >{{ i.start|time:"H:i" }} - {{ i.end|time:"H:i" }}</option>
-{% endfor %}
-                    </select>
-                </td>
+                <td>{{ form.time }}</td>
             </tr>
             <tr>
                 <td align="right" valign="top">备注：</td>
-                <td width="90%"><textarea name="note" cols="100" rows="4" id="note">{{ request.user.userinfo.note|default:request.session.c.note }}</textarea></td>
+                <td width="90%">{{ form.note }}</td>
             </tr>
             <tr>
                 <td></td>
@@ -107,7 +82,6 @@
                   <input type="button" value="订单号附属品" class="button" id="addPostD" />
                 </td>
             </tr>
-            {{ form.as_table }}
         </table>
         <center>
             {% csrf_token %}

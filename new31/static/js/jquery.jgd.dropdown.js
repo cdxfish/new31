@@ -5,7 +5,7 @@
  *
  * Homepage: http://www.dev4press.com/jquery/jgd-dropdown/
  * Examples: http://www.dev4press.com/jgd/dropdown/
- * 
+ *
  * Copyright (c) 2008-2010 Milan Petrovic, Dev4Press
  *
  * Dual licensed under the MIT and GPL licenses:
@@ -16,9 +16,9 @@
  * http://www.jankoatwarpspeed.com/post/2009/07/28/reinventing-drop-down-with-css-jquery.aspx
  */
 
-(function($){
+(function($) {
     $.fn.jgdDropdown = function(options) {
-        var settings =  $.extend({}, $.fn.jgdDropdown.defaults, options);
+        var settings = $.extend({}, $.fn.jgdDropdown.defaults, options);
         return this.each(function() {
             var $this = $(this);
             var $id = $.fn.jgdDropdown.convert($this, settings);
@@ -73,7 +73,16 @@
                 iTitle = '';
             }
         }
+
         var selected = $obj.find("option[selected]");
+
+
+        if (selected.length == 0 ) {
+            selected = $obj.find("option:first").attr('selected', true);
+
+        }
+
+
         var options = $("option", $obj);
         var id = "jgd_dd_" + get_id($obj);
         $obj.after('<dl id="' + id + '" class="' + settings.cls + '"></dl>');
@@ -81,9 +90,9 @@
             iTitle = selected.text();
             iVal = selected.val();
         }
-        $("#" + id).append('<dt><a href="#">' + iTitle + '<span class="value">' + iVal +  '</span></a></dt>');
+        $("#" + id).append('<dt><a href="#">' + iTitle + '<span class="value">' + iVal + '</span></a></dt>');
         $("#" + id).append('<dd><ul></ul></dd>');
-        options.each(function(index){
+        options.each(function(index) {
             var elClass = $(this).attr("class");
             var elStyle = $(this).attr("style");
 
@@ -97,8 +106,8 @@
                 if (index == options.length - 1) {
                     cls += " item-last";
                 }
-                if(elClass && elClass !== '') {
-                    cls+= " " + thisclass;
+                if (elClass && elClass !== '') {
+                    cls += " " + thisclass;
                 }
             }
             if (settings.clsCopySelect) {
@@ -107,8 +116,7 @@
             if ($(this).val() == selected.val()) {
                 cls += " " + settings.clsLISelected;
             }
-            $("#" + id + " dd ul").append('<li class="' + cls + '"><a href="#">' +
-                $(this).text() + '<span class="value">' + $(this).val() + '</span></a></li>');
+            $("#" + id + " dd ul").append('<li class="' + cls + '"><a href="#">' + $(this).text() + '<span class="value">' + $(this).val() + '</span></a></li>');
             if (elStyle) {
                 $("#" + id + " dd ul").find("li:last a").attr("style", elStyle);
             }
@@ -118,8 +126,9 @@
     };
     $.fn.jgd = function() {};
     $.fn.jgd.isEven = function($num) {
-        return ($num%2 === 0);
+        return ($num % 2 === 0);
     };
+
     function get_id($obj) {
         var id = $obj.attr("id");
         if (id === "") {
@@ -127,15 +136,17 @@
         }
         return id;
     }
+
     function random_id() {
         var dt = new Date().getMilliseconds();
         var num = Math.random();
         var rnd = Math.round(num * 100000);
         return "jgd" + dt + rnd;
     }
+
     function debug($obj) {
         if (window.console && window.console.log) {
-             window.console.log('jgd_dropdown: ' + $obj.size());
+            window.console.log('jgd_dropdown: ' + $obj.size());
         }
     }
 })(jQuery);

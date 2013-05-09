@@ -12,6 +12,7 @@ from message.views import *
 from item.models import *
 from area.models import *
 from order.models import *
+from order.forms import *
 import time, datetime
 
 # Create your views here.
@@ -35,16 +36,9 @@ def hCart(request, f, i, t = 1):
 
 def consignee(request):
 
-    pay = Pay.objects.filter(onLine=True)
-    signtime = SignTime.objects.filter(onLine=True)
+    a = request.session['c']
 
-    area = Area.objects.filter(onLine=True,sub=None)
-
-    toDay = time.gmtime()
-    cDate = time.strptime(request.session['c']['date'], '%Y-%m-%d')
-
-    if cDate < toDay:
-        request.session['c']['date'] = '%s' % datetime.date.today()
+    form = getForms(request)
 
     return render_to_response('consignee.htm', locals(), context_instance=RequestContext(request))
 
@@ -164,7 +158,8 @@ class ShipConsignee:
     """docstring for Consignee"""
     def __init__(self, request):
         self.request = request
-        self.c = {'user':'', 'pay':0, 'ship':0, 'consignee':'', 'area': 0, 'address':'', 'tel':'', 'date': '%s' % datetime.date.today(), 'time': 0,'note':'',}      
+        self.c = {'user':'', 'pay':0, 'ship':0, 'consignee':'', 'area': 0, 'address':'', 'tel':'', 'signDate': '%s' % datetime.date.today(), 'time': 0,'note':'',} 
+  
 
     def cConFormGET(self):
         try:

@@ -42,17 +42,6 @@ def orderSubmit(request):
 
 
 def newOrEditOrderUI(request):
-    c = request.session['c']
-
-    consignee = {}
-
-    for i, v in c.items():
-        consignee.update({ i: v })
-
-    pay = Pay.objects.filter(onLine=True)
-    signtime = SignTime.objects.filter(onLine=True)
-
-    area = Area.objects.filter(onLine=True,sub=None)
 
     toDay = time.gmtime()
     cDate = time.strptime(request.session['c']['date'], '%Y-%m-%d')
@@ -60,7 +49,12 @@ def newOrEditOrderUI(request):
     if cDate < toDay:
         request.session['c']['date'] = '%s' % datetime.date.today()
 
-    # consignee = {'address': c['address']}
+    c = request.session['c']
+
+    consignee = {}
+
+    for i, v in c.items():
+        consignee.update({ i: v })
 
 
     form = ConsigneeForm(initial= consignee)
