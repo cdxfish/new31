@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib import messages
+from django.conf import settings
 from django.core.exceptions import *
 from django.db.models import Q
 from signtime.models import *
@@ -12,13 +13,12 @@ from message.views import *
 from item.models import *
 from area.models import *
 from order.models import *
-from order.forms import *
+from consignee.views import *
 import time, datetime
 
 # Create your views here.
 
 def cart(request):
-    a = dir(request.POST)
 
     cart = CartShow(request)
 
@@ -44,21 +44,36 @@ def consignee(request):
 
 
 def checkout(request):
-    # 配置当前session
-    try:
-        ShipConsignee(request).cConFormPOST()
 
-    except:
-        return Message(request).redirect(url='/cart/consignee/').warning('请重新填写收货人信息').shopMsg()
+    if request.method == 'POST':
 
-    cart = Cart(request)
+        form = ConsigneeForm(request.POST)
 
-    pay = Pay.objects.get(onLine=True, id=request.session['c']['pay'])
-    time = SignTime.objects.get(onLine=True, id=request.session['c']['time'])
+        if not form.is_valid():
 
-    area = Area.objects.get(onLine=True, id=request.session['c']['area'])
+            for i in form:
+                if i.errors:
 
-    return render_to_response('checkout.htm', locals(), context_instance=RequestContext(request))
+                    messages.warning(request, '%s - %s' % ( i.label, i.errors))
+
+            return HttpResponseRedirect('/consignee/')
+
+        cart = CartShow(request)
+
+        if not cart:
+
+            return Message(request).redirect(url='/cart/').error('您还没选择商品喔亲~').shopMsg()
+
+        ShipConsignee(request).setSeesion()
+
+        pay = Pay.objects.getPayById(id=request.POST.get('pay'))
+        time = SignTime.objects.getTimeById(id=request.POST.get('time'))
+        area = Area.objects.getAreaById(id=request.POST.get('area'))
+
+        return render_to_response('checkout.htm', locals(), context_instance=RequestContext(request))
+    else:
+
+        return Message(request).redirect(url='/consignee/').error('提交方式有误').shopMsg()
 
 
 def buyToCart(request, i , t= 1):
@@ -109,22 +124,14 @@ def changeCartItem(request, i , t):
         raise Item.DoesNotExist
 
 
-def cConsigneeByCart(request):
-    try:
-        ShipConsignee(request).cConFormGET()
-
-        return HttpResponseRedirect("/cart/consignee/")
-    except:
-        return Message(request).redirect().warning('无法保存信息').shopMsg()
-
-
 class CartShow:
-    """docstring for Cart"""
+    """购物车"""
     def __init__(self, request):
         self.itemBuy = []
         self.countFee = 0
         self.request = request
-        itemCart = self.request.session.get('itemCart')
+        self.items = []
+        itemCart = self.request.session.get('items')
         if itemCart:
             for v, i in itemCart.items():
                 try:
@@ -139,73 +146,25 @@ class CartShow:
                 except:
                     del itemCart[v]
 
-            self.request.session['itemCart'] = itemCart
+            self.request.session['c'] = itemCart
 
 
     def cartItemSubtotal(self, i, t):
-        itemCart = self.request.session["itemCart"]
+        itemCart = self.request.session["items"]
         itemSubtotal = ItemSpec.objects.getSpecByItemSpecId(id='%s' % i[1:]).itemfee_set.get(itemType=i[0]).amount * int(t)
 
         return itemSubtotal
 
     def clearCart(self):
-        self.request.session['itemCart'] = {}
+        self.request.session['items'] = {}
 
         return self
 
 
-class ShipConsignee:
-    """docstring for Consignee"""
+class Cart:
+    """购物车相关"""
     def __init__(self, request):
-        self.request = request
-        self.c = {'user':'', 'pay':0, 'ship':0, 'consignee':'', 'area': 0, 'address':'', 'tel':'', 'signDate': '%s' % datetime.date.today(), 'time': 0,'note':'',} 
-  
+        self.items = []
 
-    def cConFormGET(self):
-        try:
-            if self.request.GET:
-                n = self.request.GET
-            else:
-                raise ValueError
-
-            s = self.request.session['c']
-
-            for v,i in n.items():
-                # 用于下拉框默认值,使得过滤器辨别为false
-                if i == '0':
-                    s[v] = 0
-                else:
-                    s[v] = i
-
-            self.request.session['c'] = s
-
-            return self
-        except:
-            raise ValueError
-
-    def cConFormPOST(self):
-        try:
-            if self.request.POST:
-                n = self.request.POST
-            else:
-                raise ValueError
-
-            s = self.request.session['c']
-
-            for v,i in n.items():
-                # 用于下拉框默认值,使得过滤器辨别为false
-                if i == '0':
-                    s[v] = 0
-                else:
-                    s[v] = i
-
-            self.request.session['c'] = s
-
-            return self
-        except:
-            raise ValueError
-
-    def clearConsignee(self):
-        self.request.session['c'] = self.c
-
-        return self
+    def showToCart(self):
+        pass

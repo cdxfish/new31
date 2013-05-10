@@ -19,16 +19,28 @@ class itemManager(models.Manager):
 
     def getItemByItemSpecId(self, id = ''):
 
-        item = ItemSpec.objects.select_related().get(id=id,onLine=True,show=True).item
+        return ItemSpec.objects.select_related().get(id=id, onLine=True, show=True).item.get(onLine=True, show=True)
 
-        if item.onLine and item.show:
-
-            return item
-        else:
-            raise self.DoesNotExist
     def getItemLikeNameOrSn(self, k=''):
 
         return self.select_related().filter((Q(name__contains=k) | Q(sn__contains=k)) & Q(onLine=True))
+
+    def getItemByAll(self):
+
+        return self.select_related().filter(onLine=True, show=True)
+
+    def getItemByTag(self, tag):
+
+        return Tag.objects.getTagByTagTitle(tag).item_set.filter(onLine=True)
+
+    def getShowItemByTag(self, tag):
+
+        return Tag.objects.getTagByTagTitle(tag).item_set.filter(onLine=True,show=True)
+
+
+
+
+
 
 
 class itemDescManager(models.Manager):
@@ -44,13 +56,14 @@ class itemSpecManager(models.Manager):
 
     def getSpecByItemSpecId(self, id = ''):
 
-        itemSpec = ItemSpec.objects.select_related().get(id=id, onLine=True)
+        return self.select_related().get(id=id, onLine=True).itme.get(onLine=True, show=True)
 
-        if itemSpec.item.onLine and itemSpec.item.show:
 
-            return itemSpec
-        else:
-            raise self.DoesNotExist
+class itemImgManager(models.Manager):
+    def getImgByAll(self):
+
+        return self.all()
+
 
 
 class Item(models.Model):
@@ -121,6 +134,7 @@ class ItemDiscount(models.Model):
 class ItemImg(models.Model):
     item = models.ForeignKey(Item, verbose_name=u'商品')
     img = models.ImageField(u'图片', upload_to='images')
+    objects = itemImgManager()
 
     def __unicode__(self):
         return u"%s - %s" % (self.item, self.img)

@@ -8,20 +8,12 @@ from django.db import models
 class PayManager(models.Manager):
     def getPayById(self, id = ''):
 
-        pay = Pay.objects.select_related().get(id=id)
+        return Pay.objects.select_related().get(onLine=True, id=id)
 
-        if pay.onLine:
-
-            return pay
-        else:
-            raise self.DoesNotExist
-
-    def  getAll(self):
+    def  getTupleByAll(self):
         pay = Pay.objects.filter(onLine=True)
 
-        a = []
-        for i in pay:
-            a.append((i.id, i.name))
+        a = [(i.id, i.name) for i in pay]
 
         return tuple(a)
 

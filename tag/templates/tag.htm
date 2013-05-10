@@ -7,20 +7,20 @@
 {% block content %}
         <p class="viewDown">向下滚动浏览</p>
         <ul class="pinBox">
-{% for i in item.itemimg_set.all %}
+{% for i in itemImgs %}
          <li>
-                <img alt="{{ i.itemName.itemName }}" title="{{ i.itemName.itemName }}" src="{{ i.img.url }}" width="{{ i.img.width }}px" />
+                <img alt="{{ i.item.name }}" title="{{ i.item.name }}" src="{{ i.img.url }}" width="{{ i.img.width }}px" />
                 <div class="pinSide{{ i.img.width }}">
-                    <h2>{{ i.itemName.itemName }}</h2>
-                    <p class="pinDes">{{i.itemName.itemdesc_set.all.1.desc}}</p>
+                    <h2>{{ i.item.name }}</h2>
+                    <p class="pinDes">{{ i.item.itemdesc_set.all.0.desc }}</p>
                     <ul class="pinInfo">
-                        <li class="date">{{ i.itemName.addTime }}</li>
-                        <li class="pv">浏览{{ i.itemName.click }}</li>
-                        <li class="like">喜欢<span id="count_like_276268754">{{ i.itemName.like }}</span></li>
+                        <li class="addDate">{{ i.item.addTime }}</li>
+                        <li class="pv">浏览 {{ i.item.click }}</li>
+                        <li class="like">喜欢 <span id="count_like_276268754">{{ i.item.like }}</span></li>
                     </ul>
                     <div class="tags">
-{% for i in item.tag.all|slice:":9" %}
-                        <a href="/tag/{{ i.tag }}/" class="tags_{{ tagsClass|random }}">{{ i.tag }}</a>
+{% for ii in i.item.tag.all|slice:":9" %}
+                        <a href="/tag/{{ ii.tag }}/" class="tags_{{ tagsClass|random }}">{{ ii.tag }}</a>
 {% endfor %}
                     </div>
                     <div class="vote">

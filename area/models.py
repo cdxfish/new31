@@ -5,13 +5,17 @@ from django.db import models
 # Create your models here.
 
 class AreaManager(models.Manager):
-    def  getAll(self):
+    def getAreaById(self, id = ''):
+
+        return Area.objects.select_related().get(onLine=True, id=id)
+
+    def  getTupleByAll(self):
         area = Area.objects.filter(onLine=True,sub=None)
 
         a = []
         for i in area:
             for ii in i.sub_set.all():
-                a.append((i.id, '%s - %s' % (i.name, ii.name)))
+                a.append((ii.id, '%s - %s' % (i.name, ii.name)))
 
         return tuple(a)
 

@@ -6,11 +6,11 @@ from django.db import models
 class tagManager(models.Manager):
     def getRandom(self, num = 10):
 
-        return self.order_by('?')[: num]
+        return self.filter(onLine=True).order_by('?')[: num]
 
     def getTagByTagTitle(self, tag = ''):
 
-        return self.select_related().filter(tag=tag)
+        return self.select_related().get(tag=tag, onLine=True)
 
 class Tag(models.Model):
     tag = models.CharField(u'标签', max_length=60, unique=True)
@@ -18,7 +18,7 @@ class Tag(models.Model):
     objects = tagManager()
 
     def __unicode__(self):
-        return u"%s" % self.tag
+        return u"%s [ onLine: %s ]" % (self.tag, self.onLine)
 
     class Meta:
         ordering = ['?']

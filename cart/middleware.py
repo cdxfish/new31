@@ -1,24 +1,14 @@
 #coding:utf-8
 from views import *
-import datetime
+import datetime, time
 
 
-class CartMiddleware:
+class cartMiddleware:
 
     def process_request(self, request):
 
         if not 'itemCart' in request.session:
-            request.session["itemCart"] = {}
-
-        if not 'c' in request.session:
-            request.session['c'] = ShipConsignee(request).c
-
-
-        toDay = time.gmtime()
-        cDate = time.strptime(request.session['c']['signDate'], '%Y-%m-%d')
-
-        if cDate < toDay or not request.session['c']['signDate']:
-            request.session['c']['signDate'] = '%s' % datetime.date.today()
+            request.session["cart"] = Cart.items
 
         return None
 

@@ -62,9 +62,10 @@ c = {
                 message += '请填写详细地址!<br />';
             }
 
-            if ($('#id_tel').val() == 0) {
+            if ($('#id_tel').val() == c.telText || $('#id_tel').val() == 0) {
                 message += '请填写联系电话!<br />';
             }
+
 
             if ($('#id_date').val() == 0) {
                 message += '请填写最佳送货日期!<br />';
@@ -82,6 +83,7 @@ c = {
                 if ($('#id_note').val() == c.noteText) {
                     $('#id_note').val('');
                 }
+
 
             }
 

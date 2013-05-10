@@ -67,9 +67,9 @@ class OrderLineTime(models.Model):
 
 class OrderLogistics(models.Model):
     order = models.OneToOneField(OrderInfo, verbose_name=u'订单')
-    consignee = models.CharField(u'联系人', max_length=60)
+    consignee = models.CharField(u'收货人', max_length=60)
     area = models.CharField(u'配送区域', max_length=60)
-    address = models.CharField(u'地址', max_length=255)
+    address = models.CharField(u'详细地址', max_length=255)
     tel = models.CharField(u'联系电话', max_length=60)
     signDate = models.DateField(u'收货日期')
     signTimeStart = models.TimeField(u'起始时间')

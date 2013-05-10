@@ -6,44 +6,28 @@ from django.core.exceptions import *
 from item.models import *
 from shop.views import *
 from cart.views import *
+from consignee.views import *
 import json
 
 # Create your views here.
 
-def ajaxLineItem(request):
+def getLineItemMore(request):
     itemList = ItemPin(8).buildItemList().sort(sortFun).itemList
 
-    return HttpResponse(json.dumps(itemList))
+    return AjaxRJson().jsonEn(itemList)
 
 
-def ajaxItemSpec(request, i, t = 1):
-    data = {}
-
+def getItemSpec(request, i, t = 1):
     try:
         itemSpec = ItemSpec.objects.getSpecByItemId(id=i)
-        data['error'] = False
-        data['message'] = ''
-        data['data'] = []
-        for v in itemSpec:
-            try:
-                data['data'].append({'id':v.id ,'spec':v.spec.value ,'amount': '%s' % v.itemfee_set.get(itemType=t).amount,'t': t })
-            except:
-                pass
+
+        data = {{'id':v.id ,'spec':v.spec.value ,'amount': '%s' % v.itemfee_set.get(itemType=t).amount,'t': t } for v in itemSpec}
+
+        return AjaxRJson().jsonEn(data)
+
     except:
-        data['error'] = True
-        data['message'] = '当前商品已下架'
+        return AjaxRJson().message('当前商品已下架').jsonEn()
 
-    return HttpResponse(json.dumps(data))
-
-
-def ajaxCartItem(request, f, i, t = 1):
-    try:
-        f(request, i, t)
-
-        return HttpResponse(AjaxRJson().error(False).data(request.session['itemCart']).jsonEn())
-    except:
-
-        return HttpResponse(AjaxRJson().error(True).message('当前商品已下架').data(request.session['itemCart']).jsonEn())
 
 
 def ajaxCartItemNum(request, f, i, t):
@@ -54,10 +38,10 @@ def ajaxCartItemNum(request, f, i, t):
 
         r ={'itemSubtotal': '%.2f' % c.cartItemSubtotal(i,t), 'subtotal': '%.2f' % c.countFee, 'i': i }
 
-        return HttpResponse(AjaxRJson().error(False).data(r).jsonEn())
+        return AjaxRJson().jsonEn(r)
     except:
 
-        return HttpResponse(AjaxRJson().error(True).message('当前商品已下架').data(request.session['itemCart']).jsonEn())
+        return AjaxRJson().message('当前商品已下架').jsonEn(request.session['itemCart'])
 
 def itemByKeyword(request):
     k = request.GET.get('k') if request.GET.get('k') else ''
@@ -73,55 +57,46 @@ def itemByKeyword(request):
             return getItemByKeyword(k)
         except:
 
-            return HttpResponse(AjaxRJson().error(True).message('未找到商品').data(request.session['itemCart']).jsonEn())
+            return AjaxRJson().error(True).message('未找到商品').data(request.session['itemCart']).jsonEn()
 
 
 def getItemByKeyword(k):
-    r = {}
 
-    for i in Item.objects.getItemLikeNameOrSn(k):
-        r.update({ i.id: {'name':i.name, 'sn': i.sn} })
+    r = { i.id: {'name':i.name, 'sn': i.sn} for i in Item.objects.getItemLikeNameOrSn(k)}
 
-
-    return HttpResponse(AjaxRJson().error(False).data(r).jsonEn())
+    return AjaxRJson().jsonEn(r)
 
 
+
+# ajax动态写入收货人信息
 def cConsigneeByAjax(request):
     try:
-        ShipConsignee(request).cConFormGET()
-        return HttpResponse(AjaxRJson().error(False).jsonEn())
+
+        ShipConsignee(request).saveConsignee()
+
+        return AjaxRJson().jsonEn()
     except:
 
-        return HttpResponse(AjaxRJson().error(True).message('无法填写表单').jsonEn())
-
-
-
-
+        return AjaxRJson().message('无法填写表单').jsonEn()
 
 
 
 class AjaxRJson:
     """JSON 字典格式化"""
     def __init__(self):
-        self.e = True
-        self.m = ''
-        self.d = {}
+        self.error = False
+        self.msg = 'success'
+        self.data = {}
 
-    def jsonEn(self):
+    def jsonEn(self, data=''):
+        if data:
+            self.data = data
 
-        return json.dumps({'error':self.e, 'message':self.m, 'data':self.d })
+        return HttpResponse(json.dumps({'error':self.error, 'message':self.msg, 'data':self.data }))
 
-    def error(self, e = True):
-        self.e = e
-
-        return self
-
-    def message(self, m):
-        self.m = m
-
-        return self
-
-    def data(self, d= {}):
-        self.d = d
+    def message(self, msg = ''):
+        
+        self.msg = msg
+        self.error = True
 
         return self

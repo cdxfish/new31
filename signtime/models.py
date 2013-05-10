@@ -5,12 +5,14 @@ from django.db import models
 # Create your models here.
 
 class SignTimeManager(models.Manager):
-    def  getAll(self):
+    def getTimeById(self, id = ''):
+
+        return SignTime.objects.select_related().get(onLine=True, id=id)
+
+    def  getTupleByAll(self):
         signTime = SignTime.objects.filter(onLine=True)
 
-        a = []
-        for i in signTime:
-            a.append((i.id, '%s - %s' % (i.start.strftime('%H: %M'), i.end.strftime('%H: %M'))))
+        a = [(i.id, '%s - %s' % (i.start.strftime('%H: %M'), i.end.strftime('%H: %M'))) for i in signTime]
 
         return tuple(a)
 

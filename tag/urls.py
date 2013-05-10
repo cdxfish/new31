@@ -4,6 +4,6 @@ from views import *
 
 urlpatterns = patterns('',
     (r'^tag\/$', tagAdmin),
-    (r'^$',tag),
-    (r'^(?P<tagTitle>.*)\/$',tag),
+    (r'^$', randomTagShow),
+    (r'^(?P<tag>.*)\/$',tagShow),
 )

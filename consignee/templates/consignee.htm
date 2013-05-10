@@ -3,18 +3,24 @@
 {% block title %}收货人信息{% endblock %}
 
 {% block js %}
-    <script type="text/javascript" src="{{ STATIC_URL }}cart/js/consignee.configuration.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}consignee/js/consignee.configuration.js"></script>
 {% endblock %}
 
 {% block content %}
         <div class="pWhite">
+{% if messages %}
+{% for i in messages %}
+            <h3>{{ i.tags }}</h3>
+            <p>{{ i|striptags }}</p>
+{% endfor %}
+{% endif %}
             <div class="mBottom50">
                 <h3>收货人信息</h3>
                 <p>（请填写详细收货地址及准确的最佳送货时间，以便更快捷将您订购的蛋糕送达！）</p>
                 <form action="/cart/checkout/" method="POST" name="checkout" id="checkout">
                     <table width="100%">
                         <tr>
-                            <td align="right" width="100px">支付方式：</td>
+                            <td align="right" width="100px">{{ form.pay.label }}：</td>
                             <td>{{ form.pay }}</td>
                         </tr>
                         <tr>
@@ -22,31 +28,31 @@
                             <td>市内免费送货上门</td>
                         </tr>
                         <tr>
-                            <td align="right">收货人姓名：</td>
+                            <td align="right">{{ form.consignee.label }}：</td>
                             <td>{{ form.consignee }}</td>
                         </tr>
                         <tr>
-                            <td align="right">配送区域：</td>
+                            <td align="right">{{ form.area.label }}：</td>
                             <td>{{ form.area }}</td>
                         </tr>
                         <tr>
-                            <td align="right">详细地址：</td>
+                            <td align="right">{{ form.address.label }}：</td>
                             <td>{{ form.address }}</td>
                         </tr>
                         <tr>
-                            <td align="right">联系电话：</td>
+                            <td align="right">{{ form.tel.label }}：</td>
                             <td>{{ form.tel }}</td>
                         </tr>
                         <tr>
-                            <td align="right">最佳收货日期：</td>
+                            <td align="right">{{ form.signDate.label }}：</td>
                             <td>{{ form.signDate }}</td>
                         </tr>
                     <tr>
-                        <td align="right">最佳收货时间：</td>
+                        <td align="right">{{ form.time.label }}：</td>
                         <td>{{ form.time }}</td>
                     </tr>
                     <tr>
-                        <td align="right" valign="top">备注：</td>
+                        <td align="right" valign="top">{{ form.note.label }}：</td>
                         <td>{{ form.note }}</td>
                     </tr>
                     </table>

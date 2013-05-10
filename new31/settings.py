@@ -146,7 +146,11 @@ APPS = {
         },
     'cart':{
             'tempContext':'',
-            'middleware':'cart.middleware.CartMiddleware',
+            'middleware':'',
+        },
+    'consignee':{
+            'tempContext':'',
+            'middleware':'consignee.middleware.consigneeMiddleware',
         },
     'tag':{
             'tempContext':'tag.views.tagsClass',

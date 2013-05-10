@@ -10,7 +10,7 @@ from area.models import *
 from item.models import *
 from payment.models import *
 from models import *
-from forms import *
+from consignee.forms import *
 import time, json
 from django.conf import settings
 
@@ -43,21 +43,8 @@ def orderSubmit(request):
 
 def newOrEditOrderUI(request):
 
-    toDay = time.gmtime()
-    cDate = time.strptime(request.session['c']['date'], '%Y-%m-%d')
 
-    if cDate < toDay:
-        request.session['c']['date'] = '%s' % datetime.date.today()
-
-    c = request.session['c']
-
-    consignee = {}
-
-    for i, v in c.items():
-        consignee.update({ i: v })
-
-
-    form = ConsigneeForm(initial= consignee)
+    form = getForms(request)
 
     return render_to_response('orderneworedit.htm', locals(), context_instance=RequestContext(request))
 
@@ -100,6 +87,7 @@ class OrderSubmit:
         self.orderDiscount = []
         self.error = False
         self.message = ''
+        self.template = ''
 
     def submit(self):
         # 插入订单号占位！
@@ -137,46 +125,6 @@ class OrderSubmit:
             self.delNewOrder()
 
         return self.message
-
-    def adminSubmit(self):
-        # 插入订单号占位！
-        # 插入订单基本信息
-        # 插入订单物流信息
-        # 插入订单商品信息
-        # 插入订单支付方式信息
-        # 插入订单送货方式信息
-        # 插入订单送货方式信息
-        # 插入订单订单状态
-        # 插入订单订单时间线
-        # 插入订单完成
-
-        if settings.DEBUG:
-            self.newOderSn() \
-                .infoSubmit() \
-                .logisticsSubmit() \
-                .itemSubmit() \
-                .paySubmit() \
-                .shipSubmit() \
-                .oStartSubmit() \
-                .oLineSubmit() \
-                .submitDone()
-        else:
-            self.newSnForMsg() \
-                .infoForMsg() \
-                .logisticsForMsg() \
-                .itemForMsg() \
-                .payForMsg() \
-                .shipForMsg() \
-                .oStartForMsg() \
-                .oLineForMsg() \
-                .submitDone()
-
-        if self.error:
-            self.delNewOrder()
-
-        return self.message
-
-
 
     def newSnForMsg(self):
         # 新订单锁定
@@ -244,13 +192,13 @@ class OrderSubmit:
         return self
 
 
-    def logisticsForMsg(self):
+    def logisticsForMsg(self, url='/consignee/'):
         # 插入订单物流信息
         if not self.error:
             try:
                 self.logisticsSubmit()
             except :
-                self.errorMsg(Message(self.request).redirect(url='/cart/consignee/').error('收货信息有误，请重新填写！').shopMsg())
+                self.errorMsg(Message(self.request).redirect(url=url).error('收货信息有误，请重新填写！').shopMsg())
 
         return self
 
@@ -270,7 +218,7 @@ class OrderSubmit:
         logistics.area = '%s - %s' % (area.sub.name, area.name)
         logistics.address = c['address']
         logistics.tel = c['tel']
-        logistics.signDate = c['date']
+        logistics.signDate = c['signDate']
         logistics.signTimeStart = time.start
         logistics.signTimeEnd = time.end
         logistics.note = c['note']
