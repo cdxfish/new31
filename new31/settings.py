@@ -153,7 +153,7 @@ APPS = {
             'middleware':'consignee.middleware.consigneeMiddleware',
         },
     'tag':{
-            'tempContext':'tag.views.tagsClass',
+            'tempContext':'tag.context.tagsClass',
             'middleware':'',
         },
     'search':{

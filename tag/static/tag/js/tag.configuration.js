@@ -52,7 +52,7 @@ buyBtn = function(data) {
         html += '          <tr>  \r\n';
         html += '             <td>' + v.spec + '</td>  \r\n';
         html += '             <td>￥' + v.amount + ' 元</td>  \r\n';
-        html += '             <td><a href="/cart/buy/' + v.t + v.id + '/" class="btnB sBtn">购买</a></td>  \r\n';
+        html += '             <td><a href="/cart/buy/' + v.id + '/" class="btnB sBtn">购买</a></td>  \r\n';
         html += '          </tr>  \r\n';
     });
 
@@ -76,7 +76,9 @@ weiboShare = function() {
                     error: false,
                     data: {},
                     message: ''
-                }, shareBtn);
+                }, shareBtn,{
+                    width:750
+                });
 
             // });
 
@@ -91,7 +93,7 @@ weiboShare = function() {
 shareBtn = function(data) {
     var h = '';
     h += '      <div class="weibo">';
-    h += '          <div class="weiboL"><img width="300px" src="/m/images/3133001p475a.jpg" alt=""/></div>  \r\n';
+    h += '          <div class="weiboL"><img width="300px" src="/media/images/3133001p475a.jpg" alt=""/></div>  \r\n';
     h += '          <div class="weiboR"><h3>分享到</h3>  \r\n';
     h += '              <ul>  \r\n';
     h += '                  <li><a target="_blank" href="sinaUrl"><img src="/static/images/t.sina.png" height="50px" width="120px" alt=""/></a></li>  \r\n';

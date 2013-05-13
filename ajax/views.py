@@ -17,16 +17,16 @@ def getLineItemMore(request):
     return AjaxRJson().jsonEn(itemList)
 
 
-def getItemSpec(request, i, t = 1):
-    try:
-        itemSpec = ItemSpec.objects.getSpecByItemId(id=i)
+def getItemSpec(request, id):
+    # try:
+    itemSpec = ItemSpec.objects.getSpecByItemId(id=id)
 
-        data = {{'id':v.id ,'spec':v.spec.value ,'amount': '%s' % v.itemfee_set.get(itemType=t).amount,'t': t } for v in itemSpec}
+    data = [ {'id':i.id ,'spec':i.spec.value ,'amount': '%s' % i.itemfee_set.getFeeByNomal().amount, } for i in itemSpec ]
 
-        return AjaxRJson().jsonEn(data)
+    return AjaxRJson().jsonEn(data)
 
-    except:
-        return AjaxRJson().message('当前商品已下架').jsonEn()
+    # except:
+    #     return AjaxRJson().message('当前商品已下架').jsonEn()
 
 
 

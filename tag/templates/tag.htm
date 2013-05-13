@@ -15,7 +15,7 @@
                     <p class="pinDes">{{ i.item.itemdesc_set.all.0.desc }}</p>
                     <ul class="pinInfo">
                         <li class="addDate">{{ i.item.addTime }}</li>
-                        <li class="pv">浏览 {{ i.item.click }}</li>
+                        <li class="pv">销量 {{ i.item.click }}</li>
                         <li class="like">喜欢 <span id="count_like_276268754">{{ i.item.like }}</span></li>
                     </ul>
                     <div class="tags">
@@ -25,7 +25,7 @@
                     </div>
                     <div class="vote">
                         <a class="btnLike" href="/ajax/like/8754/">喜欢</a>
-                        <a class="btnReplay" href="/ajax/itemspec/1{{ i.itemName.id }}/">购买(<span>0</span>)</a>
+                        <a class="btnReplay" href="/ajax/itemspec/{{ i.item.id }}/">购买</a>
                     </div>
                 </div>
             </li>

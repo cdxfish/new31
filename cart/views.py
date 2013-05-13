@@ -24,24 +24,6 @@ def cart(request):
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
 
-def hCart(request, f, i, t = 1):
-
-    try:
-        f(request, i, t)
-
-        return HttpResponseRedirect("/cart/")
-    except:
-        return Message(request).redirect(url=request.META.get('HTTP_REFERER',"/")).warning('当前商品已下架').shopMsg()
-
-
-def consignee(request):
-
-    a = request.session['c']
-
-    form = getForms(request)
-
-    return render_to_response('consignee.htm', locals(), context_instance=RequestContext(request))
-
 
 def checkout(request):
 
@@ -75,53 +57,10 @@ def checkout(request):
 
         return Message(request).redirect(url='/consignee/').error('提交方式有误').shopMsg()
 
-
-def buyToCart(request, i , t= 1):
-    
-    item = Item.objects.getItemByItemSpecId(id=i)
-
-    itemCart = request.session["itemCart"]
-
-    if not i in itemCart:
-        itemCart.update({ '%s%s' % (t,i):1 })
-
-    request.session['itemCart'] = itemCart
-
-    return request
+def buy(request, specID):
 
 
-def clearCartItem(request, i , t= 1):
-    try:
-        if not request.session.get('itemCart'):
-            request.session["itemCart"] = {}
-
-        itemCart = request.session["itemCart"]
-
-        a = '%s%s' % (t,i)
-
-        if a in itemCart:
-            del itemCart[a]
-
-        request.session['itemCart'] = itemCart
-
-        return request
-    except:
-        raise Item.DoesNotExist
-
-def changeCartItem(request, i , t):
-    try:
-        item = Item.objects.getItemByItemAttrId(id='%s' % i[1:])
-
-        itemCart = request.session["itemCart"]
-
-        if i in itemCart:
-            itemCart[i] = int(t)
-
-        request.session['itemCart'] = itemCart
-
-        return request
-    except:
-        raise Item.DoesNotExist
+    return Cart(request).pushToCart(specID)
 
 
 class CartShow:
@@ -162,9 +101,84 @@ class CartShow:
 
 
 class Cart:
-    """购物车相关"""
+    """ 购物车相关
+
+        items 
+
+        用于存储购物车中商品信息
+        其数据格式为:
+        [{ itemID:1, specID:1, num:1 }, { itemID:2, specID:2, num:2 }]
+
+    """
     def __init__(self, request):
+
         self.items = []
+
+        self.request = request
 
     def showToCart(self):
         pass
+
+
+
+    def hCart(request, func, id):
+
+        if settings.DEBUG:
+
+            return func(request, id)
+
+        else:
+            try:
+
+                return func(request, id)
+            except:
+                return Message(request).redirect(url=request.META.get('HTTP_REFERER',"/")).warning('当前商品已下架').shopMsg()
+
+
+
+    def pushToCart(self, specID):
+        
+        item = Item.objects.getItemBySpecId(id=specID)
+
+        # itemCart = request.session['item']
+
+        # if not i in request.session['item']:
+        #     itemCart.update({ '%s%s' % (t,i):1 })
+
+        # request.session['item'] = itemCart
+
+        return HttpResponseRedirect('/cart/')
+
+
+    def clearCartItem(request, i , t= 1):
+        try:
+            if not request.session.get('itemCart'):
+                request.session["itemCart"] = {}
+
+            itemCart = request.session["itemCart"]
+
+            a = '%s%s' % (t,i)
+
+            if a in itemCart:
+                del itemCart[a]
+
+            request.session['itemCart'] = itemCart
+
+            return request
+        except:
+            raise Item.DoesNotExist
+
+    def changeCartItem(request, i , t):
+        try:
+            item = Item.objects.getItemByItemAttrId(id='%s' % i[1:])
+
+            itemCart = request.session["itemCart"]
+
+            if i in itemCart:
+                itemCart[i] = int(t)
+
+            request.session['itemCart'] = itemCart
+
+            return request
+        except:
+            raise Item.DoesNotExist

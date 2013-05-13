@@ -17,9 +17,16 @@ class itemManager(models.Manager):
 
         return self.select_related().get(name=itemName, onLine=True).tag.all()
 
-    def getItemByItemSpecId(self, id = ''):
+    def getItemBySpecId(self, id = 0):
 
-        return ItemSpec.objects.select_related().get(id=id, onLine=True, show=True).item.get(onLine=True, show=True)
+        item = ItemSpec.objects.select_related().get(id=id, onLine=True, show=True).item
+
+        if item.onLine and item.show:
+
+            return item
+        else:
+
+            raise self.DoesNotExist
 
     def getItemLikeNameOrSn(self, k=''):
 
@@ -37,10 +44,9 @@ class itemManager(models.Manager):
 
         return Tag.objects.getTagByTagTitle(tag).item_set.filter(onLine=True,show=True)
 
+    def getItemByRandom(self):
 
-
-
-
+        return self.select_related().filter(onLine=True,show=True).order_by('?')[0]
 
 
 class itemDescManager(models.Manager):
@@ -63,6 +69,12 @@ class itemImgManager(models.Manager):
     def getImgByAll(self):
 
         return self.all()
+
+
+class itemFeeManager(models.Manager):
+    def getFeeByNomal(self):
+
+        return self.select_related().get(itemType=0)
 
 
 
@@ -113,7 +125,9 @@ class ItemSpec(models.Model):
 class ItemFee(models.Model):
     itemSpec = models.ForeignKey(ItemSpec, verbose_name=u'规格', unique=True)
     amount = models.DecimalField(u'单价', max_digits=10, decimal_places=2)
-    itemType = models.SmallIntegerField(u'类型',choices=((1,u'零售价'),(2,u'积分换购价'),))
+    itemType = models.SmallIntegerField(u'类型', default=0, choices=((0,u'零售价'),(1,u'积分换购价'),))
+
+    objects = itemFeeManager()
 
     def __unicode__(self):
         return u"%s - %s [%s]" % (self.itemSpec, self.amount, self.get_itemType_display())
