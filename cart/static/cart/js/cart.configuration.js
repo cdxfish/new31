@@ -5,19 +5,24 @@ $(document).ready(function() {
 
 var cart = {
     itemNum: function() {
-        $('.iNum').change(function() {
+        $('.iNum').live('change',
+
+        function() {
             var that = $(this);
             var thisValue = that.val();
             if (parseInt(thisValue) == thisValue) {
                 $.getJSON(
-                    '/ajax/itemnum/' + thisValue + '/' + that.attr('name') + '/',
+                    '/ajax/itemnum/' + that.attr('name') + '/' + thisValue + '/',
 
                 function(data) {
                     $.dialog.dialogMsgAndReload(data,
 
                     function(data) {
-                        $('.st' + data.data.i).text(data.data.itemSubtotal);
-                        $('.total').text(data.data.subtotal);
+                        var stotal = $('#am' + that.attr('name')).text() * thisValue + '.00';
+
+                        $('#st' + that.attr('name')).text(stotal);
+
+                        $('.total').text(data.data + '.00');
                     })
                 })
             } else {

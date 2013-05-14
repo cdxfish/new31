@@ -7,82 +7,69 @@ from item.models import *
 from shop.views import *
 from cart.views import *
 from consignee.views import *
+from message.views import *
 import json
 
 # Create your views here.
 
+@tryMsg('无更多商品')
 def getLineItemMore(request):
     itemList = ItemPin(8).buildItemList().sort(sortFun).itemList
 
     return AjaxRJson().jsonEn(itemList)
 
 
-def getItemSpec(request, id):
-    # try:
-    itemSpec = ItemSpec.objects.getSpecByItemId(id=id)
+@tryMsg('当前商品已下架')
+def getItemSpec(request, kwargs):
 
-    data = [ {'id':i.id ,'spec':i.spec.value ,'amount': '%s' % i.itemfee_set.getFeeByNomal().amount, } for i in itemSpec ]
+    itemSpec = ItemSpec.objects.getSpecByItemId(id=kwargs['specID'])
+
+    data = [ {'id':i.id ,'spec':i.spec.value ,'amount': '%.2f' % i.itemfee_set.getFeeByNomal().amount, } for i in itemSpec ]
 
     return AjaxRJson().jsonEn(data)
 
-    # except:
-    #     return AjaxRJson().message('当前商品已下架').jsonEn()
+
+@tryMsg('当前商品已下架')
+def ajaxChangNum(request, kwargs):
+
+    data =  '%.2d' % Cart(request).changeNumBySpec(specID=kwargs['specID'], num=kwargs['num']).countFee()
+
+    return AjaxRJson().jsonEn(data)
 
 
+def getItemByKeyword(request):
 
-def ajaxCartItemNum(request, f, i, t):
-    try:
-        f(request, i, t)
+    @tryMsg('未找到商品')
+    def _getItemByKeyword(request, k):
 
-        c = Cart(request)
-
-        r ={'itemSubtotal': '%.2f' % c.cartItemSubtotal(i,t), 'subtotal': '%.2f' % c.countFee, 'i': i }
+        r = { i.id: {'name':i.name, 'sn': i.sn} for i in Item.objects.getItemLikeNameOrSn( k ) }
 
         return AjaxRJson().jsonEn(r)
-    except:
 
-        return AjaxRJson().message('当前商品已下架').jsonEn(request.session['itemCart'])
-
-def itemByKeyword(request):
-    k = request.GET.get('k') if request.GET.get('k') else ''
-
-    if settings.DEBUG:
-
-        return getItemByKeyword(k)
-
-    else:
-
-        try:
-
-            return getItemByKeyword(k)
-        except:
-
-            return AjaxRJson().error(True).message('未找到商品').data(request.session['itemCart']).jsonEn()
-
-
-def getItemByKeyword(k):
-
-    r = { i.id: {'name':i.name, 'sn': i.sn} for i in Item.objects.getItemLikeNameOrSn(k)}
-
-    return AjaxRJson().jsonEn(r)
-
+    return _getItemByKeyword(request=request, k=request.GET.get('k', ''))
 
 
 # ajax动态写入收货人信息
+@tryMsg('无法填写表单')
 def cConsigneeByAjax(request):
-    try:
+    ShipConsignee(request).saveConsignee()
 
-        ShipConsignee(request).saveConsignee()
-
-        return AjaxRJson().jsonEn()
-    except:
-
-        return AjaxRJson().message('无法填写表单').jsonEn()
+    return AjaxRJson().jsonEn()
 
 
 
+# JSON数据格式化类
 class AjaxRJson:
-    """JSON 字典格式化"""
+    """
+        统一全局JSON 字典格式化
+
+        {
+            error: False,
+            msg: 'success',
+            data: {},
+        }
+
+    """
     def __init__(self):
         self.error = False
         self.msg = 'success'

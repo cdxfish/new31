@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db.models import Q
 from item.models import *
 from tag.models import *
+from message.views import *
 import random
 
 
@@ -12,16 +13,22 @@ import random
 
 def randomTagShow(request):
 
-    a = dir(Tag())
-
     itemImgs = TagsObj().getItemByRandomTag()
 
     return render_to_response('tag.htm', locals(), context_instance=RequestContext(request))
 
 
 def tagShow(request, tag = ''):
+    if settings.DEBUG:
+        itemImgs = TagsObj().getItemByTag(tag)
 
-    itemImgs = TagsObj().getItemByTag(tag)
+    else:
+        try:
+            itemImgs = TagsObj().getItemByTag(tag)
+        except:
+            return Message(request).redirect().error('此标签不存在。').shopMsg()
+
+    
 
     return render_to_response('tag.htm', locals(), context_instance=RequestContext(request))
 

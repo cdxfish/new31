@@ -3,7 +3,7 @@
 {% block title %}购物车{% endblock %}
 
 {% block js %}
-    <script type="text/javascript" src="/js/shop/cart.configuration.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}cart/js/cart.configuration.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -18,21 +18,21 @@
                         <th width="10%">小计</th>
                         <th></th>
                     </tr>
-{% if cart.itemBuy %}
-{% for i in cart.itemBuy %}
+{% if cart.items %}
+{% for i in cart.items %}
                     <tr align="center">
                         <td>{{ i.item.item.name }}</td>
                         <td>{{ i.item.spec }}</td>
-                        <td>￥{{ i.amount|floatformat:2 }} 元</td>
+                        <td>￥<span id="am{{ i.item.spec.id }}">{{ i.amount|floatformat:2 }}</span> 元</td>
                         <td>
-                            <input type="text" name="{{ i.v }}" value="{{ i.num }}" size="1" class="iNum" />
+                            <input type="text" name="{{ i.item.spec.id }}" value="{{ i.num }}" size="1" class="iNum" />
                         </td>
-                        <td>￥<span class="st{{ i.v }}">{{ i.subtotal|floatformat:2 }}</span> 元</td>
-                        <td align="right"><a href="/cart/clear/{{ i.v }}/" class="btnB bBtn">删除</a></td>
+                        <td>￥<span id="st{{ i.item.spec.id }}">{{ i.total|floatformat:2 }}</span> 元</td>
+                        <td align="right"><a href="/cart/clear/{{ i.item.spec.id }}/" class="btnB bBtn">删除</a></td>
                     </tr>
 {% endfor %}
                     <tr class="bLine">
-                        <td align="right" colspan="5"><span class="fBold font18">商品总价: ￥<span class="total">{{ cart.countFee|floatformat:2 }}</span> 元</span></td>
+                        <td align="right" colspan="5"><span class="fBold font18">商品总价: ￥<span class="total">{{ cart.total|floatformat:2 }}</span> 元</span></td>
                         <td></td>
                     </tr>
 {% else %}
@@ -52,12 +52,12 @@
                     <tr>
                         <td>除按蛋糕规格免费赠送的餐具数量外(详见下面说明），是否额外需要餐具？</td>
                         <td>单价：1元/份</td>
-                        <td align="right"><a href="/cart/buy/11/" class="btnB bBtn">是的，我需要增加餐具</a></td>
+                        <td align="right"><a href="/cart/buy/1/" class="btnB bBtn">是的，我需要增加餐具</a></td>
                     </tr>
                     <tr>
                         <td>是否额外购买生日套装(生日牌/冷烟花/蜡烛)？</td>
                         <td>单价：3元/份</td>
-                        <td align="right"><a href="/cart/buy/12/" class="btnB bBtn">是的，我需要增加生日套装</a></td>
+                        <td align="right"><a href="/cart/buy/2/" class="btnB bBtn">是的，我需要增加生日套装</a></td>
                     </tr>
                 </table>
             </form>

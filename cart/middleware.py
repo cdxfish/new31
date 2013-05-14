@@ -7,8 +7,7 @@ class cartMiddleware:
 
     def process_request(self, request):
 
-        if not 'itemCart' in request.session:
-            request.session["cart"] = Cart.items
+    	Cart(request).setSeesion()
 
         return None
 

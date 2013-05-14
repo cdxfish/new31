@@ -146,7 +146,7 @@ APPS = {
         },
     'cart':{
             'tempContext':'',
-            'middleware':'',
+            'middleware':'cart.middleware.cartMiddleware',
         },
     'consignee':{
             'tempContext':'',

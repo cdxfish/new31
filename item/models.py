@@ -26,9 +26,9 @@ class itemManager(models.Manager):
             return item
         else:
 
-            raise self.DoesNotExist
+            raise item.DoesNotExist
 
-    def getItemLikeNameOrSn(self, k=''):
+    def getItemLikeNameOrSn(self, k):
 
         return self.select_related().filter((Q(name__contains=k) | Q(sn__contains=k)) & Q(onLine=True))
 
@@ -56,13 +56,14 @@ class itemDescManager(models.Manager):
 
 
 class itemSpecManager(models.Manager):
-    def getSpecByItemId(self, id = ''):
+    def getSpecBySpecId(self, id):
 
-        return Item.objects.select_related().get(id=id, onLine=True, show=True).itemspec_set.all()
+        return self.select_related().get(id=id, onLine=True, show=True)
 
-    def getSpecByItemSpecId(self, id = ''):
+    def getSpecByItemId(self, id):
 
-        return self.select_related().get(id=id, onLine=True).itme.get(onLine=True, show=True)
+        return Item.objects.select_related().get(id=id, onLine=True, show=True).itemspec_set.filter(onLine=True)
+
 
 
 class itemImgManager(models.Manager):
@@ -75,6 +76,10 @@ class itemFeeManager(models.Manager):
     def getFeeByNomal(self):
 
         return self.select_related().get(itemType=0)
+
+    def getFeeBySpec(self, specID):
+
+        return ItemSpec.objects.getSpecBySpecId(id=specID).itemfee_set.getFeeByNomal()
 
 
 

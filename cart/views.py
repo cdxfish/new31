@@ -20,7 +20,18 @@ import time, datetime
 
 def cart(request):
 
-    cart = CartShow(request)
+    if settings.DEBUG:
+
+        cart = Cart(request).showItemToCart()
+    else:
+        try:
+
+            cart = Cart(request).showItemToCart()
+        except:
+
+            Cart(request).clearCart()
+            return Message(request).redirect(url='/cart/').error('您购物车中有些商品已过期，请重新选择。').shopMsg()
+
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
 
@@ -57,47 +68,56 @@ def checkout(request):
 
         return Message(request).redirect(url='/consignee/').error('提交方式有误').shopMsg()
 
-def buy(request, specID):
+
+def hFunc(request, func, **args):
+
+    if settings.DEBUG:
+
+        return func(request, args)
+
+    else:
+        try:
+
+            return func(request, args)
+            
+        except:
+
+            return Message(request).redirect(url=request.META.get('HTTP_REFERER',"/")).warning('当前商品已下架').shopMsg()
 
 
-    return Cart(request).pushToCart(specID)
+def rectToCart(func):
+
+    def newFunc(request, args):
+        
+        func(request, args)
+
+        return HttpResponseRedirect('/cart/')
+
+    return newFunc
 
 
-class CartShow:
-    """购物车"""
-    def __init__(self, request):
-        self.itemBuy = []
-        self.countFee = 0
-        self.request = request
-        self.items = []
-        itemCart = self.request.session.get('items')
-        if itemCart:
-            for v, i in itemCart.items():
-                try:
-                    if len(v) < 2:
-                        raise Item.DoesNotExist
-                        
-                    itemSpec = ItemSpec.objects.getSpecByItemSpecId(id='%s' % v[1:])
-                    amount = itemSpec.itemfee_set.get(itemType=v[0]).amount
-                    subtotal = amount * i
-                    self.countFee += subtotal
-                    self.itemBuy.append({ 'item': itemSpec, 'amount': amount, 'num': i,'subtotal': subtotal, 'v': v })
-                except:
-                    del itemCart[v]
-
-            self.request.session['c'] = itemCart
+@rectToCart
+def buy(request, args):
+   
+    return Cart(request).pushToCart(args['specID'])
 
 
-    def cartItemSubtotal(self, i, t):
-        itemCart = self.request.session["items"]
-        itemSubtotal = ItemSpec.objects.getSpecByItemSpecId(id='%s' % i[1:]).itemfee_set.get(itemType=i[0]).amount * int(t)
+@rectToCart
+def clear(request, args):
 
-        return itemSubtotal
+    return Cart(request).clearItemBySpec(args['specID'])
 
-    def clearCart(self):
-        self.request.session['items'] = {}
 
-        return self
+@rectToCart
+def changnum(request, args):
+
+    return Cart(request).changeNumBySpec(specID=args['specID'],num=args['num'])
+
+
+
+
+
+
 
 
 class Cart:
@@ -114,71 +134,102 @@ class Cart:
 
         self.items = []
 
+        self.item = {'itemID': 1, 'specID': 1, 'num': 1}
+
         self.request = request
+
+    def setSeesion(self):
+        if not self.request.session.get('items'):
+            self.request.session['items'] = self.items
+
+        return self
 
     def showToCart(self):
         pass
 
-
-
-    def hCart(request, func, id):
-
-        if settings.DEBUG:
-
-            return func(request, id)
-
-        else:
-            try:
-
-                return func(request, id)
-            except:
-                return Message(request).redirect(url=request.META.get('HTTP_REFERER',"/")).warning('当前商品已下架').shopMsg()
-
-
-
     def pushToCart(self, specID):
         
         item = Item.objects.getItemBySpecId(id=specID)
+        items = self.request.session.get('items')
 
-        # itemCart = request.session['item']
+        i = self.item
 
-        # if not i in request.session['item']:
-        #     itemCart.update({ '%s%s' % (t,i):1 })
+        i['itemID'] = item.id
+        i['specID'] = int(specID)
 
-        # request.session['item'] = itemCart
+        if not i in items:
 
-        return HttpResponseRedirect('/cart/')
+            items.append(i)
+
+            self.request.session['items'] = items
+
+        return self
 
 
-    def clearCartItem(request, i , t= 1):
-        try:
-            if not request.session.get('itemCart'):
-                request.session["itemCart"] = {}
+    def clearItemBySpec(self, specID):
 
-            itemCart = request.session["itemCart"]
+        specID = int(specID)
 
-            a = '%s%s' % (t,i)
+        items = self.request.session.get('items')
 
-            if a in itemCart:
-                del itemCart[a]
+        for i in items:
 
-            request.session['itemCart'] = itemCart
+            if specID == i['specID']:
+                items.remove(i)
 
-            return request
-        except:
-            raise Item.DoesNotExist
+        self.request.session['items'] = items
 
-    def changeCartItem(request, i , t):
-        try:
-            item = Item.objects.getItemByItemAttrId(id='%s' % i[1:])
 
-            itemCart = request.session["itemCart"]
+        return self
 
-            if i in itemCart:
-                itemCart[i] = int(t)
+    def changeNumBySpec(self, specID, num):
+        specID = int(specID)
+        num = int(num)
 
-            request.session['itemCart'] = itemCart
+        items = self.request.session.get('items')
 
-            return request
-        except:
-            raise Item.DoesNotExist
+        for i in items:
+
+            if specID == i['specID']:
+                i['num'] = num
+
+        self.request.session['items'] = items
+
+        return self
+
+
+    def showItemToCart(self):
+
+        items = self.request.session.get('items')
+
+        itemList = []
+        countFee = 0
+
+        for i in items:
+                
+            itemSpec = ItemSpec.objects.getSpecBySpecId(id=i['specID'])
+            amount = itemSpec.itemfee_set.getFeeByNomal().amount
+            total = amount * i['num']
+            countFee += total
+
+            itemList.append({ 'item': itemSpec, 'amount': amount, 'num': i['num'],'total': total })
+
+        return {'items': itemList, 'total': countFee}
+
+    def clearCart(self):
+        self.request.session['items'] = self.items
+
+        return self
+
+    def countFee(self):
+        items = self.request.session.get('items')
+
+        countFee = 0
+
+        for i in items:
+
+            amount = ItemFee.objects.getFeeBySpec(specID=i['specID']).amount
+            total = amount * i['num']
+            countFee += total
+
+        return countFee
