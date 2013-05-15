@@ -49,7 +49,7 @@ def redirTryMsg(msg):
                     return func(request, kwargs)
                 except:
 
-                    return Message().message(msg).shopMsg()
+                    return msg
 
         return __redirTryMsg
 

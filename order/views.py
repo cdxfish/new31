@@ -88,6 +88,7 @@ class OrderSubmit:
         self.error = False
         self.message = ''
         self.template = ''
+        self.items = Cart(self.request).items
 
     def submit(self):
         # 插入订单号占位！
@@ -100,26 +101,36 @@ class OrderSubmit:
         # 插入订单订单时间线
         # 插入订单完成
 
-        if settings.DEBUG:
-            self.newOderSn() \
-                .infoSubmit() \
-                .logisticsSubmit() \
-                .itemSubmit() \
-                .paySubmit() \
-                .shipSubmit() \
-                .oStartSubmit() \
-                .oLineSubmit() \
-                .submitDone()
-        else:
-            self.newSnForMsg() \
-                .infoForMsg() \
-                .logisticsForMsg() \
-                .itemForMsg() \
-                .payForMsg() \
-                .shipForMsg() \
-                .oStartForMsg() \
-                .oLineForMsg() \
-                .submitDone()
+        self.newOderSn() \
+            .infoSubmit() \
+            .logisticsSubmit() \
+            .itemSubmit() \
+            .paySubmit() \
+            .shipSubmit() \
+            .oStartSubmit() \
+            .oLineSubmit() \
+            .submitDone()
+
+        # if settings.DEBUG:
+        #     self.newOderSn() \
+        #         .infoSubmit() \
+        #         .logisticsSubmit() \
+        #         .itemSubmit() \
+        #         .paySubmit() \
+        #         .shipSubmit() \
+        #         .oStartSubmit() \
+        #         .oLineSubmit() \
+        #         .submitDone()
+        # else:
+        #     self.newSnForMsg() \
+        #         .infoForMsg() \
+        #         .logisticsForMsg() \
+        #         .itemForMsg() \
+        #         .payForMsg() \
+        #         .shipForMsg() \
+        #         .oStartForMsg() \
+        #         .oLineForMsg() \
+        #         .submitDone()
 
         if self.error:
             self.delNewOrder()
@@ -246,9 +257,9 @@ class OrderSubmit:
 
         self.orderItem = []
 
-        for v, i in self.request.session['itemCart'].items():
+        for i in self.items:
 
-            item = Item.objects.getItemByItemSpecId(id='%s' % v[1:])
+            item = Item.objects.getItemBySpecId(id=i['specID'])
 
             self.orderItem.append(OrderItem(order=self.order, name=item.name,sn=item.sn))
 
@@ -274,9 +285,9 @@ class OrderSubmit:
     def specSubmit(self):
         self.orderSpec = []
 
-        for v, i in self.request.session['itemCart'].items():
+        for i in self.items:
 
-            spec = ItemSpec.objects.getSpecByItemSpecId(id='%s' % v[1:])
+            spec = ItemSpec.objects.getSpecByItemSpecId(id=i['specID'])
 
             orderItem = OrderItem.objects.get(order=self.order, sn=spec.item.sn)
 
@@ -308,8 +319,7 @@ class OrderSubmit:
         oFee = OrderFee()
         oFee.orderSpec = sp
         oFee.number = i
-        oFee.itemType = v[0]
-        oFee.amount = spec.itemfee_set.get(itemType=v[0]).amount
+        oFee.amount = spec.itemfee_set.getFeeBynomal().amount
         oFee.save()
 
         return self.disForMsg(oFee, spec, v)

@@ -7,7 +7,7 @@ class cartMiddleware:
 
     def process_request(self, request):
 
-    	Cart(request).setSeesion()
+    	Cart(request).formatItems()
 
         return None
 

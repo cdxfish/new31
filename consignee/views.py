@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.core.exceptions import *
 from message.views import *
 from forms import *
-import datetime
+import datetime, time
 
 # Create your views here.
 
@@ -18,24 +18,26 @@ def consignee(request):
     return render_to_response('consignee.htm', locals(), context_instance=RequestContext(request))
 
 
-def cConsignee(request):
-    try:
-        ShipConsignee(request).saveConsignee()
-
-        return HttpResponseRedirect("/consignee/")
-    except:
-        return Message(request).redirect().warning('无法保存收货人信息').shopMsg()
-
-
 class ShipConsignee:
     """docstring for Consignee"""
     def __init__(self, request):
         self.request = request
-        self.c = {'user':'', 'pay':0, 'ship':0, 'consignee':'', 'area': 0, 'address':'', 'tel':'', 'signDate': '%s' % datetime.date.today(), 'time': 0,'note':'',} 
+        self.c = request.session['c']
+        self.cFormat = {
+                            'user':'', 
+                            'pay':0, 
+                            'ship':0, 
+                            'consignee':'', 
+                            'area': 0, 
+                            'address':'', 
+                            'tel':'', 
+                            'signDate': '%s' % datetime.date.today(), 
+                            'time': 0,
+                            'note':'',
+                        } 
 
     def setSeesion(self):
-
-        s = self.request.session['c']
+        s = self.c
 
         for v,i in self.request.REQUEST.items():
             # 用于下拉框默认值,使得过滤器辨别为false
@@ -44,12 +46,32 @@ class ShipConsignee:
             else:
                 s[v] = i
 
-        self.request.session['c'] = s
-
-        return self
+        return self.setConsignee(s)
 
 
     def clearConsignee(self):
-        self.request.session['c'] = self.c
+
+        return self.setConsignee(self.cFormat)
+
+    def setConsignee(self, c):
+        self.request.session['c'] = c
+
+        self.c = c
 
         return self
+
+    def formatConsignee(self):
+        if not self.c:
+
+            self.setConsignee(self.cFormat)
+
+        c = self.c
+
+        toDay = time.gmtime()
+        cDate = time.strptime(c['signDate'], '%Y-%m-%d')
+
+        if cDate < toDay or not c['signDate']:
+            c['signDate'] = '%s' % datetime.date.today()
+
+
+        return self.setConsignee(c)

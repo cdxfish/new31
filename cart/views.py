@@ -51,7 +51,7 @@ def checkout(request):
 
             return HttpResponseRedirect('/consignee/')
 
-        cart = CartShow(request)
+        cart = Cart(request).showItemToCart()
 
         if not cart:
 
@@ -132,25 +132,31 @@ class Cart:
     """
     def __init__(self, request):
 
-        self.items = []
+        self.itemsFormat = []
 
         self.item = {'itemID': 1, 'specID': 1, 'num': 1}
 
         self.request = request
 
-    def setSeesion(self):
-        if not self.request.session.get('items'):
-            self.request.session['items'] = self.items
+        self.items = request.session.get('items')
+
+    def setItems(self, items):
+
+        self.request.session['items'] = items
+        self.items = items
 
         return self
 
-    def showToCart(self):
-        pass
+    def formatItems(self):
+        if not self.items:
+
+            return self.setItems(self.itemsFormat)
+
 
     def pushToCart(self, specID):
         
         item = Item.objects.getItemBySpecId(id=specID)
-        items = self.request.session.get('items')
+        items = self.items
 
         i = self.item
 
@@ -161,32 +167,33 @@ class Cart:
 
             items.append(i)
 
-            self.request.session['items'] = items
+            return self.setItems(items)
 
-        return self
+        else:
+
+            return self
 
 
     def clearItemBySpec(self, specID):
 
         specID = int(specID)
 
-        items = self.request.session.get('items')
+        items = self.items
 
         for i in items:
 
             if specID == i['specID']:
+
                 items.remove(i)
 
-        self.request.session['items'] = items
+        return self.setItems(items)
 
-
-        return self
 
     def changeNumBySpec(self, specID, num):
         specID = int(specID)
         num = int(num)
 
-        items = self.request.session.get('items')
+        items = self.items
 
         for i in items:
 
@@ -200,7 +207,7 @@ class Cart:
 
     def showItemToCart(self):
 
-        items = self.request.session.get('items')
+        items = self.items
 
         itemList = []
         countFee = 0
@@ -217,12 +224,12 @@ class Cart:
         return {'items': itemList, 'total': countFee}
 
     def clearCart(self):
-        self.request.session['items'] = self.items
+        self.setItems(self.itemsFormat)
 
         return self
 
     def countFee(self):
-        items = self.request.session.get('items')
+        items = self.items
 
         countFee = 0
 
