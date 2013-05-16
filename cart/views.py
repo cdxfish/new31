@@ -172,10 +172,10 @@ class Cart:
         i['specID'] = int(specID)
 
         if self.request.user.is_authenticated():
-            print 'a'
+
             i['disID'] = ItemDiscount.objects.getDisBySpecID(specID=specID).id
         else:
-            print 'b'
+            
             i['disID'] = Discount.objects.getDefault().id
 
 
