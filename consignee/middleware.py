@@ -5,7 +5,7 @@ class consigneeMiddleware:
 
     def process_request(self, request):
 
-        ShipConsignee(request).formatConsignee
+        ShipConsignee(request).formatConsignee()
 
         return None
 

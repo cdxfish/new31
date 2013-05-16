@@ -66,8 +66,6 @@ def addItemToOrder(request):
 
         item = request.POST.getlist('i')
 
-
-
         return HttpResponse(json.dumps(item))
 
     else:
@@ -89,12 +87,14 @@ class OrderSubmit:
         self.message = ''
         self.template = ''
         self.items = Cart(self.request).items
+        self.c = ShipConsignee(self.request).c
 
     def submit(self):
         # 插入订单号占位！
         # 插入订单基本信息
         # 插入订单物流信息
         # 插入订单商品信息
+        # 插入订单规格信息
         # 插入订单支付方式信息
         # 插入订单送货方式信息
         # 插入订单订单状态
@@ -105,47 +105,18 @@ class OrderSubmit:
             .infoSubmit() \
             .logisticsSubmit() \
             .itemSubmit() \
+            .specSubmit() \
             .paySubmit() \
             .shipSubmit() \
             .oStartSubmit() \
             .oLineSubmit() \
             .submitDone()
 
-        # if settings.DEBUG:
-        #     self.newOderSn() \
-        #         .infoSubmit() \
-        #         .logisticsSubmit() \
-        #         .itemSubmit() \
-        #         .paySubmit() \
-        #         .shipSubmit() \
-        #         .oStartSubmit() \
-        #         .oLineSubmit() \
-        #         .submitDone()
-        # else:
-        #     self.newSnForMsg() \
-        #         .infoForMsg() \
-        #         .logisticsForMsg() \
-        #         .itemForMsg() \
-        #         .payForMsg() \
-        #         .shipForMsg() \
-        #         .oStartForMsg() \
-        #         .oLineForMsg() \
-        #         .submitDone()
 
         if self.error:
             self.delNewOrder()
 
         return self.message
-
-    def newSnForMsg(self):
-        # 新订单锁定
-        if not self.error:
-            try:
-                self.newOderSn()
-            except:
-                self.errorMsg(Message(self.request).redirect().error('无法插入订单号！').shopMsg())
-
-        return self
 
 
     # 获得新的订单编号
@@ -180,17 +151,6 @@ class OrderSubmit:
         return self
 
 
-    def infoForMsg(self):
-        # 插入基本信息
-        if not self.error:
-            try:
-                self.infoSubmit()
-            except :
-                self.errorMsg(Message(self.request).redirect().error('无法插入订单基本信息，请重新提交订单或联系客服！').shopMsg())
-
-        return self
-
-
     # 插入订单基本信息
     def infoSubmit(self, u= '' , r ='网店订单'):
 
@@ -199,17 +159,6 @@ class OrderSubmit:
 
         self.order.save()
 
-
-        return self
-
-
-    def logisticsForMsg(self, url='/consignee/'):
-        # 插入订单物流信息
-        if not self.error:
-            try:
-                self.logisticsSubmit()
-            except :
-                self.errorMsg(Message(self.request).redirect(url=url).error('收货信息有误，请重新填写！').shopMsg())
 
         return self
 
@@ -241,18 +190,6 @@ class OrderSubmit:
         return self
 
 
-    def itemForMsg(self):
-        # 插入商品信息
-        if not self.error:
-            try:
-                self.itemSubmit()
-
-            except :
-                self.errorMsg(Message(self.request).redirect(url='/cart/').error('当前购物车中商品已下降，请重新选择商品或联系客服！').shopMsg())
-
-        return self
-
-
     def itemSubmit(self):
 
         self.orderItem = []
@@ -268,26 +205,15 @@ class OrderSubmit:
 
         OrderItem.objects.bulk_create(self.orderItem)
 
-        return self.specForMsg()
-
-
-    def specForMsg(self):
-        # 插入商品规格信息
-        if not self.error:
-            try:
-                return self.specSubmit()
-
-            except :
-                self.errorMsg(Message(self.request).redirect(url='/cart/').error('当前购物车中商品规格有误，请重新选择商品或联系客服！').shopMsg())
-
         return self
+
 
     def specSubmit(self):
         self.orderSpec = []
 
         for i in self.items:
 
-            spec = ItemSpec.objects.getSpecByItemSpecId(id=i['specID'])
+            spec = ItemSpec.objects.getSpecBySpecID(id=i['specID'])
 
             orderItem = OrderItem.objects.get(order=self.order, sn=spec.item.sn)
 
@@ -298,74 +224,41 @@ class OrderSubmit:
 
             sp.save()
 
-            self.feeForMsg(sp, spec, v, i)
+            self.feeSubmit(sp, spec, i)
 
         return self
 
 
-    def feeForMsg(self, sp, spec, v, i):
-        # 插入商品价格信息
-        if not self.error:
-            try:
-                return self.feeSubmit(sp, spec, v, i)
-
-            except :
-                self.errorMsg(Message(self.request).redirect(url='/cart/').error('当前购物车中商品价格有误，请重新选择商品或联系客服！').shopMsg())
-
-        return self
-
-    def feeSubmit(self, sp, spec, v, i):
+    def feeSubmit(self, sp, spec, i):
 
         oFee = OrderFee()
         oFee.orderSpec = sp
-        oFee.number = i
-        oFee.amount = spec.itemfee_set.getFeeBynomal().amount
+        oFee.number = i['num']
+        oFee.amount = ItemFee.objects.getFeeBySpecID(specID=i['specID']).amount
         oFee.save()
 
-        return self.disForMsg(oFee, spec, v)
+        return self.disSubmit(oFee, spec, i)
 
 
-    def disForMsg(self, oFee, spec, v):
-        # 插入商品折扣信息
-        if not self.error:
-            try:
-                return self.disSubmit(oFee, spec, v)
+    def disSubmit(self, oFee, spec, i):
 
-            except :
-                self.errorMsg(Message(self.request).redirect(url='/cart/').error('当前购物车中商品折扣有误，请重新选择商品或联系客服！').shopMsg())
+        oDis = OrderDiscount()
+        oDis.orderFee = oFee
+ 
+        oDis.discount = ItemDiscount.objects.getDisByDisID(disID=i['disID']).discount
 
-        return self
-
-    def disSubmit(self, oFee, spec, v):
-        if v[0] == '1': 
-
-            oDis = OrderDiscount()
-            oDis.orderFee = oFee
-            
-            if self.request.user.is_authenticated():
-                oDis.discount = spec.itemfee_set.get(itemType=int(v[0])).itemdiscount_set.all()[0].discount.discount
-            else:
-                oDis.discount = 10.0
-
-            oDis.save()
+        oDis.save()
 
         return self
 
+    def disSubmitByAdmin(self,oFee, spec):
+        pass
 
-    def payForMsg(self):
-        # 插入商品支付方式信息
-        if not self.error:
-            try:
-                return self.paySubmit()
 
-            except :
-                self.errorMsg(Message(self.request).redirect(url='/cart/consignee/').error('当前支付方式信息有误，请重新选择或联系客服！').shopMsg())
-
-        return self
 
     def paySubmit(self):
 
-        pay = Pay.objects.getPayById(id=self.request.session['c']['pay'])
+        pay = Pay.objects.getPayById(id=self.c['pay'])
 
         oPay = OrderPay()
         oPay.order = self.order
@@ -377,21 +270,9 @@ class OrderSubmit:
         return self
 
 
-    def shipForMsg(self):
-        # 插入商品送货方式信息
-        if not self.error:
-            try:
-                return self.shipSubmit()
-
-            except :
-                self.errorMsg(Message(self.request).redirect(url='/cart/consignee/').error('当前送货方式信息有误，请重新选择或联系客服！').shopMsg())
-
-        return self
-
-
     def shipSubmit(self):
 
-        # ship = Pay.objects.getPayById(id=self.request.session['c']['ship'])
+        # ship = Pay.objects.getPayById(id=self.c['ship'])
 
         oShip = OrderShip()
         oShip.order = self.order
@@ -405,16 +286,6 @@ class OrderSubmit:
 
         return self
 
-    def oStartForMsg(self):
-        # 插入订单状态信息
-        if not self.error:
-            try:
-                return self.oStartSubmit()
-
-            except :
-                self.errorMsg(Message(self.request).redirect(url='/cart/').error('无法正确配置当前订单状态，请重新下单或联系客服！').shopMsg())
-
-        return self
 
     def oStartSubmit(self):
         oStart = OrderStatus()
@@ -424,16 +295,6 @@ class OrderSubmit:
 
         return self
 
-    def oLineForMsg(self):
-        # 插入订单状态信息
-        if not self.error:
-            try:
-                return self.oLineSubmit()
-
-            except :
-                self.errorMsg(Message(self.request).redirect(url='/cart/').error('无法正确配置当前订单时间线，请重新下单或联系客服！').shopMsg())
-
-        return self
 
     def oLineSubmit(self):
         oOLT = OrderLineTime()

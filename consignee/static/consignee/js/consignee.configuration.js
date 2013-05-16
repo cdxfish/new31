@@ -8,29 +8,27 @@ c = {
     telText: '请填写多个号码，并用空格隔开。如：134XXXXXXXX 0771XXXXXXX。',
 
     strFocusText: function(obj, str) {
-        if (obj.val() == 0) {
-            obj.css({
-                "color": "#CCCCCC"
-            }).val(str);
+        var color = obj.css('color');
+
+        var cssFormat = function() {
+            if (!obj.val()) {
+                obj.css({
+                    "color": "#CCCCCC"
+                }).val(str);
+            }
         }
+
+        cssFormat();
 
         obj.focus(
 
         function() {
             if (obj.val() == str) {
                 obj.css({
-                    "color": "#000000"
+                    "color": color
                 }).val("");
             }
-        }).focusout(
-
-        function() {
-            if (obj.val() == 0) {
-                obj.css({
-                    "color": "#CCCCCC"
-                }).val(str);
-            }
-        });
+        }).focusout(cssFormat);
 
         return this;
     },
@@ -42,7 +40,7 @@ c = {
 
             var message = "";
 
-            if ($('#id_pay').val() == 0) {
+            if (!$('#id_pay').val()) {
                 message += '请选择支付方式!<br />';
             }
 
@@ -50,32 +48,32 @@ c = {
             //     message += '请选择配送方式!<br />';
             // }
 
-            if ($('#id_consignee').val() == 0) {
+            if (!$('#id_consignee').val()) {
                 message += '请填写收货人姓名!<br />';
             }
 
-            if ($('#id_area').val() == 0) {
+            if (!$('#id_area').val()) {
                 message += '请选择区域!<br />';
             }
 
-            if ($('#id_address').val() == 0) {
+            if (!$('#id_address').val()) {
                 message += '请填写详细地址!<br />';
             }
 
-            if ($('#id_tel').val() == c.telText || $('#id_tel').val() == 0) {
+            if ($('#id_tel').val() == c.telText || !$('#id_tel').val()) {
                 message += '请填写联系电话!<br />';
             }
 
 
-            if ($('#id_date').val() == 0) {
+            if (!$('#id_signDate').val()) {
                 message += '请填写最佳送货日期!<br />';
             }
 
-            if ($('#id_time').val() == 0) {
+            if (!$('#id_time').val()) {
                 message += '请填写最佳送货时间!<br />';
             }
 
-            if (message != 0) {
+            if (!! message) {
                 $.dialog.message(message);
 
                 return false;

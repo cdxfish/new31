@@ -51,8 +51,8 @@ def getItemByKeyword(request):
 
 # ajax动态写入收货人信息
 @tryMsg('无法填写表单')
-def cConsigneeByAjax(request):
-    ShipConsignee(request).saveConsignee()
+def cConsigneeByAjax(request, kwargs):
+    ShipConsignee(request).setSeesion()
 
     return AjaxRJson().jsonEn()
 

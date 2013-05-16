@@ -56,15 +56,6 @@ INSERT INTO `spec_spec` (`value`) VALUES
 ('10.0磅：约39×39(cm)');
 
 
-INSERT INTO `discount_discount` (`discount`) VALUES
-('10.0'),
-('9.5'),
-('9.0'),
-('8.5'),
-('8.0'),
-('7.5'),
-('7.0');
-
 INSERT INTO `tag_tag` (`tag`) VALUES
 ('乳酪'),
 ('原味'),

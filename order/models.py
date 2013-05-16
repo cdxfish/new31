@@ -1,6 +1,7 @@
 #coding:utf-8
 from django.db import models
 from django.contrib.auth.models import User
+from item.models import *
 
 # Create your models here.
 
@@ -172,7 +173,7 @@ class OrderSpec(models.Model):
 class OrderFee(models.Model):
     orderSpec = models.ForeignKey(OrderSpec, verbose_name=u'规格')
     number = models.SmallIntegerField(u'数量')
-    itemType = models.SmallIntegerField(u'商品类型',choices=((1,u'零售价'),(2,u'积分换购价'),))
+    itemType = models.SmallIntegerField(u'商品类型', default=0, choices=ItemFee.itemTypeChoices)
     amount = models.DecimalField(u'单价', max_digits=10, decimal_places=2)
 
     def __unicode__(self):
@@ -184,7 +185,7 @@ class OrderFee(models.Model):
 
 class OrderDiscount(models.Model):
     orderFee = models.OneToOneField(OrderFee, verbose_name=u'商品', unique=True)
-    discount = models.DecimalField(u'折扣', max_digits=3, decimal_places=1)
+    discount = models.DecimalField(u'折扣', max_digits=3, decimal_places=1, default=10.0)
 
 
     def __unicode__(self):

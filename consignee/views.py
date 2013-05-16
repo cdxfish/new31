@@ -22,7 +22,7 @@ class ShipConsignee:
     """docstring for Consignee"""
     def __init__(self, request):
         self.request = request
-        self.c = request.session['c']
+        self.c = request.session.get('c')
         self.cFormat = {
                             'user':'', 
                             'pay':0, 

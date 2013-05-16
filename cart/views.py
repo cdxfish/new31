@@ -15,10 +15,13 @@ from area.models import *
 from order.models import *
 from consignee.views import *
 import time, datetime
+from decimal import *
+
 
 # Create your views here.
 
 def cart(request):
+    a = Cart(request).items
 
     if settings.DEBUG:
 
@@ -134,7 +137,12 @@ class Cart:
 
         self.itemsFormat = []
 
-        self.item = {'itemID': 1, 'specID': 1, 'num': 1}
+        self.item = {
+                        'itemID': 1, 
+                        'specID': 1, 
+                        'disID': 1, 
+                        'num': 1
+                    }
 
         self.request = request
 
@@ -162,6 +170,14 @@ class Cart:
 
         i['itemID'] = item.id
         i['specID'] = int(specID)
+
+        if self.request.user.is_authenticated():
+            print 'a'
+            i['disID'] = ItemDiscount.objects.getDisBySpecID(specID=specID).id
+        else:
+            print 'b'
+            i['disID'] = Discount.objects.getDefault().id
+
 
         if not i in items:
 
@@ -214,12 +230,13 @@ class Cart:
 
         for i in items:
                 
-            itemSpec = ItemSpec.objects.getSpecBySpecId(id=i['specID'])
-            amount = itemSpec.itemfee_set.getFeeByNomal().amount
+            itemSpec = ItemSpec.objects.getSpecBySpecID(id=i['specID'])
+            dis = Discount.objects.get(id=i['disID'])
+            amount = itemSpec.itemfee_set.getFeeByNomal().amount * Decimal(dis.discount)
             total = amount * i['num']
             countFee += total
 
-            itemList.append({ 'item': itemSpec, 'amount': amount, 'num': i['num'],'total': total })
+            itemList.append({ 'item': itemSpec, 'amount': amount, 'num': i['num'], 'dis': dis, 'total': total })
 
         return {'items': itemList, 'total': countFee}
 
@@ -235,7 +252,7 @@ class Cart:
 
         for i in items:
 
-            amount = ItemFee.objects.getFeeBySpec(specID=i['specID']).amount
+            amount = ItemFee.objects.getFeeBySpecID(specID=i['specID']).amount
             total = amount * i['num']
             countFee += total
 

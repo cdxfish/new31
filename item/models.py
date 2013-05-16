@@ -56,11 +56,11 @@ class itemDescManager(models.Manager):
 
 
 class itemSpecManager(models.Manager):
-    def getSpecBySpecId(self, id):
+    def getSpecBySpecID(self, id):
 
         return self.select_related().get(id=id, onLine=True, show=True)
 
-    def getSpecByItemId(self, id):
+    def getSpecByItemID(self, id):
 
         return Item.objects.select_related().get(id=id, onLine=True, show=True).itemspec_set.filter(onLine=True)
 
@@ -77,9 +77,18 @@ class itemFeeManager(models.Manager):
 
         return self.select_related().get(itemType=0)
 
-    def getFeeBySpec(self, specID):
+    def getFeeBySpecID(self, specID):
 
-        return ItemSpec.objects.getSpecBySpecId(id=specID).itemfee_set.getFeeByNomal()
+        return ItemSpec.objects.getSpecBySpecID(id=specID).itemfee_set.getFeeByNomal()
+
+class itemDisManager(models.Manager):
+    def getDisBySpecID(self, specID):
+
+        return ItemSpec.objects.getSpecBySpecID(id=specID).itemfee_set.getFeeByNomal().itemdiscount.discount
+
+    def getDisByDisID(self, disID):
+
+        return self.get(id=disID).discount
 
 
 
@@ -128,9 +137,10 @@ class ItemSpec(models.Model):
 
 
 class ItemFee(models.Model):
+    itemTypeChoices = ((0,u'零售价'),(1,u'积分换购价'),)
     itemSpec = models.ForeignKey(ItemSpec, verbose_name=u'规格', unique=True)
     amount = models.DecimalField(u'单价', max_digits=10, decimal_places=2)
-    itemType = models.SmallIntegerField(u'类型', default=0, choices=((0,u'零售价'),(1,u'积分换购价'),))
+    itemType = models.SmallIntegerField(u'类型', default=0, choices=itemTypeChoices)
 
     objects = itemFeeManager()
 
@@ -143,11 +153,13 @@ class ItemFee(models.Model):
 
 
 class ItemDiscount(models.Model):
-    itemFee = models.ForeignKey(ItemFee, verbose_name=u'单价', unique=True)
+    itemFee = models.OneToOneField(ItemFee, verbose_name=u'单价', unique=True)
     discount = models.ForeignKey(Discount, verbose_name=u'折扣')
 
+    objects = itemDisManager()
+
     def __unicode__(self):
-        return u"%s - %s 折" % (self.itemFee, self.discount)
+        return u"%s - %s" % (self.itemFee, self.discount)
 
 
 class ItemImg(models.Model):
