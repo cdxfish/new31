@@ -39,7 +39,7 @@ input{
   height:20px;
   line-height:20px;
   border:solid 1px #CDCDCD;
-  padding:0 0 0 1px;
+  padding:0 0 0 3px;
   vertical-align:bottom;
 }
 
@@ -372,6 +372,7 @@ table td{
   font-size:14px;
   padding:2px 10px;
   height: 22px;
+  line-height: 20px;
 }
 
 #content .search img,

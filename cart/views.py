@@ -14,15 +14,14 @@ from item.models import *
 from area.models import *
 from order.models import *
 from consignee.views import *
-import time, datetime
+from new31.func import *
+import time, datetime, math
 from decimal import *
 
 
 # Create your views here.
 
 def cart(request):
-    a = Cart(request).items
-
     if settings.DEBUG:
 
         cart = Cart(request).showItemToCart()
@@ -102,7 +101,7 @@ def rectToCart(func):
 @rectToCart
 def buy(request, args):
    
-    return Cart(request).pushToCart(args['specID'])
+    return Cart(request).pushToCartBySpecID(int(args['specID']))
 
 
 @rectToCart
@@ -138,9 +137,9 @@ class Cart:
         self.itemsFormat = []
 
         self.item = {
-                        'itemID': 1, 
-                        'specID': 1, 
-                        'disID': 1, 
+                        'itemID': 0, 
+                        'specID': 0, 
+                        'disID': 0, 
                         'num': 1
                     }
 
@@ -151,7 +150,6 @@ class Cart:
     def setItems(self, items):
 
         self.request.session['items'] = items
-        self.items = items
 
         return self
 
@@ -161,15 +159,14 @@ class Cart:
             return self.setItems(self.itemsFormat)
 
 
-    def pushToCart(self, specID):
-        
-        item = Item.objects.getItemBySpecId(id=specID)
+    def pushToCartBySpecID(self, specID):
+
         items = self.items
 
-        i = self.item
+        i = self.item.copy()
 
-        i['itemID'] = item.id
-        i['specID'] = int(specID)
+        i['itemID'] = Item.objects.getItemBySpecId(id=specID).id
+        i['specID'] = ItemSpec.objects.getSpecBySpecID(specID).id
 
         if self.request.user.is_authenticated():
 
@@ -188,6 +185,22 @@ class Cart:
         else:
 
             return self
+
+    def pushToCartByItemIDs(self, itemIDs):
+        items = self.items
+
+        for i in itemIDs:
+            ii = self.item.copy()
+
+            item = Item.objects.getItemByItemID(i)
+
+            ii['itemID'] = item.id
+            ii['specID'] = item.itemspec_set.getDefaultSpec().id
+            ii['disID'] = Discount.objects.getDefault().id
+  
+            items.append(ii)
+
+        return self.setItems(items)
 
 
     def clearItemBySpec(self, specID):
@@ -229,16 +242,18 @@ class Cart:
         countFee = 0
 
         for i in items:
-                
-            itemSpec = ItemSpec.objects.getSpecBySpecID(id=i['specID'])
+
+            item = Item.objects.getItemByItemID(id=i['itemID'])
+            spec = item.itemspec_set.getSpecBySpecID(id=i['specID'])
             dis = Discount.objects.get(id=i['disID'])
-            amount = itemSpec.itemfee_set.getFeeByNomal().amount * Decimal(dis.discount)
+            amount = spec.itemfee_set.getFeeByNomal().amount * Decimal(dis.discount)
             total = amount * i['num']
             countFee += total
 
-            itemList.append({ 'item': itemSpec, 'amount': amount, 'num': i['num'], 'dis': dis, 'total': total })
+            itemList.append({ 'item': item,'spec': spec, 'amount': forMatFee(amount), 'num': i['num'], 'dis': dis, 'total': forMatFee(total) })
 
-        return {'items': itemList, 'total': countFee}
+
+        return {'items': itemList, 'total': forMatFee(countFee)}
 
     def clearCart(self):
         self.setItems(self.itemsFormat)
@@ -246,14 +261,6 @@ class Cart:
         return self
 
     def countFee(self):
-        items = self.items
+        cart = self.showItemToCart()
 
-        countFee = 0
-
-        for i in items:
-
-            amount = ItemFee.objects.getFeeBySpecID(specID=i['specID']).amount
-            total = amount * i['num']
-            countFee += total
-
-        return countFee
+        return cart['countFee']

@@ -42,7 +42,7 @@ def orderSubmit(request):
 
 
 def newOrEditOrderUI(request):
-
+    items = Cart(request).showItemToCart()
 
     form = getForms(request)
 
@@ -64,9 +64,9 @@ def addItemToOrder(request):
 
     if request.method == 'POST':
 
-        item = request.POST.getlist('i')
+        Cart(request).pushToCartByItemIDs(request.POST.getlist('i'))
 
-        return HttpResponse(json.dumps(item))
+        return HttpResponseRedirect('/order/new/')
 
     else:
         return Message(request).redirect().warning('订单提交方式错误 !').officeMsg()

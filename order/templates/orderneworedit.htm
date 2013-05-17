@@ -2,7 +2,7 @@
 
 {% block js %}
     <script type="text/javascript" src="{{ STATIC_URL }}order/js/neweditorder.configuration.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}cart/js/consignee.configuration.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}consignee/js/consignee.configuration.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -19,6 +19,20 @@
               <th width="90px">小计</th>
               <th width="100px">操作</th>
             </tr>
+{% for i in items.items %}
+            <tr align="center">
+              <td>{{ i.item.name }}</td>
+              <td>{{ i.item.sn }}</td>
+              <td>{{ i.spec.spec.value }}</td>
+              <td>{{ i.dis.get_discount_display }}</td>
+              <td>{{ i.amount|floatformat:2 }}</td>
+              <td>
+                  <input type="text" name="{{ i.spec.id }}" value="{{ i.num }}" size="1" class="iNum" />
+              </td>
+              <td>￥<span id="st{{ i.spec.id }}">{{ i.total|floatformat:2 }}</span> 元</td>
+              <td><a href="/order/delitem/{{ i.item.id }}/" class="button">删除</a></td>
+            </tr>
+{% endfor %}
             <tr>
               <td colspan="7"></td>
               <td align="center"><input type="button" value="添加商品" class="button" id="addNewGoods" /></td>
@@ -27,7 +41,7 @@
               <td colspan="5">
               </td>
               <td align="right"><strong>合计：</strong></td>
-              <td align="center">￥ <span id="total"></span> 元</td>
+              <td align="center">￥ <span id="total">{{ items.total|floatformat:2 }}</span> 元</td>
               <td></td>
             </tr>
           </table>
@@ -85,7 +99,7 @@
         </table>
         <center>
             {% csrf_token %}
-            <input type="submit" name="submit" value="确认" class="button" />
+            <input type="submit" name="submit" value="提交订单" class="button" />
         </center>
     </form>
 {% endblock %}

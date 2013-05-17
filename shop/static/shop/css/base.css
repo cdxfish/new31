@@ -10,7 +10,7 @@ a:hover{color:#345db5;text-decoration:none}
 a.a_bg:hover{background:#EFF3FB;text-decoration:none}
 a:focus,input[type=button],input[type=submit],button{outline:none}
 table{border-collapse:collapse;border-spacing:0}
-table tr td{padding:7px;}
+table tr td{padding:7px;line-height: 26px;}
 textarea{overflow:auto;resize:none;border:1px solid #CCCCCC;color: #000000;}
 .clearfix{*zoom:1}
 .clearfix:after{display:block;visibility:hidden;clear:both;height:0;content:'.'}

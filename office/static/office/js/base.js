@@ -1,9 +1,6 @@
 // 置顶工具条
 $(document).ready(function() {
-    ob.nav().odd('#CFC').odds();
-    $(".sortTable").tablesorter();
-
-    $('.date').Zebra_DatePicker(); //日期选择控件
+    ob.nav().odd('#CFC').odds().plugin();
 })
 
 ob = {
@@ -45,7 +42,7 @@ ob = {
                 }
             }
 
-            return false
+            // return false
         });
         return this
     },
@@ -89,6 +86,20 @@ ob = {
             $(this).toggleClass('on').next(".messagePop").slideToggle('fast');
 
             return false;
+        });
+
+        return this;
+    },
+    plugin: function() {
+        $(".sortTable").tablesorter();
+
+        $('.dateNoDir').Zebra_DatePicker(); //日期选择控件
+        $('.date').Zebra_DatePicker({
+            direction: true
+        });
+        $('select').jgdDropdown({
+            clsLIExpand: false
+            // selected: 'RS'
         });
 
         return this;

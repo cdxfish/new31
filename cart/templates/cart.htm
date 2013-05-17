@@ -21,14 +21,14 @@
 {% if cart.items %}
 {% for i in cart.items %}
                     <tr align="center">
-                        <td>{{ i.item.item.name }}</td>
-                        <td>{{ i.item.spec }}</td>
-                        <td>￥<span id="am{{ i.item.spec.id }}">{{ i.amount|floatformat:2 }}</span> 元</td>
+                        <td>{{ i.item.name }}</td>
+                        <td>{{ i.spec.spec.value }}</td>
+                        <td>￥<span id="am{{ i.spec.id }}">{{ i.amount|floatformat:2 }}</span> 元</td>
                         <td>
-                            <input type="text" name="{{ i.item.spec.id }}" value="{{ i.num }}" size="1" class="iNum" />
+                            <input type="text" name="{{ i.spec.id }}" value="{{ i.num }}" size="1" class="iNum" />
                         </td>
-                        <td>￥<span id="st{{ i.item.spec.id }}">{{ i.total|floatformat:2 }}</span> 元</td>
-                        <td align="right"><a href="/cart/clear/{{ i.item.spec.id }}/" class="btnB bBtn">删除</a></td>
+                        <td>￥<span id="st{{ i.spec.id }}">{{ i.total|floatformat:2 }}</span> 元</td>
+                        <td align="right"><a href="/cart/clear/{{ i.spec.id }}/" class="btnB bBtn">删除</a></td>
                     </tr>
 {% endfor %}
                     <tr class="bLine">

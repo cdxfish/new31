@@ -95,7 +95,7 @@ aeog = {
 
         $.each(data.data, function(i, v) {
             html += '    <tr>  \r\n';
-            html += '      <td align="center"><input type="checkbox" name="i" value="' + i + '" class="oddbox"></td>  \r\n';
+            html += '      <td align="center"><input type="checkbox" name="i" value="' + v.id + '" class="oddbox"></td>  \r\n';
             html += '      <td>' + v.name + '</td>  \r\n';
             html += '      <td align="center">' + v.sn + '</td>  \r\n';
             html += '    </tr>  \r\n';

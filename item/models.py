@@ -28,6 +28,10 @@ class itemManager(models.Manager):
 
             raise item.DoesNotExist
 
+    def getItemByItemID(self, id = 0):
+
+        return self.get(id=id, onLine=True, show=True)
+
     def getItemLikeNameOrSn(self, k):
 
         return self.select_related().filter((Q(name__contains=k) | Q(sn__contains=k)) & Q(onLine=True))
@@ -63,6 +67,10 @@ class itemSpecManager(models.Manager):
     def getSpecByItemID(self, id):
 
         return Item.objects.select_related().get(id=id, onLine=True, show=True).itemspec_set.filter(onLine=True)
+
+    def getDefaultSpec(self):
+ 
+         return self.filter(onLine=True)[0]
 
 
 

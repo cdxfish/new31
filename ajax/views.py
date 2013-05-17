@@ -40,13 +40,14 @@ def ajaxChangNum(request, kwargs):
 def getItemByKeyword(request):
 
     @tryMsg('未找到商品')
-    def _getItemByKeyword(request, k):
+    def _getItemByKeyword(request, kwargs):
 
-        r = { i.id: {'name':i.name, 'sn': i.sn} for i in Item.objects.getItemLikeNameOrSn( k ) }
+        r = [ { 'name':i.name, 'sn': i.sn, 'id': i.id, } for i in Item.objects.getItemLikeNameOrSn( kwargs['k'] )]
 
         return AjaxRJson().jsonEn(r)
 
     return _getItemByKeyword(request=request, k=request.GET.get('k', ''))
+
 
 
 # ajax动态写入收货人信息
