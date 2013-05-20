@@ -27,10 +27,10 @@
               <td>{{ i.dis.get_discount_display }}</td>
               <td>{{ i.amount|floatformat:2 }}</td>
               <td>
-                  <input type="text" name="{{ i.spec.id }}" value="{{ i.num }}" size="1" class="iNum" />
+                  <input type="text" name="{{ i.mark }}" value="{{ i.num }}" size="1" class="iNum" />
               </td>
               <td>￥<span id="st{{ i.spec.id }}">{{ i.total|floatformat:2 }}</span> 元</td>
-              <td><a href="/order/delitem/{{ i.item.id }}/" class="button">删除</a></td>
+              <td><a href="/order/delitem/{{ i.mark }}/" class="button">删除</a></td>
             </tr>
 {% endfor %}
             <tr>

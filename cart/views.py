@@ -22,6 +22,7 @@ from decimal import *
 # Create your views here.
 
 def cart(request):
+    a = request.session.get('items')
     if settings.DEBUG:
 
         cart = Cart(request).showItemToCart()
@@ -107,7 +108,7 @@ def buy(request, args):
 @rectToCart
 def clear(request, args):
 
-    return Cart(request).clearItemBySpec(args['specID'])
+    return Cart(request).clearItemBySpec(args['mark'])
 
 
 @rectToCart
@@ -137,6 +138,7 @@ class Cart:
         self.itemsFormat = []
 
         self.item = {
+                        'mark':0,
                         'itemID': 0, 
                         'specID': 0, 
                         'disID': 0, 
@@ -158,6 +160,15 @@ class Cart:
 
             return self.setItems(self.itemsFormat)
 
+    def formatMark(self):
+
+        t = time.gmtime()
+        tCount = t.tm_hour * t.tm_min * t.tm_sec
+        sExpiryDate = self.request.session.get_expiry_date()
+        sCount = (sExpiryDate.hour * sExpiryDate.minute * sExpiryDate.second ) % 10
+
+        return int('%d%05d%d' % (len(self.items) + 1, tCount, sCount ))
+
 
     def pushToCartBySpecID(self, specID):
 
@@ -167,6 +178,7 @@ class Cart:
 
         i['itemID'] = Item.objects.getItemBySpecId(id=specID).id
         i['specID'] = ItemSpec.objects.getSpecBySpecID(specID).id
+        i['mark'] = self.formatMark()
 
         if self.request.user.is_authenticated():
 
@@ -174,7 +186,6 @@ class Cart:
         else:
             
             i['disID'] = Discount.objects.getDefault().id
-
 
         if not i in items:
 
@@ -194,6 +205,7 @@ class Cart:
 
             item = Item.objects.getItemByItemID(i)
 
+            ii['mark'] = self.formatMark()
             ii['itemID'] = item.id
             ii['specID'] = item.itemspec_set.getDefaultSpec().id
             ii['disID'] = Discount.objects.getDefault().id
@@ -203,30 +215,30 @@ class Cart:
         return self.setItems(items)
 
 
-    def clearItemBySpec(self, specID):
+    def clearItemBySpec(self, mark):
 
-        specID = int(specID)
+        mark = int(mark)
 
         items = self.items
 
         for i in items:
 
-            if specID == i['specID']:
+            if mark == i['mark']:
 
                 items.remove(i)
 
         return self.setItems(items)
 
 
-    def changeNumBySpec(self, specID, num):
-        specID = int(specID)
+    def changeNumBySpec(self, mark, num):
+        mark = int(mark)
         num = int(num)
 
         items = self.items
 
         for i in items:
 
-            if specID == i['specID']:
+            if mark == i['mark']:
                 i['num'] = num
 
         self.request.session['items'] = items
@@ -250,7 +262,17 @@ class Cart:
             total = amount * i['num']
             countFee += total
 
-            itemList.append({ 'item': item,'spec': spec, 'amount': forMatFee(amount), 'num': i['num'], 'dis': dis, 'total': forMatFee(total) })
+            ii = { 
+                    'mark': i['mark'],
+                    'item': item,
+                    'spec': spec, 
+                    'amount': forMatFee(amount), 
+                    'num': i['num'], 
+                    'dis': dis, 
+                    'total': forMatFee(total) 
+                }
+
+            itemList.append(ii)
 
 
         return {'items': itemList, 'total': forMatFee(countFee)}
@@ -263,4 +285,4 @@ class Cart:
     def countFee(self):
         cart = self.showItemToCart()
 
-        return cart['countFee']
+        return cart['total']

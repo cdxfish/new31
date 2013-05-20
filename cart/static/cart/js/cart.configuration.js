@@ -22,7 +22,7 @@ var cart = {
 
                         $('#st' + that.attr('name')).text(stotal);
 
-                        $('.total').text(data.data + '.00');
+                        $('.total').text(data.data);
                     })
                 })
             } else {

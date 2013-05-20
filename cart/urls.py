@@ -5,7 +5,6 @@ from views import *
 urlpatterns = patterns('',
     (r'^$', cart),
     (r'^buy\/(?P<specID>\d+)\/$', hFunc, {'func': buy}),
-    (r'^clear\/(?P<specID>\d+)\/$', hFunc, {'func': clear}),
-    (r'^itemnum\/(?P<num>\d+)\/(?P<specID>\d+)\/$', hFunc, {'func': changnum}),
+    (r'^clear\/(?P<mark>\d+)\/$', hFunc, {'func': clear}),
     (r'^checkout\/$', checkout),
 )

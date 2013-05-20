@@ -32,7 +32,7 @@ def getItemSpec(request, kwargs):
 @tryMsg('当前商品已下架')
 def ajaxChangNum(request, kwargs):
 
-    data =  '%.2d' % Cart(request).changeNumBySpec(specID=kwargs['specID'], num=kwargs['num']).countFee()
+    data =  '%.2f' % Cart(request).changeNumBySpec(mark=kwargs['mark'], num=kwargs['num']).countFee()
 
     return AjaxRJson().jsonEn(data)
 

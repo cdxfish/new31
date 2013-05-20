@@ -23,12 +23,12 @@
                     <tr align="center">
                         <td>{{ i.item.name }}</td>
                         <td>{{ i.spec.spec.value }}</td>
-                        <td>￥<span id="am{{ i.spec.id }}">{{ i.amount|floatformat:2 }}</span> 元</td>
+                        <td>￥<span id="am{{ i.mark }}">{{ i.amount|floatformat:2 }}</span> 元</td>
                         <td>
-                            <input type="text" name="{{ i.spec.id }}" value="{{ i.num }}" size="1" class="iNum" />
+                            <input type="text" name="{{ i.mark }}" value="{{ i.num }}" size="1" class="iNum" />
                         </td>
-                        <td>￥<span id="st{{ i.spec.id }}">{{ i.total|floatformat:2 }}</span> 元</td>
-                        <td align="right"><a href="/cart/clear/{{ i.spec.id }}/" class="btnB bBtn">删除</a></td>
+                        <td>￥<span id="st{{ i.mark }}">{{ i.total|floatformat:2 }}</span> 元</td>
+                        <td align="right"><a href="/cart/clear/{{ i.mark }}/" class="btnB bBtn">删除</a></td>
                     </tr>
 {% endfor %}
                     <tr class="bLine">
