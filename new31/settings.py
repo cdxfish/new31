@@ -144,6 +144,18 @@ APPS = {
             'tempContext':'',
             'middleware':'message.middleware.MessageMiddleware',
         },
+    'payment':{
+            'tempContext':'',
+            'middleware':'',
+        },
+    'signtime':{
+            'tempContext':'',
+            'middleware':'',
+        },
+    'area':{
+            'tempContext':'',
+            'middleware':'',
+        },
     'cart':{
             'tempContext':'',
             'middleware':'cart.middleware.cartMiddleware',
@@ -180,10 +192,7 @@ APPS = {
             'tempContext':'',
             'middleware':'',
         },
-    'payment':{
-            'tempContext':'',
-            'middleware':'',
-        },
+
     'spec':{
             'tempContext':'',
             'middleware':'',
@@ -195,14 +204,6 @@ APPS = {
     'purview':{
             'tempContext':'',
             'middleware':'purview.middleware.purviewMiddleware',
-        },
-    'signtime':{
-            'tempContext':'',
-            'middleware':'',
-        },
-    'area':{
-            'tempContext':'',
-            'middleware':'',
         },
     }
 
