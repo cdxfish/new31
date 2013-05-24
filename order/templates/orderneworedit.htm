@@ -23,12 +23,10 @@
             <tr align="center">
               <td>{{ i.item.name }}</td>
               <td>{{ i.item.sn }}</td>
-              <td>{{ i.spec.spec.value }}</td>
-              <td>{{ i.dis.get_discount_display }}</td>
+              <td>{{ i.forms.spec }}</td>
+              <td>{{ i.forms.dis }}</td>
               <td>{{ i.amount|floatformat:2 }}</td>
-              <td>
-                  <input type="text" name="{{ i.mark }}" value="{{ i.num }}" size="1" class="iNum" />
-              </td>
+              <td>{{ i.forms.num }}</td>
               <td>￥<span id="st{{ i.spec.id }}">{{ i.total|floatformat:2 }}</span> 元</td>
               <td><a href="/order/delitem/{{ i.mark }}/" class="button">删除</a></td>
             </tr>

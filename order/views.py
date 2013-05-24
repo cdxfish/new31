@@ -10,6 +10,7 @@ from area.models import *
 from item.models import *
 from payment.models import *
 from models import *
+from forms import *
 from consignee.forms import *
 import time, json
 from django.conf import settings

@@ -13,6 +13,7 @@ from message.views import *
 from item.models import *
 from area.models import *
 from order.models import *
+from order.forms import *
 from consignee.views import *
 from new31.func import *
 import time, datetime, math
@@ -269,10 +270,13 @@ class Cart:
                     'amount': forMatFee(amount), 
                     'num': i['num'], 
                     'dis': dis, 
-                    'total': forMatFee(total) 
+                    'total': forMatFee(total)
                 }
 
+            ii.update({'forms': getItemForms(item=ii)})
+
             itemList.append(ii)
+
 
 
         return {'items': itemList, 'total': forMatFee(countFee)}
