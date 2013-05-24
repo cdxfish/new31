@@ -66,12 +66,11 @@ class itemSpecManager(models.Manager):
 
     def getSpecByItemID(self, id):
 
-        return Item.objects.select_related().get(id=id, onLine=True, show=True).itemspec_set.filter(onLine=True)
+        return Item.objects.select_related().get(id=int(id), onLine=True, show=True).itemspec_set.filter(onLine=True)
 
     def getDefaultSpec(self):
  
          return self.filter(onLine=True)[0]
-
 
 
 class itemImgManager(models.Manager):
@@ -84,10 +83,14 @@ class itemFeeManager(models.Manager):
     def getFeeByNomal(self):
 
         return self.select_related().get(itemType=0)
+    def getAllFeeByNomal(self):
+
+        return self.select_related().filter(itemType=0)
 
     def getFeeBySpecID(self, specID):
 
-        return ItemSpec.objects.getSpecBySpecID(id=specID).itemfee_set.getFeeByNomal()
+        return ItemSpec.objects.getSpecBySpecID(id=specID).itemfee_set.getAllFeeByNomal()
+
 
 class itemDisManager(models.Manager):
     def getDisBySpecID(self, specID):
@@ -97,7 +100,6 @@ class itemDisManager(models.Manager):
     def getDisByDisID(self, disID):
 
         return self.get(id=disID).discount
-
 
 
 class Item(models.Model):
