@@ -144,6 +144,10 @@ APPS = {
             'tempContext':'',
             'middleware':'message.middleware.MessageMiddleware',
         },
+    'item':{
+            'tempContext':'',
+            'middleware':'',
+        },        
     'payment':{
             'tempContext':'',
             'middleware':'',
@@ -158,11 +162,11 @@ APPS = {
         },
     'cart':{
             'tempContext':'',
-            'middleware':'cart.middleware.cartMiddleware',
+            'middleware':'cart.middleware.CartMiddleware',
         },
     'consignee':{
             'tempContext':'',
-            'middleware':'consignee.middleware.consigneeMiddleware',
+            'middleware':'consignee.middleware.ConsigneeMiddleware',
         },
     'tag':{
             'tempContext':'tag.context.tagsClass',
@@ -175,10 +179,6 @@ APPS = {
     'account':{
             'tempContext':'',
             'middleware':'account.middleware.UserMiddleware',
-        },
-    'item':{
-            'tempContext':'',
-            'middleware':'',
         },
     'ajax':{
             'tempContext':'',
@@ -262,11 +262,12 @@ if DEBUG:
     'INTERCEPT_REDIRECTS': False,
 }
 
+INSTALLED_APPS = tuple(djangoAPPS)
+
 MIDDLEWARE_CLASSES = tuple(djangoMidClass)
 
 TEMPLATE_CONTEXT_PROCESSORS = tuple(djangoTempContext)
 
-INSTALLED_APPS = tuple(djangoAPPS)
 
 
 # A sample logging configuration. The only tangible logging

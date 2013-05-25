@@ -1,9 +1,10 @@
 #coding:utf-8
-from views import *
 
-class consigneeMiddleware:
+
+class ConsigneeMiddleware:
 
     def process_request(self, request):
+    	from views import *
 
         ShipConsignee(request).formatConsignee()
 

@@ -1,13 +1,11 @@
 #coding:utf-8
-from views import *
-import datetime, time
 
-
-class cartMiddleware:
-
+class CartMiddleware:
+    
     def process_request(self, request):
+        from views import Cart
 
-    	Cart(request).formatItems()
+        Cart(request).formatItems()
 
         return None
 
