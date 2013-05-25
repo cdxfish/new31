@@ -9,12 +9,8 @@ from signtime.models import *
 
 def getItemForms(item):
     mark = item['mark']
-    itemSpecs = ItemSpec.objects.getSpecByItemID(item['item'].id)
-    itemFees = ItemFee.objects.getFeeBySpecID(item['spec'].id)
-
-    speChoice = ((i.spec.id, i.spec.value) for i in  itemSpecs)
-    disChoice = ((i.itemdiscount.discount.id, i.itemdiscount.discount.get_discount_display()) for i in  itemFees)
-
+    speChoice = ItemSpec.objects.getTupleByItemID(item['item'].id)
+    disChoice = Discount.objects.getTupleByAll()
 
     class orderItemForm(forms.Form):
 

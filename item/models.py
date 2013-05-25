@@ -70,7 +70,11 @@ class itemSpecManager(models.Manager):
 
     def getDefaultSpec(self):
  
-         return self.filter(onLine=True)[0]
+        return self.filter(onLine=True)[0]
+
+    def getTupleByItemID(self, id):
+ 
+        return ((i.spec.id, i.spec.value) for i in  self.getSpecByItemID(id))
 
 
 class itemImgManager(models.Manager):
@@ -90,6 +94,11 @@ class itemFeeManager(models.Manager):
     def getFeeBySpecID(self, specID):
 
         return ItemSpec.objects.getSpecBySpecID(id=specID).itemfee_set.getAllFeeByNomal()
+
+    def getTupleBySpecID(self, id):
+        itemFees = self.getFeeBySpecID(id)
+
+        return ((i.itemdiscount.discount.id, i.itemdiscount.discount.get_discount_display()) for i in  itemFees)
 
 
 class itemDisManager(models.Manager):

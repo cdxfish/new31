@@ -48,7 +48,7 @@ class Element(models.Model):
 
     path = models.CharField(u'路径',max_length=255, choices=pPath)
     #权限类型共4种: {0:'查',1:'显',2:'增',3:'删',4:'改',} 其中显为界面显示专属
-    pType = models.SmallIntegerField(u'权限类型',default=0, choices=((0, u'查'), (1, u'显'), (2, u'增'), (3, u'删'), (4, u'改'), )) 
+    pType = models.SmallIntegerField(u'权限类型',default=0, choices=((0, u'查 (无从属)'), (1, u'显'), (2, u'增'), (3, u'删'), (4, u'改'), )) 
     onLine = models.BooleanField(u'上线', default=True)
     sub = models.ForeignKey("self",related_name='sub_set', verbose_name=u'从属', blank=True, null=True)
 

@@ -62,6 +62,12 @@ class Message:
 
         self.redirectUrl = '/'
 
+        self.formatMsg = {
+                            'extendsHtm': 'shop.base.htm',
+                            'auto': '',
+                            'redirectUrl': '',
+                        }
+
     def redirect(self, speed = 3, url=''):
         self.auto = speed
 
@@ -107,13 +113,11 @@ class Message:
 
 
     def msg(self, tempName= 'shop'):
+        msg = self.formatMsg
 
-
-        msg = {
-                'extendsHtm': "%s.base.htm" % tempName,
-                'auto': self.auto,
-                'redirectUrl': self.redirectUrl,
-            }
+        msg['extendsHtm'] = "%s.base.htm" % tempName
+        msg['auto'] = self.auto
+        msg['redirectUrl'] = self.redirectUrl
 
         self.request.session['msg'] = msg
 

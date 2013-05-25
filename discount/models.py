@@ -10,12 +10,17 @@ class disManager(models.Manager):
 
         return self.get(discount=1)
 
+    def getTupleByAll(self):
+
+        return ((i.id, i.get_discount_display()) for i in  self.filter(onLine=True))
+
     
 class Discount(models.Model):
     disChoices = (
             (1.0, u'不打折'),
             (0.95, u'9.5 折'),
             (0.9, u'9.0 折'),
+            (0.88, u'8.8 折'),
             (0.85, u'8.5 折'),
             (0.8, u'8.0 折'),
             (0.75, u'7.5 折'),
@@ -33,9 +38,10 @@ class Discount(models.Model):
             (0.15, u'1.5 折'),
             (0.1, u'1.0 折'),
             (0.05, u'0.5 折'),
-            (0.0, u'赠送'),
+            # (0.0, u'赠送'),
         )
-    discount = models.FloatField(u'折扣', default=1, choices=disChoices)
+    discount = models.FloatField(u'折扣', default=0, choices=disChoices)
+    onLine = models.BooleanField(u'上架', default=False)
 
     objects = disManager()
 
