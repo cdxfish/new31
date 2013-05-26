@@ -133,7 +133,7 @@
       <li><a href="/account/logout/">登出</a></li>
     </ul>
     <div id="header">
-        <div id="urHere"><a href="/office/" id="index">31kecake 管理中心</a> {% block urHere %}{% endblock %}</div>
+        <div id="urHere"><a href="/office/" id="index">31kecake 管理中心</a> {% if request.element %} <a href="{{ request.element.path }}">{{ request.element.get_path_display }}</a>{% endif %}</div>
         <ul id="toolsBar">
           <li><a href="/order/new/">新订单</a></li>
           <li><a href="/inventory/">库存</a></li>

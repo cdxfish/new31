@@ -74,7 +74,7 @@ class itemSpecManager(models.Manager):
 
     def getTupleByItemID(self, id):
  
-        return ((i.spec.id, i.spec.value) for i in  self.getSpecByItemID(id))
+        return ((i.id, i.spec.value) for i in  self.getSpecByItemID(id))
 
 
 class itemImgManager(models.Manager):

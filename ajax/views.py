@@ -49,13 +49,29 @@ def getItemByKeyword(request):
     return _getItemByKeyword(request=request, k=request.GET.get('k', ''))
 
 
-
 # ajax动态写入收货人信息
 @tryMsg('无法填写表单')
 def cConsigneeByAjax(request, kwargs):
     ShipConsignee(request).setSeesion()
 
     return AjaxRJson().jsonEn()
+
+
+# ajax动态写入收货人信息
+@tryMsg('无法修改表单数据')
+def cItemByAjax(request, kwargs):
+    mark = int(request.GET.get('mark')[1:])
+    cc = Cart(request).changeItem()
+
+    i = cc.getItemTotalByMark(mark)
+
+    data = {}
+    data['mark'] = mark
+    data['am'] = '%.2f' % i['amount']
+    data['st'] = '%.2f' % i['total']
+    data['total'] = '%.2f' % cc.countFee()
+
+    return AjaxRJson().jsonEn(data)
 
 
 

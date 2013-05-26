@@ -14,11 +14,11 @@ def getItemForms(item):
 
     class orderItemForm(forms.Form):
 
-        spec = forms.ChoiceField(label=u'规格', choices=speChoice, widget=forms.Select(attrs={'class': 's%d' % mark,'id':'s%d' % mark }))
-        dis = forms.ChoiceField(label=u'折扣', choices=disChoice, widget=forms.Select(attrs={'class': 'd%d' % mark,'id':'d%d' % mark }))
-        num = forms.IntegerField(label=u'数量', max_value=3, min_value=1, widget=forms.TextInput(attrs={'size': 1,'class': 'n%d' % mark,'id':'n%d' % mark }))
+        specID = forms.ChoiceField(label=u'规格', choices=speChoice, widget=forms.Select(attrs={'class': 'spec' , 'id':'s%d' % mark }))
+        disID = forms.ChoiceField(label=u'折扣', choices=disChoice, widget=forms.Select(attrs={'class': 'dis', 'id':'d%d' % mark }))
+        num = forms.IntegerField(label=u'数量', max_value=3, min_value=1, widget=forms.TextInput(attrs={'size': 1,'class': 'num', 'id':'n%d' % mark }))
 
-    i = {'spec': item['spec'].id, 'dis': item['dis'].id, 'num': item['num']}
+    i = {'specID': item['spec'].id, 'disID': item['dis'].id, 'num': item['num']}
 
     return orderItemForm(initial= i)
 

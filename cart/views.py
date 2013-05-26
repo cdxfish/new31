@@ -136,7 +136,7 @@ class Cart:
     """
     def __init__(self, request):
 
-        self.itemsFormat = []
+        self.itemsFormat = {}
 
         self.item = {
                         'mark':0,
@@ -188,15 +188,10 @@ class Cart:
             
             i['disID'] = Discount.objects.getDefault().id
 
-        if not i in items:
+        items.update({i['mark']: i}) 
 
-            items.append(i)
+        return self.setItems(items)
 
-            return self.setItems(items)
-
-        else:
-
-            return self
 
     def pushToCartByItemIDs(self, itemIDs):
         items = self.items
@@ -211,7 +206,7 @@ class Cart:
             ii['specID'] = item.itemspec_set.getDefaultSpec().id
             ii['disID'] = Discount.objects.getDefault().id
   
-            items.append(ii)
+            items.update({ii['mark']: ii}) 
 
         return self.setItems(items)
 
@@ -222,11 +217,7 @@ class Cart:
 
         items = self.items
 
-        for i in items:
-
-            if mark == i['mark']:
-
-                items.remove(i)
+        del items[mark]
 
         return self.setItems(items)
 
@@ -237,10 +228,7 @@ class Cart:
 
         items = self.items
 
-        for i in items:
-
-            if mark == i['mark']:
-                i['num'] = num
+        items[mark]['num'] = num
 
         self.request.session['items'] = items
 
@@ -256,28 +244,14 @@ class Cart:
 
         for i in items:
 
-            item = Item.objects.getItemByItemID(id=i['itemID'])
-            spec = item.itemspec_set.getSpecBySpecID(id=i['specID'])
-            dis = Discount.objects.get(id=i['disID'])
-            amount = spec.itemfee_set.getFeeByNomal().amount * Decimal(dis.discount)
-            total = amount * i['num']
-            countFee += total
-
-            ii = { 
-                    'mark': i['mark'],
-                    'item': item,
-                    'spec': spec, 
-                    'amount': forMatFee(amount), 
-                    'num': i['num'], 
-                    'dis': dis, 
-                    'total': forMatFee(total)
-                }
+            ii = self.getItemTotalByMark(i)
+            countFee += ii['total']
 
             ii.update({'forms': getItemForms(item=ii)})
 
+
+
             itemList.append(ii)
-
-
 
         return {'items': itemList, 'total': forMatFee(countFee)}
 
@@ -290,3 +264,34 @@ class Cart:
         cart = self.showItemToCart()
 
         return cart['total']
+
+    def changeItem(self):
+
+        name =  self.request.GET.get('name')
+        mark =  self.request.GET.get('mark')
+        value =  self.request.GET.get('value')
+
+        items = self.items
+
+        items[int(mark[1:])][name] = int(value)
+
+        return self.setItems(items)
+
+    def getItemTotalByMark(self, mark):
+        i = self.items[mark]
+
+        item = Item.objects.getItemByItemID(id=i['itemID'])
+        spec = item.itemspec_set.getSpecBySpecID(id=i['specID'])
+        dis = Discount.objects.get(id=i['disID'])
+        amount = spec.itemfee_set.getFeeByNomal().amount * Decimal(dis.discount)
+        total = amount * int(i['num'])
+
+        return {
+                'mark': i['mark'],
+                'item': item,
+                'spec': spec, 
+                'amount': forMatFee(amount), 
+                'num': i['num'], 
+                'dis': dis, 
+                'total': forMatFee(total)
+            }

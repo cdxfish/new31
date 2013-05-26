@@ -6,9 +6,10 @@
 {% endblock %}
 
 {% block content %}
-        <form action="/order/submit/" method="POST" name="checkout" id="checkout">
+        <form action="/order/submit/" method="POST" name="newOrder">
           <h3>商品列表</h3>
-          <table width="100%" cellpadding="3" cellspacing="1" id="goodsList">
+          <table width="100%" cellpadding="3" cellspacing="1" class="sortTable">
+            <thead>
             <tr>
               <th>商品名称</th>
               <th width="70px">货号</th>
@@ -19,18 +20,21 @@
               <th width="90px">小计</th>
               <th width="100px">操作</th>
             </tr>
+          </thead>
+          <tbody>
 {% for i in items.items %}
             <tr align="center">
               <td>{{ i.item.name }}</td>
               <td>{{ i.item.sn }}</td>
-              <td>{{ i.forms.spec }}</td>
-              <td>{{ i.forms.dis }}</td>
-              <td>{{ i.amount|floatformat:2 }}</td>
+              <td>{{ i.forms.specID }}</td>
+              <td>{{ i.forms.disID }}</td>
+              <td>￥ <span id="am{{ i.mark }}">{{ i.amount|floatformat:2 }}</span> 元</td>
               <td>{{ i.forms.num }}</td>
-              <td>￥<span id="st{{ i.spec.id }}">{{ i.total|floatformat:2 }}</span> 元</td>
+              <td>￥ <span id="st{{ i.mark }}">{{ i.total|floatformat:2 }}</span> 元</td>
               <td><a href="/order/delitem/{{ i.mark }}/" class="button">删除</a></td>
             </tr>
 {% endfor %}
+          </tbody>
             <tr>
               <td colspan="7"></td>
               <td align="center"><input type="button" value="添加商品" class="button" id="addNewGoods" /></td>

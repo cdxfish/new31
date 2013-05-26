@@ -1,13 +1,13 @@
 $(document).ready(function() {
     aeo.cu();
-    aeog.a().search();
+    aeog.a().search().cItem();
 });
 
 
 aeo = {
     cu: function() {
         $('#checkout #user').change(
-        aeo.u
+            aeo.u
 
         );
         return this;
@@ -109,6 +109,32 @@ aeog = {
         html += '      </form>  \r\n';
 
         return html;
+    },
+
+    cItem: function() {
+        $('.spec, .dis, .num').change(
+
+        function() {
+            var that = $(this);
+            var name = that.attr('name');
+            var mark = that.attr('id');
+            var value = that.val();
+
+            $.getJSON('/ajax/citem/?name=' + name + '&mark=' + mark + '&value=' + value,
+
+            function(data) {
+                $.dialog.dialogMsgAndReload(data,
+
+                function(data) {
+
+                    $('#am' + data.data.mark).text(data.data.am);
+                    $('#st' + data.data.mark).text(data.data.st);
+                    $('#total').text(data.data.total);
+                });
+
+            });
+        });
+        return this;
     }
 
 }

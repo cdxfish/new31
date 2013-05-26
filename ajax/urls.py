@@ -8,5 +8,6 @@ urlpatterns = patterns('',
     (r'^itemspec\/(?P<specID>\d+)\/$',getItemSpec),  #获取规格
     (r'^itemnum\/(?P<mark>\d+)\/(?P<num>\d+)\/$', ajaxChangNum),
     (r'^ccon\/$', cConsigneeByAjax),
+    (r'^citem\/$', cItemByAjax),
     (r'^item\/$', getItemByKeyword),
 )
