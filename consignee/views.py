@@ -25,14 +25,14 @@ class ShipConsignee:
         self.c = request.session.get('c')
         self.cFormat = {
                             'user':'', 
-                            'pay':0, 
+                            'pay': Pay.objects.getDefault().id, 
                             'ship':0, 
                             'consignee':'', 
-                            'area': 0, 
+                            'area': Area.objects.getDefault().id, 
                             'address':'', 
                             'tel':'', 
                             'signDate': '%s' % datetime.date.today(), 
-                            'time': 0,
+                            'time': SignTime.objects.getDefault().id,
                             'note':'',
                         } 
 

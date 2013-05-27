@@ -149,48 +149,11 @@ class OrderItem(models.Model):
     order = models.ForeignKey(OrderInfo, verbose_name=u'订单')
     name = models.CharField(u'商品', max_length=30)
     sn = models.CharField(u'货号', max_length=30)
-
-    def __unicode__(self):
-        return u"%s - %s[%s]" % ( self.order, self.name, self.sn )    
-
-    class Meta:
-        unique_together = (("order","name"),)
-        # verbose_name = u'订单商品'
-
-
-class OrderSpec(models.Model):
-    orderItem = models.ForeignKey(OrderItem, verbose_name=u'商品')
     spec = models.CharField(u'规格', max_length=30)
-
-    def __unicode__(self):
-        return u"%s - %s" % ( self.orderItem, self.spec )
-
-    class Meta:
-        unique_together = (("orderItem","spec"),)
-        # verbose_name = u'订单商品规格'
-
-
-class OrderFee(models.Model):
-    orderSpec = models.ForeignKey(OrderSpec, verbose_name=u'规格')
     number = models.SmallIntegerField(u'数量')
     itemType = models.SmallIntegerField(u'商品类型', default=0, choices=ItemFee.itemTypeChoices)
     amount = models.DecimalField(u'单价', max_digits=10, decimal_places=2)
-
-    def __unicode__(self):
-        return u"%s - [ 数量: %s ][ %s ][ %s ]" % ( self.orderSpec, self.number, self.get_itemType_display(), self.amount )
-    class Meta:
-        unique_together = (("orderSpec","itemType"),)
-        # verbose_name = u'订单商品价格'
-
-
-class OrderDiscount(models.Model):
-    orderFee = models.OneToOneField(OrderFee, verbose_name=u'商品', unique=True)
     discount = models.DecimalField(u'折扣', max_digits=3, decimal_places=1, default=10.0)
 
-
     def __unicode__(self):
-        return u"%s - %s折" % ( self.itemSpec, self.discount )
-
-    # class Meta:
-        # verbose_name = u'订单商品折扣'
-
+        return u"%s - %s[ %s ][ %s ][ %d ]" % ( self.order, self.name, self.spec, self.number, self.amount )

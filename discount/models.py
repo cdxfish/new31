@@ -14,6 +14,10 @@ class disManager(models.Manager):
 
         return ((i.id, i.get_discount_display()) for i in  self.filter(onLine=True))
 
+    def getDisByDisID(self,id):
+
+        return  self.get(onLine=True,id=id)
+
     
 class Discount(models.Model):
     disChoices = (

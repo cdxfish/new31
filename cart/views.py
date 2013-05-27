@@ -24,6 +24,7 @@ from decimal import *
 
 def cart(request):
     a = request.session.get('items')
+    c = request.session['c']
     if settings.DEBUG:
 
         cart = Cart(request).showItemToCart()
@@ -89,30 +90,30 @@ def hFunc(request, func, **args):
             return Message(request).redirect(url=request.META.get('HTTP_REFERER',"/")).warning('当前商品已下架').shopMsg()
 
 
-def rectToCart(func):
+def rectToBack(func):
 
     def newFunc(request, args):
         
         func(request, args)
 
-        return HttpResponseRedirect('/cart/')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER',"/"))
 
     return newFunc
 
 
-@rectToCart
+@rectToBack
 def buy(request, args):
    
     return Cart(request).pushToCartBySpecID(int(args['specID']))
 
 
-@rectToCart
+@rectToBack
 def clear(request, args):
 
-    return Cart(request).clearItemBySpec(args['mark'])
+    return Cart(request).clearItemByMark(args['mark'])
 
 
-@rectToCart
+@rectToBack
 def changnum(request, args):
 
     return Cart(request).changeNumBySpec(specID=args['specID'],num=args['num'])
@@ -211,7 +212,7 @@ class Cart:
         return self.setItems(items)
 
 
-    def clearItemBySpec(self, mark):
+    def clearItemByMark(self, mark):
 
         mark = int(mark)
 

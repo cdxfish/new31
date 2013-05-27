@@ -7,10 +7,14 @@ from django.db import models
 class AreaManager(models.Manager):
     def getAreaById(self, id = ''):
 
-        return Area.objects.select_related().get(onLine=True, id=id)
+        return self.select_related().get(onLine=True, id=id)
+
+    def getDefault(self):
+
+        return self.select_related().filter(onLine=True)[0].sub_set.filter(onLine=True)[0]
 
     def  getTupleByAll(self):
-        area = Area.objects.filter(onLine=True,sub=None)
+        area = self.filter(onLine=True,sub=None)
 
         a = []
         for i in area:

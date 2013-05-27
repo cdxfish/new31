@@ -9,6 +9,10 @@ class PayManager(models.Manager):
     def getPayById(self, id = ''):
 
         return Pay.objects.select_related().get(onLine=True, id=id)
+        
+    def getDefault(self):
+
+        return self.select_related().filter(onLine=True)[0]
 
     def  getTupleByAll(self):
         pay = Pay.objects.filter(onLine=True)

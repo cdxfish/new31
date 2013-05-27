@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-        <form action="/order/submit/" method="POST" name="newOrder">
+        <form action="/order/adminsub/" method="POST" name="newOrder" id="checkout">
           <h3>商品列表</h3>
           <table width="100%" cellpadding="3" cellspacing="1" class="sortTable">
             <thead>
@@ -48,7 +48,7 @@
             </tr>
           </table>
         <h3>收货人信息</h3>
-            <table width="100%" cellpadding="3" cellspacing="1">
+            <table width="100%" cellpadding="3" cellspacing="1" id="cconsignee">
                 <tr>
                   <td width="100px" align="right">会员帐号：</td>
                   <td>{{ form.user }}<input type="button" value="检查会员是否存在" class="button" id="checkUser" /></td>

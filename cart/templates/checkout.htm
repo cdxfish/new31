@@ -3,7 +3,7 @@
 
 {% block content %}
         <div class="pWhite">
-        <form action="/order/submit/" method="post" name="to_checkout" id="toCheckout">
+        <form action="/order/cartsub/" method="post" name="to_checkout" id="toCheckout">
              <h3>订单状态</h3>
             <table width="100%" class="mBottom10">
                 <tr>
@@ -27,8 +27,8 @@
 {% if cart.items %}
 {% for i in cart.items %}
                 <tr align="center">
-                    <td>{{ i.item.item.name }}</td>
-                    <td>{{ i.item.spec }}</td>
+                    <td>{{ i.item.name }}</td>
+                    <td>{{ i.spec.spec.value }}</td>
                     <td>￥{{ i.amount|floatformat:2 }} 元</td>
                     <td>{{ i.num }}</td>
                     <td>￥<span class="st{{ i.v }}">{{ i.total|floatformat:2 }}</span> 元</td>

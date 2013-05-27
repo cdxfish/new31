@@ -9,6 +9,10 @@ class SignTimeManager(models.Manager):
 
         return SignTime.objects.select_related().get(onLine=True, id=id)
 
+    def getDefault(self):
+
+        return self.select_related().filter(onLine=True)[0]
+
     def  getTupleByAll(self):
         signTime = SignTime.objects.filter(onLine=True)
 

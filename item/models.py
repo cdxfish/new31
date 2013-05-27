@@ -93,7 +93,7 @@ class itemFeeManager(models.Manager):
 
     def getFeeBySpecID(self, specID):
 
-        return ItemSpec.objects.getSpecBySpecID(id=specID).itemfee_set.getAllFeeByNomal()
+        return ItemSpec.objects.getSpecBySpecID(id=specID).itemfee_set.getAllFeeByNomal()[0]
 
     def getTupleBySpecID(self, id):
         itemFees = self.getFeeBySpecID(id)

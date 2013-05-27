@@ -33,13 +33,22 @@ def orderList(request):
     return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
 
 
-def orderSubmit(request):
+def orderSubmit(request, func):
     if request.method == 'POST':
 
-        return OrderSubmit(request).submit()
+        return func(request)
 
     else:
-        return Message(request).redirect().warning('订单提交方式错误 !').shopMsg()
+        return Message(request).redirect(url=url).warning('订单提交方式错误 !').shopMsg()
+
+
+def carSub(request):
+
+    return OrderSubmit(request).submit().showOrderSN()
+
+def adminSub(request):
+
+    return OrderSubmit(request).submit().redirect('/order/')
 
 
 def newOrEditOrderUI(request):
@@ -48,17 +57,6 @@ def newOrEditOrderUI(request):
     form = getForms(request)
 
     return render_to_response('orderneworedit.htm', locals(), context_instance=RequestContext(request))
-
-
-
-def adminOrderSubmit(request):
-
-    if request.method == 'POST':
-
-        return OrderSubmit(request).adminSubmit()
-
-    else:
-        return Message(request).redirect().warning('订单提交方式错误 !').officeMsg()
 
 
 def addItemToOrder(request):
@@ -72,6 +70,34 @@ def addItemToOrder(request):
     else:
         return Message(request).redirect().warning('订单提交方式错误 !').officeMsg()
 
+
+@rectToBack
+def delItemToOrder(request, args):
+
+    return Cart(request).clearItemByMark(args['mark'])
+
+
+
+# 订单用户级提示用装饰器
+def subFailRemind(s= ''):
+    def _newfunc(func):
+        def __newfunc(self, **kwargs):
+            if not self.error:
+
+                if settings.DEBUG:
+                    return func(self, kwargs)
+
+                else:
+                    try:
+                        func(self, kwargs)
+                    except:
+                        self.error = True
+                        self.message =  m
+
+                        return Message(request).redirect().error(s).officeMsg()
+
+        return __newfunc
+    return _newfunc
 
 
 
@@ -95,7 +121,6 @@ class OrderSubmit:
         # 插入订单基本信息
         # 插入订单物流信息
         # 插入订单商品信息
-        # 插入订单规格信息
         # 插入订单支付方式信息
         # 插入订单送货方式信息
         # 插入订单订单状态
@@ -106,7 +131,6 @@ class OrderSubmit:
             .infoSubmit() \
             .logisticsSubmit() \
             .itemSubmit() \
-            .specSubmit() \
             .paySubmit() \
             .shipSubmit() \
             .oStartSubmit() \
@@ -117,7 +141,7 @@ class OrderSubmit:
         if self.error:
             self.delNewOrder()
 
-        return self.message
+        return self
 
 
     # 获得新的订单编号
@@ -191,70 +215,24 @@ class OrderSubmit:
         return self
 
 
+    # 插入订单商品信息
     def itemSubmit(self):
 
         self.orderItem = []
 
-        for i in self.items:
+        for v,i in self.items.items():
 
-            item = Item.objects.getItemBySpecId(id=i['specID'])
+            item = Item.objects.getItemByItemID(id=i['itemID'])
+            spec = ItemSpec.objects.getSpecBySpecID(id=i['specID']).spec
+            fee = ItemFee.objects.getFeeBySpecID(specID=i['specID'])
+            dis = Discount.objects.getDisByDisID(id=i['disID'])
 
-            self.orderItem.append(OrderItem(order=self.order, name=item.name,sn=item.sn))
+            self.orderItem.append(OrderItem(order=self.order, name=item.name, sn=item.sn, spec=spec.value, number=i['num'],amount=fee.amount, discount=dis.discount))
 
-            # 删除重复项
-            self.orderItem = list(set(self.orderItem))
 
         OrderItem.objects.bulk_create(self.orderItem)
 
         return self
-
-
-    def specSubmit(self):
-        self.orderSpec = []
-
-        for i in self.items:
-
-            spec = ItemSpec.objects.getSpecBySpecID(id=i['specID'])
-
-            orderItem = OrderItem.objects.get(order=self.order, sn=spec.item.sn)
-
-            sp = OrderSpec()
-
-            sp.orderItem = orderItem
-            sp.spec = spec.spec
-
-            sp.save()
-
-            self.feeSubmit(sp, spec, i)
-
-        return self
-
-
-    def feeSubmit(self, sp, spec, i):
-
-        oFee = OrderFee()
-        oFee.orderSpec = sp
-        oFee.number = i['num']
-        oFee.amount = ItemFee.objects.getFeeBySpecID(specID=i['specID']).amount
-        oFee.save()
-
-        return self.disSubmit(oFee, spec, i)
-
-
-    def disSubmit(self, oFee, spec, i):
-
-        oDis = OrderDiscount()
-        oDis.orderFee = oFee
- 
-        oDis.discount = ItemDiscount.objects.getDisByDisID(disID=i['disID']).discount
-
-        oDis.save()
-
-        return self
-
-    def disSubmitByAdmin(self,oFee, spec):
-        pass
-
 
 
     def paySubmit(self):
@@ -306,13 +284,6 @@ class OrderSubmit:
         return self
 
 
-    def errorMsg(self, m=''):
-        self.error = True
-        self.message =  m
-
-        return self
-
-
     def delNewOrder(self):
         self.order.delete()
 
@@ -321,13 +292,18 @@ class OrderSubmit:
 
     def submitDone(self):
         if not self.error:
-            self.message = Message(self.request).success('您已成功提交订单!').info('感谢您在本店购物！请记住您的订单号: %s' % self.orderId).shopMsg()
-            # Cart(self.request).clearCart()
-            # ShipConsignee(self.request).clearConsignee()
+            Cart(self.request).clearCart()
+            ShipConsignee(self.request).clearConsignee()
 
         return self
 
+    def showOrderSN(self):
 
+        return Message(self.request).success('您已成功提交订单!').info('感谢您在本店购物！请记住您的订单号: %s' % self.orderId).shopMsg()
+
+    def redirect(self, url):
+
+        return HttpResponseRedirect(url)
 
 
 # 订单列表权限加持

@@ -152,6 +152,12 @@
           </ul>
         </div>
 {% endif %}
+{% if messages %}
+{% for i in messages %}
+          <h3>{{ i.tags }}</h3>
+          <p>{{ i }}</p>
+{% endfor %}
+{% endif %}
 {% block content %}{% endblock %}
     </div>
       <div id="footer">

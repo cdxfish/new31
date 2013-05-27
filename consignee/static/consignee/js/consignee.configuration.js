@@ -91,7 +91,7 @@ c = {
 
     },
     cCon: function() {
-        $('#checkout input, #checkout select, #checkout textarea').change(
+        $('#cconsignee input, #cconsignee select, #cconsignee textarea').change(
 
         function() {
             var name = $(this).attr('name');
