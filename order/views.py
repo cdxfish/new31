@@ -25,12 +25,31 @@ def orderList(request):
     k = request.GET.get('k') if request.GET.get('k') else ''
     p = int(request.GET.get('p')) if request.GET.get('p') > 0 else 1
 
+    oStatus = OrderStatus.oStatus
 
     oListAll = OrderInfo.objects.select_related().all()
 
     oList = page(l=oListAll, p=p)
 
+    oList = OrderListPurview(oList, request).getElement().beMixed()
+
     return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
+
+
+def cCon(request, c):
+
+    c = int(c)
+    orderSN = request.GET.get('sn')
+
+    # if c == 1:
+    order =  OrderInfo.objects.get(orderSn=orderSN).orderstatus
+
+    order.orderStatus = c
+
+    order.save()
+
+
+    return HttpResponseRedirect('/order/')
 
 
 def orderSubmit(request, func):
@@ -308,17 +327,41 @@ class OrderSubmit:
 
 # 订单列表权限加持
 class OrderListPurview:
-    """docstring for orderList"""
+    """首先获取当前角色可进行的订单操作权限. 其后获取订单的可选操作. 两者进行交集"""
     def __init__(self, oList, request):
         self.oList = oList
+        self.oStart = OrderStatus.oStatus
         self.element = Element.objects.get(path=request.path).sub_set.all()
+        self.role = (
+                (0, u'新单'), 
+                (1, u'确认'), 
+                (2, u'编辑'),
+                (3, u'无效'),
+                (4, u'完成'),
+                (5, u'停止'),
+            )
 
-
-    def operation(self, order):
-
-        pass
 
     # 获取订单可选操作项
     def getElement(self):
 
-        pass
+        for i in self.oList:
+            if not i.orderstatus.orderStatus:
+
+                i.action = (
+                            (1, u'确认'), 
+                            (2, u'编辑'),
+                            (3, u'无效'),
+                            )
+            else:
+                i.action = ()
+
+        return self
+
+
+    def beMixed(self):
+        for i in self.oList:
+            # i.action = tuple(set(self.role) & set(i.action))
+            i.action = (i for i in i.action if i in self.role)
+
+        return self.oList

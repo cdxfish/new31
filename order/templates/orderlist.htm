@@ -3,15 +3,11 @@
 {% block content %}
       <div class="search" nowrap="true" colspan="3">
           <form action="/order/" method="get">
-<!--             <img src="{{ STATIC_URL }}images/icon_search.gif" border="0" alt="SEARCH" /> -->
             <select name="c">
               <option value="-1" selected>全部</option>
-              <option value="0" >新单</option>
-              <option value="1" >确认</option>
-              <option value="2" >取消</option>
-              <option value="3" >无效</option>
-              <option value="4" >完成</option>
-              <option value="5" >停止</option>
+{% for v,i in oStatus %}
+              <option value="{{ v }}" >{{ i }}</option>
+{% endfor %}
             </select>
             <input type="text" name="s" size="7" value="{% if s %}{{ s }}{% else %}{% now "Y-m-d" %}{% endif %}" class="date">
              <span>至</span>
@@ -44,9 +40,9 @@
             <td>{{ i.get_orderType_display }}</td>
             <td>{{ i.orderstatus.get_orderStatus_display }} | {{ i.orderpay.get_payStatus_display }} | {{ i.ordership.get_shipStatus_display }}</td>
             <td nowrap="nowrap">
-            <a href="/order/c/?sn={{ i.orderSn }}">确认</a>
-            <a href="/order/e/?sn={{ i.orderSn }}">编辑</a>
-            <a href="/order/i/?sn={{ i.orderSn }}">无效</a>
+{% for v,ii in i.action %}
+           <a href="/order/ccon/{{ v }}/?sn={{ i.orderSn }}">{{ ii }}</a>
+{% endfor %}
             </td>
           </tr>
 {% endfor %}
