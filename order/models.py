@@ -6,7 +6,7 @@ from item.models import *
 # Create your models here.
 
 class OrderInfo(models.Model):
-    oType = ((0,u'普销'), (1,u'活动'), (2,u'积分'), )
+    oType = ((0,u'普销'), (1,u'普销(无积分)'), (2,u'活动'), (3,u'积分'), (4,u'提货券'), )
     orderSn = models.BigIntegerField(u'订单号', primary_key=True, unique=True)
     user = models.CharField(u'会员', max_length=30, blank=True, null=True)
     referer = models.CharField(u'订单来源', max_length=30)
@@ -95,6 +95,8 @@ class OrderStatus(models.Model):
                 (3, u'无效'),
                 (4, u'完成'),
                 (5, u'停止'),
+                (6, u'重建'),
+                (7, u'更换'),
             )
 
     order = models.OneToOneField(OrderInfo, verbose_name=u'订单')

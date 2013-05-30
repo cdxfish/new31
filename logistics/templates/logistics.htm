@@ -19,14 +19,14 @@
       <table cellpadding="3" cellspacing="1" width="100%" class="sortTable">
         <thead>
           <tr>
-            <th>来源</th>
+            <th>类型</th>
             <th width="80px">订单编号</th>
             <th>收货时间</th>
-            <th>收货人</th>
-            <th>电话</th>
             <th>地址</th>
-            <th>类型</th>
-            <th>订单状态</th>
+            <th>金额</th>
+            <th>预发货</th>
+            <th>物流</th>
+            <th>状态</th>
             <th width="50px">操作</th>
           </tr>
           </thead>
@@ -36,21 +36,21 @@
             <td>{{ i.get_orderType_display }}</td>
             <td><a href="/order/{{ i.orderSn }}/">{{ i.orderSn }}</a></td>
             <td>{{ i.orderlogistics.signDate|date:"Y-m-d" }} | {{ i.orderlogistics.signTimeStart|time:"H:i" }} - {{ i.orderlogistics.signTimeEnd|time:"H:i" }}</td>
-            <td>{{ i.orderlogistics.consignee }}</td>
-            <td>{{ i.orderlogistics.tel }}</td>
             <td><a href="/map/?k={{ i.orderlogistics.address }}" target="_blank">{{ i.orderlogistics.address }}</a></td>
-            <td>{{ i.referer }}</td>
+            <td>189.00</td>
+            <td>15:00 + 30m</td>
+            <td>吴</td>
             <td>{{ i.orderstatus.get_orderStatus_display }} | {{ i.orderpay.get_payStatus_display }} | {{ i.ordership.get_shipStatus_display }}</td>
             <td nowrap="nowrap">
 {% for v,ii in i.action %}
-           <a href="/order/ccon/{{ v }}/?sn={{ i.orderSn }}">{{ ii }}</a>
+           <a href="/logistics/ccon/{{ v }}/?sn={{ i.orderSn }}">{{ ii }}</a>
 {% endfor %}
             </td>
           </tr>
 {% endfor %}
           </tbody>
           <tr>
-            <td align="right" nowrap="true" colspan="10">
+            <td align="right" nowrap="true" colspan="11">
               总计 {{ oList.paginator.count }} 条记录，共 {{ oList.paginator.num_pages }} 页，当前第 {{ p }} 页
               <span id="pageLink">
                 <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p=1">第一页</a>

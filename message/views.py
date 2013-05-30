@@ -71,7 +71,8 @@ class Message:
     def redirect(self, speed = 3, url=''):
         self.auto = speed
 
-        if url and (self.request.META.get('HTTP_REFERER',"/") != url):
+        # if url and (self.request.META.get('HTTP_REFERER',"/") != url):
+        if url:
             self.redirectUrl = url
         else:
             self.redirectUrl = '/'

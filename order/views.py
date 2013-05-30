@@ -75,6 +75,8 @@ def newOrEditOrderUI(request):
 
     form = getForms(request)
 
+    oTypeForm = orderTypeForm()
+
     return render_to_response('orderneworedit.htm', locals(), context_instance=RequestContext(request))
 
 
@@ -332,18 +334,22 @@ class OrderListPurview:
         self.oList = oList
         self.oStart = OrderStatus.oStatus
         self.element = Element.objects.get(path=request.path).sub_set.all()
-        self.role = (
+        self.role = OrderStatus.oStatus
+        (
                 (0, u'新单'), 
                 (1, u'确认'), 
                 (2, u'编辑'),
                 (3, u'无效'),
                 (4, u'完成'),
                 (5, u'停止'),
+                (6, u'重建'),
+                (7, u'更换'),
             )
 
 
     # 获取订单可选操作项
     def getElement(self):
+
 
         for i in self.oList:
             if not i.orderstatus.orderStatus:
@@ -353,6 +359,32 @@ class OrderListPurview:
                             (2, u'编辑'),
                             (3, u'无效'),
                             )
+            # elif i.orderstatus.orderStatus == 1: #确认
+
+            #     i.action = (
+            #                     (5, u'停止'),
+            #                 )
+            elif i.orderstatus.orderStatus == 2: #编辑
+
+                i.action = (
+                            (1, u'确认'), 
+                            (2, u'编辑'),
+                            (3, u'无效'),
+                            )
+
+            elif i.orderstatus.orderStatus == 3: #无效
+
+                i.action = (
+                                (6, u'重建'),
+                            )
+
+            elif i.orderstatus.orderStatus == 5: #停止
+
+                i.action = (
+                                (6, u'重建'),
+                                (7, u'更换'),
+                            )
+
             else:
                 i.action = ()
 
@@ -361,7 +393,6 @@ class OrderListPurview:
 
     def beMixed(self):
         for i in self.oList:
-            # i.action = tuple(set(self.role) & set(i.action))
             i.action = (i for i in i.action if i in self.role)
 
         return self.oList

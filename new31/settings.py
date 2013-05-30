@@ -168,6 +168,10 @@ APPS = {
             'tempContext':'',
             'middleware':'consignee.middleware.ConsigneeMiddleware',
         },
+    'logistics':{
+            'tempContext':'',
+            'middleware':'',
+        },
     'tag':{
             'tempContext':'tag.context.tagsClass',
             'middleware':'',

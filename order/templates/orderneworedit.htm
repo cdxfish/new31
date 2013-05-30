@@ -28,9 +28,9 @@
               <td>{{ i.item.sn }}</td>
               <td>{{ i.forms.specID }}</td>
               <td>{{ i.forms.disID }}</td>
-              <td>￥ <span id="am{{ i.mark }}">{{ i.amount|floatformat:2 }}</span> 元</td>
+              <td><span id="am{{ i.mark }}">{{ i.amount|floatformat:2 }}</span></td>
               <td>{{ i.forms.num }}</td>
-              <td>￥ <span id="st{{ i.mark }}">{{ i.total|floatformat:2 }}</span> 元</td>
+              <td><span id="st{{ i.mark }}">{{ i.total|floatformat:2 }}</span></td>
               <td><a href="/order/delitem/{{ i.mark }}/" class="button">删除</a></td>
             </tr>
 {% endfor %}
@@ -43,15 +43,22 @@
               <td colspan="5">
               </td>
               <td align="right"><strong>合计：</strong></td>
-              <td align="center">￥ <span id="total">{{ items.total|floatformat:2 }}</span> 元</td>
+              <td align="center"><span id="total">{{ items.total|floatformat:2 }}</span></td>
               <td></td>
             </tr>
           </table>
+        <h3>订单类型</h3>
+            <table width="100%" cellpadding="3" cellspacing="1">
+                <tr>
+                  <td width="100px" align="right">订单类型：</td>
+                  <td width="90%">{{ oTypeForm.orderType }}</td>
+                </tr>
+            </table>
         <h3>收货人信息</h3>
             <table width="100%" cellpadding="3" cellspacing="1" id="cconsignee">
                 <tr>
                   <td width="100px" align="right">会员帐号：</td>
-                  <td>{{ form.user }}<input type="button" value="检查会员是否存在" class="button" id="checkUser" /></td>
+                  <td width="90%">{{ form.user }}<input type="button" value="检查会员是否存在" class="button" id="checkUser" /></td>
                 </tr>
                 <tr>
                     <td align="right">支付方式：</td>
@@ -87,7 +94,7 @@
             </tr>
             <tr>
                 <td align="right" valign="top">备注：</td>
-                <td width="90%">{{ form.note }}</td>
+                <td>{{ form.note }}</td>
             </tr>
             <tr>
                 <td></td>
