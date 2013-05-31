@@ -91,7 +91,7 @@ ob = {
         return this;
     },
     plugin: function() {
-        $(".sortTable").tablesorter();
+        // $(".sortTable").tablesorter();
 
         $('.dateNoDir').Zebra_DatePicker(); //日期选择控件
         $('.date').Zebra_DatePicker({

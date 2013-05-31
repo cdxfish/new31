@@ -27,6 +27,9 @@ def logistics(request):
 
     oList = page(l=oListAll, p=p)
 
+    for i in oList:
+        print dir(i)
+
     oList = logisticsPurview(oList, request).getElement().beMixed()
 
     return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))    
@@ -50,6 +53,7 @@ class logisticsPurview:
 
                 i.action = (
                                 (1, u'已发'), 
+
                             )
             elif i.i.ordership.shipStatus == 1:
 
@@ -58,12 +62,6 @@ class logisticsPurview:
                                 (3, u'已签'), 
                             )
 
-            # elif i.orderstatus.orderStatus == 3:
-
-            #     i.action = (
-            #                     (6, u'重建'),
-            #                     (7, u'更换'),
-            #                 )
 
             else:
                 i.action = ()
