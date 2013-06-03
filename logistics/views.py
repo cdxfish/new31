@@ -27,8 +27,8 @@ def logistics(request):
 
     oList = page(l=oListAll, p=p)
 
-    for i in oList:
-        print dir(i)
+    # for i in oList:
+    #     print dir(i)
 
     oList = logisticsPurview(oList, request).getElement().beMixed()
 

@@ -47,7 +47,7 @@ class Element(models.Model):
           (u'/filecheck/', u'文件校验'),
         ) #权限对照用列表,用于识别那些页面需要进行权限判定
 
-    path = models.CharField(u'路径',max_length=255, choices=pPath)
+    path = models.CharField(u'路径',max_length=255, choices=pPath, unique=True)
     #权限类型共4种: {0:'查',1:'显',2:'增',3:'删',4:'改',} 其中显为界面显示专属
     pType = models.SmallIntegerField(u'权限类型',default=0, choices=((0, u'查 (无从属)'), (1, u'显'), (2, u'增'), (3, u'删'), (4, u'改'), )) 
     onLine = models.BooleanField(u'上线', default=True)
