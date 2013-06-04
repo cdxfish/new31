@@ -138,22 +138,22 @@ table td{
   color:#192E32;
 }
 
-.sortTable th{
+.sort th{
   cursor: pointer;
   white-space: nowrap;
   background-repeat: no-repeat;
   background-position: center right;
 }
 
-.sortTable .headerSortUp{
+.sort .headerSortUp{
   background-image: url(/static/images/s_asc.png);
 }
 
-.sortTable .headerSortDown{
+.sort .headerSortDown{
   background-image: url(/static/images/s_desc.png);
 }
 
-.sortTable .odd td{
+.odd td{
   background:#CFC;
 }
 
@@ -305,7 +305,7 @@ table td{
 }
 
 #content table td{
-  background:#FFFFFF;
+  /*background:#FFFFFF;*/
   line-height:24px;
   padding:0 5px 0 5px;
   color:#192E32;

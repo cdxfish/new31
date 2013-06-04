@@ -212,6 +212,8 @@ class OrderSubmit:
     # 插入订单物流信息
     def logisticsSubmit(self):
 
+        logisticsTimeAvdce = 1
+
         c = self.request.session['c']
 
         time = SignTime.objects.get(id=c['time'], onLine=True)
@@ -227,6 +229,8 @@ class OrderSubmit:
         logistics.signDate = c['signDate']
         logistics.signTimeStart = time.start
         logistics.signTimeEnd = time.end
+        logistics.logisTimeStart = time.start.replace(hour = time.start.hour - logisticsTimeAvdce)  
+        logistics.logisTimeEnd = time.end.replace(hour = time.end.hour - logisticsTimeAvdce)
         logistics.note = c['note']
 
         logistics.order = self.order

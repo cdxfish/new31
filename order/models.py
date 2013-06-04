@@ -67,6 +67,12 @@ class OrderLineTime(models.Model):
 
 
 class OrderLogistics(models.Model):
+    advanceChoice = (
+            (0, '0 m'),
+            (1, '30 m'),
+            (2, '60 m'),
+            (3, '90 m'),
+        )
     order = models.OneToOneField(OrderInfo, verbose_name=u'订单')
     consignee = models.CharField(u'收货人', max_length=60)
     area = models.CharField(u'配送区域', max_length=60)
@@ -75,8 +81,9 @@ class OrderLogistics(models.Model):
     signDate = models.DateField(u'收货日期')
     signTimeStart = models.TimeField(u'起始时间')
     signTimeEnd = models.TimeField(u'结束时间')
-    logisDate = models.DateField(u'物流日期', blank=True, null=True)
-    logisTime = models.CharField(u'物流时间', max_length=60, blank=True, null=True)
+    logisTimeStart = models.TimeField(u'物流起始时间')
+    logisTimeEnd = models.TimeField(u'物流结束时间')
+    advance = models.SmallIntegerField(u'提前量', default=0, choices=advanceChoice)
     deliveryman = models.CharField(u'物流师傅', max_length=60, blank=True, null=True)
     note = models.CharField(u'备注', max_length=255, blank=True, null=True)
 

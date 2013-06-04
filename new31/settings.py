@@ -209,6 +209,10 @@ APPS = {
             'tempContext':'',
             'middleware':'purview.middleware.purviewMiddleware',
         },
+    'produce':{
+            'tempContext':'',
+            'middleware':'',
+        },
     }
 
 

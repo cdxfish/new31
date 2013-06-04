@@ -24,7 +24,7 @@
             <th>收货时间</th>
             <th>联系人</th>
             <th>金额</th>
-            <th>预发货</th>
+            <th>预出货</th>
             <th>物流</th>
             <th>状态</th>
             <th>操作</th>
@@ -38,7 +38,7 @@
             <td>{{ i.orderlogistics.signDate|date:"Y-m-d" }} | {{ i.orderlogistics.signTimeStart|time:"H:i" }} - {{ i.orderlogistics.signTimeEnd|time:"H:i" }}</td>
             <td>{{ i.orderlogistics.consignee }} [ {{ i.orderlogistics.tel }} ]</td>
             <td>189.00</td>
-            <td>15:00 + 30m</td>
+            <td>{{ i.orderlogistics.logisTimeStart|time:"H:i" }} - {{ i.orderlogistics.logisTimeEnd|time:"H:i" }} | {{ i.orderlogistics.get_advance_display }}</td>
             <td>吴</td>
             <td>{{ i.orderstatus.get_orderStatus_display }} | {{ i.orderpay.get_payStatus_display }} | {{ i.ordership.get_shipStatus_display }}</td>
             <td nowrap="nowrap">

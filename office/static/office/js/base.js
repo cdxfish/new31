@@ -1,6 +1,6 @@
 // 置顶工具条
 $(document).ready(function() {
-    ob.nav().odd('#CFC').odds().plugin();
+    ob.nav().odd('odd').odds().plugin();
 })
 
 ob = {
@@ -9,11 +9,11 @@ ob = {
         $("table tr").live('mouseover',
 
         function() {
-            $(this).addClass('odd');
+            $(this).addClass(c);
         }).live('mouseout',
 
         function() {
-            $(this).removeClass('odd');
+            $(this).removeClass(c);
         });
 
         return this;
@@ -91,7 +91,7 @@ ob = {
         return this;
     },
     plugin: function() {
-        // $(".sortTable").tablesorter();
+        $(".sort").tablesorter();
 
         $('.dateNoDir').Zebra_DatePicker(); //日期选择控件
         $('.date').Zebra_DatePicker({
