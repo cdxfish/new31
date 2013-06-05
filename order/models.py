@@ -68,10 +68,13 @@ class OrderLineTime(models.Model):
 
 class OrderLogistics(models.Model):
     advanceChoice = (
+            (-3, '- 90 m'),
+            (-2, '- 60 m'),
+            (-1, '- 30 m'),
             (0, '0 m'),
-            (1, '30 m'),
-            (2, '60 m'),
-            (3, '90 m'),
+            (1, '+ 30 m'),
+            (2, '+ 60 m'),
+            (3, '+ 90 m'),
         )
     order = models.OneToOneField(OrderInfo, verbose_name=u'订单')
     consignee = models.CharField(u'收货人', max_length=60)
