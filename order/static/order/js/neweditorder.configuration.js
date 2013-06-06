@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    aeo.cu();
+    aeo.cu().ot();
     aeog.a().search().cItem();
 });
 
@@ -21,6 +21,23 @@ aeo = {
             $.dialog.message('用户名无效!');
 
         }
+    },
+    ot: function(){
+        $('.oType').change(
+
+        function() {
+            var name = $(this).attr('name');
+            var value = $(this).val();
+
+            $.getJSON(
+                '/ajax/cotype/?' + name + '=' + value,
+
+            function(data) {
+                $.dialog.dialogMsgAndReload(data);
+            })
+
+        });
+        return this;
     }
 }
 
@@ -136,5 +153,4 @@ aeog = {
         });
         return this;
     }
-
 }

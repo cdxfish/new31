@@ -2,8 +2,9 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
+from django.conf import settings
+from new31.decorator import *
 from signtime.models import *
-from message.views import *
 from cart.views import *
 from office.func import *
 from area.models import *
@@ -13,10 +14,11 @@ from models import *
 from forms import *
 from consignee.forms import *
 import time, json
-from django.conf import settings
+from django.contrib import messages
 
 # Create your views here.
 
+# 订单列表显示页面
 def orderList(request):
 
     c = request.GET.get('c') if request.GET.get('c') else 0
@@ -36,6 +38,7 @@ def orderList(request):
     return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
 
 
+# 订单信息编辑提交
 def cCon(request, c):
 
     c = int(c)
@@ -52,81 +55,73 @@ def cCon(request, c):
     return HttpResponseRedirect('/order/')
 
 
-def orderSubmit(request, func):
-    if request.method == 'POST':
-
-        return func(request)
-
-    else:
-        return Message(request).redirect(url=url).warning('订单提交方式错误 !').shopMsg()
-
-
+# 前台订单提交,并是用前台消息模板显示订单号等信息
+@checkPOST
 def carSub(request):
 
     return OrderSubmit(request).submit().showOrderSN()
 
+
+# 后台订单提交,提交成功后进行页面跳转至订单列表
+@checkPOST
 def adminSub(request):
 
-    return OrderSubmit(request).submit().redirect('/order/')
+    # OrderSubmit(request).submit()
+
+    return HttpResponseRedirect('/order/new/')
 
 
+# 后台新单及订单编辑操作编辑页面
 def newOrEditOrderUI(request):
     items = Cart(request).showItemToCart()
 
     form = getForms(request)
 
-    oTypeForm = orderTypeForm()
+    oTypeForm = getOTpyeForm(request)
 
     return render_to_response('orderneworedit.htm', locals(), context_instance=RequestContext(request))
 
 
+# 后台订单编辑中添加商品至订单操作
+@checkPOST
+# @rectToBack
 def addItemToOrder(request):
 
-    if request.method == 'POST':
-
-        Cart(request).pushToCartByItemIDs(request.POST.getlist('i'))
-
-        return HttpResponseRedirect('/order/new/')
-
-    else:
-        return Message(request).redirect().warning('订单提交方式错误 !').officeMsg()
+    return Cart(request).pushToCartByItemIDs(request.POST.getlist('i'))
 
 
-@rectToBack
+# 编辑界面中删除订单中的商品操作
+# @rectToBack
 def delItemToOrder(request, args):
 
     return Cart(request).clearItemByMark(args['mark'])
 
 
 
-# 订单用户级提示用装饰器
-def subFailRemind(s= ''):
-    def _newfunc(func):
-        def __newfunc(self, **kwargs):
-            if not self.error:
-
-                if settings.DEBUG:
-                    return func(self, kwargs)
-
-                else:
-                    try:
-                        func(self, kwargs)
-                    except:
-                        self.error = True
-                        self.message =  m
-
-                        return Message(request).redirect().error(s).officeMsg()
-
-        return __newfunc
-    return _newfunc
-
 
 
 class OrderSubmit:
-    """docstring for Order"""
-    def __init__(self, r):
-        self.request = r
+    """ 订单提交类.
+
+        订单提交只需实例后, 使用 <<submit>> 方法即可
+        示例: OrderSubmit(request).submit()
+
+        订单数据来源为 session 中数据
+
+        session['c'] = 联系人信息
+        session['items'] = 商品信息
+        session['oType'] = 订单类型
+
+        
+
+        此类已根据 setting.DEBUG 对类方法进行了 <<用户级提示>> 装饰
+        当 settings.DEBUG = True 时, 用户级提示关闭, 反之开启.
+
+    """
+    def __init__(self, request):
+        self.request = request
         self.orderId = 2013113082322
+        self.oType = 0
         self.orderItem = []
         self.orderSpec = []
         self.orderFee = []
@@ -180,14 +175,14 @@ class OrderSubmit:
 
         self.orderId = self.getNewOrderSn()
 
-        runOrder = True
+        run = True
 
-        while runOrder:
+        while run:
             try:
                 self.order = OrderInfo.objects.get(orderSn=self.orderId)
 
             except:
-                runOrder = False
+                run = False
 
                 self.order = OrderInfo.objects.create(orderSn=self.orderId)
                 
@@ -205,6 +200,18 @@ class OrderSubmit:
 
         self.order.save()
 
+
+        return self
+
+    def formatOrderType(self):
+        if not 'oType' in self.request.session:
+
+            return self.setSeesion()
+
+
+    def setSeesion(self):
+
+        self.request.session['oType'] = self.oType
 
         return self
 

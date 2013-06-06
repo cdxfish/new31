@@ -1,7 +1,8 @@
 #coding:utf-8
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 from models import *
-from message.views import Message
+from new31.func import *
 
 # Create your views here.
 
@@ -11,79 +12,35 @@ class Purview:
     def __init__(self, request):
         self.request = request
         self.request.domElement = []
-        self.request.s = self.request.user.is_authenticated() and self.request.user.is_staff
+        self.element = [] #用户可进入的页面权限集
 
-        p = []
+        self.isStaff = self.self.request.user.is_authenticated() and self.request.user.is_staff
 
-        for i in Element.pPath:
-            p.append(i[0])
-
-        self.purview = tuple(p)
+        self.purview = ( i[0] for i in Element.pPath )
 
 
     def check(self):
 
-        return self.isPurview()
-
-    def isStaff(self,f):
-
-        if self.request.user.is_authenticated() and self.request.user.is_staff :
-            
-            f(self.request)
-
-        else:
-            return self.redirectLogin()
-
-    def isPurview(self):
-
         if self.request.path in self.purview: #进行权限页面对照,确认当前页面是否需要权限判定
 
-            if self.request.user.is_authenticated() and self.request.user.is_staff:
+            if self.isStaff:
 
-                try:
-                    self.request.element = Element.objects.get(path=self.request.path)
+                    if self.request.path in self.request.element:
+                        self.domElement() #页面元素权限加持
 
-                    return self.domElement() #页面元素权限加持
-
-                except :
-                    return self.msgPrint()
+                    else:
+                        return self.error()
 
             else:
-                return self.redirectLogin()
+                return redirectLogin()
 
 
+    # 页面元素加持
     def domElement(self):
+        pass
 
-        try:
-            # 页面元素权限加持
-            role = self.request.user.userrole.role
 
-            if role.onLine:
-                privilege = role.privilege
+    def error(self):
+        messages.error(self.request, '权限不足，无法进行当前操作。')
 
-                if privilege.onLine:
-                    domElement = privilege.element.get(path=self.request.path, onLine=True).sub_set.all()
-
-                    for i in domElement:
-                        try:
-                            element = self.request.user.userrole.role.privilege.element.get(path=i.path)
-                            if element.onLine:
-                                self.request.domElement.append(element)
-                        except:
-                            pass
-
-                else:
-                    raise AttributeError
-
-            else:
-                raise AttributeError
-
-            return None
-        except:
-            raise AttributeError
-
-    def msgPrint(self):
-        return Message(self.request).redirect(url=self.request.META.get('HTTP_REFERER',"/")).error('权限不足，无法进行当前操作。').officeMsg()
-
-    def redirectLogin(self):
-        return HttpResponseRedirect("/account/login/")
+        return redirectBack(self.request)

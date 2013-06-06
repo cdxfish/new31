@@ -2,15 +2,22 @@
 from django.db import models
 from django.contrib.auth.models import User
 from item.models import *
+from discount.models import *
 
 # Create your models here.
 
 class OrderInfo(models.Model):
-    oType = ((0,u'普销'), (1,u'普销(无积分)'), (2,u'活动'), (3,u'积分'), (4,u'提货券'), )
+    oType = (
+                (0,u'普销'), 
+                (1,u'普销(无积分)'), 
+                (2,u'活动'), 
+                (3,u'积分'), 
+                (4,u'提货券'), 
+            )
     orderSn = models.BigIntegerField(u'订单号', primary_key=True, unique=True)
     user = models.CharField(u'会员', max_length=30, blank=True, null=True)
     referer = models.CharField(u'订单来源', max_length=30)
-    orderType = models.SmallIntegerField(u'订单类型', default=0, choices=oType,)
+    orderType = models.SmallIntegerField(u'订单类型', default=0, choices=oType)
 
     def __unicode__(self):
         return u"%s [ %s ][ %s ] - %s" % (self.orderSn, self.user, self.referer, self.get_orderType_display())
@@ -164,8 +171,9 @@ class OrderItem(models.Model):
     spec = models.CharField(u'规格', max_length=30)
     number = models.SmallIntegerField(u'数量')
     itemType = models.SmallIntegerField(u'商品类型', default=0, choices=ItemFee.itemTypeChoices)
-    amount = models.DecimalField(u'单价', max_digits=10, decimal_places=2)
-    discount = models.DecimalField(u'折扣', max_digits=3, decimal_places=1, default=10.0)
+    amount = models.DecimalField(u'原价', max_digits=10, decimal_places=2)
+    nowFee = models.DecimalField(u'现价', max_digits=10, decimal_places=2)
+    discount = models.FloatField(u'折扣', default=1.0, choices=Discount.disChoices)
 
     def __unicode__(self):
         return u"%s - %s[ %s ][ %s ][ %d ]" % ( self.order, self.name, self.spec, self.number, self.amount )

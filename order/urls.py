@@ -5,10 +5,10 @@ from views import *
 
 urlpatterns = patterns('',
     (r'^$', orderList),
-    (r'^submit/$', orderSubmit, {'func': carSub}),
-    (r'^add/$', orderSubmit, {'func': adminSub}),
-    (r'^new/$', newOrEditOrderUI),
+    (r'^submit/$', carSub),
+    (r'^add/$', adminSub),
     (r'^additemtoorder/$', addItemToOrder),
     (r'^delitem\/(?P<mark>\d+)\/$', hFunc, {'func': delItemToOrder}),
+    (r'^new/$',  newOrEditOrderUI),
     (r'^ccon/(?P<c>\d+)/$', cCon),
 )

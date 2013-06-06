@@ -140,10 +140,10 @@ APPS = {
             'tempContext':'',
             'middleware':'',
         },
-    'message':{
-            'tempContext':'',
-            'middleware':'message.middleware.MessageMiddleware',
-        },
+    # 'purview':{
+    #         'tempContext':'',
+    #         'middleware':'purview.middleware.purviewMiddleware',
+    #     },
     'item':{
             'tempContext':'',
             'middleware':'',
@@ -194,7 +194,7 @@ APPS = {
         },
     'order':{
             'tempContext':'',
-            'middleware':'',
+            'middleware':'order.middleware.OrderMiddleware',
         },
 
     'spec':{
@@ -204,10 +204,6 @@ APPS = {
     'discount':{
             'tempContext':'',
             'middleware':'',
-        },
-    'purview':{
-            'tempContext':'',
-            'middleware':'purview.middleware.purviewMiddleware',
         },
     'produce':{
             'tempContext':'',

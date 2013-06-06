@@ -1,5 +1,4 @@
 #coding:utf-8
-
 from django.db import models
 
 
@@ -44,7 +43,7 @@ class Discount(models.Model):
             (0.05, u'0.5 折'),
             # (0.0, u'赠送'),
         )
-    discount = models.FloatField(u'折扣', default=0, choices=disChoices)
+    discount = models.FloatField(u'折扣', default=1.0, choices=disChoices)
     onLine = models.BooleanField(u'上架', default=False)
 
     objects = disManager()

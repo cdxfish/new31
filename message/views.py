@@ -11,27 +11,6 @@ def msg(request):
 
     return render_to_response('message.htm', locals(), context_instance=RequestContext(request))
 
-# AJAX提示用装饰器
-def tryMsg(msg):
-
-    def _tryMsg(func):
-
-        def __tryMsg(request, **kwargs):
-            if settings.DEBUG:
-
-                return func(request, kwargs)
-
-            else:
-                try:
-
-                    return func(request, kwargs)
-                except:
-
-                    return AjaxRJson().message(msg).jsonEn()
-
-        return __tryMsg
-
-    return _tryMsg
 
 # 页面跳转提示用装饰器
 def redirTryMsg(msg):

@@ -8,6 +8,7 @@ from shop.views import *
 from cart.views import *
 from consignee.views import *
 from message.views import *
+from order.views import *
 import json
 
 # Create your views here.
@@ -56,8 +57,17 @@ def cConsigneeByAjax(request, kwargs):
 
     return AjaxRJson().jsonEn()
 
-
 # ajax动态写入收货人信息
+@tryMsg('无法填写表单')
+def coTypeByAjax(request, kwargs):
+    o = OrderSubmit(request)
+    o.oType = request.GET.get('oType')
+    o.setSeesion()
+
+    return AjaxRJson().jsonEn()
+
+
+# ajax动态修改购物车内商品
 @tryMsg('无法修改表单数据')
 def cItemByAjax(request, kwargs):
     mark = int(request.GET.get('mark')[1:])

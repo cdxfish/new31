@@ -5,16 +5,11 @@ from purview.views import *
 
 
 class purviewMiddleware:
-    """权限中间件"""
+    """ 后台页面入口保安
+    	所有已注册的后台页面先经过此中间件的判定是否具有进入权限
+
+    """
 
     def process_request(self, request):
 
         return Purview(request).check()
-
-
-
-    # def process_response(self, request, response):
-
-    #     Purview(request).pageAction()
-
-    #     return HttpResponse(response)

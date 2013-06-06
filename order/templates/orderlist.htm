@@ -47,9 +47,11 @@
           </tr>
 {% for item in i.orderitem_set.all %}
           <tr align="center">
-            <td align="right" nowrap="true" colspan="5">{{ item.name }}</td>
+            <td align="right" nowrap="true" colspan="3">{{ item.name }}</td>
             <td>{{ item.spec }}</td>
             <td>{{ item.number }}</td>
+            <td>{{ item.amount }}</td>
+            <td>{{ item.get_discount_display }}</td>
             <td></td>
           </tr>
 {% endfor %}

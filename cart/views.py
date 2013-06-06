@@ -90,6 +90,7 @@ def hFunc(request, func, **args):
             return Message(request).redirect(url=request.META.get('HTTP_REFERER',"/")).warning('当前商品已下架').shopMsg()
 
 
+# 页面跳转回上一页用装饰器
 def rectToBack(func):
 
     def newFunc(request, args):

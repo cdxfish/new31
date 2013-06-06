@@ -31,8 +31,12 @@ def getForms(request):
     return ConsigneeForm(initial= consignee)
 
 
-class orderTypeForm(forms.Form):
+def getOTpyeForm(request):
+
+    return OrderTypeForm(initial= {'oType': request.session.get('oType'),})
+
+class OrderTypeForm(forms.Form):
 
     oChoice = OrderInfo.oType
 
-    orderType = forms.ChoiceField(label=u'订单类型', choices=oChoice, widget=forms.Select(attrs={'class': 'orderType' }))
+    oType = forms.ChoiceField(label=u'订单类型', choices=oChoice, widget=forms.Select(attrs={'class': 'oType' }))

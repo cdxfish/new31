@@ -142,7 +142,17 @@
         </ul>
         <span id="adminName">{{ request.user.username }} [ {% if request.user.is_superuser %}超级管理员{% else %}普通管理{% endif %} ]</span>
     </div>
+        <div class="pWhite">
+
     <div id="content">
+{% if messages %}
+      <div class="pWhite">
+{% for i in messages %}
+          <h3>{{ i.tags }}</h3>
+          <p>{{ i }}</p>
+{% endfor %}
+      </div>
+{% endif %}
 {% if request.element.pType %}
         <div id="tool">
           <ul class="action">
