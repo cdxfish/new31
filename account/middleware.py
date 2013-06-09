@@ -10,7 +10,7 @@ class UserMiddleware:
     	from views import *
 
         if hasattr(request, 'user'):
-            request.user = UserInfo(request.user).newOrderCount().newMsgCount().allmsgCount().purview().returnInfo()
+            request.user = UserInfo(request.user).newOrderCount().newMsgCount().allmsgCount().returnInfo()
 
         return None
 

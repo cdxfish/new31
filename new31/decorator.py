@@ -55,7 +55,11 @@ def checkPOST(func):
             return func(request)
 
         else:
-            return Message(request).redirect(url=url).warning('订单提交方式错误 !').shopMsg() 
+
+            messages.error('订单提交方式错误')
+
+            return redirectBack(request)
+
     return _func
 
 
@@ -104,3 +108,15 @@ def tryMsg(msg):
         return __tryMsg
 
     return _tryMsg
+
+
+# 页面跳转回上一页用装饰器
+def rectToBack(func):
+
+    def newFunc(request, args):
+        
+        func(request, args)
+
+        return rectToBack(request)
+
+    return newFunc

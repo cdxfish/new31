@@ -9,13 +9,13 @@ from django.db.models import Q
 from signtime.models import *
 from account.models import *
 from payment.models import *
-from message.views import *
 from item.models import *
 from area.models import *
 from order.models import *
 from order.forms import *
 from consignee.views import *
 from new31.func import *
+from new31.decorator import *
 import time, datetime, math
 from decimal import *
 
@@ -23,20 +23,8 @@ from decimal import *
 # Create your views here.
 
 def cart(request):
-    a = request.session.get('items')
-    c = request.session['c']
-    if settings.DEBUG:
 
-        cart = Cart(request).showItemToCart()
-    else:
-        try:
-
-            cart = Cart(request).showItemToCart()
-        except:
-
-            Cart(request).clearCart()
-            return Message(request).redirect(url='/cart/').error('您购物车中有些商品已过期，请重新选择。').shopMsg()
-
+    cart = Cart(request).showItemToCart()
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
 
@@ -60,7 +48,9 @@ def checkout(request):
 
         if not cart:
 
-            return Message(request).redirect(url='/cart/').error('您还没选择商品喔亲~').shopMsg()
+            messages.warning(request, '购物车内无商品')
+
+            return HttpResponseRedirect('/cart/')
 
         ShipConsignee(request).setSeesion()
 
@@ -71,7 +61,9 @@ def checkout(request):
         return render_to_response('checkout.htm', locals(), context_instance=RequestContext(request))
     else:
 
-        return Message(request).redirect(url='/consignee/').error('提交方式有误').shopMsg()
+        messages.warning(request, '订单提交方式有误')
+
+        return HttpResponseRedirect('/consignee/')
 
 
 def hFunc(request, func, **args):
@@ -87,19 +79,11 @@ def hFunc(request, func, **args):
             
         except:
 
-            return Message(request).redirect(url=request.META.get('HTTP_REFERER',"/")).warning('当前商品已下架').shopMsg()
+            messages.warning(request, '当前商品已下架')
+
+            return rectToBack(request)
 
 
-# 页面跳转回上一页用装饰器
-def rectToBack(func):
-
-    def newFunc(request, args):
-        
-        func(request, args)
-
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER',"/"))
-
-    return newFunc
 
 
 @rectToBack

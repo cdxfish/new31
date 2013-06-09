@@ -1,15 +1,16 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
-from django.contrib import auth
+from django.http import HttpResponseRedirect
 from django.template import RequestContext
-from django.http import HttpResponseRedirect, HttpResponse
-from message.views import *
+from django.contrib import messages, auth
 from account.models import *
+from new31.func import *
 
 # Create your views here.
 
 def login(request):
 
+    # 避免重复登录
     if not request.user.is_authenticated():
         if request.method == 'POST':
             username = request.POST.get('username')
@@ -20,25 +21,29 @@ def login(request):
                 # Correct password, and the user is marked "active"
                 auth.login(request, user)
                 # Redirect to a success page.
-                return HttpResponseRedirect(request.META.get('HTTP_REFERER',"/"))
+                return redirectBack(request)
             else:
                 # Show an error page
-                return Message(request.META.get('HTTP_REFERER',"/")).autoRedirect().title('错误').message('用户名或密码错误!').shopMsg()
+
+                messages.error(request, '用户名或密码错误')
+
+                return redirectLogin()
 
         else:
             return render_to_response('login.htm', locals(), context_instance=RequestContext(request))
 
     else:
-        if '/account/login/' in request.META.get('HTTP_REFERER',"/"):
-            return HttpResponseRedirect('/')
+        # 避免循环跳转
+        if '/account/login/' in request.META.get('HTTP_REFERER', '/'):
+            return redirect()
         else:
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER',"/"))
+            return redirectBack(request)
 
 def logout(request):
 
     auth.logout(request)
 
-    return HttpResponseRedirect("/")
+    return redirect()
 
 def settings(request):
 
@@ -75,45 +80,6 @@ class UserInfo:
 
         return self
 
-    def purview(self):
-        self.obj.purview = [
-                          '/office/',
-                          '/order/',
-                          '/back/',
-                          '/logistics/',
-                          '/produce/',
-                          '/inventory/',
-                          '/after/',
-                          '/tryeat/',
-                          '/applytryeat/',
-                          '/discount/',
-                          '/ticket/',
-                          '/integral/',
-                          '/party/',
-                          '/reconciliation/',
-                          '/approved/',
-                          '/reimburse/',
-                          '/statistics/',
-                          '/statssale/',
-                          '/member/',
-                          '/memberint/',
-                          '/purview/',
-                          '/adminlog/',
-                          '/system/',
-                          '/item/item/',
-                          '/tag/tag/',
-                          '/spec/',
-                          '/price/',
-                          '/slide/',
-                          '/payment/',
-                          '/area/',
-                          '/signtime/',
-                          '/logistics/',
-                          '/area/',
-                          '/filecheck/',
-                        ]
-
-        return self
 
     def returnInfo(self):
 

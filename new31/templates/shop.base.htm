@@ -110,6 +110,14 @@
     </div>
 {% endblock %}
     <div id="content" class="clearfix">
+        {% if messages %}
+      <div class="pWhite">
+{% for i in messages %}
+          <h3>{{ i.tags }}</h3>
+          <p>{{ i }}</p>
+{% endfor %}
+      </div>
+{% endif %}
 {% block content %}{% endblock %}
     </div>
     <div id="footer">

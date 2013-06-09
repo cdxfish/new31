@@ -7,7 +7,6 @@ from item.models import *
 from shop.views import *
 from cart.views import *
 from consignee.views import *
-from message.views import *
 from order.views import *
 import json
 

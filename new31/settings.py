@@ -140,10 +140,14 @@ APPS = {
             'tempContext':'',
             'middleware':'',
         },
-    # 'purview':{
-    #         'tempContext':'',
-    #         'middleware':'purview.middleware.purviewMiddleware',
-    #     },
+    'account':{
+            'tempContext':'',
+            'middleware':'account.middleware.UserMiddleware',
+        },
+    'purview':{
+            'tempContext':'',
+            'middleware':'purview.middleware.purviewMiddleware',
+        },
     'item':{
             'tempContext':'',
             'middleware':'',
@@ -180,10 +184,7 @@ APPS = {
             'tempContext':'',
             'middleware':'',
         },
-    'account':{
-            'tempContext':'',
-            'middleware':'account.middleware.UserMiddleware',
-        },
+
     'ajax':{
             'tempContext':'',
             'middleware':'',

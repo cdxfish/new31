@@ -12,6 +12,10 @@ def forMatFee(fee):
 def redirectLogin():
     return HttpResponseRedirect("/account/login/")
 
+# 重定向至首页
+def redirect():
+	return HttpResponseRedirect('/')
+
 
 # 重定向至前一页
 def redirectBack(request):
