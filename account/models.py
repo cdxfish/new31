@@ -69,10 +69,9 @@ class UserInfo(models.Model):
         return u"%s [ %s ] - %s" % (self.user, self.regTime)
 
 class UserRole(models.Model):
-    """docstring for UserRole"""
+
     user = models.OneToOneField(User, verbose_name=u'用户')
     role = models.OneToOneField(Role, verbose_name=u'角色', blank=True, null=True)
-
 
     def __unicode__(self):
         return u"%s - %s" % (self.user, self.role)

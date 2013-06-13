@@ -1,5 +1,7 @@
 #coding:utf-8
-
+from new31.func import *
+from django.conf import settings
+from django.contrib import messages
 # Create your decorator here.
 
 # 订单提交类提示用装饰器
@@ -56,7 +58,7 @@ def checkPOST(func):
 
         else:
 
-            messages.error('订单提交方式错误')
+            messages.error(request, '订单提交方式错误')
 
             return redirectBack(request)
 
@@ -111,12 +113,35 @@ def tryMsg(msg):
 
 
 # 页面跳转回上一页用装饰器
-def rectToBack(func):
+def decoratorBack(func):
 
-    def newFunc(request, args):
+    def _func(request, **kwargs):
         
-        func(request, args)
+        func(request, kwargs)
 
-        return rectToBack(request)
+        return redirectBack(request)
 
-    return newFunc
+    return _func
+
+
+# 根据settings.DEBUG设置是否显示用户级提示信息
+def itemOnline(func):
+
+    def _func(request, kwargs):
+
+        if settings.DEBUG:
+
+            return func(request, kwargs)
+
+        else:
+            try:
+
+                return func(request, kwargs)
+                
+            except:
+
+                messages.warning(request, '当前商品已下架')
+
+                return redirectBack(request)
+
+    return _func

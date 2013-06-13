@@ -3,9 +3,9 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
 from django.db.models import Q
+from django.contrib import messages
 from item.models import *
 from tag.models import *
-from message.views import *
 import random
 
 
@@ -26,9 +26,7 @@ def tagShow(request, tag = ''):
         try:
             itemImgs = TagsObj().getItemByTag(tag)
         except:
-            return Message(request).redirect().error('此标签不存在。').shopMsg()
-
-    
+            messages.warning(request, '此标签不存在。')
 
     return render_to_response('tag.htm', locals(), context_instance=RequestContext(request))
 

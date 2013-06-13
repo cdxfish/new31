@@ -10,7 +10,6 @@ class elementManager(models.Manager):
         return self.select_related().get(path=path, onLine=True)
 
 
-
 class Element(models.Model):
     pPath = (
           (u'/office/', U'管理中心'),
@@ -78,7 +77,7 @@ class Privilege(models.Model):
 class Role(models.Model):
     name = models.CharField(u'角色', max_length=32)
     onLine = models.BooleanField(u'上线', default=True)
-    privilege = models.ForeignKey(Privilege, verbose_name=u'权限', blank=True, null=True)
+    privilege = models.ManyToManyField(Privilege, verbose_name=u'权限', blank=True, null=True)
 
     def __unicode__(self):
         return u"%s [ onLine:%s ]" % (self.name, self.onLine)

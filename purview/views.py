@@ -12,9 +12,8 @@ class Purview:
     def __init__(self, request):
         self.request = request
         self.request.domElement = []
-        self.element = [] #用户可进入的页面权限集
 
-        self.isStaff = self.self.request.user.is_authenticated() and self.request.user.is_staff
+        self.isStaff = self.request.user.is_authenticated() and self.request.user.is_staff
 
         self.purview = ( i[0] for i in Element.pPath )
 
@@ -23,13 +22,26 @@ class Purview:
 
         if self.request.path in self.purview: #进行权限页面对照,确认当前页面是否需要权限判定
 
-            if self.isStaff:
+            if self.request.user.is_authenticated() and self.request.user.is_staff:
 
-                    if self.request.path in self.request.element:
-                        self.domElement() #页面元素权限加持
+                element =[]#用户可进入的页面权限集
 
-                    else:
-                        return self.error()
+                try:
+                    role = self.request.user.userrole.role
+ 
+                    if role.onLine:
+                        for i in role.privilege.filter(onLine=True):
+                            for ii in i.element.filter(onLine=True):
+                                element.append(ii.path)
+
+                except:
+                    return self.error()
+
+                if self.request.path in element:
+                    self.domElement() #页面元素权限加持
+
+                else:
+                    return self.error()
 
             else:
                 return redirectLogin()
@@ -42,5 +54,8 @@ class Purview:
 
     def error(self):
         messages.error(self.request, '权限不足，无法进行当前操作。')
+
+        # if len(messages) > 1:
+        #     return HttpResponseRedirect('/')
 
         return redirectBack(self.request)

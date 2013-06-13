@@ -57,6 +57,8 @@ INSERT INTO `spec_spec` (`value`) VALUES
 
 
 INSERT INTO `tag_tag` (`tag`) VALUES
+('cake'),
+('蛋糕'),
 ('乳酪'),
 ('原味'),
 ('奶酪'),

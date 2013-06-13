@@ -4,7 +4,6 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.core.exceptions import *
-from message.views import *
 from forms import *
 import datetime, time
 

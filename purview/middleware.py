@@ -12,5 +12,4 @@ class purviewMiddleware:
 
     def process_request(self, request):
 
-        # return Purview(request).check()
-        return None
+        return Purview(request).check()

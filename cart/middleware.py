@@ -8,6 +8,3 @@ class CartMiddleware:
         Cart(request).formatItems()
 
         return None
-
-    # def process_response(self, request, response):
-    #     pass

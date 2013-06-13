@@ -12,6 +12,7 @@ from item.models import *
 from payment.models import *
 from models import *
 from forms import *
+from decimal import *
 from consignee.forms import *
 import time, json
 from django.contrib import messages
@@ -66,6 +67,8 @@ def carSub(request):
 @checkPOST
 def adminSub(request):
 
+    ShipConsignee(request).setSeesion()
+
     # OrderSubmit(request).submit()
 
     return HttpResponseRedirect('/order/new/')
@@ -106,13 +109,13 @@ class OrderSubmit:
         订单提交只需实例后, 使用 <<submit>> 方法即可
         示例: OrderSubmit(request).submit()
 
-        订单数据来源为 session 中数据
+        订单数据来源为session中数据
 
         session['c'] = 联系人信息
         session['items'] = 商品信息
         session['oType'] = 订单类型
 
-        
+
 
         此类已根据 setting.DEBUG 对类方法进行了 <<用户级提示>> 装饰
         当 settings.DEBUG = True 时, 用户级提示关闭, 反之开启.
@@ -258,8 +261,20 @@ class OrderSubmit:
             spec = ItemSpec.objects.getSpecBySpecID(id=i['specID']).spec
             fee = ItemFee.objects.getFeeBySpecID(specID=i['specID'])
             dis = Discount.objects.getDisByDisID(id=i['disID'])
+            nowFee = forMatFee(fee.amount * Decimal(dis.discount))
 
-            self.orderItem.append(OrderItem(order=self.order, name=item.name, sn=item.sn, spec=spec.value, number=i['num'],amount=fee.amount, discount=dis.discount))
+            self.orderItem.append(
+                OrderItem(
+                    order=self.order, 
+                    name=item.name, 
+                    sn=item.sn, 
+                    spec=spec.value, 
+                    number=i['num'],
+                    amount=fee.amount, 
+                    discount=dis.discount,
+                    nowFee=nowFee
+                    )
+                )
 
 
         OrderItem.objects.bulk_create(self.orderItem)
@@ -331,11 +346,10 @@ class OrderSubmit:
 
     def showOrderSN(self):
 
-        return Message(self.request).success('您已成功提交订单!').info('感谢您在本店购物！请记住您的订单号: %s' % self.orderId).shopMsg()
+        messages.success(self.request, '您已成功提交订单!')
+        messages.success(self.request, '感谢您在本店购物！请记住您的订单号: %s' % self.orderId)
 
-    def redirect(self, url):
-
-        return HttpResponseRedirect(url)
+        return HttpResponseRedirect('/')
 
 
 # 订单列表权限加持

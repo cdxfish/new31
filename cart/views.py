@@ -22,90 +22,58 @@ from decimal import *
 
 # Create your views here.
 
+# 前台购物车界面
 def cart(request):
 
     cart = Cart(request).showItemToCart()
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
 
-
+# 前台订单确认界面
+@checkPOST
 def checkout(request):
 
-    if request.method == 'POST':
+    form = ConsigneeForm(request.POST)
 
-        form = ConsigneeForm(request.POST)
+    if not form.is_valid():
 
-        if not form.is_valid():
+        for i in form:
+            if i.errors:
 
-            for i in form:
-                if i.errors:
-
-                    messages.warning(request, '%s - %s' % ( i.label, i.errors))
-
-            return HttpResponseRedirect('/consignee/')
-
-        cart = Cart(request).showItemToCart()
-
-        if not cart:
-
-            messages.warning(request, '购物车内无商品')
-
-            return HttpResponseRedirect('/cart/')
-
-        ShipConsignee(request).setSeesion()
-
-        pay = Pay.objects.getPayById(id=request.POST.get('pay'))
-        time = SignTime.objects.getTimeById(id=request.POST.get('time'))
-        area = Area.objects.getAreaById(id=request.POST.get('area'))
-
-        return render_to_response('checkout.htm', locals(), context_instance=RequestContext(request))
-    else:
-
-        messages.warning(request, '订单提交方式有误')
+                messages.warning(request, '%s - %s' % ( i.label, i.errors))
 
         return HttpResponseRedirect('/consignee/')
 
+    cart = Cart(request).showItemToCart()
 
-def hFunc(request, func, **args):
+    if not cart:
 
-    if settings.DEBUG:
+        messages.warning(request, '购物车内无商品')
 
-        return func(request, args)
+        return HttpResponseRedirect('/cart/')
 
-    else:
-        try:
+    ShipConsignee(request).setSeesion()
 
-            return func(request, args)
-            
-        except:
+    pay = Pay.objects.getPayById(id=request.POST.get('pay'))
+    time = SignTime.objects.getTimeById(id=request.POST.get('time'))
+    area = Area.objects.getAreaById(id=request.POST.get('area'))
 
-            messages.warning(request, '当前商品已下架')
-
-            return rectToBack(request)
+    return render_to_response('checkout.htm', locals(), context_instance=RequestContext(request))
 
 
-
-
-@rectToBack
-def buy(request, args):
+# GET方式将物品放入购物车
+@decoratorBack
+@itemOnline
+def buy(request, kwargs):
    
-    return Cart(request).pushToCartBySpecID(int(args['specID']))
+    return Cart(request).pushToCartBySpecID(kwargs['specID'])
 
+# GET方式将物品取出购物车
+@decoratorBack
+@itemOnline
+def clear(request, kwargs):
 
-@rectToBack
-def clear(request, args):
-
-    return Cart(request).clearItemByMark(args['mark'])
-
-
-@rectToBack
-def changnum(request, args):
-
-    return Cart(request).changeNumBySpec(specID=args['specID'],num=args['num'])
-
-
-
-
+    return Cart(request).clearItemByMark(kwargs['mark'])
 
 
 
@@ -113,11 +81,16 @@ def changnum(request, args):
 class Cart:
     """ 购物车相关
 
-        items 
+        request.session['items'] 
 
         用于存储购物车中商品信息
         其数据格式为:
-        [{ itemID:1, specID:1, num:1 }, { itemID:2, specID:2, num:2 }]
+        [{ 'mark':1, 'itemID':1, 'specID':1, 'num':1 }, { 'mark':2, 'itemID':2, 'specID':2, 'num':2 }]
+
+        此类包含有对购物车操作的各类方法(必须实例化方可使用)
+
+        example:
+            Cart(request).clearItemByMark(mark)
 
     """
     def __init__(self, request):
@@ -158,6 +131,7 @@ class Cart:
 
 
     def pushToCartBySpecID(self, specID):
+        specID = int(specID)
 
         items = self.items
 

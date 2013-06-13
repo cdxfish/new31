@@ -4,7 +4,7 @@ from views import *
 
 urlpatterns = patterns('',
     (r'^$', cart),
-    (r'^buy\/(?P<specID>\d+)\/$', hFunc, {'func': buy}),
-    (r'^clear\/(?P<mark>\d+)\/$', hFunc, {'func': clear}),
+    (r'^buy\/(?P<specID>\d+)\/$', buy),
+    (r'^clear\/(?P<mark>\d+)\/$', clear),
     (r'^checkout\/$', checkout),
 )

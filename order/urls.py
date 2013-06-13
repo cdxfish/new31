@@ -8,7 +8,7 @@ urlpatterns = patterns('',
     (r'^submit/$', carSub),
     (r'^add/$', adminSub),
     (r'^additemtoorder/$', addItemToOrder),
-    (r'^delitem\/(?P<mark>\d+)\/$', hFunc, {'func': delItemToOrder}),
+    (r'^delitem\/(?P<mark>\d+)\/$', delItemToOrder),
     (r'^new/$',  newOrEditOrderUI),
     (r'^ccon/(?P<c>\d+)/$', cCon),
 )
