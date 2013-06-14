@@ -8,9 +8,11 @@ def forMatFee(fee):
 
     return math.floor(fee)
 
+
 # 重定向至登录页
 def redirectLogin():
     return HttpResponseRedirect("/account/login/")
+
 
 # 重定向至首页
 def redirect():
@@ -19,29 +21,16 @@ def redirect():
 
 # 重定向至前一页
 def redirectBack(request):
-    # def make_adder():
-    #     i = 0
-    #     def adder():
-    #         return i =+ 1
-    #     return adder
-    import sys
-    print '---------------------------'
-    print '---------------------------'
-    print '---------------------------'
-    print '---------------------------'
-    print '---------------------------'
-    print '---------------------------'
-    print '---------------------------'
-    print '---------------------------'
-    print sys.getrefcount(redirectBack)
-    print '---------------------------'
-    print '---------------------------'
-    print '---------------------------'
-    print '---------------------------'
-    print '---------------------------'
-    print '---------------------------'
 
-    if sys.getrefcount(redirectBack) > 1:
+    if count() > 1:
         return redirect()
+    else:
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER',"/"))
 
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER',"/"))
+
+# 闭包计数器
+def count(L=[]):
+
+    L.append(1)
+    
+    return len(L)

@@ -17,10 +17,7 @@ def subFailRemind(s= ''):
                     try:
                         func(self, kwargs)
                     except:
-                        self.error = True
-                        self.message =  m
-
-                        return Message(request).redirect().error(s).officeMsg()
+                        messages.error(self.request, s)
 
         return __newfunc
     return _newfunc
@@ -119,7 +116,7 @@ def decoratorBack(func):
         
         func(request, kwargs)
 
-        return redirectBack(request)
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER',"/"))
 
     return _func
 

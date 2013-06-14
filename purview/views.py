@@ -49,13 +49,10 @@ class Purview:
 
     # 页面元素加持
     def domElement(self):
-        pass
+        self.request.domElement = Element.objects.getPath(path=self.request.path)
 
-
+    # 用户级错误提示
     def error(self):
         messages.error(self.request, '权限不足，无法进行当前操作。')
-
-        # if len(messages) > 1:
-        #     return HttpResponseRedirect('/')
 
         return redirectBack(self.request)

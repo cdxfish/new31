@@ -69,9 +69,7 @@ def adminSub(request):
 
     ShipConsignee(request).setSeesion()
 
-    # OrderSubmit(request).submit()
-
-    return HttpResponseRedirect('/order/new/')
+    return OrderSubmit(request).submit().redirOrder()
 
 
 # 后台新单及订单编辑操作编辑页面
@@ -87,18 +85,17 @@ def newOrEditOrderUI(request):
 
 # 后台订单编辑中添加商品至订单操作
 @checkPOST
-# @rectToBack
-def addItemToOrder(request):
+@decoratorBack
+def addItemToOrder(request, kwargs):
 
     return Cart(request).pushToCartByItemIDs(request.POST.getlist('i'))
 
 
 # 编辑界面中删除订单中的商品操作
-# @rectToBack
-def delItemToOrder(request, args):
+@decoratorBack
+def delItemToOrder(request, kwargs):
 
-    return Cart(request).clearItemByMark(args['mark'])
-
+    return Cart(request).clearItemByMark(kwargs['mark'])
 
 
 
@@ -130,37 +127,27 @@ class OrderSubmit:
         self.orderFee = []
         self.orderDiscount = []
         self.error = False
-        self.message = ''
-        self.template = ''
+
         self.items = Cart(self.request).items
         self.c = ShipConsignee(self.request).c
 
     def submit(self):
-        # 插入订单号占位！
-        # 插入订单基本信息
-        # 插入订单物流信息
-        # 插入订单商品信息
-        # 插入订单支付方式信息
-        # 插入订单送货方式信息
-        # 插入订单订单状态
-        # 插入订单订单时间线
-        # 插入订单完成
 
-        self.newOderSn() \
-            .infoSubmit() \
-            .logisticsSubmit() \
-            .itemSubmit() \
-            .paySubmit() \
-            .shipSubmit() \
-            .oStartSubmit() \
-            .oLineSubmit() \
-            .submitDone()
+        try:
+            self.newOderSn() \
+                .infoSubmit() \
+                .logisticsSubmit() \
+                .itemSubmit() \
+                .paySubmit() \
+                .shipSubmit() \
+                .oStartSubmit() \
+                .oLineSubmit() \
+                .submitDone()
 
+            return self
 
-        if self.error:
-            self.delNewOrder()
-
-        return self
+        except:
+            return self.delNewOrder()
 
 
     # 获得新的订单编号
@@ -196,6 +183,7 @@ class OrderSubmit:
 
 
     # 插入订单基本信息
+    @subFailRemind('无法插入订单基本信息')
     def infoSubmit(self, u= '' , r ='网店订单'):
 
         self.order.referer=r
@@ -206,12 +194,15 @@ class OrderSubmit:
 
         return self
 
+
+    # 格式化订单类型,主要用于中间件
     def formatOrderType(self):
         if not 'oType' in self.request.session:
 
             return self.setSeesion()
 
 
+    # 设置订单类型
     def setSeesion(self):
 
         self.request.session['oType'] = self.oType
@@ -219,7 +210,7 @@ class OrderSubmit:
         return self
 
 
-    # 插入订单物流信息
+    # 物流信息提交
     def logisticsSubmit(self):
 
         logisticsTimeAvdce = 1
@@ -250,7 +241,7 @@ class OrderSubmit:
         return self
 
 
-    # 插入订单商品信息
+    # 商品信息提交
     def itemSubmit(self):
 
         self.orderItem = []
@@ -281,7 +272,7 @@ class OrderSubmit:
 
         return self
 
-
+    # 支付信息提交
     def paySubmit(self):
 
         pay = Pay.objects.getPayById(id=self.c['pay'])
@@ -296,6 +287,7 @@ class OrderSubmit:
         return self
 
 
+    # 配送信息提交
     def shipSubmit(self):
 
         # ship = Pay.objects.getPayById(id=self.c['ship'])
@@ -313,6 +305,7 @@ class OrderSubmit:
         return self
 
 
+    # 订单状态提交
     def oStartSubmit(self):
         oStart = OrderStatus()
         oStart.order = self.order
@@ -322,6 +315,7 @@ class OrderSubmit:
         return self
 
 
+    # 时间线提交
     def oLineSubmit(self):
         oOLT = OrderLineTime()
         oOLT.order = self.order
@@ -331,12 +325,14 @@ class OrderSubmit:
         return self
 
 
+    # 删除新订单
     def delNewOrder(self):
         self.order.delete()
 
         return self
 
 
+    # 订单提交完成
     def submitDone(self):
         if not self.error:
             Cart(self.request).clearCart()
@@ -344,39 +340,53 @@ class OrderSubmit:
 
         return self
 
-    def showOrderSN(self):
 
+    # 显示订单号,主要用于前提用户级提示
+    def showOrderSN(self):
         messages.success(self.request, '您已成功提交订单!')
         messages.success(self.request, '感谢您在本店购物！请记住您的订单号: %s' % self.orderId)
 
         return HttpResponseRedirect('/')
 
 
-# 订单列表权限加持
+    # 重定向至订单列表页
+    def redirOrder(self):
+        messages.success(self.request, '订单提交成功: %s' % self.orderId)
+
+        return HttpResponseRedirect('/order/')
+
+    # 粗粒用户级错误提示
+    def showError(self):
+        messages.error(self.request, '订单提交失败，请重新提交。')
+
+        return redirectBack(self.request)
+
+
+
+
 class OrderListPurview:
-    """首先获取当前角色可进行的订单操作权限. 其后获取订单的可选操作. 两者进行交集"""
+    """
+    订单列表权限加持
+
+    获取当前角色可进行的订单操作权限. 
+    获取订单状态,判定可选权限. 
+    两者进行交集操作.
+
+
+    """
+    # oStart = OrderStatus.oStatus
+
     def __init__(self, oList, request):
         self.oList = oList
-        self.oStart = OrderStatus.oStatus
         self.element = Element.objects.get(path=request.path).sub_set.all()
         self.role = OrderStatus.oStatus
-        (
-                (0, u'新单'), 
-                (1, u'确认'), 
-                (2, u'编辑'),
-                (3, u'无效'),
-                (4, u'完成'),
-                (5, u'停止'),
-                (6, u'重建'),
-                (7, u'更换'),
-            )
 
 
     # 获取订单可选操作项
     def getElement(self):
 
-
         for i in self.oList:
+
             if not i.orderstatus.orderStatus:
 
                 i.action = (
@@ -384,11 +394,7 @@ class OrderListPurview:
                             (2, u'编辑'),
                             (3, u'无效'),
                             )
-            # elif i.orderstatus.orderStatus == 1: #确认
 
-            #     i.action = (
-            #                     (5, u'停止'),
-            #                 )
             elif i.orderstatus.orderStatus == 2: #编辑
 
                 i.action = (
@@ -400,13 +406,13 @@ class OrderListPurview:
             elif i.orderstatus.orderStatus == 3: #无效
 
                 i.action = (
-                                (6, u'重建'),
+                                (6, u'重下'),
                             )
 
             elif i.orderstatus.orderStatus == 5: #停止
 
                 i.action = (
-                                (6, u'重建'),
+                                (6, u'重下'),
                                 (7, u'更换'),
                             )
 
