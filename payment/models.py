@@ -3,19 +3,17 @@ from django.db import models
 
 # Create your models here.
 
-
-
 class PayManager(models.Manager):
     def getPayById(self, id = ''):
 
-        return Pay.objects.select_related().get(onLine=True, id=id)
+        return self.select_related().get(onLine=True, id=id)
         
     def getDefault(self):
 
         return self.select_related().filter(onLine=True)[0]
 
-    def  getTupleByAll(self):
-        pay = Pay.objects.filter(onLine=True)
+    def getTupleByAll(self):
+        pay = self.filter(onLine=True)
 
         a = [(i.id, i.name) for i in pay]
 

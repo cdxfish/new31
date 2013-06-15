@@ -21,7 +21,6 @@ from django.contrib import messages
 
 # 订单列表显示页面
 def orderList(request):
-
     c = request.GET.get('c') if request.GET.get('c') else 0
     s = request.GET.get('s')
     e = request.GET.get('e')
@@ -153,11 +152,11 @@ class OrderSubmit:
     # 获得新的订单编号
     def getNewOrderSn(self):
         t = time.gmtime()
-        tCount = t.tm_hour * t.tm_min * t.tm_sec
+        tCount = int('%02d%02d%02d' % (t.tm_hour,t.tm_min, t.tm_sec))
         sExpiryDate = self.request.session.get_expiry_date()
-        sCount = (sExpiryDate.hour * sExpiryDate.minute * sExpiryDate.second ) % 10
+        sCount = (sExpiryDate.hour * sExpiryDate.minute * sExpiryDate.second ) % 100
 
-        return int('%d%d%05d%d' % (t.tm_year, t.tm_yday, tCount, sCount))
+        return int('%d%d%06d%02d' % (t.tm_year, t.tm_yday, tCount, sCount))
 
 
     # 锁定新订单进行订单号占位
@@ -168,6 +167,7 @@ class OrderSubmit:
         run = True
 
         while run:
+            print self.orderId
             try:
                 self.order = OrderInfo.objects.get(orderSn=self.orderId)
 

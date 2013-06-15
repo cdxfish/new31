@@ -22,6 +22,8 @@ class Purview:
 
         if self.request.path in self.purview: #进行权限页面对照,确认当前页面是否需要权限判定
 
+            self.domElement() #页面元素权限加持
+            
             if self.request.user.is_authenticated() and self.request.user.is_staff:
 
                 element =[]#用户可进入的页面权限集
@@ -37,10 +39,7 @@ class Purview:
                 except:
                     return self.error()
 
-                if self.request.path in element:
-                    self.domElement() #页面元素权限加持
-
-                else:
+                if not self.request.path in element:
                     return self.error()
 
             else:
@@ -53,6 +52,6 @@ class Purview:
 
     # 用户级错误提示
     def error(self):
-        messages.error(self.request, '权限不足，无法进行当前操作。')
+        messages.error(self.request, u'权限不足，无法进行 %s 操作。' % self.request.domElement.get_path_display())
 
         return redirectBack(self.request)

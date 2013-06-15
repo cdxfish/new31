@@ -22,16 +22,32 @@ class ShipConsignee:
     def __init__(self, request):
         self.request = request
         self.c = request.session.get('c')
+        
+        try:
+            payID = Pay.objects.getDefault().id
+        except:
+            payID = 0
+
+        try:
+            areaID = Area.objects.getDefault().id
+        except:
+            areaID = 0
+
+        try:
+            signID = SignTime.objects.getDefault().id
+        except:
+            signID = 0
+        
         self.cFormat = {
                             'user':'', 
-                            'pay': Pay.objects.getDefault().id, 
+                            'pay': payID, 
                             'ship':0, 
                             'consignee':'', 
-                            'area': Area.objects.getDefault().id, 
+                            'area': areaID, 
                             'address':'', 
                             'tel':'', 
                             'signDate': '%s' % datetime.date.today(), 
-                            'time': SignTime.objects.getDefault().id,
+                            'time': signID,
                             'note':'',
                         } 
 

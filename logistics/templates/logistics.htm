@@ -21,7 +21,7 @@
             <th>类型</th>
             <th>订单编号</th>
             <th>联系人</th>
-            <th>金额</th>
+            <th>应收 | 找补 | 实收 | 付款方式</th>
             <th>状态</th>
             <th>操作</th>
           </tr>
@@ -30,7 +30,7 @@
             <td>{{ i.get_orderType_display }}</td>
             <td><a href="/order/{{ i.orderSn }}/">{{ i.orderSn }}</a></td>
             <td>{{ i.orderlogistics.consignee }} [ {{ i.orderlogistics.tel }} ]</td>
-            <td>189.00</td>
+            <td>200.00 | 11.00 | 189.00 | {{ i.orderpay.payName }}</td>
             <td>{{ i.orderstatus.get_orderStatus_display }} | {{ i.orderpay.get_payStatus_display }} | {{ i.ordership.get_shipStatus_display }}</td>
             <td nowrap="nowrap">
 {% for v,ii in i.action %}
@@ -68,11 +68,12 @@
               <select class="dis" id="s{{ i.orderSn }}" name="s">
                 <option value="1" selected="selected">吴</option>
                 <option value="2">刘</option>
-              </select></td>
+              </select>
+            </td>
           </tr>             
           <tr>
             <td align="center">备注</td>
-            <td colspan="5">速度送</td>
+            <td colspan="6">速度送</td>
           </tr>
 
 {% endfor %}

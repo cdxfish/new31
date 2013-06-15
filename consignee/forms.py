@@ -8,7 +8,6 @@ from signtime.models import *
 # Create your forms here.
 
 class ConsigneeForm(forms.ModelForm):
-
     user = forms.CharField(label=u'会员帐号', required=False)
     pay = forms.ChoiceField(label=u'支付方式', choices=Pay.objects.getTupleByAll())
     time = forms.ChoiceField(label=u'收货时间', choices=SignTime.objects.getTupleByAll())

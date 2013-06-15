@@ -2,7 +2,6 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
-from models import *
 from order.models import *
 from purview.models import *
 from consignee.forms import *

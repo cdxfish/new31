@@ -22,9 +22,9 @@ def redirect():
 # 重定向至前一页
 def redirectBack(request):
 
-    if count() > 1:
-        return redirect()
-    else:
+    # if count() > 1:
+    #     return redirect()
+    # else:
         return HttpResponseRedirect(request.META.get('HTTP_REFERER',"/"))
 
 
