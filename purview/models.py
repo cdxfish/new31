@@ -9,6 +9,10 @@ class elementManager(models.Manager):
 
         return self.select_related().get(path=path, onLine=True)
 
+    def getDomElement(self):
+
+        return self.select_related().filter(onLine=True)
+
 
 class Element(models.Model):
     pPath = (

@@ -6,17 +6,23 @@ from discount.models import *
 
 # Create your models here.
 
+class orderLogisticsManager(models.Manager):
+    def getlogisBySN(self, sn):
+
+        return self.get(order=sn)
+
+
 class OrderInfo(models.Model):
     oType = (
-                (0,u'普销'), 
-                (1,u'普销(无积分)'), 
-                (2,u'活动'), 
-                (3,u'积分'), 
-                (4,u'提货券'), 
+                (0, u'普销'), 
+                (1, u'普销(无积分)'), 
+                (2, u'活动'), 
+                (3, u'积分'), 
+                (4, u'提货券'), 
             )
     orderSn = models.BigIntegerField(u'订单号', primary_key=True, unique=True)
-    user = models.CharField(u'会员', max_length=30, blank=True, null=True)
-    referer = models.CharField(u'订单来源', max_length=30)
+    user = models.ForeignKey(User, verbose_name=u'会员', blank=True, null=True)
+    referer = models.CharField(u'订单来源', max_length=30,default='网店订单')
     orderType = models.SmallIntegerField(u'订单类型', default=0, choices=oType)
 
     def __unicode__(self):
@@ -28,26 +34,7 @@ class OrderInfo(models.Model):
 
 
 class OrderLog(models.Model):
-    aType = (
-                (0,u'确认'),
-            )
-
-    order = models.ForeignKey(OrderInfo, verbose_name=u'订单')
-    user = models.ForeignKey(User, verbose_name=u'用户')
-    actionType = models.SmallIntegerField(u'操作', editable=False, choices=aType)
-    note = models.CharField(u'备注', max_length=60, blank=True, null=True)
-    logTime = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True, editable=False)
-
-    def __unicode__(self):
-        return u"%s - [a:%s][%s]" % ( self.order, self.get_actionType_display(), self.logTime )
-        
-    class Meta:
-        unique_together = (("order","actionType"),)
-        # verbose_name = u'订单日志'
-
-
-class OrderLineTime(models.Model):
-    tT = (
+    logType = (
             (0, u'下单'),
             (1, u'确认'),
             (2, u'取消'),
@@ -61,15 +48,17 @@ class OrderLineTime(models.Model):
         )
 
     order = models.ForeignKey(OrderInfo, verbose_name=u'订单')
-    timeType = models.SmallIntegerField(u'时间类型', default=0, choices=tT)
-    lineTime = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True)
+    user = models.ForeignKey(User, verbose_name=u'用户')
+    log = models.SmallIntegerField(u'日志类型', default=0, choices=logType)
+    note = models.CharField(u'备注', max_length=60, blank=True, null=True)
+    time = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True, editable=False)
 
     def __unicode__(self):
-        return u"%s - [ %s ][ %s ]" % ( self.order, self.get_timeType_display(), self.lineTime )
+        return u"%s - [ %s ][ %s ]" % ( self.order, self.get_log_display(), self.time )
         
     class Meta:
-        unique_together=(("order","timeType"),)   
-        # verbose_name = u'订单时间线'
+        unique_together=(("order","time"),)   
+        # verbose_name = u'订单日志'
         # 记录类似于下单时间.付款时间.发货时间等             
 
 
@@ -96,6 +85,8 @@ class OrderLogistics(models.Model):
     advance = models.SmallIntegerField(u'提前量', default=0, choices=advanceChoice)
     deliveryman = models.CharField(u'物流师傅', max_length=60, blank=True, null=True)
     note = models.CharField(u'备注', max_length=255, blank=True, null=True)
+
+    objects = orderLogisticsManager()
 
     def __unicode__(self):
         return u"%s - [ %s ][ %s  %s - %s ][ %s ]" % ( self.order, self.consignee, self.signDate, self.signTimeStart, self.signTimeEnd, self.tel )

@@ -365,9 +365,7 @@ table td{
 
 #content .search{
   background:#FFFFFF;
-  border-top:1px solid #BBDDE5;
-  border-left: 1px solid #BBDDE5;
-  border-right: 1px solid #BBDDE5;
+  border:1px solid #BBDDE5;
   color:#9CACAF;
   font-size:14px;
   padding:2px 10px;

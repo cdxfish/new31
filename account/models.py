@@ -55,7 +55,6 @@ class UserInfo(models.Model):
                     (31, u'三十一日'), 
                 )
 
-
     user = models.OneToOneField(User, verbose_name=u'用户')
     birthMon = models.SmallIntegerField(u'出生月', choices=modChoices)
     birthDay = models.SmallIntegerField(u'出生日', choices=dayChoices)

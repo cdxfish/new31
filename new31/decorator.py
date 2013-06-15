@@ -7,18 +7,20 @@ from django.contrib import messages
 # 订单提交类提示用装饰器
 def subFailRemind(s= ''):
     def _newfunc(func):
-        def __newfunc(self, **kwargs):
+        def __newfunc(self):
             if not self.error:
+                try:
+                    return func(self)
 
-                if settings.DEBUG:
-                    return func(self, kwargs)
+                except Exception, e:
+                    self.error = True
 
-                else:
-                    try:
-                        func(self, kwargs)
-                    except:
-                        messages.error(self.request, s)
+                    messages.error(self.request, s)
+                    if settings.DEBUG:
+                        self.delNewOrder()
+                        raise e
 
+            return self #强制返回self否则无法链式调用
         return __newfunc
     return _newfunc
 

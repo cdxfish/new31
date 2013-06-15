@@ -3,9 +3,9 @@
 class OrderMiddleware:
     
     def process_request(self, request):
-        from views import OrderSubmit
+        from views import Order
 
-        OrderSubmit(request).formatOrderType()
+        Order(request).format()
 
         return None
 

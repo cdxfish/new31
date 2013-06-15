@@ -64,7 +64,7 @@ class ShipConsignee:
         return self.setConsignee(s)
 
 
-    def clearConsignee(self):
+    def clear(self):
 
         return self.setConsignee(self.cFormat)
 
@@ -88,5 +88,23 @@ class ShipConsignee:
         if cDate < toDay or not c['signDate']:
             c['signDate'] = '%s' % datetime.date.today()
 
+
+        return self.setConsignee(c)
+
+    def setSiessionByOrder(self, sn):
+        c = self.cFormat.copy()
+
+        oLogistics = OrderLogistics.objects.getlogisBySN(sn=sn)
+
+        c['user'] = oLogistics.order.user
+        c['pay'] = 0
+        c['consignee'] = oLogistics.consignee
+        c['area'] = 0
+        c['address'] = oLogistics.address
+        c['tel'] = oLogistics.tel
+        # c['signDate'] = '%s' % oLogistics.signDate
+
+        c['time'] = 0
+        c['note'] = oLogistics.note
 
         return self.setConsignee(c)

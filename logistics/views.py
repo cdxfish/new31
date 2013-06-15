@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from order.models import *
 from purview.models import *
 from consignee.forms import *
-import time, json
+import time, jsonf
 from office.func import *
 
 from django.conf import settings
@@ -25,9 +25,6 @@ def logistics(request):
     oListAll = OrderInfo.objects.select_related().all()
 
     oList = page(l=oListAll, p=p)
-
-    # for i in oList:
-    #     print dir(i)
 
     oList = logisticsPurview(oList, request).getElement().beMixed()
 

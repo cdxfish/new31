@@ -59,9 +59,8 @@ def cConsigneeByAjax(request, kwargs):
 # ajax动态写入收货人信息
 @tryMsg('无法填写表单')
 def coTypeByAjax(request, kwargs):
-    o = OrderSubmit(request)
-    o.oType = request.GET.get('oType')
-    o.setSeesion()
+
+    Order(request).setSeesion(oType=request.GET.get('oType'))
 
     return AjaxRJson().jsonEn()
 

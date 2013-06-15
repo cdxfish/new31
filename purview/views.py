@@ -7,7 +7,21 @@ from new31.func import *
 # Create your views here.
 
 class Purview:
-    """权限处理类"""
+    """ 后台全局安全控制类
+
+        1. 根据后台url列表判定是否进行权限限制
+        2. 根据当前url计算当前用户是否有进入权限
+        3. 页面元素加持，用于基本信息显示
+
+
+        判定方式:
+
+        1. 是否需要判定
+        2. 是否已登录
+        3. 权限检查
+
+
+    """
 
     def __init__(self, request):
         self.request = request
@@ -22,13 +36,13 @@ class Purview:
 
         if self.request.path in self.purview: #进行权限页面对照,确认当前页面是否需要权限判定
 
-            self.domElement() #页面元素权限加持
             
             if self.request.user.is_authenticated() and self.request.user.is_staff:
 
                 element =[]#用户可进入的页面权限集
 
                 try:
+                    self.domElement() #页面元素权限加持
                     role = self.request.user.userrole.role
  
                     if role.onLine:
@@ -50,8 +64,9 @@ class Purview:
     def domElement(self):
         self.request.domElement = Element.objects.getPath(path=self.request.path)
 
+
     # 用户级错误提示
     def error(self):
-        messages.error(self.request, u'权限不足，无法进行 %s 操作。' % self.request.domElement.get_path_display())
+        messages.error(self.request, u'权限不足。')
 
         return redirectBack(self.request)

@@ -15,7 +15,8 @@ from forms import *
 from decimal import *
 from consignee.forms import *
 import time, json
-from django.contrib import messages
+from django.contrib import messages, auth
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -43,16 +44,20 @@ def cCon(request, c):
 
     c = int(c)
     orderSN = request.GET.get('sn')
-
-    # if c == 1:
     order =  OrderInfo.objects.get(orderSn=orderSN).orderstatus
 
     order.orderStatus = c
 
     order.save()
 
+    if not c == 2:
+        return HttpResponseRedirect('/order/')
 
-    return HttpResponseRedirect('/order/')
+    else:
+        # 将订单信息配置到seesion当中
+        ShipConsignee(request).setSiessionByOrder(sn=orderSN)
+
+        return HttpResponseRedirect('/order/new/')
 
 
 # 前台订单提交,并是用前台消息模板显示订单号等信息
@@ -97,6 +102,29 @@ def delItemToOrder(request, kwargs):
     return Cart(request).clearItemByMark(kwargs['mark'])
 
 
+class Order:
+    """ 订单基本信息类
+
+        存储于seesion数据的操作类
+
+    """
+    def __init__(self, request):
+        self.request = request
+        self.oType = request.session.get('oType')
+        self.oFormat = OrderInfo.oType[0][0]
+        
+    def format(self):
+        if not self.oType:
+            return self.setSeesion(self.oFormat)
+
+    def setSeesion(self, oType):
+        self.request.session['oType'] = oType
+
+        return self
+
+    def clear(self):
+
+        return self.setSeesion(self.oFormat)
 
 
 class OrderSubmit:
@@ -107,9 +135,9 @@ class OrderSubmit:
 
         订单数据来源为session中数据
 
-        session['c'] = 联系人信息
         session['items'] = 商品信息
         session['oType'] = 订单类型
+        session['c'] = 联系人信息
 
 
 
@@ -119,35 +147,29 @@ class OrderSubmit:
     """
     def __init__(self, request):
         self.request = request
-        self.orderId = 2013113082322
-        self.oType = 0
-        self.orderItem = []
-        self.orderSpec = []
-        self.orderFee = []
-        self.orderDiscount = []
         self.error = False
 
         self.items = Cart(self.request).items
         self.c = ShipConsignee(self.request).c
 
+
     def submit(self):
 
-        try:
-            self.newOderSn() \
-                .infoSubmit() \
-                .logisticsSubmit() \
-                .itemSubmit() \
-                .paySubmit() \
-                .shipSubmit() \
-                .oStartSubmit() \
-                .oLineSubmit() \
-                .submitDone()
+        self.newOderSn() \
+            .infoSubmit() \
+            .logisticsSubmit() \
+            .itemSubmit() \
+            .paySubmit() \
+            .shipSubmit() \
+            .oStartSubmit() \
+            .oLogSubmit() \
+            .submitDone()
 
-            return self
+        # 异常时对数据库进行处理
+        if self.error:
+            self.delNewOrder()
 
-        except:
-            return self.delNewOrder()
-
+        return self
 
     # 获得新的订单编号
     def getNewOrderSn(self):
@@ -161,13 +183,11 @@ class OrderSubmit:
 
     # 锁定新订单进行订单号占位
     def newOderSn(self):
-
         self.orderId = self.getNewOrderSn()
 
         run = True
 
         while run:
-            print self.orderId
             try:
                 self.order = OrderInfo.objects.get(orderSn=self.orderId)
 
@@ -175,7 +195,7 @@ class OrderSubmit:
                 run = False
 
                 self.order = OrderInfo.objects.create(orderSn=self.orderId)
-                
+
             else:
                 self.orderId += 1
 
@@ -183,56 +203,39 @@ class OrderSubmit:
 
 
     # 插入订单基本信息
-    @subFailRemind('无法插入订单基本信息')
-    def infoSubmit(self, u= '' , r ='网店订单'):
+    @subFailRemind('会员不存在，无法提交订单基本信息。')
+    def infoSubmit(self):
+        if self.c['user']:
+            self.order.user= User.objects.get(username=self.c['user'])
 
-        self.order.referer=r
-        self.order.user= u if u else self.request.user.username
-
+        self.order.orderType = Order(self.request).oType
         self.order.save()
-
-
-        return self
-
-
-    # 格式化订单类型,主要用于中间件
-    def formatOrderType(self):
-        if not 'oType' in self.request.session:
-
-            return self.setSeesion()
-
-
-    # 设置订单类型
-    def setSeesion(self):
-
-        self.request.session['oType'] = self.oType
 
         return self
 
 
     # 物流信息提交
+    @subFailRemind('无法提交物流信息。')
     def logisticsSubmit(self):
 
         logisticsTimeAvdce = 1
 
-        c = self.request.session['c']
+        time = SignTime.objects.get(id=self.c['time'], onLine=True)
 
-        time = SignTime.objects.get(id=c['time'], onLine=True)
-
-        area = Area.objects.get(id= c['area'], onLine=True)
+        area = Area.objects.get(id= self.c['area'], onLine=True)
 
         logistics = OrderLogistics()
 
-        logistics.consignee = c['consignee']
+        logistics.consignee = self.c['consignee']
         logistics.area = '%s - %s' % (area.sub.name, area.name)
-        logistics.address = c['address']
-        logistics.tel = c['tel']
-        logistics.signDate = c['signDate']
+        logistics.address = self.c['address']
+        logistics.tel = self.c['tel']
+        logistics.signDate = self.c['signDate']
         logistics.signTimeStart = time.start
         logistics.signTimeEnd = time.end
-        logistics.logisTimeStart = time.start.replace(hour = time.start.hour - logisticsTimeAvdce)  
+        logistics.logisTimeStart = time.start.replace(hour = time.start.hour - logisticsTimeAvdce)
         logistics.logisTimeEnd = time.end.replace(hour = time.end.hour - logisticsTimeAvdce)
-        logistics.note = c['note']
+        logistics.note = self.c['note']
 
         logistics.order = self.order
 
@@ -242,9 +245,10 @@ class OrderSubmit:
 
 
     # 商品信息提交
+    @subFailRemind('部分商品已下架，无法提交商品信息。')
     def itemSubmit(self):
 
-        self.orderItem = []
+        orderItem = []
 
         for v,i in self.items.items():
 
@@ -254,25 +258,26 @@ class OrderSubmit:
             dis = Discount.objects.getDisByDisID(id=i['disID'])
             nowFee = forMatFee(fee.amount * Decimal(dis.discount))
 
-            self.orderItem.append(
+            orderItem.append(
                 OrderItem(
-                    order=self.order, 
-                    name=item.name, 
-                    sn=item.sn, 
-                    spec=spec.value, 
+                    order=self.order,
+                    name=item.name,
+                    sn=item.sn,
+                    spec=spec.value,
                     number=i['num'],
-                    amount=fee.amount, 
+                    amount=fee.amount,
                     discount=dis.discount,
                     nowFee=nowFee
                     )
                 )
 
 
-        OrderItem.objects.bulk_create(self.orderItem)
+        OrderItem.objects.bulk_create(orderItem)
 
         return self
 
     # 支付信息提交
+    @subFailRemind('无法提交支付信息提交。')
     def paySubmit(self):
 
         pay = Pay.objects.getPayById(id=self.c['pay'])
@@ -287,7 +292,8 @@ class OrderSubmit:
         return self
 
 
-    # 配送信息提交
+    # 配送方式信息提交
+    @subFailRemind('无法提交配送方式信息。')
     def shipSubmit(self):
 
         # ship = Pay.objects.getPayById(id=self.c['ship'])
@@ -306,6 +312,7 @@ class OrderSubmit:
 
 
     # 订单状态提交
+    @subFailRemind('无法提订单状态。')
     def oStartSubmit(self):
         oStart = OrderStatus()
         oStart.order = self.order
@@ -315,10 +322,12 @@ class OrderSubmit:
         return self
 
 
-    # 时间线提交
-    def oLineSubmit(self):
-        oOLT = OrderLineTime()
+    # 订单日志提交
+    @subFailRemind('无法提交订单日志。')
+    def oLogSubmit(self):
+        oOLT = OrderLog()
         oOLT.order = self.order
+        oOLT.user = self.request.user
 
         oOLT.save()
 
@@ -333,27 +342,36 @@ class OrderSubmit:
 
 
     # 订单提交完成
+    @subFailRemind('订单提交无法完成。')
     def submitDone(self):
-        if not self.error:
-            Cart(self.request).clearCart()
-            ShipConsignee(self.request).clearConsignee()
+        Cart(self.request).clear()
+        ShipConsignee(self.request).clear()
+        Order(self.request).clear()
+
 
         return self
 
 
     # 显示订单号,主要用于前提用户级提示
     def showOrderSN(self):
-        messages.success(self.request, '您已成功提交订单!')
-        messages.success(self.request, '感谢您在本店购物！请记住您的订单号: %s' % self.orderId)
+        if self.error:
+            return self.showError()
+        else:
+            messages.success(self.request, '您已成功提交订单!')
+            messages.success(self.request, '感谢您在本店购物！请记住您的订单号: %s' % self.orderId)
 
-        return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/')
 
 
     # 重定向至订单列表页
     def redirOrder(self):
-        messages.success(self.request, '订单提交成功: %s' % self.orderId)
+        if self.error:
+            return self.showError()
+        else:
+            messages.success(self.request, '订单提交成功: %s' % self.orderId)
 
-        return HttpResponseRedirect('/order/')
+            return HttpResponseRedirect('/order/')
+
 
     # 粗粒用户级错误提示
     def showError(self):
@@ -363,13 +381,12 @@ class OrderSubmit:
 
 
 
-
 class OrderListPurview:
     """
     订单列表权限加持
 
-    获取当前角色可进行的订单操作权限. 
-    获取订单状态,判定可选权限. 
+    获取当前角色可进行的订单操作权限.
+    获取订单状态,判定可选权限.
     两者进行交集操作.
 
 
@@ -390,7 +407,7 @@ class OrderListPurview:
             if not i.orderstatus.orderStatus:
 
                 i.action = (
-                            (1, u'确认'), 
+                            (1, u'确认'),
                             (2, u'编辑'),
                             (3, u'无效'),
                             )
@@ -398,7 +415,7 @@ class OrderListPurview:
             elif i.orderstatus.orderStatus == 2: #编辑
 
                 i.action = (
-                            (1, u'确认'), 
+                            (1, u'确认'),
                             (2, u'编辑'),
                             (3, u'无效'),
                             )

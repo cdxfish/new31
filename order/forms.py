@@ -1,6 +1,6 @@
 #coding:utf-8
 from django import forms
-from order.models import *
+from models import *
 from payment.models import *
 from area.models import *
 from signtime.models import *
@@ -23,17 +23,11 @@ def getItemForms(item):
     return orderItemForm(initial= i)
 
 
-
-def getForms(request):
-
-    consignee = {i:v for i, v in request.session['c'].items()}
-
-    return ConsigneeForm(initial= consignee)
-
-
 def getOTpyeForm(request):
+    from views import Order
 
-    return OrderTypeForm(initial= {'oType': request.session.get('oType'),})
+    return OrderTypeForm(initial= {'oType': Order(request).oType,})
+
 
 class OrderTypeForm(forms.Form):
 

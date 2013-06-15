@@ -109,7 +109,7 @@ class Cart:
 
         self.items = request.session.get('items')
 
-    def setItems(self, items):
+    def setSeesion(self, items):
 
         self.request.session['items'] = items
 
@@ -118,7 +118,7 @@ class Cart:
     def formatItems(self):
         if not self.items:
 
-            return self.setItems(self.itemsFormat)
+            return self.setSeesion(self.itemsFormat)
 
     def formatMark(self):
 
@@ -150,7 +150,7 @@ class Cart:
 
         items.update({i['mark']: i}) 
 
-        return self.setItems(items)
+        return self.setSeesion(items)
 
 
     def pushToCartByItemIDs(self, itemIDs):
@@ -168,7 +168,7 @@ class Cart:
   
             items.update({ii['mark']: ii}) 
 
-        return self.setItems(items)
+        return self.setSeesion(items)
 
 
     def clearItemByMark(self, mark):
@@ -179,7 +179,7 @@ class Cart:
 
         del items[mark]
 
-        return self.setItems(items)
+        return self.setSeesion(items)
 
 
     def changeNumBySpec(self, mark, num):
@@ -198,25 +198,29 @@ class Cart:
     def showItemToCart(self):
 
         items = self.items
+        _items = self.items.copy()
 
         itemList = []
         countFee = 0
 
         for i in items:
+            try:
+                ii = self.getItemTotalByMark(i)
+                countFee += ii['total']
 
-            ii = self.getItemTotalByMark(i)
-            countFee += ii['total']
+                ii.update({'forms': getItemForms(item=ii)})
 
-            ii.update({'forms': getItemForms(item=ii)})
+                itemList.append(ii)
+            except Exception, e:
+                del _items[i]
+                messages.warning(self.request, '部分商品已下架。')
 
-
-
-            itemList.append(ii)
+        self.setSeesion(_items)
 
         return {'items': itemList, 'total': forMatFee(countFee)}
 
-    def clearCart(self):
-        self.setItems(self.itemsFormat)
+    def clear(self):
+        self.setSeesion(self.itemsFormat)
 
         return self
 
@@ -229,13 +233,13 @@ class Cart:
 
         name =  self.request.GET.get('name')
         mark =  self.request.GET.get('mark')
-        value =  self.request.GET.get('value')
+        value =  self.request.GET.get('value', 0)
 
         items = self.items
 
         items[int(mark[1:])][name] = int(value)
 
-        return self.setItems(items)
+        return self.setSeesion(items)
 
     def getItemTotalByMark(self, mark):
         i = self.items[mark]
