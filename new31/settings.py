@@ -210,6 +210,10 @@ APPS = {
             'tempContext':'',
             'middleware':'',
         },
+    'inventory':{
+            'tempContext':'',
+            'middleware':'',
+        },
     }
 
 
