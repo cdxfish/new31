@@ -14,7 +14,6 @@ class ConsigneeForm(forms.ModelForm):
 
     class Meta:
         model = OrderLogistics
-        # exclude = ('order', 'logisDate', 'logisDate', 'logisTime', 'deliveryman',)
         fields = ('consignee', 'area', 'address', 'tel', 'signDate', 'note')
         widgets = {
             'address': forms.TextInput(attrs={'size': 70}),

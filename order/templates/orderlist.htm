@@ -24,7 +24,7 @@
             <th>收货时间</th>
             <th>收货人</th>
             <th>电话</th>
-            <th>来源</th>
+            <th>付款方式</th>
             <th>订单状态</th>
           </tr>
           </thead>
@@ -36,7 +36,7 @@
             <td>{{ i.orderlogistics.signDate|date:"Y-m-d" }} | {{ i.orderlogistics.signTimeStart|time:"H:i" }} - {{ i.orderlogistics.signTimeEnd|time:"H:i" }}</td>
             <td>{{ i.orderlogistics.consignee }}</td>
             <td>{{ i.orderlogistics.tel }}</td>
-            <td>{{ i.referer }} [ {{i.orderpay.payName}} ]</td>
+            <td>{{i.orderpay.payName}}</td>
             <td>{{ i.orderstatus.get_orderStatus_display }} | {{ i.orderpay.get_payStatus_display }} | {{ i.ordership.get_shipStatus_display }}</td>
           </tr>
 {% for item in i.orderitem_set.all %}
@@ -51,11 +51,11 @@
 {% endfor %}
           <tr>
             <td align="center">地址</td>
-            <td colspan="8"><a href="/map/?k={{ i.orderlogistics.address }}" target="_blank">{{ i.orderlogistics.address }}</a></td>
+            <td colspan="8"><a href="/map/?k={{ i.orderlogistics.address }}" target="_blank">[ {{ i.orderlogistics.area }} ] {{ i.orderlogistics.address }}</a></td>
           </tr>          
           <tr>
             <td align="center">备注</td>
-            <td colspan="5">速度送</td>
+            <td colspan="5">{{ i.orderlogistics.note }}</td>
             <td nowrap="nowrap" align="center">
 {% for v,ii in i.action %}
            <a href="/order/ccon/{{ v }}/?sn={{ i.orderSn }}" class="button">{{ ii }}</a>

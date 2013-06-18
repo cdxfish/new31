@@ -56,6 +56,7 @@ def cCon(request, c):
     else:
         # 将订单信息配置到seesion当中
         ShipConsignee(request).setSiessionByOrder(sn=orderSN)
+        Order(request).setSeesion(OrderInfo.objects.get(orderSn=orderSN).orderType)
 
         return HttpResponseRedirect('/order/new/')
 
@@ -391,11 +392,9 @@ class OrderListPurview:
 
 
     """
-    # oStart = OrderStatus.oStatus
 
     def __init__(self, oList, request):
         self.oList = oList
-        self.element = Element.objects.get(path=request.path).sub_set.all()
         self.role = OrderStatus.oStatus
 
 
@@ -423,14 +422,13 @@ class OrderListPurview:
             elif i.orderstatus.orderStatus == 3: #无效
 
                 i.action = (
-                                (6, u'重下'),
+                                (6, u'新单'),
                             )
 
             elif i.orderstatus.orderStatus == 5: #停止
 
                 i.action = (
-                                (6, u'重下'),
-                                (7, u'更换'),
+                                (6, u'新单'),
                             )
 
             else:

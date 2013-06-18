@@ -96,15 +96,38 @@ class ShipConsignee:
 
         oLogistics = OrderLogistics.objects.getlogisBySN(sn=sn)
 
+        orderPay = oLogistics.order.orderpay
+
+        try:
+            pay = Pay.objects.get(name=orderPay.payName, cod=orderPay.cod).id
+        except Exception, e:
+            pay = Pay.objects.getDefault().id
+
+        areaList = oLogistics.area.split(' - ')
+
+
+        try:
+            area = Area.objects.get(name=areaList[1]).id
+        except Exception, e:
+            area = Area.objects.getDefault().id
+
+
+        try:
+            time = SignTime.objects.get(signTimeStart=oLogistics.start, signTimeEnd=oLogistics.end).id
+        except Exception, e:
+            time = SignTime.objects.getDefault().id
+
+
+
         c['user'] = oLogistics.order.user
-        c['pay'] = 0
+        c['pay'] = pay
         c['consignee'] = oLogistics.consignee
-        c['area'] = 0
+        c['area'] = area
         c['address'] = oLogistics.address
         c['tel'] = oLogistics.tel
-        # c['signDate'] = '%s' % oLogistics.signDate
+        c['signDate'] = '%s' % oLogistics.signDate
 
-        c['time'] = 0
+        c['time'] = time
         c['note'] = oLogistics.note
 
         return self.setConsignee(c)

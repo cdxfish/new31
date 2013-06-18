@@ -83,3 +83,8 @@ INSERT INTO `area_area` (`id`, `name`, `onLine`, `sub_id`) VALUES
 INSERT INTO `signtime_signtime` (`start`, `end`, `onLine`) VALUES
 ('06:00:00', '07:00:00', 1),
 ('07:00:00', '08:00:00', 1);
+
+INSERT INTO `discount_discount` (`discount`, `onLine`) VALUES
+(1, 1),
+(0.95, 1),
+(0.9, 1);

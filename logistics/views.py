@@ -37,8 +37,6 @@ class logisticsPurview:
     """首先获取当前角色可进行的订单操作权限. 其后获取订单的可选操作. 两者进行交集"""
     def __init__(self, oList, request):
         self.oList = oList
-        self.sStart = OrderShip.sStatus
-        self.element = Element.objects.get(path=request.path).sub_set.all()
         self.role = OrderShip.sStatus
 
     # 获取订单可选操作项

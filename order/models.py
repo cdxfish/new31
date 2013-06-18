@@ -22,7 +22,6 @@ class OrderInfo(models.Model):
             )
     orderSn = models.BigIntegerField(u'订单号', primary_key=True, unique=True)
     user = models.ForeignKey(User, verbose_name=u'会员', blank=True, null=True)
-    referer = models.CharField(u'订单来源', max_length=30,default='网店订单')
     orderType = models.SmallIntegerField(u'订单类型', default=0, choices=oType)
 
     def __unicode__(self):
@@ -103,8 +102,7 @@ class OrderStatus(models.Model):
                 (3, u'无效'),
                 (4, u'完成'),
                 (5, u'停止'),
-                (6, u'重建'),
-                (7, u'更换'),
+                (6, u'新单'),
             )
 
     order = models.OneToOneField(OrderInfo, verbose_name=u'订单')

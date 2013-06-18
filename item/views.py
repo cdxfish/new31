@@ -26,8 +26,6 @@ def itemAdd(request):
     return render_to_response('itemadd.htm', locals(), context_instance=RequestContext(request))    
 
 
-
-
 class ItemList:
     """商品类 for Item"""
     def __init__(self):
