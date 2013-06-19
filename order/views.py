@@ -24,11 +24,11 @@ from django.db.models import Q
 # 订单列表显示页面
 def orderList(request):
 
-    form = getOstatusForm(request)
+    o = Order(request)
 
-    oList = Order(request).oList()
+    form = OrderStatusForm(initial=o.initial)
 
-    oList = OrderListPurview(oList, request).getElement().beMixed()
+    oList = OrderListPurview(o.oList(), request).getElement().beMixed()
 
     return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
 
@@ -107,6 +107,20 @@ class Order:
         self.request = request
         self.oType = request.session.get('oType')
         self.oFormat = OrderInfo.oType[0][0]
+
+
+        today = datetime.date.today()
+        oneDay = datetime.timedelta(days=1)
+
+
+        self.initial = {
+                        'o': int(request.GET.get('o', -1)),
+                        'c': int(request.GET.get('c', 0)), 
+                        's': request.GET.get('s', '%s' % today).strip(),
+                        'e': request.GET.get('e', '%s' % (today + oneDay)).strip(),
+                        'k': request.GET.get('k', '').strip(), 
+            }
+
         
     def format(self):
         if not self.oType:
@@ -122,33 +136,33 @@ class Order:
         return self.setSeesion(self.oFormat)
 
     def oList(self):
-
-        s = self.request.GET.get('s', '%s' % datetime.date.today())
-        e = self.request.GET.get('e', '%s' % datetime.date.today())
-        k = self.request.GET.get('k', '').strip()
-
-        o = int(self.request.GET.get('o', -1))
-        c = int(self.request.GET.get('c', 0))
-        p = int(self.request.GET.get('p', 1))
+        print dir(datetime.date)
 
         q = (
-                Q(orderSn__contains=k) | 
-                # Q(user__contains=k) | 
-                Q(orderlogistics__consignee__contains=k)
+                Q(orderSn__contains=self.initial['k']) |
+                Q(user__username__contains=self.initial['k']) |
+                Q(orderlogistics__consignee__contains=self.initial['k']) |
+                Q(orderlogistics__area__contains=self.initial['k']) |
+                Q(orderlogistics__address__contains=self.initial['k']) |
+                Q(orderlogistics__tel__contains=self.initial['k']) |
+                # Q(orderlogistics__signDate=datetime.date.today()) |
+                Q(orderlogistics__signTimeStart__contains=self.initial['k']) |
+                Q(orderlogistics__signTimeEnd__contains=self.initial['k']) |
+                Q(orderlogistics__note__contains=self.initial['k'])
             )
 
         oList = OrderInfo.objects.select_related().filter(q)
 
-        if o >= 0:
-            oList = oList.filter(orderType=o)
+        if self.initial['o'] >= 0:
+            oList = oList.filter(orderType=self.initial['o'])
 
-        if c >= 0:
-            oList = oList.filter(orderstatus__orderStatus=c)
+        if self.initial['c'] >= 0:
+            oList = oList.filter(orderstatus__orderStatus=self.initial['c'])
 
-        oList = oList.filter(orderlog__time__range=(s, e), orderlog__log=0)
+        oList = oList.filter(orderlog__time__range=(self.initial['s'], self.initial['e']), orderlog__log=0)
 
 
-        return page(l=oList, p=p)
+        return page(l=oList, p=int(self.request.GET.get('p', 1)))
 
 
 class OrderSubmit:

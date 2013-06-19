@@ -4,7 +4,6 @@ from models import *
 from payment.models import *
 from area.models import *
 from signtime.models import *
-import datetime
 
 # Create your forms here.
 
@@ -35,20 +34,6 @@ class OrderTypeForm(forms.Form):
     oChoice = OrderInfo.oType
 
     oType = forms.ChoiceField(label=u'订单类型', choices=oChoice, widget=forms.Select(attrs={'class': 'oType' }))
-
-
-
-def getOstatusForm(request):
-
-    fromInitial = {
-                    'o': int(request.GET.get('o', -1)),
-                    'c': int(request.GET.get('c', 0)), 
-                    's': request.GET.get('s', '%s' % datetime.date.today()).strip(),
-                    'e': request.GET.get('e', '%s' % datetime.date.today()).strip(),
-                    'k': request.GET.get('k', '').strip(), 
-        }
-
-    return OrderStatusForm(initial= fromInitial)
 
 
 class OrderStatusForm(forms.Form):
