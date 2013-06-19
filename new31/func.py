@@ -1,4 +1,5 @@
 #coding:utf-8
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.http import HttpResponseRedirect
 import math
 
@@ -34,3 +35,15 @@ def count(L=[]):
     L.append(1)
     
     return len(L)
+
+
+# 分页
+def page(l='', p=1, pSize=150):
+
+    p = int(p) if int(p) > 0 else 1
+    paginator = Paginator(l, pSize)
+
+    try:
+        return paginator.page(p)
+    except (EmptyPage, InvalidPage):
+        return paginator.page(paginator.num_pages)

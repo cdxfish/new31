@@ -4,7 +4,7 @@
 class ConsigneeMiddleware:
 
     def process_request(self, request):
-    	from views import *
+        from views import *
 
         ShipConsignee(request).formatConsignee()
 

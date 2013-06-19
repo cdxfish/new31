@@ -34,7 +34,7 @@ class OrderInfo(models.Model):
 
 class OrderLog(models.Model):
     logType = (
-            (0, u'下单'),
+            (0, u'新单'),
             (1, u'确认'),
             (2, u'取消'),
             (3, u'无效'),

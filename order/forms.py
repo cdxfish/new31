@@ -4,6 +4,7 @@ from models import *
 from payment.models import *
 from area.models import *
 from signtime.models import *
+import datetime
 
 # Create your forms here.
 
@@ -34,3 +35,29 @@ class OrderTypeForm(forms.Form):
     oChoice = OrderInfo.oType
 
     oType = forms.ChoiceField(label=u'订单类型', choices=oChoice, widget=forms.Select(attrs={'class': 'oType' }))
+
+
+
+def getOstatusForm(request):
+
+    fromInitial = {
+                    'o': int(request.GET.get('o', -1)),
+                    'c': int(request.GET.get('c', 0)), 
+                    's': request.GET.get('s', '%s' % datetime.date.today()).strip(),
+                    'e': request.GET.get('e', '%s' % datetime.date.today()).strip(),
+                    'k': request.GET.get('k', '').strip(), 
+        }
+
+    return OrderStatusForm(initial= fromInitial)
+
+
+class OrderStatusForm(forms.Form):
+
+    oChoice = ((-1, '全部'),) + OrderInfo.oType
+    cChoice = ((-1, '全部'),) + OrderStatus.oStatus
+
+    o = forms.ChoiceField(label=u'订单类型', choices=oChoice, widget=forms.Select(attrs={'class': 'c' }))
+    c = forms.ChoiceField(label=u'订单状态', choices=cChoice, widget=forms.Select(attrs={'class': 'o' }))
+    s = forms.DateField(label="起始时间",widget=forms.DateInput(attrs={'class': 'dateNoDir', 'size': 7},format='%Y-%m-%d'))
+    e = forms.DateField(label="结束时间",widget=forms.DateInput(attrs={'class': 'dateNoDir', 'size': 7},format='%Y-%m-%d'))
+    k = forms.CharField(label=u'关键字', required=False)

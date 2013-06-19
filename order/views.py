@@ -4,9 +4,9 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
 from new31.decorator import *
+from new31.func import *
 from signtime.models import *
 from cart.views import *
-from office.func import *
 from area.models import *
 from item.models import *
 from payment.models import *
@@ -17,22 +17,16 @@ from consignee.forms import *
 import time, json
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 # Create your views here.
 
 # 订单列表显示页面
 def orderList(request):
-    c = request.GET.get('c') if request.GET.get('c') else 0
-    s = request.GET.get('s')
-    e = request.GET.get('e')
-    k = request.GET.get('k') if request.GET.get('k') else ''
-    p = int(request.GET.get('p')) if request.GET.get('p') > 0 else 1
 
-    oStatus = OrderStatus.oStatus
+    form = getOstatusForm(request)
 
-    oListAll = OrderInfo.objects.select_related().all()
-
-    oList = page(l=oListAll, p=p)
+    oList = Order(request).oList()
 
     oList = OrderListPurview(oList, request).getElement().beMixed()
 
@@ -126,6 +120,35 @@ class Order:
     def clear(self):
 
         return self.setSeesion(self.oFormat)
+
+    def oList(self):
+
+        s = self.request.GET.get('s', '%s' % datetime.date.today())
+        e = self.request.GET.get('e', '%s' % datetime.date.today())
+        k = self.request.GET.get('k', '').strip()
+
+        o = int(self.request.GET.get('o', -1))
+        c = int(self.request.GET.get('c', 0))
+        p = int(self.request.GET.get('p', 1))
+
+        q = (
+                Q(orderSn__contains=k) | 
+                # Q(user__contains=k) | 
+                Q(orderlogistics__consignee__contains=k)
+            )
+
+        oList = OrderInfo.objects.select_related().filter(q)
+
+        if o >= 0:
+            oList = oList.filter(orderType=o)
+
+        if c >= 0:
+            oList = oList.filter(orderstatus__orderStatus=c)
+
+        oList = oList.filter(orderlog__time__range=(s, e), orderlog__log=0)
+
+
+        return page(l=oList, p=p)
 
 
 class OrderSubmit:

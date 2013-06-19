@@ -3,16 +3,12 @@
 {% block content %}
       <div class="search" nowrap="true" colspan="3">
           <form action="/order/" method="get">
-            <select name="c">
-              <option value="-1" selected>全部</option>
-{% for v,i in oStatus %}
-              <option value="{{ v }}" >{{ i }}</option>
-{% endfor %}
-            </select>
-            <input type="text" name="s" size="7" value="{% if s %}{{ s }}{% else %}{% now "Y-m-d" %}{% endif %}" class="date">
-             <span>至</span>
-            <input type="text" name="e" size="7" value="{% if e %}{{ e }}{% else %}{% now "Y-m-d" %}{% endif %}" class="date">
-            <input type="text" name="k" size="15" value="{{ k }}" />
+            {{ form.o }}
+            {{ form.c }}
+            {{ form.s }}
+            <span>至</span>
+            {{ form.e }}
+            {{ form.k }}
             <input type="submit" value=" 搜索 " class="button" />
           </form>
       </div>
