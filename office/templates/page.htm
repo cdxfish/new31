@@ -1,0 +1,14 @@
+          <tr>
+            <td align="right" nowrap="true" colspan="10">
+              总计 {{ oList.paginator.count }} 条记录，共 {{ oList.paginator.num_pages }} 页，当前第 {{ oList.paginator.p }} 页
+              <span id="pageLink">
+                <a href="{{ request.path }}?{% for i in form %}{{ i.name }}={{ i.value }}&{% endfor %}p=1">第一页</a>
+{% if oList.has_previous %}
+                <a href="{{ request.path }}?{% for i in form %}{{ i.name }}={{ i.value }}&{% endfor %}p={{ oList.previous_page_number }}">上一页</a>
+{% endif %}
+{% if oList.has_next %}
+                  <a href="{{ request.path }}?{% for i in form %}{{ i.name }}={{ i.value }}&{% endfor %}p={{ oList.next_page_number }}">下一页</a>
+{% endif %}
+              </span>           
+            </td>
+          </tr>

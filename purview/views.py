@@ -25,11 +25,12 @@ class Purview:
 
     def __init__(self, request):
         self.request = request
-        self.request.domElement = []
+        self.request.domElement = [] #页面元素
 
-        self.isStaff = self.request.user.is_authenticated() and self.request.user.is_staff
+        self.isStaff = self.request.user.is_authenticated() and self.request.user.is_staff #用户登录状态
 
-        self.purview = ( i[0] for i in Element.pPath )
+        self.purview = ( i[0] for i in Element.pPath ) #需要判定的url列表
+        self.request.paths = { v:i  for i, v in Element.pPath } #需要判定的url列表
 
 
     def check(self):

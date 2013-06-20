@@ -97,12 +97,11 @@ class OrderLogistics(models.Model):
 class OrderStatus(models.Model):
     oStatus = (
                 (0, u'新单'), 
-                (1, u'确认'), 
-                (2, u'编辑'),
+                (1, u'编辑'), 
+                (2, u'确认'),
                 (3, u'无效'),
                 (4, u'完成'),
                 (5, u'停止'),
-                (6, u'新单'),
             )
 
     order = models.OneToOneField(OrderInfo, verbose_name=u'订单')

@@ -5,36 +5,65 @@ from django.http import HttpResponse
 from consignee.forms import *
 from purview.models import *
 from order.models import *
-from office.func import *
-import time
+from order.views import *
+from new31.func import *
+from forms import *
+import time,datetime
 
 from django.conf import settings
 
 # Create your views here.
 
-def logistics(request):
+def logisticsUI(request):
 
-    c = request.GET.get('c') if request.GET.get('c') else 0
-    s = request.GET.get('s')
-    e = request.GET.get('e')
-    k = request.GET.get('k') if request.GET.get('k') else ''
-    p = int(request.GET.get('p')) if request.GET.get('p') > 0 else 1
+    l = Logistics(request)
 
-    oStatus = OrderShip.sStatus
+    form = LogisticsForm(initial=l.initial)
 
-    oListAll = OrderInfo.objects.select_related().all()
-
-    oList = page(l=oListAll, p=p)
-
-    oList = logisticsPurview(oList, request).getElement().beMixed()
+    oList = logisticsPurview(l.search().oStatus().range().page(), request).getElement().beMixed()
 
     return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))    
 
 
 
+class Logistics(Order):
+    """ 
+        订单基本信息类
+
+        存储于seesion数据的操作类
+
+    """
+    def __init__(self, request):
+        super(Logistics, self).__init__(request)
+
+    def search(self):
+        self.oList = self.baseSearch().oList.filter(orderstatus__orderStatus__gt = 1)
+
+        return self
+
+    def oStatus(self):
+        if self.initial['c'] >= 0:
+            self.oList = self.oList.filter(ordership__shipStatus=self.initial['c'])
+
+        return self
+
+    def range(self):
+        self.oList = self.oList.filter(orderlogistics__signDate__range=(self.initial['s'], self.initial['e']))
+
+        return self
+
+    def page(self):
+        return page(l=self.oList, p=int(self.request.GET.get('p', 1)))
+
+
 # 订单列表权限加持
 class logisticsPurview:
-    """首先获取当前角色可进行的订单操作权限. 其后获取订单的可选操作. 两者进行交集"""
+    """
+        首先获取当前角色可进行的订单操作权限. 
+
+        其后获取订单的可选操作. 两者进行交集
+
+    """
     def __init__(self, oList, request):
         self.oList = oList
         self.role = OrderShip.sStatus

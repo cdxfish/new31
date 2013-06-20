@@ -1,19 +1,8 @@
 {% extends "office.base.htm" %}
 
 {% block content %}
-      <div class="search" nowrap="true" colspan="3">
-          <form action="/order/" method="get">
-            {{ form.o }}
-            {{ form.c }}
-            {{ form.s }}
-            <span>至</span>
-            {{ form.e }}
-            {{ form.k }}
-            <input type="submit" value=" 搜索 " class="button" />
-          </form>
-      </div>
-      <table cellpadding="3" cellspacing="1" width="100%" class="sortTable">
-        <thead>
+      {% include 'search.htm' %}
+      <table cellpadding="3" cellspacing="1" width="100%">
           <tr>
             <th>类型</th>
             <th width="80px">订单编号</th>
@@ -23,12 +12,10 @@
             <th>付款方式</th>
             <th>订单状态</th>
           </tr>
-          </thead>
-          <tbody>
 {% for i in oList %}
           <tr align="center" class="tr_border_top_black">
             <td>{{ i.get_orderType_display }}</td>
-            <td><a href="/order/{{ i.orderSn }}/">{{ i.orderSn }}</a></td>
+            <td><a href="{{ request.path }}{{ i.orderSn }}/">{{ i.orderSn }}</a></td>
             <td>{{ i.orderlogistics.signDate|date:"Y-m-d" }} | {{ i.orderlogistics.signTimeStart|time:"H:i" }} - {{ i.orderlogistics.signTimeEnd|time:"H:i" }}</td>
             <td>{{ i.orderlogistics.consignee }}</td>
             <td>{{ i.orderlogistics.tel }}</td>
@@ -47,32 +34,18 @@
 {% endfor %}
           <tr>
             <td align="center">地址</td>
-            <td colspan="8"><a href="/map/?k={{ i.orderlogistics.address }}" target="_blank">[ {{ i.orderlogistics.area }} ] {{ i.orderlogistics.address }}</a></td>
+            <td colspan="8"><a href="{{ request.paths.地图 }}?k={{ i.orderlogistics.address }}" target="_blank">[ {{ i.orderlogistics.area }} ] {{ i.orderlogistics.address }}</a></td>
           </tr>          
           <tr>
             <td align="center">备注</td>
             <td colspan="5">{{ i.orderlogistics.note }}</td>
             <td nowrap="nowrap" align="center">
 {% for v,ii in i.action %}
-           <a href="/order/ccon/{{ v }}/?sn={{ i.orderSn }}" class="button">{{ ii }}</a>
+           <a href="{{ request.paths.订单 }}ccon/{{ v }}/?sn={{ i.orderSn }}" class="button">{{ ii }}</a>
 {% endfor %}
             </td>
           </tr>
 {% endfor %}
-          </tbody>
-          <tr>
-            <td align="right" nowrap="true" colspan="10">
-              总计 {{ oList.paginator.count }} 条记录，共 {{ oList.paginator.num_pages }} 页，当前第 {{ p }} 页
-              <span id="pageLink">
-                <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p=1">第一页</a>
-{% if oList.has_previous %}
-                <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p={{ oList.previous_page_number }}">上一页</a>
-{% endif %}
-{% if oList.has_next %}
-                  <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p={{ oList.next_page_number }}">下一页</a>
-{% endif %}
-              </span>           
-            </td>
-          </tr>
+          {% include 'page.htm' %}
       </table>
 {% endblock %}

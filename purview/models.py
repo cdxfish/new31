@@ -20,8 +20,8 @@ class Element(models.Model):
           (u'/order/', u'订单'),
           (u'/order/new/', u'新订单'),
           (u'/order/add/', u'订单提交'),
-          (u'/order/1/', u'确认订单'),
-          (u'/order/2/', u'编辑订单'),
+          (u'/order/1/', u'编辑订单'),
+          (u'/order/2/', u'确认订单'),
           (u'/order/3/', u'无效订单'),
           (u'/back/', u'退款'),
           (u'/logistics/', u'物流管理'),
@@ -54,6 +54,7 @@ class Element(models.Model):
           (u'/logistics/time/', u'物流时间'),
           (u'/area/', u'配送区域'),
           (u'/filecheck/', u'文件校验'),
+          (u'/map/', u'地图'),
         ) #权限对照用列表,用于识别那些页面需要进行权限判定
 
     path = models.CharField(u'路径',max_length=255, choices=pPath, unique=True)

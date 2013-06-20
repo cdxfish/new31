@@ -28,7 +28,7 @@ def orderList(request):
 
     form = OrderStatusForm(initial=o.initial)
 
-    oList = OrderListPurview(o.oList(), request).getElement().beMixed()
+    oList = OrderListPurview(o.baseSearch().oStatus().range().page(), request).getElement().beMixed()
 
     return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
 
@@ -44,7 +44,7 @@ def cCon(request, c):
 
     order.save()
 
-    if not c == 2:
+    if c > 1:
         return HttpResponseRedirect('/order/')
 
     else:
@@ -97,7 +97,7 @@ def delItemToOrder(request, kwargs):
     return Cart(request).clearItemByMark(kwargs['mark'])
 
 
-class Order:
+class Order(object):
     """ 订单基本信息类
 
         存储于seesion数据的操作类
@@ -135,8 +135,7 @@ class Order:
 
         return self.setSeesion(self.oFormat)
 
-    def oList(self):
-        print dir(datetime.date)
+    def baseSearch(self):
 
         q = (
                 Q(orderSn__contains=self.initial['k']) |
@@ -151,18 +150,30 @@ class Order:
                 Q(orderlogistics__note__contains=self.initial['k'])
             )
 
-        oList = OrderInfo.objects.select_related().filter(q)
+        self.oList = OrderInfo.objects.select_related().filter(q)
 
         if self.initial['o'] >= 0:
-            oList = oList.filter(orderType=self.initial['o'])
-
-        if self.initial['c'] >= 0:
-            oList = oList.filter(orderstatus__orderStatus=self.initial['c'])
-
-        oList = oList.filter(orderlog__time__range=(self.initial['s'], self.initial['e']), orderlog__log=0)
+            self.oList = self.oList.filter(orderType=self.initial['o'])
 
 
-        return page(l=oList, p=int(self.request.GET.get('p', 1)))
+
+        return self
+
+    def oStatus(self):
+            if self.initial['c'] >= 0:
+                self.oList = self.oList.filter(orderstatus__orderStatus=self.initial['c'])
+
+            return self
+
+    def range(self):
+
+        self.oList = self.oList.filter(orderlog__time__range=(self.initial['s'], self.initial['e']), orderlog__log=0)
+
+        return self
+
+    def page(self):
+
+        return page(l=self.oList, p=int(self.request.GET.get('p', 1)))
 
 
 class OrderSubmit:
@@ -440,19 +451,11 @@ class OrderListPurview:
 
         for i in self.oList:
 
-            if not i.orderstatus.orderStatus:
+            if i.orderstatus.orderStatus < 2: #编辑
 
                 i.action = (
-                            (1, u'确认'),
-                            (2, u'编辑'),
-                            (3, u'无效'),
-                            )
-
-            elif i.orderstatus.orderStatus == 2: #编辑
-
-                i.action = (
-                            (1, u'确认'),
-                            (2, u'编辑'),
+                            (1, u'编辑'),
+                            (2, u'确认'),
                             (3, u'无效'),
                             )
 

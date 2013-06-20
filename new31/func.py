@@ -38,10 +38,12 @@ def count(L=[]):
 
 
 # 分页
-def page(l='', p=1, pSize=150):
+def page(l, p=1, pSize=150):
 
     p = int(p) if int(p) > 0 else 1
     paginator = Paginator(l, pSize)
+
+    paginator.p = p
 
     try:
         return paginator.page(p)

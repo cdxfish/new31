@@ -1,21 +1,7 @@
 {% extends "office.base.htm" %}
 
 {% block content %}
-      <div class="search" nowrap="true" colspan="3">
-          <form action="/order/" method="get">
-            <select name="c">
-              <option value="-1" selected>全部</option>
-{% for v,i in oStatus %}
-              <option value="{{ v }}" >{{ i }}</option>
-{% endfor %}
-            </select>
-            <input type="text" name="s" size="7" value="{% if s %}{{ s }}{% else %}{% now "Y-m-d" %}{% endif %}" class="date">
-             <span>至</span>
-            <input type="text" name="e" size="7" value="{% if e %}{{ e }}{% else %}{% now "Y-m-d" %}{% endif %}" class="date">
-            <input type="text" name="k" size="15" value="{{ k }}" />
-            <input type="submit" value=" 搜索 " class="button" />
-          </form>
-      </div>
+      {% include 'search.htm' %}
       <table cellpadding="3" cellspacing="1" width="100%" class="sortTable">
           <tr>
             <th>类型</th>
@@ -28,13 +14,13 @@
 {% for i in oList %}
           <tr align="center" class="tr_border_top_black">
             <td>{{ i.get_orderType_display }}</td>
-            <td><a href="/order/{{ i.orderSn }}/">{{ i.orderSn }}</a></td>
+            <td><a href="{{ request.paths.订单 }}{{ i.orderSn }}/">{{ i.orderSn }}</a></td>
             <td>{{ i.orderlogistics.consignee }} [ {{ i.orderlogistics.tel }} ]</td>
             <td>200.00 | 11.00 | 189.00 | {{ i.orderpay.payName }}</td>
             <td>{{ i.orderstatus.get_orderStatus_display }} | {{ i.orderpay.get_payStatus_display }} | {{ i.ordership.get_shipStatus_display }}</td>
             <td nowrap="nowrap">
 {% for v,ii in i.action %}
-           <a href="/logistics/ccon/{{ v }}/?sn={{ i.orderSn }}" class="button">{{ ii }}</a>
+           <a href="{{ request.paths.物流管理 }}ccon/{{ v }}/?sn={{ i.orderSn }}" class="button">{{ ii }}</a>
 {% endfor %}
             </td>
           </tr>
@@ -49,7 +35,7 @@
 {% endfor %}
           <tr>
             <td align="center">地址</td>
-            <td colspan="5"><a href="/map/?k={{ i.orderlogistics.address }}" target="_blank">{{ i.orderlogistics.address }}</a></td>
+            <td colspan="5"><a href="{{ request.paths.地图 }}?k={{ i.orderlogistics.address }}" target="_blank">{{ i.orderlogistics.address }}</a></td>
           </tr>
           <tr align="center">
             <td>时间</td>
@@ -75,21 +61,7 @@
             <td align="center">备注</td>
             <td colspan="6">速度送</td>
           </tr>
-
 {% endfor %}
-          <tr>
-            <td align="right" nowrap="true" colspan="11">
-              总计 {{ oList.paginator.count }} 条记录，共 {{ oList.paginator.num_pages }} 页，当前第 {{ p }} 页
-              <span id="pageLink">
-                <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p=1">第一页</a>
-{% if oList.has_previous %}
-                <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p={{ oList.previous_page_number }}">上一页</a>
-{% endif %}
-{% if oList.has_next %}
-                  <a href="/order/?k={{ k }}&c={{ c }}&s={{ s }}&e={{ e }}&p={{ oList.next_page_number }}">下一页</a>
-{% endif %}
-              </span>           
-            </td>
-          </tr>
+          {% include 'page.htm' %}
       </table>
 {% endblock %}
