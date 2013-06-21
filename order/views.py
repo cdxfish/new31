@@ -45,14 +45,14 @@ def cCon(request, c):
     order.save()
 
     if c > 1:
-        return HttpResponseRedirect('/order/')
+        return HttpResponseRedirect(request.paths[u'订单'])
 
     else:
         # 将订单信息配置到seesion当中
         ShipConsignee(request).setSiessionByOrder(sn=orderSN)
         Order(request).setSeesion(OrderInfo.objects.get(orderSn=orderSN).orderType)
 
-        return HttpResponseRedirect('/order/new/')
+        return HttpResponseRedirect(request.paths[u'新订单'])
 
 
 # 前台订单提交,并是用前台消息模板显示订单号等信息
@@ -98,7 +98,8 @@ def delItemToOrder(request, kwargs):
 
 
 class Order(object):
-    """ 订单基本信息类
+    """ 
+        订单基本信息类
 
         存储于seesion数据的操作类
 
@@ -177,7 +178,8 @@ class Order(object):
 
 
 class OrderSubmit:
-    """ 订单提交类.
+    """ 
+        订单提交类.
 
         订单提交只需实例后, 使用 <<submit>> 方法即可
         示例: OrderSubmit(request).submit()
@@ -432,12 +434,11 @@ class OrderSubmit:
 
 class OrderListPurview:
     """
-    订单列表权限加持
+        订单列表权限加持
 
-    获取当前角色可进行的订单操作权限.
-    获取订单状态,判定可选权限.
-    两者进行交集操作.
-
+        获取当前角色可进行的订单操作权限.
+        获取订单状态,判定可选权限.
+        两者进行交集操作.
 
     """
 

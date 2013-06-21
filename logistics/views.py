@@ -24,7 +24,26 @@ def logisticsUI(request):
 
     return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))    
 
+# 物流信息提交
+def cCon(request, c):
 
+    c = int(c)
+    orderSN = request.GET.get('sn')
+    order =  OrderShip.objects.get(order=orderSN)
+
+    order.shipStatus = c
+
+    order.save()
+
+    if c > 1:
+        return redirectBack(request)
+
+    else:
+        # 将订单信息配置到seesion当中
+        ShipConsignee(request).setSiessionByOrder(sn=orderSN)
+        Order(request).setSeesion(OrderInfo.objects.get(orderSn=orderSN).orderType)
+
+        return HttpResponseRedirect(request.paths[u'新订单'])
 
 class Logistics(Order):
     """ 
@@ -72,17 +91,18 @@ class logisticsPurview:
     def getElement(self):
 
         for i in self.oList:
-            if not i.ordership.shipStatus:
+            if i.ordership.shipStatus < 2:
 
                 i.action = (
-                                (1, u'已发'), 
+                                (1, u'编辑'), 
+                                (2, u'已发'), 
 
                             )
-            elif i.i.ordership.shipStatus == 1:
+            elif i.ordership.shipStatus == 2:
 
                 i.action = (
-                                (2, u'拒签'), 
-                                (3, u'已签'), 
+                                (3, u'拒签'), 
+                                (4, u'已签'), 
                             )
 
 

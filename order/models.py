@@ -35,15 +35,16 @@ class OrderInfo(models.Model):
 class OrderLog(models.Model):
     logType = (
             (0, u'新单'),
-            (1, u'确认'),
-            (2, u'取消'),
-            (3, u'无效'),
-            (4, u'完成'),
-            (5, u'停止'),
-            (6, u'发货'),
-            (7, u'签收'),
-            (8, u'拒签'),
-            (9, u'付款'),
+            (1, u'编辑'),
+            (2, u'确认'),
+            (3, u'取消'),
+            (4, u'无效'),
+            (5, u'完成'),
+            (6, u'停止'),
+            (7, u'发货'),
+            (8, u'签收'),
+            (9, u'拒签'),
+            (10, u'付款'),
         )
 
     order = models.ForeignKey(OrderInfo, verbose_name=u'订单')
@@ -134,10 +135,11 @@ class OrderPay(models.Model):
 
 class OrderShip(models.Model):
     sStatus = (
-                (0, u'未发'), 
-                (1, u'已发'), 
-                (2, u'拒签'), 
-                (3, u'已签'), 
+                (0, u'未发'),
+                (1, u'编辑'),
+                (2, u'已发'), 
+                (3, u'拒签'), 
+                (4, u'已签'), 
             )
 
     order = models.OneToOneField(OrderInfo, verbose_name=u'订单')

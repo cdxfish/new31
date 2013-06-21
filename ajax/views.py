@@ -12,6 +12,7 @@ import json
 
 # Create your views here.
 
+# 首页瀑布流获取更多商品
 @tryMsg('无更多商品')
 def getLineItemMore(request):
     itemList = ItemPin(8).buildItemList().sort(sortFun).itemList
@@ -19,6 +20,7 @@ def getLineItemMore(request):
     return AjaxRJson().jsonEn(itemList)
 
 
+# 前台弹出层中获取商品规格
 @tryMsg('当前商品已下架')
 def getItemSpec(request, kwargs):
 
@@ -29,6 +31,7 @@ def getItemSpec(request, kwargs):
     return AjaxRJson().jsonEn(data)
 
 
+# 前台购物车界面修改购物车中商品数量
 @tryMsg('当前商品已下架')
 def ajaxChangNum(request, kwargs):
 
@@ -37,6 +40,8 @@ def ajaxChangNum(request, kwargs):
     return AjaxRJson().jsonEn(data)
 
 
+
+# 商品查询，后台新订单及订单编辑用
 def getItemByKeyword(request):
 
     @tryMsg('未找到商品')

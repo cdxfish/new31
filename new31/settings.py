@@ -197,7 +197,10 @@ APPS = {
             'tempContext':'',
             'middleware':'order.middleware.OrderMiddleware',
         },
-
+    'finance':{
+            'tempContext':'',
+            'middleware':'',
+        },
     'spec':{
             'tempContext':'',
             'middleware':'',
