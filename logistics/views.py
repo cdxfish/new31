@@ -56,13 +56,13 @@ class Logistics(Order):
         super(Logistics, self).__init__(request)
 
     def search(self):
-        self.oList = self.baseSearch().oList.filter(orderstatus__orderStatus__gt = 1)
+        self.oList = self.baseSearch().oList.filter(orderstatus__status__gt = 1)
 
         return self
 
     def oStatus(self):
         if self.initial['c'] >= 0:
-            self.oList = self.oList.filter(ordership__shipStatus=self.initial['c'])
+            self.oList = self.oList.filter(ordership__status=self.initial['c'])
 
         return self
 
@@ -85,35 +85,39 @@ class logisticsPurview:
     """
     def __init__(self, oList, request):
         self.oList = oList
-        self.role = OrderShip.sStatus
+        self.oStatus = OrderShip.oStatus
+        self.path = request.paths[u'物流']
+        self.role = ''
 
     # 获取订单可选操作项
     def getElement(self):
-
         for i in self.oList:
-            if i.ordership.shipStatus < 2:
+            if not hasattr(i,'action'):
+                i.action = {}
 
-                i.action = (
+            if i.ordership.status < 2:
+
+                i.action[self.path] = (
                                 (1, u'编辑'), 
                                 (2, u'已发'), 
 
                             )
-            elif i.ordership.shipStatus == 2:
+            elif i.ordership.status == 2:
 
-                i.action = (
+                i.action[self.path] = (
                                 (3, u'拒签'), 
                                 (4, u'已签'), 
                             )
 
 
             else:
-                i.action = ()
+                i.action[self.path] = ()
 
         return self
 
 
     def beMixed(self):
         for i in self.oList:
-            i.action = (i for i in i.action if i in self.role)
+            i.action[self.path] = (i for i in i.action[self.path] if i in self.oStatus)
 
         return self.oList

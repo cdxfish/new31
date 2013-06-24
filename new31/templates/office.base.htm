@@ -30,28 +30,28 @@
     <ul id="navMenu">
       <li><a href="/" id="showNav"></a></li>
       <li>
-        <a href="/order/" class="nav">订单管理</a>
+        <a href="{{ request.paths.订单 }}" class="nav">订单管理</a>
         <div class="messagePop" style="display:none;">
           <ul>
-            <li><a href="/order/">订单</a></li>
+            <li><a href="{{ request.paths.订单 }}">订单</a></li>
             <li><a href="/back/">退货</a></li>
           </ul>
         </div>
       </li>
       <li>
-        <a href="/logistics/" class="nav">物流管理</a>
+        <a href="{{ request.paths.物流 }}" class="nav">物流管理</a>
         <div class="messagePop" style="display:none;">
           <ul>
-            <li><a href="/logistics/">物流配送</a></li>
+            <li><a href="{{ request.paths.物流 }}">物流</a></li>
           </ul>
         </div>
       </li>
       <li>
-        <a href="/produce/" class="nav">生产管理</a>
+        <a href="{{ request.paths.生产 }}" class="nav">生产管理</a>
         <div class="messagePop" style="display:none;">
           <ul>
-            <li><a href="/produce/">生产</a></li>
-            <li><a href="/inventory/">库存</a></li>
+            <li><a href="{{ request.paths.生产 }}">生产</a></li>
+            <li><a href="{{ request.paths.库存 }}">库存</a></li>
           </ul>
         </div>
       </li>
@@ -80,7 +80,7 @@
         <a href="/finance/" class="nav">财务管理</a>
         <div class="messagePop" style="display:none;">
           <ul>
-            <li><a href="/finance/">财务</a></li>
+            <li><a href="{{ request.paths.财务 }}">财务</a></li>
             <li><a href="/finance/">零钱</a></li>
             <li><a href="/reimburse/">退款</a></li>
           </ul>

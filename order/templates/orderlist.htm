@@ -15,12 +15,12 @@
 {% for i in oList %}
           <tr align="center" class="tr_border_top_black">
             <td>{{ i.get_orderType_display }}</td>
-            <td><a href="{{ request.path }}{{ i.orderSn }}/">{{ i.orderSn }}</a></td>
+            <td><a href="{{ request.path }}{{ i.sn }}/">{{ i.sn }}</a></td>
             <td>{{ i.orderlogistics.signDate|date:"Y-m-d" }} | {{ i.orderlogistics.signTimeStart|time:"H:i" }} - {{ i.orderlogistics.signTimeEnd|time:"H:i" }}</td>
             <td>{{ i.orderlogistics.consignee }}</td>
             <td>{{ i.orderlogistics.tel }}</td>
-            <td>{{i.orderpay.payName}}</td>
-            <td>{{ i.orderstatus.get_orderStatus_display }} | {{ i.orderpay.get_payStatus_display }} | {{ i.ordership.get_shipStatus_display }}</td>
+            <td>{{i.orderpay.name}}</td>
+            <td>{{ i.orderstatus.get_status_display }} | {{ i.orderpay.get_status_display }} | {{ i.ordership.get_status_display }}</td>
           </tr>
 {% for item in i.orderitem_set.all %}
           <tr align="center">
@@ -39,11 +39,7 @@
           <tr>
             <td align="center">备注</td>
             <td colspan="5">{{ i.orderlogistics.note }}</td>
-            <td nowrap="nowrap" align="center">
-{% for v,ii in i.action %}
-           <a href="{{ request.paths.订单 }}ccon/{{ v }}/?sn={{ i.orderSn }}" class="button">{{ ii }}</a>
-{% endfor %}
-            </td>
+            {% include 'operate.htm' %}
           </tr>
 {% endfor %}
           {% include 'page.htm' %}

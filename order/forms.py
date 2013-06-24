@@ -1,5 +1,6 @@
 #coding:utf-8
 from django import forms
+from office.forms import *
 from models import *
 from payment.models import *
 from area.models import *
@@ -36,13 +37,8 @@ class OrderTypeForm(forms.Form):
     oType = forms.ChoiceField(label=u'订单类型', choices=oChoice, widget=forms.Select(attrs={'class': 'oType' }))
 
 
-class OrderStatusForm(forms.Form):
+class OrderStatusForm(baseSearchForm):
 
-    oChoice = ((-1, '全部'),) + OrderInfo.oType
     cChoice = ((-1, '全部'),) + OrderStatus.oStatus
 
-    o = forms.ChoiceField(label=u'订单类型', choices=oChoice, widget=forms.Select(attrs={'class': 'o' }))
     c = forms.ChoiceField(label=u'订单状态', choices=cChoice, widget=forms.Select(attrs={'class': 'c' }))
-    s = forms.DateField(label="起始时间",widget=forms.DateInput(attrs={'class': 'dateNoDir', 'size': 7},format='%Y-%m-%d'))
-    e = forms.DateField(label="结束时间",widget=forms.DateInput(attrs={'class': 'dateNoDir', 'size': 7},format='%Y-%m-%d'))
-    k = forms.CharField(label=u'关键字', required=False)

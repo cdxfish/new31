@@ -22,11 +22,12 @@
           </tr>
 {% for item in i.orderitem_set.all %}
           <tr align="center">
-            <td align="right" nowrap="true" colspan="2">{{ item.name }}</td>
+            <td align="right" nowrap="true">{{ item.name }}</td>
             <td>{{ item.spec }}</td>
             <td>{{ item.number }}</td>
-            <td>未产</td>
-            <td><a href="/a/" class="button">生产请求</a></td>
+            <td>{{ item.amount }}</td>
+            <td>{{ item.get_discount_display }}</td>
+            <td>{{ item.nowFee }}</td>
           </tr>
 {% endfor %}
           <tr>
@@ -38,20 +39,8 @@
             <td align="left">{{ i.orderlogistics.signDate|date:"Y-m-d" }} | {{ i.orderlogistics.signTimeStart|time:"H:i" }} - {{ i.orderlogistics.signTimeEnd|time:"H:i" }}</td>
             <td>预发货</td>
             <td>{{ i.orderlogistics.logisTimeStart|time:"H:i" }}</td>
-            <td>
-              <select class="dis" id="d{{ i.sn }}" name="disID">
-                <option value="0" selected="selected">0 m</option>
-                <option value="1">+ 30 m</option>
-                <option value="2">+ 60 m</option>
-                <option value="3">+ 90 m</option>
-              </select>
-            </td>
-            <td>              
-              <select class="dis" id="s{{ i.sn }}" name="s">
-                <option value="1" selected="selected">吴</option>
-                <option value="2">刘</option>
-              </select>
-            </td>
+            <td>+ 90 m</td>
+            <td>刘</td>
           </tr>             
           <tr>
             <td align="center">备注</td>

@@ -37,10 +37,10 @@ def orderList(request):
 def cCon(request, c):
 
     c = int(c)
-    orderSN = request.GET.get('sn')
-    order =  OrderInfo.objects.get(orderSn=orderSN).orderstatus
+    SN = request.GET.get('sn')
+    order =  OrderInfo.objects.get(sn=SN).orderstatus
 
-    order.orderStatus = c
+    order.status = c
 
     order.save()
 
@@ -49,8 +49,8 @@ def cCon(request, c):
 
     else:
         # 将订单信息配置到seesion当中
-        ShipConsignee(request).setSiessionByOrder(sn=orderSN)
-        Order(request).setSeesion(OrderInfo.objects.get(orderSn=orderSN).orderType)
+        ShipConsignee(request).setSiessionByOrder(sn=SN)
+        Order(request).setSeesion(OrderInfo.objects.get(sn=SN).orderType)
 
         return HttpResponseRedirect(request.paths[u'新订单'])
 
@@ -139,7 +139,7 @@ class Order(object):
     def baseSearch(self):
 
         q = (
-                Q(orderSn__contains=self.initial['k']) |
+                Q(sn__contains=self.initial['k']) |
                 Q(user__username__contains=self.initial['k']) |
                 Q(orderlogistics__consignee__contains=self.initial['k']) |
                 Q(orderlogistics__area__contains=self.initial['k']) |
@@ -162,7 +162,7 @@ class Order(object):
 
     def oStatus(self):
             if self.initial['c'] >= 0:
-                self.oList = self.oList.filter(orderstatus__orderStatus=self.initial['c'])
+                self.oList = self.oList.filter(orderstatus__status=self.initial['c'])
 
             return self
 
@@ -213,8 +213,8 @@ class OrderSubmit:
             .paySubmit() \
             .shipSubmit() \
             .oStartSubmit() \
-            .oLogSubmit() \
-            .submitDone()
+            .oLogSubmit()
+            # .submitDone()
 
         # 异常时对数据库进行处理
         if self.error:
@@ -240,12 +240,12 @@ class OrderSubmit:
 
         while run:
             try:
-                self.order = OrderInfo.objects.get(orderSn=self.orderId)
+                self.order = OrderInfo.objects.get(sn=self.orderId)
 
             except:
                 run = False
 
-                self.order = OrderInfo.objects.create(orderSn=self.orderId)
+                self.order = OrderInfo.objects.create(sn=self.orderId)
 
             else:
                 self.orderId += 1
@@ -335,7 +335,7 @@ class OrderSubmit:
 
         oPay = OrderPay()
         oPay.order = self.order
-        oPay.payName = pay.name
+        oPay.name = pay.name
         oPay.cod = pay.cod
 
         oPay.save()
@@ -445,41 +445,45 @@ class OrderListPurview:
     def __init__(self, oList, request):
         self.oList = oList
         self.role = OrderStatus.oStatus
+        self.path = request.paths[u'订单']
 
 
     # 获取订单可选操作项
     def getElement(self):
 
         for i in self.oList:
+            if not hasattr(i,'action'):
+                i.action = {}
 
-            if i.orderstatus.orderStatus < 2: #编辑
 
-                i.action = (
+            if i.orderstatus.status < 2: #编辑
+
+                i.action[self.path] = (
                             (1, u'编辑'),
                             (2, u'确认'),
                             (3, u'无效'),
                             )
 
-            elif i.orderstatus.orderStatus == 3: #无效
+            elif i.orderstatus.status == 3: #无效
 
-                i.action = (
+                i.action[self.path] = (
                                 (6, u'新单'),
                             )
 
-            elif i.orderstatus.orderStatus == 5: #停止
+            elif i.orderstatus.status == 5: #停止
 
-                i.action = (
+                i.action[self.path] = (
                                 (6, u'新单'),
                             )
 
             else:
-                i.action = ()
+                i.action[self.path] = ()
 
         return self
 
 
     def beMixed(self):
         for i in self.oList:
-            i.action = (i for i in i.action if i in self.role)
+            i.action[self.path] = (i for i in i.action[self.path] if i in self.role)
 
         return self.oList
