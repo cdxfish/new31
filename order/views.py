@@ -14,6 +14,7 @@ from models import *
 from forms import *
 from decimal import *
 from consignee.forms import *
+from purview.views import *
 import time, json
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
@@ -23,12 +24,15 @@ from django.db.models import Q
 
 # 订单列表显示页面
 def orderList(request):
+    from finance.views import FinancePurview
 
     o = Order(request)
 
     form = OrderStatusForm(initial=o.initial)
 
-    oList = OrderListPurview(o.baseSearch().oStatus().range().page(), request).getElement().beMixed()
+    oList = o.baseSearch().oStatus().range().page()
+    oList = OrderListPurview(oList, request).getElement().beMixed()
+    oList = OrderPurview(oList, request).beMixed()
 
     return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
 
@@ -108,6 +112,7 @@ class Order(object):
         self.request = request
         self.oType = request.session.get('oType')
         self.oFormat = OrderInfo.oType[0][0]
+        self.oList = OrderInfo.objects.select_related().all()
 
 
         today = datetime.date.today()
@@ -151,7 +156,7 @@ class Order(object):
                 Q(orderlogistics__note__contains=self.initial['k'])
             )
 
-        self.oList = OrderInfo.objects.select_related().filter(q)
+        self.oList = self.oList.filter(q)
 
         if self.initial['o'] >= 0:
             self.oList = self.oList.filter(orderType=self.initial['o'])
@@ -444,7 +449,7 @@ class OrderListPurview:
 
     def __init__(self, oList, request):
         self.oList = oList
-        self.role = OrderStatus.oStatus
+        self.oStatus = OrderStatus.oStatus
         self.path = request.paths[u'订单']
 
 
@@ -454,7 +459,6 @@ class OrderListPurview:
         for i in self.oList:
             if not hasattr(i,'action'):
                 i.action = {}
-
 
             if i.orderstatus.status < 2: #编辑
 
@@ -484,6 +488,6 @@ class OrderListPurview:
 
     def beMixed(self):
         for i in self.oList:
-            i.action[self.path] = (i for i in i.action[self.path] if i in self.role)
+            i.action[self.path] = tuple([ ii for ii in i.action[self.path] if ii in self.oStatus ])
 
         return self.oList

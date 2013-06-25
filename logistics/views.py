@@ -4,8 +4,10 @@ from django.template import RequestContext
 from django.http import HttpResponse
 from consignee.forms import *
 from purview.models import *
+from purview.views import *
 from order.models import *
 from order.views import *
+from finance.views import *
 from new31.func import *
 from forms import *
 import time,datetime
@@ -16,11 +18,14 @@ from django.conf import settings
 
 def logisticsUI(request):
 
-    l = Logistics(request)
+    o = Logistics(request)
 
-    form = LogisticsForm(initial=l.initial)
+    form = LogisticsForm(initial=o.initial)
 
-    oList = logisticsPurview(l.search().oStatus().range().page(), request).getElement().beMixed()
+    oList = o.search().oStatus().range().page()
+    oList = logisticsPurview(oList, request).getElement().beMixed()
+    oList = FinancePurview(oList, request).getElement().beMixed()
+    oList = OrderPurview(oList, request).beMixed()
 
     return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))    
 
@@ -87,7 +92,6 @@ class logisticsPurview:
         self.oList = oList
         self.oStatus = OrderShip.oStatus
         self.path = request.paths[u'物流']
-        self.role = ''
 
     # 获取订单可选操作项
     def getElement(self):
@@ -118,6 +122,6 @@ class logisticsPurview:
 
     def beMixed(self):
         for i in self.oList:
-            i.action[self.path] = (i for i in i.action[self.path] if i in self.oStatus)
+            i.action[self.path] = tuple([ ii for ii in i.action[self.path] if ii in self.oStatus ])
 
         return self.oList

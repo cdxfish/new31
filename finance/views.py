@@ -14,11 +14,11 @@ def financeUI(request):
 
     form = financeForm(initial=o.initial)
 
-    oList = financePurview(o.search().status().range().page(), request).getElement().beMixed()
+    oList = o.search().status().range().page()
+    oList = FinancePurview(oList, request).getElement().beMixed()
+    oList = OrderPurview(oList, request).beMixed()
 
     return render_to_response('financeui.htm', locals(), context_instance=RequestContext(request))
-
-
 
 
 class Finance(Order):
@@ -53,7 +53,7 @@ class Finance(Order):
 
 
 # 订单列表权限加持
-class financePurview:
+class FinancePurview:
     """
         首先获取当前角色可进行的订单操作权限. 
 
@@ -62,37 +62,42 @@ class financePurview:
     """
     def __init__(self, oList, request):
         self.oList = oList
-        self.role = OrderPay.oStatus
+        self.oStatus = OrderPay.oStatus
+        self.path = request.paths[u'财务']
 
     # 获取订单可选操作项
     def getElement(self):
 
+
         for i in self.oList:
+            if not hasattr(i,'action'):
+                i.action = {}
+
             if i.orderpay.status < 1:
-                i.action = (
+                i.action[self.path] = (
                                 (1, u'已付'),  
 
                             )
 
             elif i.orderpay.status == 1:
-                i.action = (
+                i.action[self.path] = (
                                 (2, u'已结'), 
                             )
 
             elif i.orderpay.status == 2:
-                i.action = (
+                i.action[self.path] = (
                                 (3, u'已核'), 
                             )
 
 
             else:
-                i.action = ()
+                i.action[self.path] = ()
 
         return self
 
 
     def beMixed(self):
         for i in self.oList:
-            i.action = (i for i in i.action if i in self.role)
+            i.action[self.path] = tuple([ ii for ii in i.action[self.path] if ii in self.oStatus ])
 
         return self.oList
