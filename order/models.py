@@ -21,7 +21,7 @@ class OrderInfo(models.Model):
                 (4, u'提货券'), 
             )
     sn = models.BigIntegerField(u'订单号', primary_key=True, unique=True)
-    user = models.ForeignKey(User, verbose_name=u'会员', blank=True, null=True)
+    user = models.OneToOneField(User, verbose_name=u'会员', blank=True, null=True)
     orderType = models.SmallIntegerField(u'订单类型', default=0, choices=oType)
 
     def __unicode__(self):
@@ -63,7 +63,7 @@ class OrderLog(models.Model):
 
 
 class OrderLogistics(models.Model):
-    advanceChoice = (
+    aChoice = (
             (-3, '- 90 m'),
             (-2, '- 60 m'),
             (-1, '- 30 m'),
@@ -82,8 +82,8 @@ class OrderLogistics(models.Model):
     signTimeEnd = models.TimeField(u'结束时间')
     logisTimeStart = models.TimeField(u'物流起始时间')
     logisTimeEnd = models.TimeField(u'物流结束时间')
-    advance = models.SmallIntegerField(u'提前量', default=0, choices=advanceChoice)
-    deliveryman = models.CharField(u'物流师傅', max_length=60, blank=True, null=True)
+    advance = models.SmallIntegerField(u'提前量', default=0, choices=aChoice)
+    dman = models.OneToOneField(User, verbose_name=u'物流师傅', blank=True, null=True)
     note = models.CharField(u'备注', max_length=255, blank=True, null=True)
 
     objects = orderLogisticsManager()
@@ -101,8 +101,8 @@ class OrderStatus(models.Model):
                 (1, u'编辑'), 
                 (2, u'确认'),
                 (3, u'无效'),
-                (4, u'完成'),
-                (5, u'停止'),
+                (4, u'停止'),
+                (5, u'完成'),
             )
 
     order = models.OneToOneField(OrderInfo, verbose_name=u'订单')

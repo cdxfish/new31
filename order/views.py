@@ -463,21 +463,29 @@ class OrderListPurview:
             if i.orderstatus.status < 2: #编辑
 
                 i.action[self.path] = (
+                            (0, u'新单'),
                             (1, u'编辑'),
                             (2, u'确认'),
                             (3, u'无效'),
                             )
 
+            elif i.orderstatus.status == 2: #确认
+
+                i.action[self.path] = (
+                                (0, u'新单'),
+                                (5, u'完成'),
+                            )
+
             elif i.orderstatus.status == 3: #无效
 
                 i.action[self.path] = (
-                                (6, u'新单'),
+                                (0, u'新单'),
                             )
 
-            elif i.orderstatus.status == 5: #停止
+            elif i.orderstatus.status == 4: #停止
 
                 i.action[self.path] = (
-                                (6, u'新单'),
+                                (0, u'新单'),
                             )
 
             else:

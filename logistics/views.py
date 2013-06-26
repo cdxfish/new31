@@ -22,7 +22,7 @@ def logisticsUI(request):
 
     form = LogisticsForm(initial=o.initial)
 
-    oList = o.search().oStatus().range().page()
+    oList = o.search().oStatus().range().form().page()
     oList = logisticsPurview(oList, request).getElement().beMixed()
     oList = FinancePurview(oList, request).getElement().beMixed()
     oList = OrderPurview(oList, request).beMixed()
@@ -78,6 +78,12 @@ class Logistics(Order):
 
     def page(self):
         return page(l=self.oList, p=int(self.request.GET.get('p', 1)))
+
+    def form(self):
+        for i in self.oList:
+            i.form = AdvanForm(i)
+            
+        return self
 
 
 # 订单列表权限加持

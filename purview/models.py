@@ -5,6 +5,11 @@ from order.models import *
 
 # Create your models here.
 
+class roleManager(models.Manager):
+    def getPath(self, path = ''):
+
+        return self.select_related().get(path=path, onLine=True)
+
 class elementManager(models.Manager):
     def getPath(self, path = ''):
 
@@ -64,9 +69,11 @@ class Element(models.Model):
             )
          #权限对照用列表,用于识别那些页面需要进行权限判定
 
+    pChoice = ((0, u'查 (无从属)'), (1, u'显'), (2, u'增'), (3, u'删'), (4, u'改'), )
+
     path = models.CharField(u'路径',max_length=255, choices=pPath, unique=True)
     #权限类型共4种: {0:'查',1:'显',2:'增',3:'删',4:'改',} 其中显为界面显示专属
-    pType = models.SmallIntegerField(u'权限类型',default=0, choices=((0, u'查 (无从属)'), (1, u'显'), (2, u'增'), (3, u'删'), (4, u'改'), ))
+    pType = models.SmallIntegerField(u'权限类型',default=0, choices=pChoice)
     onLine = models.BooleanField(u'上线', default=True)
     sub = models.ForeignKey("self",related_name='sub_set', verbose_name=u'从属', blank=True, null=True)
 
@@ -86,9 +93,18 @@ class Privilege(models.Model):
 
 
 class Role(models.Model):
-    name = models.CharField(u'角色', max_length=32)
+    nChoice = (
+            (-1, u'管理员'),
+            (0, u'无'),
+            (1, u'物流师傅'),
+        )
+
+    role = models.SmallIntegerField(u'角色', choices=nChoice, unique=True)
+    user = models.ForeignKey(User, verbose_name=u'用户')
     onLine = models.BooleanField(u'上线', default=True)
     privilege = models.ManyToManyField(Privilege, verbose_name=u'权限', blank=True, null=True)
+
+    objects = roleManager()
 
     def __unicode__(self):
         return u"%s [ onLine:%s ]" % (self.name, self.onLine)
