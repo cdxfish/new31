@@ -84,7 +84,10 @@ class Element(models.Model):
 
 
 class Privilege(models.Model):
-    name = models.CharField(u'名称', max_length=32, unique=True)
+    nChoice = (
+            (0, u'全局可读可写')
+        )
+    name = models.SmallIntegerField(u'名称', choices=nChoice, unique=True)
     onLine = models.BooleanField(u'上线', default=True)
     element = models.ManyToManyField(Element, verbose_name=u'权限', blank=True, null=True)
 
