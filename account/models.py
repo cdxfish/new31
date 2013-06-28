@@ -5,18 +5,6 @@ from purview.models import *
 
 # Create your models here.
 
-class userRoleManager(models.Manager):
-    def getPath(self, user):
-        element = []
-        role = user.userrole.role
-
-        if role.onLine:
-            for i in role.privilege.filter(onLine=True):
-                for ii in i.element.filter(onLine=True):
-                    element.append(ii.path)
-
-        return element
-
 class UserInfo(models.Model):
 
     modChoices = (
@@ -78,14 +66,3 @@ class UserInfo(models.Model):
 
     def __unicode__(self):
         return u"%s [ %s ] - %s" % (self.user, self.regTime)
-
-class UserRole(models.Model):
-
-    user = models.OneToOneField(User, verbose_name=u'用户')
-    role = models.OneToOneField(Role, verbose_name=u'角色', blank=True, null=True)
-
-    objects = userRoleManager()
-
-    def __unicode__(self):
-        return u"%s - %s" % (self.user, self.role)
-        

@@ -10,6 +10,22 @@ class roleManager(models.Manager):
 
         return self.select_related().get(path=path, onLine=True)
 
+    def getPathByUser(self, user):
+        element = []
+        role = self.select_related().get(user=user, onLine=True)
+
+        for i in role.privilege.filter(onLine=True):
+            for ii in i.element.filter(onLine=True):
+                element.append(ii.path)
+
+        return element
+
+    def getDmanToTuple(self):
+
+        dMan = self.select_related().get(role=1,onLine=True).user.all()
+
+        return tuple([(i.id, u'%s%s' % (i.last_name, i.first_name) if (i.last_name or i.first_name) else i.username) for i in dMan])
+
 class elementManager(models.Manager):
     def getPath(self, path = ''):
 
@@ -85,14 +101,14 @@ class Element(models.Model):
 
 class Privilege(models.Model):
     nChoice = (
-            (0, u'全局可读可写')
+            (0, u'全局可读可写'),
         )
     name = models.SmallIntegerField(u'名称', choices=nChoice, unique=True)
     onLine = models.BooleanField(u'上线', default=True)
     element = models.ManyToManyField(Element, verbose_name=u'权限', blank=True, null=True)
 
     def __unicode__(self):
-        return u"%s [ onLine: %s ]" % (self.name, self.onLine)
+        return u"%s [ onLine: %s ]" % (self.get_name_display(), self.onLine)
 
 
 class Role(models.Model):
@@ -103,11 +119,11 @@ class Role(models.Model):
         )
 
     role = models.SmallIntegerField(u'角色', choices=nChoice, unique=True)
-    user = models.ForeignKey(User, verbose_name=u'用户')
+    user = models.ManyToManyField(User, verbose_name=u'用户', blank=True, null=True)
     onLine = models.BooleanField(u'上线', default=True)
     privilege = models.ManyToManyField(Privilege, verbose_name=u'权限', blank=True, null=True)
 
     objects = roleManager()
 
     def __unicode__(self):
-        return u"%s [ onLine:%s ]" % (self.name, self.onLine)
+        return u"%s [ onLine:%s ]" % (self.get_role_display(), self.onLine)

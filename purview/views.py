@@ -41,7 +41,7 @@ class URLPurview:
 
                 try:
                     self.domElement() #页面元素权限加持
-                    element = UserRole.objects.getPath(self.request.user) #用户可进入的页面权限集
+                    element = Role.objects.getPathByUser(self.request.user) #用户可进入的页面权限集
                 except:
                     return self.error()
 
@@ -77,7 +77,7 @@ class OrderPurview(object):
     """
     def __init__(self, oList, request):
         self.oList = oList
-        self.role = UserRole.objects.getPath(request.user)
+        self.role = Role.objects.getPathByUser(request.user)
 
 
     def beMixed(self):

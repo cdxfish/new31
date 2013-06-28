@@ -1,5 +1,6 @@
 #coding:utf-8
 from django import forms
+from purview.models import *
 from order.models import *
 from office.forms import *
 
@@ -19,6 +20,6 @@ def AdvanForm(o):
     class AdvanceForm(baseSearchForm):
 
         advance = forms.ChoiceField(label=u'提前量', choices=OrderLogistics.aChoice, widget=forms.Select(attrs={'class': 'ad', 'id': 'a%s' %  o.sn }))
-        dman = forms.ChoiceField(label=u'物流师傅', choices=OrderLogistics.aChoice, widget=forms.Select(attrs={'class': 'dman', 'id': 'd%s' %  o.sn }))
+        dman = forms.ChoiceField(label=u'物流师傅', choices=Role.objects.getDmanToTuple(), widget=forms.Select(attrs={'class': 'dman', 'id': 'd%s' %  o.sn }))
 
     return AdvanceForm(initial=initial)

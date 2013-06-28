@@ -39,8 +39,8 @@
             <td align="left">{{ i.orderlogistics.signDate|date:"Y-m-d" }} | {{ i.orderlogistics.signTimeStart|time:"H:i" }} - {{ i.orderlogistics.signTimeEnd|time:"H:i" }}</td>
             <td>预发货</td>
             <td>{{ i.orderlogistics.logisTimeStart|time:"H:i" }}</td>
-            <td>+ 90 m</td>
-            <td>刘</td>
+            <td>{{ i.orderlogistics.get_advance_display }}</td>
+            <td>{{ i.orderlogistics.dman.first_name }}{{ i.orderlogistics.dman.last_name }}</td>
           </tr>             
           <tr>
             <td align="center">备注</td>
