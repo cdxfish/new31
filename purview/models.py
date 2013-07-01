@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from order.models import *
+from produce.models import *
 
 # Create your models here.
 
@@ -51,7 +52,10 @@ class Element(models.Model):
             tuple([ (u'/logistics/%s/' % i, u'物流%s' % v) for i,v in OrderShip.oStatus ]) + \
             (
                 (u'/produce/', u'生产'),
-                (u'/inventory/', u'库存'),
+            ) + \
+            tuple([ (u'/produce/%s/' % i, u'生产%s' % v) for i,v in Produce.oStatus ]) + \
+            (
+                (u'/inventory/', u'备货'),
                 (u'/after/', u'售后反馈'),
                 (u'/tryeat/', u'试吃反馈'),
                 (u'/applytryeat/', u'试吃'),
@@ -79,6 +83,7 @@ class Element(models.Model):
                 (u'/payment/', u'支付方式'),
                 (u'/signtime/', u'收货时间'),
                 (u'/logistics/time/', u'物流时间'),
+                (u'/bom/', u'物料'),
                 (u'/area/', u'配送区域'),
                 (u'/filecheck/', u'文件校验'),
                 (u'/map/', u'地图'),
