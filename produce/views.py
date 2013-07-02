@@ -3,10 +3,136 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
 from models import *
+from forms import *
+from order.views import *
 from signtime.models import *
 
 # Create your views here.
 
 def produceUI(request):
 
+    o = ProduceList(request)
+
+    form = ProduceForm(initial=o.initial)
+
+    oList = o.search().oStatus().range().page()
+    oList = ProducePurview(oList, request).getElement().beMixed()
+
+    oList = sortList(oList)
+
     return render_to_response('produceui.htm', locals(), context_instance=RequestContext(request))
+
+
+def sortList(oList):
+    _oList = {}
+    for i in oList:
+        
+        signDate = u'%s' % i.orderlogistics.signDate
+        logisTimeStart = u'%s' % i.orderlogistics.logisTimeStart
+        advance = u'%s' % i.orderlogistics.get_advance_display()
+
+        if not signDate in _oList:
+            _oList[signDate] = {}
+
+        if not logisTimeStart in _oList[signDate]:
+            _oList[signDate][logisTimeStart] = {}
+
+        if not advance in _oList[signDate][logisTimeStart]:
+            _oList[signDate][logisTimeStart][advance] = []
+
+        _oList[signDate][logisTimeStart][advance].append(i)
+
+    return _oList
+
+
+class ProduceList(Order):
+    """ 
+        生产管理类
+
+        用于工厂操作商品生产用
+
+    """
+    def __init__(self, request):
+        super(ProduceList, self).__init__(request)
+
+    def search(self):
+        self.oList = self.baseSearch().oList.filter(orderstatus__status__gt = 1)
+
+        return self
+
+    def oStatus(self):
+        if self.initial['c'] >= 0:
+            pass
+
+        return self
+
+    def range(self):
+        self.oList = self.oList.filter(orderlogistics__signDate__range=(self.initial['s'], self.initial['e']))
+
+        return self
+
+    def page(self):
+        return page(l=self.oList, p=int(self.request.GET.get('p', 1)))
+
+
+# 订单列表权限加持
+class ProducePurview:
+    """
+        首先获取当前角色可进行的订单操作权限. 
+
+        其后获取订单的可选操作. 两者进行交集
+
+    """
+    def __init__(self, oList, request):
+        self.oList = oList
+        self.oStatus = Produce.oStatus
+        self.path = request.paths[u'生产']
+
+    # 获取订单可选操作项
+    def getElement(self):
+        for i in self.oList:
+            items = []
+
+            for ii in i.orderitem_set.all():
+                if not hasattr(ii,'action'):
+                    ii.action = {}
+
+                try:
+                    status = ii.produce.status
+                except Exception, e:
+                    status = Produce.objects.create(item=ii).status #关联外键
+
+                if not status:
+                    
+                    ii.action[self.path] = (
+                                    (1, u'产求'), 
+
+                                )
+                elif status == 1:
+
+                    ii.action[self.path] = (
+                                    (2, u'产中'), 
+                                    (3, u'拒产'), 
+                                )
+                elif status == 2:
+
+                    ii.action[self.path] = (
+                                    (3, u'拒签'), 
+                                    (4, u'已产'), 
+                                )
+                else:
+                    ii.action[self.path] = ()
+
+                items.append(ii)
+
+            i.items = items
+
+        return self
+
+
+    def beMixed(self):
+        for i in self.oList:
+            for ii in i.items:
+                ii.action[self.path] = tuple([ iii for iii in ii.action[self.path] if iii in self.oStatus ])
+
+        return self.oList
