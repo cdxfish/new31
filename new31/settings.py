@@ -252,9 +252,6 @@ djangoAPPS = [
     'django.contrib.admindocs',
 ]
 
-# for i in APPS:
-#     djangoAPPS.append(i)
-
 for i,v in APPS.items():
 
     djangoAPPS.append(i)

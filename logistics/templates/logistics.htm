@@ -2,6 +2,7 @@
 
 {% block content %}
       {% include 'search.htm' %}
+      {% load tags %}
       <table cellpadding="3" cellspacing="1" width="100%" class="sortTable">
           <tr>
             <th>类型</th>
@@ -18,15 +19,15 @@
             <td>{{ i.orderlogistics.consignee }} [ {{ i.orderlogistics.tel }} ]</td>
             <td>200.00 | 11.00 | 189.00 | {{ i.orderpay.name }}</td>
             <td>{{ i.orderstatus.get_status_display }} | {{ i.orderpay.get_status_display }} | {{ i.ordership.get_status_display }}</td>
-            {% include 'operate.htm' %}
+            {% optr i %}
           </tr>
-{% for item in i.orderitem_set.all %}
+{% for item in i.items %}
           <tr align="center">
             <td align="right" nowrap="true" colspan="2">{{ item.name }}</td>
             <td>{{ item.spec }}</td>
             <td>{{ item.number }}</td>
-            <td>未产</td>
-            <td><a href="{{ request.paths.生产 }}" class="button">生产请求</a></td>
+            <td>{{ item.produce.get_status_display }}</td>
+            {% optr item %}
           </tr>
 {% endfor %}
           <tr>
@@ -40,7 +41,7 @@
             <td>{{ i.orderlogistics.logisTimeStart|time:"H:i" }}</td>
             <td>{{ i.form.advance }}</td>
             <td>{{ i.form.dman }}</td>
-          </tr>             
+          </tr>
           <tr>
             <td align="center">备注</td>
             <td colspan="6">速度送</td>

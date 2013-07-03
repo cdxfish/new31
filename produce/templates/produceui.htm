@@ -2,6 +2,7 @@
 
 {% block content %}
       {% include 'search.htm' %}
+      {% load tags %}
         <table cellpadding="3" cellspacing="1" width="100%">
           <tr>
             <th>名称</th>
@@ -26,14 +27,8 @@
             <td align="right" nowrap="true">{{ item.name }}</td>
             <td>{{ item.spec }}</td>
             <td>{{ item.number }}</td>
-            <td>未产</td>
-            <td>
-{% for itemI, itemV in item.action.items %}
-{% for itemII,itemVV in itemV %}
-           <a href="{{ itemI }}{{ itemII }}/?sn={{ iiii.sn }}" class="button">{{ itemVV }}</a>
-{% endfor %}
-{% endfor %}
-            </td>
+            <td>{{ item.produce.get_status_display }}</td>
+            {% optr item %}
           </tr>
 {% endfor %}
 {% endfor %}

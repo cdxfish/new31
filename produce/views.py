@@ -31,18 +31,37 @@ def sortList(oList):
         logisTimeStart = u'%s' % i.orderlogistics.logisTimeStart
         advance = u'%s' % i.orderlogistics.get_advance_display()
 
-        if not signDate in _oList:
-            _oList[signDate] = {}
+        i.items = [ ii for ii in i.items if ii.produce.status ]
 
-        if not logisTimeStart in _oList[signDate]:
-            _oList[signDate][logisTimeStart] = {}
+        if i.items:
 
-        if not advance in _oList[signDate][logisTimeStart]:
-            _oList[signDate][logisTimeStart][advance] = []
+            if not signDate in _oList:
+                _oList[signDate] = {}
 
-        _oList[signDate][logisTimeStart][advance].append(i)
+            if not logisTimeStart in _oList[signDate]:
+                _oList[signDate][logisTimeStart] = {}
+
+            if not advance in _oList[signDate][logisTimeStart]:
+                _oList[signDate][logisTimeStart][advance] = []
+
+            _oList[signDate][logisTimeStart][advance].append(i)
 
     return _oList
+
+
+
+def pCon(request, c):
+
+    c = int(c)
+    sn = request.GET.get('sn')
+    item =  Produce.objects.get(item=sn)
+
+    item.status = c
+
+    item.save()
+
+    return redirectBack(request)
+
 
 
 class ProduceList(Order):
@@ -80,7 +99,7 @@ class ProducePurview:
     """
         首先获取当前角色可进行的订单操作权限. 
 
-        其后获取订单的可选操作. 两者进行交集
+        其后获取订单的可选操作. 两者进行交集.
 
     """
     def __init__(self, oList, request):

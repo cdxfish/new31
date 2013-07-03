@@ -327,7 +327,6 @@ class OrderSubmit:
                     )
                 )
 
-
         OrderItem.objects.bulk_create(orderItem)
 
         return self

@@ -6,7 +6,6 @@ from office.forms import *
 
 # Create your forms here.
 
-
 class ProduceForm(baseSearchForm):
 
     cChoice = ((-1, '全部'),) + Produce.oStatus

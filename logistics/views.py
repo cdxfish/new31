@@ -7,6 +7,7 @@ from purview.models import *
 from purview.views import *
 from order.models import *
 from order.views import *
+from produce.views import *
 from finance.views import *
 from new31.func import *
 from forms import *
@@ -26,17 +27,18 @@ def logisticsUI(request):
     oList = logisticsPurview(oList, request).getElement().beMixed()
     oList = FinancePurview(oList, request).getElement().beMixed()
     oList = OrderPurview(oList, request).beMixed()
+    oList = ProducePurview(oList, request).getElement().beMixed()
 
     return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))    
 
 # 物流信息提交
-def cCon(request, c):
+def lCon(request, c):
 
     c = int(c)
     orderSN = request.GET.get('sn')
     order =  OrderShip.objects.get(order=orderSN)
 
-    order.shipStatus = c
+    order.status = c
 
     order.save()
 

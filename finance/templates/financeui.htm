@@ -2,6 +2,7 @@
 
 {% block content %}
       {% include 'search.htm' %}
+      {% load tags %}
       <table cellpadding="3" cellspacing="1" width="100%" class="sortTable">
           <tr>
             <th>类型</th>
@@ -18,7 +19,7 @@
             <td>{{ i.orderlogistics.consignee }} [ {{ i.orderlogistics.tel }} ]</td>
             <td>200.00 | 11.00 | 189.00 | {{ i.orderpay.name }}</td>
             <td>{{ i.orderstatus.get_status_display }} | {{ i.orderpay.get_status_display }} | {{ i.ordership.get_status_display }}</td>
-            {% include 'operate.htm' %}
+            {% optr i %}
           </tr>
 {% for item in i.orderitem_set.all %}
           <tr align="center">

@@ -4,5 +4,5 @@ from views import *
 
 urlpatterns = patterns('',
     (r'^$', logisticsUI),
-    (r'^ccon/(?P<c>\d+)/$', cCon),
+    (r'^(?P<c>\d+)/$', lCon),
 )
