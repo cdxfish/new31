@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from models import *
 from forms import *
 from order.views import *
+from purview.views import *
 from signtime.models import *
 
 # Create your views here.
@@ -15,7 +16,7 @@ def produceUI(request):
 
     form = ProduceForm(initial=o.initial)
 
-    oList = o.search().oStatus().range().page()
+    oList = o.search().range().oStatus().page()
     oList = ProducePurview(oList, request).getElement().beMixed()
 
     oList = sortList(oList)
@@ -80,8 +81,16 @@ class ProduceList(Order):
         return self
 
     def oStatus(self):
-        if self.initial['c'] >= 0:
-            pass
+        for i in self.oList:
+            items = []
+            for ii in i.orderitem_set.all():
+                if self.initial['c'] >= 0:
+                    if ii.produce.status == self.initial['c']:
+                        items.append(ii)
+                else:
+                    items.append(ii)
+
+            i.items = items
 
         return self
 
@@ -95,7 +104,7 @@ class ProduceList(Order):
 
 
 # 订单列表权限加持
-class ProducePurview:
+class ProducePurview(OrderPurview):
     """
         首先获取当前角色可进行的订单操作权限. 
 
@@ -103,7 +112,7 @@ class ProducePurview:
 
     """
     def __init__(self, oList, request):
-        self.oList = oList
+        super(ProducePurview, self).__init__(oList, request)
         self.oStatus = Produce.oStatus
         self.path = request.paths[u'生产']
 
@@ -112,7 +121,7 @@ class ProducePurview:
         for i in self.oList:
             items = []
 
-            for ii in i.orderitem_set.all():
+            for ii in i.items:
                 if not hasattr(ii,'action'):
                     ii.action = {}
 

@@ -24,7 +24,7 @@ def logisticsUI(request):
     form = LogisticsForm(initial=o.initial)
 
     oList = o.search().oStatus().range().page()
-    oList = logisticsPurview(oList, request).getElement().beMixed()
+    oList = logisticsPurview(oList, request).getElement().mixedStatus()
     oList = FinancePurview(oList, request).getElement().beMixed()
     oList = OrderPurview(oList, request).beMixed()
     oList = ProducePurview(oList, request).getElement().beMixed()
@@ -78,12 +78,8 @@ class Logistics(Order):
 
         return self
 
-    def page(self):
-        return page(l=self.oList, p=int(self.request.GET.get('p', 1)))
-
-
 # 订单列表权限加持
-class logisticsPurview:
+class logisticsPurview(OrderPurview):
     """
         首先获取当前角色可进行的订单操作权限. 
 
@@ -91,7 +87,7 @@ class logisticsPurview:
 
     """
     def __init__(self, oList, request):
-        self.oList = oList
+        super(logisticsPurview, self).__init__(oList, request)
         self.oStatus = OrderShip.oStatus
         self.path = request.paths[u'物流']
 
@@ -121,10 +117,3 @@ class logisticsPurview:
                 i.action[self.path] = ()
 
         return self
-
-
-    def beMixed(self):
-        for i in self.oList:
-            i.action[self.path] = tuple([ ii for ii in i.action[self.path] if ii in self.oStatus ])
-
-        return self.oList

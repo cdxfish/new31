@@ -24,15 +24,13 @@ from django.db.models import Q
 
 # 订单列表显示页面
 def orderList(request):
-    from finance.views import FinancePurview
 
     o = Order(request)
 
     form = OrderStatusForm(initial=o.initial)
 
     oList = o.baseSearch().oStatus().range().page()
-    oList = OrderListPurview(oList, request).getElement().beMixed()
-    oList = OrderPurview(oList, request).beMixed()
+    oList = OrderListPurview(oList, request).getElement().mixedStatus()
 
     return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
 
@@ -160,8 +158,6 @@ class Order(object):
 
         if self.initial['o'] >= 0:
             self.oList = self.oList.filter(orderType=self.initial['o'])
-
-
 
         return self
 
@@ -436,7 +432,7 @@ class OrderSubmit:
 
 
 
-class OrderListPurview:
+class OrderListPurview(OrderPurview):
     """
         订单列表权限加持
 
@@ -447,7 +443,7 @@ class OrderListPurview:
     """
 
     def __init__(self, oList, request):
-        self.oList = oList
+        super(OrderListPurview, self).__init__(oList, request)
         self.oStatus = OrderStatus.oStatus
         self.path = request.paths[u'订单']
 
@@ -472,7 +468,6 @@ class OrderListPurview:
 
                 i.action[self.path] = (
                                 (0, u'新单'),
-                                (5, u'完成'),
                             )
 
             elif i.orderstatus.status == 3: #无效
@@ -491,10 +486,3 @@ class OrderListPurview:
                 i.action[self.path] = ()
 
         return self
-
-
-    def beMixed(self):
-        for i in self.oList:
-            i.action[self.path] = tuple([ ii for ii in i.action[self.path] if ii in self.oStatus ])
-
-        return self.oList

@@ -102,7 +102,6 @@ class OrderStatus(models.Model):
                 (2, u'确认'),
                 (3, u'无效'),
                 (4, u'停止'),
-                (5, u'完成'),
             )
 
     order = models.OneToOneField(OrderInfo, verbose_name=u'订单')

@@ -86,3 +86,10 @@ class OrderPurview(object):
                 i.action[ii] = tuple([ iii for iii in i.action[ii] if u'%s%s/' % (ii, iii[0]) in self.role ])
 
         return self.oList
+
+
+    def mixedStatus(self):
+        for i in self.oList:
+            i.action[self.path] = tuple([ ii for ii in i.action[self.path] if ii in self.oStatus ])
+
+        return self.oList
