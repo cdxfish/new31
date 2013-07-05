@@ -79,7 +79,6 @@ class OrderPurview(object):
         self.oList = oList
         self.role = Role.objects.getPathByUser(request.user)
 
-
     def beMixed(self):
         for i in self.oList:
             for ii in i.action:

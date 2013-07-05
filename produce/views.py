@@ -116,6 +116,10 @@ class ProducePurview(OrderPurview):
         self.oStatus = Produce.oStatus
         self.path = request.paths[u'生产']
 
+        for i in self.oList:
+            i.items = i.orderitem_set.all()
+
+
     # 获取订单可选操作项
     def getElement(self):
         for i in self.oList:
@@ -147,6 +151,11 @@ class ProducePurview(OrderPurview):
                     ii.action[self.path] = (
                                     (3, u'拒签'), 
                                     (4, u'已产'), 
+                                )
+                elif status == 3:
+
+                    ii.action[self.path] = (
+                                    (1, u'产求'), 
                                 )
                 else:
                     ii.action[self.path] = ()
