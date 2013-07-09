@@ -90,6 +90,11 @@ class logisticsPurview(OrderPurview):
         super(logisticsPurview, self).__init__(oList, request)
         self.oStatus = OrderShip.oStatus
         self.path = request.paths[u'物流']
+        self.action = (
+                        ((1, u'编辑'), (2, u'已发'),),
+                        ((1, u'编辑'), (2, u'已发'),),
+                        ((3, u'拒签'),(4, u'已签'),),
+                    )
 
     # 获取订单可选操作项
     def getElement(self):
@@ -98,22 +103,6 @@ class logisticsPurview(OrderPurview):
             if not hasattr(i,'action'):
                 i.action = {}
 
-            if i.ordership.status < 2:
-
-                i.action[self.path] = (
-                                (1, u'编辑'), 
-                                (2, u'已发'), 
-
-                            )
-            elif i.ordership.status == 2:
-
-                i.action[self.path] = (
-                                (3, u'拒签'), 
-                                (4, u'已签'), 
-                            )
-
-
-            else:
-                i.action[self.path] = ()
+            i.action[self.path] = self.action[i.ordership.status]
 
         return self

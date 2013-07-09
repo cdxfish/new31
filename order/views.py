@@ -446,6 +446,13 @@ class OrderListPurview(OrderPurview):
         super(OrderListPurview, self).__init__(oList, request)
         self.oStatus = OrderStatus.oStatus
         self.path = request.paths[u'订单']
+        self.action = ( 
+                        ((0, u'新单'),(1, u'编辑'),(2, u'确认'),(3, u'无效'),),
+                        ((0, u'新单'),(1, u'编辑'),(2, u'确认'),(3, u'无效'),),
+                        ((0, u'新单'),),
+                        ((0, u'新单'),),
+                        ((0, u'新单'),),
+                    )
 
 
     # 获取订单可选操作项
@@ -455,34 +462,6 @@ class OrderListPurview(OrderPurview):
             if not hasattr(i,'action'):
                 i.action = {}
 
-            if i.orderstatus.status < 2: #编辑
-
-                i.action[self.path] = (
-                            (0, u'新单'),
-                            (1, u'编辑'),
-                            (2, u'确认'),
-                            (3, u'无效'),
-                            )
-
-            elif i.orderstatus.status == 2: #确认
-
-                i.action[self.path] = (
-                                (0, u'新单'),
-                            )
-
-            elif i.orderstatus.status == 3: #无效
-
-                i.action[self.path] = (
-                                (0, u'新单'),
-                            )
-
-            elif i.orderstatus.status == 4: #停止
-
-                i.action[self.path] = (
-                                (0, u'新单'),
-                            )
-
-            else:
-                i.action[self.path] = ()
+            i.action[self.path] = self.action[i.orderstatus.status]
 
         return self

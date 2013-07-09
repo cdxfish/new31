@@ -182,8 +182,10 @@ class ItemDiscount(models.Model):
 
 
 class ItemImg(models.Model):
+    iTypeChoices = ((0,u'小图'),(1,u'大图'),)
     item = models.ForeignKey(Item, verbose_name=u'商品')
     img = models.ImageField(u'图片', upload_to='images')
+    iType = models.SmallIntegerField(u'类型', default=0, choices=iTypeChoices)
     objects = itemImgManager()
 
     def __unicode__(self):

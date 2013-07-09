@@ -64,6 +64,12 @@ class FinancePurview:
         self.oList = oList
         self.oStatus = OrderPay.oStatus
         self.path = request.paths[u'财务']
+        self.action = (
+                        ((1, u'已付'),),
+                        ((1, u'已付'),),
+                        ((2, u'已结'),),
+                        ((3, u'已核'),),
+                )
 
     # 获取订单可选操作项
     def getElement(self):
@@ -73,25 +79,7 @@ class FinancePurview:
             if not hasattr(i,'action'):
                 i.action = {}
 
-            if i.orderpay.status < 1:
-                i.action[self.path] = (
-                                (1, u'已付'),  
-
-                            )
-
-            elif i.orderpay.status == 1:
-                i.action[self.path] = (
-                                (2, u'已结'), 
-                            )
-
-            elif i.orderpay.status == 2:
-                i.action[self.path] = (
-                                (3, u'已核'), 
-                            )
-
-
-            else:
-                i.action[self.path] = ()
+            i.action[self.path] = self.action[i.orderpay.status]
 
         return self
 

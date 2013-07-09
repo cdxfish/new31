@@ -115,6 +115,13 @@ class ProducePurview(OrderPurview):
         super(ProducePurview, self).__init__(oList, request)
         self.oStatus = Produce.oStatus
         self.path = request.paths[u'生产']
+        self.action = (
+                    ((1, u'产求'), ),
+                    ((2, u'产中'), (3, u'拒产'), ),
+                    ((3, u'拒签'), (4, u'已产'), ),
+                    ((1, u'产求'), ),
+                    (),
+                )
 
         for i in self.oList:
             i.items = i.orderitem_set.all()
@@ -134,31 +141,7 @@ class ProducePurview(OrderPurview):
                 except Exception, e:
                     status = Produce.objects.create(item=ii).status #关联外键
 
-                if not status:
-                    
-                    ii.action[self.path] = (
-                                    (1, u'产求'), 
-
-                                )
-                elif status == 1:
-
-                    ii.action[self.path] = (
-                                    (2, u'产中'), 
-                                    (3, u'拒产'), 
-                                )
-                elif status == 2:
-
-                    ii.action[self.path] = (
-                                    (3, u'拒签'), 
-                                    (4, u'已产'), 
-                                )
-                elif status == 3:
-
-                    ii.action[self.path] = (
-                                    (1, u'产求'), 
-                                )
-                else:
-                    ii.action[self.path] = ()
+                ii.action[self.path] = self.action[status]
 
                 items.append(ii)
 
