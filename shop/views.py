@@ -47,8 +47,8 @@ class ItemPin:
         return self
 
     # 物品行排序方案,需传入一个函数对象
-    def sort(self,function):
-        self.itemList = function(self.itemList)
+    def sort(self,func):
+        self.itemList = func(self.itemList)
 
         return self
 
