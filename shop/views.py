@@ -14,9 +14,9 @@ from django.contrib import messages
 # APP For Shop UI
 def shop(request):
 
-    itemList = ItemPin(10).buildItemList().sort(sortFun).itemList
+    items = ItemPin(10).getItems()
 
-    tagList = Tag.objects.all()[:8]
+    tags = Tag.objects.all()[:8]
 
     return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))
 
@@ -25,64 +25,92 @@ def sortFun(itemList):
     [random.shuffle(i) for i in itemList]
     return itemList
 
-class ItemPin:
-    """瀑布流物品排序类"""
-    def __init__(self, rowSize=8, lineSize=3, orthClass='b2', baseClass='b1'):
-       self.rowSize = rowSize
-       self.lineSize = lineSize
-       self.orthClass = orthClass
-       self.baseClass = baseClass
+class ItemPin(object):
+    """
+        瀑布流物品排序类
+        用于首页物品展示用
+        可看作矩阵
 
-       self.itemList = []
-       self.itemQuery = Item.objects.select_related().filter(Q(sn__contains='3133') | Q(sn__contains='3155') | Q(sn__contains='3177'))  #初始化物品序列
+        实例化参数: 
 
-    # 获取物品数组
-    def buildItemList(self):      
-        for i in range(0, self.rowSize):
+        rSize(竖尺寸)
+        lSize(横尺寸)
 
-            lineItem = self.buildLineItem()
+        使用方法: ItemPin(10).getItems()
 
-            self.itemList.append(lineItem)
+        方便前台ajax调用, 返回值为列表, 格式为.
+
+        [
+            {
+                'name': 'xxx', 
+                'amount': '￥ %0.2f', 
+                'like': 123, 
+                'src': 'http://xxxxxx.jpg',
+                'width': 123,
+                'height': 123
+             },
+            .............
+            ,
+            .............
+            ,
+        ]
+
+    """
+    def __init__(self, rSize=8, lSize=(1,2)):
+       self.rSize = rSize
+       self.lSize = sum(lSize)
+
+       self.itemQuery = ItemImg.objects.getSImgs()  #初始化物品序列
+       self.matrix = []
+
+    """
+        矩阵竖坐标
+
+        长度为rowSize
+
+
+    """
+    def buildRow(self, rSize):
+
+        for x in xrange(0, rSize):
+
+            self.builLine(self.lSize)
 
         return self
 
-    # 物品行排序方案,需传入一个函数对象
-    def sort(self,func):
-        self.itemList = func(self.itemList)
+
+    """
+        矩阵横坐标
+
+        长度为lineSize
+
+    """
+    def builLine(self, lSize):
+        lItems = []
+        for x in xrange(0,lSize):
+            i =  self.random()
+
+            self.matrix.append({
+                        'name': i.item.name, 
+                        'amount': '￥ %0.2f' % i.item.itemspec_set.getDefaultSpec().itemfee_set.getFeeByNomal().amount, 
+                        'like': i.item.like, 
+                        'src': i.img.url,
+                        'width': i.img.width,
+                        'height': i.img.height
+                    })
 
         return self
 
-    # 从物品序列中随机获取一个物品,并以字典方式返回数据
-    def randomItem(self):
-        randomItem = random.choice(self.itemQuery)
+    def getItems(self):
+ 
+        return self.buildRow(self.rSize).matrix
 
-        while not os.path.isfile('%simages\\%ss.jpg' % (settings.MEDIA_ROOT, randomItem.sn)):
-            randomItem = random.choice(self.itemQuery)
+    def random(self):
 
-        item = {
-            'cssClass': self.baseClass,    
-            'img': '%simages/%ss.jpg' % (settings.MEDIA_URL, randomItem.sn),
-            'itemName': randomItem.name,
-            'sn': randomItem.sn,
-            'like': randomItem.like,
-            'click': randomItem.click,
-            # 'amount': '%.2f' % randomItem.itemattr_set.all()[0].itemfee_set.get().amount,
-            'amount': '%.2f' % 189,
-        }
-       
-        return item
+        return random.choice(self.itemQuery)
 
-    # 初始化物品行
-    def buildLineItem(self):
-        lineItem = []
-        [lineItem.append(self.randomItem()) for i in range(0,self.lineSize)]
+    def sort(self):
+        for x in self.matrix:
+            pass
 
-        if os.path.isfile('%simages\\%sb.jpg' % (settings.MEDIA_ROOT, lineItem[0]['sn'])):
-
-            lineItem[0]['cssClass'] = self.orthClass
-            lineItem[0]['img'] = '%simages/%sb.jpg' % (settings.MEDIA_URL, lineItem[0]['sn'])
-
-        else:
-            lineItem.append(self.randomItem())
-
-        return lineItem
+        return self

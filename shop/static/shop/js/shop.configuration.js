@@ -1,22 +1,23 @@
 $(document).ready(function() {
 
-    (function() {
-        var i = 0;
-        addi = function() {
-            i++;
-        }
-        vi = function() {
-            return i;
-        }
-
-    })()
-
     shop.getMoreItem().pinStream();
 
 });
 
 var shop = {
+    vi: (function() {
+        var i = 0;
+        this.addi = function() {
+            i++;
+        }
+
+        return function() {
+            return i;
+        }
+    })(),
     getMoreItem: function() {
+        var self = this;
+
         $(window).scroll(function() {
             var pinStream = $(".pinStream");
 
@@ -26,7 +27,8 @@ var shop = {
             var pinTop = pinStream.offset().top;
             var pinHeight = pinStream.outerHeight();
 
-            if (vi() <= 5) {
+
+            if (self.vi() <= 5) {
                 if (scrollTop + winHeight + 600 >= pinTop + pinHeight) {
                     $.getJSON('/ajax/itemmore/', function(data) {
                         addi();

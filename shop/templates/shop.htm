@@ -23,18 +23,18 @@
 
 {% block content %}
     <div class="pinStream clearfix">
-{% for line in itemList %}{% for list in line %}
-        <div class="{{ list.cssClass }}">
-            <a href="/tag/{{ list.itemName }}/" target="_blank/" title="{{ list.itemName }}">
-                <img src="{{ list.img }}" alt="{{ list.itemName }}" title="{{ list.itemName }}" />
+{% for i in items %}
+        <div class="s{{ i.width }}">
+            <a href="/tag/{{ i.name }}/" target="_blank/" title="{{ i.name }}">
+                <img src="{{ i.src }}" alt="{{ i.name }}" title="{{ i.name }}" />
                 <span class="floatInfo">
-                    <span class="price">￥ {{ list.amount }}</span>
-                    <span class="like_icon">{{ list.like }}</span>
-                    <span class="name">{{ list.itemName }}</span>
+                    <span class="price">{{ i.amount }}</span>
+                    <span class="like_icon">{{ i.like }}</span>
+                    <span class="name">{{ i.name }}</span>
                 </span>
             </a>
         </div>
-{% endfor %}{% endfor %}
+{% endfor %}
     </div>
     <div class="sideBar">
         <div class="locListName">
@@ -48,7 +48,7 @@
         <div class="tagsList">
           <h4>标签</h4>
           <div class="tagsBox">
-{% for i in tagList %}
+{% for i in tags %}
               <a href="/tag/{{ i.tag }}/"class="tags_{{ tagsClass|random }}">{{ i.tag }}</a>
 {% endfor %}
           </div>
@@ -86,7 +86,7 @@
                 </li>
             </ul>
         </div>
-        <div class="buyList">
+        <!-- <div class="buyList">
             <h4>热销</h4>
             <ul>
                 <li><a href="/tag/evanescence/"><img width="32" height="32" src="{{ MEDIA_URL }}images/3133015s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a></li>
@@ -117,7 +117,7 @@
                 <li>
                     <a href="/tag/Joseph/"><img width="32" height="32" src="{{ MEDIA_URL }}images/3133004s.jpg" alt="香浓巧克力" title="香浓巧克力" /></a>
                 </li>
-            </ul>
+            </ul> -->
         </div>
     </div>
 {% endblock %}

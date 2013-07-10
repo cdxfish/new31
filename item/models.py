@@ -52,6 +52,10 @@ class itemManager(models.Manager):
 
         return self.select_related().filter(onLine=True,show=True).order_by('?')[0]
 
+    def getItems(self):
+
+        return self.select_related().filter((Q(sn__contains='3133') | Q(sn__contains='3155') | Q(sn__contains='3177')), onLine=True, show=True)
+
 
 class itemDescManager(models.Manager):
     def random(self, itemName = ''):
@@ -82,17 +86,19 @@ class itemImgManager(models.Manager):
 
         return self.all()
 
+    def getSImgs(self):
+
+        return self.select_related().filter(iType=0, onLine=True)
+
 
 class itemFeeManager(models.Manager):
     def getFeeByNomal(self):
-
         return self.select_related().get(itemType=0)
-    def getAllFeeByNomal(self):
 
+    def getAllFeeByNomal(self):
         return self.select_related().filter(itemType=0)
 
     def getFeeBySpecID(self, specID):
-
         return ItemSpec.objects.getSpecBySpecID(id=specID).itemfee_set.getAllFeeByNomal()[0]
 
     def getTupleBySpecID(self, id):
@@ -186,6 +192,7 @@ class ItemImg(models.Model):
     item = models.ForeignKey(Item, verbose_name=u'商品')
     img = models.ImageField(u'图片', upload_to='images')
     iType = models.SmallIntegerField(u'类型', default=0, choices=iTypeChoices)
+    onLine = models.BooleanField(u'上线', default=True)
     objects = itemImgManager()
 
     def __unicode__(self):
