@@ -1,17 +1,11 @@
 #coding:utf-8
 # Django settings for new31 project.
-import os, socket
+import os
 
 ROOT_PATH = os.path.dirname(os.path.dirname(__file__))
 
 
-# if socket.gethostname() == 'my-laptop':
-#     DEBUG = TEMPLATE_DEBUG = True
-# else:
-#     DEBUG = TEMPLATE_DEBUG = False
-
-
-DEBUG = not os.environ.get("APP_NAME", "")
+DEBUG = False if 'SERVER_SOFTWARE' in os.environ else True
 
 if DEBUG:
     # local
@@ -21,9 +15,9 @@ if DEBUG:
     MYSQL_HOST_M = 'localhost'
     MYSQL_HOST_S = 'localhost'
     MYSQL_PORT = '3306'
+
 else:
     # SAE
-
     import sae.const
     MYSQL_DB = sae.const.MYSQL_DB
     MYSQL_USER = sae.const.MYSQL_USER
@@ -32,7 +26,7 @@ else:
     MYSQL_HOST_S = sae.const.MYSQL_HOST_S
     MYSQL_PORT = sae.const.MYSQL_PORT
 
-# DEBUG = False
+# DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 

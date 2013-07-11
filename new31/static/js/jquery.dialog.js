@@ -215,7 +215,7 @@
 
     $.fn.extend({
         ajaxDialog: function(f, l) {
-            var f = f ? f : function() {};
+            var f= f ? f : function() {};
             var l = l ? l : '努力加载中请稍候，请稍候';
 
             $.dialog.loading(l);
