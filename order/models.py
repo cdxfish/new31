@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from item.models import *
 from discount.models import *
+from new31.func import *
 
 # Create your models here.
 
@@ -10,6 +11,29 @@ class orderLogisticsManager(models.Manager):
     def getlogisBySN(self, sn):
 
         return self.get(sn=sn)
+
+class orderManager(models.Manager):
+    def getOrderByUser(self, user):
+
+        orders = self.select_related(depth=2).filter(user=user)
+
+        for i in orders:
+            i.total = OrderItem.objects.getFeeBySN(i.sn)
+
+        return orders
+
+class orderItemManager(models.Manager):
+    def getFeeBySN(self, sn):
+
+        order = self.select_related().filter(order=sn)
+        total = {}
+        for i in order:
+            if not i.itemType in total:
+                total[i.itemType] = 0
+
+            total[i.itemType] += forMatFee(i.nowFee * i.number)
+
+        return total
 
 
 class OrderInfo(models.Model):
@@ -23,6 +47,8 @@ class OrderInfo(models.Model):
     sn = models.BigIntegerField(u'订单号', primary_key=True, unique=True)
     user = models.OneToOneField(User, verbose_name=u'会员', blank=True, null=True)
     orderType = models.SmallIntegerField(u'订单类型', default=0, choices=oType)
+
+    objects = orderManager()
 
     def __unicode__(self):
         return u"%s [ %s ] - %s" % (self.sn, self.user, self.get_orderType_display())
@@ -108,7 +134,7 @@ class OrderStatus(models.Model):
     status = models.SmallIntegerField(u'订单状态', default=0, editable=False, choices=oStatus)
 
     def __unicode__(self):
-        return u"%s - [ %s ]" % ( self.order, self.get_orderStatus_display() )    
+        return u"%s - [ %s ]" % ( self.order, self.get_status_display() )    
 
     # class Meta:
         # verbose_name = u'订单支付'
@@ -128,7 +154,7 @@ class OrderPay(models.Model):
     status = models.SmallIntegerField(u'支付状态', default=0, editable=False, choices=oStatus)
 
     def __unicode__(self):
-        return u"%s - %s [ %s ]" % ( self.order, self.name, self.get_payStatus_display() )
+        return u"%s - %s [ %s ]" % ( self.order, self.name, self.get_status_display() )
 
     # class Meta:
         # verbose_name = u'订单支付'
@@ -149,7 +175,7 @@ class OrderShip(models.Model):
     status = models.SmallIntegerField(u'物流状态', default=0, editable=False, choices=oStatus)
 
     def __unicode__(self):
-        return u"%s - %s [ %s ]" % ( self.order, self.name, self.get_shipStatus_display() )    
+        return u"%s - %s [ %s ]" % ( self.order, self.name, self.get_status_display() )    
 
     # class Meta:
         # verbose_name = u'订单物流'
@@ -165,6 +191,8 @@ class OrderItem(models.Model):
     amount = models.DecimalField(u'原价', max_digits=10, decimal_places=2)
     nowFee = models.DecimalField(u'现价', max_digits=10, decimal_places=2)
     discount = models.FloatField(u'折扣', default=1.0, choices=Discount.disChoices)
+
+    objects = orderItemManager()
 
     def __unicode__(self):
         return u"%s - %s[ %s ][ %s ][ %d ]" % ( self.order, self.name, self.spec, self.number, self.amount )

@@ -58,9 +58,16 @@ class URLPurview:
 
     # 用户级错误提示
     def error(self):
-        messages.error(self.request, u'权限不足。')
+        errStr = u'权限不足。'
 
-        return redirectBack(self.request)
+        if self.request.domElement.aType:
+
+            return AjaxRJson().messages(errStr).dumps()
+
+        else: 
+            messages.error(self.request, errStr)
+
+            return redirectBack(self.request)
 
 
 class OrderPurview(object):

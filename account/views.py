@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib import messages, auth
 from account.models import *
+from order.models import *
 from new31.func import *
 
 # Create your views here.
@@ -54,6 +55,8 @@ def changepwd(request):
     return render_to_response('changepwd.htm', locals(), context_instance=RequestContext(request))
 
 def myOrder(request):
+
+    orders = OrderInfo.objects.getOrderByUser(request.user.id)
 
     return render_to_response('myorder.htm', locals(), context_instance=RequestContext(request))
 

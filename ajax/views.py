@@ -17,7 +17,7 @@ import json
 def getLineItemMore(request):
     itemList = ItemPin(8).buildItemList().sort(sortFun).itemList
 
-    return AjaxRJson().jsonEn(itemList)
+    return AjaxRJson().dumps(itemList)
 
 
 # 前台弹出层中获取商品规格
@@ -28,7 +28,7 @@ def getItemSpec(request, kwargs):
 
     data = [ {'id':i.id ,'spec':i.spec.value ,'amount': '%.2f' % i.itemfee_set.getFeeByNomal().amount, } for i in itemSpec ]
 
-    return AjaxRJson().jsonEn(data)
+    return AjaxRJson().dumps(data)
 
 
 # 前台购物车界面修改购物车中商品数量
@@ -37,8 +37,7 @@ def ajaxChangNum(request, kwargs):
 
     data =  '%.2f' % Cart(request).changeNumBySpec(mark=kwargs['mark'], num=kwargs['num']).countFee()
 
-    return AjaxRJson().jsonEn(data)
-
+    return AjaxRJson().dumps(data)
 
 
 # 商品查询，后台新订单及订单编辑用
@@ -49,7 +48,7 @@ def getItemByKeyword(request):
 
         r = [ { 'name':i.name, 'sn': i.sn, 'id': i.id, } for i in Item.objects.getItemLikeNameOrSn( kwargs['k'] )]
 
-        return AjaxRJson().jsonEn(r)
+        return AjaxRJson().dumps(r)
 
     return _getItemByKeyword(request=request, k=request.GET.get('k', ''))
 
@@ -59,7 +58,7 @@ def getItemByKeyword(request):
 def cConsigneeByAjax(request, kwargs):
     ShipConsignee(request).setSeesion()
 
-    return AjaxRJson().jsonEn()
+    return AjaxRJson().dumps()
 
 # ajax动态写入收货人信息
 @tryMsg('无法填写表单')
@@ -67,7 +66,7 @@ def coTypeByAjax(request, kwargs):
 
     Order(request).setSeesion(oType=request.GET.get('oType'))
 
-    return AjaxRJson().jsonEn()
+    return AjaxRJson().dumps()
 
 
 # ajax动态修改购物车内商品
@@ -84,7 +83,7 @@ def cItemByAjax(request, kwargs):
     data['st'] = '%.2f' % i['total']
     data['total'] = '%.2f' % cc.countFee()
 
-    return AjaxRJson().jsonEn(data)
+    return AjaxRJson().dumps(data)
 
 
 
@@ -105,7 +104,7 @@ class AjaxRJson:
         self.msg = 'success'
         self.data = {}
 
-    def jsonEn(self, data=''):
+    def dumps(self, data=''):
         if data:
             self.data = data
 
