@@ -22,7 +22,7 @@
 
 /*pinStream:Start*/
 
-.pinStream{width:764px;float:left;overflow:hidden;_zoom:1;}
+.pinStream{width:764px;min-height:100px;float:left;overflow:hidden;_zoom:1;}
 .pinStream a{display:block;height:100%}
 .pinStream .box{overflow:hidden;*zoom:1}
 .pinStream .s188,.s379,.s379379{margin:0 3px 3px 0;float:left;overflow:hidden;position:relative;}

@@ -1,7 +1,7 @@
 #coding:utf-8
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.http import HttpResponseRedirect
-import math
+import math, random, json, os
 
 
 # 格式化价格,舍弃小数位
@@ -49,3 +49,9 @@ def page(l, p=1, pSize=150):
         return paginator.page(p)
     except (EmptyPage, InvalidPage):
         return paginator.page(paginator.num_pages)
+
+
+# 排序方法
+def sort(i):
+    random.shuffle(i)
+    return i

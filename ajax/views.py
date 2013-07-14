@@ -13,11 +13,10 @@ import json
 # Create your views here.
 
 # 首页瀑布流获取更多商品
-@tryMsg('无更多商品')
-def getLineItemMore(request):
-    itemList = ItemPin(8).buildItemList().sort(sortFun).itemList
+# @tryMsg('无更多商品')
+def getItemPin(request):
 
-    return AjaxRJson().dumps(itemList)
+    return AjaxRJson().dumps(ItemPin(8).getItems(sort))
 
 
 # 前台弹出层中获取商品规格
@@ -108,7 +107,7 @@ class AjaxRJson:
         if data:
             self.data = data
 
-        return HttpResponse(json.dumps({'error':self.error, 'message':self.msg, 'data':self.data }))
+        return HttpResponse(json.dumps({'err':self.error, 'msg':self.msg, 'data':self.data }))
 
     def message(self, msg = ''):
         

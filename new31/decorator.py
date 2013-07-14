@@ -2,6 +2,7 @@
 from new31.func import *
 from django.conf import settings
 from django.contrib import messages
+
 # Create your decorator here.
 
 # 订单提交类提示用装饰器
@@ -31,17 +32,13 @@ def tryMsg(msg):
     def _tryMsg(func):
 
         def __tryMsg(request, **kwargs):
-            if settings.DEBUG:
+            try:
 
                 return func(request, kwargs)
+            except:
+                from ajax.views import AjaxRJson
 
-            else:
-                try:
-
-                    return func(request, kwargs)
-                except:
-
-                    return AjaxRJson().message(msg).jsonEn()
+                return AjaxRJson().message(msg).dumps()
 
         return __tryMsg
 
@@ -86,29 +83,6 @@ def redirTryMsg(msg):
         return __redirTryMsg
 
     return _redirTryMsg
-
-
-# AJAX提示用装饰器
-def tryMsg(msg):
-
-    def _tryMsg(func):
-
-        def __tryMsg(request, **kwargs):
-            if settings.DEBUG:
-
-                return func(request, kwargs)
-
-            else:
-                try:
-
-                    return func(request, kwargs)
-                except:
-
-                    return AjaxRJson().message(msg).jsonEn()
-
-        return __tryMsg
-
-    return _tryMsg
 
 
 # 页面跳转回上一页用装饰器

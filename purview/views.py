@@ -25,6 +25,7 @@ class URLPurview:
     """
 
     def __init__(self, request):
+        self.errStr = u'权限不足。'
         self.request = request
         self.request.domElement = [] #页面元素
 
@@ -43,7 +44,7 @@ class URLPurview:
                     self.domElement() #页面元素权限加持
                     element = Role.objects.getPathByUser(self.request.user) #用户可进入的页面权限集
                 except:
-                    return self.error()
+                    return self.errorShow()
 
                 if not self.request.path in element:
                     return self.error()
@@ -53,21 +54,28 @@ class URLPurview:
 
     # 页面元素加持
     def domElement(self):
+
         self.request.domElement = Element.objects.getPath(path=self.request.path)
+
+        return self
+
 
 
     # 用户级错误提示
     def error(self):
-        errStr = u'权限不足。'
 
         if self.request.domElement.aType:
 
-            return AjaxRJson().messages(errStr).dumps()
+            return AjaxRJson().messages(self.errStr).dumps()
 
         else: 
-            messages.error(self.request, errStr)
+            return self.errorShow()
+
+    def errorShow(self):
+            messages.error(self.request, self.errStr)
 
             return redirectBack(self.request)
+
 
 
 class OrderPurview(object):

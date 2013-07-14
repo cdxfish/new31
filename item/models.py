@@ -200,3 +200,4 @@ class ItemImg(models.Model):
 
     class Meta:
         ordering = ['?']
+        unique_together=(("img"),)  

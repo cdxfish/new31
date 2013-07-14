@@ -1,13 +1,13 @@
 $(document).ready(function() {
 
-    shop.getMoreItem().pinStream();
+    shop.getMoreItem(5).pinStream();
 
 });
 
 var shop = {
-    vi: (function() {
+    count: (function() {
         var i = 0;
-        this.addi = function() {
+        this.plusi = function() {
             i++;
         }
 
@@ -15,7 +15,20 @@ var shop = {
             return i;
         }
     })(),
-    getMoreItem: function() {
+    speedLimit: (function(t) {
+        var i = true;
+        this.timeSwitch = function() {
+            return i
+        }
+        return function() {
+            i = false;
+            setTimeout(function() {
+                i = true
+            }, t);
+        }
+
+    })(2000),
+    getMoreItem: function(num) {
         var self = this;
 
         $(window).scroll(function() {
@@ -27,37 +40,10 @@ var shop = {
             var pinTop = pinStream.offset().top;
             var pinHeight = pinStream.outerHeight();
 
-
-            if (self.vi() <= 5) {
-                if (scrollTop + winHeight + 600 >= pinTop + pinHeight) {
-                    $.getJSON('/ajax/itemmore/', function(data) {
-                        addi();
-
-                        var appendHtm = '';
-                        $.each(data, function(a, c) {
-                            $.each(c, function(n, v) {
-                                appendHtm += '<div class="' + v.cssClass + '">';
-                                appendHtm += '   <a href="/tag/' + v.itemName + '/" target="_blank/" title="' + v.itemName + '">';
-                                appendHtm += '       <img src="' + v.img + '" alt="' + v.itemName + '" title="' + v.itemName + '" />';
-                                appendHtm += '       <span class="floatInfo">';
-                                appendHtm += '           <span class="price">￥ ' + v.amount + '</span>';
-                                appendHtm += '           <span class="like_icon">' + v.like + '</span>';
-                                appendHtm += '           <span class="name">' + v.itemName + '</span>';
-                                appendHtm += '       </span>';
-                                appendHtm += '   </a>';
-                                appendHtm += '</div>';
-                            });
-
-                        });
-
-                        pinStream.append(appendHtm);
-
-                    });
-                    pinStream.ajaxStart(function() {
-                        $(this).append("<div class=\"moreLoading\"><span class=\"loading_black\"></span>努力加载中...</div>");
-                    }).ajaxSuccess(function() {
-                        $(".moreLoading").remove();
-                    });
+            if (scrollTop + winHeight + 600 >= pinTop + pinHeight) {
+                if (self.count() < num && timeSwitch()) {
+                    self.speedLimit()
+                    self.ajaxGetItems(pinStream);
                 }
 
             }
@@ -65,9 +51,48 @@ var shop = {
         });
 
         return this;
+
     },
+    ajaxGetItems: function(obj) {
+        if (!$(".moreLoading").length) {
+            obj.append("<div class=\"moreLoading\" style=\"display:none;\"><span class=\"loading_black\"></span>努力加载中...</div>");
+        }
 
+        var load = $(".moreLoading");
+        obj.ajaxStart(function() {
+            load.show()
+        }).ajaxSuccess(function() {
+            load.remove();
+        });
 
+        $.getJSON('/ajax/itemmore/', function(data) {
+
+            if (data.err) {
+                alert(data.msg);
+            } else {
+                var appendHtm = '';
+
+                $.each(data.data, function(i, v) {
+                    appendHtm += '<div class="s' + v.width + '">';
+                    appendHtm += '   <a href="/tag/' + v.name + '/" target="_blank/" title="' + v.name + '">';
+                    appendHtm += '       <img src="' + v.src + '" alt="' + v.name + '" title="' + v.name + '" />';
+                    appendHtm += '       <span class="floatInfo">';
+                    appendHtm += '           <span class="price">' + v.amount + '</span>';
+                    appendHtm += '           <span class="like_icon">' + v.like + '</span>';
+                    appendHtm += '           <span class="name">' + v.name + '</span>';
+                    appendHtm += '       </span>';
+                    appendHtm += '   </a>';
+                    appendHtm += '</div>';
+                });
+
+                obj.append(appendHtm);
+
+                plusi();
+            }
+
+        });
+
+    },
     pinStream: function() {
         $(".pinStream a").live('mouseenter', function() {
             $(this).children('.floatInfo').stop().animate({
@@ -79,7 +104,6 @@ var shop = {
         //         'bottom' : '-50px'
         //     }, 150);
         // });
-
         return this;
     }
 

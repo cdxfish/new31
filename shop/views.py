@@ -1,29 +1,21 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponse
-from django.conf import settings 
-from django.db.models import Q, Min
-from item.models import *
-from tag.models import *
-import random, json, os
-from django.contrib import messages
+from new31.func import *
+from tag.models import Tag
 
 # Create your views here.
 
 # APP For Shop UI
 def shop(request):
 
-    items = ItemPin(10).getItems()
+    items = ItemPin(10).getItems(sort)
 
     tags = Tag.objects.all()[:8]
 
     return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))
 
-# 排序方法
-def sortFun(itemList):
-    [random.shuffle(i) for i in itemList]
-    return itemList
+
 
 class ItemPin(object):
     """
@@ -33,8 +25,8 @@ class ItemPin(object):
 
         实例化参数: 
 
-        rSize(竖尺寸)
-        lSize(横尺寸)
+        rSize(行长度) = 1
+        lSize(列长度) = ((2, 188), (1, 379))
 
         使用方法: ItemPin(10).getItems()
 
@@ -56,25 +48,30 @@ class ItemPin(object):
         ]
 
     """
-    def __init__(self, rSize=8, lSize=(1,2)):
-       self.rSize = rSize
-       self.lSize = sum(lSize)
+    def __init__(self, rSize=8, lSize=((2, 188), (1, 379))):
+        self.rSize = rSize
+        self.lSize = lSize
 
-       self.itemQuery = ItemImg.objects.getSImgs()  #初始化物品序列
-       self.matrix = []
+        from item.models import ItemImg
+        self.itemQuery = ItemImg.objects.getSImgs()  #初始化物品序列
+        self.matrix = []
+
+    def getItems(self, func):
+ 
+        return self.__getRItem(self.rSize, func).matrix
 
     """
         矩阵竖坐标
 
-        长度为rowSize
+        长度为rSize
 
 
     """
-    def buildRow(self, rSize):
+    def __getRItem(self, rSize, func):
 
-        for x in xrange(0, rSize):
+        for x in range(0, rSize):
 
-            self.builLine(self.lSize)
+            self.matrix += func(self.getLItem(self.lSize))
 
         return self
 
@@ -82,35 +79,41 @@ class ItemPin(object):
     """
         矩阵横坐标
 
-        长度为lineSize
+        长度为lSize
 
     """
-    def builLine(self, lSize):
-        lItems = []
-        for x in xrange(0,lSize):
-            i =  self.random()
+    def getLItem(self, lSize):
+        items = []
+        for x,v in lSize:
+            items  += self.__getLItem(x,v)
 
-            self.matrix.append({
-                        'name': i.item.name, 
-                        'amount': '￥ %0.2f' % i.item.itemspec_set.getDefaultSpec().itemfee_set.getFeeByNomal().amount, 
-                        'like': i.item.like, 
-                        'src': i.img.url,
-                        'width': i.img.width,
-                        'height': i.img.height
-                    })
+        return items
 
-        return self
+    def __getLItem(self, size, width):
+        count = 0
+        items = []
+        for x in range(100):
+            if count == size:
+                break
+            else:
+                i = self.random()
+                if i.img.width == width:
+                    count += 1
+                    items.append(self.__item(i))
 
-    def getItems(self):
- 
-        return self.buildRow(self.rSize).matrix
+        return items
+
+    def __item(self, i):
+
+        return  {
+            'name': i.item.name, 
+            'amount': '￥ %0.2f' % i.item.itemspec_set.getDefaultSpec().itemfee_set.getFeeByNomal().amount, 
+            'like': i.item.like, 
+            'src': i.img.url,
+            'width': i.img.width,
+            'height': i.img.height
+        }
 
     def random(self):
 
         return random.choice(self.itemQuery)
-
-    def sort(self):
-        for x in self.matrix:
-            pass
-
-        return self

@@ -2,7 +2,6 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
-from django.db.models import Q
 from django.contrib import messages
 from item.models import *
 from tag.models import *
