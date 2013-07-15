@@ -247,7 +247,7 @@ class Cart:
         item = Item.objects.getItemByItemID(id=i['itemID'])
         spec = item.itemspec_set.getSpecBySpecID(id=i['specID'])
         dis = Discount.objects.get(id=i['disID'])
-        amount = spec.itemfee_set.getFeeByNomal().amount * Decimal(dis.discount)
+        amount = spec.itemfee_set.getFeeByNomal().amount * Decimal(dis.dis)
         total = amount * int(i['num'])
 
         return {

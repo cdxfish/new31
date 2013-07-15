@@ -14,7 +14,7 @@
           </tr>
 {% for i in oList %}
           <tr align="center" class="tr_border_top_black">
-            <td>{{ i.get_orderType_display }}</td>
+            <td>{{ i.get_typ_display }}</td>
             <td><a href="{{ request.paths.订单 }}{{ i.sn }}/">{{ i.sn }}</a></td>
             <td>{{ i.orderlogistics.consignee }} [ {{ i.orderlogistics.tel }} ]</td>
             <td>200.00 | 11.00 | 189.00 | {{ i.orderpay.name }}</td>

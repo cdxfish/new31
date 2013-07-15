@@ -15,7 +15,7 @@
           </tr>
 {% for i in oList %}
           <tr align="center" class="tr_border_top_black">
-            <td>{{ i.get_orderType_display }}</td>
+            <td>{{ i.get_typ_display }}</td>
             <td><a href="{{ request.path }}{{ i.sn }}/">{{ i.sn }}</a></td>
             <td>{{ i.orderlogistics.signDate|date:"Y-m-d" }} | {{ i.orderlogistics.signTimeStart|time:"H:i" }} - {{ i.orderlogistics.signTimeEnd|time:"H:i" }}</td>
             <td>{{ i.orderlogistics.consignee }}</td>
@@ -29,7 +29,7 @@
             <td>{{ item.spec }}</td>
             <td>{{ item.number }}</td>
             <td>{{ item.amount }}</td>
-            <td>{{ item.get_discount_display }}</td>
+            <td>{{ item.get_dis_display }}</td>
             <td>{{ item.nowFee }}</td>
           </tr>
 {% endfor %}

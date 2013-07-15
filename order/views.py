@@ -52,7 +52,7 @@ def cCon(request, c):
     else:
         # 将订单信息配置到seesion当中
         ShipConsignee(request).setSiessionByOrder(sn=SN)
-        Order(request).setSeesion(OrderInfo.objects.get(sn=SN).orderType)
+        Order(request).setSeesion(OrderInfo.objects.get(sn=SN).typ)
 
         return HttpResponseRedirect(request.paths[u'新订单'])
 
@@ -157,7 +157,7 @@ class Order(object):
         self.oList = self.oList.filter(q)
 
         if self.initial['o'] >= 0:
-            self.oList = self.oList.filter(orderType=self.initial['o'])
+            self.oList = self.oList.filter(typ=self.initial['o'])
 
         return self
 
@@ -260,7 +260,7 @@ class OrderSubmit:
         if self.c['user']:
             self.order.user= User.objects.get(username=self.c['user'])
 
-        self.order.orderType = Order(self.request).oType
+        self.order.typ = Order(self.request).oType
         self.order.save()
 
         return self
@@ -308,7 +308,7 @@ class OrderSubmit:
             spec = ItemSpec.objects.getSpecBySpecID(id=i['specID']).spec
             fee = ItemFee.objects.getFeeBySpecID(specID=i['specID'])
             dis = Discount.objects.getDisByDisID(id=i['disID'])
-            nowFee = forMatFee(fee.amount * Decimal(dis.discount))
+            nowFee = forMatFee(fee.amount * Decimal(dis.dis))
 
             orderItem.append(
                 OrderItem(
@@ -318,7 +318,7 @@ class OrderSubmit:
                     spec=spec.value,
                     number=i['num'],
                     amount=fee.amount,
-                    discount=dis.discount,
+                    dis=dis.dis,
                     nowFee=nowFee
                     )
                 )

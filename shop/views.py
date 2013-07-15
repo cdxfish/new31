@@ -69,7 +69,7 @@ class ItemPin(object):
     """
     def __getRItem(self, rSize, func):
 
-        for x in range(0, rSize):
+        for x in xrange(rSize):
 
             self.matrix += func(self.getLItem(self.lSize))
 
@@ -92,7 +92,7 @@ class ItemPin(object):
     def __getLItem(self, size, width):
         count = 0
         items = []
-        for x in range(100):
+        for x in xrange(10):
             if count == size:
                 break
             else:

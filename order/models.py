@@ -46,12 +46,12 @@ class OrderInfo(models.Model):
             )
     sn = models.BigIntegerField(u'订单号', primary_key=True, unique=True)
     user = models.OneToOneField(User, verbose_name=u'会员', blank=True, null=True)
-    orderType = models.SmallIntegerField(u'订单类型', default=0, choices=oType)
+    typ = models.SmallIntegerField(u'订单类型', default=0, choices=oType)
 
     objects = orderManager()
 
     def __unicode__(self):
-        return u"%s [ %s ] - %s" % (self.sn, self.user, self.get_orderType_display())
+        return u"%s [ %s ] - %s" % (self.sn, self.user, self.get_typ_display())
 
     class Meta:
         ordering = ['-sn']
@@ -190,7 +190,7 @@ class OrderItem(models.Model):
     itemType = models.SmallIntegerField(u'商品类型', default=0, choices=ItemFee.itemTypeChoices)
     amount = models.DecimalField(u'原价', max_digits=10, decimal_places=2)
     nowFee = models.DecimalField(u'现价', max_digits=10, decimal_places=2)
-    discount = models.FloatField(u'折扣', default=1.0, choices=Discount.disChoices)
+    dis = models.FloatField(u'折扣', default=1.0, choices=Discount.chcs)
 
     objects = orderItemManager()
 

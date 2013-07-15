@@ -7,11 +7,11 @@ from django.db import models
 class disManager(models.Manager):
     def getDefault(self):
 
-        return self.get(discount=1)
+        return self.get(dis=1)
 
     def getTupleByAll(self):
 
-        return ((i.id, i.get_discount_display()) for i in  self.filter(onLine=True))
+        return ((i.id, i.get_dis_display()) for i in  self.filter(onLine=True))
 
     def getDisByDisID(self,id):
 
@@ -19,7 +19,7 @@ class disManager(models.Manager):
 
     
 class Discount(models.Model):
-    disChoices = (
+    chcs = (
             (1.0, u'不打折'),
             (0.95, u'9.5 折'),
             (0.9, u'9.0 折'),
@@ -43,7 +43,7 @@ class Discount(models.Model):
             (0.05, u'0.5 折'),
             # (0.0, u'赠送'),
         )
-    discount = models.FloatField(u'折扣', default=1.0, choices=disChoices)
+    dis = models.FloatField(u'折扣', default=1.0, choices=chcs)
     onLine = models.BooleanField(u'上架', default=False)
 
     objects = disManager()

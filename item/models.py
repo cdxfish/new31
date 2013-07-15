@@ -179,12 +179,12 @@ class ItemFee(models.Model):
 
 class ItemDiscount(models.Model):
     itemFee = models.OneToOneField(ItemFee, verbose_name=u'单价', unique=True)
-    discount = models.ForeignKey(Discount, verbose_name=u'折扣')
+    dis = models.ForeignKey(Discount, verbose_name=u'折扣')
 
     objects = itemDisManager()
 
     def __unicode__(self):
-        return u"%s - %s" % (self.itemFee, self.discount)
+        return u"%s - %s" % (self.itemFee, self.dis)
 
 
 class ItemImg(models.Model):

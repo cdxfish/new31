@@ -48,7 +48,7 @@ def lCon(request, c):
     else:
         # 将订单信息配置到seesion当中
         ShipConsignee(request).setSiessionByOrder(sn=orderSN)
-        Order(request).setSeesion(OrderInfo.objects.get(orderSn=orderSN).orderType)
+        Order(request).setSeesion(OrderInfo.objects.get(orderSn=orderSN).typ)
 
         return HttpResponseRedirect(request.paths[u'新订单'])
 
