@@ -5,8 +5,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
 from new31.decorator import *
 from new31.func import *
-from signtime.models import *
 from cart.views import *
+from signtime.models import *
 from area.models import *
 from item.models import *
 from payment.models import *
@@ -42,27 +42,16 @@ def submit(request):
 
     return OrderSubmit(request).submit().redirOrder()
 
-
 # 后台新单编辑操作编辑页面
 def newOrderUI(request):
-    a = request.session['o']
-    o = Order(request)
-    o.o['status'] = 0
+
+    Order(request).setStoZero()
 
     return editUI(request)
 
-def editOrderUI(request, c=1):
+def editOrderUI(request, c):
 
-    # 将订单信息配置到seesion当中
-    ShipConsignee(request).setSiessionByOrder(sn=SN)
-    o = Order(request)
-    o.cCon(c)
-    oFormat = o.oFormat.copy()
-    oFormat['typ'] = OrderInfo.objects.get(sn=SN).typ
-    oFormat['status'] = c
-    oFormat['sn'] = SN
-
-    o.setSeesion(oFormat)
+    Order(request).setSessBySN(request.GET.get('sn'))
 
     return editUI(request)
 
@@ -72,6 +61,8 @@ def editUI(request):
 
     items = Cart(request).showItemToCart()
 
+    ItemsForm.getItemForms(items['items'])
+
     form = getForms(request)
 
     oTypeForm = getOTpyeForm(request)
@@ -79,10 +70,30 @@ def editUI(request):
     return render_to_response('orderneworedit.htm', locals(), context_instance=RequestContext(request))
 
 
-# 非新单及编辑以外的订单操作
+def copyOrder(request,c):
+
+    Order(request).setSessBySN(request.GET.get('sn'))
+
+    return HttpResponseRedirect(request.paths[u'新订单'])
+
 def cCon(request, c):
 
-    return Order(request).cCon(c)
+    Order(request).cCon(request.GET.get('sn'), c)
+
+    return redirectBack(request)
+
+
+
+
+# 非新单及编辑以外的订单操作
+def cCons(request, c):
+
+    c = int(c)
+
+    cons = [copyOrder, editOrderUI, cCon, cCon, cCon ]
+
+
+    return cons[c](request, c)
 
 
 # 后台订单编辑中添加商品至订单操作
@@ -130,15 +141,13 @@ class Order(object):
 
         return self.setSeesion(self.oFormat)
 
-    def cCon(self, c):
-        c = int(c)
-        SN = self.request.GET.get('sn')
-        order =  OrderInfo.objects.get(sn=SN).orderstatus
+    def cCon(self, sn, c):
+        order =  OrderInfo.objects.get(sn=sn).orderstatus
         act = OrderStatus.objects.getActTuple(order.status)
 
         if not c in act:
 
-            messages.error(self.request, u'%s - 无法%s' % (SN, order.get_status_display()))
+            messages.error(self.request, u'%s - 无法%s' % (sn, order.get_status_display()))
 
             return redirectBack(self.request)
 
@@ -147,6 +156,96 @@ class Order(object):
         order.save()
 
         return self
+
+
+    def setStoZero(self):
+
+        self.o['status'] = 0
+
+        return self
+
+
+    def setStoOne(self):
+        self.o['status'] = 1
+        return self
+
+    def cpyTsess(self, sn):
+        order = OrderInfo.objects.get(sn=sn)
+        self.o['typ'] = order.typ
+        self.o['sn'] = sn
+
+        return self.setStoOne()
+
+    def cpyCongn(self, sn):
+        sCongn = ShipConsignee(self.request)
+        c = sCongn.cFormat.copy()
+
+        oLogistics = OrderInfo.objects.get(sn=sn).orderlogistics
+
+        orderPay = oLogistics.order.orderpay
+
+        try:
+            pay = Pay.objects.get(name=orderPay.payName, cod=orderPay.cod).id
+        except Exception, e:
+            pay = Pay.objects.getDefault().id
+
+        areaList = oLogistics.area.split(' - ')
+
+
+        try:
+            area = Area.objects.get(name=areaList[1]).id
+        except Exception, e:
+            area = Area.objects.getDefault().id
+
+
+        try:
+            time = SignTime.objects.get(signTimeStart=oLogistics.start, signTimeEnd=oLogistics.end).id
+        except Exception, e:
+            time = SignTime.objects.getDefault().id
+
+        c['user'] = oLogistics.order.user
+        c['pay'] = pay
+        c['consignee'] = oLogistics.consignee
+        c['area'] = area
+        c['address'] = oLogistics.address
+        c['tel'] = oLogistics.tel
+        c['signDate'] = '%s' % oLogistics.signDate
+
+        c['time'] = time
+        c['note'] = oLogistics.note
+
+        sCongn.setConsignee(c)
+
+
+        return self
+
+    def cpyItem(self, sn):
+        c = Cart(self.request).clear()
+
+        order = OrderInfo.objects.get(sn=sn)
+        items = order.orderitem_set.all()
+        _items = []
+
+        for i in items:
+            item = c.item.copy()
+            item['itemID'] = 1
+            item['specID'] = 1
+            item['disID'] = 1
+            item['num'] = 10
+
+            _items.append(item)
+
+        c.pushItem(_items)
+
+        return self
+
+
+    # 将订单信息配置到seesion当
+    def setSessBySN(self, sn):
+
+        return self.cpyTsess(sn).cpyCongn(sn).cpyItem(sn)
+
+
 
 class OrderSerch(object):
     """
@@ -209,6 +308,35 @@ class OrderSerch(object):
         return page(l=self.oList, p=int(self.request.GET.get('p', 1)))
 
 
+class OrderListPurview(OrderPurview):
+    """
+        订单列表权限加持
+
+        获取当前角色可进行的订单操作权限.
+        获取订单状态,判定可选权限.
+        两者进行交集操作.
+
+    """
+
+    def __init__(self, oList, request):
+        super(OrderListPurview, self).__init__(oList, request)
+        self.chcs = OrderStatus.chcs
+        self.path = request.paths[u'订单']
+        self.action = OrderStatus.act
+
+
+    # 获取订单可选操作项
+    def getElement(self):
+
+        for i in self.oList:
+            if not hasattr(i,'action'):
+                i.action = {}
+
+            i.action[self.path] = self.action[i.orderstatus.status]
+
+        return self
+
+
 class OrderSubmit:
     """ 
         订单提交类.
@@ -250,8 +378,8 @@ class OrderSubmit:
                 .paySubmit() \
                 .shipSubmit() \
                 .oStartSubmit() \
-                .oLogSubmit()
-                # .submitDone()
+                .oLogSubmit() \
+                .submitDone()
 
         # 异常时对数据库进行处理
         if self.error:
@@ -465,33 +593,3 @@ class OrderSubmit:
         messages.error(self.request, '订单提交失败，请重新提交。')
 
         return redirectBack(self.request)
-
-
-
-class OrderListPurview(OrderPurview):
-    """
-        订单列表权限加持
-
-        获取当前角色可进行的订单操作权限.
-        获取订单状态,判定可选权限.
-        两者进行交集操作.
-
-    """
-
-    def __init__(self, oList, request):
-        super(OrderListPurview, self).__init__(oList, request)
-        self.chcs = OrderStatus.chcs
-        self.path = request.paths[u'订单']
-        self.action = OrderStatus.act
-
-
-    # 获取订单可选操作项
-    def getElement(self):
-
-        for i in self.oList:
-            if not hasattr(i,'action'):
-                i.action = {}
-
-            i.action[self.path] = self.action[i.orderstatus.status]
-
-        return self

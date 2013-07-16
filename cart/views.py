@@ -10,9 +10,6 @@ from account.models import *
 from payment.models import *
 from item.models import *
 from area.models import *
-from order.models import *
-from order.forms import *
-from order.views import *
 from consignee.views import *
 from new31.func import *
 from new31.decorator import *
@@ -83,9 +80,7 @@ def clear(request, kwargs):
     return Cart(request).clearItemByMark(kwargs['mark'])
 
 
-
-
-class Cart:
+class Cart(object):
     """ 
         购物车相关
 
@@ -131,7 +126,7 @@ class Cart:
     def formatItems(self):
         if not self.items:
 
-            return self.setSeesion(self.itemsFormat)
+            return self.clear()
 
     def formatMark(self):
 
@@ -179,9 +174,22 @@ class Cart:
             ii['specID'] = item.itemspec_set.getDefaultSpec().id
             ii['disID'] = Discount.objects.getDefault().id
   
-            items.update({ii['mark']: ii}) 
+            items[ii['mark']] = ii 
 
         return self.setSeesion(items)
+
+    def pushItem(self, items):
+        _items = self.items
+
+        for i in items:
+
+            i['mark'] = self.formatMark()
+  
+            _items[i['mark']] = i  
+
+            print _items
+
+        return self.setSeesion(_items)
 
 
     def clearItemByMark(self, mark):
@@ -221,8 +229,6 @@ class Cart:
                 ii = self.getItemTotalByMark(i)
                 countFee += ii['total']
 
-                ii.update({'forms': getItemForms(item=ii)})
-
                 itemList.append(ii)
             except Exception, e:
                 del _items[i]
@@ -233,9 +239,9 @@ class Cart:
         return {'items': itemList, 'total': forMatFee(countFee)}
 
     def clear(self):
-        self.setSeesion(self.itemsFormat)
-
-        return self
+        self.items.clear()
+ 
+        return self.setSeesion(self.items)
 
     def countFee(self):
         cart = self.showItemToCart()

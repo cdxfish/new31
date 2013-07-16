@@ -94,7 +94,7 @@ class ShipConsignee:
     def setSiessionByOrder(self, sn):
         c = self.cFormat.copy()
 
-        oLogistics = OrderLogistics.objects.getlogisBySN(sn=sn)
+        oLogistics = OrderInfo.objects.get(sn=sn).orderlogistics
 
         orderPay = oLogistics.order.orderpay
 
