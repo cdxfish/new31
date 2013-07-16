@@ -77,7 +77,7 @@ var shop = {
                     appendHtm += '   <a href="/tag/' + v.name + '/" target="_blank/" title="' + v.name + '">';
                     appendHtm += '       <img src="' + v.src + '" alt="' + v.name + '" title="' + v.name + '" />';
                     appendHtm += '       <span class="floatInfo">';
-                    appendHtm += '           <span class="price">' + v.amount + '</span>';
+                    appendHtm += '           <span class="price">' + v.fee + '</span>';
                     appendHtm += '           <span class="like_icon">' + v.like + '</span>';
                     appendHtm += '           <span class="name">' + v.name + '</span>';
                     appendHtm += '       </span>';

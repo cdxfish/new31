@@ -24,7 +24,7 @@
                 <td>{{ i.id }}</td>
                 <td><a href="/signtime/{{ i.id }}/" title="起始时间">{{ i.start|time:"H:i:s" }}</a></td>
                 <td><a href="/signtime/{{ i.id }}/" title="结束时间">{{ i.end|time:"H:i:s" }}</a></td>
-                <td class="onLine cp"><img src="{{ STATIC_URL }}images/{% if i.onLine %}yes{% else %}no{% endif %}.gif" /></td>
+                <td class="onl cp"><img src="{{ STATIC_URL }}images/{% if i.onl %}yes{% else %}no{% endif %}.gif" /></td>
               </tr>
 {% endfor %}
             </tbody>

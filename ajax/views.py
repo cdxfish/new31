@@ -25,7 +25,7 @@ def getItemSpec(request, kwargs):
 
     itemSpec = ItemSpec.objects.getSpecByItemId(id=kwargs['specID'])
 
-    data = [ {'id':i.id ,'spec':i.spec.value ,'amount': '%.2f' % i.itemfee_set.getFeeByNomal().amount, } for i in itemSpec ]
+    data = [ {'id':i.id ,'spec':i.spec.value ,'fee': '%.2f' % i.itemfee_set.getFeeByNomal().fee, } for i in itemSpec ]
 
     return AjaxRJson().dumps(data)
 
@@ -63,7 +63,9 @@ def cConsigneeByAjax(request, kwargs):
 @tryMsg('无法填写表单')
 def coTypeByAjax(request, kwargs):
 
-    Order(request).setSeesion(oType=request.GET.get('oType'))
+    o = Order(request)
+
+    o.o['typ'] = request.GET.get('oType')
 
     return AjaxRJson().dumps()
 
@@ -78,7 +80,7 @@ def cItemByAjax(request, kwargs):
 
     data = {}
     data['mark'] = mark
-    data['am'] = '%.2f' % i['amount']
+    data['am'] = '%.2f' % i['fee']
     data['st'] = '%.2f' % i['total']
     data['total'] = '%.2f' % cc.countFee()
 

@@ -10,7 +10,7 @@ from order.views import *
 
 def financeUI(request):
 
-    o = Finance(request)
+    o = FncSearch(request)
 
     form = financeForm(initial=o.initial)
 
@@ -21,7 +21,7 @@ def financeUI(request):
     return render_to_response('financeui.htm', locals(), context_instance=RequestContext(request))
 
 
-class Finance(Order):
+class FncSearch(OrderSerch):
     """
         财务基本类
 
@@ -30,7 +30,7 @@ class Finance(Order):
 
     """
     def __init__(self, request):
-        super(Finance, self).__init__(request)
+        super(FncSearch, self).__init__(request)
 
     def search(self):
         self.oList = self.baseSearch().oList.filter(orderstatus__status__gt = 1)
@@ -62,7 +62,7 @@ class FinancePurview:
     """
     def __init__(self, oList, request):
         self.oList = oList
-        self.oStatus = OrderPay.oStatus
+        self.chcs = OrderPay.chcs
         self.path = request.paths[u'财务']
         self.action = (
                         ((1, u'已付'),),
@@ -86,6 +86,6 @@ class FinancePurview:
 
     def beMixed(self):
         for i in self.oList:
-            i.action[self.path] = tuple([ ii for ii in i.action[self.path] if ii in self.oStatus ])
+            i.action[self.path] = tuple([ ii for ii in i.action[self.path] if ii in self.chcs ])
 
         return self.oList

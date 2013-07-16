@@ -11,11 +11,11 @@ class disManager(models.Manager):
 
     def getTupleByAll(self):
 
-        return ((i.id, i.get_dis_display()) for i in  self.filter(onLine=True))
+        return ((i.id, i.get_dis_display()) for i in  self.filter(onl=True))
 
     def getDisByDisID(self,id):
 
-        return  self.get(onLine=True,id=id)
+        return  self.get(onl=True,id=id)
 
     
 class Discount(models.Model):
@@ -44,9 +44,9 @@ class Discount(models.Model):
             # (0.0, u'赠送'),
         )
     dis = models.FloatField(u'折扣', default=1.0, choices=chcs)
-    onLine = models.BooleanField(u'上架', default=False)
+    onl = models.BooleanField(u'上架', default=False)
 
     objects = disManager()
 
     def __unicode__(self):
-        return u"%s" % self.get_discount_display()
+        return u"%s" % self.get_dis_display()

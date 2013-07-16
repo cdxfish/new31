@@ -22,7 +22,7 @@
               <tr class="odd">
                 <td align="center">{{ i.id }}</td>
                 <td><a href="/area/edit/{{ i.id }}/" title="编辑">{{ i.name }}</a></td>
-                <td align="center" class="onLine cp"><img src="{{ STATIC_URL }}images/{% if i.onLine %}yes{% else %}no{% endif %}.gif" /></td>
+                <td align="center" class="onl cp"><img src="{{ STATIC_URL }}images/{% if i.onl %}yes{% else %}no{% endif %}.gif" /></td>
               </tr>
 {% endfor %}
             </tbody>

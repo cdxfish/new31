@@ -6,14 +6,14 @@ from django.db import models
 class PayManager(models.Manager):
     def getPayById(self, id = ''):
 
-        return self.select_related().get(onLine=True, id=id)
+        return self.select_related().get(onl=True, id=id)
         
     def getDefault(self):
 
-        return self.select_related().filter(onLine=True)[0]
+        return self.select_related().filter(onl=True)[0]
 
     def getTupleByAll(self):
-        pay = self.filter(onLine=True)
+        pay = self.filter(onl=True)
 
         a = [(i.id, i.name) for i in pay]
 
@@ -23,12 +23,12 @@ class Pay(models.Model):
     name = models.CharField(u'名字', max_length=30)
     cod = models.CharField(u'代码', max_length=30)
     config = models.TextField(u'配置')
-    onLine = models.BooleanField(u'上线')
+    onl = models.BooleanField(u'上线')
 
     objects = PayManager()
 
     def __unicode__(self):
-        return u"%s - %s" % (self.name, self.onLine)
+        return u"%s - %s" % (self.name, self.onl)
 
     # class Meta:
         # verbose_name = u'支付方式'

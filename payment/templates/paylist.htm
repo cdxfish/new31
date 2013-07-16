@@ -29,7 +29,7 @@
               <tr class="odd" align="center">
                 <td>{{ i.id }}</td>
                 <td align="left"><a href="/payment/{{ i.id }}/" title="{{ i.name }}">{{ i.name }}</a></td>
-                <td><a href="/payment/online/{{ i.id }}/" title="{{ i.onLine }}"><img src="/images/{% if i.onLine %}yes{% else %}no{% endif %}.gif" /></a></td>
+                <td><a href="/payment/onl/{{ i.id }}/" title="{{ i.onl }}"><img src="/images/{% if i.onl %}yes{% else %}no{% endif %}.gif" /></a></td>
               </tr>
 {% endfor %}
             </tbody>

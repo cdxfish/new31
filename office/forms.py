@@ -8,9 +8,9 @@ from signtime.models import *
 
 class baseSearchForm(forms.Form):
 
-    oChoice = ((-1, '全部'),) + OrderInfo.oType
+    chcs = ((-1, '全部'),) + OrderInfo.chcs
 
-    o = forms.ChoiceField(label=u'订单类型', choices=oChoice, widget=forms.Select(attrs={'class': 'o' }))
+    o = forms.ChoiceField(label=u'订单类型', choices=chcs, widget=forms.Select(attrs={'class': 'o' }))
     s = forms.DateField(label="起始时间",widget=forms.DateInput(attrs={'class': 'dateNoDir', 'size': 7},format='%Y-%m-%d'))
     e = forms.DateField(label="结束时间",widget=forms.DateInput(attrs={'class': 'dateNoDir', 'size': 7},format='%Y-%m-%d'))
     k = forms.CharField(label=u'关键字', required=False)

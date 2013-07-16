@@ -5,10 +5,11 @@ from views import *
 
 urlpatterns = patterns('',
     (r'^$', orderList),
-    (r'^submit/$', carSub),
-    (r'^add/$', adminSub),
+    (r'^submit/$', submit),
     (r'^additemtoorder/$', addItemToOrder),
     (r'^delitem\/(?P<mark>\d+)\/$', delItemToOrder),
-    (r'^new/$',  newOrEditOrderUI),
+    (r'^new/$',  newOrderUI),
+    (r'^0/$',  newOrderUI),
+    (r'^1/$',  editOrderUI),
     (r'^(?P<c>\d+)/$', cCon),
 )

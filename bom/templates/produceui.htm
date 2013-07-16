@@ -5,7 +5,7 @@
           <form action="/order/" method="get">
             <select name="c">
               <option value="-1" selected>全部</option>
-{% for v,i in oStatus %}
+{% for v,i in chcs %}
               <option value="{{ v }}" >{{ i }}</option>
 {% endfor %}
             </select>

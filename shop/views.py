@@ -35,7 +35,7 @@ class ItemPin(object):
         [
             {
                 'name': 'xxx', 
-                'amount': '￥ %0.2f', 
+                'fee': '￥ %0.2f', 
                 'like': 123, 
                 'src': 'http://xxxxxx.jpg',
                 'width': 123,
@@ -107,7 +107,7 @@ class ItemPin(object):
 
         return  {
             'name': i.item.name, 
-            'amount': '￥ %0.2f' % i.item.itemspec_set.getDefaultSpec().itemfee_set.getFeeByNomal().amount, 
+            'fee': '￥ %0.2f' % i.item.itemspec_set.getDefaultSpec().itemfee_set.getFeeByNomal().fee, 
             'like': i.item.like, 
             'src': i.img.url,
             'width': i.img.width,

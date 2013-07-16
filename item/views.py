@@ -38,7 +38,7 @@ class ItemList:
                 'id': i.id,
                 'itemName': i.itemName,
                 'sn': i.sn,
-                'onLine': i.onLine,
+                'onl': i.onl,
                 'show': i.show,
                 'like': i.like,
                 'click': i.click,

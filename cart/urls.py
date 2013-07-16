@@ -7,4 +7,5 @@ urlpatterns = patterns('',
     (r'^buy\/(?P<specID>\d+)\/$', buy),
     (r'^clear\/(?P<mark>\d+)\/$', clear),
     (r'^checkout\/$', checkout),
+    (r'^submit\/$', submit),
 )

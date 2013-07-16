@@ -8,5 +8,5 @@ from office.forms import *
 
 class financeForm(baseSearchForm):
 
-    cChoice = ((-1, '全部'),) + OrderPay.oStatus
+    cChoice = ((-1, '全部'),) + OrderPay.chcs
     c = forms.ChoiceField(label=u'支付状态', choices=cChoice, widget=forms.Select(attrs={'class': 'c' }))

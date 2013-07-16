@@ -9,32 +9,32 @@ from produce.models import *
 class roleManager(models.Manager):
     def getPath(self, path = ''):
 
-        return self.select_related().get(path=path, onLine=True)
+        return self.select_related().get(path=path, onl=True)
 
     def getPathByUser(self, user):
         element = []
-        role = self.select_related().get(user=user, onLine=True)
+        role = self.select_related().get(user=user, onl=True)
 
-        for i in role.privilege.filter(onLine=True):
-            for ii in i.element.filter(onLine=True):
+        for i in role.privilege.filter(onl=True):
+            for ii in i.element.filter(onl=True):
                 element.append(ii.path)
 
         return element
 
     def getDmanToTuple(self):
 
-        dMan = self.select_related().get(role=1,onLine=True).user.all()
+        dMan = self.select_related().get(role=1,onl=True).user.all()
 
         return tuple([(i.id, u'%s%s' % (i.last_name, i.first_name) if (i.last_name or i.first_name) else i.username) for i in dMan])
 
 class elementManager(models.Manager):
     def getPath(self, path = ''):
 
-        return self.select_related().get(path=path, onLine=True)
+        return self.select_related().get(path=path, onl=True)
 
     def getDomElement(self):
 
-        return self.select_related().filter(onLine=True)
+        return self.select_related().filter(onl=True)
 
 
 class Element(models.Model):
@@ -42,18 +42,18 @@ class Element(models.Model):
                 (u'/office/', U'管理中心'),
                 (u'/order/', u'订单'),
             ) + \
-            tuple([ (u'/order/%s/' % i, u'订单%s' % v) for i,v in OrderStatus.oStatus ]) + \
+            tuple([ (u'/order/%s/' % i, u'订单%s' % v) for i,v in OrderStatus.chcs ]) + \
             (
                 (u'/order/new/', u'新订单'),
                 (u'/order/add/', u'订单提交'),
                 (u'/back/', u'退款'),
                 (u'/logistics/', u'物流'),
             ) + \
-            tuple([ (u'/logistics/%s/' % i, u'物流%s' % v) for i,v in OrderShip.oStatus ]) + \
+            tuple([ (u'/logistics/%s/' % i, u'物流%s' % v) for i,v in OrderShip.chcs ]) + \
             (
                 (u'/produce/', u'生产'),
             ) + \
-            tuple([ (u'/produce/%s/' % i, u'生产%s' % v) for i,v in Produce.oStatus ]) + \
+            tuple([ (u'/produce/%s/' % i, u'生产%s' % v) for i,v in Produce.chcs ]) + \
             (
                 (u'/inventory/', u'备货'),
                 (u'/after/', u'售后反馈'),
@@ -65,7 +65,7 @@ class Element(models.Model):
                 (u'/party/', u'活动'),
                 (u'/finance/', u'财务'),
             ) + \
-            tuple([ (u'/finance/%s/' % i, u'财务%s' % v) for i,v in OrderPay.oStatus ]) + \
+            tuple([ (u'/finance/%s/' % i, u'财务%s' % v) for i,v in OrderPay.chcs ]) + \
             (
                 (u'/reimburse/', u'退款'),
                 (u'/statistics/', u'订单统计'),
@@ -98,13 +98,13 @@ class Element(models.Model):
     pType = models.SmallIntegerField(u'权限类型',default=0, choices=pChoice)
 
     aType = models.SmallIntegerField(u'路径类型',default=0, choices=aChoice)
-    onLine = models.BooleanField(u'上线', default=True)
+    onl = models.BooleanField(u'上线', default=True)
     sub = models.ForeignKey("self",related_name='sub_set', verbose_name=u'从属', blank=True, null=True)
 
     objects = elementManager()
 
     def __unicode__(self):
-        return u"%s [ %s ][ sub: %s ][ onLine: %s ] - %s" % (self.get_path_display(), self.get_pType_display(), self.sub, self.onLine, self.path)
+        return u"%s [ %s ][ sub: %s ][ onl: %s ] - %s" % (self.get_path_display(), self.get_pType_display(), self.sub, self.onl, self.path)
 
 
 class Privilege(models.Model):
@@ -112,11 +112,11 @@ class Privilege(models.Model):
             (0, u'全局可读可写'),
         )
     name = models.SmallIntegerField(u'名称', choices=nChoice, unique=True)
-    onLine = models.BooleanField(u'上线', default=True)
+    onl = models.BooleanField(u'上线', default=True)
     element = models.ManyToManyField(Element, verbose_name=u'权限', blank=True, null=True)
 
     def __unicode__(self):
-        return u"%s [ onLine: %s ]" % (self.get_name_display(), self.onLine)
+        return u"%s [ onl: %s ]" % (self.get_name_display(), self.onl)
 
 
 class Role(models.Model):
@@ -128,10 +128,10 @@ class Role(models.Model):
 
     role = models.SmallIntegerField(u'角色', choices=nChoice, unique=True)
     user = models.ManyToManyField(User, verbose_name=u'用户', blank=True, null=True)
-    onLine = models.BooleanField(u'上线', default=True)
+    onl = models.BooleanField(u'上线', default=True)
     privilege = models.ManyToManyField(Privilege, verbose_name=u'权限', blank=True, null=True)
 
     objects = roleManager()
 
     def __unicode__(self):
-        return u"%s [ onLine:%s ]" % (self.get_role_display(), self.onLine)
+        return u"%s [ onl:%s ]" % (self.get_role_display(), self.onl)

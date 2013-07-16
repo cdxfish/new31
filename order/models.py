@@ -28,25 +28,31 @@ class orderItemManager(models.Manager):
         order = self.select_related().filter(order=sn)
         total = {}
         for i in order:
-            if not i.itemType in total:
-                total[i.itemType] = 0
+            if not i.typ in total:
+                total[i.typ] = 0
 
-            total[i.itemType] += forMatFee(i.nowFee * i.number)
+            total[i.typ] += forMatFee(i.nfee * i.num)
 
         return total
 
+class orderStatusManager(models.Manager):
+    def getActTuple(self, i):
+
+        return tuple([ i for i, v in OrderStatus.act[i]])
+
 
 class OrderInfo(models.Model):
-    oType = (
+    chcs = (
                 (0, u'普销'), 
                 (1, u'普销(无积分)'), 
                 (2, u'活动'), 
                 (3, u'积分'), 
                 (4, u'提货券'), 
             )
+
     sn = models.BigIntegerField(u'订单号', primary_key=True, unique=True)
-    user = models.OneToOneField(User, verbose_name=u'会员', blank=True, null=True)
-    typ = models.SmallIntegerField(u'订单类型', default=0, choices=oType)
+    user = models.ForeignKey(User, verbose_name=u'会员', blank=True, null=True)
+    typ = models.SmallIntegerField(u'订单类型', default=0, choices=chcs)
 
     objects = orderManager()
 
@@ -122,7 +128,7 @@ class OrderLogistics(models.Model):
 
 
 class OrderStatus(models.Model):
-    oStatus = (
+    chcs = (
                 (0, u'新单'), 
                 (1, u'编辑'), 
                 (2, u'确认'),
@@ -130,8 +136,18 @@ class OrderStatus(models.Model):
                 (4, u'停止'),
             )
 
+    act =   ( 
+                ((0, u'新单'),(1, u'编辑'),(2, u'确认'),(3, u'无效'),),
+                ((0, u'新单'),(1, u'编辑'),(2, u'确认'),(3, u'无效'),),
+                ((0, u'新单'),),
+                ((0, u'新单'),),
+                ((0, u'新单'),),
+            )
+
     order = models.OneToOneField(OrderInfo, verbose_name=u'订单')
-    status = models.SmallIntegerField(u'订单状态', default=0, editable=False, choices=oStatus)
+    status = models.SmallIntegerField(u'订单状态', default=0, editable=False, choices=chcs)
+
+    objects = orderStatusManager()
 
     def __unicode__(self):
         return u"%s - [ %s ]" % ( self.order, self.get_status_display() )    
@@ -141,7 +157,7 @@ class OrderStatus(models.Model):
 
 
 class OrderPay(models.Model):
-    oStatus = (
+    chcs = (
                 (0, u'未付'), 
                 (1, u'已付'),
                 (2, u'已结'),
@@ -151,7 +167,7 @@ class OrderPay(models.Model):
     order = models.OneToOneField(OrderInfo, verbose_name=u'订单')
     name = models.CharField(u'支付方式', max_length=30)
     cod = models.CharField(u'代码', max_length=30)
-    status = models.SmallIntegerField(u'支付状态', default=0, editable=False, choices=oStatus)
+    status = models.SmallIntegerField(u'支付状态', default=0, editable=False, choices=chcs)
 
     def __unicode__(self):
         return u"%s - %s [ %s ]" % ( self.order, self.name, self.get_status_display() )
@@ -161,7 +177,7 @@ class OrderPay(models.Model):
 
 
 class OrderShip(models.Model):
-    oStatus = (
+    chcs = (
                 (0, u'未发'),
                 (1, u'编辑'),
                 (2, u'已发'), 
@@ -172,7 +188,7 @@ class OrderShip(models.Model):
     order = models.OneToOneField(OrderInfo, verbose_name=u'订单')
     name = models.CharField(u'物流方式', max_length=30, editable=False)
     cod = models.CharField(u'代码', max_length=30)
-    status = models.SmallIntegerField(u'物流状态', default=0, editable=False, choices=oStatus)
+    status = models.SmallIntegerField(u'物流状态', default=0, editable=False, choices=chcs)
 
     def __unicode__(self):
         return u"%s - %s [ %s ]" % ( self.order, self.name, self.get_status_display() )    
@@ -186,13 +202,13 @@ class OrderItem(models.Model):
     name = models.CharField(u'商品', max_length=30)
     sn = models.CharField(u'货号', max_length=30)
     spec = models.CharField(u'规格', max_length=30)
-    number = models.SmallIntegerField(u'数量')
-    itemType = models.SmallIntegerField(u'商品类型', default=0, choices=ItemFee.itemTypeChoices)
-    amount = models.DecimalField(u'原价', max_digits=10, decimal_places=2)
-    nowFee = models.DecimalField(u'现价', max_digits=10, decimal_places=2)
+    num = models.SmallIntegerField(u'数量')
+    typ = models.SmallIntegerField(u'商品类型', default=0, choices=ItemFee.chcs)
+    fee = models.DecimalField(u'原价', max_digits=10, decimal_places=2)
+    nfee = models.DecimalField(u'现价', max_digits=10, decimal_places=2)
     dis = models.FloatField(u'折扣', default=1.0, choices=Discount.chcs)
 
     objects = orderItemManager()
 
     def __unicode__(self):
-        return u"%s - %s[ %s ][ %s ][ %d ]" % ( self.order, self.name, self.spec, self.number, self.amount )
+        return u"%s - %s[ %s ][ %s ][ %d ]" % ( self.order, self.name, self.spec, self.num, self.fee )

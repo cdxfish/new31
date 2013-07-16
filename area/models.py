@@ -7,14 +7,14 @@ from django.db import models
 class AreaManager(models.Manager):
     def getAreaById(self, id = ''):
 
-        return self.select_related().get(onLine=True, id=id)
+        return self.select_related().get(onl=True, id=id)
 
     def getDefault(self):
 
-        return self.select_related().filter(onLine=True)[0].sub_set.filter(onLine=True)[0]
+        return self.select_related().filter(onl=True)[0].sub_set.filter(onl=True)[0]
 
     def  getTupleByAll(self):
-        area = self.filter(onLine=True,sub=None)
+        area = self.filter(onl=True,sub=None)
 
         a = []
         for i in area:
@@ -25,10 +25,10 @@ class AreaManager(models.Manager):
 
 class Area(models.Model):
     name = models.CharField(u'区域', max_length=32, unique=True)
-    onLine = models.BooleanField(u'上线', default=True)
+    onl = models.BooleanField(u'上线', default=True)
     sub = models.ForeignKey("self",related_name='sub_set', verbose_name=u'从属', blank=True, null=True)
 
     objects = AreaManager()
 
     def __unicode__(self):
-        return u"%s [ onLine: %s] - %s" % (self.name, self.onLine, self.sub)
+        return u"%s [ onl: %s] - %s" % (self.name, self.onl, self.sub)

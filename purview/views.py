@@ -104,6 +104,6 @@ class OrderPurview(object):
 
     def mixedStatus(self):
         for i in self.oList:
-            i.action[self.path] = tuple([ ii for ii in i.action[self.path] if ii in self.oStatus ])
+            i.action[self.path] = tuple([ ii for ii in i.action[self.path] if ii in self.chcs ])
 
         return self.oList

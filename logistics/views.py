@@ -19,11 +19,11 @@ from django.conf import settings
 
 def logisticsUI(request):
 
-    o = Logistics(request)
+    o = LogcsSerch(request)
 
     form = LogisticsForm(initial=o.initial)
 
-    oList = o.search().oStatus().range().page()
+    oList = o.search().chcs().range().page()
     oList = logisticsPurview(oList, request).getElement().mixedStatus()
     oList = FinancePurview(oList, request).getElement().beMixed()
     oList = OrderPurview(oList, request).beMixed()
@@ -52,7 +52,7 @@ def lCon(request, c):
 
         return HttpResponseRedirect(request.paths[u'新订单'])
 
-class Logistics(Order):
+class LogcsSerch(OrderSerch):
     """ 
         订单基本信息类
 
@@ -60,14 +60,14 @@ class Logistics(Order):
 
     """
     def __init__(self, request):
-        super(Logistics, self).__init__(request)
+        super(LogcsSerch, self).__init__(request)
 
     def search(self):
         self.oList = self.baseSearch().oList.filter(orderstatus__status__gt = 1)
 
         return self
 
-    def oStatus(self):
+    def chcs(self):
         if self.initial['c'] >= 0:
             self.oList = self.oList.filter(ordership__status=self.initial['c'])
 
@@ -88,7 +88,7 @@ class logisticsPurview(OrderPurview):
     """
     def __init__(self, oList, request):
         super(logisticsPurview, self).__init__(oList, request)
-        self.oStatus = OrderShip.oStatus
+        self.chcs = OrderShip.chcs
         self.path = request.paths[u'物流']
         self.action = (
                         ((1, u'编辑'), (2, u'已发'),),

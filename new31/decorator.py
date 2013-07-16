@@ -98,7 +98,7 @@ def decoratorBack(func):
 
 
 # 根据settings.DEBUG设置是否显示用户级提示信息
-def itemOnline(func):
+def itemonl(func):
 
     def _func(request, kwargs):
 

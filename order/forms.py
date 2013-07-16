@@ -10,13 +10,13 @@ from signtime.models import *
 
 def getItemForms(item):
     mark = item['mark']
-    speChoice = ItemSpec.objects.getTupleByItemID(item['item'].id)
-    disChoice = Discount.objects.getTupleByAll()
+    speChcs = ItemSpec.objects.getTupleByItemID(item['item'].id)
+    disChcs = Discount.objects.getTupleByAll()
 
     class orderItemForm(forms.Form):
 
-        specID = forms.ChoiceField(label=u'规格', choices=speChoice, widget=forms.Select(attrs={'class': 'spec' , 'id':'s%d' % mark }))
-        disID = forms.ChoiceField(label=u'折扣', choices=disChoice, widget=forms.Select(attrs={'class': 'dis', 'id':'d%d' % mark }))
+        specID = forms.ChoiceField(label=u'规格', choices=speChcs, widget=forms.Select(attrs={'class': 'spec' , 'id':'s%d' % mark }))
+        disID = forms.ChoiceField(label=u'折扣', choices=disChcs, widget=forms.Select(attrs={'class': 'dis', 'id':'d%d' % mark }))
         num = forms.IntegerField(label=u'数量', max_value=3, min_value=1, widget=forms.TextInput(attrs={'size': 1,'class': 'num', 'id':'n%d' % mark }))
 
     i = {'specID': item['spec'].id, 'disID': item['dis'].id, 'num': item['num']}
@@ -27,18 +27,18 @@ def getItemForms(item):
 def getOTpyeForm(request):
     from views import Order
 
-    return OrderTypeForm(initial= {'oType': Order(request).oType,})
+    return OrderTypeForm(initial= {'oType': Order(request).o['typ'],})
 
 
 class OrderTypeForm(forms.Form):
 
-    oChoice = OrderInfo.oType
+    chcs = OrderInfo.chcs
 
-    oType = forms.ChoiceField(label=u'订单类型', choices=oChoice, widget=forms.Select(attrs={'class': 'oType' }))
+    oType = forms.ChoiceField(label=u'订单类型', choices=chcs, widget=forms.Select(attrs={'class': 'oType' }))
 
 
 class OrderStatusForm(baseSearchForm):
 
-    cChoice = ((-1, '全部'),) + OrderStatus.oStatus
+    chcs = ((-1, '全部'),) + OrderStatus.chcs
 
-    c = forms.ChoiceField(label=u'订单状态', choices=cChoice, widget=forms.Select(attrs={'class': 'c' }))
+    c = forms.ChoiceField(label=u'订单状态', choices=chcs, widget=forms.Select(attrs={'class': 'c' }))

@@ -9,7 +9,7 @@ from office.forms import *
 
 class LogisticsForm(baseSearchForm):
 
-    cChoice = ((-1, '全部'),) + OrderShip.oStatus
+    cChoice = ((-1, '全部'),) + OrderShip.chcs
     c = forms.ChoiceField(label=u'物流状态', choices=cChoice, widget=forms.Select(attrs={'class': 'c' }))
 
 

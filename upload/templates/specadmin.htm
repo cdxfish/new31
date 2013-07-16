@@ -32,7 +32,7 @@
                 <td align="center" class="goods_id cp">{{ i.id }}</td>
                 <td><a href="/item/edit/{{ i.id }}/" title="编辑" class="editItem">{{ i.itemName }}</a></td>
                 <td align="center">{{ i.sn }}</td>
-                <td align="center" class="onLine cp"><img src="/images/{% if i.onLine %}yes{% else %}no{% endif %}.gif" /></td>
+                <td align="center" class="onl cp"><img src="/images/{% if i.onl %}yes{% else %}no{% endif %}.gif" /></td>
                 <td align="center" class="show cp"><img src="/images/{% if i.show %}yes{% else %}no{% endif %}.gif" /></td>
               </tr>
 {% endfor %}

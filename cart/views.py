@@ -5,7 +5,6 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.conf import settings
 from django.core.exceptions import *
-from django.db.models import Q
 from signtime.models import *
 from account.models import *
 from payment.models import *
@@ -13,6 +12,7 @@ from item.models import *
 from area.models import *
 from order.models import *
 from order.forms import *
+from order.views import *
 from consignee.views import *
 from new31.func import *
 from new31.decorator import *
@@ -52,6 +52,8 @@ def checkout(request):
 
         return HttpResponseRedirect('/cart/')
 
+    request.session['c']['user'] = request.user.username
+
     ShipConsignee(request).setSeesion()
 
     pay = Pay.objects.getPayById(id=request.POST.get('pay'))
@@ -60,17 +62,22 @@ def checkout(request):
 
     return render_to_response('checkout.htm', locals(), context_instance=RequestContext(request))
 
+# 前台订单提交,并是用前台消息模板显示订单号等信息
+@checkPOST
+def submit(request):
+
+    return OrderSubmit(request).submit().showOrderSN()
 
 # GET方式将物品放入购物车
 @decoratorBack
-@itemOnline
+@itemonl
 def buy(request, kwargs):
    
     return Cart(request).pushToCartBySpecID(kwargs['specID'])
 
 # GET方式将物品取出购物车
 @decoratorBack
-@itemOnline
+@itemonl
 def clear(request, kwargs):
 
     return Cart(request).clearItemByMark(kwargs['mark'])
@@ -79,18 +86,24 @@ def clear(request, kwargs):
 
 
 class Cart:
-    """ 购物车相关
+    """ 
+        购物车相关
 
         request.session['items'] 
 
         用于存储购物车中商品信息
         其数据格式为:
-        [{ 'mark':1, 'itemID':1, 'specID':1, 'num':1 }, { 'mark':2, 'itemID':2, 'specID':2, 'num':2 }]
+        [
+            { 'mark':1, 'itemID':1, 'specID':1, 'num':1 }, 
+            { 'mark':2, 'itemID':2, 'specID':2, 'num':2 },
+            .........
+        ]
 
         此类包含有对购物车操作的各类方法(必须实例化方可使用)
 
         example:
             Cart(request).clearItemByMark(mark)
+
 
     """
     def __init__(self, request):
@@ -143,7 +156,7 @@ class Cart:
 
         if self.request.user.is_authenticated():
 
-            i['disID'] = ItemDiscount.objects.getDisBySpecID(specID=specID).id
+            i['disID'] = ItemFee.objects.getDisBySpecID(id=specID).id
         else:
             
             i['disID'] = Discount.objects.getDefault().id
@@ -247,14 +260,14 @@ class Cart:
         item = Item.objects.getItemByItemID(id=i['itemID'])
         spec = item.itemspec_set.getSpecBySpecID(id=i['specID'])
         dis = Discount.objects.get(id=i['disID'])
-        amount = spec.itemfee_set.getFeeByNomal().amount * Decimal(dis.dis)
-        total = amount * int(i['num'])
+        fee = spec.itemfee_set.getFeeByNomal().fee * Decimal(dis.dis)
+        total = fee * int(i['num'])
 
         return {
                 'mark': i['mark'],
                 'item': item,
                 'spec': spec, 
-                'amount': forMatFee(amount), 
+                'fee': forMatFee(fee), 
                 'num': i['num'], 
                 'dis': dis, 
                 'total': forMatFee(total)

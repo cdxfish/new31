@@ -51,8 +51,8 @@ buyBtn = function(data) {
     $.each(data.data, function(i, v) {
         html += '          <tr>  \r\n';
         html += '             <td>' + v.spec + '</td>  \r\n';
-        html += '             <td>￥' + v.amount + ' 元</td>  \r\n';
-        html += '             <td>' + v.amount + ' 折</td>  \r\n';
+        html += '             <td>￥' + v.fee + ' 元</td>  \r\n';
+        html += '             <td>' + v.fee + ' 折</td>  \r\n';
         html += '             <td><a href="/cart/buy/' + v.id + '/" class="btnB sBtn">购买</a></td>  \r\n';
         html += '          </tr>  \r\n';
     });

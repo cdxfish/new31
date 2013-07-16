@@ -12,11 +12,11 @@ from signtime.models import *
 
 def produceUI(request):
 
-    o = ProduceList(request)
+    o = ProSerch(request)
 
     form = ProduceForm(initial=o.initial)
 
-    oList = o.search().range().oStatus().page()
+    oList = o.search().range().chcs().page()
     oList = ProducePurview(oList, request).getElement().beMixed()
 
     oList = sortList(oList)
@@ -65,7 +65,7 @@ def pCon(request, c):
 
 
 
-class ProduceList(Order):
+class ProSerch(OrderSerch):
     """ 
         生产管理类
 
@@ -73,14 +73,14 @@ class ProduceList(Order):
 
     """
     def __init__(self, request):
-        super(ProduceList, self).__init__(request)
+        super(ProSerch, self).__init__(request)
 
     def search(self):
         self.oList = self.baseSearch().oList.filter(orderstatus__status__gt = 1)
 
         return self
 
-    def oStatus(self):
+    def chcs(self):
         for i in self.oList:
             items = []
             for ii in i.orderitem_set.all():
@@ -113,7 +113,7 @@ class ProducePurview(OrderPurview):
     """
     def __init__(self, oList, request):
         super(ProducePurview, self).__init__(oList, request)
-        self.oStatus = Produce.oStatus
+        self.chcs = Produce.chcs
         self.path = request.paths[u'生产']
         self.action = (
                     ((1, u'产求'), ),
@@ -153,6 +153,6 @@ class ProducePurview(OrderPurview):
     def beMixed(self):
         for i in self.oList:
             for ii in i.items:
-                ii.action[self.path] = tuple([ iii for iii in ii.action[self.path] if iii in self.oStatus ])
+                ii.action[self.path] = tuple([ iii for iii in ii.action[self.path] if iii in self.chcs ])
 
         return self.oList

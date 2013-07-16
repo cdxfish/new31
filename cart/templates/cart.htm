@@ -23,7 +23,7 @@
                     <tr align="center">
                         <td>{{ i.item.name }}</td>
                         <td>{{ i.spec.spec.value }}</td>
-                        <td>￥<span id="am{{ i.mark }}">{{ i.amount|floatformat:2 }}</span> 元</td>
+                        <td>￥<span id="am{{ i.mark }}">{{ i.fee|floatformat:2 }}</span> 元</td>
                         <td>
                             <input type="text" name="{{ i.mark }}" value="{{ i.num }}" size="1" class="iNum" />
                         </td>

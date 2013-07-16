@@ -15,7 +15,7 @@ from forms import *
 from decimal import *
 from consignee.forms import *
 from purview.views import *
-import time, json
+import time, json, datetime
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -24,57 +24,52 @@ from django.db.models import Q
 
 # 订单列表显示页面
 def orderList(request):
-
-    o = Order(request)
+    o = OrderSerch(request)
 
     form = OrderStatusForm(initial=o.initial)
 
-    oList = o.baseSearch().oStatus().range().page()
+    oList = o.baseSearch().chcs().range().page()
     oList = OrderListPurview(oList, request).getElement().mixedStatus()
 
     return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
 
 
-# 订单信息编辑提交
-def cCon(request, c):
-
-    c = int(c)
-    SN = request.GET.get('sn')
-    order =  OrderInfo.objects.get(sn=SN).orderstatus
-
-    order.status = c
-
-    order.save()
-
-    if c > 1:
-        return HttpResponseRedirect(request.paths[u'订单'])
-
-    else:
-        # 将订单信息配置到seesion当中
-        ShipConsignee(request).setSiessionByOrder(sn=SN)
-        Order(request).setSeesion(OrderInfo.objects.get(sn=SN).typ)
-
-        return HttpResponseRedirect(request.paths[u'新订单'])
-
-
-# 前台订单提交,并是用前台消息模板显示订单号等信息
-@checkPOST
-def carSub(request):
-
-    return OrderSubmit(request).submit().showOrderSN()
-
-
 # 后台订单提交,提交成功后进行页面跳转至订单列表
 @checkPOST
-def adminSub(request):
+def submit(request):
 
     ShipConsignee(request).setSeesion()
 
     return OrderSubmit(request).submit().redirOrder()
 
 
-# 后台新单及订单编辑操作编辑页面
-def newOrEditOrderUI(request):
+# 后台新单编辑操作编辑页面
+def newOrderUI(request):
+    a = request.session['o']
+    o = Order(request)
+    o.o['status'] = 0
+
+    return editUI(request)
+
+def editOrderUI(request, c=1):
+
+    # 将订单信息配置到seesion当中
+    ShipConsignee(request).setSiessionByOrder(sn=SN)
+    o = Order(request)
+    o.cCon(c)
+    oFormat = o.oFormat.copy()
+    oFormat['typ'] = OrderInfo.objects.get(sn=SN).typ
+    oFormat['status'] = c
+    oFormat['sn'] = SN
+
+    o.setSeesion(oFormat)
+
+    return editUI(request)
+
+
+# 后台订单编辑操作编辑页面
+def editUI(request):
+
     items = Cart(request).showItemToCart()
 
     form = getForms(request)
@@ -82,6 +77,12 @@ def newOrEditOrderUI(request):
     oTypeForm = getOTpyeForm(request)
 
     return render_to_response('orderneworedit.htm', locals(), context_instance=RequestContext(request))
+
+
+# 非新单及编辑以外的订单操作
+def cCon(request, c):
+
+    return Order(request).cCon(c)
 
 
 # 后台订单编辑中添加商品至订单操作
@@ -108,14 +109,57 @@ class Order(object):
     """
     def __init__(self, request):
         self.request = request
-        self.oType = request.session.get('oType')
-        self.oFormat = OrderInfo.oType[0][0]
-        self.oList = OrderInfo.objects.select_related().all()
+        self.o = self.request.session.get('o')
+        self.oFormat =  {
+                        'typ': OrderInfo.chcs[0][0],
+                        'status': OrderStatus.chcs[0][0],
+                        'sn': 0,
+            }
 
+    # 初始化seesion中用于存储订单的基本操作信息字典
+    def format(self):
+        if not self.o:
+            return self.setSeesion(self.oFormat)
+
+    def setSeesion(self, o):
+        self.request.session['o'] = o
+
+        return self
+
+    def clear(self):
+
+        return self.setSeesion(self.oFormat)
+
+    def cCon(self, c):
+        c = int(c)
+        SN = self.request.GET.get('sn')
+        order =  OrderInfo.objects.get(sn=SN).orderstatus
+        act = OrderStatus.objects.getActTuple(order.status)
+
+        if not c in act:
+
+            messages.error(self.request, u'%s - 无法%s' % (SN, order.get_status_display()))
+
+            return redirectBack(self.request)
+
+        order.status = c
+
+        order.save()
+
+        return self
+
+class OrderSerch(object):
+    """
+        订单基本搜索类
+
+    """
+    def __init__(self, request):
+        self.request = request
+
+        self.oList = OrderInfo.objects.select_related().all()
 
         today = datetime.date.today()
         oneDay = datetime.timedelta(days=1)
-
 
         self.initial = {
                         'o': int(request.GET.get('o', -1)),
@@ -126,19 +170,6 @@ class Order(object):
             }
 
         
-    def format(self):
-        if not self.oType:
-            return self.setSeesion(self.oFormat)
-
-    def setSeesion(self, oType):
-        self.request.session['oType'] = oType
-
-        return self
-
-    def clear(self):
-
-        return self.setSeesion(self.oFormat)
-
     def baseSearch(self):
 
         q = (
@@ -161,7 +192,7 @@ class Order(object):
 
         return self
 
-    def oStatus(self):
+    def chcs(self):
             if self.initial['c'] >= 0:
                 self.oList = self.oList.filter(orderstatus__status=self.initial['c'])
 
@@ -188,8 +219,8 @@ class OrderSubmit:
         订单数据来源为session中数据
 
         session['items'] = 商品信息
-        session['oType'] = 订单类型
         session['c'] = 联系人信息
+        session['o'] = 订单基本信息, 比如订单类型, 新单或编辑
 
 
 
@@ -203,19 +234,24 @@ class OrderSubmit:
 
         self.items = Cart(self.request).items
         self.c = ShipConsignee(self.request).c
+        self.o = Order(self.request).o
 
 
     def submit(self):
 
-        self.newOderSn() \
-            .infoSubmit() \
-            .logisticsSubmit() \
-            .itemSubmit() \
-            .paySubmit() \
-            .shipSubmit() \
-            .oStartSubmit() \
-            .oLogSubmit()
-            # .submitDone()
+        if self.o['status']:
+            pass
+        else:
+
+            self.newOderSn() \
+                .infoSubmit() \
+                .logisticsSubmit() \
+                .itemSubmit() \
+                .paySubmit() \
+                .shipSubmit() \
+                .oStartSubmit() \
+                .oLogSubmit()
+                # .submitDone()
 
         # 异常时对数据库进行处理
         if self.error:
@@ -260,7 +296,7 @@ class OrderSubmit:
         if self.c['user']:
             self.order.user= User.objects.get(username=self.c['user'])
 
-        self.order.typ = Order(self.request).oType
+        self.order.typ = self.o['typ']
         self.order.save()
 
         return self
@@ -272,9 +308,9 @@ class OrderSubmit:
 
         logisticsTimeAvdce = 1
 
-        time = SignTime.objects.get(id=self.c['time'], onLine=True)
+        time = SignTime.objects.get(id=self.c['time'], onl=True)
 
-        area = Area.objects.get(id= self.c['area'], onLine=True)
+        area = Area.objects.get(id= self.c['area'], onl=True)
 
         logistics = OrderLogistics()
 
@@ -306,9 +342,9 @@ class OrderSubmit:
 
             item = Item.objects.getItemByItemID(id=i['itemID'])
             spec = ItemSpec.objects.getSpecBySpecID(id=i['specID']).spec
-            fee = ItemFee.objects.getFeeBySpecID(specID=i['specID'])
+            fee = ItemFee.objects.getFeeBySpecID(id=i['specID'])
             dis = Discount.objects.getDisByDisID(id=i['disID'])
-            nowFee = forMatFee(fee.amount * Decimal(dis.dis))
+            nfee = forMatFee(fee.fee * Decimal(dis.dis))
 
             orderItem.append(
                 OrderItem(
@@ -316,10 +352,10 @@ class OrderSubmit:
                     name=item.name,
                     sn=item.sn,
                     spec=spec.value,
-                    number=i['num'],
-                    amount=fee.amount,
+                    num=i['num'],
+                    fee=fee.fee,
                     dis=dis.dis,
-                    nowFee=nowFee
+                    nfee=nfee
                     )
                 )
 
@@ -351,10 +387,10 @@ class OrderSubmit:
 
         oShip = OrderShip()
         oShip.order = self.order
-        # oShip.shipName = ship.name
+        # oShip.name = ship.name
         # oShip.cod = ship.cod
 
-        oShip.shipName = u'市内免费送货上门'
+        oShip.name = u'市内免费送货上门'
         oShip.cod = u'fditc'
 
         oShip.save()
@@ -444,15 +480,9 @@ class OrderListPurview(OrderPurview):
 
     def __init__(self, oList, request):
         super(OrderListPurview, self).__init__(oList, request)
-        self.oStatus = OrderStatus.oStatus
+        self.chcs = OrderStatus.chcs
         self.path = request.paths[u'订单']
-        self.action = ( 
-                        ((0, u'新单'),(1, u'编辑'),(2, u'确认'),(3, u'无效'),),
-                        ((0, u'新单'),(1, u'编辑'),(2, u'确认'),(3, u'无效'),),
-                        ((0, u'新单'),),
-                        ((0, u'新单'),),
-                        ((0, u'新单'),),
-                    )
+        self.action = OrderStatus.act
 
 
     # 获取订单可选操作项

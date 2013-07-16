@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-        <form action="/order/add/" method="POST" name="newOrder" id="checkout">
+        <form action="/order/submit/" method="POST" id="checkout">
           <h3>商品列表</h3>
           <table width="100%" cellpadding="3" cellspacing="1" class="sortTable">
             <thead>
@@ -28,7 +28,7 @@
               <td>{{ i.item.sn }}</td>
               <td>{{ i.forms.specID }}</td>
               <td>{{ i.forms.disID }}</td>
-              <td><span id="am{{ i.mark }}">{{ i.amount|floatformat:2 }}</span></td>
+              <td><span id="am{{ i.mark }}">{{ i.fee|floatformat:2 }}</span></td>
               <td>{{ i.forms.num }}</td>
               <td><span id="st{{ i.mark }}">{{ i.total|floatformat:2 }}</span></td>
               <td><a href="/order/delitem/{{ i.mark }}/" class="button">删除</a></td>
