@@ -9,7 +9,7 @@
             <th width="80px">订单编号</th>
             <th>收货时间</th>
             <th>收货人</th>
-            <th>电话</th>
+            <th>电话 | 会员</th>
             <th>付款方式</th>
             <th>订单状态</th>
           </tr>
@@ -19,8 +19,8 @@
             <td><a href="{{ request.paths.订单 }}{{ i.sn }}/">{{ i.sn }}</a></td>
             <td>{{ i.orderlogistics.signDate|date:"Y-m-d" }} | {{ i.orderlogistics.signTimeStart|time:"H:i" }} - {{ i.orderlogistics.signTimeEnd|time:"H:i" }}</td>
             <td>{{ i.orderlogistics.consignee }}</td>
-            <td>{{ i.orderlogistics.tel }}</td>
-            <td>{{i.orderpay.name}}</td>
+            <td>{{ i.orderlogistics.tel }} | {{ i.user.username}}</td>
+            <td>{{ i.orderpay.name }}</td>
             <td>{{ i.orderstatus.get_status_display }} | {{ i.orderpay.get_status_display }} | {{ i.ordership.get_status_display }}</td>
           </tr>
 {% for item in i.orderitem_set.all %}

@@ -20,7 +20,7 @@ class disManager(models.Manager):
     
 class Discount(models.Model):
     chcs = (
-            (1.0, u'不打折'),
+            (1.0, u'原价'),
             (0.95, u'9.5 折'),
             (0.9, u'9.0 折'),
             (0.88, u'8.8 折'),

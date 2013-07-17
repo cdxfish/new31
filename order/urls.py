@@ -9,5 +9,6 @@ urlpatterns = patterns('',
     (r'^additemtoorder/$', addItemToOrder),
     (r'^delitem\/(?P<mark>\d+)\/$', delItemToOrder),
     (r'^new/$',  newOrderUI),
+    (r'^edit/$',  editUI),
     (r'^(?P<c>\d+)/$', cCons),
 )

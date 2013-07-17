@@ -64,12 +64,13 @@ class URLPurview:
     # 用户级错误提示
     def error(self):
 
-        if self.request.domElement.aType:
+        if self.request.domElement.typ:
 
-            return AjaxRJson().messages(self.errStr).dumps()
+            return self.errorShow()
 
         else: 
-            return self.errorShow()
+            from ajax.views import AjaxRJson
+            return AjaxRJson().messages(self.errStr).dumps()
 
     def errorShow(self):
             messages.error(self.request, self.errStr)
@@ -78,7 +79,7 @@ class URLPurview:
 
 
 
-class OrderPurview(object):
+class OrdPur(object):
     """
         订单操作按钮元素级类
 
@@ -92,18 +93,34 @@ class OrderPurview(object):
     """
     def __init__(self, oList, request):
         self.oList = oList
+        self.action = OrderStatus.act
         self.role = Role.objects.getPathByUser(request.user)
+
+    def getElement(self):
+
+        for i in self.oList:
+            if not hasattr(i,'action'):
+                i.action = {}
+
+            i.action[self.path] = self.action[i.orderstatus.status]
+
+        return self
 
     def beMixed(self):
         for i in self.oList:
             for ii in i.action:
                 i.action[ii] = tuple([ iii for iii in i.action[ii] if u'%s%s/' % (ii, iii[0]) in self.role ])
 
-        return self.oList
+        return self
 
 
     def mixedStatus(self):
         for i in self.oList:
             i.action[self.path] = tuple([ ii for ii in i.action[self.path] if ii in self.chcs ])
 
-        return self.oList
+        return self
+
+
+    def getOrders(self):
+
+        return self.getElement().beMixed().mixedStatus().oList

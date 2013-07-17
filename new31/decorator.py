@@ -2,6 +2,7 @@
 from new31.func import *
 from django.conf import settings
 from django.contrib import messages
+from order.models import *
 
 # Create your decorator here.
 
@@ -116,5 +117,28 @@ def itemonl(func):
                 messages.warning(request, '当前商品已下架')
 
                 return redirectBack(request)
+
+    return _func
+
+
+# 订单状态操作装饰器
+def conOrder(func):
+
+    def _func(request, c):
+
+        order =  OrderInfo.objects.get(sn=request.GET.get('sn')).orderstatus
+        act = OrderStatus.objects.getActTuple(order.status)
+
+        if not c in act:
+
+            messages.error(self.request, u'%s - 无法%s' % (sn, order.get_status_display()))
+
+            return redirectBack(self.request)
+
+        order.status = c
+
+        order.save()
+
+        return func(request, c)
 
     return _func

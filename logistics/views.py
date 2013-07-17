@@ -24,10 +24,10 @@ def logisticsUI(request):
     form = LogisticsForm(initial=o.initial)
 
     oList = o.search().chcs().range().page()
-    oList = logisticsPurview(oList, request).getElement().mixedStatus()
-    oList = FinancePurview(oList, request).getElement().beMixed()
-    oList = OrderPurview(oList, request).beMixed()
-    oList = ProducePurview(oList, request).getElement().beMixed()
+    oList = LogcsPur(oList, request).getOrders()
+    oList = FncPur(oList, request).getOrders()
+    oList = OrdPur(oList, request).getOrders()
+    oList = ProPur(oList, request).getOrders()
 
     return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))    
 
@@ -79,7 +79,7 @@ class LogcsSerch(OrderSerch):
         return self
 
 # 订单列表权限加持
-class logisticsPurview(OrderPurview):
+class LogcsPur(OrdPur):
     """
         首先获取当前角色可进行的订单操作权限. 
 
@@ -87,7 +87,7 @@ class logisticsPurview(OrderPurview):
 
     """
     def __init__(self, oList, request):
-        super(logisticsPurview, self).__init__(oList, request)
+        super(LogcsPur, self).__init__(oList, request)
         self.chcs = OrderShip.chcs
         self.path = request.paths[u'物流']
         self.action = (

@@ -146,14 +146,13 @@
 
     <div id="content">
 {% if messages %}
-      <div id="message">
+        <ul class="messagelist">
 {% for i in messages %}
-          <h3>{{ i.tags }}</h3>
-          <p>{{ i }}</p>
+            <li class="{{ i.tags }}">{{ i }}</li>
 {% endfor %}
-      </div>
+        </ul>
 {% endif %}
-{% if request.domElement.pType %}
+{% if request.domElement.sub_set.getDomElement %}
         <div id="tool">
           <ul class="action">
 {% for i in request.domElement.sub_set.getDomElement %}

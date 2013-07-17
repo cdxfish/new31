@@ -17,7 +17,7 @@ def produceUI(request):
     form = ProduceForm(initial=o.initial)
 
     oList = o.search().range().chcs().page()
-    oList = ProducePurview(oList, request).getElement().beMixed()
+    oList = ProPur(oList, request).getElement().beMixed()
 
     oList = sortList(oList)
 
@@ -104,7 +104,7 @@ class ProSerch(OrderSerch):
 
 
 # 订单列表权限加持
-class ProducePurview(OrderPurview):
+class ProPur(OrdPur):
     """
         首先获取当前角色可进行的订单操作权限. 
 
@@ -112,7 +112,7 @@ class ProducePurview(OrderPurview):
 
     """
     def __init__(self, oList, request):
-        super(ProducePurview, self).__init__(oList, request)
+        super(ProPur, self).__init__(oList, request)
         self.chcs = Produce.chcs
         self.path = request.paths[u'生产']
         self.action = (

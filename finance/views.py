@@ -15,8 +15,8 @@ def financeUI(request):
     form = financeForm(initial=o.initial)
 
     oList = o.search().status().range().page()
-    oList = FinancePurview(oList, request).getElement().beMixed()
-    oList = OrderPurview(oList, request).beMixed()
+    oList = FncPur(oList, request).getOrders()
+    oList = OrdPur(oList, request).getOrders()
 
     return render_to_response('financeui.htm', locals(), context_instance=RequestContext(request))
 
@@ -53,7 +53,7 @@ class FncSearch(OrderSerch):
 
 
 # 订单列表权限加持
-class FinancePurview:
+class FncPur:
     """
         首先获取当前角色可进行的订单操作权限. 
 
@@ -88,4 +88,4 @@ class FinancePurview:
         for i in self.oList:
             i.action[self.path] = tuple([ ii for ii in i.action[self.path] if ii in self.chcs ])
 
-        return self.oList
+        return self

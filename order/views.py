@@ -3,6 +3,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
+from django.contrib import messages, auth
+from django.db.models import Q
 from new31.decorator import *
 from new31.func import *
 from cart.views import *
@@ -15,10 +17,7 @@ from forms import *
 from decimal import *
 from consignee.forms import *
 from purview.views import *
-import time, json, datetime
-from django.contrib import messages, auth
-from django.contrib.auth.models import User
-from django.db.models import Q
+import time, datetime
 
 # Create your views here.
 
@@ -29,7 +28,7 @@ def orderList(request):
     form = OrderStatusForm(initial=o.initial)
 
     oList = o.baseSearch().chcs().range().page()
-    oList = OrderListPurview(oList, request).getElement().mixedStatus()
+    oList = OrdPur(oList, request).getOrders()
 
     return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
 
@@ -49,11 +48,12 @@ def newOrderUI(request):
 
     return editUI(request)
 
-def editOrderUI(request, c):
+@conOrder
+def editOrd(request, c):
 
     Order(request).setSessBySN(request.GET.get('sn'))
 
-    return editUI(request)
+    return HttpResponseRedirect(request.paths[u'编辑订单'])
 
 
 # 后台订单编辑操作编辑页面
@@ -69,13 +69,14 @@ def editUI(request):
 
     return render_to_response('orderneworedit.htm', locals(), context_instance=RequestContext(request))
 
-
+@conOrder
 def copyOrder(request,c):
 
     Order(request).setSessBySN(request.GET.get('sn'))
 
     return HttpResponseRedirect(request.paths[u'新订单'])
 
+@conOrder
 def cCon(request, c):
 
     Order(request).cCon(request.GET.get('sn'), c)
@@ -84,14 +85,11 @@ def cCon(request, c):
 
 
 
-
 # 非新单及编辑以外的订单操作
 def cCons(request, c):
-
     c = int(c)
 
-    cons = [copyOrder, editOrderUI, cCon, cCon, cCon ]
-
+    cons = [copyOrder, editOrd, cCon, cCon, cCon ]
 
     return cons[c](request, c)
 
@@ -227,11 +225,13 @@ class Order(object):
         _items = []
 
         for i in items:
+            ii = ItemSpec.objects.get(item__name=i.name, spec__value=i.spec)
+
             item = c.item.copy()
-            item['itemID'] = 1
-            item['specID'] = 1
-            item['disID'] = 1
-            item['num'] = 10
+            item['itemID'] = ii.item.id
+            item['specID'] = ii.spec.id
+            item['disID'] = ii.itemfee_set.getFeeByNomal().dis.id
+            item['num'] = i.num
 
             _items.append(item)
 
@@ -308,7 +308,7 @@ class OrderSerch(object):
         return page(l=self.oList, p=int(self.request.GET.get('p', 1)))
 
 
-class OrderListPurview(OrderPurview):
+class OrdPur(OrdPur):
     """
         订单列表权限加持
 
@@ -319,7 +319,7 @@ class OrderListPurview(OrderPurview):
     """
 
     def __init__(self, oList, request):
-        super(OrderListPurview, self).__init__(oList, request)
+        super(OrdPur, self).__init__(oList, request)
         self.chcs = OrderStatus.chcs
         self.path = request.paths[u'订单']
         self.action = OrderStatus.act
@@ -422,7 +422,7 @@ class OrderSubmit:
     @subFailRemind('会员不存在，无法提交订单基本信息。')
     def infoSubmit(self):
         if self.c['user']:
-            self.order.user= User.objects.get(username=self.c['user'])
+            self.order.user= auth.models.User.objects.get(username=self.c['user'])
 
         self.order.typ = self.o['typ']
         self.order.save()

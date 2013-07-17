@@ -45,6 +45,7 @@ class Element(models.Model):
             tuple([ (u'/order/%s/' % i, u'订单%s' % v) for i,v in OrderStatus.chcs ]) + \
             (
                 (u'/order/new/', u'新订单'),
+                (u'/order/edit/', u'编辑订单'),
                 (u'/order/add/', u'订单提交'),
                 (u'/back/', u'退款'),
                 (u'/logistics/', u'物流'),
@@ -90,21 +91,18 @@ class Element(models.Model):
             )
          #权限对照用列表,用于识别那些页面需要进行权限判定
 
-    pChoice = ((0, u'查 (无从属)'), (1, u'显'), (2, u'增'), (3, u'删'), (4, u'改'), )
-    aChoice = ((0, u'web'), (1, u'json'), )
+    pChoice = ((0, u'json'), (1, u'查'), (2, u'增'), (3, u'删'), (4, u'改'), )
 
     path = models.CharField(u'路径',max_length=255, choices=pPath, unique=True)
     #权限类型共4种: {0:'查',1:'显',2:'增',3:'删',4:'改',} 其中显为界面显示专属
-    pType = models.SmallIntegerField(u'权限类型',default=0, choices=pChoice)
-
-    aType = models.SmallIntegerField(u'路径类型',default=0, choices=aChoice)
+    typ = models.SmallIntegerField(u'权限类型',default=0, choices=pChoice)
     onl = models.BooleanField(u'上线', default=True)
     sub = models.ForeignKey("self",related_name='sub_set', verbose_name=u'从属', blank=True, null=True)
 
     objects = elementManager()
 
     def __unicode__(self):
-        return u"%s [ %s ][ sub: %s ][ onl: %s ] - %s" % (self.get_path_display(), self.get_pType_display(), self.sub, self.onl, self.path)
+        return u"%s [ %s ][ sub: %s ][ onl: %s ] - %s" % (self.get_path_display(), self.get_typ_display(), self.sub, self.onl, self.path)
 
 
 class Privilege(models.Model):

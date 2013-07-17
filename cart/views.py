@@ -126,7 +126,7 @@ class Cart(object):
     def formatItems(self):
         if not self.items:
 
-            return self.clear()
+            return self.setSeesion(self.itemsFormat)
 
     def formatMark(self):
 
@@ -186,8 +186,6 @@ class Cart(object):
             i['mark'] = self.formatMark()
   
             _items[i['mark']] = i  
-
-            print _items
 
         return self.setSeesion(_items)
 

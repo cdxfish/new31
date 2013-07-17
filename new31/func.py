@@ -21,20 +21,34 @@ def redirect():
 
 
 # 重定向至前一页
-def redirectBack(request):
+def redirectBack(request, L=[]):
+    HTTP_REFERER = request.META.get('HTTP_REFERER',"/")
 
-    # if count() > 1:
-    #     return redirect()
+    # bol = False
+
+    # if HTTP_REFERER in L:
+    #     del L
+    #     bol = True
     # else:
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER',"/"))
+    #     L.append(HTTP_REFERER)
 
+    if count():
+        return HttpResponseRedirect(HTTP_REFERER)
+    else:
+        return redirect()
 
 # 闭包计数器
-def count(L=[]):
+def count():
+    i = 0
 
-    L.append(1)
-    
-    return len(L)
+    def _func(i):
+        i +=  1
+        return i
+
+    if i:
+        return _func
+    else:
+        return _func(i)
 
 
 # 分页
