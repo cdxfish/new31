@@ -21,7 +21,7 @@ from decimal import *
 
 # 前台购物车界面
 def cart(request):
-
+    from order.views import OrderSubmit
     cart = Cart(request).showItemToCart()
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))

@@ -2093,15 +2093,15 @@ ul.messagelist li {
     margin: 0 0 3px 0;
     border-bottom: 1px solid #ddd;
     color: #666;
-    background: #ffc url(../img/icon_success.gif) 5px .3em no-repeat;
+    background: #ffc url(/static/images/icon_success.gif) 5px .3em no-repeat;
 }
 
 ul.messagelist li.warning {
-    background-image: url(../img/icon_alert.gif);
+    background-image: url(/static/images/icon_alert.gif);
 }
 
 ul.messagelist li.error {
-    background-image: url(../img/icon_error.gif);
+    background-image: url(/static/images/icon_error.gif);
 }
 
 .errornote {
@@ -2111,7 +2111,7 @@ ul.messagelist li.error {
     margin: 0 0 3px 0;
     border: 1px solid red;
     color: red;
-    background: #ffc url(../img/icon_error.gif) 5px .3em no-repeat;
+    background: #ffc url(/static/images/icon_error.gif) 5px .3em no-repeat;
 }
 
 ul.errorlist {
@@ -2126,7 +2126,7 @@ ul.errorlist {
     margin: 0 0 3px 0;
     border: 1px solid red;
     color: white;
-    background: red url(../img/icon_alert.gif) 5px .3em no-repeat;
+    background: red url(/static/images/icon_alert.gif) 5px .3em no-repeat;
 }
 
 .errorlist li a {

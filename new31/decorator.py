@@ -2,7 +2,6 @@
 from new31.func import *
 from django.conf import settings
 from django.contrib import messages
-from order.models import *
 
 # Create your decorator here.
 
@@ -125,6 +124,7 @@ def itemonl(func):
 def conOrder(func):
 
     def _func(request, c):
+        from order.models import OrderInfo, OrderStatus
 
         order =  OrderInfo.objects.get(sn=request.GET.get('sn')).orderstatus
         act = OrderStatus.objects.getActTuple(order.status)

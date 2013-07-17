@@ -105,10 +105,10 @@ INSERT INTO `discount_discount` (`dis`, `onl`) VALUES
 (0.9, 1);
 
 INSERT INTO `purview_element` (`id`, `path`, `typ`, `onl`, `sub_id`) VALUES
-(1, '/office/', 0, 1, NULL),
+(1, '/office/', 1, 1, NULL),
 (2, '/order/', 1, 1, NULL),
-(3, '/order/new/', 0, 1, 2),
-(4, '/order/add/', 2, 1, NULL);
+(3, '/order/new/', 1, 1, 2),
+(4, '/order/submit/', 2, 1, NULL);
 
 INSERT INTO `purview_privilege` (`id`, `name`, `onl`) VALUES
 (1, 0, 1);

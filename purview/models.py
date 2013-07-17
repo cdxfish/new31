@@ -46,7 +46,7 @@ class Element(models.Model):
             (
                 (u'/order/new/', u'新订单'),
                 (u'/order/edit/', u'编辑订单'),
-                (u'/order/add/', u'订单提交'),
+                (u'/order/submit/', u'提交订单'),
                 (u'/back/', u'退款'),
                 (u'/logistics/', u'物流'),
             ) + \

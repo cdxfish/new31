@@ -1,7 +1,7 @@
 #coding:utf-8
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.http import HttpResponseRedirect
-import math, random, json, os
+import math, random
 
 
 # 格式化价格,舍弃小数位

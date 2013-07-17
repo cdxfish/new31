@@ -7,7 +7,6 @@ from django.contrib import messages, auth
 from django.db.models import Q
 from new31.decorator import *
 from new31.func import *
-from cart.views import *
 from signtime.models import *
 from area.models import *
 from item.models import *
