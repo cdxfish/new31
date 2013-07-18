@@ -65,7 +65,7 @@ def coTypeByAjax(request, kwargs):
 
     o = Order(request)
 
-    o.o['typ'] = request.GET.get('oType')
+    o.o['typ'] = int(request.GET.get('oType'))
 
     return AjaxRJson().dumps()
 

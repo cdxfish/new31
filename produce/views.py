@@ -148,11 +148,17 @@ class ProPur(OrdPur):
             i.items = items
 
         return self
-
-
     def beMixed(self):
+        for i in self.oList:
+            for ii in i.items:
+                ii.action[self.path] = tuple([ iii for iii in ii.action[self.path] if u'%s%s/' % (self.path, iii[0]) in self.role ])
+
+        return self
+
+
+    def mixedStatus(self):
         for i in self.oList:
             for ii in i.items:
                 ii.action[self.path] = tuple([ iii for iii in ii.action[self.path] if iii in self.chcs ])
 
-        return self.oList
+        return self

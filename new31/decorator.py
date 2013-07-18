@@ -125,21 +125,19 @@ def conOrder(func):
 
     def _func(request, c):
         from order.models import OrderInfo, OrderStatus
-
-        order =  OrderInfo.objects.get(sn=request.GET.get('sn')).orderstatus
+        sn = request.GET.get('sn')
+        order =  OrderInfo.objects.get(sn=sn).orderstatus
         act = OrderStatus.objects.getActTuple(order.status)
 
         if not c in act:
 
-            messages.error(self.request, u'%s - 无法%s' % (sn, order.get_status_display()))
+            messages.error(request, u'%s - 无法%s' % (sn, OrderStatus.chcs[c][1]))
 
-            return redirectBack(self.request)
+            return redirectBack(request)
 
-        order.status = c
+        else:
 
-        order.save()
-
-        return func(request, c)
+            return func(request, c)
 
     return _func
 

@@ -24,14 +24,6 @@ def redirect():
 def redirectBack(request, L=[]):
     HTTP_REFERER = request.META.get('HTTP_REFERER',"/")
 
-    # bol = False
-
-    # if HTTP_REFERER in L:
-    #     del L
-    #     bol = True
-    # else:
-    #     L.append(HTTP_REFERER)
-
     if count():
         return HttpResponseRedirect(HTTP_REFERER)
     else:

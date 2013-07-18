@@ -53,7 +53,7 @@ class FncSearch(OrderSerch):
 
 
 # 订单列表权限加持
-class FncPur:
+class FncPur(OrdPur):
     """
         首先获取当前角色可进行的订单操作权限. 
 
@@ -61,7 +61,7 @@ class FncPur:
 
     """
     def __init__(self, oList, request):
-        self.oList = oList
+        super(FncPur, self).__init__(oList, request)
         self.chcs = OrderPay.chcs
         self.path = request.paths[u'财务']
         self.action = (
@@ -80,12 +80,5 @@ class FncPur:
                 i.action = {}
 
             i.action[self.path] = self.action[i.orderpay.status]
-
-        return self
-
-
-    def beMixed(self):
-        for i in self.oList:
-            i.action[self.path] = tuple([ ii for ii in i.action[self.path] if ii in self.chcs ])
 
         return self

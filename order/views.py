@@ -48,7 +48,9 @@ def newOrderUI(request):
 
 @conOrder
 def editOrd(request, c):
-    Order(request).setSessBySN(request.GET.get('sn'))
+    o = Order(request)
+    o.cCon(request.GET.get('sn'), c)
+    o.setSessBySN(request.GET.get('sn'))
 
     return HttpResponseRedirect(request.paths[u'编辑订单'])
 
@@ -68,7 +70,7 @@ def editUI(request):
 
     return render_to_response('orderneworedit.htm', locals(), context_instance=RequestContext(request))
 
-# @conOrder
+
 def copyOrder(request,c):
     Order(request).setSessBySN(int(request.GET.get('sn')))
 
@@ -102,6 +104,7 @@ def addItemToOrder(request, kwargs):
 # 编辑界面中删除订单中的商品操作
 @decoratorBack
 def delItemToOrder(request, kwargs):
+    from cart.views import Cart
 
     return Cart(request).clearItemByMark(kwargs['mark'])
 

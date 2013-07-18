@@ -24,9 +24,9 @@ def logisticsUI(request):
     form = LogisticsForm(initial=o.initial)
 
     oList = o.search().chcs().range().page()
+    oList = OrdPur(oList, request).getOrders()
     oList = LogcsPur(oList, request).getOrders()
     oList = FncPur(oList, request).getOrders()
-    oList = OrdPur(oList, request).getOrders()
     oList = ProPur(oList, request).getOrders()
 
     return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))    
