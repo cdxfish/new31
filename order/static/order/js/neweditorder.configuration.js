@@ -7,7 +7,7 @@ $(document).ready(function() {
 aeo = {
     cu: function() {
         $('#checkout #user').change(
-            aeo.u
+        aeo.u
 
         );
         return this;
@@ -22,15 +22,14 @@ aeo = {
 
         }
     },
-    ot: function(){
+    ot: function() {
         $('.oType').change(
 
         function() {
             var name = $(this).attr('name');
             var value = $(this).val();
 
-            $.getJSON(
-                '/ajax/cotype/?' + name + '=' + value,
+            $.getJSON('/ajax/cotype/?' + name + '=' + value,
 
             function(data) {
                 $.dialog.dialogMsgAndReload(data);
@@ -137,19 +136,20 @@ aeog = {
             var mark = that.attr('id');
             var value = that.val();
 
-            $.getJSON('/ajax/citem/?name=' + name + '&mark=' + mark + '&value=' + value,
-
-            function(data) {
-                $.dialog.dialogMsgAndReload(data,
+            $(this).ajaxDialog(function() {
+                $.getJSON('/ajax/citem/?name=' + name + '&mark=' + mark + '&value=' + value,
 
                 function(data) {
 
                     $('#am' + data.data.mark).text(data.data.am);
                     $('#st' + data.data.mark).text(data.data.st);
                     $('#total').text(data.data.total);
+                    $.dialog.close();
+
                 });
 
             });
+
         });
         return this;
     }

@@ -125,7 +125,7 @@
             },
 
             delayClose: function(msg, t) {
-                var time = !t ? 1000 : t;
+                var time = !t ? 100 : t;
                 $("#dialog").fadeOut(time);
                 return this;
             },
@@ -141,7 +141,7 @@
                 var cssObj = obj ? obj : {
                     width: 220
                 };
-                var time = !t ? 1500 : t;
+                var time = !t ? 1000 : t;
 
 
                 $.dialog.showDialog('<span class="message" style="text-align:center; width:220px">' + msg + '</span>', cssObj);
@@ -180,17 +180,17 @@
                 }
             },
 
-            ajaxDialog: function(h, f, l) {
+            ajaxDialog: function(data, f, l) {
                 var f = f ? f : function() {};
-                var l = l ? l : '努力加载中请稍候，请稍候';
+                var l = l ? l : '努力加载中，请稍候';
 
                 $.dialog.loading(l);
 
-                f(h);
+                f(data);
 
             },
 
-            allPrpos: function(obj) {
+            prpos: function(obj) {
                 this.dialogMsg({
                     error: false,
                     data: obj,
@@ -216,7 +216,7 @@
     $.fn.extend({
         ajaxDialog: function(f, l) {
             var f= f ? f : function() {};
-            var l = l ? l : '努力加载中请稍候，请稍候';
+            var l = l ? l : '努力加载中，请稍候';
 
             $.dialog.loading(l);
 

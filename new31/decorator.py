@@ -142,3 +142,10 @@ def conOrder(func):
         return func(request, c)
 
     return _func
+
+# order中各类引用包装饰器
+def ordImps(cls):
+    from cart.views import Cart
+
+    return cls
+
