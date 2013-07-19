@@ -42,7 +42,7 @@ class Element(models.Model):
                 (u'/office/', U'管理中心'),
                 (u'/order/', u'订单'),
             ) + \
-            tuple([ (u'/order/%s/' % i, u'订单%s' % v) for i,v in OrdStatus.chcs ]) + \
+            tuple([ (u'/order/%s/' % i, u'订单%s' % v) for i,v in OrdSats.chcs ]) + \
             (
                 (u'/order/new/', u'新订单'),
                 (u'/order/edit/', u'编辑订单'),

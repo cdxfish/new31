@@ -24,7 +24,7 @@ import time, datetime
 def orderList(request):
     o = OrdSerch(request)
 
-    form = OrdStatusForm(initial=o.initial)
+    form = OrdSatsForm(initial=o.initial)
 
     oList = o.baseSearch().chcs().range().page()
     oList = OrdPur(oList, request).getOrds()
@@ -121,7 +121,7 @@ class Ord(object):
         self.o = self.request.session.get('o')
         self.oFormat =  {
                         'typ': OrdInfo.chcs[0][0],
-                        'status': OrdStatus.chcs[0][0],
+                        'status': OrdSats.chcs[0][0],
                         'sn': 0,
             }
 
@@ -140,8 +140,8 @@ class Ord(object):
         return self.setSeesion(self.oFormat)
 
     def cCon(self, sn, c):
-        order =  OrdInfo.objects.get(sn=sn).ordstatus
-        act = OrdStatus.objects.getActTuple(order.status)
+        order =  OrdInfo.objects.get(sn=sn).ordsats
+        act = OrdSats.objects.getActTuple(order.status)
 
         if not c in act:
 
@@ -323,9 +323,9 @@ class OrdPur(OrdPur):
 
     def __init__(self, oList, request):
         super(OrdPur, self).__init__(oList, request)
-        self.chcs = OrdStatus.chcs
+        self.chcs = OrdSats.chcs
         self.path = request.paths[u'订单']
-        self.action = OrdStatus.act
+        self.action = OrdSats.act
 
 
     # 获取订单可选操作项
@@ -335,7 +335,7 @@ class OrdPur(OrdPur):
             if not hasattr(i,'action'):
                 i.action = {}
 
-            i.action[self.path] = self.action[i.ordstatus.status]
+            i.action[self.path] = self.action[i.ordsats.status]
 
         return self
 
@@ -369,7 +369,7 @@ class OrdSub(object):
         self.o = Ord(self.request).o
         self.logcs = OrdLogcs()
         self.oPay = OrdPay()
-        self.oStart = OrdStatus()
+        self.oStart = OrdSats()
         self.oShip = OrdShip()
         self.oOLT = OrdLog()
 
@@ -615,7 +615,7 @@ class OrdSub(object):
 
         self.logcs = self.ord.ordlogcs
         self.oPay = self.ord.ordpay
-        self.oStart = self.ord.ordstatus
+        self.oStart = self.ord.ordsats
         self.oShip = self.ord.ordship
         self.oOLT = self.ord.ordlog_set.get(Q(log=0) | Q(log=1))
 

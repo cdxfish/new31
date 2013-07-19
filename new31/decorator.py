@@ -124,14 +124,14 @@ def itemonl(func):
 def conOrd(func):
 
     def _func(request, c):
-        from order.models import OrdInfo, OrdStatus
+        from order.models import OrdInfo, OrdSats
         sn = request.GET.get('sn')
-        order =  OrdInfo.objects.get(sn=sn).ordstatus
-        act = OrdStatus.objects.getActTuple(order.status)
+        order =  OrdInfo.objects.get(sn=sn).ordsats
+        act = OrdSats.objects.getActTuple(order.status)
 
         if not c in act:
 
-            messages.error(request, u'%s - 无法%s' % (sn, OrdStatus.chcs[c][1]))
+            messages.error(request, u'%s - 无法%s' % (sn, OrdSats.chcs[c][1]))
 
             return redirectBack(request)
 

@@ -22,9 +22,9 @@ class OrdTypeForm(forms.Form):
     oType = forms.ChoiceField(label=u'订单类型', choices=chcs, widget=forms.Select(attrs={'class': 'oType' }))
 
 
-class OrdStatusForm(baseSearchForm):
+class OrdSatsForm(baseSearchForm):
 
-    chcs = ((-1, '全部'),) + OrdStatus.chcs
+    chcs = ((-1, '全部'),) + OrdSats.chcs
 
     c = forms.ChoiceField(label=u'订单状态', choices=chcs, widget=forms.Select(attrs={'class': 'c' }))
 

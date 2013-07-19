@@ -38,7 +38,7 @@ class orderItemManager(models.Manager):
 class ordSatsManager(models.Manager):
     def getActTuple(self, i):
 
-        return tuple([ i for i, v in OrdStatus.act[i]])
+        return tuple([ i for i, v in OrdSats.act[i]])
 
 
 class OrdInfo(models.Model):
@@ -127,7 +127,7 @@ class OrdLogcs(models.Model):
         # verbose_name = u'订单物流信息'             
 
 
-class OrdStatus(models.Model):
+class OrdSats(models.Model):
     chcs = (
                 (0, u'新单'), 
                 (1, u'编辑'), 

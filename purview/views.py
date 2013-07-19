@@ -93,7 +93,7 @@ class OrdPur(object):
     """
     def __init__(self, oList, request):
         self.oList = oList
-        self.action = OrdStatus.act
+        self.action = OrdSats.act
         self.role = Role.objects.getPathByUser(request.user)
 
     def getElement(self):
@@ -102,7 +102,7 @@ class OrdPur(object):
             if not hasattr(i,'action'):
                 i.action = {}
 
-            i.action[self.path] = self.action[i.ordstatus.status]
+            i.action[self.path] = self.action[i.ordsats.status]
 
         return self
 
