@@ -74,7 +74,7 @@ class LogcsSerch(OrdSerch):
         return self
 
     def range(self):
-        self.oList = self.oList.filter(orderlogistics__signDate__range=(self.initial['s'], self.initial['e']))
+        self.oList = self.oList.filter(orderlogistics__date__range=(self.initial['s'], self.initial['e']))
 
         return self
 

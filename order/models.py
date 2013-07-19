@@ -109,11 +109,11 @@ class OrdLogcs(models.Model):
     area = models.CharField(u'配送区域', max_length=60)
     address = models.CharField(u'详细地址', max_length=255)
     tel = models.CharField(u'联系电话', max_length=60)
-    signDate = models.DateField(u'收货日期')
-    signTimeStart = models.TimeField(u'起始时间')
-    signTimeEnd = models.TimeField(u'结束时间')
-    logisTimeStart = models.TimeField(u'物流起始时间')
-    logisTimeEnd = models.TimeField(u'物流结束时间')
+    date = models.DateField(u'收货日期')
+    stime = models.TimeField(u'起始时间')
+    etime = models.TimeField(u'结束时间')
+    lstime = models.TimeField(u'物流起始时间')
+    letime = models.TimeField(u'物流结束时间')
     advance = models.SmallIntegerField(u'提前量', default=0, choices=chcs)
     dman = models.OneToOneField(User, verbose_name=u'物流师傅', blank=True, null=True)
     note = models.CharField(u'备注', max_length=255, blank=True, null=True)
@@ -121,7 +121,7 @@ class OrdLogcs(models.Model):
     objects = ordLogManager()
 
     def __unicode__(self):
-        return u"%s - [ %s ][ %s  %s - %s ][ %s ]" % ( self.ord, self.consignee, self.signDate, self.signTimeStart, self.signTimeEnd, self.tel )
+        return u"%s - [ %s ][ %s  %s - %s ][ %s ]" % ( self.ord, self.consignee, self.date, self.stime, self.etime, self.tel )
         
     # class Meta: 
         # verbose_name = u'订单物流信息'             

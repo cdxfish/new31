@@ -198,7 +198,7 @@ class Ord(object):
 
 
         try:
-            time = SignTime.objects.get(signTimeStart=oLogcs.start, signTimeEnd=oLogcs.end).id
+            time = SignTime.objects.get(stime=oLogcs.start, etime=oLogcs.end).id
         except Exception, e:
             time = SignTime.objects.getDefault().id
 
@@ -208,7 +208,7 @@ class Ord(object):
         c['area'] = area
         c['address'] = oLogcs.address
         c['tel'] = oLogcs.tel
-        c['signDate'] = '%s' % oLogcs.signDate
+        c['date'] = '%s' % oLogcs.date
 
         c['time'] = time
         c['note'] = oLogcs.note
@@ -281,9 +281,9 @@ class OrdSerch(object):
                 Q(orderlogistics__area__contains=self.initial['k']) |
                 Q(orderlogistics__address__contains=self.initial['k']) |
                 Q(orderlogistics__tel__contains=self.initial['k']) |
-                # Q(orderlogistics__signDate=datetime.date.today()) |
-                Q(orderlogistics__signTimeStart__contains=self.initial['k']) |
-                Q(orderlogistics__signTimeEnd__contains=self.initial['k']) |
+                # Q(orderlogistics__date=datetime.date.today()) |
+                Q(orderlogistics__stime__contains=self.initial['k']) |
+                Q(orderlogistics__etime__contains=self.initial['k']) |
                 Q(orderlogistics__note__contains=self.initial['k'])
             )
 
@@ -453,11 +453,11 @@ class OrdSub(object):
         self.logcs.area = '%s - %s' % (area.sub.name, area.name)
         self.logcs.address = self.c['address']
         self.logcs.tel = self.c['tel']
-        self.logcs.signDate = self.c['signDate']
-        self.logcs.signTimeStart = time.start
-        self.logcs.signTimeEnd = time.end
-        self.logcs.logisTimeStart = time.start.replace(hour = time.start.hour - logisticsTimeAvdce)
-        self.logcs.logisTimeEnd = time.end.replace(hour = time.end.hour - logisticsTimeAvdce)
+        self.logcs.date = self.c['date']
+        self.logcs.stime = time.start
+        self.logcs.etime = time.end
+        self.logcs.lstime = time.start.replace(hour = time.start.hour - logisticsTimeAvdce)
+        self.logcs.letime = time.end.replace(hour = time.end.hour - logisticsTimeAvdce)
         self.logcs.note = self.c['note']
 
         self.logcs.ord = self.ord
@@ -593,7 +593,7 @@ class OrdSub(object):
             return self.showError()
         else:
             messages.success(self.request, u'订单提交成功: %s' % self.sn)
-            d = datetime.datetime.strptime(self.c['signDate'], "%Y-%m-%d")
+            d = datetime.datetime.strptime(self.c['date'], "%Y-%m-%d")
             s = d - datetime.timedelta(days=1)
             e = d + datetime.timedelta(days=1)
 

@@ -14,13 +14,13 @@ class ConsigneeForm(forms.ModelForm):
 
     class Meta:
         model = OrdLogcs
-        fields = ('consignee', 'area', 'address', 'tel', 'signDate', 'note')
+        fields = ('consignee', 'area', 'address', 'tel', 'date', 'note')
         widgets = {
             'address': forms.TextInput(attrs={'size': 70}),
             'tel': forms.TextInput(attrs={'size': 60}),
             'note': forms.Textarea(attrs={'cols': 100, 'rows': 4}),  
             'area': forms.Select(choices=Area.objects.getTupleByAll()),  
-            'signDate': forms.DateInput(attrs={'class': 'date'},format='%Y-%m-%d'),  
+            'date': forms.DateInput(attrs={'class': 'date'},format='%Y-%m-%d'),  
         }
 
 

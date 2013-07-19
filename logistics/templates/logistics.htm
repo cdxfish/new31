@@ -36,9 +36,9 @@
           </tr>
           <tr align="center">
             <td>时间</td>
-            <td align="left">{{ i.ordlogcs.signDate|date:"Y-m-d" }} | {{ i.ordlogcs.signTimeStart|time:"H:i" }} - {{ i.ordlogcs.signTimeEnd|time:"H:i" }}</td>
+            <td align="left">{{ i.ordlogcs.date|date:"Y-m-d" }} | {{ i.ordlogcs.stime|time:"H:i" }} - {{ i.ordlogcs.etime|time:"H:i" }}</td>
             <td>预发货</td>
-            <td>{{ i.ordlogcs.logisTimeStart|time:"H:i" }}</td>
+            <td>{{ i.ordlogcs.lstime|time:"H:i" }}</td>
             <td>{{ i.form.advance }}</td>
             <td>{{ i.form.dman }}</td>
           </tr>

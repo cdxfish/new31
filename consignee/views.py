@@ -46,7 +46,7 @@ class SpCnsgn:
                             'area': areaID, 
                             'address':'', 
                             'tel':'', 
-                            'signDate': '%s' % datetime.date.today(), 
+                            'date': '%s' % datetime.date.today(), 
                             'time': signID,
                             'note':'',
                         } 
@@ -83,10 +83,10 @@ class SpCnsgn:
         c = self.c
 
         toDay = time.gmtime()
-        cDate = time.strptime(c['signDate'], '%Y-%m-%d')
+        cDate = time.strptime(c['date'], '%Y-%m-%d')
 
-        if cDate < toDay or not c['signDate']:
-            c['signDate'] = '%s' % datetime.date.today()
+        if cDate < toDay or not c['date']:
+            c['date'] = '%s' % datetime.date.today()
 
 
         return self.setConsignee(c)
@@ -113,7 +113,7 @@ class SpCnsgn:
 
 
         try:
-            time = SignTime.objects.get(signTimeStart=oLogcs.start, signTimeEnd=oLogcs.end).id
+            time = SignTime.objects.get(stime=oLogcs.start, etime=oLogcs.end).id
         except Exception, e:
             time = SignTime.objects.getDefault().id
 
@@ -125,7 +125,7 @@ class SpCnsgn:
         c['area'] = area
         c['address'] = oLogcs.address
         c['tel'] = oLogcs.tel
-        c['signDate'] = '%s' % oLogcs.signDate
+        c['date'] = '%s' % oLogcs.date
 
         c['time'] = time
         c['note'] = oLogcs.note

@@ -28,24 +28,24 @@ def sortList(oList):
     _oList = {}
     for i in oList:
         
-        signDate = u'%s' % i.ordlogcs.signDate
-        logisTimeStart = u'%s' % i.ordlogcs.logisTimeStart
+        date = u'%s' % i.ordlogcs.date
+        lstime = u'%s' % i.ordlogcs.lstime
         advance = u'%s' % i.ordlogcs.get_advance_display()
 
         i.items = [ ii for ii in i.items if ii.produce.status ]
 
         if i.items:
 
-            if not signDate in _oList:
-                _oList[signDate] = {}
+            if not date in _oList:
+                _oList[date] = {}
 
-            if not logisTimeStart in _oList[signDate]:
-                _oList[signDate][logisTimeStart] = {}
+            if not lstime in _oList[date]:
+                _oList[date][lstime] = {}
 
-            if not advance in _oList[signDate][logisTimeStart]:
-                _oList[signDate][logisTimeStart][advance] = []
+            if not advance in _oList[date][lstime]:
+                _oList[date][lstime][advance] = []
 
-            _oList[signDate][logisTimeStart][advance].append(i)
+            _oList[date][lstime][advance].append(i)
 
     return _oList
 
@@ -95,7 +95,7 @@ class ProSerch(OrdSerch):
         return self
 
     def range(self):
-        self.oList = self.oList.filter(orderlogistics__signDate__range=(self.initial['s'], self.initial['e']))
+        self.oList = self.oList.filter(orderlogistics__date__range=(self.initial['s'], self.initial['e']))
 
         return self
 

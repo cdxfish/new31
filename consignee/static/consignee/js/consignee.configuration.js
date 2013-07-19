@@ -65,7 +65,7 @@ c = {
             }
 
 
-            if (!$('#id_signDate').val()) {
+            if (!$('#id_date').val()) {
                 message += '请填写最佳送货日期!<br />';
             }
 

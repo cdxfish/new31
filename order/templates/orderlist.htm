@@ -17,7 +17,7 @@
           <tr align="center" class="tr_border_top_black">
             <td>{{ i.get_typ_display }}</td>
             <td><a href="{{ request.paths.订单 }}{{ i.sn }}/">{{ i.sn }}</a></td>
-            <td>{{ i.ordlogcs.signDate|date:"Y-m-d" }} | {{ i.ordlogcs.signTimeStart|time:"H:i" }} - {{ i.ordlogcs.signTimeEnd|time:"H:i" }}</td>
+            <td>{{ i.ordlogcs.date|date:"Y-m-d" }} | {{ i.ordlogcs.stime|time:"H:i" }} - {{ i.ordlogcs.etime|time:"H:i" }}</td>
             <td>{{ i.ordlogcs.consignee }}</td>
             <td>{{ i.ordlogcs.tel }} | {{ i.user.username}}</td>
             <td>{{ i.ordpay.name }}</td>
