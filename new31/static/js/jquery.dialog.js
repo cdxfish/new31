@@ -150,10 +150,23 @@
 
                 return this;
             },
+            msg: function(data, t, obj) {
+                var time = !t ? 1000 : t;
+                var cssObj = obj ? obj : {
+                    width: 220
+                };
+
+                if (data.err) {
+                    $.dialog.message(data.msg, time, cssObj);
+
+                } else {
+                    $.dialog.close();
+                }
+            },
 
             dialogMsg: function(data, f, obj) {
                 var cssObj = obj ? obj : {};
-                if (data.error) {
+                if (data.er) {
                     $.dialog.message(data.message);
 
                 } else {
@@ -215,7 +228,7 @@
 
     $.fn.extend({
         ajaxDialog: function(f, l) {
-            var f= f ? f : function() {};
+            var f = f ? f : function() {};
             var l = l ? l : '努力加载中，请稍候';
 
             $.dialog.loading(l);

@@ -39,7 +39,7 @@ class FncSearch(OrdSerch):
 
     def status(self):
         if self.initial['c'] >= 0:
-            self.oList = self.oList.filter(ordership__status=self.initial['c'])
+            self.oList = self.oList.filter(ordship__status=self.initial['c'])
 
         return self
 

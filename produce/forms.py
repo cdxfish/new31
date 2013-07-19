@@ -6,7 +6,7 @@ from office.forms import *
 
 # Create your forms here.
 
-class ProduceForm(baseSearchForm):
+class ProFrm(bsSrchFrm):
 
     chcs = ((-1, '全部'),) + Produce.chcs
     c = forms.ChoiceField(label=u'生产状态', choices=chcs, widget=forms.Select(attrs={'class': 'c' }))

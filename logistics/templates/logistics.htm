@@ -39,8 +39,8 @@
             <td align="left">{{ i.ordlogcs.date|date:"Y-m-d" }} | {{ i.ordlogcs.stime|time:"H:i" }} - {{ i.ordlogcs.etime|time:"H:i" }}</td>
             <td>预发货</td>
             <td>{{ i.ordlogcs.lstime|time:"H:i" }}</td>
-            <td>{{ i.form.advance }}</td>
-            <td>{{ i.form.dman }}</td>
+            <td>{% if i.form %}{{ i.form.advance }}{% else %}{{ i.get_advance_display }}{% endif %}</td>
+            <td>{% if i.form %}{{ i.form.dman }}{% else %}{{ i.dman }}{% endif %}</td>
           </tr>
           <tr>
             <td align="center">备注</td>
@@ -49,4 +49,5 @@
 {% endfor %}
           {% include 'page.htm' %}
       </table>
+      <script type="text/javascript" src="{{ STATIC_URL }}logistics/js/logistics.configuration.js"></script>
 {% endblock %}

@@ -86,6 +86,53 @@ def cItemByAjax(request, kwargs):
 
     return AjaxRJson().dumps(data)
 
+# ajax动态修改物流偏移量
+@tryMsg('无法修改表单数据')
+def cAdv(request, kwargs):
+    sn = int(request.GET.get('sn')[1:])
+    value = int(request.GET.get('value', 0))
+    from order.models import OrdInfo,OrdLogcs
+
+    ordlogcs = OrdLogcs.objects.get(ord=sn)
+
+    if ordlogcs.ord.ordship.status > 1:
+        return AjaxRJson.message(u'无法修改表单数据').dumps()
+
+    ordlogcs.advance = value
+
+    ordlogcs.save()
+
+    data = {}
+    data['sn'] = sn
+    data['value'] = value
+
+    return AjaxRJson().dumps(data)
+
+# ajax动态修改物流师傅
+# @tryMsg('无法修改表单数据')
+def cDman(request):
+    sn = int(request.GET.get('sn')[1:])
+    value = int(request.GET.get('value', 0))
+    from order.models import OrdInfo,OrdLogcs
+
+    ordlogcs = OrdLogcs.objects.get(ord=sn)
+
+    if ordlogcs.ord.ordship.status > 1:
+        return AjaxRJson.message(u'无法修改表单数据').dumps()
+
+    if value:
+        ordlogcs.dman = value
+    else:
+        ordlogcs.dman = u'null'
+
+    ordlogcs.save()
+
+    data = {}
+    data['sn'] = sn
+    data['value'] = value
+
+    return AjaxRJson().dumps(data)
+
 
 
 # JSON数据格式化类

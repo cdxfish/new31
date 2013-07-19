@@ -89,7 +89,7 @@ class OrdLog(models.Model):
         return u"%s - [ %s ][ %s ]" % ( self.ord, self.get_log_display(), self.time )
         
     class Meta:
-        unique_together=(("ord","time"),)   
+        unique_together=(("ord","time"),)
         # verbose_name = u'订单日志'
         # 记录类似于下单时间.付款时间.发货时间等             
 
@@ -115,7 +115,7 @@ class OrdLogcs(models.Model):
     lstime = models.TimeField(u'物流起始时间')
     letime = models.TimeField(u'物流结束时间')
     advance = models.SmallIntegerField(u'提前量', default=0, choices=chcs)
-    dman = models.OneToOneField(User, verbose_name=u'物流师傅', blank=True, null=True)
+    dman = models.ForeignKey(User, verbose_name=u'物流师傅', blank=True, null=True)
     note = models.CharField(u'备注', max_length=255, blank=True, null=True)
 
     objects = ordLogManager()

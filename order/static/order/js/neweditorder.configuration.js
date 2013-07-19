@@ -144,7 +144,7 @@ aeog = {
                     $('#am' + data.data.mark).text(data.data.am);
                     $('#st' + data.data.mark).text(data.data.st);
                     $('#total').text(data.data.total);
-                    $.dialog.close();
+                    $.dialog.msg(data);
 
                 });
 

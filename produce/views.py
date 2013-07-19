@@ -14,7 +14,7 @@ def produceUI(request):
 
     o = ProSerch(request)
 
-    form = ProduceForm(initial=o.initial)
+    form = ProFrm(initial=o.initial)
 
     oList = o.search().range().chcs().page()
     oList = ProPur(oList, request).getElement().beMixed()

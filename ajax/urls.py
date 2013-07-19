@@ -9,6 +9,8 @@ urlpatterns = patterns('',
     (r'^itemnum\/(?P<mark>\d+)\/(?P<num>\d+)\/$', ajaxChangNum),
     (r'^ccon\/$', cConsigneeByAjax),
     (r'^cotype\/$', coTypeByAjax),
+    (r'^cadvance\/$', cAdv),
+    (r'^cdman\/$', cDman),
     (r'^citem\/$', cItemByAjax),
     (r'^item\/$', getItemByKeyword),
 )

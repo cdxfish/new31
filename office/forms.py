@@ -6,7 +6,7 @@ from signtime.models import *
 # Create your forms here.
 
 
-class baseSearchForm(forms.Form):
+class bsSrchFrm(forms.Form):
 
     chcs = ((-1, '全部'),) + OrdInfo.chcs
 

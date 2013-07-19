@@ -17,11 +17,11 @@ from django.conf import settings
 
 # Create your views here.
 
-def logisticsUI(request):
+def logcsUI(request):
 
     o = LogcsSerch(request)
 
-    form = LogcsForm(initial=o.initial)
+    form = LogcsFrm(initial=o.initial)
 
     oList = o.search().chcs().range().page()
     oList = OrdPur(oList, request).getOrds()
@@ -69,7 +69,7 @@ class LogcsSerch(OrdSerch):
 
     def chcs(self):
         if self.initial['c'] >= 0:
-            self.oList = self.oList.filter(ordership__status=self.initial['c'])
+            self.oList = self.oList.filter(ordship__status=self.initial['c'])
 
         return self
 
@@ -99,7 +99,9 @@ class LogcsPur(OrdPur):
     # 获取订单可选操作项
     def getElement(self):
         for i in self.oList:
-            i.form = AdvanForm(i)
+            if i.ordship.status < 2:
+                i.form = AdvFrm(i)
+
             if not hasattr(i,'action'):
                 i.action = {}
 
