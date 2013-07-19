@@ -95,7 +95,7 @@ class OrdLog(models.Model):
 
 
 class OrdLogcs(models.Model):
-    aChoice = (
+    chcs = (
             (-3, '- 90 m'),
             (-2, '- 60 m'),
             (-1, '- 30 m'),
@@ -114,7 +114,7 @@ class OrdLogcs(models.Model):
     signTimeEnd = models.TimeField(u'结束时间')
     logisTimeStart = models.TimeField(u'物流起始时间')
     logisTimeEnd = models.TimeField(u'物流结束时间')
-    advance = models.SmallIntegerField(u'提前量', default=0, choices=aChoice)
+    advance = models.SmallIntegerField(u'提前量', default=0, choices=chcs)
     dman = models.OneToOneField(User, verbose_name=u'物流师傅', blank=True, null=True)
     note = models.CharField(u'备注', max_length=255, blank=True, null=True)
 

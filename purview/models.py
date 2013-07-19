@@ -91,11 +91,11 @@ class Element(models.Model):
             )
          #权限对照用列表,用于识别那些页面需要进行权限判定
 
-    pChoice = ((0, u'json'), (1, u'查'), (2, u'增'), (3, u'删'), (4, u'改'), )
+    chcs = ((0, u'json'), (1, u'查'), (2, u'增'), (3, u'删'), (4, u'改'), )
 
     path = models.CharField(u'路径',max_length=255, choices=pPath, unique=True)
     #权限类型共4种: {0:'查',1:'显',2:'增',3:'删',4:'改',} 其中显为界面显示专属
-    typ = models.SmallIntegerField(u'权限类型',default=0, choices=pChoice)
+    typ = models.SmallIntegerField(u'权限类型',default=0, choices=chcs)
     onl = models.BooleanField(u'上线', default=True)
     sub = models.ForeignKey("self",related_name='sub_set', verbose_name=u'从属', blank=True, null=True)
 
@@ -106,10 +106,10 @@ class Element(models.Model):
 
 
 class Privilege(models.Model):
-    nChoice = (
+    chcs = (
             (0, u'全局可读可写'),
         )
-    name = models.SmallIntegerField(u'名称', choices=nChoice, unique=True)
+    name = models.SmallIntegerField(u'名称', choices=chcs, unique=True)
     onl = models.BooleanField(u'上线', default=True)
     element = models.ManyToManyField(Element, verbose_name=u'权限', blank=True, null=True)
 
@@ -118,13 +118,13 @@ class Privilege(models.Model):
 
 
 class Role(models.Model):
-    nChoice = (
+    chcs = (
             (-1, u'管理员'),
             (0, u'无'),
             (1, u'物流师傅'),
         )
 
-    role = models.SmallIntegerField(u'角色', choices=nChoice, unique=True)
+    role = models.SmallIntegerField(u'角色', choices=chcs, unique=True)
     user = models.ManyToManyField(User, verbose_name=u'用户', blank=True, null=True)
     onl = models.BooleanField(u'上线', default=True)
     privilege = models.ManyToManyField(Privilege, verbose_name=u'权限', blank=True, null=True)

@@ -8,5 +8,5 @@ from office.forms import *
 
 class ProduceForm(baseSearchForm):
 
-    cChoice = ((-1, '全部'),) + Produce.chcs
-    c = forms.ChoiceField(label=u'生产状态', choices=cChoice, widget=forms.Select(attrs={'class': 'c' }))
+    chcs = ((-1, '全部'),) + Produce.chcs
+    c = forms.ChoiceField(label=u'生产状态', choices=chcs, widget=forms.Select(attrs={'class': 'c' }))
