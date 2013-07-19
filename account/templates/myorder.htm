@@ -14,9 +14,9 @@
 {% for i in orders %}
                 <tr align="center">
                     <td><a href="/account/order/?{{ i.sn }}">{{ i.sn }}</a></td>
-                    <td>{{ i.orderlog_set.all.0.time|date:'Y-m-d H:i:s' }}</td>
+                    <td>{{ i.ordlog_set.all.0.time|date:'Y-m-d H:i:s' }}</td>
                     <td>{% for ii, vv in i.total.items %}{% if forloop.first %}{{ vv }}{% else %} | {{ vv }}{% endif %}{% endfor %}</td>
-                    <td>{{ i.orderstatus.get_status_display }} | {{ i.ordership.get_status_display }} | {{ i.orderpay.get_status_display }}</td>
+                    <td>{{ i.ordstatus.get_status_display }} | {{ i.ordship.get_status_display }} | {{ i.ordpay.get_status_display }}</td>
                     <td><a href="/account/order/?{{ i.sn }}">查看详情</a></td>
                 </tr>
 {% endfor %}

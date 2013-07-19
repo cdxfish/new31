@@ -15,7 +15,7 @@ class oprerateTag(template.Node):
         for i,v in value.action.items():
             for ii,vv in v:
                 try:
-                    sn =  value.order.sn
+                    sn =  value.ord.sn
                     s += '<a href="%s%s/?sn=%s" class="button">%s</a>' % (i, ii, value.id, vv)
                 except Exception, e:
                     s += '<a href="%s%s/?sn=%s" class="button">%s</a>' % (i, ii, value.sn, vv)

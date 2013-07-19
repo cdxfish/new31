@@ -126,7 +126,7 @@ def conOrd(func):
     def _func(request, c):
         from order.models import OrdInfo, OrdStatus
         sn = request.GET.get('sn')
-        order =  OrdInfo.objects.get(sn=sn).orderstatus
+        order =  OrdInfo.objects.get(sn=sn).ordstatus
         act = OrdStatus.objects.getActTuple(order.status)
 
         if not c in act:

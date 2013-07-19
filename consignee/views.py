@@ -94,16 +94,16 @@ class SpCnsgn:
     def setSiessionByOrd(self, sn):
         c = self.cFormat.copy()
 
-        oLogistics = OrdInfo.objects.get(sn=sn).orderlogistics
+        oLogcs = OrdInfo.objects.get(sn=sn).ordlogcs
 
-        orderPay = oLogistics.order.orderpay
+        orderPay = oLogcs.ord.ordpay
 
         try:
             pay = Pay.objects.get(name=orderPay.payName, cod=orderPay.cod).id
         except Exception, e:
             pay = Pay.objects.getDefault().id
 
-        areaList = oLogistics.area.split(' - ')
+        areaList = oLogcs.area.split(' - ')
 
 
         try:
@@ -113,21 +113,21 @@ class SpCnsgn:
 
 
         try:
-            time = SignTime.objects.get(signTimeStart=oLogistics.start, signTimeEnd=oLogistics.end).id
+            time = SignTime.objects.get(signTimeStart=oLogcs.start, signTimeEnd=oLogcs.end).id
         except Exception, e:
             time = SignTime.objects.getDefault().id
 
 
 
-        c['user'] = oLogistics.order.user
+        c['user'] = oLogcs.ord.user
         c['pay'] = pay
-        c['consignee'] = oLogistics.consignee
+        c['consignee'] = oLogcs.consignee
         c['area'] = area
-        c['address'] = oLogistics.address
-        c['tel'] = oLogistics.tel
-        c['signDate'] = '%s' % oLogistics.signDate
+        c['address'] = oLogcs.address
+        c['tel'] = oLogcs.tel
+        c['signDate'] = '%s' % oLogcs.signDate
 
         c['time'] = time
-        c['note'] = oLogistics.note
+        c['note'] = oLogcs.note
 
         return self.setConsignee(c)

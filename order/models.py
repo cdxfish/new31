@@ -86,7 +86,7 @@ class OrdLog(models.Model):
     time = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True, editable=False)
 
     def __unicode__(self):
-        return u"%s - [ %s ][ %s ]" % ( self.order, self.get_log_display(), self.time )
+        return u"%s - [ %s ][ %s ]" % ( self.ord, self.get_log_display(), self.time )
         
     class Meta:
         unique_together=(("order","time"),)   
@@ -121,7 +121,7 @@ class OrdLogcs(models.Model):
     objects = ordLogManager()
 
     def __unicode__(self):
-        return u"%s - [ %s ][ %s  %s - %s ][ %s ]" % ( self.order, self.consignee, self.signDate, self.signTimeStart, self.signTimeEnd, self.tel )
+        return u"%s - [ %s ][ %s  %s - %s ][ %s ]" % ( self.ord, self.consignee, self.signDate, self.signTimeStart, self.signTimeEnd, self.tel )
         
     # class Meta: 
         # verbose_name = u'订单物流信息'             
@@ -150,7 +150,7 @@ class OrdStatus(models.Model):
     objects = ordSatsManager()
 
     def __unicode__(self):
-        return u"%s - [ %s ]" % ( self.order, self.get_status_display() )    
+        return u"%s - [ %s ]" % ( self.ord, self.get_status_display() )    
 
     # class Meta:
         # verbose_name = u'订单支付'
@@ -170,7 +170,7 @@ class OrdPay(models.Model):
     status = models.SmallIntegerField(u'支付状态', default=0, editable=False, choices=chcs)
 
     def __unicode__(self):
-        return u"%s - %s [ %s ]" % ( self.order, self.name, self.get_status_display() )
+        return u"%s - %s [ %s ]" % ( self.ord, self.name, self.get_status_display() )
 
     # class Meta:
         # verbose_name = u'订单支付'
@@ -191,7 +191,7 @@ class OrdShip(models.Model):
     status = models.SmallIntegerField(u'物流状态', default=0, editable=False, choices=chcs)
 
     def __unicode__(self):
-        return u"%s - %s [ %s ]" % ( self.order, self.name, self.get_status_display() )    
+        return u"%s - %s [ %s ]" % ( self.ord, self.name, self.get_status_display() )    
 
     # class Meta:
         # verbose_name = u'订单物流'
@@ -211,4 +211,4 @@ class OrdItem(models.Model):
     objects = orderItemManager()
 
     def __unicode__(self):
-        return u"%s - %s[ %s ][ %s ][ %d ]" % ( self.order, self.name, self.spec, self.num, self.fee )
+        return u"%s - %s[ %s ][ %s ][ %d ]" % ( self.ord, self.name, self.spec, self.num, self.fee )

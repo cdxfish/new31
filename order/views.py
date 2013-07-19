@@ -140,7 +140,7 @@ class Ord(object):
         return self.setSeesion(self.oFormat)
 
     def cCon(self, sn, c):
-        order =  OrdInfo.objects.get(sn=sn).orderstatus
+        order =  OrdInfo.objects.get(sn=sn).ordstatus
         act = OrdStatus.objects.getActTuple(order.status)
 
         if not c in act:
@@ -179,16 +179,16 @@ class Ord(object):
         sCongn = SpCnsgn(self.request)
         c = sCongn.cFormat.copy()
 
-        oLogistics = OrdInfo.objects.get(sn=sn).orderlogistics
+        oLogcs = OrdInfo.objects.get(sn=sn).ordlogcs
 
-        orderPay = oLogistics.order.orderpay
+        orderPay = oLogcs.ord.ordpay
 
         try:
             pay = Pay.objects.get(name=orderPay.payName, cod=orderPay.cod).id
         except Exception, e:
             pay = Pay.objects.getDefault().id
 
-        areaList = oLogistics.area.split(' - ')
+        areaList = oLogcs.area.split(' - ')
 
 
         try:
@@ -198,20 +198,20 @@ class Ord(object):
 
 
         try:
-            time = SignTime.objects.get(signTimeStart=oLogistics.start, signTimeEnd=oLogistics.end).id
+            time = SignTime.objects.get(signTimeStart=oLogcs.start, signTimeEnd=oLogcs.end).id
         except Exception, e:
             time = SignTime.objects.getDefault().id
 
-        c['user'] = oLogistics.order.user
+        c['user'] = oLogcs.ord.user
         c['pay'] = pay
-        c['consignee'] = oLogistics.consignee
+        c['consignee'] = oLogcs.consignee
         c['area'] = area
-        c['address'] = oLogistics.address
-        c['tel'] = oLogistics.tel
-        c['signDate'] = '%s' % oLogistics.signDate
+        c['address'] = oLogcs.address
+        c['tel'] = oLogcs.tel
+        c['signDate'] = '%s' % oLogcs.signDate
 
         c['time'] = time
-        c['note'] = oLogistics.note
+        c['note'] = oLogcs.note
 
         sCongn.setConsignee(c)
 
@@ -224,7 +224,7 @@ class Ord(object):
         c = Cart(self.request).clear()
 
         order = OrdInfo.objects.get(sn=sn)
-        items = order.orderitem_set.all()
+        items = order.orditem_set.all()
         _items = []
 
         for i in items:
@@ -335,7 +335,7 @@ class OrdPur(OrdPur):
             if not hasattr(i,'action'):
                 i.action = {}
 
-            i.action[self.path] = self.action[i.orderstatus.status]
+            i.action[self.path] = self.action[i.ordstatus.status]
 
         return self
 
@@ -414,12 +414,12 @@ class OrdSub(object):
 
         while run:
             try:
-                self.order = OrdInfo.objects.get(sn=self.sn)
+                self.ord = OrdInfo.objects.get(sn=self.sn)
 
             except:
                 run = False
 
-                self.order = OrdInfo.objects.create(sn=self.sn)
+                self.ord = OrdInfo.objects.create(sn=self.sn)
 
             else:
                 self.sn += 1
@@ -431,10 +431,10 @@ class OrdSub(object):
     @subFailRemind(u'会员不存在，无法提交订单基本信息。')
     def infoSubmit(self):
         if self.c['user']:
-            self.order.user= auth.models.User.objects.get(username=self.c['user'])
+            self.ord.user= auth.models.User.objects.get(username=self.c['user'])
 
-        self.order.typ = self.o['typ']
-        self.order.save()
+        self.ord.typ = self.o['typ']
+        self.ord.save()
 
         return self
 
@@ -460,7 +460,7 @@ class OrdSub(object):
         self.logcs.logisTimeEnd = time.end.replace(hour = time.end.hour - logisticsTimeAvdce)
         self.logcs.note = self.c['note']
 
-        self.logcs.order = self.order
+        self.logcs.ord = self.ord
 
         self.logcs.save()
 
@@ -483,7 +483,7 @@ class OrdSub(object):
 
             items.append(
                 OrdItem(
-                    order=self.order,
+                    order=self.ord,
                     name=item.name,
                     sn=item.sn,
                     spec=spec.value,
@@ -504,7 +504,7 @@ class OrdSub(object):
 
         pay = Pay.objects.getPayById(id=self.c['pay'])
 
-        self.oPay.order = self.order
+        self.oPay.ord = self.ord
         self.oPay.name = pay.name
         self.oPay.cod = pay.cod
 
@@ -519,7 +519,7 @@ class OrdSub(object):
 
         # ship = Pay.objects.getPayById(id=self.c['ship'])
 
-        self.oShip.order = self.order
+        self.oShip.ord = self.ord
         # self.oShip.name = ship.name
         # self.oShip.cod = ship.cod
 
@@ -535,7 +535,7 @@ class OrdSub(object):
     @subFailRemind(u'无法提订单状态。')
     def oStartSubmit(self):
 
-        self.oStart.order = self.order
+        self.oStart.ord = self.ord
 
         self.oStart.save()
 
@@ -546,7 +546,7 @@ class OrdSub(object):
     @subFailRemind(u'无法提交订单日志。')
     def oLogSubmit(self):
 
-        self.oOLT.order = self.order
+        self.oOLT.ord = self.ord
         self.oOLT.user = self.request.user
         if self.o['status']:
             self.oOLT.log = 1
@@ -558,7 +558,7 @@ class OrdSub(object):
 
     # 删除新订单
     def delNewOrd(self):
-        self.order.delete()
+        self.ord.delete()
 
         return self
 
@@ -611,16 +611,16 @@ class OrdSub(object):
 
         self.sn = self.o['sn']
 
-        self.order = OrdInfo.objects.get(sn=self.sn)
+        self.ord = OrdInfo.objects.get(sn=self.sn)
 
-        self.logcs = self.order.orderlogistics
-        self.oPay = self.order.orderpay
-        self.oStart = self.order.orderstatus
-        self.oShip = self.order.ordership
-        self.oOLT = self.order.orderlog_set.get(Q(log=0) | Q(log=1))
+        self.logcs = self.ord.ordlogcs
+        self.oPay = self.ord.ordpay
+        self.oStart = self.ord.ordstatus
+        self.oShip = self.ord.ordship
+        self.oOLT = self.ord.ordlog_set.get(Q(log=0) | Q(log=1))
 
 
-        self.order.orderitem_set.all().delete()
+        self.ord.orditem_set.all().delete()
 
 
 

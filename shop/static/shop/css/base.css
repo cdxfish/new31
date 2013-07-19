@@ -705,7 +705,7 @@ header,footer,article,aside,section,nav,menu,hgroup {
 	float: left;
 }
 
-.subMenu .subMenuContent .order {
+.subMenu .subMenuContent .ord {
 	border: 1px solid #DBDBD4;
 	border-radius: 2px;
 	padding: 5px 30px 5px 15px;
@@ -713,7 +713,7 @@ header,footer,article,aside,section,nav,menu,hgroup {
 	position: relative;
 }
 
-.subMenu .subMenuContent .order span {
+.subMenu .subMenuContent .ord span {
 	overflow: hidden;
 	width: 0;
 	height: 0;
@@ -724,7 +724,7 @@ header,footer,article,aside,section,nav,menu,hgroup {
 	right: 10px
 }
 
-.subMenu .subMenuContent .order:hover {
+.subMenu .subMenuContent .ord:hover {
 	text-decoration: none;
 	box-shadow: 1px 1px 2px #ccc
 }

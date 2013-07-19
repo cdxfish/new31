@@ -7,7 +7,7 @@ from office.forms import *
 # Create your forms here.
 
 
-class LogisticsForm(baseSearchForm):
+class LogcsForm(baseSearchForm):
 
     cChoice = ((-1, '全部'),) + OrdShip.chcs
     c = forms.ChoiceField(label=u'物流状态', choices=cChoice, widget=forms.Select(attrs={'class': 'c' }))
@@ -15,7 +15,7 @@ class LogisticsForm(baseSearchForm):
 
 
 def AdvanForm(o):
-    initial = {'advance': o.orderlogistics.advance, 'dman': o.orderlogistics.dman}
+    initial = {'advance': o.ordlogcs.advance, 'dman': o.ordlogcs.dman}
 
     class AdvanceForm(baseSearchForm):
 

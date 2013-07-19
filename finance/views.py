@@ -79,6 +79,6 @@ class FncPur(OrdPur):
             if not hasattr(i,'action'):
                 i.action = {}
 
-            i.action[self.path] = self.action[i.orderpay.status]
+            i.action[self.path] = self.action[i.ordpay.status]
 
         return self

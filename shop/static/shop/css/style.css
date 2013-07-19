@@ -574,13 +574,13 @@ section.new_msg{border-top:1px solid #FFFFFF;}
 .album_photos_aside .photos_share{margin-right:30px;padding-left:20px;background:url(/static/images/ico_kinds.png) no-repeat 0 -3px;font-weight:bold;color:#8B9192}
 .album_photos_content{float:left;width:100%}
 .album_photos_content .box{position:relative;margin-left:320px}
-.album_photos_content .top .order{display:block;position:relative;width:70px;height:25px;padding-left:10px;border:1px solid #ccc;line-height:25px;box-shadow:1px 1px 0 #FFFFFF inset}
-.album_photos_content .top .order_select{position:absolute;right:0;z-index:10000;border:1px solid #ccc;background:#FFFFFF;box-shadow:2px 2px 2px #ccc}
-.album_photos_content .top .order_select li a{display:block;width:70px;height:25px;padding-left:10px;line-height:25px}
-.album_photos_content .top .order_select li a span{border:6px solid #FFFFFF;border-top:6px solid #333}
-.album_photos_content .top .order_select li a:hover span{border:6px solid #06F;border-top:6px solid #FFFFFF}
-.album_photos_content .top .order_select li a:hover{background:#06F;color:#FFFFFF}
-.album_photos_content .top .order_select li .order{border:none;border-bottom:1px solid #ccc}
+.album_photos_content .top .ord{display:block;position:relative;width:70px;height:25px;padding-left:10px;border:1px solid #ccc;line-height:25px;box-shadow:1px 1px 0 #FFFFFF inset}
+.album_photos_content .top .ord_select{position:absolute;right:0;z-index:10000;border:1px solid #ccc;background:#FFFFFF;box-shadow:2px 2px 2px #ccc}
+.album_photos_content .top .ord_select li a{display:block;width:70px;height:25px;padding-left:10px;line-height:25px}
+.album_photos_content .top .ord_select li a span{border:6px solid #FFFFFF;border-top:6px solid #333}
+.album_photos_content .top .ord_select li a:hover span{border:6px solid #06F;border-top:6px solid #FFFFFF}
+.album_photos_content .top .ord_select li a:hover{background:#06F;color:#FFFFFF}
+.album_photos_content .top .ord_select li .ord{border:none;border-bottom:1px solid #ccc}
 .album_photos_content .top span{overflow:hidden;position:absolute;top:10px;width:0;height:0;margin-left:5px;border:6px solid #E9E9E3;border-top:6px solid #333;*zoom:1}
 .album_photos_content .center li{display:inline-block;*display:inline;overflow:hidden;position:relative;width:160px;height:160px;margin:20px 20px 0 0;*zoom:1}
 .album_photos_content .center li.select{width:154px;height:154px;border:3px solid #FFFFFF;border-radius:6px;box-shadow:2px 2px 2px #999}

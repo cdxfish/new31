@@ -21,7 +21,7 @@ def logisticsUI(request):
 
     o = LogcsSerch(request)
 
-    form = LogisticsForm(initial=o.initial)
+    form = LogcsForm(initial=o.initial)
 
     oList = o.search().chcs().range().page()
     oList = OrdPur(oList, request).getOrds()
@@ -103,6 +103,6 @@ class LogcsPur(OrdPur):
             if not hasattr(i,'action'):
                 i.action = {}
 
-            i.action[self.path] = self.action[i.ordership.status]
+            i.action[self.path] = self.action[i.ordship.status]
 
         return self

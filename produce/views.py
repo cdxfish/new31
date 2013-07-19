@@ -28,9 +28,9 @@ def sortList(oList):
     _oList = {}
     for i in oList:
         
-        signDate = u'%s' % i.orderlogistics.signDate
-        logisTimeStart = u'%s' % i.orderlogistics.logisTimeStart
-        advance = u'%s' % i.orderlogistics.get_advance_display()
+        signDate = u'%s' % i.ordlogcs.signDate
+        logisTimeStart = u'%s' % i.ordlogcs.logisTimeStart
+        advance = u'%s' % i.ordlogcs.get_advance_display()
 
         i.items = [ ii for ii in i.items if ii.produce.status ]
 
@@ -83,7 +83,7 @@ class ProSerch(OrdSerch):
     def chcs(self):
         for i in self.oList:
             items = []
-            for ii in i.orderitem_set.all():
+            for ii in i.orditem_set.all():
                 if self.initial['c'] >= 0:
                     if ii.produce.status == self.initial['c']:
                         items.append(ii)
@@ -124,7 +124,7 @@ class ProPur(OrdPur):
                 )
 
         for i in self.oList:
-            i.items = i.orderitem_set.all()
+            i.items = i.orditem_set.all()
 
 
     # 获取订单可选操作项

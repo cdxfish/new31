@@ -102,7 +102,7 @@ class OrdPur(object):
             if not hasattr(i,'action'):
                 i.action = {}
 
-            i.action[self.path] = self.action[i.orderstatus.status]
+            i.action[self.path] = self.action[i.ordstatus.status]
 
         return self
 
