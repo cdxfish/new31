@@ -27,11 +27,11 @@ def subFailRemind(s= ''):
 
 
 # AJAX提示用
-def tryMsg(msg):
+def errMsg(msg):
 
-    def _tryMsg(func):
+    def _errMsg(func):
 
-        def __tryMsg(request, **kwargs):
+        def __errMsg(request, **kwargs):
             try:
 
                 return func(request, kwargs)
@@ -40,9 +40,9 @@ def tryMsg(msg):
 
                 return AjaxRJson().message(msg).dumps()
 
-        return __tryMsg
+        return __errMsg
 
-    return _tryMsg
+    return _errMsg
 
 
 # 提交模式检测包装函数
@@ -56,18 +56,18 @@ def checkPOST(func):
 
             messages.error(request, '订单提交方式错误')
 
-            return redirectBack(request)
+            return rdrBck(request)
 
     return _func
 
 
 
 # 页面跳转提示用装饰器
-def redirTryMsg(msg):
+def redirMsg(msg):
 
-    def _redirTryMsg(func):
+    def _redirMsg(func):
 
-        def __redirTryMsg(request, **kwargs):
+        def __redirMsg(request, **kwargs):
             if settings.DEBUG:
 
                 return func(request, kwargs)
@@ -80,13 +80,13 @@ def redirTryMsg(msg):
 
                     return msg
 
-        return __redirTryMsg
+        return __redirMsg
 
-    return _redirTryMsg
+    return _redirMsg
 
 
 # 页面跳转回上一页用装饰器
-def decoratorBack(func):
+def rdrBckDr(func):
 
     def _func(request, **kwargs):
         
@@ -115,7 +115,7 @@ def itemonl(func):
 
                 messages.warning(request, '当前商品已下架')
 
-                return redirectBack(request)
+                return rdrBck(request)
 
     return _func
 
@@ -133,7 +133,7 @@ def conOrd(func):
 
             messages.error(request, u'%s - 无法%s' % (sn, OrdSats.chcs[c][1]))
 
-            return redirectBack(request)
+            return rdrBck(request)
 
         else:
 

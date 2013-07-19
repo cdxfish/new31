@@ -80,7 +80,7 @@ def copyOrd(request,c):
 def cCon(request, c):
     Ord(request).cCon(request.GET.get('sn'), c)
 
-    return redirectBack(request)
+    return rdrBck(request)
 
 
 
@@ -95,14 +95,14 @@ def cCons(request, c):
 
 # 后台订单编辑中添加商品至订单操作
 @checkPOST
-@decoratorBack
+@rdrBckDr
 def addItemToOrd(request, kwargs):
     from cart.views import Cart
     return Cart(request).pushToCartByItemIDs(request.POST.getlist('i'))
 
 
 # 编辑界面中删除订单中的商品操作
-@decoratorBack
+@rdrBckDr
 def delItemToOrd(request, kwargs):
     from cart.views import Cart
 
@@ -147,7 +147,7 @@ class Ord(object):
 
             messages.error(self.request, u'%s - 无法%s' % (sn, order.get_status_display()))
 
-            return redirectBack(self.request)
+            return rdrBck(self.request)
 
         order.status = c
 
@@ -604,7 +604,7 @@ class OrdSub(object):
     def showError(self):
         messages.error(self.request, u'订单提交失败，请重新提交。')
 
-        return redirectBack(self.request)
+        return rdrBck(self.request)
 
 
     def editOrdFmt(self):

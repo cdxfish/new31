@@ -21,7 +21,7 @@ def redirect():
 
 
 # 重定向至前一页
-def redirectBack(request, L=[]):
+def rdrBck(request, L=[]):
     HTTP_REFERER = request.META.get('HTTP_REFERER',"/")
 
     if count():

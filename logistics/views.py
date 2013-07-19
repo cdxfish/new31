@@ -35,20 +35,20 @@ def logcsUI(request):
 def lCon(request, c):
 
     c = int(c)
-    orderSN = request.GET.get('sn')
-    order =  OrdShip.objects.get(order=orderSN)
+    sn = request.GET.get('sn')
+    ordShip =  OrdShip.objects.get(ord=sn)
 
-    order.status = c
+    ordShip.status = c
 
-    order.save()
+    ordShip.save()
 
     if c > 1:
-        return redirectBack(request)
+        return rdrBck(request)
 
     else:
         # 将订单信息配置到seesion当中
-        SpCnsgn(request).setSiessionByOrd(sn=orderSN)
-        Ord(request).setSeesion(OrdInfo.objects.get(orderSn=orderSN).typ)
+        SpCnsgn(request).setSiessionByOrd(sn=sn)
+        Ord(request).setSeesion(OrdInfo.objects.get(orderSn=sn).typ)
 
         return HttpResponseRedirect(request.paths[u'新订单'])
 

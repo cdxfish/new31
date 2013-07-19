@@ -22,7 +22,7 @@ def login(request):
                 # Correct password, and the user is marked "active"
                 auth.login(request, user)
                 # Redirect to a success page.
-                return redirectBack(request)
+                return rdrBck(request)
             else:
                 # Show an error page
 
@@ -38,7 +38,7 @@ def login(request):
         if '/account/login/' in request.META.get('HTTP_REFERER', '/'):
             return redirect()
         else:
-            return redirectBack(request)
+            return rdrBck(request)
 
 def logout(request):
 

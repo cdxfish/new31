@@ -75,7 +75,7 @@ class URLPurview:
     def errorShow(self):
             messages.error(self.request, self.errStr)
 
-            return redirectBack(self.request)
+            return rdrBck(self.request)
 
 
 

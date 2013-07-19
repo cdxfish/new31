@@ -13,14 +13,14 @@ import json
 # Create your views here.
 
 # 首页瀑布流获取更多商品
-# @tryMsg('无更多商品')
-def getItemPin(request):
+@errMsg('无更多商品')
+def getItemPin(request, kwargs):
 
     return AjaxRJson().dumps(ItemPin(8).getItems(sort))
 
 
 # 前台弹出层中获取商品规格
-@tryMsg('当前商品已下架')
+@errMsg('当前商品已下架')
 def getItemSpec(request, kwargs):
 
     itemSpec = ItemSpec.objects.getSpecByItemId(id=kwargs['specID'])
@@ -31,7 +31,7 @@ def getItemSpec(request, kwargs):
 
 
 # 前台购物车界面修改购物车中商品数量
-@tryMsg('当前商品已下架')
+@errMsg('当前商品已下架')
 def ajaxChangNum(request, kwargs):
 
     data =  '%.2f' % Cart(request).changeNumBySpec(mark=kwargs['mark'], num=kwargs['num']).countFee()
@@ -42,7 +42,7 @@ def ajaxChangNum(request, kwargs):
 # 商品查询，后台新订单及订单编辑用
 def getItemByKeyword(request):
 
-    @tryMsg('未找到商品')
+    @errMsg('未找到商品')
     def _getItemByKeyword(request, kwargs):
 
         r = [ { 'name':i.name, 'sn': i.sn, 'id': i.id, } for i in Item.objects.getItemLikeNameOrSn( kwargs['k'] )]
@@ -53,14 +53,14 @@ def getItemByKeyword(request):
 
 
 # ajax动态写入收货人信息
-@tryMsg('无法填写表单')
+@errMsg('无法填写表单')
 def cConsigneeByAjax(request, kwargs):
     SpCnsgn(request).setSeesion()
 
     return AjaxRJson().dumps()
 
 # ajax动态写入收货人信息
-@tryMsg('无法填写表单')
+@errMsg('无法填写表单')
 def coTypeByAjax(request, kwargs):
 
     o = Ord(request)
@@ -71,7 +71,7 @@ def coTypeByAjax(request, kwargs):
 
 
 # ajax动态修改购物车内商品
-@tryMsg('无法修改表单数据')
+@errMsg('无法修改表单数据')
 def cItemByAjax(request, kwargs):
     mark = int(request.GET.get('mark')[1:])
     cc = Cart(request).changeItem()
@@ -87,11 +87,11 @@ def cItemByAjax(request, kwargs):
     return AjaxRJson().dumps(data)
 
 # ajax动态修改物流偏移量
-@tryMsg('无法修改表单数据')
+@errMsg('无法修改表单数据')
 def cAdv(request, kwargs):
     sn = int(request.GET.get('sn')[1:])
     value = int(request.GET.get('value', 0))
-    from order.models import OrdInfo,OrdLogcs
+    from order.models import OrdLogcs
 
     ordlogcs = OrdLogcs.objects.get(ord=sn)
 
@@ -109,21 +109,23 @@ def cAdv(request, kwargs):
     return AjaxRJson().dumps(data)
 
 # ajax动态修改物流师傅
-# @tryMsg('无法修改表单数据')
-def cDman(request):
+@errMsg('无法修改表单数据')
+def cDman(request, kwargs):
     sn = int(request.GET.get('sn')[1:])
     value = int(request.GET.get('value', 0))
-    from order.models import OrdInfo,OrdLogcs
 
+    from order.models import OrdLogcs
     ordlogcs = OrdLogcs.objects.get(ord=sn)
 
     if ordlogcs.ord.ordship.status > 1:
         return AjaxRJson.message(u'无法修改表单数据').dumps()
 
     if value:
-        ordlogcs.dman = value
+        from django.contrib import auth
+        user = auth.models.User.objects.get(id=value)
+        ordlogcs.dman = user
     else:
-        ordlogcs.dman = u'null'
+        ordlogcs.dman = None
 
     ordlogcs.save()
 
@@ -132,6 +134,19 @@ def cDman(request):
     data['value'] = value
 
     return AjaxRJson().dumps(data)
+
+
+def cLogcs(request, func):
+    sn = int(request.GET.get('sn')[1:])
+    value = int(request.GET.get('value', 0))
+
+    from order.models import OrdLogcs
+    ordlogcs = OrdLogcs.objects.get(ord=sn)
+
+    if ordlogcs.ord.ordship.status > 1:
+        return AjaxRJson.message(u'无法修改表单数据').dumps()
+
+    return func()
 
 
 

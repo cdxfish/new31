@@ -121,7 +121,7 @@ class OrdLogcs(models.Model):
     objects = ordLogManager()
 
     def __unicode__(self):
-        return u"%s - [ %s ][ %s  %s - %s ][ %s ]" % ( self.ord, self.consignee, self.date, self.stime, self.etime, self.tel )
+        return u"%s - [ %s ][ %s  %s - %s ][ %s ][ %s ]" % ( self.ord, self.consignee, self.date, self.stime, self.etime, self.tel, self.dman )
         
     # class Meta: 
         # verbose_name = u'订单物流信息'             

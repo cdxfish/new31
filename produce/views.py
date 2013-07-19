@@ -61,7 +61,7 @@ def pCon(request, c):
 
     item.save()
 
-    return redirectBack(request)
+    return rdrBck(request)
 
 
 

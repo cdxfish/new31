@@ -66,14 +66,14 @@ def submit(request):
     return OrdSub(request).submit().showOrdSN()
 
 # GET方式将物品放入购物车
-@decoratorBack
+@rdrBckDr
 @itemonl
 def buy(request, kwargs):
    
     return Cart(request).pushToCartBySpecID(kwargs['specID'])
 
 # GET方式将物品取出购物车
-@decoratorBack
+@rdrBckDr
 @itemonl
 def clear(request, kwargs):
 

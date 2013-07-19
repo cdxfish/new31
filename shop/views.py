@@ -8,8 +8,10 @@ from tag.models import Tag
 
 # APP For Shop UI
 def shop(request):
-
-    items = ItemPin(10).getItems(sort)
+    try:
+        items = ItemPin(10).getItems(sort)
+    except Exception, e:
+        pass
 
     tags = Tag.objects.all()[:8]
 
