@@ -6,9 +6,9 @@ from views import *
 urlpatterns = patterns('',
     (r'^$', orderList),
     (r'^submit/$', submit),
-    (r'^additemtoorder/$', addItemToOrder),
-    (r'^delitem\/(?P<mark>\d+)\/$', delItemToOrder),
-    (r'^new/$',  newOrderUI),
+    (r'^additemtoorder/$', addItemToOrd),
+    (r'^delitem\/(?P<mark>\d+)\/$', delItemToOrd),
+    (r'^new/$',  newOrdUI),
     (r'^edit/$',  editUI),
     (r'^(?P<c>\d+)/$', cCons),
 )

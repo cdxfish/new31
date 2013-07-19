@@ -6,7 +6,7 @@ class ConsigneeMiddleware:
     def process_request(self, request):
         from views import *
 
-        ShipConsignee(request).formatConsignee()
+        SpCnsgn(request).formatConsignee()
 
         return None
 

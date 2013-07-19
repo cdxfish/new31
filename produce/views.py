@@ -65,7 +65,7 @@ def pCon(request, c):
 
 
 
-class ProSerch(OrderSerch):
+class ProSerch(OrdSerch):
     """ 
         生产管理类
 

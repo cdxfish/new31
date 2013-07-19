@@ -42,7 +42,7 @@ class Element(models.Model):
                 (u'/office/', U'管理中心'),
                 (u'/order/', u'订单'),
             ) + \
-            tuple([ (u'/order/%s/' % i, u'订单%s' % v) for i,v in OrderStatus.chcs ]) + \
+            tuple([ (u'/order/%s/' % i, u'订单%s' % v) for i,v in OrdStatus.chcs ]) + \
             (
                 (u'/order/new/', u'新订单'),
                 (u'/order/edit/', u'编辑订单'),
@@ -50,7 +50,7 @@ class Element(models.Model):
                 (u'/back/', u'退款'),
                 (u'/logistics/', u'物流'),
             ) + \
-            tuple([ (u'/logistics/%s/' % i, u'物流%s' % v) for i,v in OrderShip.chcs ]) + \
+            tuple([ (u'/logistics/%s/' % i, u'物流%s' % v) for i,v in OrdShip.chcs ]) + \
             (
                 (u'/produce/', u'生产'),
             ) + \
@@ -66,7 +66,7 @@ class Element(models.Model):
                 (u'/party/', u'活动'),
                 (u'/finance/', u'财务'),
             ) + \
-            tuple([ (u'/finance/%s/' % i, u'财务%s' % v) for i,v in OrderPay.chcs ]) + \
+            tuple([ (u'/finance/%s/' % i, u'财务%s' % v) for i,v in OrdPay.chcs ]) + \
             (
                 (u'/reimburse/', u'退款'),
                 (u'/statistics/', u'订单统计'),

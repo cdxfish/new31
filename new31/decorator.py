@@ -18,7 +18,7 @@ def subFailRemind(s= ''):
 
                     messages.error(self.request, s)
                     if settings.DEBUG:
-                        self.delNewOrder()
+                        self.delNewOrd()
                         raise e
 
             return self #强制返回self否则无法链式调用
@@ -121,17 +121,17 @@ def itemonl(func):
 
 
 # 订单状态操作装饰器
-def conOrder(func):
+def conOrd(func):
 
     def _func(request, c):
-        from order.models import OrderInfo, OrderStatus
+        from order.models import OrdInfo, OrdStatus
         sn = request.GET.get('sn')
-        order =  OrderInfo.objects.get(sn=sn).orderstatus
-        act = OrderStatus.objects.getActTuple(order.status)
+        order =  OrdInfo.objects.get(sn=sn).orderstatus
+        act = OrdStatus.objects.getActTuple(order.status)
 
         if not c in act:
 
-            messages.error(request, u'%s - 无法%s' % (sn, OrderStatus.chcs[c][1]))
+            messages.error(request, u'%s - 无法%s' % (sn, OrdStatus.chcs[c][1]))
 
             return redirectBack(request)
 

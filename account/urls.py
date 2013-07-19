@@ -7,6 +7,6 @@ urlpatterns = patterns('',
     (r'^logout\/$', logout),
     (r'^settings\/$', settings),
     (r'^changepwd\/$', changepwd),
-    (r'^order\/$', myOrder),
+    (r'^order\/$', myOrd),
     (r'^order\/(\d+)$', orderDetail),
 )

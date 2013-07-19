@@ -24,10 +24,10 @@ def logisticsUI(request):
     form = LogisticsForm(initial=o.initial)
 
     oList = o.search().chcs().range().page()
-    oList = OrdPur(oList, request).getOrders()
-    oList = LogcsPur(oList, request).getOrders()
-    oList = FncPur(oList, request).getOrders()
-    oList = ProPur(oList, request).getOrders()
+    oList = OrdPur(oList, request).getOrds()
+    oList = LogcsPur(oList, request).getOrds()
+    oList = FncPur(oList, request).getOrds()
+    oList = ProPur(oList, request).getOrds()
 
     return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))    
 
@@ -36,7 +36,7 @@ def lCon(request, c):
 
     c = int(c)
     orderSN = request.GET.get('sn')
-    order =  OrderShip.objects.get(order=orderSN)
+    order =  OrdShip.objects.get(order=orderSN)
 
     order.status = c
 
@@ -47,12 +47,12 @@ def lCon(request, c):
 
     else:
         # 将订单信息配置到seesion当中
-        ShipConsignee(request).setSiessionByOrder(sn=orderSN)
-        Order(request).setSeesion(OrderInfo.objects.get(orderSn=orderSN).typ)
+        SpCnsgn(request).setSiessionByOrd(sn=orderSN)
+        Ord(request).setSeesion(OrdInfo.objects.get(orderSn=orderSN).typ)
 
         return HttpResponseRedirect(request.paths[u'新订单'])
 
-class LogcsSerch(OrderSerch):
+class LogcsSerch(OrdSerch):
     """ 
         订单基本信息类
 
@@ -88,7 +88,7 @@ class LogcsPur(OrdPur):
     """
     def __init__(self, oList, request):
         super(LogcsPur, self).__init__(oList, request)
-        self.chcs = OrderShip.chcs
+        self.chcs = OrdShip.chcs
         self.path = request.paths[u'物流']
         self.action = (
                         ((1, u'编辑'), (2, u'已发'),),

@@ -10,21 +10,21 @@ from signtime.models import *
 
 
 def getOTpyeForm(request):
-    from views import Order
+    from views import Ord
 
-    return OrderTypeForm(initial= {'oType': int(Order(request).o['typ']),})
+    return OrdTypeForm(initial= {'oType': int(Ord(request).o['typ']),})
 
 
-class OrderTypeForm(forms.Form):
+class OrdTypeForm(forms.Form):
 
-    chcs = OrderInfo.chcs
+    chcs = OrdInfo.chcs
 
     oType = forms.ChoiceField(label=u'订单类型', choices=chcs, widget=forms.Select(attrs={'class': 'oType' }))
 
 
-class OrderStatusForm(baseSearchForm):
+class OrdStatusForm(baseSearchForm):
 
-    chcs = ((-1, '全部'),) + OrderStatus.chcs
+    chcs = ((-1, '全部'),) + OrdStatus.chcs
 
     c = forms.ChoiceField(label=u'订单状态', choices=chcs, widget=forms.Select(attrs={'class': 'c' }))
 

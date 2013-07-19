@@ -189,7 +189,7 @@ APPS = {
         },
     'order':{
             'tempContext':'',
-            'middleware':'order.middleware.OrderMiddleware',
+            'middleware':'order.middleware.OrdMiddleware',
         },
     'finance':{
             'tempContext':'',

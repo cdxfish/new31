@@ -54,9 +54,9 @@ def changepwd(request):
 
     return render_to_response('changepwd.htm', locals(), context_instance=RequestContext(request))
 
-def myOrder(request):
+def myOrd(request):
 
-    orders = OrderInfo.objects.getOrderByUser(request.user.id)
+    orders = OrdInfo.objects.getOrdByUser(request.user.id)
 
     return render_to_response('myorder.htm', locals(), context_instance=RequestContext(request))
 
@@ -70,8 +70,8 @@ class UserInfo:
     def __init__(self, obj):
         self.obj = obj
 
-    def newOrderCount(self):
-        self.obj.newOrderCount = 2
+    def newOrdCount(self):
+        self.obj.newOrdCount = 2
         return self
 
     def newMsgCount(self):
@@ -79,7 +79,7 @@ class UserInfo:
         return self
 
     def allmsgCount(self):
-        self.obj.allmsgCount = self.newOrderCount().obj.newOrderCount + self.newMsgCount().obj.newMsgCount
+        self.obj.allmsgCount = self.newOrdCount().obj.newOrdCount + self.newMsgCount().obj.newMsgCount
 
         return self
 

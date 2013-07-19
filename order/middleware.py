@@ -1,11 +1,11 @@
 #coding:utf-8
 
-class OrderMiddleware:
+class OrdMiddleware:
     
     def process_request(self, request):
-        from views import Order
+        from views import Ord
 
-        Order(request).format()
+        Ord(request).format()
 
         return None
 

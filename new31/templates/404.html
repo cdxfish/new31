@@ -45,7 +45,7 @@
                     <div id="pnlTopMessage" class="messagePop" style="display:none;">
                         <h3>新消息</h3>
                         <ul>
-                            <li><a href="/account/order/">新订单（ {% if request.user.newOrderCount %}{{request.user.newOrderCount}}{% else %}0{% endif %} ）</a></li>
+                            <li><a href="/account/order/">新订单（ {% if request.user.newOrdCount %}{{request.user.newOrdCount}}{% else %}0{% endif %} ）</a></li>
                             <li><a href="/account/messages/">新留言（ {% if request.user.newMsgCount %}{{request.user.newMsgCount}}{% else %}0{% endif %} ）</a></li>
                         </ul>
                         <a class="confirm" href="javascript:void(0)" onclick="clearMessageData();return false;">我知道了</a>

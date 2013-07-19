@@ -6,6 +6,6 @@ class UserMiddleware:
         from views import UserInfo
         
         if hasattr(request, 'user'):
-            request.user = UserInfo(request.user).newOrderCount().newMsgCount().allmsgCount().returnInfo()
+            request.user = UserInfo(request.user).newOrdCount().newMsgCount().allmsgCount().returnInfo()
 
         return None

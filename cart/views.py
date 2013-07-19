@@ -21,7 +21,7 @@ from decimal import *
 
 # 前台购物车界面
 def cart(request):
-    from order.views import OrderSubmit
+    from order.views import OrdSubmit
     cart = Cart(request).showItemToCart()
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
@@ -51,7 +51,7 @@ def checkout(request):
 
     request.session['c']['user'] = request.user.username
 
-    ShipConsignee(request).setSeesion()
+    SpCnsgn(request).setSeesion()
 
     pay = Pay.objects.getPayById(id=request.POST.get('pay'))
     time = SignTime.objects.getTimeById(id=request.POST.get('time'))
@@ -63,7 +63,7 @@ def checkout(request):
 @checkPOST
 def submit(request):
 
-    return OrderSubmit(request).submit().showOrderSN()
+    return OrdSubmit(request).submit().showOrdSN()
 
 # GET方式将物品放入购物车
 @decoratorBack

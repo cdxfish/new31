@@ -13,7 +13,7 @@ class ConsigneeForm(forms.ModelForm):
     time = forms.ChoiceField(label=u'收货时间', choices=SignTime.objects.getTupleByAll())
 
     class Meta:
-        model = OrderLogistics
+        model = OrdLogcs
         fields = ('consignee', 'area', 'address', 'tel', 'signDate', 'note')
         widgets = {
             'address': forms.TextInput(attrs={'size': 70}),

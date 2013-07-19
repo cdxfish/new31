@@ -12,7 +12,7 @@ class Produce(models.Model):
             (3, u'拒产'),
             (4, u'已产'),
         )
-    item = models.OneToOneField(OrderItem, verbose_name=u'商品')
+    item = models.OneToOneField(OrdItem, verbose_name=u'商品')
     status = models.SmallIntegerField(u'生产状态', default=0, editable=False, choices=chcs)
 
     def __unicode__(self):

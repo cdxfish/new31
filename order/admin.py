@@ -2,10 +2,10 @@
 from django.contrib import admin
 from models import *
 
-admin.site.register(OrderInfo)
-admin.site.register(OrderLog)
-admin.site.register(OrderLogistics)
-admin.site.register(OrderStatus)
-admin.site.register(OrderPay)
-admin.site.register(OrderShip)
-admin.site.register(OrderItem)
+admin.site.register(OrdInfo)
+admin.site.register(OrdLog)
+admin.site.register(OrdLogcs)
+admin.site.register(OrdStatus)
+admin.site.register(OrdPay)
+admin.site.register(OrdShip)
+admin.site.register(OrdItem)

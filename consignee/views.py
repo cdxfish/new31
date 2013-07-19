@@ -17,7 +17,7 @@ def consignee(request):
     return render_to_response('consignee.htm', locals(), context_instance=RequestContext(request))
 
 
-class ShipConsignee:
+class SpCnsgn:
     """docstring for Consignee"""
     def __init__(self, request):
         self.request = request
@@ -91,10 +91,10 @@ class ShipConsignee:
 
         return self.setConsignee(c)
 
-    def setSiessionByOrder(self, sn):
+    def setSiessionByOrd(self, sn):
         c = self.cFormat.copy()
 
-        oLogistics = OrderInfo.objects.get(sn=sn).orderlogistics
+        oLogistics = OrdInfo.objects.get(sn=sn).orderlogistics
 
         orderPay = oLogistics.order.orderpay
 

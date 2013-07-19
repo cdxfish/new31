@@ -55,7 +55,7 @@ def getItemByKeyword(request):
 # ajax动态写入收货人信息
 @tryMsg('无法填写表单')
 def cConsigneeByAjax(request, kwargs):
-    ShipConsignee(request).setSeesion()
+    SpCnsgn(request).setSeesion()
 
     return AjaxRJson().dumps()
 
@@ -63,7 +63,7 @@ def cConsigneeByAjax(request, kwargs):
 @tryMsg('无法填写表单')
 def coTypeByAjax(request, kwargs):
 
-    o = Order(request)
+    o = Ord(request)
 
     o.o['typ'] = int(request.GET.get('oType'))
 

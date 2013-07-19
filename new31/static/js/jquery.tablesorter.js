@@ -49,7 +49,7 @@
  *         to sortable tr elements in the thead on a descending sort. Default
  *         value: "headerSortDown"
  * 
- * @option String sortInitialOrder (optional) A string of the inital sorting
+ * @option String sortInitialOrd (optional) A string of the inital sorting
  *         order can be asc or desc. Default value: "asc"
  * 
  * @option String sortMultisortKey (optional) A string of the multi-column sort
@@ -114,7 +114,7 @@
                 cssAsc: "headerSortUp",
                 cssDesc: "headerSortDown",
                 cssChildRow: "expand-child",
-                sortInitialOrder: "asc",
+                sortInitialOrd: "asc",
                 sortMultiSortKey: "shiftKey",
                 sortForce: null,
                 sortAppend: null,
@@ -388,13 +388,13 @@
 
                     this.column = header_index[this.parentNode.rowIndex + "-" + this.cellIndex];
                     // this.column = index;
-                    this.order = formatSortingOrder(table.config.sortInitialOrder);
+                    this.order = formatSortingOrd(table.config.sortInitialOrd);
                     
 					
 					this.count = this.order;
 
                     if (checkHeaderMetadata(this) || checkHeaderOptions(table, index)) this.sortDisabled = true;
-					if (checkHeaderOptionsSortingLocked(table, index)) this.order = this.lockedOrder = checkHeaderOptionsSortingLocked(table, index);
+					if (checkHeaderOptionsSortingLocked(table, index)) this.order = this.lockedOrd = checkHeaderOptionsSortingLocked(table, index);
 
                     if (!this.sortDisabled) {
                         var $th = $(this).addClass(table.config.cssHeader);
@@ -495,7 +495,7 @@
             }
 			
 			 function checkHeaderOptionsSortingLocked(table, i) {
-                if ((table.config.headers[i]) && (table.config.headers[i].lockedOrder)) return table.config.headers[i].lockedOrder;
+                if ((table.config.headers[i]) && (table.config.headers[i].lockedOrd)) return table.config.headers[i].lockedOrd;
                 return false;
             }
 			
@@ -518,7 +518,7 @@
                 }
             };
 
-            function formatSortingOrder(v) {
+            function formatSortingOrd(v) {
                 if (typeof(v) != "Number") {
                     return (v.toLowerCase() == "desc") ? 1 : 0;
                 } else {
@@ -608,8 +608,8 @@
                 }
 
                 // if value is the same keep orignal order
-                var orgOrderCol = cache.normalized[0].length - 1;
-                dynamicExp += "return a[" + orgOrderCol + "]-b[" + orgOrderCol + "];";
+                var orgOrdCol = cache.normalized[0].length - 1;
+                dynamicExp += "return a[" + orgOrdCol + "]-b[" + orgOrdCol + "];";
 
                 for (var i = 0; i < l; i++) {
                     dynamicExp += "}; ";
@@ -690,7 +690,7 @@
                     if (!this.tHead || !this.tBodies) return;
                     // declare
                     var $this, $document, $headers, cache, config, shiftDown = 0,
-                        sortOrder;
+                        sortOrd;
                     // new blank config object
                     this.config = {};
                     // merge and extend.
@@ -726,7 +726,7 @@
                             // get current column sort order
                             this.order = this.count++ % 2;
 							// always sort on the locked order.
-							if(this.lockedOrder) this.order = this.lockedOrder;
+							if(this.lockedOrd) this.order = this.lockedOrd;
 							
 							// user only whants to sort on one
                             // column

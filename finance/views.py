@@ -15,13 +15,13 @@ def financeUI(request):
     form = financeForm(initial=o.initial)
 
     oList = o.search().status().range().page()
-    oList = FncPur(oList, request).getOrders()
-    oList = OrdPur(oList, request).getOrders()
+    oList = FncPur(oList, request).getOrds()
+    oList = OrdPur(oList, request).getOrds()
 
     return render_to_response('financeui.htm', locals(), context_instance=RequestContext(request))
 
 
-class FncSearch(OrderSerch):
+class FncSearch(OrdSerch):
     """
         财务基本类
 
@@ -62,7 +62,7 @@ class FncPur(OrdPur):
     """
     def __init__(self, oList, request):
         super(FncPur, self).__init__(oList, request)
-        self.chcs = OrderPay.chcs
+        self.chcs = OrdPay.chcs
         self.path = request.paths[u'财务']
         self.action = (
                         ((1, u'已付'),),

@@ -93,7 +93,7 @@ class OrdPur(object):
     """
     def __init__(self, oList, request):
         self.oList = oList
-        self.action = OrderStatus.act
+        self.action = OrdStatus.act
         self.role = Role.objects.getPathByUser(request.user)
 
     def getElement(self):
@@ -121,6 +121,6 @@ class OrdPur(object):
         return self
 
 
-    def getOrders(self):
+    def getOrds(self):
 
         return self.getElement().beMixed().mixedStatus().oList
