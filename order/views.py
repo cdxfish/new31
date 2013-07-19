@@ -181,10 +181,10 @@ class Ord(object):
 
         oLogcs = OrdInfo.objects.get(sn=sn).ordlogcs
 
-        orderPay = oLogcs.ord.ordpay
+        ordPay = oLogcs.ord.ordpay
 
         try:
-            pay = Pay.objects.get(name=orderPay.payName, cod=orderPay.cod).id
+            pay = Pay.objects.get(name=ordPay.name, cod=ordPay.cod).id
         except Exception, e:
             pay = Pay.objects.getDefault().id
 
@@ -198,7 +198,7 @@ class Ord(object):
 
 
         try:
-            time = SignTime.objects.get(stime=oLogcs.start, etime=oLogcs.end).id
+            time = SignTime.objects.get(start=oLogcs.stime, end=oLogcs.etime).id
         except Exception, e:
             time = SignTime.objects.getDefault().id
 
