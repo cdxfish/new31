@@ -4,7 +4,7 @@ from django.conf import settings
 from views import *
 
 urlpatterns = patterns('',
-    (r'^$', orderList),
+    (r'^$', ordList),
     (r'^submit/$', submit),
     (r'^additemtoorder/$', addItemToOrd),
     (r'^delitem\/(?P<mark>\d+)\/$', delItemToOrd),

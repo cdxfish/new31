@@ -21,7 +21,7 @@ import time, datetime
 # Create your views here.
 
 # 订单列表显示页面
-def orderList(request):
+def ordList(request):
     o = OrdSerch(request)
 
     form = OrdSatsForm(initial=o.initial)
@@ -277,14 +277,14 @@ class OrdSerch(object):
         q = (
                 Q(sn__contains=self.initial['k']) |
                 Q(user__username__contains=self.initial['k']) |
-                Q(orderlogistics__consignee__contains=self.initial['k']) |
-                Q(orderlogistics__area__contains=self.initial['k']) |
-                Q(orderlogistics__address__contains=self.initial['k']) |
-                Q(orderlogistics__tel__contains=self.initial['k']) |
-                # Q(orderlogistics__date=datetime.date.today()) |
-                Q(orderlogistics__stime__contains=self.initial['k']) |
-                Q(orderlogistics__etime__contains=self.initial['k']) |
-                Q(orderlogistics__note__contains=self.initial['k'])
+                Q(ordlogcs__consignee__contains=self.initial['k']) |
+                Q(ordlogcs__area__contains=self.initial['k']) |
+                Q(ordlogcs__address__contains=self.initial['k']) |
+                Q(ordlogcs__tel__contains=self.initial['k']) |
+                # Q(ordlogcs__date=datetime.date.today()) |
+                Q(ordlogcs__stime__contains=self.initial['k']) |
+                Q(ordlogcs__etime__contains=self.initial['k']) |
+                Q(ordlogcs__note__contains=self.initial['k'])
             )
 
         self.oList = self.oList.filter(q)
@@ -296,13 +296,13 @@ class OrdSerch(object):
 
     def chcs(self):
             if self.initial['c'] >= 0:
-                self.oList = self.oList.filter(orderstatus__status=self.initial['c'])
+                self.oList = self.oList.filter(ordsats__status=self.initial['c'])
 
             return self
 
     def range(self):
 
-        self.oList = self.oList.filter((Q(orderlog__log=0) | Q(orderlog__log=1)), orderlog__time__range=(self.initial['s'], self.initial['e']) )
+        self.oList = self.oList.filter((Q(ordlog__log=0) | Q(ordlog__log=1)), ordlog__time__range=(self.initial['s'], self.initial['e']) )
 
         return self
 
@@ -379,16 +379,16 @@ class OrdSub(object):
             self.editOrdFmt()
 
         else:
-            self.newOderSn()
+            self.newSn()
 
         self.infoSubmit()
-        self.logisticsSubmit()
-        self.itemSubmit()
-        self.paySubmit()
-        self.shipSubmit()
-        self.oStartSubmit()
-        self.oLogSubmit()
-        self.submitDone()
+        self.logcsSub()
+        self.itemSub()
+        self.paySub()
+        self.shipSub()
+        self.oSatSub()
+        self.logSub()
+        self.subDone()
 
         # 异常时对数据库进行处理
         # if self.error:
@@ -407,7 +407,7 @@ class OrdSub(object):
 
 
     # 锁定新订单进行订单号占位
-    def newOderSn(self):
+    def newSn(self):
         self.sn = self.getNewOrdSn()
 
         run = True
@@ -441,7 +441,7 @@ class OrdSub(object):
 
     # 物流信息提交
     @subFailRemind(u'无法提交物流信息。')
-    def logisticsSubmit(self):
+    def logcsSub(self):
 
         logisticsTimeAvdce = 1 # 默认偏移1hour
 
@@ -469,7 +469,7 @@ class OrdSub(object):
 
     # 商品信息提交
     @subFailRemind(u'部分商品已下架，无法提交商品信息。')
-    def itemSubmit(self):
+    def itemSub(self):
 
         items = []
 
@@ -483,7 +483,7 @@ class OrdSub(object):
 
             items.append(
                 OrdItem(
-                    order=self.ord,
+                    ord=self.ord,
                     name=item.name,
                     sn=item.sn,
                     spec=spec.value,
@@ -500,7 +500,7 @@ class OrdSub(object):
 
     # 支付信息提交
     @subFailRemind(u'无法提交支付信息提交。')
-    def paySubmit(self):
+    def paySub(self):
 
         pay = Pay.objects.getPayById(id=self.c['pay'])
 
@@ -515,7 +515,7 @@ class OrdSub(object):
 
     # 配送方式信息提交
     @subFailRemind(u'无法提交配送方式信息。')
-    def shipSubmit(self):
+    def shipSub(self):
 
         # ship = Pay.objects.getPayById(id=self.c['ship'])
 
@@ -533,7 +533,7 @@ class OrdSub(object):
 
     # 订单状态提交
     @subFailRemind(u'无法提订单状态。')
-    def oStartSubmit(self):
+    def oSatSub(self):
 
         self.oStart.ord = self.ord
 
@@ -544,7 +544,7 @@ class OrdSub(object):
 
     # 订单日志提交
     @subFailRemind(u'无法提交订单日志。')
-    def oLogSubmit(self):
+    def logSub(self):
 
         self.oOLT.ord = self.ord
         self.oOLT.user = self.request.user
@@ -565,7 +565,7 @@ class OrdSub(object):
 
     # 订单提交完成
     @subFailRemind(u'订单提交无法完成。')
-    def submitDone(self):
+    def subDone(self):
         from cart.views import Cart
         Cart(self.request).clear()
         from consignee.views import SpCnsgn

@@ -21,7 +21,6 @@ from decimal import *
 
 # 前台购物车界面
 def cart(request):
-    from order.views import OrdSubmit
     cart = Cart(request).showItemToCart()
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
@@ -62,8 +61,9 @@ def checkout(request):
 # 前台订单提交,并是用前台消息模板显示订单号等信息
 @checkPOST
 def submit(request):
+    from order.views import OrdSub
 
-    return OrdSubmit(request).submit().showOrdSN()
+    return OrdSub(request).submit().showOrdSN()
 
 # GET方式将物品放入购物车
 @decoratorBack

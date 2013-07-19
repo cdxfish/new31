@@ -33,7 +33,7 @@ class FncSearch(OrdSerch):
         super(FncSearch, self).__init__(request)
 
     def search(self):
-        self.oList = self.baseSearch().oList.filter(orderstatus__status__gt = 1)
+        self.oList = self.baseSearch().oList.filter(ordsats__status__gt = 1)
 
         return self
 
@@ -44,7 +44,7 @@ class FncSearch(OrdSerch):
         return self
 
     def range(self):
-        self.oList = self.oList.filter(orderlogistics__date__range=(self.initial['s'], self.initial['e']))
+        self.oList = self.oList.filter(ordlogcs__date__range=(self.initial['s'], self.initial['e']))
 
         return self
 

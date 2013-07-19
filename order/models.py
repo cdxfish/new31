@@ -15,19 +15,19 @@ class ordLogManager(models.Manager):
 class ordManager(models.Manager):
     def getOrdByUser(self, user):
 
-        orders = self.select_related(depth=2).filter(user=user)
+        ords = self.select_related(depth=2).filter(user=user)
 
-        for i in orders:
+        for i in ords:
             i.total = OrdItem.objects.getFeeBySN(i.sn)
 
-        return orders
+        return ords
 
 class orderItemManager(models.Manager):
     def getFeeBySN(self, sn):
 
-        order = self.select_related().filter(order=sn)
+        ord = self.select_related().filter(order=sn)
         total = {}
-        for i in order:
+        for i in ord:
             if not i.typ in total:
                 total[i.typ] = 0
 
@@ -65,7 +65,7 @@ class OrdInfo(models.Model):
 
 
 class OrdLog(models.Model):
-    logType = (
+    chcs = (
             (0, u'新单'),
             (1, u'编辑'),
             (2, u'确认'),
@@ -79,9 +79,9 @@ class OrdLog(models.Model):
             (10, u'付款'),
         )
 
-    order = models.ForeignKey(OrdInfo, verbose_name=u'订单')
+    ord = models.ForeignKey(OrdInfo, verbose_name=u'订单')
     user = models.ForeignKey(User, verbose_name=u'用户')
-    log = models.SmallIntegerField(u'日志类型', default=0, choices=logType)
+    log = models.SmallIntegerField(u'日志类型', default=0, choices=chcs)
     note = models.CharField(u'备注', max_length=60, blank=True, null=True)
     time = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True, editable=False)
 
@@ -89,7 +89,7 @@ class OrdLog(models.Model):
         return u"%s - [ %s ][ %s ]" % ( self.ord, self.get_log_display(), self.time )
         
     class Meta:
-        unique_together=(("order","time"),)   
+        unique_together=(("ord","time"),)   
         # verbose_name = u'订单日志'
         # 记录类似于下单时间.付款时间.发货时间等             
 
@@ -104,7 +104,7 @@ class OrdLogcs(models.Model):
             (2, '+ 60 m'),
             (3, '+ 90 m'),
         )
-    order = models.OneToOneField(OrdInfo, verbose_name=u'订单')
+    ord = models.OneToOneField(OrdInfo, verbose_name=u'订单')
     consignee = models.CharField(u'收货人', max_length=60)
     area = models.CharField(u'配送区域', max_length=60)
     address = models.CharField(u'详细地址', max_length=255)
@@ -144,7 +144,7 @@ class OrdSats(models.Model):
                 ((0, u'新单'),),
             )
 
-    order = models.OneToOneField(OrdInfo, verbose_name=u'订单')
+    ord = models.OneToOneField(OrdInfo, verbose_name=u'订单')
     status = models.SmallIntegerField(u'订单状态', default=0, editable=False, choices=chcs)
 
     objects = ordSatsManager()
@@ -164,7 +164,7 @@ class OrdPay(models.Model):
                 (3, u'已核'),
             )
 
-    order = models.OneToOneField(OrdInfo, verbose_name=u'订单')
+    ord = models.OneToOneField(OrdInfo, verbose_name=u'订单')
     name = models.CharField(u'支付方式', max_length=30)
     cod = models.CharField(u'代码', max_length=30)
     status = models.SmallIntegerField(u'支付状态', default=0, editable=False, choices=chcs)
@@ -185,7 +185,7 @@ class OrdShip(models.Model):
                 (4, u'已签'), 
             )
 
-    order = models.OneToOneField(OrdInfo, verbose_name=u'订单')
+    ord = models.OneToOneField(OrdInfo, verbose_name=u'订单')
     name = models.CharField(u'物流方式', max_length=30, editable=False)
     cod = models.CharField(u'代码', max_length=30)
     status = models.SmallIntegerField(u'物流状态', default=0, editable=False, choices=chcs)
@@ -198,7 +198,7 @@ class OrdShip(models.Model):
 
 
 class OrdItem(models.Model):
-    order = models.ForeignKey(OrdInfo, verbose_name=u'订单')
+    ord = models.ForeignKey(OrdInfo, verbose_name=u'订单')
     name = models.CharField(u'商品', max_length=30)
     sn = models.CharField(u'货号', max_length=30)
     spec = models.CharField(u'规格', max_length=30)
