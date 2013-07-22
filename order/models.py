@@ -41,6 +41,12 @@ class ordSatsManager(models.Manager):
         return tuple([ i for i, v in OrdSats.act[i]])
 
 
+class ordShipManager(models.Manager):
+    def getActTuple(self, i):
+
+        return tuple([ i for i, v in OrdShip.act[i]])
+
+
 class OrdInfo(models.Model):
     chcs = (
                 (0, u'普销'), 
@@ -133,13 +139,13 @@ class OrdSats(models.Model):
                 (1, u'编辑'), 
                 (2, u'确认'),
                 (3, u'无效'),
-                (4, u'停止'),
+                (4, u'止单'),
             )
 
     act =   ( 
                 ((0, u'新单'),(1, u'编辑'),(2, u'确认'),(3, u'无效'),),
                 ((0, u'新单'),(1, u'编辑'),(2, u'确认'),(3, u'无效'),),
-                ((0, u'新单'),),
+                ((0, u'新单'),(4, u'止单'),),
                 ((0, u'新单'),),
                 ((0, u'新单'),),
             )
@@ -183,12 +189,22 @@ class OrdShip(models.Model):
                 (2, u'已发'), 
                 (3, u'拒签'), 
                 (4, u'已签'), 
+                (5, u'止送'), 
             )
-
+    act =   (
+                ((1, u'编辑'), (2, u'已发'),(5, u'止送'), ),
+                ((1, u'编辑'), (2, u'已发'),(5, u'止送'), ),
+                ((3, u'拒签'),(4, u'已签'),),
+                (),
+                (),
+                (),
+            )
     ord = models.OneToOneField(OrdInfo, verbose_name=u'订单')
     name = models.CharField(u'物流方式', max_length=30, editable=False)
     cod = models.CharField(u'代码', max_length=30)
     status = models.SmallIntegerField(u'物流状态', default=0, editable=False, choices=chcs)
+
+    objects = ordShipManager()
 
     def __unicode__(self):
         return u"%s - %s [ %s ]" % ( self.ord, self.name, self.get_status_display() )    

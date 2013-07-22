@@ -55,8 +55,7 @@ def editOrd(request, c):
     return HttpResponseRedirect(request.paths[u'编辑订单'])
 
 
-# 后台订单编辑操作编辑页面
-@ordImps
+# 后台订单编辑操作编辑页面@
 def editUI(request):
     from cart.views import Cart
 
@@ -64,7 +63,7 @@ def editUI(request):
 
     ItemsForm.getItemForms(items['items'])
 
-    form = getForms(request)
+    form = conFrm(request)
 
     oTypeForm = getOTpyeForm(request)
 
@@ -141,13 +140,6 @@ class Ord(object):
 
     def cCon(self, sn, c):
         order =  OrdInfo.objects.get(sn=sn).ordsats
-        act = OrdSats.objects.getActTuple(order.status)
-
-        if not c in act:
-
-            messages.error(self.request, u'%s - 无法%s' % (sn, order.get_status_display()))
-
-            return rdrBck(self.request)
 
         order.status = c
 
@@ -249,6 +241,11 @@ class Ord(object):
         return self.cpyTsess(sn).cpyCongn(sn).cpyItem(sn)
 
 
+    def stopOrd(self, sn):
+
+        return self.cCon(sn, 4)
+
+
 
 class OrdSerch(object):
     """
@@ -323,9 +320,11 @@ class OrdPur(OrdPur):
 
     def __init__(self, oList, request):
         super(OrdPur, self).__init__(oList, request)
-        self.chcs = OrdSats.chcs
         self.path = request.paths[u'订单']
-        self.action = OrdSats.act
+
+        order =  OrdSats
+        self.chcs = order.chcs
+        self.action = order.act
 
 
     # 获取订单可选操作项
@@ -593,12 +592,8 @@ class OrdSub(object):
             return self.showError()
         else:
             messages.success(self.request, u'订单提交成功: %s' % self.sn)
-            d = datetime.datetime.strptime(self.c['date'], "%Y-%m-%d")
-            s = d - datetime.timedelta(days=1)
-            e = d + datetime.timedelta(days=1)
 
-            return HttpResponseRedirect(u'/order/?o=-1&c=-1&s=%s&e=%s&k=%s' % (s.strftime('%Y-%m-%d').strip(), e.strftime('%Y-%m-%d').strip(), self.sn))
-
+            return rdrRange(self.request.paths[u'订单'], self.c['date'], self.sn)
 
     # 粗粒用户级错误提示
     def showError(self):

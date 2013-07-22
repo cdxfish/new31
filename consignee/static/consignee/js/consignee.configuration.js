@@ -40,9 +40,9 @@ c = {
 
             var message = "";
 
-            if (!$('#id_pay').val()) {
-                message += '请选择支付方式!<br />';
-            }
+            // if (!$('#id_pay').val()) {
+            //     message += '请选择支付方式!<br />';
+            // }
 
             // if ($('#ship').val() == 0) {
             //     message += '请选择配送方式!<br />';

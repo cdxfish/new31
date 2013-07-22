@@ -24,7 +24,7 @@ class ConsigneeForm(forms.ModelForm):
         }
 
 
-def getForms(request):
+def conFrm(request):
 
     consignee = {i:v for i, v in request.session['c'].items()}
 

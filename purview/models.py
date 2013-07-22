@@ -41,14 +41,16 @@ class Element(models.Model):
     pPath = (
                 (u'/office/', U'管理中心'),
                 (u'/order/', u'订单'),
-            ) + \
-            tuple([ (u'/order/%s/' % i, u'订单%s' % v) for i,v in OrdSats.chcs ]) + \
-            (
                 (u'/order/new/', u'新订单'),
                 (u'/order/edit/', u'编辑订单'),
                 (u'/order/submit/', u'提交订单'),
+            ) + \
+            tuple([ (u'/order/%s/' % i, u'订单%s' % v) for i,v in OrdSats.chcs ]) + \
+            (
                 (u'/back/', u'退款'),
                 (u'/logistics/', u'物流'),
+                (u'/logistics/edit/', u'编辑物流'),
+                (u'/logistics/submit/', u'提交物流'),
             ) + \
             tuple([ (u'/logistics/%s/' % i, u'物流%s' % v) for i,v in OrdShip.chcs ]) + \
             (

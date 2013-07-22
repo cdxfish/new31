@@ -141,9 +141,29 @@ def conOrd(func):
 
     return _func
 
-# order中各类引用包装饰器
-def ordImps(cls):
-    from cart.views import Cart
 
-    return cls
+# 物流状态操作装饰器
+def conShip(func):
+    def _func(request, c):
+        from order.models import OrdInfo, OrdShip
+        sn = request.GET.get('sn')
+        order =  OrdInfo.objects.get(sn=sn)
+        if not order.ordlogcs.dman:
+            messages.error(request, u'%s - 请选择物流师傅' % sn)
 
+            return rdrBck(request)
+
+
+        act = OrdShip.objects.getActTuple(order.ordship.status)
+
+        if not c in act:
+
+            messages.error(request, u'%s - 无法%s' % (sn, OrdShip.chcs[c][1]))
+
+            return rdrBck(request)
+
+        else:
+
+            return func(request, c)
+
+    return _func

@@ -17,6 +17,7 @@ from django.conf import settings
 
 # Create your views here.
 
+# 物流界面
 def logcsUI(request):
 
     o = LogcsSerch(request)
@@ -24,33 +25,103 @@ def logcsUI(request):
     form = LogcsFrm(initial=o.initial)
 
     oList = o.search().chcs().range().page()
-    oList = OrdPur(oList, request).getOrds()
     oList = LogcsPur(oList, request).getOrds()
     oList = FncPur(oList, request).getOrds()
+    oList = OrdPur(oList, request).getOrds()
     oList = ProPur(oList, request).getOrds()
 
-    return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))    
+    return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))
 
-# 物流信息提交
-def lCon(request, c):
+# 编辑物流界面
+def editUI(request):
+    from consignee.forms import conFrm
 
-    c = int(c)
+    form = conFrm(request)
+
+    return render_to_response('logcsedit.htm', locals(), context_instance=RequestContext(request))
+
+# 编辑物流前置操作
+def editShip(request, c):
     sn = request.GET.get('sn')
-    ordShip =  OrdShip.objects.get(ord=sn)
 
-    ordShip.status = c
+    Ship(request).lCon(sn, c)
 
-    ordShip.save()
+    from order.views import Ord
 
-    if c > 1:
-        return rdrBck(request)
+    Ord(request).cpyTsess(sn).cpyCongn(sn)
+    
+    return HttpResponseRedirect(request.paths[u'编辑物流'])
 
-    else:
-        # 将订单信息配置到seesion当中
-        SpCnsgn(request).setSiessionByOrd(sn=sn)
-        Ord(request).setSeesion(OrdInfo.objects.get(orderSn=sn).typ)
+# 提交物流
+def shipSub(request):
 
-        return HttpResponseRedirect(request.paths[u'新订单'])
+    return Ship(request).editSub()
+
+
+# 物流状态修改
+@conShip
+def lCon(request, c):
+    Ship(request).lCon(request.GET.get('sn'), c)
+
+    return rdrBck(request)
+
+# 止送
+@conShip
+def stopLogcs(request,c ):
+    sn = request.GET.get('sn')
+    Ship(request).lCon(sn, c)
+
+    # from order.views import Ord
+    # Ord(request).stopOrd(sn)
+
+    return rdrBck(request)
+
+# 非新单及编辑以外的订单操作
+def lCons(request, c):
+    c = int(c)
+    
+    _func = [lCon, editShip, lCon, lCon, stopLogcs]
+
+    return _func[c](request, c)
+
+
+
+
+class Ship(object):
+    """
+        物流管理 操作类
+        
+        用于物流状态修改以及提交物流
+
+        只需实例后, 使用对应方法即可
+        示例: Ship(request).editSub()
+
+        订单数据来源为session中数据
+
+        session['c'] = 联系人信息
+        session['o'] = 订单基本信息, 比如订单类型, 新单或编辑
+
+    """
+    def __init__(self, request):
+        self.request  = request
+        from consignee.views import SpCnsgn
+        self.c = SpCnsgn(self.request).c
+        self.o = Ord(self.request).o
+
+    def lCon(self, sn, c):
+        from order.models import OrdInfo
+        ship =  OrdInfo.objects.get(sn=sn).ordship
+
+        ship.status = c
+
+        ship.save()
+
+        return self
+
+    def editSub(self):
+        messages.success(self.request, u'提交成功: %s' % self.o['sn'])
+
+        return rdrRange(self.request.paths[u'物流'], self.c['date'], self.o['sn'])
 
 class LogcsSerch(OrdSerch):
     """ 
@@ -88,13 +159,11 @@ class LogcsPur(OrdPur):
     """
     def __init__(self, oList, request):
         super(LogcsPur, self).__init__(oList, request)
-        self.chcs = OrdShip.chcs
         self.path = request.paths[u'物流']
-        self.action = (
-                        ((1, u'编辑'), (2, u'已发'),),
-                        ((1, u'编辑'), (2, u'已发'),),
-                        ((3, u'拒签'),(4, u'已签'),),
-                    )
+
+        ship = OrdShip
+        self.chcs = ship.chcs
+        self.action = ship.act
 
     # 获取订单可选操作项
     def getElement(self):

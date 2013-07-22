@@ -1,7 +1,7 @@
 #coding:utf-8
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.http import HttpResponseRedirect
-import math, random
+import math, random, datetime
 
 
 # 格式化价格,舍弃小数位
@@ -61,3 +61,12 @@ def page(l, p=1, pSize=150):
 def sort(i):
     random.shuffle(i)
     return i
+
+
+def rdrRange(url,date,sn):
+
+    d = datetime.datetime.strptime(date, "%Y-%m-%d")
+    s = d - datetime.timedelta(days=1)
+    e = d + datetime.timedelta(days=1)
+
+    return HttpResponseRedirect(u'%s?o=-1&c=-1&s=%s&e=%s&k=%s' % (url, s.strftime('%Y-%m-%d').strip(), e.strftime('%Y-%m-%d').strip(), sn))

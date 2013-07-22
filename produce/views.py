@@ -17,7 +17,7 @@ def produceUI(request):
     form = ProFrm(initial=o.initial)
 
     oList = o.search().range().chcs().page()
-    oList = ProPur(oList, request).getElement().beMixed()
+    oList = ProPur(oList, request).getElement().beMixed().oList
 
     oList = sortList(oList)
 
@@ -148,13 +148,13 @@ class ProPur(OrdPur):
             i.items = items
 
         return self
+
     def beMixed(self):
         for i in self.oList:
             for ii in i.items:
                 ii.action[self.path] = tuple([ iii for iii in ii.action[self.path] if u'%s%s/' % (self.path, iii[0]) in self.role ])
 
         return self
-
 
     def mixedStatus(self):
         for i in self.oList:

@@ -12,7 +12,7 @@ import datetime, time
 
 def consignee(request):
 
-    form = getForms(request)
+    form = conFrm(request)
 
     return render_to_response('consignee.htm', locals(), context_instance=RequestContext(request))
 
