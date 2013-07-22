@@ -121,7 +121,7 @@ def itemonl(func):
 
 
 # 订单状态操作装饰器
-def conOrd(func):
+def ordDetr(func):
 
     def _func(request, c):
         from order.models import OrdInfo, OrdSats
@@ -143,7 +143,7 @@ def conOrd(func):
 
 
 # 物流状态操作装饰器
-def conShip(func):
+def shipDetr(func):
     def _func(request, c):
         from order.models import OrdInfo, OrdShip
         sn = request.GET.get('sn')
@@ -159,6 +159,28 @@ def conShip(func):
         if not c in act:
 
             messages.error(request, u'%s - 无法%s' % (sn, OrdShip.chcs[c][1]))
+
+            return rdrBck(request)
+
+        else:
+
+            return func(request, c)
+
+    return _func
+
+
+# 生产状态操作装饰器
+def proDetr(func):
+    def _func(request, c):
+        from produce.models import Produce
+        sn = request.GET.get('sn')
+        pro =  Produce.objects.get(item=sn)
+
+        act = Produce.objects.getActTuple(pro.status)
+
+        if not c in act:
+
+            messages.error(request, u'%s | %s - 无法%s' % (pro.item.ord.sn, pro.item.name, Produce.chcs[c][1]))
 
             return rdrBck(request)
 

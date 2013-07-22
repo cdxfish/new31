@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-        <form action="{{ requset.paths.提交订单 }}" method="POST" id="checkout">
+        <form action="{{ request.paths.提交订单 }}" method="POST" id="checkout">
           <h3>商品列表</h3>
           <table width="100%" cellpadding="3" cellspacing="1" class="sortTable">
             <thead>
@@ -31,7 +31,7 @@
               <td><span id="am{{ i.mark }}">{{ i.fee|floatformat:2 }}</span></td>
               <td>{{ i.forms.num }}</td>
               <td><span id="st{{ i.mark }}">{{ i.total|floatformat:2 }}</span></td>
-              <td><a href="/order/delitem/{{ i.mark }}/" class="button">删除</a></td>
+              <td><a href="{{ request.paths.删订单商品 }}?mark={{ i.mark }}" class="button">删除</a></td>
             </tr>
 {% endfor %}
           </tbody>

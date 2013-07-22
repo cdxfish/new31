@@ -13,22 +13,24 @@ class PayManager(models.Manager):
         return self.select_related().filter(onl=True)[0]
 
     def getTupleByAll(self):
-        pay = self.filter(onl=True)
 
-        a = [(i.id, i.name) for i in pay]
-
-        return tuple(a)
+        return tuple([(i.id, i.get_cod_display()) for i in self.filter(onl=True)])
 
 class Pay(models.Model):
-    name = models.CharField(u'名字', max_length=30)
-    cod = models.CharField(u'代码', max_length=30)
+    chcs = (
+                ('payafter', u'货到付款'), 
+                ('alipay', u'支付宝'), 
+                ('post', u'刷卡付款'), 
+        )
+
+    cod = models.CharField(u'代码', max_length=30, choices=chcs)
     config = models.TextField(u'配置')
     onl = models.BooleanField(u'上线')
 
     objects = PayManager()
 
     def __unicode__(self):
-        return u"%s - %s" % (self.name, self.onl)
+        return u"%s - %s" % (self.cod, self.onl)
 
     # class Meta:
         # verbose_name = u'支付方式'

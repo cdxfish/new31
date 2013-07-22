@@ -13,11 +13,12 @@ class roleManager(models.Manager):
 
     def getPathByUser(self, user):
         element = []
-        role = self.select_related().get(user=user, onl=True)
+        role = self.select_related().filter(user=user, onl=True)
 
-        for i in role.privilege.filter(onl=True):
-            for ii in i.element.filter(onl=True):
-                element.append(ii.path)
+        for i in role:
+            for ii in i.privilege.filter(onl=True):
+                for iii in ii.element.filter(onl=True):
+                    element.append(iii.path)
 
         return element
 
@@ -42,6 +43,8 @@ class Element(models.Model):
                 (u'/office/', U'管理中心'),
                 (u'/order/', u'订单'),
                 (u'/order/new/', u'新订单'),
+                (u'/order/additemtoorder/', u'增订单商品'),
+                (u'/order/delitem/', u'删订单商品'),
                 (u'/order/edit/', u'编辑订单'),
                 (u'/order/submit/', u'提交订单'),
             ) + \

@@ -85,9 +85,10 @@ INSERT INTO `tag_tag` (`tag`,`onl`) VALUES
 ('芒果', 1),
 ('芝士', 1);
 
-INSERT INTO `payment_pay` ( `name`, `cod`, `config`, `onl`) VALUES
-('货到付款', 'payafter', 'a', 1),
-('支付宝', 'alipay', 'a', 1);
+INSERT INTO `payment_pay` (`cod`, `config`, `onl`) VALUES
+('payafter', 'payafter', 1),
+('alipay', 'alipay', 1);
+('post', 'post', 1);
 
 INSERT INTO `area_area` (`id`, `name`, `onl`, `sub_id`) VALUES
 (1, '南宁', 1, NULL),
@@ -108,7 +109,31 @@ INSERT INTO `purview_element` (`id`, `path`, `typ`, `onl`, `sub_id`) VALUES
 (1, '/office/', 1, 1, NULL),
 (2, '/order/', 1, 1, NULL),
 (3, '/order/new/', 1, 1, 2),
-(4, '/order/submit/', 2, 1, NULL);
+(4, '/order/submit/', 2, 1, NULL),
+(5, '/order/additemtoorder/', 2, 1, NULL),
+(6, '/order/delitem/', 3, 1, NULL),
+(7, '/order/edit/', 4, 1, NULL),
+(8, '/order/0/', 4, 1, NULL),
+(9, '/order/1/', 4, 1, NULL),
+(10, '/order/2/', 4, 1, NULL),
+(11, '/order/3/', 4, 1, NULL),
+(12, '/logistics/', 1, 1, NULL),
+(13, '/logistics/edit/', 4, 1, NULL),
+(14, '/logistics/submit/', 4, 1, NULL),
+(15, '/logistics/0/', 4, 1, NULL),
+(16, '/logistics/1/', 4, 1, NULL),
+(17, '/logistics/2/', 4, 1, NULL),
+(18, '/logistics/3/', 4, 1, NULL),
+(19, '/logistics/4/', 4, 1, NULL),
+(20, '/logistics/5/', 4, 1, NULL),
+(21, '/produce/', 1, 1, NULL),
+(22, '/produce/0/', 4, 1, NULL),
+(23, '/produce/1/', 4, 1, NULL),
+(24, '/produce/2/', 4, 1, NULL),
+(25, '/produce/3/', 4, 1, NULL),
+(26, '/produce/4/', 4, 1, NULL),
+(27, '/inventory/', 1, 1, NULL);
+
 
 INSERT INTO `purview_privilege` (`id`, `name`, `onl`) VALUES
 (1, 0, 1);

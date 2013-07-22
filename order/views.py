@@ -46,7 +46,7 @@ def newOrdUI(request):
 
     return editUI(request)
 
-@conOrd
+@ordDetr
 def editOrd(request, c):
     o = Ord(request)
     o.cCon(request.GET.get('sn'), c)
@@ -75,7 +75,7 @@ def copyOrd(request,c):
 
     return HttpResponseRedirect(request.paths[u'新订单'])
 
-@conOrd
+@ordDetr
 def cCon(request, c):
     Ord(request).cCon(request.GET.get('sn'), c)
 
@@ -172,14 +172,7 @@ class Ord(object):
         c = sCongn.cFormat.copy()
 
         oLogcs = OrdInfo.objects.get(sn=sn).ordlogcs
-
-        ordPay = oLogcs.ord.ordpay
-
-        try:
-            pay = Pay.objects.get(name=ordPay.name, cod=ordPay.cod).id
-        except Exception, e:
-            pay = Pay.objects.getDefault().id
-
+ 
         areaList = oLogcs.area.split(' - ')
 
 
@@ -195,7 +188,7 @@ class Ord(object):
             time = SignTime.objects.getDefault().id
 
         c['user'] = oLogcs.ord.user
-        c['pay'] = pay
+        c['pay'] = oLogcs.ord.ordpay.cod.id
         c['consignee'] = oLogcs.consignee
         c['area'] = area
         c['address'] = oLogcs.address
@@ -504,8 +497,7 @@ class OrdSub(object):
         pay = Pay.objects.getPayById(id=self.c['pay'])
 
         self.oPay.ord = self.ord
-        self.oPay.name = pay.name
-        self.oPay.cod = pay.cod
+        self.oPay.cod = pay
 
         self.oPay.save()
 

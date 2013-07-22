@@ -29,6 +29,7 @@ def logcsUI(request):
     oList = FncPur(oList, request).getOrds()
     oList = OrdPur(oList, request).getOrds()
     oList = ProPur(oList, request).getOrds()
+    oList = KpChng(oList, request).getOrds()
 
     return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))
 
@@ -59,20 +60,20 @@ def shipSub(request):
 
 
 # 物流状态修改
-@conShip
+@shipDetr
 def lCon(request, c):
     Ship(request).lCon(request.GET.get('sn'), c)
 
     return rdrBck(request)
 
 # 止送
-@conShip
+@shipDetr
 def stopLogcs(request,c ):
     sn = request.GET.get('sn')
     Ship(request).lCon(sn, c)
 
-    # from order.views import Ord
-    # Ord(request).stopOrd(sn)
+    from order.views import Ord
+    Ord(request).stopOrd(sn)
 
     return rdrBck(request)
 
@@ -80,7 +81,7 @@ def stopLogcs(request,c ):
 def lCons(request, c):
     c = int(c)
     
-    _func = [lCon, editShip, lCon, lCon, stopLogcs]
+    _func = [lCon, editShip, lCon, lCon, lCon, stopLogcs]
 
     return _func[c](request, c)
 
@@ -177,3 +178,39 @@ class LogcsPur(OrdPur):
             i.action[self.path] = self.action[i.ordship.status]
 
         return self
+
+
+class KpChng(object):
+    """
+
+        找零
+
+    """
+    def __init__(self, oList, request):
+        self.oList = oList
+        self.request = request
+        self.fee = {
+            'paid': 0,
+            'total': 0,
+            'kpchng':0,
+        }
+        
+
+    def cntFee(self):
+        from order.models import OrdItem
+
+        for i in self.oList:
+            i.fee = self.fee.copy()
+            i.fee['total'] = OrdItem.objects.getFeeBySN(i.sn)
+
+            i.fee['paid'] = keChngFrmt(i.fee['total'])
+
+            i.fee['kpchng'] = i.fee['paid'] - i.fee['total']
+
+
+        return self
+
+    def getOrds(self):
+
+        return self.cntFee().oList
+

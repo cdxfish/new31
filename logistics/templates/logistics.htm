@@ -17,7 +17,7 @@
             <td>{{ i.get_typ_display }}</td>
             <td><a href="{{ request.paths.订单 }}{{ i.sn }}/">{{ i.sn }}</a></td>
             <td>{{ i.ordlogcs.consignee }} [ {{ i.ordlogcs.tel }} ]</td>
-            <td>200.00 | 11.00 | 189.00 | {{ i.ordpay.name }}</td>
+            <td>{{ i.fee.paid|stringformat:"0.2f" }} | {{ i.fee.kpchng|stringformat:"0.2f" }} | {{ i.fee.total|stringformat:"0.2f" }} | {{ i.ordpay.name }}</td>
             <td>{{ i.ordsats.get_status_display }} | {{ i.ordpay.get_status_display }} | {{ i.ordship.get_status_display }}</td>
             {% optr i %}
           </tr>

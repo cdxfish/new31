@@ -25,13 +25,10 @@ class ordManager(models.Manager):
 class orderItemManager(models.Manager):
     def getFeeBySN(self, sn):
 
-        ord = self.select_related().filter(order=sn)
-        total = {}
-        for i in ord:
-            if not i.typ in total:
-                total[i.typ] = 0
-
-            total[i.typ] += forMatFee(i.nfee * i.num)
+        ord = OrdInfo.objects.select_related().get(sn=sn)
+        total = 0
+        for i in ord.orditem_set.all():
+            total += forMatFee(i.nfee * i.num)
 
         return total
 
@@ -163,6 +160,7 @@ class OrdSats(models.Model):
 
 
 class OrdPay(models.Model):
+    from payment.models import Pay
     chcs = (
                 (0, u'未付'), 
                 (1, u'已付'),
@@ -171,8 +169,7 @@ class OrdPay(models.Model):
             )
 
     ord = models.OneToOneField(OrdInfo, verbose_name=u'订单')
-    name = models.CharField(u'支付方式', max_length=30)
-    cod = models.CharField(u'代码', max_length=30)
+    cod = models.ForeignKey(Pay, verbose_name=u'支付方式')
     status = models.SmallIntegerField(u'支付状态', default=0, editable=False, choices=chcs)
 
     def __unicode__(self):

@@ -50,26 +50,46 @@ def sortList(oList):
     return _oList
 
 
-
+@proDetr
 def pCon(request, c):
-
-    c = int(c)
-    sn = request.GET.get('sn')
-    item =  Produce.objects.get(item=sn)
-
-    item.status = c
-
-    item.save()
+    ProCon(request).cCon(request.GET.get('sn'), c)
 
     return rdrBck(request)
 
+def pCons(request, c):
+    c = int(c)
+
+    return [pCon, pCon, pCon, pCon, pCon][c](request, c)
+
+
+class ProCon(object):
+    """
+        生产状态操作类
+
+
+
+
+    """
+    def __init__(self, request):
+        self.request = request
+
+
+    def cCon(self, sn, c):
+        item = Produce.objects.get(item=sn)
+
+        item.status = c
+
+        item.save()
+
+        return self
 
 
 class ProSerch(OrdSerch):
     """ 
-        生产管理类
+        工厂订单搜索类
 
-        用于工厂操作商品生产用
+        继承于基本订单搜索类
+        前期对订单基本搜索后转入此类进行二次搜索
 
     """
     def __init__(self, request):
@@ -113,15 +133,10 @@ class ProPur(OrdPur):
     """
     def __init__(self, oList, request):
         super(ProPur, self).__init__(oList, request)
-        self.chcs = Produce.chcs
+        pro = Produce
+        self.chcs = pro.chcs
         self.path = request.paths[u'生产']
-        self.action = (
-                    ((1, u'产求'), ),
-                    ((2, u'产中'), (3, u'拒产'), ),
-                    ((3, u'拒签'), (4, u'已产'), ),
-                    ((1, u'产求'), ),
-                    (),
-                )
+        self.action = pro.act
 
         for i in self.oList:
             i.items = i.orditem_set.all()

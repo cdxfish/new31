@@ -9,6 +9,14 @@ def forMatFee(fee):
 
     return math.floor(fee)
 
+def keChngFrmt(fee):
+    if fee % 100 < 50:
+        paid = math.floor(fee / 100) * 100 + 50
+
+    else:
+        paid = math.ceil(fee / 100) * 100
+
+    return paid
 
 # 重定向至登录页
 def redirectLogin():
@@ -70,3 +78,4 @@ def rdrRange(url,date,sn):
     e = d + datetime.timedelta(days=1)
 
     return HttpResponseRedirect(u'%s?o=-1&c=-1&s=%s&e=%s&k=%s' % (url, s.strftime('%Y-%m-%d').strip(), e.strftime('%Y-%m-%d').strip(), sn))
+
