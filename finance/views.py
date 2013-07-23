@@ -16,7 +16,6 @@ def fncUI(request):
 
     oList = o.search().status().range().page()
     oList = FncPur(oList, request).getOrds()
-    oList = OrdPur(oList, request).getOrds()
 
     return render_to_response('financeui.htm', locals(), context_instance=RequestContext(request))
 
