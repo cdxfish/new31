@@ -3,5 +3,6 @@ from django.conf.urls import patterns, include, url
 from views import *
 
 urlpatterns = patterns('',
-    (r'^$', financeUI),
+    (r'^$', fncUI),
+    (r'^(?P<c>\d+)/$', fCons),
 )

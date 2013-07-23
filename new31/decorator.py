@@ -189,3 +189,25 @@ def proDetr(func):
             return func(request, c)
 
     return _func
+
+
+# 支付状态操作装饰器
+def payDetr(func):
+    def _func(request, c):
+        from order.models import OrdInfo, OrdPay
+        sn = request.GET.get('sn')
+        pay =  OrdInfo.objects.get(sn=sn).ordpay
+
+        act = OrdPay.objects.getActTuple(pay.status)
+
+        if not c in act:
+
+            messages.error(request, u'%s - 无法%s' % (sn, OrdPay.chcs[c][1]))
+
+            return rdrBck(request)
+
+        else:
+
+            return func(request, c)
+
+    return _func

@@ -20,7 +20,7 @@ class Pay(models.Model):
     chcs = (
                 ('payafter', u'货到付款'), 
                 ('alipay', u'支付宝'), 
-                ('post', u'刷卡付款'), 
+                ('post', u'货到付款 ( 刷卡 )'), 
         )
 
     cod = models.CharField(u'代码', max_length=30, choices=chcs)

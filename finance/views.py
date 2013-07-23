@@ -8,9 +8,9 @@ from order.views import *
 
 # Create your views here.
 
-def financeUI(request):
+def fncUI(request):
 
-    o = FncSearch(request)
+    o = FncSerch(request)
 
     form = financeForm(initial=o.initial)
 
@@ -21,16 +21,48 @@ def financeUI(request):
     return render_to_response('financeui.htm', locals(), context_instance=RequestContext(request))
 
 
-class FncSearch(OrdSerch):
+@payDetr
+def fCon(request, c):
+
+    FncPrt(request).cCon(request.GET.get('sn'), c)
+
+    return rdrBck(request)
+
+def fCons(request, c):
+    c = int(c)
+    return [fCon, fCon, fCon, fCon][c](request, c)
+
+class FncPrt(object):
     """
         财务基本类
+
+    """
+    def __init__(self, request):
+        self.request = request
+
+
+    def cCon(self, sn, c):
+        from order.models import OrdInfo
+        pay =  OrdInfo.objects.get(sn=sn).ordpay
+
+        pay.status = c
+
+        pay.save()
+
+        return self
+
+
+
+class FncSerch(OrdSerch):
+    """
+        对订单用财务搜索类
 
         用于订单条件过滤及显示
         继承自订单基本过滤类
 
     """
     def __init__(self, request):
-        super(FncSearch, self).__init__(request)
+        super(FncSerch, self).__init__(request)
 
     def search(self):
         self.oList = self.baseSearch().oList.filter(ordsats__status__gt = 1)
@@ -62,18 +94,14 @@ class FncPur(OrdPur):
     """
     def __init__(self, oList, request):
         super(FncPur, self).__init__(oList, request)
-        self.chcs = OrdPay.chcs
         self.path = request.paths[u'财务']
-        self.action = (
-                        ((1, u'已付'),),
-                        ((1, u'已付'),),
-                        ((2, u'已结'),),
-                        ((3, u'已核'),),
-                )
+
+        opay = OrdPay
+        self.chcs = opay.chcs
+        self.action = opay.act
 
     # 获取订单可选操作项
     def getElement(self):
-
 
         for i in self.oList:
             if not hasattr(i,'action'):

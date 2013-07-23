@@ -182,7 +182,6 @@ class LogcsPur(OrdPur):
 
 class KpChng(object):
     """
-
         找零
 
     """
@@ -190,11 +189,11 @@ class KpChng(object):
         self.oList = oList
         self.request = request
         self.fee = {
-            'paid': 0,
-            'total': 0,
-            'kpchng':0,
-        }
-        
+                    'paid': 0,
+                    'total': 0,
+                    'kpchng':0,
+                }
+            
 
     def cntFee(self):
         from order.models import OrdItem

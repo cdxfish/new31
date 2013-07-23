@@ -38,6 +38,12 @@ class ordSatsManager(models.Manager):
         return tuple([ i for i, v in OrdSats.act[i]])
 
 
+class ordPayManager(models.Manager):
+    def getActTuple(self, i):
+
+        return tuple([ i for i, v in OrdPay.act[i]])
+
+
 class ordShipManager(models.Manager):
     def getActTuple(self, i):
 
@@ -168,9 +174,18 @@ class OrdPay(models.Model):
                 (3, u'已核'),
             )
 
+    act =   (
+                ((1, u'已付'),),
+                ((2, u'已结'),),
+                ((3, u'已核'),),
+                (),
+        )
+
     ord = models.OneToOneField(OrdInfo, verbose_name=u'订单')
     cod = models.ForeignKey(Pay, verbose_name=u'支付方式')
     status = models.SmallIntegerField(u'支付状态', default=0, editable=False, choices=chcs)
+
+    objects = ordPayManager()
 
     def __unicode__(self):
         return u"%s - %s [ %s ]" % ( self.ord, self.name, self.get_status_display() )

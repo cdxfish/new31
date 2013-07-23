@@ -87,7 +87,7 @@ INSERT INTO `tag_tag` (`tag`,`onl`) VALUES
 
 INSERT INTO `payment_pay` (`cod`, `config`, `onl`) VALUES
 ('payafter', 'payafter', 1),
-('alipay', 'alipay', 1);
+('alipay', 'alipay', 1),
 ('post', 'post', 1);
 
 INSERT INTO `area_area` (`id`, `name`, `onl`, `sub_id`) VALUES
