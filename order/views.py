@@ -14,7 +14,7 @@ from payment.models import *
 from models import *
 from forms import *
 from decimal import *
-from consignee.forms import *
+# from consignee.forms import *
 from purview.views import *
 import time, datetime
 
@@ -119,7 +119,7 @@ class Ord(object):
         self.request = request
         self.o = self.request.session.get('o')
         self.oFormat =  {
-                        'typ': OrdInfo.chcs[0][0],
+                        'typ': Ord.chcs[0][0],
                         'status': OrdSats.chcs[0][0],
                         'sn': 0,
             }
@@ -139,7 +139,7 @@ class Ord(object):
         return self.setSeesion(self.oFormat)
 
     def cCon(self, sn, c):
-        order =  OrdInfo.objects.get(sn=sn).ordsats
+        order =  Ord.objects.get(sn=sn).ordsats
 
         order.status = c
 
@@ -160,7 +160,7 @@ class Ord(object):
         return self
 
     def cpyTsess(self, sn):
-        order = OrdInfo.objects.get(sn=sn)
+        order = Ord.objects.get(sn=sn)
         self.o['typ'] = order.typ
         self.o['sn'] = sn
 
@@ -171,7 +171,7 @@ class Ord(object):
         sCongn = SpCnsgn(self.request)
         c = sCongn.cFormat.copy()
 
-        oLogcs = OrdInfo.objects.get(sn=sn).ordlogcs
+        oLogcs = Ord.objects.get(sn=sn).logcs
  
         areaList = oLogcs.area.split(' - ')
 
@@ -188,7 +188,7 @@ class Ord(object):
             time = SignTime.objects.getDefault().id
 
         c['user'] = oLogcs.ord.user
-        c['pay'] = oLogcs.ord.ordpay.cod.id
+        c['pay'] = oLogcs.ord.ordfnc.cod.id
         c['consignee'] = oLogcs.consignee
         c['area'] = area
         c['address'] = oLogcs.address
@@ -205,10 +205,10 @@ class Ord(object):
 
     def cpyItem(self, sn):
         from cart.views import Cart
-        from discount.models import Discount
+        from discount.models import Dis
         c = Cart(self.request).clear()
 
-        order = OrdInfo.objects.get(sn=sn)
+        order = Ord.objects.get(sn=sn)
         items = order.orditem_set.all()
         _items = []
 
@@ -218,7 +218,7 @@ class Ord(object):
             item = c.item.copy()
             item['itemID'] = ii.item.id
             item['specID'] = ii.id
-            item['disID'] = Discount.objects.get(dis=i.dis).id
+            item['disID'] = Dis.objects.get(dis=i.dis).id
             item['num'] = i.num
 
             _items.append(item)
@@ -248,7 +248,7 @@ class OrdSerch(object):
     def __init__(self, request):
         self.request = request
 
-        self.oList = OrdInfo.objects.select_related().all()
+        self.oList = Ord.objects.select_related().all()
 
         today = datetime.date.today()
         oneDay = datetime.timedelta(days=1)
@@ -267,14 +267,14 @@ class OrdSerch(object):
         q = (
                 Q(sn__contains=self.initial['k']) |
                 Q(user__username__contains=self.initial['k']) |
-                Q(ordlogcs__consignee__contains=self.initial['k']) |
-                Q(ordlogcs__area__contains=self.initial['k']) |
-                Q(ordlogcs__address__contains=self.initial['k']) |
-                Q(ordlogcs__tel__contains=self.initial['k']) |
-                # Q(ordlogcs__date=datetime.date.today()) |
-                Q(ordlogcs__stime__contains=self.initial['k']) |
-                Q(ordlogcs__etime__contains=self.initial['k']) |
-                Q(ordlogcs__note__contains=self.initial['k'])
+                Q(logcs__consignee__contains=self.initial['k']) |
+                Q(logcs__area__contains=self.initial['k']) |
+                Q(logcs__address__contains=self.initial['k']) |
+                Q(logcs__tel__contains=self.initial['k']) |
+                # Q(logcs__date=datetime.date.today()) |
+                Q(logcs__stime__contains=self.initial['k']) |
+                Q(logcs__etime__contains=self.initial['k']) |
+                Q(logcs__note__contains=self.initial['k'])
             )
 
         self.oList = self.oList.filter(q)
@@ -360,7 +360,7 @@ class OrdSub(object):
         self.c = SpCnsgn(self.request).c
         self.o = Ord(self.request).o
         self.logcs = OrdLogcs()
-        self.oPay = OrdPay()
+        self.oPay = OrdFnc()
         self.oStart = OrdSats()
         self.oShip = OrdShip()
         self.oOLT = OrdLog()
@@ -406,12 +406,12 @@ class OrdSub(object):
 
         while run:
             try:
-                self.ord = OrdInfo.objects.get(sn=self.sn)
+                self.ord = Ord.objects.get(sn=self.sn)
 
             except:
                 run = False
 
-                self.ord = OrdInfo.objects.create(sn=self.sn)
+                self.ord = Ord.objects.create(sn=self.sn)
 
             else:
                 self.sn += 1
@@ -470,7 +470,7 @@ class OrdSub(object):
             item = Item.objects.getItemByItemID(id=i['itemID'])
             spec = ItemSpec.objects.getSpecBySpecID(id=i['specID']).spec
             fee = ItemFee.objects.getFeeBySpecID(id=i['specID'])
-            dis = Discount.objects.getDisByDisID(id=i['disID'])
+            dis = Dis.objects.getDisByDisID(id=i['disID'])
             nfee = forMatFee(fee.fee * Decimal(dis.dis))
 
             items.append(
@@ -598,10 +598,10 @@ class OrdSub(object):
 
         self.sn = self.o['sn']
 
-        self.ord = OrdInfo.objects.get(sn=self.sn)
+        self.ord = Ord.objects.get(sn=self.sn)
 
-        self.logcs = self.ord.ordlogcs
-        self.oPay = self.ord.ordpay
+        self.logcs = self.ord.logcs
+        self.oPay = self.ord.ordfnc
         self.oStart = self.ord.ordsats
         self.oShip = self.ord.ordship
         self.oOLT = self.ord.ordlog_set.get(Q(log=0) | Q(log=1))

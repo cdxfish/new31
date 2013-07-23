@@ -124,9 +124,9 @@ def itemonl(func):
 def ordDetr(func):
 
     def _func(request, c):
-        from order.models import OrdInfo, OrdSats
+        from order.models import Ord, OrdSats
         sn = request.GET.get('sn')
-        order =  OrdInfo.objects.get(sn=sn).ordsats
+        order =  Ord.objects.get(sn=sn).ordsats
         act = OrdSats.objects.getActTuple(order.status)
 
         if not c in act:
@@ -145,10 +145,10 @@ def ordDetr(func):
 # 物流状态操作装饰器
 def shipDetr(func):
     def _func(request, c):
-        from order.models import OrdInfo, OrdShip
+        from order.models import Ord, OrdShip
         sn = request.GET.get('sn')
-        order =  OrdInfo.objects.get(sn=sn)
-        if not order.ordlogcs.dman:
+        order =  Ord.objects.get(sn=sn)
+        if not order.logcs.dman:
             messages.error(request, u'%s - 请选择物流师傅' % sn)
 
             return rdrBck(request)
@@ -172,15 +172,15 @@ def shipDetr(func):
 # 生产状态操作装饰器
 def proDetr(func):
     def _func(request, c):
-        from produce.models import Produce
+        from produce.models import Pro
         sn = request.GET.get('sn')
-        pro =  Produce.objects.get(item=sn)
+        pro =  Pro.objects.get(item=sn)
 
-        act = Produce.objects.getActTuple(pro.status)
+        act = Pro.objects.getActTuple(pro.status)
 
         if not c in act:
 
-            messages.error(request, u'%s | %s - 无法%s' % (pro.item.ord.sn, pro.item.name, Produce.chcs[c][1]))
+            messages.error(request, u'%s | %s - 无法%s' % (pro.item.ord.sn, pro.item.name, Pro.chcs[c][1]))
 
             return rdrBck(request)
 
@@ -192,17 +192,17 @@ def proDetr(func):
 
 
 # 支付状态操作装饰器
-def payDetr(func):
+def fncDetr(func):
     def _func(request, c):
-        from order.models import OrdInfo, OrdPay
+        from order.models import Ord, OrdFnc
         sn = request.GET.get('sn')
-        pay =  OrdInfo.objects.get(sn=sn).ordpay
+        pay =  Ord.objects.get(sn=sn).ordfnc
 
-        act = OrdPay.objects.getActTuple(pay.status)
+        act = OrdFnc.objects.getActTuple(pay.status)
 
         if not c in act:
 
-            messages.error(request, u'%s - 无法%s' % (sn, OrdPay.chcs[c][1]))
+            messages.error(request, u'%s - 无法%s' % (sn, OrdFnc.chcs[c][1]))
 
             return rdrBck(request)
 

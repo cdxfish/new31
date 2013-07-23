@@ -8,5 +8,5 @@ from office.forms import *
 
 class ProFrm(bsSrchFrm):
 
-    chcs = ((-1, '全部'),) + Produce.chcs
+    chcs = ((-1, '全部'),) + Pro.chcs
     c = forms.ChoiceField(label=u'生产状态', choices=chcs, widget=forms.Select(attrs={'class': 'c' }))

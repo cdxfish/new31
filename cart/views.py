@@ -10,7 +10,6 @@ from account.models import *
 from payment.models import *
 from item.models import *
 from area.models import *
-from consignee.views import *
 from new31.func import *
 from new31.decorator import *
 import time, datetime, math
@@ -154,7 +153,7 @@ class Cart(object):
             i['disID'] = ItemFee.objects.getDisBySpecID(id=specID).id
         else:
             
-            i['disID'] = Discount.objects.getDefault().id
+            i['disID'] = Dis.objects.getDefault().id
 
         items.update({i['mark']: i}) 
 
@@ -172,7 +171,7 @@ class Cart(object):
             ii['mark'] = self.formatMark()
             ii['itemID'] = item.id
             ii['specID'] = item.itemspec_set.getDefaultSpec().id
-            ii['disID'] = Discount.objects.getDefault().id
+            ii['disID'] = Dis.objects.getDefault().id
   
             items[ii['mark']] = ii 
 
@@ -263,7 +262,7 @@ class Cart(object):
 
         item = Item.objects.getItemByItemID(id=i['itemID'])
         spec = item.itemspec_set.getSpecBySpecID(id=i['specID'])
-        dis = Discount.objects.get(id=i['disID'])
+        dis = Dis.objects.get(id=i['disID'])
         fee = spec.itemfee_set.getFeeByNomal().fee * Decimal(dis.dis)
         total = fee * int(i['num'])
 

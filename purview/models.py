@@ -1,8 +1,5 @@
 #coding:utf-8
 from django.db import models
-from django.contrib.auth.models import User
-from order.models import *
-from produce.models import *
 
 # Create your models here.
 
@@ -39,6 +36,10 @@ class elementManager(models.Manager):
 
 
 class Element(models.Model):
+    from order.models import Ord
+    from logistics.models import Logcs
+    from produce.models import Pro
+    from finance.models import Fnc
     pPath = (
                 (u'/office/', U'管理中心'),
                 (u'/order/', u'订单'),
@@ -48,18 +49,18 @@ class Element(models.Model):
                 (u'/order/edit/', u'编辑订单'),
                 (u'/order/submit/', u'提交订单'),
             ) + \
-            tuple([ (u'/order/%s/' % i, u'订单%s' % v) for i,v in OrdSats.chcs ]) + \
+            tuple([ (u'/order/%s/' % i, u'订单%s' % v) for i,v in Ord.chcs ]) + \
             (
                 (u'/back/', u'退款'),
                 (u'/logistics/', u'物流'),
                 (u'/logistics/edit/', u'编辑物流'),
                 (u'/logistics/submit/', u'提交物流'),
             ) + \
-            tuple([ (u'/logistics/%s/' % i, u'物流%s' % v) for i,v in OrdShip.chcs ]) + \
+            tuple([ (u'/logistics/%s/' % i, u'物流%s' % v) for i,v in Logcs.chcs ]) + \
             (
                 (u'/produce/', u'生产'),
             ) + \
-            tuple([ (u'/produce/%s/' % i, u'生产%s' % v) for i,v in Produce.chcs ]) + \
+            tuple([ (u'/produce/%s/' % i, u'生产%s' % v) for i,v in Pro.chcs ]) + \
             (
                 (u'/inventory/', u'备货'),
                 (u'/after/', u'售后反馈'),
@@ -71,7 +72,7 @@ class Element(models.Model):
                 (u'/party/', u'活动'),
                 (u'/finance/', u'财务'),
             ) + \
-            tuple([ (u'/finance/%s/' % i, u'财务%s' % v) for i,v in OrdPay.chcs ]) + \
+            tuple([ (u'/finance/%s/' % i, u'财务%s' % v) for i,v in Fnc.chcs ]) + \
             (
                 (u'/reimburse/', u'退款'),
                 (u'/statistics/', u'订单统计'),
@@ -123,6 +124,7 @@ class Privilege(models.Model):
 
 
 class Role(models.Model):
+    from django.contrib.auth.models import User
     chcs = (
             (-1, u'管理员'),
             (0, u'无'),

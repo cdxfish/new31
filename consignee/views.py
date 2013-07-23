@@ -94,9 +94,9 @@ class SpCnsgn:
     def setSiessionByOrd(self, sn):
         c = self.cFormat.copy()
 
-        oLogcs = OrdInfo.objects.get(sn=sn).ordlogcs
+        oLogcs = Ord.objects.get(sn=sn).logcs
 
-        orderPay = oLogcs.ord.ordpay
+        orderPay = oLogcs.ord.ordfnc
 
         try:
             pay = Pay.objects.get(name=orderPay.payName, cod=orderPay.cod).id

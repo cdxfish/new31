@@ -1,10 +1,6 @@
 #coding:utf-8
 from django import forms
-from office.forms import *
-from models import *
-from payment.models import *
-from area.models import *
-from signtime.models import *
+from office.forms import bsSrchFrm
 
 # Create your forms here.
 
@@ -16,15 +12,15 @@ def getOTpyeForm(request):
 
 
 class OrdTypeForm(forms.Form):
-
-    chcs = OrdInfo.chcs
+    from models import Ord
+    chcs = Ord.chcs
 
     oType = forms.ChoiceField(label=u'订单类型', choices=chcs, widget=forms.Select(attrs={'class': 'oType' }))
 
 
 class OrdSatsForm(bsSrchFrm):
-
-    chcs = ((-1, '全部'),) + OrdSats.chcs
+    from models import Ord
+    chcs = ((-1, '全部'),) + Ord.chcs
 
     c = forms.ChoiceField(label=u'订单状态', choices=chcs, widget=forms.Select(attrs={'class': 'c' }))
 
@@ -39,9 +35,12 @@ class ItemsForm(object):
 
     @staticmethod
     def _getItemForms(item):
+        from item.models import ItemSpec
+        from discount.models import Dis
+
         mark = item['mark']
         speChcs = ItemSpec.objects.getTupleByItemID(item['item'].id)
-        disChcs = Discount.objects.getTupleByAll()
+        disChcs = Dis.objects.getTupleByAll()
 
         class orderItemForm(forms.Form):
 

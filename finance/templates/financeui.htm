@@ -16,9 +16,9 @@
           <tr align="center" class="tr_border_top_black">
             <td>{{ i.get_typ_display }}</td>
             <td><a href="{{ request.paths.订单 }}{{ i.sn }}/">{{ i.sn }}</a></td>
-            <td>{{ i.ordlogcs.consignee }} [ {{ i.ordlogcs.tel }} ]</td>
-            <td>200.00 | 11.00 | 189.00 | {{ i.ordpay.name }}</td>
-            <td>{{ i.ordsats.get_status_display }} | {{ i.ordpay.get_status_display }} | {{ i.ordship.get_status_display }}</td>
+            <td>{{ i.logcs.consignee }} [ {{ i.logcs.tel }} ]</td>
+            <td>200.00 | 11.00 | 189.00 | {{ i.ordfnc.name }}</td>
+            <td>{{ i.ordsats.get_status_display }} | {{ i.ordfnc.get_status_display }} | {{ i.ordship.get_status_display }}</td>
             {% optr i %}
           </tr>
 {% for item in i.orditem_set.all %}
@@ -33,15 +33,15 @@
 {% endfor %}
           <tr>
             <td align="center">地址</td>
-            <td colspan="5"><a href="{{ request.paths.地图 }}?k={{ i.ordlogcs.address }}" target="_blank">{{ i.ordlogcs.address }}</a></td>
+            <td colspan="5"><a href="{{ request.paths.地图 }}?k={{ i.logcs.address }}" target="_blank">{{ i.logcs.address }}</a></td>
           </tr>
           <tr align="center">
             <td>时间</td>
-            <td align="left">{{ i.ordlogcs.date|date:"Y-m-d" }} | {{ i.ordlogcs.stime|time:"H:i" }} - {{ i.ordlogcs.etime|time:"H:i" }}</td>
+            <td align="left">{{ i.logcs.date|date:"Y-m-d" }} | {{ i.logcs.stime|time:"H:i" }} - {{ i.logcs.etime|time:"H:i" }}</td>
             <td>预发货</td>
-            <td>{{ i.ordlogcs.lstime|time:"H:i" }}</td>
-            <td>{{ i.ordlogcs.get_advance_display }}</td>
-            <td>{{ i.ordlogcs.dman.first_name }}{{ i.ordlogcs.dman.last_name }}</td>
+            <td>{{ i.logcs.lstime|time:"H:i" }}</td>
+            <td>{{ i.logcs.get_advance_display }}</td>
+            <td>{{ i.logcs.dman.first_name }}{{ i.logcs.dman.last_name }}</td>
           </tr>             
           <tr>
             <td align="center">备注</td>

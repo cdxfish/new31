@@ -28,9 +28,9 @@ def sortList(oList):
     _oList = {}
     for i in oList:
         
-        date = u'%s' % i.ordlogcs.date
-        lstime = u'%s' % i.ordlogcs.lstime
-        advance = u'%s' % i.ordlogcs.get_advance_display()
+        date = u'%s' % i.logcs.date
+        lstime = u'%s' % i.logcs.lstime
+        advance = u'%s' % i.logcs.get_advance_display()
 
         i.items = [ ii for ii in i.items if ii.produce.status ]
 
@@ -75,7 +75,7 @@ class ProCon(object):
 
 
     def cCon(self, sn, c):
-        item = Produce.objects.get(item=sn)
+        item = Pro.objects.get(item=sn)
 
         item.status = c
 
@@ -115,7 +115,7 @@ class ProSerch(OrdSerch):
         return self
 
     def range(self):
-        self.oList = self.oList.filter(ordlogcs__date__range=(self.initial['s'], self.initial['e']))
+        self.oList = self.oList.filter(logcs__date__range=(self.initial['s'], self.initial['e']))
 
         return self
 
@@ -133,7 +133,7 @@ class ProPur(OrdPur):
     """
     def __init__(self, oList, request):
         super(ProPur, self).__init__(oList, request)
-        pro = Produce
+        pro = Pro
         self.chcs = pro.chcs
         self.path = request.paths[u'生产']
         self.action = pro.act
@@ -154,7 +154,7 @@ class ProPur(OrdPur):
                 try:
                     status = ii.produce.status
                 except Exception, e:
-                    status = Produce.objects.create(item=ii).status #关联外键
+                    status = Pro.objects.create(item=ii).status #关联外键
 
                 ii.action[self.path] = self.action[status]
 

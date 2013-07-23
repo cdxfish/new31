@@ -56,7 +56,7 @@ def changepwd(request):
 
 def myOrd(request):
 
-    orders = OrdInfo.objects.getOrdByUser(request.user.id)
+    orders = Ord.objects.getOrdByUser(request.user.id)
 
     return render_to_response('myorder.htm', locals(), context_instance=RequestContext(request))
 

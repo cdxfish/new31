@@ -6,7 +6,6 @@ from django.core.exceptions import *
 from item.models import *
 from shop.views import *
 from cart.views import *
-from consignee.views import *
 from order.views import *
 import json
 
@@ -93,14 +92,14 @@ def cAdv(request, kwargs):
     value = int(request.GET.get('value', 0))
     from order.models import OrdLogcs
 
-    ordlogcs = OrdLogcs.objects.get(ord=sn)
+    logcs = OrdLogcs.objects.get(ord=sn)
 
-    if ordlogcs.ord.ordship.status > 1:
+    if logcs.ord.ordship.status > 1:
         return AjaxRJson.message(u'无法修改表单数据').dumps()
 
-    ordlogcs.advance = value
+    logcs.advance = value
 
-    ordlogcs.save()
+    logcs.save()
 
     data = {}
     data['sn'] = sn
@@ -115,19 +114,19 @@ def cDman(request, kwargs):
     value = int(request.GET.get('value', 0))
 
     from order.models import OrdLogcs
-    ordlogcs = OrdLogcs.objects.get(ord=sn)
+    logcs = OrdLogcs.objects.get(ord=sn)
 
-    if ordlogcs.ord.ordship.status > 1:
+    if logcs.ord.ordship.status > 1:
         return AjaxRJson.message(u'无法修改表单数据').dumps()
 
     if value:
         from django.contrib import auth
         user = auth.models.User.objects.get(id=value)
-        ordlogcs.dman = user
+        logcs.dman = user
     else:
-        ordlogcs.dman = None
+        logcs.dman = None
 
-    ordlogcs.save()
+    logcs.save()
 
     data = {}
     data['sn'] = sn
@@ -141,9 +140,9 @@ def cLogcs(request, func):
     value = int(request.GET.get('value', 0))
 
     from order.models import OrdLogcs
-    ordlogcs = OrdLogcs.objects.get(ord=sn)
+    logcs = OrdLogcs.objects.get(ord=sn)
 
-    if ordlogcs.ord.ordship.status > 1:
+    if logcs.ord.ordship.status > 1:
         return AjaxRJson.message(u'无法修改表单数据').dumps()
 
     return func()

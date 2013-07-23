@@ -18,7 +18,7 @@ class disManager(models.Manager):
         return  self.get(onl=True,id=id)
 
     
-class Discount(models.Model):
+class Dis(models.Model):
     chcs = (
             (1.0, u'原价'),
             (0.95, u'9.5 折'),

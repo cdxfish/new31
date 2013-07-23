@@ -166,7 +166,7 @@ class ItemFee(models.Model):
     spec = models.ForeignKey(ItemSpec, verbose_name=u'规格')
     fee = models.DecimalField(u'单价', max_digits=10, decimal_places=2)
     typ = models.SmallIntegerField(u'类型', default=0, choices=chcs)
-    dis = models.ForeignKey(Discount, verbose_name=u'折扣')
+    dis = models.ForeignKey(Dis, verbose_name=u'折扣')
 
     objects = itemFeeManager()
 

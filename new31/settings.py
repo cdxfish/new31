@@ -149,6 +149,10 @@ APPS = {
     'payment':{
             'tempContext':'',
             'middleware':'',
+        },        
+    'deliver':{
+            'tempContext':'',
+            'middleware':'',
         },
     'signtime':{
             'tempContext':'',
@@ -158,14 +162,14 @@ APPS = {
             'tempContext':'',
             'middleware':'',
         },
-    'cart':{
-            'tempContext':'',
-            'middleware':'cart.middleware.CartMiddleware',
-        },
-    'consignee':{
-            'tempContext':'',
-            'middleware':'consignee.middleware.ConsigneeMiddleware',
-        },
+    # 'cart':{
+    #         'tempContext':'',
+    #         'middleware':'cart.middleware.CartMiddleware',
+    #     },
+    # 'consignee':{
+    #         'tempContext':'',
+    #         'middleware':'consignee.middleware.ConsigneeMiddleware',
+    #     },
     'logistics':{
             'tempContext':'',
             'middleware':'',

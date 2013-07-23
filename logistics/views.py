@@ -2,7 +2,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
-from consignee.forms import *
+
 from purview.models import *
 from purview.views import *
 from order.models import *
@@ -110,8 +110,8 @@ class Ship(object):
         self.o = Ord(self.request).o
 
     def lCon(self, sn, c):
-        from order.models import OrdInfo
-        ship =  OrdInfo.objects.get(sn=sn).ordship
+        from order.models import Ord
+        ship =  Ord.objects.get(sn=sn).ordship
 
         ship.status = c
 
@@ -146,7 +146,7 @@ class LogcsSerch(OrdSerch):
         return self
 
     def range(self):
-        self.oList = self.oList.filter(ordlogcs__date__range=(self.initial['s'], self.initial['e']))
+        self.oList = self.oList.filter(logcs__date__range=(self.initial['s'], self.initial['e']))
 
         return self
 

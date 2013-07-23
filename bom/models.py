@@ -4,7 +4,7 @@ from order.models import *
 
 # Create your models here.
 
-class Produce(models.Model):
+class Pro(models.Model):
     chcs = (
             (0, u'未产'),
             (1, u'产中'),

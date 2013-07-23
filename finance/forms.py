@@ -1,12 +1,12 @@
 #coding:utf-8
 from django import forms
-from order.models import *
-from office.forms import *
+from office.forms import bsSrchFrm
 
 # Create your forms here.
 
 
-class financeForm(bsSrchFrm):
-
-    chcs = ((-1, '全部'),) + OrdPay.chcs
+class fncFrm(bsSrchFrm):
+    from models import Fnc
+    
+    chcs = ((-1, '全部'),) + Fnc.chcs
     c = forms.ChoiceField(label=u'支付状态', choices=chcs, widget=forms.Select(attrs={'class': 'c' }))

@@ -12,7 +12,7 @@ def fncUI(request):
 
     o = FncSerch(request)
 
-    form = financeForm(initial=o.initial)
+    form = fncFrm(initial=o.initial)
 
     oList = o.search().status().range().page()
     oList = FncPur(oList, request).getOrds()
@@ -20,7 +20,7 @@ def fncUI(request):
     return render_to_response('financeui.htm', locals(), context_instance=RequestContext(request))
 
 
-@payDetr
+@fncDetr
 def fCon(request, c):
 
     FncPrt(request).cCon(request.GET.get('sn'), c)
@@ -41,8 +41,8 @@ class FncPrt(object):
 
 
     def cCon(self, sn, c):
-        from order.models import OrdInfo
-        pay =  OrdInfo.objects.get(sn=sn).ordpay
+        from order.models import Ord
+        pay =  Ord.objects.get(sn=sn).ordfnc
 
         pay.status = c
 
@@ -75,7 +75,7 @@ class FncSerch(OrdSerch):
         return self
 
     def range(self):
-        self.oList = self.oList.filter(ordlogcs__date__range=(self.initial['s'], self.initial['e']))
+        self.oList = self.oList.filter(logcs__date__range=(self.initial['s'], self.initial['e']))
 
         return self
 
@@ -95,7 +95,7 @@ class FncPur(OrdPur):
         super(FncPur, self).__init__(oList, request)
         self.path = request.paths[u'财务']
 
-        opay = OrdPay
+        opay = OrdFnc
         self.chcs = opay.chcs
         self.action = opay.act
 
@@ -106,6 +106,6 @@ class FncPur(OrdPur):
             if not hasattr(i,'action'):
                 i.action = {}
 
-            i.action[self.path] = self.action[i.ordpay.status]
+            i.action[self.path] = self.action[i.ordfnc.status]
 
         return self
