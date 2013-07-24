@@ -17,8 +17,8 @@
             <td>{{ i.get_typ_display }}</td>
             <td><a href="{{ request.paths.订单 }}{{ i.sn }}/">{{ i.sn }}</a></td>
             <td>{{ i.logcs.consignee }} [ {{ i.logcs.tel }} ]</td>
-            <td>{{ i.fee.paid|stringformat:"0.2f" }} | {{ i.fee.kpchng|stringformat:"0.2f" }} | {{ i.fee.total|stringformat:"0.2f" }} | {{ i.ordfnc.name }}</td>
-            <td>{{ i.ordsats.get_status_display }} | {{ i.ordfnc.get_status_display }} | {{ i.ordship.get_status_display }}</td>
+            <td>{{ i.fee.paid|stringformat:"0.2f" }} | {{ i.fee.kpchng|stringformat:"0.2f" }} | {{ i.fee.total|stringformat:"0.2f" }} | {{ i.fnc.name }}</td>
+            <td>{{ i.get_status_display }} | {{ i.fnc.get_status_display }} | {{ i.ordship.get_status_display }}</td>
             {% optr i %}
           </tr>
 {% for item in i.items %}

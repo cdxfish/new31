@@ -1,12 +1,9 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponse
-from models import *
-from forms import *
-from order.views import *
-from purview.views import *
-from signtime.models import *
+from new31.decorator import proDetr
+from order.views import OrdSerch, OrdPur
+
 
 # Create your views here.
 
@@ -96,7 +93,7 @@ class ProSerch(OrdSerch):
         super(ProSerch, self).__init__(request)
 
     def search(self):
-        self.oList = self.baseSearch().oList.filter(ordsats__status__gt = 1)
+        self.oList = self.baseSearch().oList.filter(ord__status__gt = 1)
 
         return self
 

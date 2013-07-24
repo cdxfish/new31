@@ -8,11 +8,11 @@
             <table width="100%" class="mBottom10">
                 <tr>
                     <td width="100px">付款方式：</td>
-                    <td><strong>{{ pay.name }}</strong></td>
+                    <td><strong>{{ fInfo.pay.get_cod_display }}</strong></td>
                 </tr>
                 <tr>
                     <td>配送方式：</td>
-                    <td><strong>送货上门</strong></td>
+                    <td><strong>{{ cInfo.dlvr.get_cod_display }}</strong></td>
                 </tr>
             </table>
             <h3>商品列表</h3>
@@ -61,27 +61,27 @@
                     <td></td>
                 </tr>
             </table>
-            <h3>收货人信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/consignee/" class="btnB sBtn">修改</a></h3>
+            <h3>收货人信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/cart/consignee/" class="btnB sBtn">修改</a></h3>
             <table width="100%" class="mBottom10">
                 <tr>
                     <td width="100px">收货人姓名：</td>
-                    <td>{{ request.session.c.consignee }}</td>
+                    <td>{{ cInfo.consignee }}</td>
                 </tr>
                 <tr>
                     <td>详细地址：</td>
-                    <td>[ {{ area.sub.name }} - {{ area.name }} ]&nbsp;&nbsp;{{ request.session.c.address }}</td>
+                    <td>[ {{ cInfo.area.sub.name }} - {{ cInfo.area.name }} ]&nbsp;&nbsp;{{ cInfo.address }}</td>
                 </tr>
                 <tr>
                     <td>电话：</td>
-                    <td>{{ request.session.c.tel }}</td>
+                    <td>{{ cInfo.tel }}</td>
                 </tr>
                 <tr>
                     <td>最佳收货时间：</td>
-                    <td>{{ request.session.c.date }}&nbsp;&nbsp;{{ time.start|time:"H:i" }} - {{ time.end|time:"H:i" }}</td>
+                    <td>{{ cInfo.date }}&nbsp;&nbsp;{{ cInfo.time.start|time:"H:i" }} - {{ cInfo.time.end|time:"H:i" }}</td>
                 </tr>
                 <tr>
                     <td>备注：</td>
-                    <td>{{ request.session.c.note }}</td>
+                    <td>{{ cInfo.note }}</td>
                 </tr>
             </table>
             <center>

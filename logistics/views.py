@@ -2,18 +2,9 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
-
-from purview.models import *
-from purview.views import *
-from order.models import *
-from order.views import *
-from produce.views import *
-from finance.views import *
-from new31.func import *
-from forms import *
 import time,datetime
-
-from django.conf import settings
+from new31.decorator import shipDetr
+from order.views import OrdSerch, OrdPur
 
 # Create your views here.
 
@@ -105,8 +96,8 @@ class Ship(object):
     """
     def __init__(self, request):
         self.request  = request
-        from consignee.views import SpCnsgn
-        self.c = SpCnsgn(self.request).c
+        from consignee.views import Cnsgn
+        self.c = Cnsgn(self.request).c
         self.o = Ord(self.request).o
 
     def lCon(self, sn, c):
@@ -124,6 +115,167 @@ class Ship(object):
 
         return rdrRange(self.request.paths[u'物流'], self.c['date'], self.o['sn'])
 
+
+class Cnsgn(object):
+    """
+        联系人信息
+    """
+    def __init__(self, request):
+
+        from deliver.models import Deliver
+        from area.models import Area
+        from signtime.models import SignTime
+
+        self.request = request
+        self.c = request.session.get('c')
+        
+        try:
+            dlvrID = Deliver.objects.getDefault().id
+        except:
+            dlvrID = 0
+
+        try:
+            areaID = Area.objects.getDefault().id
+        except:
+            areaID = 0
+
+        try:
+            signID = SignTime.objects.getDefault().id
+        except:
+            signID = 0
+        
+        self.cFormat = {
+                            'dlvr': dlvrID, 
+                            'consignee':'', 
+                            'area': areaID, 
+                            'address':'', 
+                            'tel':'', 
+                            'date': '%s' % datetime.date.today(), 
+                            'time': signID,
+                            'note':'',
+                        } 
+
+    def setSeesion(self):
+        s = self.c
+
+        for v,i in self.request.REQUEST.items():
+            # 用于下拉框默认值,使得过滤器辨别为false
+            if i == '0':
+                s[v] = 0
+            else:
+                s[v] = i
+
+        return self.setConsignee(s)
+
+    def setSsn(self, i, v):
+        if v == '0':
+            self.c[i] = 0
+        else:
+            self.c[i] = v
+    
+
+        return self.setConsignee(self.c)
+
+    def clear(self):
+
+        return self.setConsignee(self.cFormat)
+
+    def setConsignee(self, c):
+        self.request.session['c'] = c
+
+        self.c = c
+
+        return self
+
+    def frmtCnsgn(self):
+        if not self.c:
+
+            self.setConsignee(self.cFormat)
+
+        c = self.c
+
+        toDay = time.gmtime()
+        cDate = time.strptime(c['date'], '%Y-%m-%d')
+
+        if cDate < toDay or not c['date']:
+            c['date'] = '%s' % datetime.date.today()
+
+
+        return self.setConsignee(c)
+
+    def setSiessionByOrd(self, sn):
+        from payment.models import Pay
+        from deliver.models import Deliver
+        from area.models import Area
+        from signtime.models import SignTime
+
+        c = self.cFormat.copy()
+
+        oLogcs = Ord.objects.get(sn=sn).logcs
+
+        orderPay = oLogcs.ord.fnc
+
+        try:
+            pay = Pay.objects.get(name=orderPay.payName, cod=orderPay.cod).id
+        except Exception, e:
+            pay = Pay.objects.getDefault().id
+
+
+        try:
+            dlvr = Deliver.objects.get(name=orderPay.payName, cod=orderPay.cod).id
+        except Exception, e:
+            dlvr = Deliver.objects.getDefault().id
+
+
+        _area = oLogcs.area.split(' - ')
+        try:
+            area = Area.objects.get(name=_area[1]).id
+        except Exception, e:
+            area = Area.objects.getDefault().id
+
+
+        try:
+            time = SignTime.objects.get(stime=oLogcs.start, etime=oLogcs.end).id
+        except Exception, e:
+            time = SignTime.objects.getDefault().id
+
+
+        c['user'] = oLogcs.ord.user
+        c['pay'] = pay
+        c['dlvr'] = dlvr
+        c['consignee'] = oLogcs.consignee
+        c['area'] = area
+        c['address'] = oLogcs.address
+        c['tel'] = oLogcs.tel
+        c['date'] = '%s' % oLogcs.date
+
+        c['time'] = time
+        c['note'] = oLogcs.note
+
+        return self.setConsignee(c)
+
+
+    def getObj(self):
+        
+        from deliver.models import Deliver
+        from signtime.models import SignTime
+        from area.models import Area
+
+        dlvr = Deliver.objects.getDlvrById(id=self.c['dlvr'])
+        time = SignTime.objects.getTimeById(id=self.c['time'])
+        area = Area.objects.getAreaById(id=self.c['area'])
+
+        self.obj = self.c.copy()
+        self.obj['dlvr'] = dlvr
+        self.obj['time'] = time
+        self.obj['area'] = area
+
+        return self.obj
+
+
+
+
+
 class LogcsSerch(OrdSerch):
     """ 
         订单基本信息类
@@ -135,7 +287,7 @@ class LogcsSerch(OrdSerch):
         super(LogcsSerch, self).__init__(request)
 
     def search(self):
-        self.oList = self.baseSearch().oList.filter(ordsats__status__gt = 1)
+        self.oList = self.baseSearch().oList.filter(ord__status__gt = 1)
 
         return self
 

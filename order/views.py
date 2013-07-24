@@ -1,30 +1,24 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
-from django.template import RequestContext
-from django.http import HttpResponseRedirect, HttpResponse
-from django.conf import settings
-from django.contrib import messages, auth
 from django.db.models import Q
-from new31.decorator import *
-from new31.func import *
-from signtime.models import *
-from area.models import *
-from item.models import *
-from payment.models import *
-from models import *
-from forms import *
-from decimal import *
-# from consignee.forms import *
-from purview.views import *
+from django.template import RequestContext
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+from new31.decorator import checkPOST, ordDetr, rdrBckDr, subFailRemind
+from new31.func import forMatFee, rdrRange, page
+from purview.views import BsPur
+from decimal import Decimal
 import time, datetime
 
 # Create your views here.
 
 # 订单列表显示页面
 def ordList(request):
+    from forms import OrdSrchFrm
+
     o = OrdSerch(request)
 
-    form = OrdSatsForm(initial=o.initial)
+    form = OrdSrchFrm(initial=o.initial)
 
     oList = o.baseSearch().chcs().range().page()
     oList = OrdPur(oList, request).getOrds()
@@ -35,20 +29,20 @@ def ordList(request):
 # 后台订单提交,提交成功后进行页面跳转至订单列表
 @checkPOST
 def submit(request):
-    from consignee.views import SpCnsgn
-    SpCnsgn(request).setSeesion()
+    from logistics.views import Cnsgn
+    Cnsgn(request).setSeesion()
 
     return OrdSub(request).submit().redirOrd()
 
 # 后台新单编辑操作编辑页面
 def newOrdUI(request):
-    Ord(request).setStoZero()
+    OrdSess(request).setStoZero()
 
     return editUI(request)
 
 @ordDetr
 def editOrd(request, c):
-    o = Ord(request)
+    o = OrdSess(request)
     o.cCon(request.GET.get('sn'), c)
     o.setSessBySN(request.GET.get('sn'))
 
@@ -58,26 +52,30 @@ def editOrd(request, c):
 # 后台订单编辑操作编辑页面@
 def editUI(request):
     from cart.views import Cart
+    from forms import ItemsForm, ordForm
+    from logistics.forms import cnsgnForm
+    from finance.forms import fncFrm
 
     items = Cart(request).showItemToCart()
 
     ItemsForm.getItemForms(items['items'])
 
-    form = conFrm(request)
+    cnsgn = cnsgnForm(request)
+    fnc = fncFrm(request)
 
-    oTypeForm = getOTpyeForm(request)
+    ord = ordForm(request)
 
     return render_to_response('orderneworedit.htm', locals(), context_instance=RequestContext(request))
 
 
 def copyOrd(request,c):
-    Ord(request).setSessBySN(int(request.GET.get('sn')))
+    OrdSess(request).setSessBySN(int(request.GET.get('sn')))
 
     return HttpResponseRedirect(request.paths[u'新订单'])
 
 @ordDetr
 def cCon(request, c):
-    Ord(request).cCon(request.GET.get('sn'), c)
+    OrdSess(request).cCon(request.GET.get('sn'), c)
 
     return rdrBck(request)
 
@@ -108,7 +106,7 @@ def delItemToOrd(request, kwargs):
     return Cart(request).clearItemByMark(kwargs['mark'])
 
 
-class Ord(object):
+class OrdSess(object):
     """ 
         订单基本信息类
 
@@ -116,12 +114,15 @@ class Ord(object):
 
     """
     def __init__(self, request):
+        from models import Ord
+        # from django.contrib.auth.models import User
         self.request = request
         self.o = self.request.session.get('o')
         self.oFormat =  {
-                        'typ': Ord.chcs[0][0],
-                        'status': OrdSats.chcs[0][0],
+                        'typ': Ord.typs[0][0],
+                        'status': Ord.chcs[0][0],
                         'sn': 0,
+                        'user': self.request.user.username,
             }
 
     # 初始化seesion中用于存储订单的基本操作信息字典
@@ -139,7 +140,7 @@ class Ord(object):
         return self.setSeesion(self.oFormat)
 
     def cCon(self, sn, c):
-        order =  Ord.objects.get(sn=sn).ordsats
+        order =  Ord.objects.get(sn=sn)
 
         order.status = c
 
@@ -167,8 +168,8 @@ class Ord(object):
         return self.setStoOne()
 
     def cpyCongn(self, sn):
-        from consignee.views import SpCnsgn
-        sCongn = SpCnsgn(self.request)
+        from consignee.views import Cnsgn
+        sCongn = Cnsgn(self.request)
         c = sCongn.cFormat.copy()
 
         oLogcs = Ord.objects.get(sn=sn).logcs
@@ -188,7 +189,7 @@ class Ord(object):
             time = SignTime.objects.getDefault().id
 
         c['user'] = oLogcs.ord.user
-        c['pay'] = oLogcs.ord.ordfnc.cod.id
+        c['pay'] = oLogcs.ord.fnc.cod.id
         c['consignee'] = oLogcs.consignee
         c['area'] = area
         c['address'] = oLogcs.address
@@ -246,6 +247,8 @@ class OrdSerch(object):
 
     """
     def __init__(self, request):
+        from models import Ord
+
         self.request = request
 
         self.oList = Ord.objects.select_related().all()
@@ -286,13 +289,13 @@ class OrdSerch(object):
 
     def chcs(self):
             if self.initial['c'] >= 0:
-                self.oList = self.oList.filter(ordsats__status=self.initial['c'])
+                self.oList = self.oList.filter(status=self.initial['c'])
 
             return self
 
     def range(self):
 
-        self.oList = self.oList.filter((Q(ordlog__log=0) | Q(ordlog__log=1)), ordlog__time__range=(self.initial['s'], self.initial['e']) )
+        self.oList = self.oList.filter((Q(ordlog__typ=0) | Q(ordlog__typ=1)), ordlog__time__range=(self.initial['s'], self.initial['e']) )
 
         return self
 
@@ -301,7 +304,7 @@ class OrdSerch(object):
         return page(l=self.oList, p=int(self.request.GET.get('p', 1)))
 
 
-class OrdPur(OrdPur):
+class OrdPur(BsPur):
     """
         订单列表权限加持
 
@@ -312,12 +315,13 @@ class OrdPur(OrdPur):
     """
 
     def __init__(self, oList, request):
+        from models import Ord
+
         super(OrdPur, self).__init__(oList, request)
         self.path = request.paths[u'订单']
 
-        order =  OrdSats
-        self.chcs = order.chcs
-        self.action = order.act
+        self.chcs = Ord.chcs
+        self.action = Ord.act
 
 
     # 获取订单可选操作项
@@ -327,7 +331,7 @@ class OrdPur(OrdPur):
             if not hasattr(i,'action'):
                 i.action = {}
 
-            i.action[self.path] = self.action[i.ordsats.status]
+            i.action[self.path] = self.action[i.status]
 
         return self
 
@@ -354,16 +358,9 @@ class OrdSub(object):
     def __init__(self, request):
         self.request = request
         self.error = False
-        from cart.views import Cart
-        self.items = Cart(self.request).items
-        from consignee.views import SpCnsgn
-        self.c = SpCnsgn(self.request).c
-        self.o = Ord(self.request).o
-        self.logcs = OrdLogcs()
-        self.oPay = OrdFnc()
-        self.oStart = OrdSats()
-        self.oShip = OrdShip()
-        self.oOLT = OrdLog()
+
+        self.o = OrdSess(self.request).o
+
 
     def submit(self):
 
@@ -373,18 +370,16 @@ class OrdSub(object):
         else:
             self.newSn()
 
-        self.infoSubmit()
-        self.logcsSub()
-        self.itemSub()
-        self.paySub()
-        self.shipSub()
-        self.oSatSub()
-        self.logSub()
-        self.subDone()
+        self.pushOrd()
+        self.logcs()
+        self.pro()
+        self.fnc()
+        self.log()
+        self.done()
 
         # 异常时对数据库进行处理
-        # if self.error:
-        #     self.delNewOrd()
+        if self.error:
+            self.delNewOrd()
 
         return self
 
@@ -400,8 +395,9 @@ class OrdSub(object):
 
     # 锁定新订单进行订单号占位
     def newSn(self):
-        self.sn = self.getNewOrdSn()
+        from models import Ord
 
+        self.sn = self.getNewOrdSn()
         run = True
 
         while run:
@@ -421,128 +417,51 @@ class OrdSub(object):
 
     # 插入订单基本信息
     @subFailRemind(u'会员不存在，无法提交订单基本信息。')
-    def infoSubmit(self):
-        if self.c['user']:
-            self.ord.user= auth.models.User.objects.get(username=self.c['user'])
+    def pushOrd(self):
+        from models import Ord
 
-        self.ord.typ = self.o['typ']
-        self.ord.save()
-
+        Ord.objects.saveOrd(self.ord, self.request)
         return self
 
 
     # 物流信息提交
     @subFailRemind(u'无法提交物流信息。')
-    def logcsSub(self):
+    def logcs(self):
 
-        logisticsTimeAvdce = 1 # 默认偏移1hour
+        from logistics.models import Logcs
 
-        time = SignTime.objects.get(id=self.c['time'], onl=True)
-
-        area = Area.objects.get(id= self.c['area'], onl=True)
-
-        self.logcs.consignee = self.c['consignee']
-        self.logcs.area = '%s - %s' % (area.sub.name, area.name)
-        self.logcs.address = self.c['address']
-        self.logcs.tel = self.c['tel']
-        self.logcs.date = self.c['date']
-        self.logcs.stime = time.start
-        self.logcs.etime = time.end
-        self.logcs.lstime = time.start.replace(hour = time.start.hour - logisticsTimeAvdce)
-        self.logcs.letime = time.end.replace(hour = time.end.hour - logisticsTimeAvdce)
-        self.logcs.note = self.c['note']
-
-        self.logcs.ord = self.ord
-
-        self.logcs.save()
+        Logcs.objects.saveLogcs(self.ord, self.request)
 
         return self
 
 
     # 商品信息提交
     @subFailRemind(u'部分商品已下架，无法提交商品信息。')
-    def itemSub(self):
+    def pro(self):
+        from produce.models import Pro
 
-        items = []
-
-        for v,i in self.items.items():
-
-            item = Item.objects.getItemByItemID(id=i['itemID'])
-            spec = ItemSpec.objects.getSpecBySpecID(id=i['specID']).spec
-            fee = ItemFee.objects.getFeeBySpecID(id=i['specID'])
-            dis = Dis.objects.getDisByDisID(id=i['disID'])
-            nfee = forMatFee(fee.fee * Decimal(dis.dis))
-
-            items.append(
-                OrdItem(
-                    ord=self.ord,
-                    name=item.name,
-                    sn=item.sn,
-                    spec=spec.value,
-                    num=i['num'],
-                    fee=fee.fee,
-                    dis=dis.dis,
-                    nfee=nfee
-                    )
-                )
-
-        OrdItem.objects.bulk_create(items)
+        Pro.objects.savePro(self.ord, self.request)
 
         return self
 
     # 支付信息提交
-    @subFailRemind(u'无法提交支付信息提交。')
-    def paySub(self):
+    @subFailRemind(u'无法提交财务信息。')
+    def fnc(self):
+        from finance.models import Fnc
 
-        pay = Pay.objects.getPayById(id=self.c['pay'])
+        Fnc.objects.saveFnc(self.ord, self.request)
 
-        self.oPay.ord = self.ord
-        self.oPay.cod = pay
-
-        self.oPay.save()
 
         return self
 
-
-    # 配送方式信息提交
-    @subFailRemind(u'无法提交配送方式信息。')
-    def shipSub(self):
-
-        # ship = Pay.objects.getPayById(id=self.c['ship'])
-
-        self.oShip.ord = self.ord
-        # self.oShip.name = ship.name
-        # self.oShip.cod = ship.cod
-
-        self.oShip.name = u'市内免费送货上门'
-        self.oShip.cod = u'fditc'
-
-        self.oShip.save()
-
-        return self
-
-
-    # 订单状态提交
-    @subFailRemind(u'无法提订单状态。')
-    def oSatSub(self):
-
-        self.oStart.ord = self.ord
-
-        self.oStart.save()
-
-        return self
 
 
     # 订单日志提交
     @subFailRemind(u'无法提交订单日志。')
-    def logSub(self):
+    def log(self):
+        from log.models import OrdLog
 
-        self.oOLT.ord = self.ord
-        self.oOLT.user = self.request.user
-        if self.o['status']:
-            self.oOLT.log = 1
-
-        self.oOLT.save()
+        OrdLog.objects.saveLog(self.ord, self.request)
 
         return self
 
@@ -556,13 +475,15 @@ class OrdSub(object):
 
     # 订单提交完成
     @subFailRemind(u'订单提交无法完成。')
-    def subDone(self):
+    def done(self):
         from cart.views import Cart
-        Cart(self.request).clear()
-        from consignee.views import SpCnsgn
-        SpCnsgn(self.request).clear()
-        Ord(self.request).clear()
+        from logistics.views import Cnsgn
+        from finance.views import FncSess
 
+        Cart(self.request).clear()
+        Cnsgn(self.request).clear()
+        OrdSess(self.request).clear()
+        FncSess(self.request).clear()
 
         return self
 
@@ -580,12 +501,13 @@ class OrdSub(object):
 
     # 重定向至订单列表页
     def redirOrd(self):
+        from logistics.views import Cnsgn
         if self.error:
             return self.showError()
         else:
             messages.success(self.request, u'订单提交成功: %s' % self.sn)
 
-            return rdrRange(self.request.paths[u'订单'], self.c['date'], self.sn)
+            return rdrRange(self.request.paths[u'订单'], Cnsgn(self.request).c['date'], self.sn)
 
     # 粗粒用户级错误提示
     def showError(self):
@@ -601,8 +523,8 @@ class OrdSub(object):
         self.ord = Ord.objects.get(sn=self.sn)
 
         self.logcs = self.ord.logcs
-        self.oPay = self.ord.ordfnc
-        self.oStart = self.ord.ordsats
+        self.oPay = self.ord.fnc
+        self.oStart = self.ord
         self.oShip = self.ord.ordship
         self.oOLT = self.ord.ordlog_set.get(Q(log=0) | Q(log=1))
 

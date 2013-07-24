@@ -7,7 +7,7 @@ urlpatterns = patterns('',
     (r'^itemmore\/$',getItemPin),
     (r'^itemspec\/(?P<specID>\d+)\/$',getItemSpec),  #获取规格
     (r'^itemnum\/(?P<mark>\d+)\/(?P<num>\d+)\/$', ajaxChangNum),
-    (r'^ccon\/$', cConsigneeByAjax),
+    (r'^ccon\/$', cCnsgnByAjax),
     (r'^cotype\/$', coTypeByAjax),
     (r'^cadvance\/$', cAdv),
     (r'^cdman\/$', cDman),

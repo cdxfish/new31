@@ -11,12 +11,12 @@ c = {
         var color = obj.css('color');
 
         var cssFormat = function() {
-            if (!obj.val()) {
-                obj.css({
-                    "color": "#CCCCCC"
-                }).val(str);
+                if (!obj.val()) {
+                    obj.css({
+                        "color": "#CCCCCC"
+                    }).val(str);
+                }
             }
-        }
 
         cssFormat();
 
@@ -40,14 +40,9 @@ c = {
 
             var message = "";
 
-            // if (!$('#id_pay').val()) {
-            //     message += '请选择支付方式!<br />';
-            // }
-
-            // if ($('#ship').val() == 0) {
-            //     message += '请选择配送方式!<br />';
-            // }
-
+            if ($('#id_dlvr').val() == 0) {
+                message += '请选择配送方式!<br />';
+            }
             if (!$('#id_consignee').val()) {
                 message += '请填写收货人姓名!<br />';
             }
@@ -73,7 +68,7 @@ c = {
                 message += '请填写最佳送货时间!<br />';
             }
 
-            if (!! message) {
+            if ( !! message) {
                 $.dialog.message(message);
 
                 return false;
@@ -96,13 +91,15 @@ c = {
         function() {
             var name = $(this).attr('name');
             var value = $(this).val();
+            $(this).ajaxDialog(function() {
+                $.getJSON('/ajax/ccon/?' + name + '=' + value,
 
-            $.getJSON(
-                '/ajax/ccon/?' + name + '=' + value,
+                function(data) {
+                    $.dialog.msg(data);
+                })
 
-            function(data) {
-                $.dialog.dialogMsgAndReload(data);
-            })
+            });
+
 
         });
         return this;

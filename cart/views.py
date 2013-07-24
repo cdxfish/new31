@@ -1,19 +1,13 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponseRedirect
 from django.contrib import messages
-from django.conf import settings
-from django.core.exceptions import *
-from signtime.models import *
-from account.models import *
-from payment.models import *
-from item.models import *
-from area.models import *
-from new31.func import *
-from new31.decorator import *
+from django.http import HttpResponseRedirect
+from new31.decorator import checkPOST, rdrBckDr, itemonl
+from new31.func import forMatFee
 import time, datetime, math
-from decimal import *
+from decimal import Decimal
+
 
 
 # Create your views here.
@@ -21,14 +15,39 @@ from decimal import *
 # 前台购物车界面
 def cart(request):
     cart = Cart(request).showItemToCart()
+    # from order.models import Ord
+
+    # Ord.objects.all().delete()
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
+
+
+# 收货人信息界面
+def cnsgn(request):
+    from logistics.forms import cnsgnForm
+    from finance.forms import fncFrm
+    cnsgn = cnsgnForm(request)
+    fnc = fncFrm(request)
+
+    return render_to_response('consignee.htm', locals(), context_instance=RequestContext(request))
+
+
 
 # 前台订单确认界面
 @checkPOST
 def checkout(request):
+    from logistics.forms import CnsgnForm
+    from logistics.views import Cnsgn
+    from finance.views import FncSess
+    from order.views import OrdSess
 
-    form = ConsigneeForm(request.POST)
+    cInfo = Cnsgn(request).setConsignee(request.POST.dict()).getObj() #将联系人信息存入session,并获得对应的对象
+    fInfo = FncSess(request).setSess().getObj() #将联系人信息存入session,并获得对应的对象
+    OrdSess(request).format()
+
+
+    form = CnsgnForm(request.POST)
+
 
     if not form.is_valid():
 
@@ -37,23 +56,16 @@ def checkout(request):
 
                 messages.warning(request, '%s - %s' % ( i.label, i.errors))
 
-        return HttpResponseRedirect('/consignee/')
+        return HttpResponseRedirect('/cart/consignee/')
 
     cart = Cart(request).showItemToCart()
 
-    if not cart:
+    if not cart['items']:
 
         messages.warning(request, '购物车内无商品')
 
         return HttpResponseRedirect('/cart/')
 
-    request.session['c']['user'] = request.user.username
-
-    SpCnsgn(request).setSeesion()
-
-    pay = Pay.objects.getPayById(id=request.POST.get('pay'))
-    time = SignTime.objects.getTimeById(id=request.POST.get('time'))
-    area = Area.objects.getAreaById(id=request.POST.get('area'))
 
     return render_to_response('checkout.htm', locals(), context_instance=RequestContext(request))
 
@@ -138,6 +150,8 @@ class Cart(object):
 
 
     def pushToCartBySpecID(self, specID):
+        from item.models import Item, ItemFee, ItemSpec
+        from discount.models import Dis
         specID = int(specID)
 
         items = self.items
@@ -161,6 +175,8 @@ class Cart(object):
 
 
     def pushToCartByItemIDs(self, itemIDs):
+        from item.models import Item
+        from discount.models import Dis
         items = self.items
 
         for i in itemIDs:
@@ -258,6 +274,9 @@ class Cart(object):
         return self.setSeesion(items)
 
     def getItemTotalByMark(self, mark):
+        from item.models import Item
+        from discount.models import Dis
+
         i = self.items[mark]
 
         item = Item.objects.getItemByItemID(id=i['itemID'])

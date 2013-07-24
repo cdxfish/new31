@@ -5,20 +5,21 @@ from office.forms import bsSrchFrm
 # Create your forms here.
 
 
-def getOTpyeForm(request):
-    from views import Ord
+def ordForm(request):
+    from views import OrdSess
 
-    return OrdTypeForm(initial= {'oType': int(Ord(request).o['typ']),})
+    return OrdForm(initial= {'typ': int(OrdSess(request).o['typ']),})
 
 
-class OrdTypeForm(forms.Form):
+class OrdForm(forms.Form):
     from models import Ord
-    chcs = Ord.chcs
+    chcs = Ord.typs
 
-    oType = forms.ChoiceField(label=u'订单类型', choices=chcs, widget=forms.Select(attrs={'class': 'oType' }))
+    user = forms.CharField(label=u'会员帐号', required=False)
+    typ = forms.ChoiceField(label=u'订单类型', choices=chcs, widget=forms.Select(attrs={'class': 'typ' }))
 
 
-class OrdSatsForm(bsSrchFrm):
+class OrdSrchFrm(bsSrchFrm):
     from models import Ord
     chcs = ((-1, '全部'),) + Ord.chcs
 

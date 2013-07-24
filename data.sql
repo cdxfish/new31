@@ -100,7 +100,7 @@ INSERT INTO `signtime_signtime` (`start`, `end`, `onl`) VALUES
 ('06:00:00', '07:00:00', 1),
 ('07:00:00', '08:00:00', 1);
 
-INSERT INTO `discount_discount` (`dis`, `onl`) VALUES
+INSERT INTO `discount_dis` (`dis`, `onl`) VALUES
 (1, 1),
 (0.95, 1),
 (0.9, 1);

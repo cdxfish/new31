@@ -136,11 +136,11 @@ APPS = {
         },
     'account':{
             'tempContext':'',
-            'middleware':'account.middleware.UserMiddleware',
+            'middleware':'UserMiddleware',
         },
     'purview':{
             'tempContext':'',
-            'middleware':'purview.middleware.purviewMiddleware',
+            'middleware':'purviewMiddleware',
         },
     'item':{
             'tempContext':'',
@@ -162,20 +162,16 @@ APPS = {
             'tempContext':'',
             'middleware':'',
         },
-    # 'cart':{
-    #         'tempContext':'',
-    #         'middleware':'cart.middleware.CartMiddleware',
-    #     },
-    # 'consignee':{
-    #         'tempContext':'',
-    #         'middleware':'consignee.middleware.ConsigneeMiddleware',
-    #     },
+    'cart':{
+            'tempContext':'',
+            'middleware':'CartMiddleware',
+        },
     'logistics':{
             'tempContext':'',
-            'middleware':'',
+            'middleware':'CnsgnMiddleware',
         },
     'tag':{
-            'tempContext':'tag.context.tagsClass',
+            'tempContext':'tagsClass',
             'middleware':'',
         },
     'search':{
@@ -193,11 +189,11 @@ APPS = {
         },
     'order':{
             'tempContext':'',
-            'middleware':'order.middleware.OrdMiddleware',
+            'middleware':'OrdMiddleware',
         },
     'finance':{
             'tempContext':'',
-            'middleware':'',
+            'middleware':'FncMiddleware',
         },
     'spec':{
             'tempContext':'',
@@ -212,6 +208,10 @@ APPS = {
             'middleware':'',
         },
     'inventory':{
+            'tempContext':'',
+            'middleware':'',
+        },
+    'log':{
             'tempContext':'',
             'middleware':'',
         },
@@ -255,10 +255,10 @@ for i,v in APPS.items():
     djangoAPPS.append(i)
 
     if v['middleware']:
-        djangoMidClass.append(v['middleware'])
+        djangoMidClass.append(u'%s.middleware.%s' % (i, v['middleware']))
 
     if v['tempContext']:
-        djangoTempContext.append(v['tempContext'])
+        djangoTempContext.append(u'%s.context.%s' % (i, v['tempContext']))
 
 
 if DEBUG:

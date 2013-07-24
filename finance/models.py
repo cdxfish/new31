@@ -8,6 +8,16 @@ class fncManager(models.Manager):
 
         return tuple([ i for i, v in Fnc.act[i]])
 
+
+    def saveFnc(self, ord, request):
+        from views import FncSess
+        fnc = Fnc()
+
+        fnc.ord = ord
+        fnc.cod = FncSess(request).getObj()['pay']
+
+        fnc.save()
+
 class Fnc(models.Model):
     from order.models import Ord
     from payment.models import Pay

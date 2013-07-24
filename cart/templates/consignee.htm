@@ -3,7 +3,7 @@
 {% block title %}收货人信息{% endblock %}
 
 {% block js %}
-    <script type="text/javascript" src="{{ STATIC_URL }}consignee/js/consignee.configuration.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}logistics/js/consignee.configuration.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -14,40 +14,40 @@
                 <form action="/cart/checkout/" method="POST" name="checkout" id="checkout">
                     <table width="100%" id="cconsignee">
                         <tr>
-                            <td align="right" width="100px">{{ form.pay.label }}：</td>
-                            <td>{{ form.pay }}</td>
+                            <td align="right" width="100px">{{ fnc.pay.label }}：</td>
+                            <td>{{ fnc.pay }}</td>
                         </tr>
                         <tr>
-                            <td align="right">配送方式：</td>
-                            <td>市内免费送货上门</td>
+                            <td align="right">{{ cnsgn.dlvr.label }}：</td>
+                            <td>{{ cnsgn.dlvr }}</td>
                         </tr>
                         <tr>
-                            <td align="right">{{ form.consignee.label }}：</td>
-                            <td>{{ form.consignee }}</td>
+                            <td align="right">{{ cnsgn.consignee.label }}：</td>
+                            <td>{{ cnsgn.consignee }}</td>
                         </tr>
                         <tr>
-                            <td align="right">{{ form.area.label }}：</td>
-                            <td>{{ form.area }}</td>
+                            <td align="right">{{ cnsgn.area.label }}：</td>
+                            <td>{{ cnsgn.area }}</td>
                         </tr>
                         <tr>
-                            <td align="right">{{ form.address.label }}：</td>
-                            <td>{{ form.address }}</td>
+                            <td align="right">{{ cnsgn.address.label }}：</td>
+                            <td>{{ cnsgn.address }}</td>
                         </tr>
                         <tr>
-                            <td align="right">{{ form.tel.label }}：</td>
-                            <td>{{ form.tel }}</td>
+                            <td align="right">{{ cnsgn.tel.label }}：</td>
+                            <td>{{ cnsgn.tel }}</td>
                         </tr>
                         <tr>
-                            <td align="right">{{ form.date.label }}：</td>
-                            <td>{{ form.date }}</td>
+                            <td align="right">{{ cnsgn.date.label }}：</td>
+                            <td>{{ cnsgn.date }}</td>
                         </tr>
                     <tr>
-                        <td align="right">{{ form.time.label }}：</td>
-                        <td>{{ form.time }}</td>
+                        <td align="right">{{ cnsgn.time.label }}：</td>
+                        <td>{{ cnsgn.time }}</td>
                     </tr>
                     <tr>
-                        <td align="right" valign="top">{{ form.note.label }}：</td>
-                        <td>{{ form.note }}</td>
+                        <td align="right" valign="top">{{ cnsgn.note.label }}：</td>
+                        <td>{{ cnsgn.note }}</td>
                     </tr>
                     </table>
                     <center>

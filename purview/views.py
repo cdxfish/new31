@@ -1,9 +1,7 @@
 #coding:utf-8
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from models import *
-from new31.func import *
-from account.models import *
+from new31.func import rdrBck, redirectLogin
 
 # Create your views here.
 
@@ -25,6 +23,8 @@ class URLPurview:
     """
 
     def __init__(self, request):
+        from models import Element
+
         self.errStr = u'权限不足。'
         self.request = request
         self.request.domElement = [] #页面元素
@@ -36,6 +36,7 @@ class URLPurview:
 
 
     def check(self):
+        from models import Role
 
         if self.request.path in self.purview: #进行权限页面对照,确认当前页面是否需要权限判定
             if self.request.user.is_authenticated() and self.request.user.is_staff:
@@ -54,6 +55,7 @@ class URLPurview:
 
     # 页面元素加持
     def domElement(self):
+        from models import Element
 
         self.request.domElement = Element.objects.getPath(path=self.request.path)
 
@@ -79,7 +81,7 @@ class URLPurview:
 
 
 
-class OrdPur(object):
+class BsPur(object):
     """
         订单操作按钮元素级类
 
@@ -92,8 +94,10 @@ class OrdPur(object):
 
     """
     def __init__(self, oList, request):
+        from order.models import Ord
+        from models import Role
         self.oList = oList
-        self.action = OrdSats.act
+        self.action = Ord.act
         self.role = Role.objects.getPathByUser(request.user)
 
     def getElement(self):
@@ -102,7 +106,7 @@ class OrdPur(object):
             if not hasattr(i,'action'):
                 i.action = {}
 
-            i.action[self.path] = self.action[i.ordsats.status]
+            i.action[self.path] = self.action[i.status]
 
         return self
 

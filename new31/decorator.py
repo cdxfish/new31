@@ -15,11 +15,10 @@ def subFailRemind(s= ''):
 
                 except Exception, e:
                     self.error = True
-
                     messages.error(self.request, s)
-                    if settings.DEBUG:
-                        self.delNewOrd()
-                        raise e
+                    self.delNewOrd()
+
+                    raise e
 
             return self #强制返回self否则无法链式调用
         return __newfunc
@@ -68,17 +67,13 @@ def redirMsg(msg):
     def _redirMsg(func):
 
         def __redirMsg(request, **kwargs):
-            if settings.DEBUG:
+ 
+            try:
 
                 return func(request, kwargs)
+            except:
 
-            else:
-                try:
-
-                    return func(request, kwargs)
-                except:
-
-                    return msg
+                return msg
 
         return __redirMsg
 
@@ -97,25 +92,16 @@ def rdrBckDr(func):
     return _func
 
 
-# 根据settings.DEBUG设置是否显示用户级提示信息
+
 def itemonl(func):
-
     def _func(request, kwargs):
-
-        if settings.DEBUG:
-
+        try:
             return func(request, kwargs)
+            
+        except:
+            messages.warning(request, '当前商品已下架')
 
-        else:
-            try:
-
-                return func(request, kwargs)
-                
-            except:
-
-                messages.warning(request, '当前商品已下架')
-
-                return rdrBck(request)
+            return rdrBck(request)
 
     return _func
 
@@ -126,7 +112,7 @@ def ordDetr(func):
     def _func(request, c):
         from order.models import Ord, OrdSats
         sn = request.GET.get('sn')
-        order =  Ord.objects.get(sn=sn).ordsats
+        order =  Ord.objects.get(sn=sn)
         act = OrdSats.objects.getActTuple(order.status)
 
         if not c in act:
@@ -196,7 +182,7 @@ def fncDetr(func):
     def _func(request, c):
         from order.models import Ord, OrdFnc
         sn = request.GET.get('sn')
-        pay =  Ord.objects.get(sn=sn).ordfnc
+        pay =  Ord.objects.get(sn=sn).fnc
 
         act = OrdFnc.objects.getActTuple(pay.status)
 

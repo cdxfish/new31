@@ -20,8 +20,8 @@
             <td>{{ i.logcs.date|date:"Y-m-d" }} | {{ i.logcs.stime|time:"H:i" }} - {{ i.logcs.etime|time:"H:i" }}</td>
             <td>{{ i.logcs.consignee }}</td>
             <td>{{ i.logcs.tel }} | {{ i.user.username}}</td>
-            <td>{{ i.ordfnc.cod.get_cod_display }}</td>
-            <td>{{ i.ordsats.get_status_display }} | {{ i.ordfnc.get_status_display }} | {{ i.ordship.get_status_display }}</td>
+            <td>{{ i.fnc.cod.get_cod_display }}</td>
+            <td>{{ i.get_status_display }} | {{ i.fnc.get_status_display }} | {{ i.logcs.get_status_display }}</td>
           </tr>
 {% for item in i.orditem_set.all %}
           <tr align="center">

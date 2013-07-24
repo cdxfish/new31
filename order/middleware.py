@@ -3,9 +3,9 @@
 class OrdMiddleware:
     
     def process_request(self, request):
-        from views import Ord
+        from views import OrdSess
 
-        # Ord(request).format()
+        OrdSess(request).format()
 
         return None
 

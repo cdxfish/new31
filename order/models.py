@@ -21,6 +21,19 @@ class ordManager(models.Manager):
 
         return tuple([ i for i, v in Ord.act[i]])
 
+
+    def saveOrd(self, ord, request):
+        from django.contrib.auth.models import User
+        from views import OrdSess
+        
+        o = OrdSess(request).o
+        if o['user']:
+            ord.user= User.objects.get(username=o['user'])
+
+        ord.typ = o['typ']
+        ord.save()
+
+
 class Ord(models.Model):
     typs = (
                 (0, u'普销'), 

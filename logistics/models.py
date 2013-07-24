@@ -12,6 +12,34 @@ class logcsManager(models.Manager):
 
         return tuple([ i for i, v in OrdLogcs.act[i]])
 
+
+    def saveLogcs(self, ord, request):
+        from views import Cnsgn
+
+        c = Cnsgn(request).getObj()
+        avd = 1 # 默认偏移1hour
+
+        time = c['time']
+
+        area = c['area']
+
+        logcs = Logcs()
+        logcs.consignee = c['consignee']
+        logcs.area = '%s - %s' % (area.sub.name, area.name)
+        logcs.address = c['address']
+        logcs.tel = c['tel']
+        logcs.date = c['date']
+        logcs.stime = time.start
+        logcs.etime = time.end
+        logcs.lstime = time.start.replace(hour = time.start.hour - avd)
+        logcs.letime = time.end.replace(hour = time.end.hour - avd)
+        logcs.note = c['note']
+        logcs.cod = c['dlvr']
+
+        logcs.ord = ord
+
+        logcs.save()
+
 class Logcs(models.Model):
     from django.contrib.auth.models import User
     from deliver.models import Deliver
@@ -57,8 +85,9 @@ class Logcs(models.Model):
     advance = models.SmallIntegerField(u'提前量', default=0, choices=advs)
     dman = models.ForeignKey(User, verbose_name=u'物流师傅', blank=True, null=True)
     note = models.CharField(u'备注', max_length=255, blank=True, null=True)
-    cod = models.CharField(u'送货方式', max_length=30)
-    cod = models.ForeignKey(Deliver, verbose_name=u'支付方式')
+    # pcod = models.ForeignKey(Pay, verbose_name=u'支付方式')
+    # dcod = models.ForeignKey(Deliver, verbose_name=u'送货方式')
+    cod = models.ForeignKey(Deliver, verbose_name=u'送货方式')
     status = models.SmallIntegerField(u'物流状态', default=0, editable=False, choices=chcs)
 
     objects = logcsManager()

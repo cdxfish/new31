@@ -1,12 +1,11 @@
 #coding:utf-8
 
-
-class ConsigneeMiddleware:
+class CnsgnMiddleware:
 
     def process_request(self, request):
-        from views import SpCnsgn
+        from views import Cnsgn
         
-        SpCnsgn(request).formatConsignee()
+        Cnsgn(request).frmtCnsgn()
 
         return None
 

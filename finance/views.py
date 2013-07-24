@@ -2,9 +2,9 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
-from forms import *
-from signtime.models import *
-from order.views import *
+from new31.decorator import fncDetr
+from order.views import OrdSerch, OrdPur
+
 
 # Create your views here.
 
@@ -12,7 +12,7 @@ def fncUI(request):
 
     o = FncSerch(request)
 
-    form = fncFrm(initial=o.initial)
+    form = FncSrchFrm(initial=o.initial)
 
     oList = o.search().status().range().page()
     oList = FncPur(oList, request).getOrds()
@@ -31,6 +31,56 @@ def fCons(request, c):
     c = int(c)
     return [fCon, fCon, fCon, fCon][c](request, c)
 
+
+class FncSess(object):
+    """
+        财务session类
+
+    """
+    def __init__(self, request):
+        from payment.models import Pay
+
+        self.request = request
+
+        self.f = self.request.session.get('f')
+
+        try:
+            payID = Pay.objects.getDefault().id
+        except:
+            payID = 0
+
+        self.frmt = {
+                        u'pay': payID,
+            }
+
+    def frMtSess(self):
+        if not self.f:
+            return self.setSession(self.frmt)
+
+    def setSession(self, f):
+        self.request.session['f'] = f
+
+        self.f = f
+
+        return self
+
+    def setSess(self):
+
+        return self.setSession({i: v for i,v in self.request.REQUEST.items() if i in self.frmt })
+
+    def clear(self):
+
+        return self.setSession(self.frmt)
+
+    def getObj(self):
+        from payment.models import Pay
+        self.obj = self.f.copy()
+        
+        self.obj['pay'] = Pay.objects.getPayById(id=self.f['pay'])
+
+        return self.obj
+        
+
 class FncPrt(object):
     """
         财务基本类
@@ -42,7 +92,7 @@ class FncPrt(object):
 
     def cCon(self, sn, c):
         from order.models import Ord
-        pay =  Ord.objects.get(sn=sn).ordfnc
+        pay =  Ord.objects.get(sn=sn).fnc
 
         pay.status = c
 
@@ -64,7 +114,7 @@ class FncSerch(OrdSerch):
         super(FncSerch, self).__init__(request)
 
     def search(self):
-        self.oList = self.baseSearch().oList.filter(ordsats__status__gt = 1)
+        self.oList = self.baseSearch().oList.filter(ord__status__gt = 1)
 
         return self
 
@@ -106,6 +156,6 @@ class FncPur(OrdPur):
             if not hasattr(i,'action'):
                 i.action = {}
 
-            i.action[self.path] = self.action[i.ordfnc.status]
+            i.action[self.path] = self.action[i.fnc.status]
 
         return self

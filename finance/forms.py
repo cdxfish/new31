@@ -4,8 +4,18 @@ from office.forms import bsSrchFrm
 
 # Create your forms here.
 
+class FncFrm(forms.Form):
+    from payment.models import Pay
 
-class fncFrm(bsSrchFrm):
+    pay = forms.ChoiceField(label=u'支付方式', choices=Pay.objects.getTupleByAll())
+
+
+def fncFrm(request):
+    from views import FncSess
+
+    return FncFrm(initial={i:v for i, v in FncSess(request).f.items()})
+
+class FncSrchFrm(bsSrchFrm):
     from models import Fnc
     
     chcs = ((-1, '全部'),) + Fnc.chcs

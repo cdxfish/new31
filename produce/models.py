@@ -17,6 +17,40 @@ class proManager(models.Manager):
 
         return total
 
+    def savePro(self, ord, request):
+        from cart.views import Cart
+        from item.models import Item, ItemSpec, ItemFee
+        from discount.models import Dis
+        from new31.func import forMatFee
+        from decimal import Decimal
+
+        items  = Cart(request).items
+
+        _items = []
+
+        for v,i in items.items():
+
+            item = Item.objects.getItemByItemID(id=i['itemID'])
+            spec = ItemSpec.objects.getSpecBySpecID(id=i['specID']).spec
+            fee = ItemFee.objects.getFeeBySpecID(id=i['specID'])
+            dis = Dis.objects.getDisByDisID(id=i['disID'])
+            nfee = forMatFee(fee.fee * Decimal(dis.dis))
+
+            _items.append(
+                Pro(
+                    ord=ord,
+                    name=item.name,
+                    sn=item.sn,
+                    spec=spec.value,
+                    num=i['num'],
+                    fee=fee.fee,
+                    dis=dis.dis,
+                    nfee=nfee
+                    )
+                )
+
+        Pro.objects.bulk_create(_items)
+
 class Pro(models.Model):
     from order.models import Ord
     from item.models import ItemFee

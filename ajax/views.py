@@ -1,12 +1,6 @@
 #coding:utf-8
-from django.contrib import auth
-from django.conf import settings
 from django.http import HttpResponse
-from django.core.exceptions import *
-from item.models import *
-from shop.views import *
-from cart.views import *
-from order.views import *
+from new31.decorator import errMsg
 import json
 
 # Create your views here.
@@ -21,6 +15,7 @@ def getItemPin(request, kwargs):
 # 前台弹出层中获取商品规格
 @errMsg('当前商品已下架')
 def getItemSpec(request, kwargs):
+    from item.models import ItemSpec
 
     itemSpec = ItemSpec.objects.getSpecByItemId(id=kwargs['specID'])
 
@@ -32,6 +27,7 @@ def getItemSpec(request, kwargs):
 # 前台购物车界面修改购物车中商品数量
 @errMsg('当前商品已下架')
 def ajaxChangNum(request, kwargs):
+    from cart.views import Cart
 
     data =  '%.2f' % Cart(request).changeNumBySpec(mark=kwargs['mark'], num=kwargs['num']).countFee()
 
@@ -43,6 +39,7 @@ def getItemByKeyword(request):
 
     @errMsg('未找到商品')
     def _getItemByKeyword(request, kwargs):
+        from item.models import Item
 
         r = [ { 'name':i.name, 'sn': i.sn, 'id': i.id, } for i in Item.objects.getItemLikeNameOrSn( kwargs['k'] )]
 
@@ -53,8 +50,9 @@ def getItemByKeyword(request):
 
 # ajax动态写入收货人信息
 @errMsg('无法填写表单')
-def cConsigneeByAjax(request, kwargs):
-    SpCnsgn(request).setSeesion()
+def cCnsgnByAjax(request, kwargs):
+    from logistics.views import Cnsgn
+    Cnsgn(request).setSeesion()
 
     return AjaxRJson().dumps()
 
@@ -72,6 +70,7 @@ def coTypeByAjax(request, kwargs):
 # ajax动态修改购物车内商品
 @errMsg('无法修改表单数据')
 def cItemByAjax(request, kwargs):
+    from cart.views import Cart
     mark = int(request.GET.get('mark')[1:])
     cc = Cart(request).changeItem()
 
@@ -88,9 +87,10 @@ def cItemByAjax(request, kwargs):
 # ajax动态修改物流偏移量
 @errMsg('无法修改表单数据')
 def cAdv(request, kwargs):
+    from order.models import OrdLogcs
+
     sn = int(request.GET.get('sn')[1:])
     value = int(request.GET.get('value', 0))
-    from order.models import OrdLogcs
 
     logcs = OrdLogcs.objects.get(ord=sn)
 
@@ -120,8 +120,8 @@ def cDman(request, kwargs):
         return AjaxRJson.message(u'无法修改表单数据').dumps()
 
     if value:
-        from django.contrib import auth
-        user = auth.models.User.objects.get(id=value)
+        from django.contrib.auth.models import User
+        user = User.objects.get(id=value)
         logcs.dman = user
     else:
         logcs.dman = None

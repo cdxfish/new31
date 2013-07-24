@@ -3,6 +3,18 @@ from django.db import models
 
 # Create your models here.
 
+class logManager(models.Manager):
+
+    def saveLog(self, ord, request):
+        
+        log = OrdLog()
+        log.ord = ord
+        log.user = request.user
+        if ord.status:
+            log.typ = 1
+
+        log.save()
+
 class OrdLog(models.Model):
     from django.contrib.auth.models import User
     from order.models import Ord
@@ -23,9 +35,11 @@ class OrdLog(models.Model):
 
     ord = models.ForeignKey(Ord, verbose_name=u'订单')
     user = models.ForeignKey(User, verbose_name=u'用户')
-    log = models.SmallIntegerField(u'日志类型', default=0, choices=chcs)
+    typ = models.SmallIntegerField(u'日志类型', default=0, choices=chcs)
     note = models.CharField(u'备注', max_length=60, blank=True, null=True)
     time = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True, editable=False)
+
+    objects = logManager()
 
     def __unicode__(self):
         return u"%s - [ %s ][ %s ]" % ( self.ord, self.get_log_display(), self.time )

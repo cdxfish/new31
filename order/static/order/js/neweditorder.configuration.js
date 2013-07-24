@@ -83,10 +83,14 @@ aeog = {
                 },
 
                 function(data) {
-                    $.dialog.dialogMsg(data, aeog.sg, {
-                        'position': 'absolute',
-                        'width': 400
-                    });
+                    if (data.err) {
+                        $.dialog.msg(data);
+                    } else {
+                        $.dialog.dialogMsg(data, aeog.sg, {
+                            'position': 'absolute',
+                            'width': 400
+                        });
+                    }
 
                 });
 
