@@ -3,9 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib import messages, auth
-from account.models import *
-from order.models import *
-from new31.func import *
+from new31.func import rdrtLogin
 
 # Create your views here.
 
@@ -22,13 +20,13 @@ def login(request):
                 # Correct password, and the user is marked "active"
                 auth.login(request, user)
                 # Redirect to a success page.
-                return rdrBck(request)
+                return rdrtBck(request)
             else:
                 # Show an error page
 
                 messages.error(request, '用户名或密码错误')
 
-                return redirectLogin()
+                return rdrtLogin()
 
         else:
             return render_to_response('login.htm', locals(), context_instance=RequestContext(request))
@@ -36,15 +34,15 @@ def login(request):
     else:
         # 避免循环跳转
         if '/account/login/' in request.META.get('HTTP_REFERER', '/'):
-            return redirect()
+            return rdrtIndex()
         else:
-            return rdrBck(request)
+            return rdrtBck(request)
 
 def logout(request):
 
     auth.logout(request)
 
-    return redirect()
+    return rdrtIndex()
 
 def settings(request):
 

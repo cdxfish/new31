@@ -150,6 +150,20 @@
 
                 return this;
             },
+            ajaxMsg: function(url, func) {
+                $.dialog.loading('努力加载中，请稍候')
+                $.getJSON(url,
+
+                function(data) {
+                    if (data.err) {
+                        $.dialog.message(data.msg)
+                    } else {
+                        $.dialog.delayClose()
+                        func(data)
+                    }
+
+                })
+            },
             msg: function(data, t, obj) {
                 var time = !t ? 1000 : t;
                 var cssObj = obj ? obj : {

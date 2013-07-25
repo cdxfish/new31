@@ -25,14 +25,15 @@ def fCon(request, c):
 
     FncPrt(request).cCon(request.GET.get('sn'), c)
 
-    return rdrBck(request)
+    return rdrtBck(request)
 
 def fCons(request, c):
     c = int(c)
     return [fCon, fCon, fCon, fCon][c](request, c)
 
 
-class FncSess(object):
+from new31.cls import BsSess
+class FncSess(BsSess):
     """
         财务session类
 
@@ -40,37 +41,17 @@ class FncSess(object):
     def __init__(self, request):
         from payment.models import Pay
 
-        self.request = request
-
-        self.f = self.request.session.get('f')
+        self.s = 'f'
 
         try:
-            payID = Pay.objects.getDefault().id
+            pid = Pay.objects.getDefault().id
         except:
-            payID = 0
+            pid = 0
 
         self.frmt = {
-                        u'pay': payID,
+                        u'pay': pid,
             }
-
-    def frMtSess(self):
-        if not self.f:
-            return self.setSession(self.frmt)
-
-    def setSession(self, f):
-        self.request.session['f'] = f
-
-        self.f = f
-
-        return self
-
-    def setSess(self):
-
-        return self.setSession({i: v for i,v in self.request.REQUEST.items() if i in self.frmt })
-
-    def clear(self):
-
-        return self.setSession(self.frmt)
+        super(FncSess, self).__init__(request)
 
     def getObj(self):
         from payment.models import Pay

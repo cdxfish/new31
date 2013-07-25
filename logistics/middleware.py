@@ -3,9 +3,9 @@
 class CnsgnMiddleware:
 
     def process_request(self, request):
-        from views import Cnsgn
+        from views import LogcSess
         
-        Cnsgn(request).frmtCnsgn()
+        LogcSess(request).frMt().chkDate()
 
         return None
 

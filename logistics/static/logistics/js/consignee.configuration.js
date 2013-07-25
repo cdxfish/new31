@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    c.strFocusText($('#id_note'), c.noteText).strFocusText($('#id_tel'), c.telText).cCon().submit();
+    c.strFocusText($('#id_note'), c.noteText).strFocusText($('#id_tel'), c.telText).submit();
+    b.chng($('#logcs input, #logcs select, #logcs textarea'), '/ajax/clogcs/');
 });
 
 
@@ -84,24 +85,5 @@ c = {
 
         return this;
 
-    },
-    cCon: function() {
-        $('#cconsignee input, #cconsignee select, #cconsignee textarea').change(
-
-        function() {
-            var name = $(this).attr('name');
-            var value = $(this).val();
-            $(this).ajaxDialog(function() {
-                $.getJSON('/ajax/ccon/?' + name + '=' + value,
-
-                function(data) {
-                    $.dialog.msg(data);
-                })
-
-            });
-
-
-        });
-        return this;
     }
 }

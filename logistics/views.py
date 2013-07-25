@@ -13,7 +13,7 @@ def logcsUI(request):
 
     o = LogcsSerch(request)
 
-    form = LogcsFrm(initial=o.initial)
+    form = logcsFrm(initial=o.initial)
 
     oList = o.search().chcs().range().page()
     oList = LogcsPur(oList, request).getOrds()
@@ -55,7 +55,7 @@ def shipSub(request):
 def lCon(request, c):
     Ship(request).lCon(request.GET.get('sn'), c)
 
-    return rdrBck(request)
+    return rdrtBck(request)
 
 # 止送
 @shipDetr
@@ -66,7 +66,7 @@ def stopLogcs(request,c ):
     from order.views import Ord
     Ord(request).stopOrd(sn)
 
-    return rdrBck(request)
+    return rdrtBck(request)
 
 # 非新单及编辑以外的订单操作
 def lCons(request, c):
@@ -115,20 +115,18 @@ class Ship(object):
 
         return rdrRange(self.request.paths[u'物流'], self.c['date'], self.o['sn'])
 
-
-class Cnsgn(object):
+from new31.cls import BsSess
+class LogcSess(BsSess):
     """
         联系人信息
     """
     def __init__(self, request):
-
         from deliver.models import Deliver
         from area.models import Area
         from signtime.models import SignTime
 
-        self.request = request
-        self.c = request.session.get('c')
-        
+        self.s = 'l'
+
         try:
             dlvrID = Deliver.objects.getDefault().id
         except:
@@ -144,7 +142,7 @@ class Cnsgn(object):
         except:
             signID = 0
         
-        self.cFormat = {
+        self.frmt = {
                             'dlvr': dlvrID, 
                             'consignee':'', 
                             'area': areaID, 
@@ -155,55 +153,19 @@ class Cnsgn(object):
                             'note':'',
                         } 
 
-    def setSeesion(self):
-        s = self.c
+        super(LogcSess, self).__init__(request)
+        
 
-        for v,i in self.request.REQUEST.items():
-            # 用于下拉框默认值,使得过滤器辨别为false
-            if i == '0':
-                s[v] = 0
-            else:
-                s[v] = i
+    def chkDate(self):
+        date = time.strptime(self.sess['date'], '%Y-%m-%d')
+        today = time.gmtime
 
-        return self.setConsignee(s)
+        if date >= today or not self.sess['date']:
+            self.sess['date'] = '%s' % datetime.date.today()
 
-    def setSsn(self, i, v):
-        if v == '0':
-            self.c[i] = 0
-        else:
-            self.c[i] = v
-    
+        return self.set(self.sess)
 
-        return self.setConsignee(self.c)
-
-    def clear(self):
-
-        return self.setConsignee(self.cFormat)
-
-    def setConsignee(self, c):
-        self.request.session['c'] = c
-
-        self.c = c
-
-        return self
-
-    def frmtCnsgn(self):
-        if not self.c:
-
-            self.setConsignee(self.cFormat)
-
-        c = self.c
-
-        toDay = time.gmtime()
-        cDate = time.strptime(c['date'], '%Y-%m-%d')
-
-        if cDate < toDay or not c['date']:
-            c['date'] = '%s' % datetime.date.today()
-
-
-        return self.setConsignee(c)
-
-    def setSiessionByOrd(self, sn):
+    def setByOrd(self, sn):
         from payment.models import Pay
         from deliver.models import Deliver
         from area.models import Area
@@ -271,8 +233,6 @@ class Cnsgn(object):
         self.obj['area'] = area
 
         return self.obj
-
-
 
 
 
@@ -354,7 +314,7 @@ class KpChng(object):
             i.fee = self.fee.copy()
             i.fee['total'] = OrdItem.objects.getFeeBySN(i.sn)
 
-            i.fee['paid'] = keChngFrmt(i.fee['total'])
+            i.fee['paid'] = keFrmt(i.fee['total'])
 
             i.fee['kpchng'] = i.fee['paid'] - i.fee['total']
 

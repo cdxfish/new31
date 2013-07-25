@@ -1,45 +1,6 @@
 $(document).ready(function() {
-    aeo.cu().ot();
     aeog.a().search().cItem();
 });
-
-
-aeo = {
-    cu: function() {
-        $('#checkout #user').change(
-        aeo.u
-
-        );
-        return this;
-    },
-    u: function() {
-
-        var user = $(this).val();
-
-        if (user.length > 0 || !/^1[3|4|5|8][0-9]\d{8}$/.test(user)) {
-
-            $.dialog.message('用户名无效!');
-
-        }
-    },
-    ot: function() {
-        $('.oType').change(
-
-        function() {
-            var name = $(this).attr('name');
-            var value = $(this).val();
-
-            $.getJSON('/ajax/cotype/?' + name + '=' + value,
-
-            function(data) {
-                $.dialog.dialogMsgAndReload(data);
-            })
-
-        });
-        return this;
-    }
-}
-
 
 aeog = {
 

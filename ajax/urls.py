@@ -5,12 +5,13 @@ from cart.views import *
 
 urlpatterns = patterns('',
     (r'^itemmore\/$',getItemPin),
-    (r'^itemspec\/(?P<specID>\d+)\/$',getItemSpec),  #获取规格
-    (r'^itemnum\/(?P<mark>\d+)\/(?P<num>\d+)\/$', ajaxChangNum),
-    (r'^ccon\/$', cCnsgnByAjax),
-    (r'^cotype\/$', coTypeByAjax),
+    (r'^itemspec\/$',getItemSpec),  #获取规格
+    (r'^cnum\/$', cNum),
+    (r'^clogcs\/$', cLogcs),
+    (r'^cord\/$', cOrd),
+    (r'^cfnc\/$', cFnc),
     (r'^cadvance\/$', cAdv),
     (r'^cdman\/$', cDman),
-    (r'^citem\/$', cItemByAjax),
+    (r'^citem\/$', cItem),
     (r'^item\/$', getItemByKeyword),
 )

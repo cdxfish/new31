@@ -26,7 +26,7 @@ class ordManager(models.Manager):
         from django.contrib.auth.models import User
         from views import OrdSess
         
-        o = OrdSess(request).o
+        o = OrdSess(request).sess
         if o['user']:
             ord.user= User.objects.get(username=o['user'])
 

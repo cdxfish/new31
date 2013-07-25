@@ -5,18 +5,19 @@ from office.forms import bsSrchFrm
 # Create your forms here.
 
 
-def ordForm(request):
+def ordFrm(request):
     from views import OrdSess
 
-    return OrdForm(initial= {'typ': int(OrdSess(request).o['typ']),})
+    return OrdFrm(initial= OrdSess(request).sess)
 
 
-class OrdForm(forms.Form):
+class OrdFrm(forms.Form):
     from models import Ord
-    chcs = Ord.typs
 
     user = forms.CharField(label=u'会员帐号', required=False)
-    typ = forms.ChoiceField(label=u'订单类型', choices=chcs, widget=forms.Select(attrs={'class': 'typ' }))
+    sn = forms.IntegerField(label=u'订单编号', required=False, max_value=13, min_value=13)
+    status = forms.ChoiceField(label=u'订单状态', required=False, choices=Ord.chcs, widget=forms.Select(attrs={'class': 'status' }))
+    typ = forms.ChoiceField(label=u'订单类型', choices=Ord.typs, widget=forms.Select(attrs={'class': 'typ' }))
 
 
 class OrdSrchFrm(bsSrchFrm):

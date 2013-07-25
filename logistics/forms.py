@@ -4,7 +4,7 @@ from office.forms import bsSrchFrm
 
 # Create your forms here.
 
-class CnsgnForm(forms.ModelForm):
+class LogcsFrm(forms.ModelForm):
     from deliver.models import Deliver
     from signtime.models import SignTime
 
@@ -26,10 +26,10 @@ class CnsgnForm(forms.ModelForm):
         }
 
 
-def cnsgnForm(request):
-    from views import Cnsgn
+def logcsFrm(request):
+    from views import LogcSess
 
-    return CnsgnForm(initial={i:v for i, v in Cnsgn(request).c.items()})
+    return LogcsFrm(initial={i:v for i, v in LogcSess(request).sess.items()})
 
 
 

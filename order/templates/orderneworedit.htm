@@ -2,6 +2,8 @@
 
 {% block js %}
     <script type="text/javascript" src="{{ STATIC_URL }}order/js/neweditorder.configuration.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}order/js/ord.configuration.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}finance/js/fnc.configuration.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}logistics/js/consignee.configuration.js"></script>
 {% endblock %}
 
@@ -46,7 +48,7 @@
               <td></td>
             </tr>
           </table>
-          <table width="100%" cellpadding="3" cellspacing="1">
+          <table width="100%" cellpadding="3" cellspacing="1" id="ord">
             <tr>
               <td width="100px" align="right">{{ ord.user.label }}</td>
               <td width="90%">{{ ord.user }}<input type="button" value="检查会员是否存在" class="button" id="checkUser" /></td>
@@ -56,13 +58,13 @@
               <td>{{ ord.typ }}</td>
             </tr>
           </table>          
-          <table width="100%" cellpadding="3" cellspacing="1">
+          <table width="100%" cellpadding="3" cellspacing="1" id="fnc">
             <tr>
               <td width="100px" align="right">{{ fnc.pay.label }}：</td>
               <td width="90%">{{ fnc.pay }}</td>
             </tr>
           </table>
-          <table width="100%" cellpadding="3" cellspacing="1" id="cconsignee">
+          <table width="100%" cellpadding="3" cellspacing="1" id="logcs">
               <tr>
                   <td width="100px" align="right">{{ cnsgn.dlvr.label }}：</td>
                   <td width="90%">{{ cnsgn.dlvr }}</td>

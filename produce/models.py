@@ -13,7 +13,7 @@ class proManager(models.Manager):
         ord = Ord.objects.select_related().get(sn=sn)
         total = 0
         for i in ord.orditem_set.all():
-            total += forMatFee(i.nfee * i.num)
+            total += frMtFee(i.nfee * i.num)
 
         return total
 
@@ -21,10 +21,10 @@ class proManager(models.Manager):
         from cart.views import Cart
         from item.models import Item, ItemSpec, ItemFee
         from discount.models import Dis
-        from new31.func import forMatFee
+        from new31.func import frMtFee
         from decimal import Decimal
 
-        items  = Cart(request).items
+        items  = CartSess(request).items
 
         _items = []
 
@@ -34,7 +34,7 @@ class proManager(models.Manager):
             spec = ItemSpec.objects.getSpecBySpecID(id=i['specID']).spec
             fee = ItemFee.objects.getFeeBySpecID(id=i['specID'])
             dis = Dis.objects.getDisByDisID(id=i['disID'])
-            nfee = forMatFee(fee.fee * Decimal(dis.dis))
+            nfee = frMtFee(fee.fee * Decimal(dis.dis))
 
             _items.append(
                 Pro(

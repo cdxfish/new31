@@ -6,9 +6,9 @@ from django.contrib import messages
 # Create your decorator here.
 
 # 订单提交类提示用装饰器
-def subFailRemind(s= ''):
-    def _newfunc(func):
-        def __newfunc(self):
+def subMsg(s= ''):
+    def _func(func):
+        def __func(self):
             if not self.error:
                 try:
                     return func(self)
@@ -21,87 +21,62 @@ def subFailRemind(s= ''):
                     raise e
 
             return self #强制返回self否则无法链式调用
-        return __newfunc
-    return _newfunc
+        return __func
+    return _func
 
 
 # AJAX提示用
-def errMsg(msg):
-
-    def _errMsg(func):
-
-        def __errMsg(request, **kwargs):
+def ajaxMsg(msg):
+    def _func(func):
+        def __func(request):
             try:
+                return func(request)
 
-                return func(request, kwargs)
             except:
                 from ajax.views import AjaxRJson
 
                 return AjaxRJson().message(msg).dumps()
-
-        return __errMsg
-
-    return _errMsg
-
-
-# 提交模式检测包装函数
-def checkPOST(func):
-    def _func(request):
-        if request.method == 'POST':
-
-            return func(request)
-
-        else:
-
-            messages.error(request, '订单提交方式错误')
-
-            return rdrBck(request)
-
+        return __func
     return _func
 
 
+# 提交模式检测包装函数
+def postDr(func):
+    def _func(request):
+        if request.method == 'POST':
+            return func(request)
 
-# 页面跳转提示用装饰器
-def redirMsg(msg):
+        else:
+            messages.error(request, '订单提交方式错误')
 
-    def _redirMsg(func):
+            return rdrtBck(request)
+    return _func
 
-        def __redirMsg(request, **kwargs):
- 
+
+# 页面跳转回上一页用装饰器
+def rdrtBckDr(msg):
+    def func(func):
+        def _func(request):
             try:
 
-                return func(request, kwargs)
+                return func(request)
             except:
 
                 return msg
 
-        return __redirMsg
-
-    return _redirMsg
-
-
-# 页面跳转回上一页用装饰器
-def rdrBckDr(func):
-
-    def _func(request, **kwargs):
-        
-        func(request, kwargs)
-
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER',"/"))
-
-    return _func
-
-
+            return rdrtBckDr()
+        return _func
+    return func
 
 def itemonl(func):
-    def _func(request, kwargs):
+    def _func(request):
         try:
-            return func(request, kwargs)
+            return func(request)
             
         except:
             messages.warning(request, '当前商品已下架')
 
-            return rdrBck(request)
+            return rdrtBck(request)
 
     return _func
 
@@ -119,7 +94,7 @@ def ordDetr(func):
 
             messages.error(request, u'%s - 无法%s' % (sn, OrdSats.chcs[c][1]))
 
-            return rdrBck(request)
+            return rdrtBck(request)
 
         else:
 
@@ -137,7 +112,7 @@ def shipDetr(func):
         if not order.logcs.dman:
             messages.error(request, u'%s - 请选择物流师傅' % sn)
 
-            return rdrBck(request)
+            return rdrtBck(request)
 
 
         act = OrdShip.objects.getActTuple(order.ordship.status)
@@ -146,7 +121,7 @@ def shipDetr(func):
 
             messages.error(request, u'%s - 无法%s' % (sn, OrdShip.chcs[c][1]))
 
-            return rdrBck(request)
+            return rdrtBck(request)
 
         else:
 
@@ -168,7 +143,7 @@ def proDetr(func):
 
             messages.error(request, u'%s | %s - 无法%s' % (pro.item.ord.sn, pro.item.name, Pro.chcs[c][1]))
 
-            return rdrBck(request)
+            return rdrtBck(request)
 
         else:
 
@@ -190,7 +165,7 @@ def fncDetr(func):
 
             messages.error(request, u'%s - 无法%s' % (sn, OrdFnc.chcs[c][1]))
 
-            return rdrBck(request)
+            return rdrtBck(request)
 
         else:
 

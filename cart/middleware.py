@@ -3,8 +3,8 @@
 class CartMiddleware:
     
     def process_request(self, request):
-        from views import Cart
+        from views import CartSess
 
-        Cart(request).formatItems()
+        CartSess(request).frMt()
 
         return None

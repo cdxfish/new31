@@ -51,7 +51,7 @@ def sortList(oList):
 def pCon(request, c):
     ProCon(request).cCon(request.GET.get('sn'), c)
 
-    return rdrBck(request)
+    return rdrtBck(request)
 
 def pCons(request, c):
     c = int(c)

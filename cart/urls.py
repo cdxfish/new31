@@ -1,12 +1,12 @@
 #coding:utf-8
 from django.conf.urls import patterns, include, url
-from views import cart, cnsgn, buy, clear, checkout, submit
+from views import cart, cnsgn, buy, delete, checkout, submit
 
 urlpatterns = patterns('',
     (r'^$', cart),
     (r'^consignee\/$', cnsgn),
-    (r'^buy\/(?P<specID>\d+)\/$', buy),
-    (r'^clear\/(?P<mark>\d+)\/$', clear),
+    (r'^buy\/$', buy),
+    (r'^delete\/$', delete),
     (r'^checkout\/$', checkout),
     (r'^submit\/$', submit),
 )

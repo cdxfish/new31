@@ -5,7 +5,7 @@ class FncMiddleware:
     def process_request(self, request):
         from views import FncSess
         
-        FncSess(request).frMtSess()
+        FncSess(request).frMt()
 
         return None
 

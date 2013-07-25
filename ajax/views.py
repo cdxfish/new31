@@ -1,20 +1,20 @@
 #coding:utf-8
 from django.http import HttpResponse
-from new31.decorator import errMsg
+from new31.decorator import ajaxMsg
 import json
 
 # Create your views here.
 
 # 首页瀑布流获取更多商品
-@errMsg('无更多商品')
-def getItemPin(request, kwargs):
+@ajaxMsg('无更多商品')
+def getItemPin(request):
 
     return AjaxRJson().dumps(ItemPin(8).getItems(sort))
 
 
 # 前台弹出层中获取商品规格
-@errMsg('当前商品已下架')
-def getItemSpec(request, kwargs):
+@ajaxMsg('当前商品已下架')
+def getItemSpec(request):
     from item.models import ItemSpec
 
     itemSpec = ItemSpec.objects.getSpecByItemId(id=kwargs['specID'])
@@ -25,11 +25,13 @@ def getItemSpec(request, kwargs):
 
 
 # 前台购物车界面修改购物车中商品数量
-@errMsg('当前商品已下架')
-def ajaxChangNum(request, kwargs):
-    from cart.views import Cart
+@ajaxMsg('当前商品已下架')
+def cNum(request):
+    from cart.views import CartSess
+    mark = int(request.GET.get('mark'))
+    num = int(request.GET.get('num'))
 
-    data =  '%.2f' % Cart(request).changeNumBySpec(mark=kwargs['mark'], num=kwargs['num']).countFee()
+    data =  '%.2f' % CartSess(request).chngNum(mark, num).total()
 
     return AjaxRJson().dumps(data)
 
@@ -37,8 +39,8 @@ def ajaxChangNum(request, kwargs):
 # 商品查询，后台新订单及订单编辑用
 def getItemByKeyword(request):
 
-    @errMsg('未找到商品')
-    def _getItemByKeyword(request, kwargs):
+    @ajaxMsg('未找到商品')
+    def _getItemByKeyword(request):
         from item.models import Item
 
         r = [ { 'name':i.name, 'sn': i.sn, 'id': i.id, } for i in Item.objects.getItemLikeNameOrSn( kwargs['k'] )]
@@ -49,30 +51,40 @@ def getItemByKeyword(request):
 
 
 # ajax动态写入收货人信息
-@errMsg('无法填写表单')
-def cCnsgnByAjax(request, kwargs):
+@ajaxMsg('无法填写表单')
+def cLogcs(request):
     from logistics.views import Cnsgn
-    Cnsgn(request).setSeesion()
+
+    for i,v in request.GET.dict().items():
+        OrdSess(request).setByName(i, v)
 
     return AjaxRJson().dumps()
 
-# ajax动态写入收货人信息
-@errMsg('无法填写表单')
-def coTypeByAjax(request, kwargs):
+# ajax动态写入订单信息
+@ajaxMsg('无法填写表单')
+def cOrd(request):
+    from order.views import OrdSess
+    for i,v in request.GET.dict().items():
+        OrdSess(request).setByName(i, v)
 
-    o = Ord(request)
+    return AjaxRJson().dumps()
 
-    o.o['typ'] = int(request.GET.get('oType'))
+# ajax动态写入财务信息
+@ajaxMsg('无法填写表单')
+def cFnc(request):
+    from finance.views import FncSess
+    for i,v in request.GET.dict().items():
+        FncSess(request).setByName(i, v)
 
     return AjaxRJson().dumps()
 
 
 # ajax动态修改购物车内商品
-@errMsg('无法修改表单数据')
-def cItemByAjax(request, kwargs):
+@ajaxMsg('无法修改表单数据')
+def cItem(request, kwargs):
     from cart.views import Cart
     mark = int(request.GET.get('mark')[1:])
-    cc = Cart(request).changeItem()
+    cc = CartSess(request).changeItem()
 
     i = cc.getItemTotalByMark(mark)
 
@@ -85,7 +97,7 @@ def cItemByAjax(request, kwargs):
     return AjaxRJson().dumps(data)
 
 # ajax动态修改物流偏移量
-@errMsg('无法修改表单数据')
+@ajaxMsg('无法修改表单数据')
 def cAdv(request, kwargs):
     from order.models import OrdLogcs
 
@@ -108,7 +120,7 @@ def cAdv(request, kwargs):
     return AjaxRJson().dumps(data)
 
 # ajax动态修改物流师傅
-@errMsg('无法修改表单数据')
+@ajaxMsg('无法修改表单数据')
 def cDman(request, kwargs):
     sn = int(request.GET.get('sn')[1:])
     value = int(request.GET.get('value', 0))
@@ -135,17 +147,17 @@ def cDman(request, kwargs):
     return AjaxRJson().dumps(data)
 
 
-def cLogcs(request, func):
-    sn = int(request.GET.get('sn')[1:])
-    value = int(request.GET.get('value', 0))
+# def cLogcs(request, func):
+#     sn = int(request.GET.get('sn')[1:])
+#     value = int(request.GET.get('value', 0))
 
-    from order.models import OrdLogcs
-    logcs = OrdLogcs.objects.get(ord=sn)
+#     from order.models import OrdLogcs
+#     logcs = OrdLogcs.objects.get(ord=sn)
 
-    if logcs.ord.ordship.status > 1:
-        return AjaxRJson.message(u'无法修改表单数据').dumps()
+#     if logcs.ord.ordship.status > 1:
+#         return AjaxRJson.message(u'无法修改表单数据').dumps()
 
-    return func()
+#     return func()
 
 
 

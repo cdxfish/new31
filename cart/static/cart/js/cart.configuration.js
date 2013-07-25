@@ -8,25 +8,24 @@ var cart = {
         $('.iNum').live('change',
 
         function() {
-            var that = $(this);
-            var thisValue = that.val();
-            if (parseInt(thisValue) == thisValue) {
-                $.getJSON(
-                    '/ajax/itemnum/' + that.attr('name') + '/' + thisValue + '/',
+            var self = $(this);
+            var val = self.val();
+            if (parseInt(val) == val) {
+                $.dialog.ajaxMsg('/ajax/cnum/?mark=' + self.attr('name') + '&num=' + val,
 
                 function(data) {
-                    $.dialog.dialogMsgAndReload(data,
 
-                    function(data) {
-                        var stotal = $('#am' + that.attr('name')).text() * thisValue + '.00';
+                    var stotal = $('#am' + self.attr('name')).text() * val + '.00';
 
-                        $('#st' + that.attr('name')).text(stotal);
+                    $('#st' + self.attr('name')).text(stotal);
 
-                        $('.total').text(data.data);
-                    })
+                    $('.total').text(data.data);
+
                 })
+
+
             } else {
-                that.val(1);
+                self.val(1);
             }
 
         })

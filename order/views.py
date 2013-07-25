@@ -4,8 +4,8 @@ from django.db.models import Q
 from django.template import RequestContext
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from new31.decorator import checkPOST, ordDetr, rdrBckDr, subFailRemind
-from new31.func import forMatFee, rdrRange, page
+from new31.decorator import postDr, ordDetr, rdrtBckDr, subMsg
+from new31.func import frMtFee, rdrRange, page
 from purview.views import BsPur
 from decimal import Decimal
 import time, datetime
@@ -27,7 +27,7 @@ def ordList(request):
 
 
 # 后台订单提交,提交成功后进行页面跳转至订单列表
-@checkPOST
+@postDr
 def submit(request):
     from logistics.views import Cnsgn
     Cnsgn(request).setSeesion()
@@ -36,7 +36,7 @@ def submit(request):
 
 # 后台新单编辑操作编辑页面
 def newOrdUI(request):
-    OrdSess(request).setStoZero()
+    OrdSess(request).setSzero()
 
     return editUI(request)
 
@@ -52,18 +52,18 @@ def editOrd(request, c):
 # 后台订单编辑操作编辑页面@
 def editUI(request):
     from cart.views import Cart
-    from forms import ItemsForm, ordForm
-    from logistics.forms import cnsgnForm
+    from forms import ItemsForm, ordFrm
+    from logistics.forms import logcsFrm
     from finance.forms import fncFrm
 
-    items = Cart(request).showItemToCart()
+    items = CartSess(request).showItemToCartSess()
 
     ItemsForm.getItemForms(items['items'])
 
-    cnsgn = cnsgnForm(request)
+    cnsgn = logcsFrm(request)
     fnc = fncFrm(request)
 
-    ord = ordForm(request)
+    ord = ordFrm(request)
 
     return render_to_response('orderneworedit.htm', locals(), context_instance=RequestContext(request))
 
@@ -75,10 +75,9 @@ def copyOrd(request,c):
 
 @ordDetr
 def cCon(request, c):
-    OrdSess(request).cCon(request.GET.get('sn'), c)
+    # OrdSess(request).cCon(request.GET.get('sn'), c)
 
-    return rdrBck(request)
-
+    return rdrtBck(request)
 
 
 # 非新单及编辑以外的订单操作
@@ -91,22 +90,23 @@ def cCons(request, c):
 
 
 # 后台订单编辑中添加商品至订单操作
-@checkPOST
-@rdrBckDr
+@postDr
+@rdrtBckDr
 def addItemToOrd(request, kwargs):
     from cart.views import Cart
-    return Cart(request).pushToCartByItemIDs(request.POST.getlist('i'))
+    return CartSess(request).pushByIDs(request.POST.getlist('i'))
 
 
 # 编辑界面中删除订单中的商品操作
-@rdrBckDr
+@rdrtBckDr
 def delItemToOrd(request, kwargs):
     from cart.views import Cart
 
-    return Cart(request).clearItemByMark(kwargs['mark'])
+    return CartSess(request).clearItemByMark(kwargs['mark'])
 
 
-class OrdSess(object):
+from new31.cls import BsSess
+class OrdSess(BsSess):
     """ 
         订单基本信息类
 
@@ -115,129 +115,98 @@ class OrdSess(object):
     """
     def __init__(self, request):
         from models import Ord
-        # from django.contrib.auth.models import User
-        self.request = request
-        self.o = self.request.session.get('o')
-        self.oFormat =  {
+
+        self.s = 'o'
+        self.frmt =  {
                         'typ': Ord.typs[0][0],
                         'status': Ord.chcs[0][0],
                         'sn': 0,
-                        'user': self.request.user.username,
+                        'user': request.user.username,
             }
 
-    # 初始化seesion中用于存储订单的基本操作信息字典
-    def format(self):
-        if not self.o:
-            return self.setSeesion(self.oFormat)
+        super(OrdSess, self).__init__(request)
 
-    def setSeesion(self, o):
-        self.request.session['o'] = o
+    def setSzero(self):
+        self.sess['status'] = 0
 
-        return self
-
-    def clear(self):
-
-        return self.setSeesion(self.oFormat)
-
-    def cCon(self, sn, c):
-        order =  Ord.objects.get(sn=sn)
-
-        order.status = c
-
-        order.save()
-
-        return self
+        return self.set(self.sess)
 
 
-    def setStoZero(self):
+    def setSone(self):
+        self.sess['status'] = 1
 
-        self.o['status'] = 0
+        return self.set(self.sess)
 
-        return self
+    # def cpyTsess(self, sn):
+    #     order = Ord.objects.get(sn=sn)
+    #     self.o['typ'] = order.typ
+    #     self.o['sn'] = sn
 
+    #     return self.setStoOne()
 
-    def setStoOne(self):
-        self.o['status'] = 1
-        return self
+    # def cpyCongn(self, sn):
+    #     from consignee.views import Cnsgn
+    #     sCongn = Cnsgn(self.request)
+    #     c = sCongn.cFormat.copy()
 
-    def cpyTsess(self, sn):
-        order = Ord.objects.get(sn=sn)
-        self.o['typ'] = order.typ
-        self.o['sn'] = sn
-
-        return self.setStoOne()
-
-    def cpyCongn(self, sn):
-        from consignee.views import Cnsgn
-        sCongn = Cnsgn(self.request)
-        c = sCongn.cFormat.copy()
-
-        oLogcs = Ord.objects.get(sn=sn).logcs
+    #     oLogcs = Ord.objects.get(sn=sn).logcs
  
-        areaList = oLogcs.area.split(' - ')
+    #     areaList = oLogcs.area.split(' - ')
 
 
-        try:
-            area = Area.objects.get(name=areaList[1]).id
-        except Exception, e:
-            area = Area.objects.getDefault().id
+    #     try:
+    #         area = Area.objects.get(name=areaList[1]).id
+    #     except Exception, e:
+    #         area = Area.objects.getDefault().id
 
 
-        try:
-            time = SignTime.objects.get(start=oLogcs.stime, end=oLogcs.etime).id
-        except Exception, e:
-            time = SignTime.objects.getDefault().id
+    #     try:
+    #         time = SignTime.objects.get(start=oLogcs.stime, end=oLogcs.etime).id
+    #     except Exception, e:
+    #         time = SignTime.objects.getDefault().id
 
-        c['user'] = oLogcs.ord.user
-        c['pay'] = oLogcs.ord.fnc.cod.id
-        c['consignee'] = oLogcs.consignee
-        c['area'] = area
-        c['address'] = oLogcs.address
-        c['tel'] = oLogcs.tel
-        c['date'] = '%s' % oLogcs.date
+    #     c['user'] = oLogcs.ord.user
+    #     c['pay'] = oLogcs.ord.fnc.cod.id
+    #     c['consignee'] = oLogcs.consignee
+    #     c['area'] = area
+    #     c['address'] = oLogcs.address
+    #     c['tel'] = oLogcs.tel
+    #     c['date'] = '%s' % oLogcs.date
 
-        c['time'] = time
-        c['note'] = oLogcs.note
+    #     c['time'] = time
+    #     c['note'] = oLogcs.note
 
-        sCongn.setConsignee(c)
+    #     sCongn.setConsignee(c)
 
 
-        return self
+    #     return self
 
-    def cpyItem(self, sn):
-        from cart.views import Cart
-        from discount.models import Dis
-        c = Cart(self.request).clear()
+    # def cpyItem(self, sn):
+    #     from cart.views import Cart
+    #     from discount.models import Dis
+    #     c = CartSess(self.request).clear()
 
-        order = Ord.objects.get(sn=sn)
-        items = order.orditem_set.all()
-        _items = []
+    #     order = Ord.objects.get(sn=sn)
+    #     items = order.orditem_set.all()
+    #     _items = []
 
-        for i in items:
-            ii = ItemSpec.objects.get(item__name=i.name, spec__value=i.spec)
+    #     for i in items:
+    #         ii = ItemSpec.objects.get(item__name=i.name, spec__value=i.spec)
 
-            item = c.item.copy()
-            item['itemID'] = ii.item.id
-            item['specID'] = ii.id
-            item['disID'] = Dis.objects.get(dis=i.dis).id
-            item['num'] = i.num
+    #         item = c.item.copy()
+    #         item['itemID'] = ii.item.id
+    #         item['specID'] = ii.id
+    #         item['disID'] = Dis.objects.get(dis=i.dis).id
+    #         item['num'] = i.num
 
-            _items.append(item)
+    #         _items.append(item)
 
-        c.pushItem(_items)
+    #     c.pushItem(_items)
 
-        return self
+    #     return self
 
 
     # 将订单信息配置到seesion当
-    def setSessBySN(self, sn):
-
-        return self.cpyTsess(sn).cpyCongn(sn).cpyItem(sn)
-
-
-    def stopOrd(self, sn):
-
-        return self.cCon(sn, 4)
 
 
 
@@ -416,7 +385,7 @@ class OrdSub(object):
 
 
     # 插入订单基本信息
-    @subFailRemind(u'会员不存在，无法提交订单基本信息。')
+    @subMsg(u'会员不存在，无法提交订单基本信息。')
     def pushOrd(self):
         from models import Ord
 
@@ -425,7 +394,7 @@ class OrdSub(object):
 
 
     # 物流信息提交
-    @subFailRemind(u'无法提交物流信息。')
+    @subMsg(u'无法提交物流信息。')
     def logcs(self):
 
         from logistics.models import Logcs
@@ -436,7 +405,7 @@ class OrdSub(object):
 
 
     # 商品信息提交
-    @subFailRemind(u'部分商品已下架，无法提交商品信息。')
+    @subMsg(u'部分商品已下架，无法提交商品信息。')
     def pro(self):
         from produce.models import Pro
 
@@ -445,7 +414,7 @@ class OrdSub(object):
         return self
 
     # 支付信息提交
-    @subFailRemind(u'无法提交财务信息。')
+    @subMsg(u'无法提交财务信息。')
     def fnc(self):
         from finance.models import Fnc
 
@@ -457,7 +426,7 @@ class OrdSub(object):
 
 
     # 订单日志提交
-    @subFailRemind(u'无法提交订单日志。')
+    @subMsg(u'无法提交订单日志。')
     def log(self):
         from log.models import OrdLog
 
@@ -474,13 +443,13 @@ class OrdSub(object):
 
 
     # 订单提交完成
-    @subFailRemind(u'订单提交无法完成。')
+    @subMsg(u'订单提交无法完成。')
     def done(self):
         from cart.views import Cart
         from logistics.views import Cnsgn
         from finance.views import FncSess
 
-        Cart(self.request).clear()
+        CartSess(self.request).clear()
         Cnsgn(self.request).clear()
         OrdSess(self.request).clear()
         FncSess(self.request).clear()
@@ -513,7 +482,7 @@ class OrdSub(object):
     def showError(self):
         messages.error(self.request, u'订单提交失败，请重新提交。')
 
-        return rdrBck(self.request)
+        return rdrtBck(self.request)
 
 
     def editOrdFmt(self):

@@ -3,30 +3,26 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from new31.decorator import checkPOST, rdrBckDr, itemonl
-from new31.func import forMatFee
+from new31.decorator import postDr, itemonl
+from new31.func import frMtFee, rdrtBck
 import time, datetime, math
 from decimal import Decimal
-
-
 
 # Create your views here.
 
 # 前台购物车界面
 def cart(request):
-    cart = Cart(request).showItemToCart()
-    # from order.models import Ord
-
-    # Ord.objects.all().delete()
+    cart = CartSess(request).show()
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
 
 
 # 收货人信息界面
 def cnsgn(request):
-    from logistics.forms import cnsgnForm
+    from logistics.forms import logcsFrm
     from finance.forms import fncFrm
-    cnsgn = cnsgnForm(request)
+
+    cnsgn = logcsFrm(request)
     fnc = fncFrm(request)
 
     return render_to_response('consignee.htm', locals(), context_instance=RequestContext(request))
@@ -34,7 +30,7 @@ def cnsgn(request):
 
 
 # 前台订单确认界面
-@checkPOST
+@postDr
 def checkout(request):
     from logistics.forms import CnsgnForm
     from logistics.views import Cnsgn
@@ -58,7 +54,7 @@ def checkout(request):
 
         return HttpResponseRedirect('/cart/consignee/')
 
-    cart = Cart(request).showItemToCart()
+    cart = CartSess(request).showItemToCartSess()
 
     if not cart['items']:
 
@@ -70,28 +66,30 @@ def checkout(request):
     return render_to_response('checkout.htm', locals(), context_instance=RequestContext(request))
 
 # 前台订单提交,并是用前台消息模板显示订单号等信息
-@checkPOST
+@postDr
 def submit(request):
     from order.views import OrdSub
 
     return OrdSub(request).submit().showOrdSN()
 
 # GET方式将物品放入购物车
-@rdrBckDr
 @itemonl
-def buy(request, kwargs):
+def buy(request):
+
+    CartSess(request).pushBySid(request.GET.get('id'))
    
-    return Cart(request).pushToCartBySpecID(kwargs['specID'])
+    return rdrtBck(request)
 
 # GET方式将物品取出购物车
-@rdrBckDr
-@itemonl
-def clear(request, kwargs):
+def delete(request):
 
-    return Cart(request).clearItemByMark(kwargs['mark'])
+    CartSess(request).delete(int(request.GET.get('id')))
+
+    return rdrtBck(request)
 
 
-class Cart(object):
+from new31.cls import BsSess
+class CartSess(BsSess):
     """ 
         购物车相关
 
@@ -108,189 +106,139 @@ class Cart(object):
         此类包含有对购物车操作的各类方法(必须实例化方可使用)
 
         example:
-            Cart(request).clearItemByMark(mark)
+            CartSess(request).clear(mark)
 
 
     """
     def __init__(self, request):
 
-        self.itemsFormat = {}
+        self.s = 'c'
 
-        self.item = {
-                        'mark':0,
-                        'itemID': 0, 
-                        'specID': 0, 
-                        'disID': 0, 
-                        'num': 1
-                    }
+        super(CartSess, self).__init__(request)
 
-        self.request = request
-
-        self.items = request.session.get('items')
-
-    def setSeesion(self, items):
-
-        self.request.session['items'] = items
-
-        return self
-
-    def formatItems(self):
-        if not self.items:
-
-            return self.setSeesion(self.itemsFormat)
-
-    def formatMark(self):
+    def getMark(self):
 
         t = time.gmtime()
         tCount = t.tm_hour * t.tm_min * t.tm_sec
         sExpiryDate = self.request.session.get_expiry_date()
         sCount = (sExpiryDate.hour * sExpiryDate.minute * sExpiryDate.second ) % 10
 
-        return int('%d%05d%d' % (len(self.items) + 1, tCount, sCount ))
+        return int('%d%05d%d' % (len(self.sess) + 1, tCount, sCount ))
 
 
-    def pushToCartBySpecID(self, specID):
+    def pushBySid(self, sid):
         from item.models import Item, ItemFee, ItemSpec
         from discount.models import Dis
-        specID = int(specID)
 
-        items = self.items
+        i = {
+                'mark': self.getMark(),
+                'itemID': Item.objects.getItemBySpecId(id=sid).id,
+                'specID': ItemSpec.objects.getSpecBySpecID(sid).id,
+                'disID': ItemFee.objects.getDisBySpecID(id=sid).id if self.request.user.is_authenticated() else Dis.objects.getDefault().id,
+                'num': 1,
+        }
 
-        i = self.item.copy()
+        self.sess[i['mark']] = i 
 
-        i['itemID'] = Item.objects.getItemBySpecId(id=specID).id
-        i['specID'] = ItemSpec.objects.getSpecBySpecID(specID).id
-        i['mark'] = self.formatMark()
-
-        if self.request.user.is_authenticated():
-
-            i['disID'] = ItemFee.objects.getDisBySpecID(id=specID).id
-        else:
-            
-            i['disID'] = Dis.objects.getDefault().id
-
-        items.update({i['mark']: i}) 
-
-        return self.setSeesion(items)
+        return self._set()
 
 
-    def pushToCartByItemIDs(self, itemIDs):
+    def pushByIDs(self, IDs):
         from item.models import Item
         from discount.models import Dis
-        items = self.items
 
-        for i in itemIDs:
-            ii = self.item.copy()
 
-            item = Item.objects.getItemByItemID(i)
+        for i in IDs:
+            ii = {
+                    'mark': self.getMark(),
+                    'itemID': i,
+                    'specID': Item.objects.getItemByItemID(i).itemspec_set.getDefaultSpec().id,
+                    'disID': Dis.objects.getDefault().id,
+                    'num': 1,
+            }
 
-            ii['mark'] = self.formatMark()
-            ii['itemID'] = item.id
-            ii['specID'] = item.itemspec_set.getDefaultSpec().id
-            ii['disID'] = Dis.objects.getDefault().id
-  
-            items[ii['mark']] = ii 
+            self.sess[ii['mark']] = ii
 
-        return self.setSeesion(items)
+        return self._set()
 
-    def pushItem(self, items):
-        _items = self.items
 
+    def pushByItems(self, items):
         for i in items:
 
-            i['mark'] = self.formatMark()
+            i['mark'] = self.getMark()
   
-            _items[i['mark']] = i  
+            self.sess[i['mark']] = i  
 
-        return self.setSeesion(_items)
-
-
-    def clearItemByMark(self, mark):
-
-        mark = int(mark)
-
-        items = self.items
-
-        del items[mark]
-
-        return self.setSeesion(items)
+        return self._set()
 
 
-    def changeNumBySpec(self, mark, num):
-        mark = int(mark)
-        num = int(num)
+    def delete(self, mark):
 
-        items = self.items
+        self.sess.pop(mark)
 
-        items[mark]['num'] = num
-
-        self.request.session['items'] = items
-
-        return self
+        return self.set(self.sess)
 
 
-    def showItemToCart(self):
+    def chngNum(self, mark, num):
 
-        items = self.items
-        _items = self.items.copy()
+        self.sess[mark]['num'] = num
 
-        itemList = []
-        countFee = 0
+        return self._set()
 
-        for i in items:
+
+    def show(self):
+        sess = self.sess.copy()
+
+        items = []
+        total = 0
+
+        for i in self.sess:
             try:
-                ii = self.getItemTotalByMark(i)
-                countFee += ii['total']
-
-                itemList.append(ii)
+                ii = self.getItem(i)
+                total += ii['total']
+                items.append(ii)
             except Exception, e:
-                del _items[i]
+                del sess[i]
                 messages.warning(self.request, '部分商品已下架。')
 
-        self.setSeesion(_items)
+        self.set(sess)
 
-        return {'items': itemList, 'total': forMatFee(countFee)}
+        return {'items': items, 'total': frMtFee(total)}
 
-    def clear(self):
-        self.items.clear()
+
+    def total(self):
  
-        return self.setSeesion(self.items)
+        return self.show()['total']
 
-    def countFee(self):
-        cart = self.showItemToCart()
-
-        return cart['total']
-
-    def changeItem(self):
+    def chngItem(self):
 
         name =  self.request.GET.get('name')
         mark =  self.request.GET.get('mark')
         value =  self.request.GET.get('value', 0)
 
-        items = self.items
+        items = self.sess
 
         items[int(mark[1:])][name] = int(value)
 
-        return self.setSeesion(items)
+        return self.set(items)
 
-    def getItemTotalByMark(self, mark):
+    def getItem(self, mark):
         from item.models import Item
         from discount.models import Dis
 
-        i = self.items[mark]
+        i = self.sess[mark]
 
         item = Item.objects.getItemByItemID(id=i['itemID'])
         spec = item.itemspec_set.getSpecBySpecID(id=i['specID'])
         dis = Dis.objects.get(id=i['disID'])
         fee = spec.itemfee_set.getFeeByNomal().fee * Decimal(dis.dis)
-        total = fee * int(i['num'])
 
         return {
                 'mark': i['mark'],
                 'item': item,
                 'spec': spec, 
-                'fee': forMatFee(fee), 
+                'fee': frMtFee(fee), 
                 'num': i['num'], 
                 'dis': dis, 
-                'total': forMatFee(total)
+                'total': frMtFee(fee * int(i['num']))
             }

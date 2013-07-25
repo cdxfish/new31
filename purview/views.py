@@ -1,7 +1,7 @@
 #coding:utf-8
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from new31.func import rdrBck, redirectLogin
+from new31.func import rdrtBck, rdrtLogin
 
 # Create your views here.
 
@@ -50,7 +50,7 @@ class URLPurview:
                 if not self.request.path in element:
                     return self.error()
             else:
-                return redirectLogin()
+                return rdrtLogin()
 
 
     # 页面元素加持
@@ -77,7 +77,7 @@ class URLPurview:
     def errorShow(self):
             messages.error(self.request, self.errStr)
 
-            return rdrBck(self.request)
+            return rdrtBck(self.request)
 
 
 

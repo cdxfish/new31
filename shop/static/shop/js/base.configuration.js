@@ -139,6 +139,25 @@ var b = {
         $(".messagePop").hide();
 
         return this
+    },
+    chng: function(obj, url) {
+        obj.change(
+
+        function() {
+            var name = $(this).attr('name');
+            var value = $(this).val();
+            $(this).ajaxDialog(function() {
+                $.getJSON(url + '?' + name + '=' + value,
+
+                function(data) {
+                    $.dialog.msg(data);
+                })
+
+            });
+
+
+        });
+        return this;
     }
 
 }

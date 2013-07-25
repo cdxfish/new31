@@ -1,9 +1,9 @@
 // 置顶工具条
 $(document).ready(function() {
-    ob.nav().odd('odd').odds().plugin();
+    b.nav().odd('odd').odds().plugin();
 })
 
-ob = {
+b = {
     // 表格鼠标移入移出特效
     odd: function(c) {
         $("table tr").live('mouseover',
@@ -102,6 +102,25 @@ ob = {
             // selected: 'RS'
         });
 
+        return this;
+    },
+    chng: function(obj, url) {
+        obj.change(
+
+        function() {
+            var name = $(this).attr('name');
+            var value = $(this).val();
+            $(this).ajaxDialog(function() {
+                $.getJSON(url + '?' + name + '=' + value,
+
+                function(data) {
+                    $.dialog.msg(data);
+                })
+
+            });
+
+
+        });
         return this;
     }
 }

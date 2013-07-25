@@ -5,50 +5,26 @@ import math, random, datetime
 
 
 # 格式化价格,舍弃小数位
-def forMatFee(fee):
-
+def frMtFee(fee):
     return math.floor(fee)
 
-def keChngFrmt(fee):
-    if fee % 100 < 50:
-        paid = math.floor(fee / 100) * 100 + 50
-
-    else:
-        paid = math.ceil(fee / 100) * 100
-
-    return paid
+def keFrmt(fee):
+    return math.floor(fee / 100) * 100 + 50 if fee % 100 < 50 else math.ceil(fee / 100) * 100
 
 # 重定向至登录页
-def redirectLogin():
+def rdrtLogin():
     return HttpResponseRedirect("/account/login/")
 
 
 # 重定向至首页
-def redirect():
+def rdrtIndex():
     return HttpResponseRedirect('/')
 
 
 # 重定向至前一页
-def rdrBck(request, L=[]):
-    HTTP_REFERER = request.META.get('HTTP_REFERER',"/")
+def rdrtBck(request):
 
-    if count():
-        return HttpResponseRedirect(HTTP_REFERER)
-    else:
-        return redirect()
-
-# 闭包计数器
-def count():
-    i = 0
-
-    def _func(i):
-        i +=  1
-        return i
-
-    if i:
-        return _func
-    else:
-        return _func(i)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER',"/"))
 
 
 # 分页
@@ -72,7 +48,6 @@ def sort(i):
 
 
 def rdrRange(url,date,sn):
-
     d = datetime.datetime.strptime(date, "%Y-%m-%d")
     s = d - datetime.timedelta(days=1)
     e = d + datetime.timedelta(days=1)
