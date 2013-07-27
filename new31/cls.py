@@ -27,6 +27,7 @@ class BsSess(object):
         return self
 
     def set(self, d):
+
         self.request.session[self.s] = d
 
         self.sess = d
@@ -37,11 +38,16 @@ class BsSess(object):
         
         return self.set(self.sess)
 
+    def setByDict(self, d):
+
+        return self.set(dict({ i:v for i,v in d.items() if i in self.frmt}))
+
     def setByName(self, name, s):
 
         self.sess[name] = s
 
         return self.set(self.sess)
+
 
     def clear(self):
 

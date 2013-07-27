@@ -13,7 +13,7 @@ class FncFrm(forms.Form):
 def fncFrm(request):
     from views import FncSess
 
-    return FncFrm(initial={i:v for i, v in FncSess(request).f.items()})
+    return FncFrm(initial={i:v for i, v in FncSess(request).sess.items()})
 
 class FncSrchFrm(bsSrchFrm):
     from models import Fnc

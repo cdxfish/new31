@@ -11,7 +11,10 @@ class fncManager(models.Manager):
 
     def saveFnc(self, ord, request):
         from views import FncSess
-        fnc = Fnc()
+        try:
+            fnc = ord.fnc
+        except Exception, e:
+            fnc = Fnc()
 
         fnc.ord = ord
         fnc.cod = FncSess(request).getObj()['pay']

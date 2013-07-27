@@ -27,11 +27,25 @@ class ordManager(models.Manager):
         from views import OrdSess
         
         o = OrdSess(request).sess
+        print o
         if o['user']:
             ord.user= User.objects.get(username=o['user'])
+        else:
+            ord.user = None
 
         ord.typ = o['typ']
         ord.save()
+
+    def cStatus(self, sn , s):
+        ord = self.get(sn=sn)
+
+        ord.status = s
+
+        ord.save()
+
+    def stopOrd(self, sn):
+
+        return self.cStatus(sn, 4)
 
 
 class Ord(models.Model):

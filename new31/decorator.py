@@ -1,7 +1,6 @@
 #coding:utf-8
-from new31.func import *
-from django.conf import settings
 from django.contrib import messages
+from new31.func import rdrtBck
 
 # Create your decorator here.
 
@@ -15,8 +14,9 @@ def subMsg(s= ''):
 
                 except Exception, e:
                     self.error = True
-                    messages.error(self.request, s)
                     self.delNewOrd()
+                    
+                    messages.error(self.request, s)
 
                     raise e
 
@@ -61,10 +61,8 @@ def rdrtBckDr(msg):
 
                 return func(request)
             except:
-
-                return msg
-
-            return rdrtBckDr()
+                messages.warning(request, msg)
+                return rdrtBck(request)
         return _func
     return func
 
@@ -82,56 +80,92 @@ def itemonl(func):
 
 
 # 订单状态操作装饰器
-def ordDetr(func):
+def ordDr(func):
 
-    def _func(request, c):
-        from order.models import Ord, OrdSats
+    def _func(request, s):
+        from order.models import Ord
         sn = request.GET.get('sn')
         order =  Ord.objects.get(sn=sn)
-        act = OrdSats.objects.getActTuple(order.status)
 
-        if not c in act:
+        act = Ord.objects.getActTuple(order.status)
 
-            messages.error(request, u'%s - 无法%s' % (sn, OrdSats.chcs[c][1]))
+        if not s in act:
+
+            messages.error(request, u'%s - 无法%s' % (sn, Ord.chcs[s][1]))
 
             return rdrtBck(request)
 
         else:
 
-            return func(request, c)
+            return func(request, s)
 
     return _func
 
 
 # 物流状态操作装饰器
-def shipDetr(func):
-    def _func(request, c):
-        from order.models import Ord, OrdShip
+def logcsDr(func):
+    def _func(request, s):
+        from logistics.models import Logcs
+
         sn = request.GET.get('sn')
-        order =  Ord.objects.get(sn=sn)
-        if not order.logcs.dman:
-            messages.error(request, u'%s - 请选择物流师傅' % sn)
 
-            return rdrtBck(request)
+        act = Logcs.objects.getActTuple(Logcs.objects.get(ord__sn=sn).status)
 
+        if not s in act:
 
-        act = OrdShip.objects.getActTuple(order.ordship.status)
-
-        if not c in act:
-
-            messages.error(request, u'%s - 无法%s' % (sn, OrdShip.chcs[c][1]))
+            messages.error(request, u'%s - 无法%s' % (sn, Logcs.chcs[s][1]))
 
             return rdrtBck(request)
 
         else:
 
-            return func(request, c)
+            return func(request, s)
+
+    return _func
+
+def dManDr(func):
+    def _func(request, s):
+        from logistics.models import Logcs
+
+        sn = request.GET.get('sn')
+
+        if not Logcs.objects.get(ord__sn=sn).dman:
+            messages.error(request, u'%s - 请选择物流师傅' % sn)
+
+            return rdrtBck(request)
+
+        else:
+
+            return func(request, s)
+
+    return _func 
+
+# Ajax物流偏移量以及物流师傅选择装饰器
+def  aLogcsDr(func):
+    def _func(request):
+        from logistics.models import Logcs
+        from ajax.views import AjaxRJson
+        
+        sn = int(request.GET.get('sn')[1:])
+        value = int(request.GET.get('value', 0))
+
+        logcs = Logcs.objects.get(ord=sn)
+
+        if logcs.status > 1:
+            return AjaxRJson.message(u'无法修改表单数据').dumps()
+
+        func(logcs, value)
+
+        logcs.save()
+
+        return AjaxRJson().dumps({'sn': sn, 'value': value})
 
     return _func
 
 
+
 # 生产状态操作装饰器
-def proDetr(func):
+def proDr(func):
     def _func(request, c):
         from produce.models import Pro
         sn = request.GET.get('sn')

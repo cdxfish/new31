@@ -23,7 +23,7 @@
             <td>{{ i.fnc.cod.get_cod_display }}</td>
             <td>{{ i.get_status_display }} | {{ i.fnc.get_status_display }} | {{ i.logcs.get_status_display }}</td>
           </tr>
-{% for item in i.orditem_set.all %}
+{% for item in i.pro_set.all %}
           <tr align="center">
             <td align="right" nowrap="true" colspan="2">{{ item.name }}</td>
             <td>{{ item.spec }}</td>

@@ -1,54 +1,50 @@
 {% extends "office.base.htm" %}
 
 {% block js %}
-    <script type="text/javascript" src="{{ STATIC_URL }}consignee/js/consignee.configuration.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}logistics/js/consignee.configuration.js"></script>
 {% endblock %}
 
 {% block content %}
         <form action="{{ request.paths.提交物流 }}" method="POST" id="checkout">
         <h3>收货人信息</h3>
-            <table width="100%" cellpadding="3" cellspacing="1" id="cconsignee">
+            <table width="100%" cellpadding="3" cellspacing="1" id="logcs">
+              <tr>
+                  <td width="100px" align="right">{{ logcs.dlvr.label }}：</td>
+                  <td width="90%">{{ logcs.dlvr }}</td>
+              </tr>
+              <tr>
+                  <td align="right">{{ logcs.consignee.label }}：</td>
+                  <td>{{ logcs.consignee }}</td>
+              </tr>
+              <tr>
+                  <td align="right">{{ logcs.area.label }}：</td>
+                  <td>{{ logcs.area }}</td>
+              </tr>
+              <tr>
+                  <td align="right">{{ logcs.address.label }}：</td>
+                  <td>{{ logcs.address }}</td>
+              </tr>
+              <tr>
+                  <td align="right">{{ logcs.tel.label }}：</td>
+                  <td>{{ logcs.tel }}</td>
+              </tr>
+              <tr>
+                  <td align="right">{{ logcs.date.label }}：</td>
+                  <td>{{ logcs.date }}</td>
+              </tr>
+              <tr>
+                  <td align="right">{{ logcs.time.label }}：</td>
+                  <td>{{ logcs.time }}</td>
+              </tr>
+              <tr>
+                  <td align="right" valign="top">{{ logcs.note.label }}：</td>
+                  <td>{{ logcs.note }}</td>
+              </tr>
                 <tr>
-                    <td align="right">配送方式：</td>
-                    <td>市内免费送货上门</td>
+                    <td></td>
+                    <td id="sbutton">
+                    </td>
                 </tr>
-                <tr>
-                    <td align="right">收货人姓名：</td>
-                    <td>{{ form.consignee }}</td>
-                </tr>
-                <tr>
-                    <td align="right">配送区域：</td>
-                    <td>{{ form.area }}</td>
-                </tr>
-                <tr>
-                    <td align="right">详细地址：</td>
-                    <td width="90%">{{ form.address }}</td>
-                </tr>
-                <tr>
-                    <td align="right">联系电话：</td>
-                    <td>{{ form.tel }}</td>
-                </tr>
-                <tr>
-                    <td align="right">最佳收货日期：</td>
-                    <td>{{ form.date }}</td>
-                </tr>
-            <tr>
-                <td align="right">最佳收货时间：</td>
-                <td>{{ form.time }}</td>
-            </tr>
-            <tr>
-                <td align="right" valign="top">备注：</td>
-                <td>{{ form.note }}</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                  <input type="button" value="曲奇礼品" class="button" id="addPostA" />
-                  <input type="button" value="礼品两份" class="button" id="addPostB" />
-                  <input type="button" value="会员生日巧克力礼品" class="button" id="addPostC" />
-                  <input type="button" value="订单号附属品" class="button" id="addPostD" />
-                </td>
-            </tr>
         </table>
         <center>
             {% csrf_token %}

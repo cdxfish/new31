@@ -10,20 +10,25 @@ class logcsManager(models.Manager):
 
     def getActTuple(self, i):
 
-        return tuple([ i for i, v in OrdLogcs.act[i]])
+        return tuple([ i for i, v in Logcs.act[i]])
 
 
     def saveLogcs(self, ord, request):
-        from views import Cnsgn
+        from views import LogcSess
 
-        c = Cnsgn(request).getObj()
+        c = LogcSess(request).getObj()
         avd = 1 # 默认偏移1hour
 
         time = c['time']
 
         area = c['area']
+        try:
+            logcs = ord.logcs
+        except Exception, e:
+            logcs = Logcs()
 
-        logcs = Logcs()
+        logcs.ord = ord
+
         logcs.consignee = c['consignee']
         logcs.area = '%s - %s' % (area.sub.name, area.name)
         logcs.address = c['address']
@@ -36,9 +41,15 @@ class logcsManager(models.Manager):
         logcs.note = c['note']
         logcs.cod = c['dlvr']
 
-        logcs.ord = ord
+        logcs.save()
+
+    def cStatus(self, sn , s):
+        logcs = self.get(ord=sn)
+
+        logcs.status = s
 
         logcs.save()
+
 
 class Logcs(models.Model):
     from django.contrib.auth.models import User

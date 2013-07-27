@@ -6,8 +6,11 @@ from django.db import models
 class logManager(models.Manager):
 
     def saveLog(self, ord, request):
-        
-        log = OrdLog()
+        try:
+            log = ord.ordlog_set.get(models.Q(typ=0) | models.Q(typ=1))
+        except Exception, e:
+            log = OrdLog()
+
         log.ord = ord
         log.user = request.user
         if ord.status:

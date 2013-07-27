@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib import messages, auth
-from new31.func import rdrtLogin
+from new31.func import rdrtLogin, rdrtBck
 
 # Create your views here.
 

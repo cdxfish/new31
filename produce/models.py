@@ -9,22 +9,24 @@ class proManager(models.Manager):
         return tuple([ i for i, v in Pro.act[i]])
 
     def getFeeBySN(self, sn):
+        from new31.func import frMtFee
+        from order.models import Ord
 
         ord = Ord.objects.select_related().get(sn=sn)
         total = 0
-        for i in ord.orditem_set.all():
+        for i in ord.pro_set.all():
             total += frMtFee(i.nfee * i.num)
 
         return total
 
     def savePro(self, ord, request):
-        from cart.views import Cart
+        from cart.views import CartSess
         from item.models import Item, ItemSpec, ItemFee
         from discount.models import Dis
         from new31.func import frMtFee
         from decimal import Decimal
 
-        items  = CartSess(request).items
+        items  = CartSess(request).sess
 
         _items = []
 

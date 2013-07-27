@@ -28,7 +28,7 @@ class Deliver(models.Model):
     objects = dlvrManager()
 
     def __unicode__(self):
-        return u"%s - %s" % (self.cod, self.onl)
+        return u"%s - %s" % (self.get_cod_display(), self.onl)
 
     # class Meta:
         # verbose_name = u'支付方式'

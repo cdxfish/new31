@@ -1,8 +1,9 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from new31.func import *
+from new31.func import sort
 from tag.models import Tag
+import random
 
 # Create your views here.
 

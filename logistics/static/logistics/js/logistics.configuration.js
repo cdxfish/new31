@@ -10,7 +10,7 @@ var logcs = {
             var sn = self.attr('id');
             var value = self.val();
             self.ajaxDialog(function() {
-                $.getJSON('/ajax/cadvance/?sn=' + sn + '&value=' + value,
+                $.getJSON('/ajax/cadv/?sn=' + sn + '&value=' + value,
 
                 function(data) {
                     $.dialog.msg(data);

@@ -1,14 +1,13 @@
 #coding:utf-8
-from django.conf.urls import patterns, include, url
-from django.conf import settings
-from views import *
+from django.conf.urls import patterns
+from views import ordList, submit, addItem, delItem, newOrdUI, editUI, cCons
 
 urlpatterns = patterns('',
     (r'^$', ordList),
     (r'^submit/$', submit),
-    (r'^additemtoorder/$', addItemToOrd),
-    (r'^delitem\/(?P<mark>\d+)\/$', delItemToOrd),
+    (r'^additem/$', addItem),
+    (r'^delitem\/$', delItem),
     (r'^new/$',  newOrdUI),
     (r'^edit/$',  editUI),
-    (r'^(?P<c>\d+)/$', cCons),
+    (r'^(?P<s>\d+)/$', cCons),
 )

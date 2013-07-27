@@ -54,3 +54,7 @@ def rdrRange(url,date,sn):
 
     return HttpResponseRedirect(u'%s?o=-1&c=-1&s=%s&e=%s&k=%s' % (url, s.strftime('%Y-%m-%d').strip(), e.strftime('%Y-%m-%d').strip(), sn))
 
+
+def f02f(i):
+
+    return '%0.2f' % i

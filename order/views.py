@@ -4,9 +4,8 @@ from django.db.models import Q
 from django.template import RequestContext
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from new31.decorator import postDr, ordDetr, rdrtBckDr, subMsg
-from new31.func import frMtFee, rdrRange, page
-from purview.views import BsPur
+from new31.decorator import postDr, ordDr, rdrtBckDr, subMsg
+from new31.func import frMtFee, rdrRange, page, rdrtBck
 from decimal import Decimal
 import time, datetime
 
@@ -20,7 +19,7 @@ def ordList(request):
 
     form = OrdSrchFrm(initial=o.initial)
 
-    oList = o.baseSearch().chcs().range().page()
+    oList = o.getOrds()
     oList = OrdPur(oList, request).getOrds()
 
     return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
@@ -29,8 +28,8 @@ def ordList(request):
 # 后台订单提交,提交成功后进行页面跳转至订单列表
 @postDr
 def submit(request):
-    from logistics.views import Cnsgn
-    Cnsgn(request).setSeesion()
+    from logistics.views import LogcSess
+    LogcSess(request).setByDict(request.POST.dict())
 
     return OrdSub(request).submit().redirOrd()
 
@@ -40,27 +39,28 @@ def newOrdUI(request):
 
     return editUI(request)
 
-@ordDetr
-def editOrd(request, c):
-    o = OrdSess(request)
-    o.cCon(request.GET.get('sn'), c)
-    o.setSessBySN(request.GET.get('sn'))
+@ordDr
+def editOrd(request, s):
+    from models import Ord
+    Ord.objects.cStatus(request.GET.get('sn'), s)
+
+    OrdSess(request).copy(request.GET.get('sn'))
 
     return HttpResponseRedirect(request.paths[u'编辑订单'])
 
 
 # 后台订单编辑操作编辑页面@
 def editUI(request):
-    from cart.views import Cart
+    from cart.views import CartSess
     from forms import ItemsForm, ordFrm
     from logistics.forms import logcsFrm
     from finance.forms import fncFrm
 
-    items = CartSess(request).showItemToCartSess()
+    items = CartSess(request).show()
 
     ItemsForm.getItemForms(items['items'])
 
-    cnsgn = logcsFrm(request)
+    logcs = logcsFrm(request)
     fnc = fncFrm(request)
 
     ord = ordFrm(request)
@@ -69,40 +69,45 @@ def editUI(request):
 
 
 def copyOrd(request,c):
-    OrdSess(request).setSessBySN(int(request.GET.get('sn')))
+    OrdSess(request).copy(int(request.GET.get('sn')))
 
     return HttpResponseRedirect(request.paths[u'新订单'])
 
-@ordDetr
-def cCon(request, c):
-    # OrdSess(request).cCon(request.GET.get('sn'), c)
+@ordDr
+def cCon(request, s):
+    from models import Ord
+    Ord.objects.cStatus(request.GET.get('sn'), s)
 
     return rdrtBck(request)
 
 
 # 非新单及编辑以外的订单操作
-def cCons(request, c):
-    c = int(c)
+def cCons(request, s):
+    s = int(s)
 
     cons = [copyOrd, editOrd, cCon, cCon, cCon ]
 
-    return cons[c](request, c)
+    return cons[s](request, s)
 
 
 # 后台订单编辑中添加商品至订单操作
 @postDr
-@rdrtBckDr
-def addItemToOrd(request, kwargs):
-    from cart.views import Cart
-    return CartSess(request).pushByIDs(request.POST.getlist('i'))
+@rdrtBckDr('无法添加商品，部分商品已下架。')
+def addItem(request):
+    from cart.views import CartSess
+
+    CartSess(request).pushByIDs(request.POST.getlist('i'))
+    return rdrtBck(request)
 
 
 # 编辑界面中删除订单中的商品操作
-@rdrtBckDr
-def delItemToOrd(request, kwargs):
-    from cart.views import Cart
+# @rdrtBckDr('无法删除商品，请与管理员联系。')
+def delItem(request):
+    from cart.views import CartSess
 
-    return CartSess(request).clearItemByMark(kwargs['mark'])
+    CartSess(request).delete(int(request.GET.get('mark')))
+
+    return rdrtBck(request)
 
 
 from new31.cls import BsSess
@@ -121,93 +126,58 @@ class OrdSess(BsSess):
                         'typ': Ord.typs[0][0],
                         'status': Ord.chcs[0][0],
                         'sn': 0,
-                        'user': request.user.username,
+                        'user': '',
             }
 
         super(OrdSess, self).__init__(request)
 
+    def setUser(self):
+        self.sess['user'] = self.request.user.username
+
+        return self._set()
+
+
     def setSzero(self):
         self.sess['status'] = 0
 
-        return self.set(self.sess)
+        return self._set()
 
 
     def setSone(self):
         self.sess['status'] = 1
 
-        return self.set(self.sess)
-
-    # def cpyTsess(self, sn):
-    #     order = Ord.objects.get(sn=sn)
-    #     self.o['typ'] = order.typ
-    #     self.o['sn'] = sn
-
-    #     return self.setStoOne()
-
-    # def cpyCongn(self, sn):
-    #     from consignee.views import Cnsgn
-    #     sCongn = Cnsgn(self.request)
-    #     c = sCongn.cFormat.copy()
-
-    #     oLogcs = Ord.objects.get(sn=sn).logcs
- 
-    #     areaList = oLogcs.area.split(' - ')
+        return self._set()
 
 
-    #     try:
-    #         area = Area.objects.get(name=areaList[1]).id
-    #     except Exception, e:
-    #         area = Area.objects.getDefault().id
+    def copy(self, sn):
+
+        return self.cpyOrd(sn).cpyLogcs(sn).cpyItem(sn)
 
 
-    #     try:
-    #         time = SignTime.objects.get(start=oLogcs.stime, end=oLogcs.etime).id
-    #     except Exception, e:
-    #         time = SignTime.objects.getDefault().id
+    def cpyOrd(self, sn):
+        from models import Ord
+        
+        order = Ord.objects.get(sn=sn)
+        self.sess['typ'] = order.typ
+        self.sess['sn'] = sn
+        self.sess['user'] = order.user
 
-    #     c['user'] = oLogcs.ord.user
-    #     c['pay'] = oLogcs.ord.fnc.cod.id
-    #     c['consignee'] = oLogcs.consignee
-    #     c['area'] = area
-    #     c['address'] = oLogcs.address
-    #     c['tel'] = oLogcs.tel
-    #     c['date'] = '%s' % oLogcs.date
-
-    #     c['time'] = time
-    #     c['note'] = oLogcs.note
-
-    #     sCongn.setConsignee(c)
+        return self.setSone()
 
 
-    #     return self
+    def cpyLogcs(self, sn):
+        from logistics.views import LogcSess
 
-    # def cpyItem(self, sn):
-    #     from cart.views import Cart
-    #     from discount.models import Dis
-    #     c = CartSess(self.request).clear()
+        LogcSess(self.request).copy(sn)
 
-    #     order = Ord.objects.get(sn=sn)
-    #     items = order.orditem_set.all()
-    #     _items = []
+        return self
 
-    #     for i in items:
-    #         ii = ItemSpec.objects.get(item__name=i.name, spec__value=i.spec)
+    def cpyItem(self, sn):
+        from cart.views import CartSess
 
-    #         item = c.item.copy()
-    #         item['itemID'] = ii.item.id
-    #         item['specID'] = ii.id
-    #         item['disID'] = Dis.objects.get(dis=i.dis).id
-    #         item['num'] = i.num
+        CartSess(self.request).copy(sn)
 
-    #         _items.append(item)
-
-    #     c.pushItem(_items)
-
-    #     return self
-
-
-    # 将订单信息配置到seesion当
-
+        return self
 
 
 class OrdSerch(object):
@@ -256,11 +226,15 @@ class OrdSerch(object):
 
         return self
 
-    def chcs(self):
-            if self.initial['c'] >= 0:
-                self.oList = self.oList.filter(status=self.initial['c'])
+    def search(self):
 
-            return self
+        return self
+
+    def chcs(self):
+        if self.initial['c'] >= 0:
+            self.oList = self.oList.filter(status=self.initial['c'])
+
+        return self
 
     def range(self):
 
@@ -272,7 +246,12 @@ class OrdSerch(object):
 
         return page(l=self.oList, p=int(self.request.GET.get('p', 1)))
 
+    def getOrds(self):
 
+        return self.baseSearch().search().chcs().range().page()
+
+
+from purview.views import BsPur
 class OrdPur(BsPur):
     """
         订单列表权限加持
@@ -314,8 +293,8 @@ class OrdSub(object):
 
         订单数据来源为session中数据
 
-        session['items'] = 商品信息
-        session['c'] = 联系人信息
+        session['c'] = 商品信息
+        session['l'] = 联系人信息
         session['o'] = 订单基本信息, 比如订单类型, 新单或编辑
 
 
@@ -328,7 +307,7 @@ class OrdSub(object):
         self.request = request
         self.error = False
 
-        self.o = OrdSess(self.request).o
+        self.o = OrdSess(self.request).sess
 
 
     def submit(self):
@@ -345,10 +324,6 @@ class OrdSub(object):
         self.fnc()
         self.log()
         self.done()
-
-        # 异常时对数据库进行处理
-        if self.error:
-            self.delNewOrd()
 
         return self
 
@@ -413,6 +388,7 @@ class OrdSub(object):
 
         return self
 
+
     # 支付信息提交
     @subMsg(u'无法提交财务信息。')
     def fnc(self):
@@ -422,7 +398,6 @@ class OrdSub(object):
 
 
         return self
-
 
 
     # 订单日志提交
@@ -445,12 +420,12 @@ class OrdSub(object):
     # 订单提交完成
     @subMsg(u'订单提交无法完成。')
     def done(self):
-        from cart.views import Cart
-        from logistics.views import Cnsgn
+        from cart.views import CartSess
+        from logistics.views import LogcSess
         from finance.views import FncSess
 
         CartSess(self.request).clear()
-        Cnsgn(self.request).clear()
+        LogcSess(self.request).clear()
         OrdSess(self.request).clear()
         FncSess(self.request).clear()
 
@@ -470,13 +445,13 @@ class OrdSub(object):
 
     # 重定向至订单列表页
     def redirOrd(self):
-        from logistics.views import Cnsgn
+        from logistics.views import LogcSess
         if self.error:
             return self.showError()
         else:
             messages.success(self.request, u'订单提交成功: %s' % self.sn)
 
-            return rdrRange(self.request.paths[u'订单'], Cnsgn(self.request).c['date'], self.sn)
+            return rdrRange(self.request.paths[u'订单'], LogcSess(self.request).sess['date'], self.sn)
 
     # 粗粒用户级错误提示
     def showError(self):
@@ -486,20 +461,13 @@ class OrdSub(object):
 
 
     def editOrdFmt(self):
+        from models import Ord
 
         self.sn = self.o['sn']
 
         self.ord = Ord.objects.get(sn=self.sn)
 
-        self.logcs = self.ord.logcs
-        self.oPay = self.ord.fnc
-        self.oStart = self.ord
-        self.oShip = self.ord.ordship
-        self.oOLT = self.ord.ordlog_set.get(Q(log=0) | Q(log=1))
-
-
-        self.ord.orditem_set.all().delete()
-
+        self.ord.pro_set.all().delete()
 
 
         return self

@@ -11,25 +11,26 @@ c = {
     strFocusText: function(obj, str) {
         var color = obj.css('color');
 
-        var cssFormat = function() {
-                if (!obj.val()) {
+        var func = function() {
+                if (!obj.val() || obj.val() == str) {
                     obj.css({
-                        "color": "#CCCCCC"
+                        color: "#CCCCCC"
                     }).val(str);
                 }
             }
 
-        cssFormat();
+        func();
+
 
         obj.focus(
 
         function() {
             if (obj.val() == str) {
                 obj.css({
-                    "color": color
-                }).val("");
+                    color: color
+                }).val('');
             }
-        }).focusout(cssFormat);
+        }).focusout(func);
 
         return this;
     },

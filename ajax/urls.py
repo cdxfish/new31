@@ -1,7 +1,6 @@
 #coding:utf-8
 from django.conf.urls import patterns, include, url
-from views import *
-from cart.views import *
+from views import getItemPin, getItemSpec, cNum, cLogcs, cOrd, cFnc, cAdv, cDman, cItem, getItemByKeyword
 
 urlpatterns = patterns('',
     (r'^itemmore\/$',getItemPin),
@@ -10,7 +9,7 @@ urlpatterns = patterns('',
     (r'^clogcs\/$', cLogcs),
     (r'^cord\/$', cOrd),
     (r'^cfnc\/$', cFnc),
-    (r'^cadvance\/$', cAdv),
+    (r'^cadv\/$', cAdv),
     (r'^cdman\/$', cDman),
     (r'^citem\/$', cItem),
     (r'^item\/$', getItemByKeyword),

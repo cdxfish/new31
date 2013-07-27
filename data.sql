@@ -140,3 +140,6 @@ INSERT INTO `purview_privilege` (`id`, `name`, `onl`) VALUES
 
 INSERT INTO `purview_role` (`id`, `role`, `onl`) VALUES
 (1, -1, 1);
+
+INSERT INTO `deliver_deliver` (`id`, `cod`, `config`, `onl`) VALUES
+(1, 'cod', 'free', 1);

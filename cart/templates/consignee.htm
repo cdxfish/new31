@@ -4,6 +4,7 @@
 
 {% block js %}
     <script type="text/javascript" src="{{ STATIC_URL }}logistics/js/consignee.configuration.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}finance/js/fnc.configuration.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -12,13 +13,15 @@
                 <h3>收货人信息</h3>
                 <p>（请填写详细收货地址及准确的最佳送货时间，以便更快捷将您订购的蛋糕送达！）</p>
                 <form action="/cart/checkout/" method="POST" name="checkout" id="checkout">
-                    <table width="100%" id="cconsignee">
+                    <table width="100%" id="fnc">                        
                         <tr>
                             <td align="right" width="100px">{{ fnc.pay.label }}：</td>
                             <td>{{ fnc.pay }}</td>
                         </tr>
+                    </table>
+                    <table width="100%" id="logcs">
                         <tr>
-                            <td align="right">{{ cnsgn.dlvr.label }}：</td>
+                            <td align="right" width="100px">{{ cnsgn.dlvr.label }}：</td>
                             <td>{{ cnsgn.dlvr }}</td>
                         </tr>
                         <tr>

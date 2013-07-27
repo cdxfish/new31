@@ -55,9 +55,10 @@ class FncSess(BsSess):
 
     def getObj(self):
         from payment.models import Pay
-        self.obj = self.f.copy()
         
-        self.obj['pay'] = Pay.objects.getPayById(id=self.f['pay'])
+        self.obj = self.sess.copy()
+        
+        self.obj['pay'] = Pay.objects.getPayById(id=self.sess['pay'])
 
         return self.obj
         
@@ -123,12 +124,13 @@ class FncPur(OrdPur):
 
     """
     def __init__(self, oList, request):
+        from models import Fnc
+
         super(FncPur, self).__init__(oList, request)
         self.path = request.paths[u'财务']
 
-        opay = OrdFnc
-        self.chcs = opay.chcs
-        self.action = opay.act
+        self.chcs = Fnc.chcs
+        self.action = Fnc.act
 
     # 获取订单可选操作项
     def getElement(self):

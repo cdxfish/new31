@@ -1,7 +1,7 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from new31.decorator import proDetr
+from new31.decorator import proDr
 from order.views import OrdSerch, OrdPur
 
 
@@ -47,7 +47,7 @@ def sortList(oList):
     return _oList
 
 
-@proDetr
+@proDr
 def pCon(request, c):
     ProCon(request).cCon(request.GET.get('sn'), c)
 
@@ -129,18 +129,23 @@ class ProPur(OrdPur):
 
     """
     def __init__(self, oList, request):
+        from models import Pro
+
         super(ProPur, self).__init__(oList, request)
+        self.path = request.paths[u'生产']
+
         pro = Pro
         self.chcs = pro.chcs
-        self.path = request.paths[u'生产']
         self.action = pro.act
 
         for i in self.oList:
-            i.items = i.orditem_set.all()
+            i.items = i.pro_set.all()
 
 
     # 获取订单可选操作项
     def getElement(self):
+        from models import Pro
+
         for i in self.oList:
             items = []
 
@@ -148,12 +153,7 @@ class ProPur(OrdPur):
                 if not hasattr(ii,'action'):
                     ii.action = {}
 
-                try:
-                    status = ii.produce.status
-                except Exception, e:
-                    status = Pro.objects.create(item=ii).status #关联外键
-
-                ii.action[self.path] = self.action[status]
+                ii.action[self.path] = self.action[ii.status]
 
                 items.append(ii)
 

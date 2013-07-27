@@ -32,29 +32,32 @@ def cnsgn(request):
 # 前台订单确认界面
 @postDr
 def checkout(request):
-    from logistics.forms import CnsgnForm
-    from logistics.views import Cnsgn
+    from logistics.forms import LogcsFrm
+    from logistics.views import LogcSess
     from finance.views import FncSess
     from order.views import OrdSess
 
-    cInfo = Cnsgn(request).setConsignee(request.POST.dict()).getObj() #将联系人信息存入session,并获得对应的对象
-    fInfo = FncSess(request).setSess().getObj() #将联系人信息存入session,并获得对应的对象
-    OrdSess(request).format()
+    post = request.POST.dict()
+
+    cInfo = LogcSess(request).setByDict(post).getObj() #将联系人信息存入session,并获得对应的对象
 
 
-    form = CnsgnForm(request.POST)
+    fInfo = FncSess(request).setByDict(post).getObj() #将联系人信息存入session,并获得对应的对象
+    OrdSess(request).frMt().setUser()
 
+
+    form = LogcsFrm(post)
 
     if not form.is_valid():
 
         for i in form:
             if i.errors:
 
-                messages.warning(request, '%s - %s' % ( i.label, i.errors))
+                messages.warning(request, '%s - %s' % ( i.label, u'这个字段是必填项。'))
 
-        return HttpResponseRedirect('/cart/consignee/')
+        return rdrtBck(request)
 
-    cart = CartSess(request).showItemToCartSess()
+    cart = CartSess(request).show()
 
     if not cart['items']:
 
@@ -162,16 +165,6 @@ class CartSess(BsSess):
         return self._set()
 
 
-    def pushByItems(self, items):
-        for i in items:
-
-            i['mark'] = self.getMark()
-  
-            self.sess[i['mark']] = i  
-
-        return self._set()
-
-
     def delete(self, mark):
 
         self.sess.pop(mark)
@@ -242,3 +235,29 @@ class CartSess(BsSess):
                 'dis': dis, 
                 'total': frMtFee(fee * int(i['num']))
             }
+
+
+    def copy(self, sn):
+
+        return self.clear()._copy(sn)
+
+
+    def _copy(self, sn):
+        from order.models import Ord
+        from item.models import ItemSpec
+        from discount.models import Dis
+
+        for i in Ord.objects.get(sn=sn).pro_set.all():
+            spec = ItemSpec.objects.get(item__name=i.name, spec__value=i.spec)
+
+            mark = self.getMark()
+
+            self.sess[mark] = {
+                                'mark': mark,
+                                'itemID': spec.item.id,
+                                'specID': spec.id,
+                                'disID': Dis.objects.get(dis=i.dis).id,
+                                'num': i.num,
+                    }
+        
+        return self._set()

@@ -66,7 +66,7 @@ aeog = {
         var html = '';
         html += aeog.sgBtn();
 
-        html += '        <form action="/order/additemtoorder/" method="POST">  \r\n';
+        html += '        <form action="/order/additem/" method="POST">  \r\n';
         html += '        <table width="100%" cellpadding="3" cellspacing="1" id="searchGoodslist" class="sortTable">  \r\n';
         html += '        <tr>  \r\n';
         html += '          <th width="20px"></th>  \r\n';

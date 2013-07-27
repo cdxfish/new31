@@ -66,44 +66,40 @@
           </table>
           <table width="100%" cellpadding="3" cellspacing="1" id="logcs">
               <tr>
-                  <td width="100px" align="right">{{ cnsgn.dlvr.label }}：</td>
-                  <td width="90%">{{ cnsgn.dlvr }}</td>
+                  <td width="100px" align="right">{{ logcs.dlvr.label }}：</td>
+                  <td width="90%">{{ logcs.dlvr }}</td>
               </tr>
               <tr>
-                  <td align="right">{{ cnsgn.consignee.label }}：</td>
-                  <td>{{ cnsgn.consignee }}</td>
+                  <td align="right">{{ logcs.consignee.label }}：</td>
+                  <td>{{ logcs.consignee }}</td>
               </tr>
               <tr>
-                  <td align="right">{{ cnsgn.area.label }}：</td>
-                  <td>{{ cnsgn.area }}</td>
+                  <td align="right">{{ logcs.area.label }}：</td>
+                  <td>{{ logcs.area }}</td>
               </tr>
               <tr>
-                  <td align="right">{{ cnsgn.address.label }}：</td>
-                  <td>{{ cnsgn.address }}</td>
+                  <td align="right">{{ logcs.address.label }}：</td>
+                  <td>{{ logcs.address }}</td>
               </tr>
               <tr>
-                  <td align="right">{{ cnsgn.tel.label }}：</td>
-                  <td>{{ cnsgn.tel }}</td>
+                  <td align="right">{{ logcs.tel.label }}：</td>
+                  <td>{{ logcs.tel }}</td>
               </tr>
               <tr>
-                  <td align="right">{{ cnsgn.date.label }}：</td>
-                  <td>{{ cnsgn.date }}</td>
+                  <td align="right">{{ logcs.date.label }}：</td>
+                  <td>{{ logcs.date }}</td>
               </tr>
-          <tr>
-              <td align="right">{{ cnsgn.time.label }}：</td>
-              <td>{{ cnsgn.time }}</td>
-          </tr>
-          <tr>
-              <td align="right" valign="top">{{ cnsgn.note.label }}：</td>
-              <td>{{ cnsgn.note }}</td>
-          </tr>
+              <tr>
+                  <td align="right">{{ logcs.time.label }}：</td>
+                  <td>{{ logcs.time }}</td>
+              </tr>
+              <tr>
+                  <td align="right" valign="top">{{ logcs.note.label }}：</td>
+                  <td>{{ logcs.note }}</td>
+              </tr>
               <tr>
               <td></td>
-              <td>
-                <input type="button" value="曲奇礼品" class="button" id="addPostA" />
-                <input type="button" value="礼品两份" class="button" id="addPostB" />
-                <input type="button" value="会员生日巧克力礼品" class="button" id="addPostC" />
-                <input type="button" value="订单号附属品" class="button" id="addPostD" />
+              <td id="sbutton">
               </td>
           </tr>
       </table>

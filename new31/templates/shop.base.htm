@@ -111,13 +111,11 @@
 {% endblock %}
     <div id="content" class="clearfix">
 {% if messages %}
-      <div class="pWhite">
-        <ul class="messagelist">
+    <ul class="messagelist">
 {% for i in messages %}
-            <li class="{{ i.tags }}">{{ i }}</li>
+        <li class="{{ i.tags }}">{{ i }}</li>
 {% endfor %}
-        </ul>
-      </div>
+    </ul>
 {% endif %}
 {% block content %}{% endblock %}
     </div>
