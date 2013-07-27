@@ -4,5 +4,5 @@ from views import *
 
 urlpatterns = patterns('',
     (r'^$', produceUI),
-    (r'^(?P<c>\d+)/$', pCons),
+    (r'^(?P<s>\d+)/$', pCons),
 )

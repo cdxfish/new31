@@ -4,5 +4,5 @@ from views import fncUI, fCons
 
 urlpatterns = patterns('',
     (r'^$', fncUI),
-    (r'^(?P<c>\d+)/$', fCons),
+    (r'^(?P<s>\d+)/$', fCons),
 )

@@ -1,9 +1,8 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponse
 from new31.decorator import fncDetr
-from order.views import OrdSerch, OrdPur
+from new31.func import rdrtBck
 
 
 # Create your views here.
@@ -14,22 +13,24 @@ def fncUI(request):
 
     form = FncSrchFrm(initial=o.initial)
 
-    oList = o.search().status().range().page()
+    oList = o.getOrds()
     oList = FncPur(oList, request).getOrds()
 
     return render_to_response('financeui.htm', locals(), context_instance=RequestContext(request))
 
 
 @fncDetr
-def fCon(request, c):
+def fCon(request, s):
+    from models import Fnc
 
-    FncPrt(request).cCon(request.GET.get('sn'), c)
+    Fnc.objects.cStatus(request.GET.get('sn'), s)
+    
 
     return rdrtBck(request)
 
-def fCons(request, c):
-    c = int(c)
-    return [fCon, fCon, fCon, fCon][c](request, c)
+def fCons(request, s):
+    s = int(s)
+    return [fCon, fCon, fCon, fCon][s](request, s)
 
 
 from new31.cls import BsSess
@@ -63,27 +64,7 @@ class FncSess(BsSess):
         return self.obj
         
 
-class FncPrt(object):
-    """
-        财务基本类
-
-    """
-    def __init__(self, request):
-        self.request = request
-
-
-    def cCon(self, sn, c):
-        from order.models import Ord
-        pay =  Ord.objects.get(sn=sn).fnc
-
-        pay.status = c
-
-        pay.save()
-
-        return self
-
-
-
+from order.views import OrdSerch
 class FncSerch(OrdSerch):
     """
         对订单用财务搜索类
@@ -111,11 +92,9 @@ class FncSerch(OrdSerch):
 
         return self
 
-    def page(self):
-        return page(l=self.oList, p=int(self.request.GET.get('p', 1)))
-
 
 # 订单列表权限加持
+from order.views import OrdPur
 class FncPur(OrdPur):
     """
         首先获取当前角色可进行的订单操作权限. 

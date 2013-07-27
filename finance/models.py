@@ -21,6 +21,14 @@ class fncManager(models.Manager):
 
         fnc.save()
 
+    def cStatus(self, sn , s):
+        fnc = self.get(ord=sn)
+
+        fnc.status = s
+
+        fnc.save()
+
+
 class Fnc(models.Model):
     from order.models import Ord
     from payment.models import Pay

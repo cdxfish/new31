@@ -26,7 +26,7 @@
             <td align="right" nowrap="true">{{ item.name }}</td>
             <td>{{ item.spec }}</td>
             <td>{{ item.num }}</td>
-            <td>{{ item.produce.get_status_display }}</td>
+            <td>{{ item.get_status_display }}</td>
             {% optr item %}
           </tr>
 {% endfor %}

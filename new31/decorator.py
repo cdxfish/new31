@@ -166,43 +166,43 @@ def  aLogcsDr(func):
 
 # 生产状态操作装饰器
 def proDr(func):
-    def _func(request, c):
+    def _func(request, s):
         from produce.models import Pro
+
         sn = request.GET.get('sn')
-        pro =  Pro.objects.get(item=sn)
+        pro =  Pro.objects.get(id=sn)
 
         act = Pro.objects.getActTuple(pro.status)
 
-        if not c in act:
+        if not s in act:
 
-            messages.error(request, u'%s | %s - 无法%s' % (pro.item.ord.sn, pro.item.name, Pro.chcs[c][1]))
+            messages.error(request, u'%s | %s - 无法%s' % (pro.ord.sn, pro.name, Pro.chcs[s][1]))
 
             return rdrtBck(request)
 
         else:
 
-            return func(request, c)
+            return func(request, s)
 
     return _func
 
 
 # 支付状态操作装饰器
 def fncDetr(func):
-    def _func(request, c):
-        from order.models import Ord, OrdFnc
+    def _func(request, s):
+        from finance.models import Fnc
         sn = request.GET.get('sn')
-        pay =  Ord.objects.get(sn=sn).fnc
 
-        act = OrdFnc.objects.getActTuple(pay.status)
+        act = Fnc.objects.getActTuple(Fnc.objects.get(ord=sn).status)
 
-        if not c in act:
+        if not s in act:
 
-            messages.error(request, u'%s - 无法%s' % (sn, OrdFnc.chcs[c][1]))
+            messages.error(request, u'%s - 无法%s' % (sn, Fnc.chcs[s][1]))
 
             return rdrtBck(request)
 
         else:
 
-            return func(request, c)
+            return func(request, s)
 
     return _func

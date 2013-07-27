@@ -53,6 +53,14 @@ class proManager(models.Manager):
 
         Pro.objects.bulk_create(_items)
 
+    def cStatus(self, pid , s):
+        pro = self.get(id=pid)
+
+        pro.status = s
+
+        pro.save()
+
+
 class Pro(models.Model):
     from order.models import Ord
     from item.models import ItemFee

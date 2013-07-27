@@ -2,19 +2,20 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from new31.decorator import proDr
-from order.views import OrdSerch, OrdPur
+from new31.func import rdrtBck, page
 
 
 # Create your views here.
 
 def produceUI(request):
+    from forms import ProFrm
 
     o = ProSerch(request)
 
     form = ProFrm(initial=o.initial)
 
-    oList = o.search().range().chcs().page()
-    oList = ProPur(oList, request).getElement().beMixed().oList
+    oList = o.getOrds()
+    oList = ProPur(oList, request).getOrds()
 
     oList = sortList(oList)
 
@@ -29,7 +30,7 @@ def sortList(oList):
         lstime = u'%s' % i.logcs.lstime
         advance = u'%s' % i.logcs.get_advance_display()
 
-        i.items = [ ii for ii in i.items if ii.produce.status ]
+        i.items = [ ii for ii in i.items if ii.status ]
 
         if i.items:
 
@@ -48,39 +49,20 @@ def sortList(oList):
 
 
 @proDr
-def pCon(request, c):
-    ProCon(request).cCon(request.GET.get('sn'), c)
+def pCon(request, s):
+    from models import Pro
+
+    Pro.objects.cStatus(request.GET.get('sn'), s)
 
     return rdrtBck(request)
 
-def pCons(request, c):
-    c = int(c)
+def pCons(request, s):
+    s = int(s)
 
-    return [pCon, pCon, pCon, pCon, pCon][c](request, c)
-
-
-class ProCon(object):
-    """
-        生产状态操作类
+    return [pCon, pCon, pCon, pCon, pCon][s](request, s)
 
 
-
-
-    """
-    def __init__(self, request):
-        self.request = request
-
-
-    def cCon(self, sn, c):
-        item = Pro.objects.get(item=sn)
-
-        item.status = c
-
-        item.save()
-
-        return self
-
-
+from order.views import OrdSerch
 class ProSerch(OrdSerch):
     """ 
         工厂订单搜索类
@@ -93,16 +75,16 @@ class ProSerch(OrdSerch):
         super(ProSerch, self).__init__(request)
 
     def search(self):
-        self.oList = self.baseSearch().oList.filter(ord__status__gt = 1)
+        self.oList = self.baseSearch().oList.filter(status__gt = 1)
 
         return self
 
     def chcs(self):
         for i in self.oList:
             items = []
-            for ii in i.orditem_set.all():
+            for ii in i.pro_set.all():
                 if self.initial['c'] >= 0:
-                    if ii.produce.status == self.initial['c']:
+                    if ii.status == self.initial['c']:
                         items.append(ii)
                 else:
                     items.append(ii)
@@ -116,11 +98,9 @@ class ProSerch(OrdSerch):
 
         return self
 
-    def page(self):
-        return page(l=self.oList, p=int(self.request.GET.get('p', 1)))
-
 
 # 订单列表权限加持
+from order.views import OrdPur
 class ProPur(OrdPur):
     """
         首先获取当前角色可进行的订单操作权限. 

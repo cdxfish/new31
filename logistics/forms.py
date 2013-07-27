@@ -1,6 +1,5 @@
 #coding:utf-8
 from django import forms
-from office.forms import bsSrchFrm
 
 # Create your forms here.
 
@@ -32,7 +31,7 @@ def logcsFrm(request):
     return LogcsFrm(initial={i:v for i, v in LogcSess(request).sess.items()})
 
 
-
+from office.forms import bsSrchFrm
 class LogcSrchFrm(bsSrchFrm):
     from models import Logcs
     chcs = ((-1, '全部'),) + Logcs.chcs

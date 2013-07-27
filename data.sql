@@ -132,8 +132,11 @@ INSERT INTO `purview_element` (`id`, `path`, `typ`, `onl`, `sub_id`) VALUES
 (24, '/produce/2/', 4, 1, NULL),
 (25, '/produce/3/', 4, 1, NULL),
 (26, '/produce/4/', 4, 1, NULL),
-(27, '/inventory/', 1, 1, NULL);
-
+(27, '/inventory/', 1, 1, NULL),
+(28, '/finance/', 1, 1, NULL),
+(29, '/finance/1/', 4, 1, NULL),
+(30, '/finance/2/', 4, 1, NULL),
+(31, '/finance/3/', 4, 1, NULL);
 
 INSERT INTO `purview_privilege` (`id`, `name`, `onl`) VALUES
 (1, 0, 1);
