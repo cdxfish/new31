@@ -9,12 +9,15 @@ import random
 
 # APP For Shop UI
 def shop(request):
+    from tag.views import TagsObj
     try:
         items = ItemPin(10).getItems(sort)
     except Exception, e:
         pass
 
     tags = Tag.objects.all()[:8]
+
+    tagsCls = TagsObj.tagsCls
 
     return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))
 

@@ -1,6 +1,7 @@
 #coding:utf-8
 from django.http import HttpResponse
-from new31.decorator import ajaxMsg, aLogcsDr
+from decorator import ajaxMsg
+from logistics.decorator import aLogcsDr
 from new31.func import sort, f02f
 import json
 

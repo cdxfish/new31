@@ -1,7 +1,6 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.conf import settings
 from django.contrib import messages
 from item.models import *
 from tag.models import *
@@ -18,14 +17,13 @@ def randomTagShow(request):
 
 
 def tagShow(request, tag = ''):
-    if settings.DEBUG:
-        itemImgs = TagsObj().getItemByTag(tag)
 
-    else:
-        try:
-            itemImgs = TagsObj().getItemByTag(tag)
-        except:
-            messages.warning(request, '此标签不存在。')
+    tagsCls = TagsObj.tagsCls
+
+    try:
+        itemImgs = TagsObj().getItemByTag(tag)
+    except:
+        messages.warning(request, '此标签不存在。')
 
     return render_to_response('tag.htm', locals(), context_instance=RequestContext(request))
 
@@ -39,7 +37,7 @@ def tagAdmin(request):
 
 class TagsObj:
     """标签页相关"""
-    tagsClass = {'tagsClass':['DD9797','BA5252','D97D0F','E3BA9B','71BFCD','95BADD','A7CF50',]}
+    tagsCls = ('DD9797','BA5252','D97D0F','E3BA9B','71BFCD','95BADD','A7CF50',)
 
     def getItemByTag(self, tag):
         items = Item.objects.getShowItemByTag(tag)

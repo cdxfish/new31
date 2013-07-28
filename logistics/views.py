@@ -3,7 +3,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from new31.decorator import logcsDr, dManDr, postDr
+from new31.decorator import postDr
+from decorator import logcsDr, dManDr
 from new31.func import keFrmt, rdrtBck, rdrRange
 import time,datetime
 

@@ -3,7 +3,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from new31.decorator import postDr, itemonl
+from item.decorator import itemonl
+from new31.decorator import postDr
 from new31.func import frMtFee, rdrtBck
 import time, datetime, math
 from decimal import Decimal
@@ -40,8 +41,6 @@ def checkout(request):
     post = request.POST.dict()
 
     cInfo = LogcSess(request).setByDict(post).getObj() #将联系人信息存入session,并获得对应的对象
-
-
     fInfo = FncSess(request).setByDict(post).getObj() #将联系人信息存入session,并获得对应的对象
     OrdSess(request).frMt().setUser()
 

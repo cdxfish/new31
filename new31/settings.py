@@ -171,7 +171,7 @@ APPS = {
             'middleware':'CnsgnMiddleware',
         },
     'tag':{
-            'tempContext':'tagsClass',
+            'tempContext':'',
             'middleware':'',
         },
     'search':{

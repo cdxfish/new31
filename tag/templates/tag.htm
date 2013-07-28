@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-        <p class="viewDown">向下滚动浏览</p>
+        <!-- <p class="viewDown">向下滚动浏览</p> -->
         <ul class="pinBox">
 {% for i in itemImgs %}
          <li>
@@ -20,7 +20,7 @@
                     </ul>
                     <div class="tags">
 {% for ii in i.item.tag.all|slice:":9" %}
-                        <a href="/tag/{{ ii.tag }}/" class="tags_{{ tagsClass|random }}">{{ ii.tag }}</a>
+                        <a href="/tag/{{ ii.tag }}/" class="tags_{{ tagsCls|random }}">{{ ii.tag }}</a>
 {% endfor %}
                     </div>
                     <div class="vote">
