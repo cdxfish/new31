@@ -67,7 +67,13 @@ INSERT INTO `item_itemimg` (`id`, `item_id`, `img`, `typ`, `onl`) VALUES
 (11, 1, 'images/3133001b2b.jpg', 1, 1),
 (12, 2, 'images/3133002b2a.jpg', 1, 1),
 (13, 2, 'images/3133002b2b.jpg', 1, 1),
-(14, 2, 'images/3133002b2c.jpg', 1, 1);
+(14, 2, 'images/3133002b2c.jpg', 1, 1),
+(15, 1, 'images/3133001p450a.jpg', 2, 1),
+(16, 1, 'images/3133001p450b.jpg', 2, 1),
+(17, 2, 'images/3133002p450a.jpg', 2, 1),
+(18, 2, 'images/3133002p450b.jpg', 2, 1),
+(19, 1, 'images/3133001p960.jpg', 3, 1),
+(20, 2, 'images/3133002p960.jpg', 3, 1);
 
 
 
