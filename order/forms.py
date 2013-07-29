@@ -41,8 +41,8 @@ class ItemsForm(object):
         from discount.models import Dis
 
         mark = item['mark']
-        speChcs = ItemSpec.objects.getTupleByItemID(item['item'].id)
-        disChcs = Dis.objects.getTupleByAll()
+        speChcs = ItemSpec.objects.getTpl(item['item'].id)
+        disChcs = Dis.objects.getTpl()
 
         class orderItemForm(forms.Form):
 

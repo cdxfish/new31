@@ -7,8 +7,8 @@ class LogcsFrm(forms.ModelForm):
     from deliver.models import Deliver
     from signtime.models import SignTime
 
-    dlvr = forms.ChoiceField(label=u'配送方式', choices=Deliver.objects.getTupleByAll())
-    time = forms.ChoiceField(label=u'收货时间', choices=SignTime.objects.getTupleByAll())
+    dlvr = forms.ChoiceField(label=u'配送方式', choices=Deliver.objects.getTpl())
+    time = forms.ChoiceField(label=u'收货时间', choices=SignTime.objects.getTpl())
 
     class Meta:
         from models import Logcs
@@ -20,7 +20,7 @@ class LogcsFrm(forms.ModelForm):
             'address': forms.TextInput(attrs={'size': 70}),
             'tel': forms.TextInput(attrs={'size': 60}),
             'note': forms.Textarea(attrs={'cols': 100, 'rows': 4}),  
-            'area': forms.Select(choices=Area.objects.getTupleByAll()),  
+            'area': forms.Select(choices=Area.objects.getTpl()),  
             'date': forms.DateInput(attrs={'class': 'date'}, format='%Y-%m-%d'),  
         }
 

@@ -4,17 +4,14 @@ from django.db import models
 # Create your models here.
 
 class tagManager(models.Manager):
-    def getRandom(self):
-
-        return self.filter(onl=True).order_by('?')[0]
-
-    def getTagByTagTitle(self, tag = ''):
+    def getByTag(self, tag):
 
         return self.select_related().get(tag=tag, onl=True)
 
-    def getTagByAll(self):
+    def random(self):
 
-        return self.select_related().filter(onl=True)
+    	return self.select_related().filter(onl=True)[0]
+
 
 class Tag(models.Model):
     

@@ -5,16 +5,17 @@ $(document).ready(function() {
 aeog = {
 
     a: function() {
+        var self = this;
         //添加商品
         $("#addNewGoods").live("click",
 
         function() {
-            var data = {
+
+            $.dialog.bnMsg({
                 data: {},
-                error: false,
-                message: ''
-            };
-            $.dialog.dialogMsg(data, aeog.sgBtn, {
+                err: false,
+                msg: ''
+            }, self.sgBtn, {
                 'width': 400
             });
         });
@@ -30,6 +31,8 @@ aeog = {
     },
 
     search: function() {
+        var self = this;
+
         // 搜索商品
         $("#goodsSearch").live('click',
 
@@ -37,29 +40,15 @@ aeog = {
 
             var keyword = $('#keyword').val();
 
-            $(this).ajaxDialog(function(a) {
-
-                $.getJSON('/ajax/item/', {
-                    k: keyword
-                },
-
-                function(data) {
-                    if (data.err) {
-                        $.dialog.msg(data);
-                    } else {
-                        $.dialog.dialogMsg(data, aeog.sg, {
-                            'position': 'absolute',
-                            'width': 400
-                        });
-                    }
-
-                });
-
+            $.dialog.ajaxGET('/ajax/item/', self.sg, {
+                'position': 'absolute',
+                'width': 400
             });
+
 
         });
 
-        return this
+        return this;
     },
 
     sg: function(data) {
@@ -93,26 +82,15 @@ aeog = {
     },
 
     cItem: function() {
+
         $('.spec, .dis, .num').change(
 
         function() {
-            var that = $(this);
-            var name = that.attr('name');
-            var mark = that.attr('id');
-            var value = that.val();
-
-            $(this).ajaxDialog(function() {
-                $.getJSON('/ajax/citem/?name=' + name + '&mark=' + mark + '&value=' + value,
-
-                function(data) {
-
-                    $('#am' + data.data.mark).text(data.data.am);
-                    $('#st' + data.data.mark).text(data.data.st);
-                    $('#total').text(data.data.total);
-                    $.dialog.msg(data);
-
-                });
-
+            var self = $(this);
+            $(this).ajaxGET('/ajax/citem/?name=' + self.attr('name') + '&mark=' + self.attr('id') + '&value=' + self.val(), function(data) {
+                $('#am' + data.data.mark).text(data.data.am);
+                $('#st' + data.data.mark).text(data.data.st);
+                $('#total').text(data.data.total);
             });
 
         });

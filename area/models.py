@@ -9,19 +9,14 @@ class AreaManager(models.Manager):
 
         return self.select_related().get(onl=True, id=id)
 
-    def getDefault(self):
+    def default(self):
 
         return self.select_related().filter(onl=True)[0].sub_set.filter(onl=True)[0]
 
-    def  getTupleByAll(self):
+    def getTpl(self):
         area = self.filter(onl=True,sub=None)
 
-        a = []
-        for i in area:
-            for ii in i.sub_set.all():
-                a.append((ii.id, '%s - %s' % (i.name, ii.name)))
-
-        return tuple(a)
+        return tuple( [(ii.id, '%s - %s' % (i.name, ii.name)) for i in area for ii in i.sub_set.all()] )
 
 class Area(models.Model):
     name = models.CharField(u'区域', max_length=32, unique=True)

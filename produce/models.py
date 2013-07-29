@@ -32,10 +32,10 @@ class proManager(models.Manager):
 
         for v,i in items.items():
 
-            item = Item.objects.getItemByItemID(id=i['itemID'])
-            spec = ItemSpec.objects.getSpecBySpecID(id=i['specID']).spec
-            fee = ItemFee.objects.getFeeBySpecID(id=i['specID'])
-            dis = Dis.objects.getDisByDisID(id=i['disID'])
+            item = Item.objects.getByID(id=i['itemID'])
+            spec = ItemSpec.objects.getBySid(id=i['specID']).spec
+            fee = ItemFee.objects.getBySid(id=i['specID'])
+            dis = Dis.objects.getByid(id=i['disID'])
             nfee = frMtFee(fee.fee * Decimal(dis.dis))
 
             _items.append(

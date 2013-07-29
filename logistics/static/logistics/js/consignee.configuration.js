@@ -71,7 +71,7 @@ c = {
             }
 
             if ( !! message) {
-                $.dialog.message(message);
+                $.dialog.msg(message);
 
                 return false;
             } else {

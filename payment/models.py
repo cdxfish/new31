@@ -8,11 +8,11 @@ class PayManager(models.Manager):
 
         return self.select_related().get(onl=True, id=id)
         
-    def getDefault(self):
+    def default(self):
 
         return self.select_related().filter(onl=True)[0]
 
-    def getTupleByAll(self):
+    def getTpl(self):
 
         return tuple([(i.id, i.get_cod_display()) for i in self.filter(onl=True)])
 

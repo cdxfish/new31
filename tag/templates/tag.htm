@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block content %}
-        <!-- <p class="viewDown">向下滚动浏览</p> -->
+        <p class="viewDown">向下滚动浏览更多关于:　{{ tag }} 标签商品</p>
         <ul class="pinBox">
-{% for i in itemImgs %}
+{% for i in items %}
          <li>
                 <img alt="{{ i.item.name }}" title="{{ i.item.name }}" src="{{ i.img.url }}" width="{{ i.img.width }}px" />
                 <div class="pinSide{{ i.img.width }}">
@@ -25,7 +25,7 @@
                     </div>
                     <div class="vote">
                         <a class="btnLike" href="/ajax/like/8754/">喜欢</a>
-                        <a class="btnReplay" href="/ajax/itemspec/{{ i.item.id }}/">购买</a>
+                        <a class="btnReplay" href="/ajax/itemspec/?id={{ i.item.id }}">购买</a>
                     </div>
                 </div>
             </li>
@@ -39,7 +39,7 @@
         <div id="container_bottom_recommend" class="list_album_content userVouch" >
             <h3>销售记录</h3>
             <ul class="user list_album_user">
-                <li>
+<!--                 <li>
                     <a href="/tag/德国烤奶酪/">
                         <img width="210" height="157" src="{{ MEDIA_URL }}images/3133002s.jpg" alt="德国烤奶酪" />
                     </a>
@@ -62,103 +62,7 @@
                         <img width="210" height="157" src="{{ MEDIA_URL }}images/3133004b.jpg" alt="市井布衣">
                     </a>
                     <span class="username fl">151****45</span>
-                </li>
-                <li>
-                    <a href="/tag/">
-                        <img width="210" height="157" src="{{ MEDIA_URL }}images/3155002b.jpg" alt="库因兹">
-                    </a>
-                    <span class="username fl">151****45</span>
-                </li>
-                <li>
-                    <a href="/tag/">
-                        <img width="210" height="157" src="{{ MEDIA_URL }}images/3177008b.jpg" alt="原生泰">
-                    </a>
-                    <span class="username fl">151****45</span>
-                </li>
-                <li>
-                    <a href="/tag/">
-                        <img width="210" height="157" src="{{ MEDIA_URL }}images/3177012b.jpg" alt="笑微微">
-                    </a>
-                    <span class="username fl">151****45</span>
-                </li>
-                <li>
-                    <a href="/tag/">
-                        <img width="210" height="157" src="{{ MEDIA_URL }}images/3166006b.jpg" alt="陈金成">
-                    </a>
-                    <span class="username fl">151****45</span>
-                </li>
-                <li>
-                    <a href="/tag/">
-                        <img width="210" height="157" src="{{ MEDIA_URL }}images/3199002b.jpg" alt="陈思梦">
-                    </a>
-                    <span class="username fl">151****45</span>
-                </li>
-                <li>
-                    <a href="/tag/">
-                        <img width="210" height="157" src="{{ MEDIA_URL }}images/3177004b.jpg" alt="慕蓉香">
-                    </a>
-                    <span class="username fl">151****45</span>
-                </li>
-                <li>
-                    <a href="/tag/">
-                        <img width="210" height="157" src="{{ MEDIA_URL }}images/3199004b.jpg" alt="阿骆">
-                    </a>
-                    <span class="username fl">151****45</span>
-                </li>
-                <li>
-                    <a href="/tag/">
-                        <img width="210" height="157" src="{{ MEDIA_URL }}images/3133012s.jpg" alt="lLeo">
-                    </a>
-                    <span class="username fl">151****45</span>
-                </li>
-                <li>
-                    <a href="/tag/">
-                        <img width="210" height="157" src="{{ MEDIA_URL }}images/3133016s.jpg" alt="lioncat">
-                    </a>
-                    <span class="username fl">151****45</span>
-                </li>
-                <li>
-                    <a href="/tag/">
-                        <img width="210" height="157" src="{{ MEDIA_URL }}images/3133013b.jpg" alt="laowan">
-                    </a>
-                    <span class="username fl">151****45</span>
-                </li>
-                <li>
-                    <a href="/tag/">
-                        <img width="210" height="157" src="{{ MEDIA_URL }}images/3133001b.jpg" alt="张晨">
-                    </a>
-                    <span class="username fl">151****45</span>
-                </li>
-                <li>
-                    <a href="/tag/">
-                        <img width="210" height="157" src="{{ MEDIA_URL }}images/3133006s.jpg" alt="句号姑娘">
-                    </a>
-                    <span class="username fl">151****45</span>
-                </li>
-                <li>
-                    <a href="/tag/">
-                        <img width="210" height="157" src="{{ MEDIA_URL }}images/3133022s.jpg" alt="猪正">
-                    </a>
-                    <span class="username fl">151****45</span>
-                </li>
-                <li>
-                    <a href="/tag/">
-                        <img width="210" height="157" src="{{ MEDIA_URL }}images/3133020s.jpg" alt="飘零忘川">
-                    </a>
-                    <span class="username fl">151****45</span>
-                </li>
-                <li>
-                    <a href="/tag/">
-                        <img width="210" height="157" src="{{ MEDIA_URL }}images/3133021b.jpg" alt="小小">
-                    </a>
-                    <span class="username fl">151****45</span>
-                </li>
-                <li>
-                    <a href="/tag/">
-                        <img width="210" height="157" src="{{ MEDIA_URL }}images/3133019b.jpg" alt="小悠拉">
-                    </a>
-                    <span class="username fl">151****45</span>
-                </li>
+                </li> -->
             </ul>
         </div>
 {% endblock %}

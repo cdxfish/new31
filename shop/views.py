@@ -9,7 +9,7 @@ import random
 
 # APP For Shop UI
 def shop(request):
-    from tag.views import TagsObj
+    from tag.views import TagSrch
     try:
         items = ItemPin(10).getItems(sort)
     except Exception, e:
@@ -17,7 +17,7 @@ def shop(request):
 
     tags = Tag.objects.all()[:8]
 
-    tagsCls = TagsObj.tagsCls
+    tagsCls = TagSrch.tagsCls
 
     return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))
 
@@ -113,7 +113,7 @@ class ItemPin(object):
 
         return  {
             'name': i.item.name, 
-            'fee': '￥ %0.2f' % i.item.itemspec_set.getDefaultSpec().itemfee_set.getFeeByNomal().fee, 
+            'fee': '￥ %0.2f' % i.item.itemspec_set.default().itemfee_set.nomal().fee, 
             'like': i.item.like, 
             'src': i.img.url,
             'width': i.img.width,

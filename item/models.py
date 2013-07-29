@@ -9,112 +9,66 @@ from discount.models import *
 # Create your models here.
 
 class itemManager(models.Manager):
-    def getItemByItemName(self, name = ''):
+    def getBySid(self, id):
 
-        return self.select_related().get(name=name, onl=True)
+        return self.select_related().get(itemspec__id=id, onl=True, show=True)
 
-    def getTagByItemName(self, name = ''):
-
-        return self.select_related().get(name=name, onl=True).tag.all()
-
-    def getItemBySpecId(self, id = 0):
-
-        item = ItemSpec.objects.select_related().get(id=id, onl=True, show=True).item
-
-        if item.onl and item.show:
-
-            return item
-        else:
-
-            raise item.DoesNotExist
-
-    def getItemByItemID(self, id = 0):
+    def getByID(self, id):
 
         return self.get(id=id, onl=True, show=True)
 
-    def getItemLikeNameOrSn(self, k):
+    def likeNameOrSn(self, k):
 
         return self.select_related().filter((Q(name__contains=k) | Q(sn__contains=k)) & Q(onl=True))
 
-    def getItemByAll(self):
 
-        return self.select_related().filter(onl=True, show=True)
+    def getByTag(self, tag):
 
-    def getItemByTag(self, tag):
+        return self.select_related().filter(onl=True,show=True, tag__tag=tag)
 
-        return Tag.objects.getTagByTagTitle(tag).item_set.filter(onl=True)
-
-    def getShowItemByTag(self, tag):
-
-        return Tag.objects.getTagByTagTitle(tag).item_set.filter(onl=True,show=True)
-
-    def getItemByRandom(self):
-
-        return self.select_related().filter(onl=True,show=True).order_by('?')[0]
 
     def getItems(self):
 
         return self.select_related().filter((Q(sn__contains='3133') | Q(sn__contains='3155') | Q(sn__contains='3177')), onl=True, show=True)
 
 
-class itemDescManager(models.Manager):
-    def random(self):
-
-        return self.select_related().all()[0]
-
-
 class itemSpecManager(models.Manager):
-    def getSpecBySpecID(self, id):
+    def getBySid(self, id):
 
         return self.select_related().get(id=id, onl=True, show=True)
 
-    def getSpecByItemID(self, id):
+    def getByID(self, id):
 
         return Item.objects.select_related().get(id=id, onl=True, show=True).itemspec_set.filter(onl=True)
 
-    def getDefaultSpec(self):
+    def default(self):
  
         return self.filter(onl=True)[0]
 
-    def getTupleByItemID(self, id):
+    def getTpl(self, id):
  
-        return ((i.id, i.spec.value) for i in  self.getSpecByItemID(id))
+        return ((i.id, i.spec.value) for i in  self.getByID(id))
 
 
 class itemImgManager(models.Manager):
-    def getImgByAll(self):
-
-        return self.all()
-
     def getSImgs(self):
 
-        return self.select_related().filter((Q(typ=1) | Q(typ=0)), onl=True)
+        return self.select_related().filter((Q(typ=0) | Q(typ=1)), onl=True)
+
+    def getBImgs(self):
+
+        return self.select_related().filter((Q(typ=2) | Q(typ=3)), onl=True)
 
 
 class itemFeeManager(models.Manager):
-    def getFeeByNomal(self):
+    def nomal(self):
         return self.select_related().get(typ=0)
 
-    def getAllFeeByNomal(self):
+    def nomalAll(self):
         return self.select_related().filter(typ=0)
 
-    def getFeeBySpecID(self, id):
-        return ItemSpec.objects.getSpecBySpecID(id=id).itemfee_set.getAllFeeByNomal()[0]
-
-    def getTupleBySpecID(self, id):
-        itemFees = self.getFeeBySpecID(id)
-
-        return ((i.dis.id, i.dis.get_dis_display()) for i in  itemFees)
-
-    def getDisBySpecID(self, id):
-
-        return ItemSpec.objects.getSpecBySpecID(id=id).itemfee_set.getFeeByNomal().dis
-
-    def getDisByDisID(self, id):
-
-        return self.get(id=id).dis
-
-
+    def getBySid(self, id):
+        return self.select_related().get(spec__id=id, typ=0)
 
 
 class Item(models.Model):
@@ -136,7 +90,6 @@ class Item(models.Model):
 class ItemDesc(models.Model):
     item = models.ForeignKey(Item, verbose_name=u'商品')
     desc = models.CharField(u'描述', max_length=60)
-    objects = itemDescManager()
 
     def __unicode__(self):
         return u"%s - %s" % (self.item, self.desc)

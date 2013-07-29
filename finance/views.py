@@ -45,7 +45,7 @@ class FncSess(BsSess):
         self.s = 'f'
 
         try:
-            pid = Pay.objects.getDefault().id
+            pid = Pay.objects.default().id
         except:
             pid = 0
 

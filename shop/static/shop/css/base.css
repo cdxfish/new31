@@ -24,7 +24,8 @@ select {
 }
 
 img {
-	border: 0 none
+	border: 0 none;
+	border-radius: 3px;
 }
 
 ul,ol,li,dl,dt,dd {

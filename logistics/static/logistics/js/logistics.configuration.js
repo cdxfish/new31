@@ -7,16 +7,8 @@ var logcs = {
     ad: function() {
         $('.ad').change(function() {
             var self = $(this);
-            var sn = self.attr('id');
-            var value = self.val();
-            self.ajaxDialog(function() {
-                $.getJSON('/ajax/cadv/?sn=' + sn + '&value=' + value,
 
-                function(data) {
-                    $.dialog.msg(data);
-                });
-
-            });
+            self.ajaxGET('/ajax/cadv/?sn=' + self.attr('id') + '&value=' + self.val());
         });
 
         return this
@@ -24,16 +16,8 @@ var logcs = {
     dman: function() {
         $('.dman').change(function() {
             var self = $(this);
-            var sn = self.attr('id');
-            var value = self.val();
-            self.ajaxDialog(function() {
-                $.getJSON('/ajax/cdman/?sn=' + sn + '&value=' + value,
 
-                function(data) {
-                    $.dialog.msg(data);
-                });
-
-            });
+            self.ajaxGET('/ajax/cdman/?sn=' + self.attr('id') + '&value=' + self.val());
         });
 
         return this

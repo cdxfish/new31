@@ -5,17 +5,21 @@ from django.db import models
 # Create your models here.
 
 class disManager(models.Manager):
-    def getDefault(self):
+    def default(self):
 
         return self.get(dis=1)
 
-    def getTupleByAll(self):
+    def getTpl(self):
 
         return ((i.id, i.get_dis_display()) for i in  self.filter(onl=True))
 
-    def getDisByDisID(self,id):
+    def getByid(self, id):
 
-        return  self.get(onl=True,id=id)
+        return self.get(onl=True,id=id)
+
+    def getBySid(self, id):
+
+        return self.select_related().get(itemfee__spec__id=id, itemfee__typ=0, onl=True)
 
     
 class Dis(models.Model):

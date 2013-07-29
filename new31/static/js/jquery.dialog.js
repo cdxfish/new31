@@ -12,6 +12,7 @@
 (function($) {
     $.extend({
         dialog: {
+            id: '#dialog',
             css: {
                 dialog: {
                     'display': 'none',
@@ -71,11 +72,11 @@
                 });
                 return this;
             },
-            showDialog: function(h, obj) {
+            show: function(h, obj) {
                 var cssObj = obj ? obj : {};
 
                 document.getElementById("floatLayer").innerHTML = h;
-                $('#dialog').show();
+                $(this.id).show();
 
 
                 // 该死的IE
@@ -98,14 +99,14 @@
 
                     $("#floatLayer").css(cssObj);
 
-                    $.dialog.dialogCenter();
+                    $.dialog.center();
 
                 }
 
                 return this;
             },
 
-            dialogCenter: function() {
+            center: function() {
 
                 var windowHeight = $(window).outerHeight();
                 var windowouterWidth = $('body').outerWidth();
@@ -124,115 +125,55 @@
                 })
             },
 
-            delayClose: function(msg, t) {
-                var time = !t ? 100 : t;
-                $("#dialog").fadeOut(time);
-                return this;
-            },
             loading: function(t, obj) {
                 var cssObj = obj ? obj : {
                     width: 220
                 };
-                $.dialog.showDialog('<span class="loading" style="width:auto; padding-left:22px;background: url(/static/images/loading_s.gif) no-repeat;">' + t + '</span>', cssObj)
+                this.show('<span class="loading" style="width:auto; padding-left:22px;background: url(/static/images/loading_s.gif) no-repeat;">' + t + '</span>', cssObj)
 
                 return this;
             },
-            message: function(msg, t, obj) {
+
+            msg: function(msg, t, obj) {
                 var cssObj = obj ? obj : {
                     width: 220
                 };
                 var time = !t ? 1000 : t;
 
 
-                $.dialog.showDialog('<span class="message" style="text-align:center; width:220px">' + msg + '</span>', cssObj);
+                this.show('<span class="message" style="text-align:center; width:220px">' + msg + '</span>', cssObj);
 
-                setTimeout('$.dialog.delayClose()', time);
+                setTimeout(this.close, time);
 
                 return this;
             },
-            ajaxMsg: function(url, func) {
-                $.dialog.loading('努力加载中，请稍候')
-                $.getJSON(url,
 
-                function(data) {
-                    if (data.err) {
-                        $.dialog.message(data.msg)
-                    } else {
-                        $.dialog.delayClose()
-                        func(data)
-                    }
-
-                })
-            },
-            msg: function(data, t, obj) {
-                var time = !t ? 1000 : t;
-                var cssObj = obj ? obj : {
-                    width: 220
-                };
-
-                if (data.err) {
-                    $.dialog.message(data.msg, time, cssObj);
-
-                } else {
-                    $.dialog.close();
-                }
-            },
-
-            dialogMsg: function(data, f, obj) {
+            bnMsg: function(data, func, obj) {
                 var cssObj = obj ? obj : {};
-                if (data.er) {
-                    $.dialog.message(data.message);
+                if (data.err) {
+                    this.msg(data.msg);
 
                 } else {
                     var h = '';
                     h += '   <div class="topBox" style="width:100%;height:22px;line-height:22px;padding-bottom: 5px;float:right;"><a class="close" href="javascript:void(0);" style="background:url(/static/images/btn_close.gif) no-repeat; display:block;height: 22px; width:22px;text-indent:-9999em;float:right;">关闭</a></div>';
                     h += '   <div class="box" style="overflow:hidden; _zoom:1; background:#f0f0f0; border:2px dashed #d6d6d6; padding:15px;margin-bottom: 10px; clear:both;">  \r\n';
-                    h += f(data);
+                    h += func(data);
                     h += '      </div>  \r\n';
                     h += '   </div>  \r\n';
 
-                    $.dialog.showDialog(h, cssObj);
+                    this.show(h, cssObj);
                 }
             },
 
-            dialogMsgAndReload: function(data, f, t) {
-                var time = !t ? 1500 : t;
-                if (data.error) {
-                    $.dialog.message(data.message, time);
-                    setTimeout('window.location.reload()', time);
-                } else {
-                    if (f) {
-                        f(data);
-                    }
-                }
-            },
+            ajaxGET: function(url, func, obj) {
+                var self = this;
 
-            ajaxDialog: function(data, f, l) {
-                var f = f ? f : function() {};
-                var l = l ? l : '努力加载中，请稍候';
-
-                $.dialog.loading(l);
-
-                f(data);
-
-            },
-
-            prpos: function(obj) {
-                this.dialogMsg({
-                    error: false,
-                    data: obj,
-                    message: ''
-                }, function(obj) {
-                    var props = '<p>';
-
-                    for (var p in obj.data) {
-                        props += p + ": " + obj[p] + "  <br />";
-
-                    }
-                    props += '</p>';
-                    return props;
-
-                });
+                self.loading('努力加载中，请稍候')
+                $.getJSON(url, function(data) {
+                    self.bnMsg(data, func, obj ? obj : {
+                        width: 460
+                    })
+                })
             }
 
         }
@@ -241,14 +182,21 @@
     });
 
     $.fn.extend({
-        ajaxDialog: function(f, l) {
-            var f = f ? f : function() {};
-            var l = l ? l : '努力加载中，请稍候';
+        ajaxGET: function(url, func) {
+            $.dialog.loading('努力加载中，请稍候')
+            // $.getJSON(url, $.dialog.msg);
+            $.getJSON(url, function(data) {
 
-            $.dialog.loading(l);
+                if (data.err) {
+                    $.dialog.msg(data.msg);
 
-            f(this);
+                } else {
+                    $.dialog.close();
 
+                    !! func && func(data)
+
+                }
+            });
         }
     })
 

@@ -9,11 +9,11 @@ class SignTimeManager(models.Manager):
 
         return SignTime.objects.select_related().get(onl=True, id=id)
 
-    def getDefault(self):
+    def default(self):
 
         return self.select_related().filter(onl=True)[0]
 
-    def  getTupleByAll(self):
+    def getTpl(self):
         signTime = SignTime.objects.filter(onl=True)
 
         a = [(i.id, '%s - %s' % (i.start.strftime('%H: %M'), i.end.strftime('%H: %M'))) for i in signTime]

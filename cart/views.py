@@ -75,12 +75,14 @@ def submit(request):
     return OrdSub(request).submit().showOrdSN()
 
 # GET方式将物品放入购物车
-@itemonl
+# @itemonl
 def buy(request):
+
 
     CartSess(request).pushBySid(request.GET.get('id'))
    
-    return rdrtBck(request)
+    # return rdrtBck(request)
+    return HttpResponseRedirect('/cart/')
 
 # GET方式将物品取出购物车
 def delete(request):
@@ -134,9 +136,10 @@ class CartSess(BsSess):
 
         i = {
                 'mark': self.getMark(),
-                'itemID': Item.objects.getItemBySpecId(id=sid).id,
-                'specID': ItemSpec.objects.getSpecBySpecID(sid).id,
-                'disID': ItemFee.objects.getDisBySpecID(id=sid).id if self.request.user.is_authenticated() else Dis.objects.getDefault().id,
+                'itemID': Item.objects.getBySid(id=sid).id,
+                'specID': ItemSpec.objects.getBySid(sid).id,
+                # 'disID': ItemFee.objects.getDisBySpecID(id=sid).id if self.request.user.is_authenticated() else Dis.objects.default().id,
+                'disID': Dis.objects.getBySid(id=sid).id if self.request.user.is_authenticated() else Dis.objects.default().id,
                 'num': 1,
         }
 
@@ -154,8 +157,8 @@ class CartSess(BsSess):
             ii = {
                     'mark': self.getMark(),
                     'itemID': i,
-                    'specID': Item.objects.getItemByItemID(i).itemspec_set.getDefaultSpec().id,
-                    'disID': Dis.objects.getDefault().id,
+                    'specID': Item.objects.getByID(i).itemspec_set.default().id,
+                    'disID': Dis.objects.default().id,
                     'num': 1,
             }
 
@@ -220,10 +223,10 @@ class CartSess(BsSess):
 
         i = self.sess[mark]
 
-        item = Item.objects.getItemByItemID(id=i['itemID'])
-        spec = item.itemspec_set.getSpecBySpecID(id=i['specID'])
+        item = Item.objects.getByID(id=i['itemID'])
+        spec = item.itemspec_set.getBySid(id=i['specID'])
         dis = Dis.objects.get(id=i['disID'])
-        fee = spec.itemfee_set.getFeeByNomal().fee * Decimal(dis.dis)
+        fee = spec.itemfee_set.nomal().fee * Decimal(dis.dis)
 
         return {
                 'mark': i['mark'],

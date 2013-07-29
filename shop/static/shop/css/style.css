@@ -31,7 +31,7 @@
 .pinStream .s379379{width:379px;height:379px}
 /*.pinStream .s379 img{margin-top:-106px}*/
 .pinStream .boxInner{float:left;width:382px;height:570px}
-.floatInfo{color:#FFFFFF;position:relative;display:block;width:100%;position:absolute;left:0;bottom:-50px;height:50px;background:#000000;opacity:0.8;filter:alpha(opacity=80);-moz-opacity:0.8;}
+.floatInfo{color:#FFFFFF;position:relative;display:block;width:100%;position:absolute;left:0;bottom:-50px;height:50px;background:#000000;opacity:0.8;filter:alpha(opacity=80);-moz-opacity:0.8;border-radius: 3px;}
 .floatInfo .price{position:absolute;left:8px;bottom:20px;font-size:20px;-webkit-text-size-adjust:none;}
 .floatInfo .name{position:absolute;left:15px;bottom:5px;width:85%;white-space:nowrap;overflow:hidden;}
 .floatInfo .like_icon{ width:30px;overflow:hidden;position:absolute;right:8px;bottom:25px;}
@@ -62,7 +62,7 @@
 
 /*pinBox:start*/
 
-.viewDown{background:url(/static/images/untitled.gif) no-repeat 520px 15px;text-align:center;line-height:40px}
+.viewDown{background:url(/static/images/untitled.gif) no-repeat 380px 15px;padding-left: 400px;line-height:40px}
 .pinBox{width:100%;}
 .pinBox li{/* background:#FFFFFF; */margin-bottom:30px;width:100%;border-radius:1px;}
 .pinBox li h2{color:#666;}

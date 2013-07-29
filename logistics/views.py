@@ -116,17 +116,17 @@ class LogcSess(BsSess):
         self.s = 'l'
 
         try:
-            dlvrID = Deliver.objects.getDefault().id
+            dlvrID = Deliver.objects.default().id
         except:
             dlvrID = 0
 
         try:
-            areaID = Area.objects.getDefault().id
+            areaID = Area.objects.default().id
         except:
             areaID = 0
 
         try:
-            signID = SignTime.objects.getDefault().id
+            signID = SignTime.objects.default().id
         except:
             signID = 0
         
@@ -146,12 +146,12 @@ class LogcSess(BsSess):
 
     def chkDate(self):
         date = time.strptime(self.sess['date'], '%Y-%m-%d')
-        today = time.gmtime
+        today = time.struct_time
 
-        if date < today or not self.sess['date']:
+        if today > date:
             self.sess['date'] = '%s' % datetime.date.today()
 
-        return self.set(self.sess)
+        return self._set()
 
 
     def getObj(self):
@@ -182,12 +182,12 @@ class LogcSess(BsSess):
         try:
             area = Area.objects.get(name=areas[1]).id
         except Exception, e:
-            area = Area.objects.getDefault().id
+            area = Area.objects.default().id
 
         try:
             time = SignTime.objects.get(start=oLogcs.stime, end=oLogcs.etime).id
         except Exception, e:
-            time = SignTime.objects.getDefault().id
+            time = SignTime.objects.default().id
 
         logcs.sess['user'] = oLogcs.ord.user
         logcs.sess['pay'] = oLogcs.ord.fnc.cod.id

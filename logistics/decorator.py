@@ -44,7 +44,7 @@ def dManDr(func):
     return _func 
 
 # Ajax物流偏移量以及物流师傅选择装饰器
-def  aLogcsDr(func):
+def aLogcsDr(func):
     def _func(request):
         from logistics.models import Logcs
         from ajax.views import AjaxRJson

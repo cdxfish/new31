@@ -17,14 +17,10 @@ def getItemPin(request):
 
 # 前台弹出层中获取商品规格
 @ajaxMsg('当前商品已下架')
-def getItemSpec(request):
+def getSpec(request):
     from item.models import ItemSpec
 
-    itemSpec = ItemSpec.objects.getSpecByItemId(id=kwargs['specID'])
-
-    data = [ {'id':i.id ,'spec':i.spec.value ,'fee': f02f(i.itemfee_set.getFeeByNomal().fee), } for i in itemSpec ]
-
-    return AjaxRJson().dumps(data)
+    return AjaxRJson().dumps([ {'id':i.id ,'spec':i.spec.value ,'fee': f02f(i.itemfee_set.nomal().fee), } for i in ItemSpec.objects.getByID(id=request.GET.get('id')) ])
 
 
 # 前台购物车界面修改购物车中商品数量
@@ -44,7 +40,7 @@ def cNum(request):
 def getItemByKeyword(request):
     from item.models import Item
 
-    r = [ { 'name':i.name, 'sn': i.sn, 'id': i.id, } for i in Item.objects.getItemLikeNameOrSn(request.GET.get('k', ''))]
+    r = [ { 'name':i.name, 'sn': i.sn, 'id': i.id, } for i in Item.objects.likeNameOrSn(request.GET.get('k', ''))]
 
     return AjaxRJson().dumps(r)
 
