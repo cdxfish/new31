@@ -1,6 +1,5 @@
 #coding:utf-8
-
 from django.contrib import admin
-from models import *
+from models import Spec
 
 admin.site.register(Spec)

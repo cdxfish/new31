@@ -1,10 +1,5 @@
 #coding:utf-8
-
 from django.db import models
-from django.db.models import Q
-from tag.models import *
-from spec.models import *
-from discount.models import *
 
 # Create your models here.
 
@@ -19,18 +14,21 @@ class itemManager(models.Manager):
 
     def likeNameOrSn(self, k):
 
-        return self.select_related().filter((Q(name__contains=k) | Q(sn__contains=k)) & Q(onl=True))
+        return self.select_related().filter((models.Q(name__contains=k) | models.Q(sn__contains=k)) & models.Q(onl=True))
 
 
     def getByTag(self, tag):
 
-        return self.select_related().filter(onl=True,show=True, tag__tag=tag)
+        return self.select_related().filter(onl=True, show=True, tag__tag=tag)
 
 
     def getItems(self):
 
-        return self.select_related().filter((Q(sn__contains='3133') | Q(sn__contains='3155') | Q(sn__contains='3177')), onl=True, show=True)
+        return self.select_related().filter((models.Q(sn__contains='3133') | models.Q(sn__contains='3155') | models.Q(sn__contains='3177')), onl=True, show=True)
 
+    def getAll(self):
+
+        return self.select_related().filter(onl=True)
 
 class itemSpecManager(models.Manager):
     def getBySid(self, id):
@@ -53,11 +51,11 @@ class itemSpecManager(models.Manager):
 class itemImgManager(models.Manager):
     def getSImgs(self):
 
-        return self.select_related().filter((Q(typ=0) | Q(typ=1)), onl=True)
+        return self.select_related().filter((models.Q(typ=0) | models.Q(typ=1)), onl=True)
 
     def getBImgs(self):
 
-        return self.select_related().filter((Q(typ=2) | Q(typ=3)), onl=True)
+        return self.select_related().filter((models.Q(typ=2) | models.Q(typ=3)), onl=True)
 
 
 class itemFeeManager(models.Manager):
@@ -72,6 +70,8 @@ class itemFeeManager(models.Manager):
 
 
 class Item(models.Model):
+    from tag.models import Tag
+    
     name = models.CharField(u'商品名称', max_length=30, unique=True)
     sn = models.IntegerField(u'货号', unique=True)
     addTime = models.DateTimeField(u'添加时间', auto_now=True, auto_now_add=True)
@@ -100,6 +100,7 @@ class ItemDesc(models.Model):
 
 
 class ItemSpec(models.Model):
+    from spec.models import Spec
     item = models.ForeignKey(Item, verbose_name=u'商品')
     spec = models.ForeignKey(Spec, verbose_name=u'规格')
     onl = models.BooleanField(u'上线', default=False)
@@ -115,6 +116,8 @@ class ItemSpec(models.Model):
 
 
 class ItemFee(models.Model):
+    from discount.models import Dis
+
     chcs = ((0,u'零售价'),(1,u'积分换购价'),)
     spec = models.ForeignKey(ItemSpec, verbose_name=u'规格')
     fee = models.DecimalField(u'单价', max_digits=10, decimal_places=2)

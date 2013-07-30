@@ -1,6 +1,5 @@
 #coding:utf-8
 from django.contrib import admin
-from models import *
+from models import UserInfo
 
 admin.site.register(UserInfo)
-# admin.site.register(UserRole)

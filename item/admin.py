@@ -1,6 +1,6 @@
 #coding:utf-8
 from django.contrib import admin
-from models import *
+from models import Item, ItemSpec, ItemFee, ItemImg, ItemDesc
 
 admin.site.register(Item)
 admin.site.register(ItemSpec)

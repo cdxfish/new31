@@ -40,6 +40,7 @@ class Element(models.Model):
     from logistics.models import Logcs
     from produce.models import Pro
     from finance.models import Fnc
+
     pPath = (
                 (u'/office/', U'管理中心'),
                 (u'/order/', u'订单'),
@@ -62,7 +63,12 @@ class Element(models.Model):
             ) + \
             tuple([ (u'/produce/%s/' % i, u'生产%s' % v) for i,v in Pro.chcs ]) + \
             (
-                (u'/inventory/', u'备货'),
+                (u'/inventory/', u'备货'), 
+                (u'/inventory/list/', u'备货清单'), 
+                (u'/inventory/conl/', u'备货选择'), 
+                (u'/inventory/default/', u'备货格式化'), 
+                (u'/inventory/minus/', u'备货减'), 
+                (u'/inventory/plus/', u'备货加'), 
                 (u'/after/', u'售后反馈'),
                 (u'/tryeat/', u'试吃反馈'),
                 (u'/applytryeat/', u'试吃'),
@@ -108,7 +114,12 @@ class Element(models.Model):
     objects = elementManager()
 
     def __unicode__(self):
-        return u"%s [ %s ][ sub: %s ][ onl: %s ] - %s" % (self.get_path_display(), self.get_typ_display(), self.sub, self.onl, self.path)
+        if hasattr(self.sub, 'get_typ_display'):
+            sub = self.sub.get_path_display()
+        else:
+            sub = None
+
+        return u"%s [ %s ][ sub: %s ][ onl: %s ] - %s" % (self.get_path_display(), self.get_typ_display(), sub, self.onl, self.path)
 
 
 class Privilege(models.Model):

@@ -4,11 +4,10 @@ $(document).ready(function() {
     if (jQuery.browser.msie && jQuery.browser.version === "6.0") {} else {
         b.scrollTop();
     }
-    
+
     $('.date').Zebra_DatePicker({
         direction: true
     }); //日期选择控件
-
 
     $('select').jgdDropdown({
         clsLIExpand: false
@@ -100,8 +99,7 @@ var b = {
 
     // 返回顶部按钮
     backToTopEle: function() {
-        var backToTopEle = $('<a href="javascript:void(0);" class="backToTop" title=\"返回顶部\"></a>').appendTo($("body"))
-            .click(function() {
+        var backToTopEle = $('<a href="javascript:void(0);" class="backToTop" title=\"返回顶部\"></a>').appendTo($("body")).click(function() {
             $("html, body").animate({
                 scrollTop: 0
             }, 300, "linear", function() {
@@ -144,16 +142,8 @@ var b = {
         obj.change(
 
         function() {
-            var name = $(this).attr('name');
-            var value = $(this).val();
-            $(this).ajaxDialog(function() {
-                $.getJSON(url + '?' + name + '=' + value,
-
-                function(data) {
-                    $.dialog.msg(data);
-                })
-
-            });
+            var self = $(this);
+            self.ajaxGET(url + '?' + $(this).attr('name') + '=' + $(this).val());
 
 
         });
