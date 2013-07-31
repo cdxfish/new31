@@ -95,4 +95,4 @@ class Pro(models.Model):
     objects = proManager()
 
     def __unicode__(self):
-        return u"%s - [ %s ]" % ( self.item, self.status)
+        return u"%s - %s [ %s ]" % ( self.name, self.spec, self.status)
