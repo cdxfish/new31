@@ -43,7 +43,7 @@ class ordManager(models.Manager):
 
         ord.save()
 
-    def stopOrd(self, sn):
+    def stop(self, sn):
 
         return self.cStatus(sn, 4)
 

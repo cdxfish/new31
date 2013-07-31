@@ -13,8 +13,8 @@ def fncUI(request):
 
     form = FncSrchFrm(initial=o.initial)
 
-    oList = o.getOrds()
-    oList = FncPur(oList, request).getOrds()
+    oList = o.get()
+    oList = FncPur(oList, request).get()
 
     return render_to_response('financeui.htm', locals(), context_instance=RequestContext(request))
 
@@ -30,7 +30,7 @@ def fCon(request, s):
 
 def fCons(request, s):
     s = int(s)
-    return [fCon, fCon, fCon, fCon][s](request, s)
+    return [fCon, fCon, fCon, fCon, fCon][s](request, s)
 
 
 from new31.cls import BsSess
@@ -94,8 +94,8 @@ class FncSerch(OrdSerch):
 
 
 # 订单列表权限加持
-from order.views import OrdPur
-class FncPur(OrdPur):
+from purview.views import BsPur
+class FncPur(BsPur):
     """
         首先获取当前角色可进行的订单操作权限. 
 
@@ -119,5 +119,7 @@ class FncPur(OrdPur):
                 i.action = {}
 
             i.action[self.path] = self.action[i.fnc.status]
+            i.optr = 'sn'
+            i.value = i.sn
 
         return self

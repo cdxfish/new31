@@ -14,8 +14,8 @@ def produceUI(request):
 
     form = ProFrm(initial=o.initial)
 
-    oList = o.getOrds()
-    oList = ProPur(oList, request).getOrds()
+    oList = o.get()
+    oList = ProPur(oList, request).get()
 
     oList = sortList(oList)
 
@@ -52,7 +52,7 @@ def sortList(oList):
 def pCon(request, s):
     from models import Pro
 
-    Pro.objects.cStatus(request.GET.get('sn'), s)
+    Pro.objects.cStatus(request.GET.get('id'), s)
 
     return rdrtBck(request)
 
@@ -100,8 +100,8 @@ class ProSerch(OrdSerch):
 
 
 # 订单列表权限加持
-from order.views import OrdPur
-class ProPur(OrdPur):
+from purview.views import BsPur
+class ProPur(BsPur):
     """
         首先获取当前角色可进行的订单操作权限. 
 
@@ -134,6 +134,8 @@ class ProPur(OrdPur):
                     ii.action = {}
 
                 ii.action[self.path] = self.action[ii.status]
+                ii.optr = 'id'
+                ii.value = ii.id
 
                 items.append(ii)
 

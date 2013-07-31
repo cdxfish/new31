@@ -58,3 +58,7 @@ def rdrRange(url,date,sn):
 def f02f(i):
 
     return '%0.2f' % i
+
+def frmtDate(date):
+    d = date.split('-')
+    return datetime.date(int(d[0]), int(d[1]), int(d[2]))

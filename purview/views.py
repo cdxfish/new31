@@ -125,6 +125,6 @@ class BsPur(object):
         return self
 
 
-    def getOrds(self):
+    def get(self):
 
         return self.getElement().beMixed().mixedStatus().oList

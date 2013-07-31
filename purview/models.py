@@ -40,6 +40,7 @@ class Element(models.Model):
     from logistics.models import Logcs
     from produce.models import Pro
     from finance.models import Fnc
+    from inventory.models import InvPro
 
     pPath = (
                 (u'/office/', U'管理中心'),
@@ -67,8 +68,9 @@ class Element(models.Model):
                 (u'/inventory/list/', u'备货清单'), 
                 (u'/inventory/conl/', u'备货选择'), 
                 (u'/inventory/default/', u'备货格式化'), 
-                (u'/inventory/minus/', u'备货减'), 
-                (u'/inventory/plus/', u'备货加'), 
+            ) + \
+            tuple([ (u'/inventory/%s/' % i, u'备货%s' % v) for i,v in InvPro.typ ]) + \
+            (
                 (u'/after/', u'售后反馈'),
                 (u'/tryeat/', u'试吃反馈'),
                 (u'/applytryeat/', u'试吃'),

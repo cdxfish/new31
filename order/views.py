@@ -17,11 +17,10 @@ def ordList(request):
     from forms import OrdSrchFrm
 
     o = OrdSerch(request)
+    oList = o.get()
+    oList = OrdPur(oList, request).get()
 
     form = OrdSrchFrm(initial=o.initial)
-
-    oList = o.getOrds()
-    oList = OrdPur(oList, request).getOrds()
 
     return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
 
@@ -247,7 +246,7 @@ class OrdSerch(object):
 
         return page(l=self.oList, p=int(self.request.GET.get('p', 1)))
 
-    def getOrds(self):
+    def get(self):
 
         return self.baseSearch().search().chcs().range().page()
 
@@ -281,6 +280,8 @@ class OrdPur(BsPur):
                 i.action = {}
 
             i.action[self.path] = self.action[i.status]
+            i.optr = 'sn'
+            i.value = i.sn
 
         return self
 

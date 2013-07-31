@@ -14,11 +14,7 @@ class oprerateTag(template.Node):
         s = '<td nowrap="nowrap" align="center">'
         for i,v in value.action.items():
             for ii,vv in v:
-                try:
-                    sn =  value.ord.sn
-                    s += '<a href="%s%s/?sn=%s" class="button">%s</a>' % (i, ii, value.id, vv)
-                except Exception, e:
-                    s += '<a href="%s%s/?sn=%s" class="button">%s</a>' % (i, ii, value.sn, vv)
+                s += '<a href="%s%s/?%s=%s" class="button">%s</a>' % (i, ii, value.optr, value.value, vv)
 
         return s + '</td>'
 

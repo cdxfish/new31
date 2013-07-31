@@ -50,6 +50,10 @@ class logcsManager(models.Manager):
 
         logcs.save()
 
+    def stop(self, sn):
+
+        return self.cStatus(sn, 5)
+
 
 class Logcs(models.Model):
     from django.contrib.auth.models import User

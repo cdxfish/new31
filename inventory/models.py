@@ -1,5 +1,6 @@
 #coding:utf-8
 from django.db import models
+from new31.func import frmtDate
 import datetime
 
 # Create your models here.
@@ -24,44 +25,78 @@ class invProManager(models.Manager):
 
 
 class invNumManager(models.Manager):
-    def default(self):
-        from produce.models import Pro
+    def default(self, date=''):
+        if date:
+            date = frmtDate(date)
+        else:
+            date = datetime.date.today()
 
-        d = datetime.date.today()
-        t = d - datetime.timedelta(days=1)
+        t = date - datetime.timedelta(days=1)
 
-        self.filter(date=d).delete()
+        self.filter(date=date).delete()
 
         for i in InvPro.objects.getAll():
-            lNum = Pro.objects.filter(sn=i.spec.item.sn, spec=i.spec.spec.value, ord__logcs__date=t).values('num')
-            try:
-                num = self.get(pro__spec__item__sn=i.spec.item.sn, pro__spec__spec__value=i.spec.spec.value, date=t).values('num')
-            except Exception, e:
-                num = [{'num':  0}]
 
-            iNum = InvNum()
-            iNum.pro = i
-            iNum.date = d
-            iNum.num = sum([v['num'] for v in num]) - sum([v['num'] for v in lNum])
-            iNum.save()
+            self.frMt(i.id, date)
+            
 
-
-    def getAll(self):
+    def frMt(self, id, date):
         from produce.models import Pro
 
-        today = datetime.date.today()
+        t = date - datetime.timedelta(days=1)
+
+        pro = InvPro.objects.get(id=id)
+
+        adv = Pro.objects.filter(sn=pro.spec.item.sn, spec=pro.spec.spec.value, ord__logcs__date=t).values('num')
+        try:
+            num = self.get(pro__spec__item__sn=pro.spec.item.sn, pro__spec__spec__value=pro.spec.spec.value, date=t).num
+        except Exception, e:
+            num = 0
+
+        iNum = InvNum()
+        iNum.pro = pro
+        iNum.date = date
+        iNum.num = num - sum([v['num'] for v in adv])
+        iNum.save()
+
+        return iNum
+
+
+    def getAll(self, date):
+        from produce.models import Pro
+        if date:
+            date = frmtDate(date)
+        else:
+            date = datetime.date.today()
 
         pros = InvPro.objects.getAll()
 
         for i in pros:
-            i.invnum = []
-            for ii in i.invnum_set.filter(date=today):
-                l = sum([v['num'] for v in Pro.objects.filter(sn=i.spec.item.sn, spec=i.spec.spec.value, ord__logcs__date=today).values('num')])
-                ii.count = ii.num - l
-                ii.logcs = l
-                i.invnum.append(ii)
+            adv = sum([v['num'] for v in Pro.objects.filter(sn=i.spec.item.sn, spec=i.spec.spec.value, ord__logcs__date=date).values('num')])
+            try:
+                invnum = i.invnum_set.get(date=date)
+            except Exception, e:
+                invnum = self.frMt(i.id, date)
+            invnum.adv = adv
+            invnum.count = invnum.num - adv
+
+            i.invnum = invnum
 
         return pros
+
+    def minus(self, id):
+
+        num = self.get(id=id)
+        num.num -= 1
+
+        num.save()
+
+    def plus(self, id):
+
+        num = self.get(id=id)
+        num.num += 1
+
+        num.save()
 
 
 class InvPro(models.Model):
@@ -70,6 +105,15 @@ class InvPro(models.Model):
     chcs =  (
             (False, u'不备'),
             (True, u'已备'),
+        )
+
+    typ = (
+            ('minus', u'减'),
+            ('plus', u'加'),
+        )
+    act =   (
+                (('minus', u'减'),('plus', u'加'),),
+                (('minus', u'减'),('plus', u'加'),),
         )
 
     spec = models.OneToOneField(ItemSpec, verbose_name=u'商品规格')

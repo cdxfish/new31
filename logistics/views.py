@@ -21,12 +21,12 @@ def logcsUI(request):
 
     form = LogcSrchFrm(initial=o.initial)
 
-    oList = o.getOrds()
-    oList = LogcsPur(oList, request).getOrds()
-    oList = FncPur(oList, request).getOrds()
-    oList = OrdPur(oList, request).getOrds()
-    oList = ProPur(oList, request).getOrds()
-    oList = KpChng(oList, request).getOrds()
+    oList = o.get()
+    oList = LogcsPur(oList, request).get()
+    oList = FncPur(oList, request).get()
+    oList = OrdPur(oList, request).get()
+    oList = ProPur(oList, request).get()
+    oList = KpChng(oList, request).get()
 
     return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))
 
@@ -83,12 +83,14 @@ def lCon(request, s):
 @logcsDr
 def stopLogcs(request, s):
     from models import Logcs
-    from order.models import Ord
+    # from order.models import Ord
+    # from finance.models import Fnc
 
     sn = request.GET.get('sn')
     
-    Logcs.objects.cStatus(sn, s)
-    Ord.objects.stopOrd(sn)
+    Logcs.objects.stop(sn)
+    # Ord.objects.stop(sn)
+    # Fnc.objects.stop(sn)
 
 
     return rdrtBck(request)
@@ -231,8 +233,8 @@ class LogcsSerch(OrdSerch):
         return self
 
 # 订单列表权限加持
-from order.views import OrdPur
-class LogcsPur(OrdPur):
+from purview.views import BsPur
+class LogcsPur(BsPur):
     """
         首先获取当前角色可进行的订单操作权限. 
 
@@ -261,6 +263,8 @@ class LogcsPur(OrdPur):
                 i.action = {}
 
             i.action[self.path] = self.action[i.logcs.status]
+            i.optr = 'sn'
+            i.value = i.sn
 
         return self
 
@@ -294,7 +298,7 @@ class KpChng(object):
 
         return self
 
-    def getOrds(self):
+    def get(self):
 
         return self.cntFee().oList
 

@@ -27,6 +27,10 @@ class fncManager(models.Manager):
         fnc.status = s
 
         fnc.save()
+        
+    def stop(self, sn):
+
+        return self.cStatus(sn, 4)
 
 
 class Fnc(models.Model):
@@ -37,12 +41,14 @@ class Fnc(models.Model):
                 (1, u'已付'),
                 (2, u'已结'),
                 (3, u'已核'),
+                (4, u'止付'),
             )
 
     act =   (
-                ((1, u'已付'),),
+                ((1, u'已付'),(4, u'止付'),),
                 ((2, u'已结'),),
                 ((3, u'已核'),),
+                (),
                 (),
         )
 

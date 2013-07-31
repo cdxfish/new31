@@ -1,6 +1,15 @@
 {% extends "office.base.htm" %}
 
 {% block content %}
+{% load tags %}
+      <div class="search" nowrap="true" colspan="3">
+          <form action="{{ request.path }}" method="get">
+{% for i in form %}
+              {{ i }}
+{% endfor %}
+            <input type="submit" value=" 搜索 " class="button" />
+          </form>
+      </div>
       <table cellpadding="3" cellspacing="1" width="100%">
           <tr>
             <th>名称</th>
@@ -12,17 +21,21 @@
           <tr align="center" class="tr_border_top_black">
             <td>{{ i.name }}</td>
             <td>&nbsp;</td>
-            <td><span class="wow_item_1">1</span> | <span class="wow_item_8">6</span> | <span class="wow_item_0">7</span></td>
+            <td><span class="wow_item_1">{{ i.adv }}</span> | <span class="wow_item_8">{{ i.count }}</span> | <span class="wow_item_0">{{ i.num }}</span></td>
             <td>&nbsp;</td>
           </tr>
 {% for ii in i.invnum %}
           <tr align="center">
             <td>&nbsp;</td>
-            <td>{{ ii.pro.spec.spec.value }}</td>
-            <td><span class="wow_item_1">{{ ii.logcs }}</span> | <span class="wow_item_8">{{ ii.num }}</span> | <span class="wow_item_0">{{ ii.count }}</span></td>
-            <td><a href="{{ request.paths.备货减 }}?id={{ ii.pro.id }}" class="button">减</a><a href="{{ request.paths.备货加 }}?id={{ ii.pro.id }}" class="button">加</a></td>
+            <td>{{ ii.spec.spec.value }}</td>
+            <td><span class="wow_item_1">{{ ii.invnum.adv }}</span> | <span class="wow_item_8">{{ ii.invnum.count }}</span> | <span class="wow_item_0">{{ ii.invnum.num }}</span></td>
+            {% optr ii %}
           </tr>
 {% endfor %}
 {% endfor %}
+          <tr>
+            <td align="center"><a href="{{ request.paths.备货格式化 }}?s={{ form.initial.s }}" class="button">备货格式化</a></td>
+            <td colspan="3">&nbsp;</td>
+          </tr>
       </table>
 {% endblock %}
