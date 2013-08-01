@@ -6,8 +6,7 @@ from purview.models import *
 # Create your models here.
 
 class UserInfo(models.Model):
-
-    modChoices = (
+    mons = (
                     (1, u'一月'), 
                     (2, u'二月'), 
                     (3, u'三月'), 
@@ -21,7 +20,7 @@ class UserInfo(models.Model):
                     (11, u'十一月'), 
                     (12, u'十二月'), 
                 )
-    dayChoices = (
+    days = (
                     (1, u'一日'), 
                     (2, u'二日'), 
                     (3, u'三日'), 
@@ -55,14 +54,16 @@ class UserInfo(models.Model):
                     (31, u'三十一日'), 
                 )
 
+    sexs =  (
+                (u'M', u'先生'), 
+                (u'F', u'女士'),
+        )
+
     user = models.OneToOneField(User, verbose_name=u'用户')
-    birthMon = models.SmallIntegerField(u'出生月', choices=modChoices)
-    birthDay = models.SmallIntegerField(u'出生日', choices=dayChoices)
-    sex = models.CharField(u'性别',max_length=1, choices=((u'M', u'先生'), (u'F', u'女士'),))
-    buycount = models.IntegerField(u'购买次数', default=0, editable=False)
-    integral = models.IntegerField(u'积分', default=0, editable=False)
-    regType = models.SmallIntegerField(u'注册类型', default=0, editable=False)
-    regTime = models.DateTimeField(u'注册时间', auto_now=True, auto_now_add=True, editable=False)
+    birthMon = models.SmallIntegerField(u'出生月', choices=mons)
+    birthDay = models.SmallIntegerField(u'出生日', choices=days)
+    sex = models.CharField(u'性别',max_length=1, choices=sexs)
+    typ = models.SmallIntegerField(u'注册类型', default=0, editable=False)
 
     def __unicode__(self):
         return u"%s [ %s ] - %s" % (self.user, self.regTime)

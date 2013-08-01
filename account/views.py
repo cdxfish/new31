@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib import messages, auth
 from new31.func import rdrtLogin, rdrtBck, rdrtIndex
+from decorator import loginDr
 
 # Create your views here.
 
@@ -26,14 +27,14 @@ def login(request):
 
                 messages.error(request, '用户名或密码错误')
 
-                return rdrtLogin()
+                return rdrtLogin(request)
 
         else:
             return render_to_response('login.htm', locals(), context_instance=RequestContext(request))
 
     else:
         # 避免循环跳转
-        if '/account/login/' in request.META.get('HTTP_REFERER', '/'):
+        if '/account/login/' == request.META.get('HTTP_REFERER', '/'):
             return rdrtIndex()
         else:
             return rdrtBck(request)
@@ -44,14 +45,21 @@ def logout(request):
 
     return rdrtIndex()
 
+@loginDr
 def settings(request):
+    from forms import setFrm
+    frm = setFrm(request)
 
     return render_to_response('settings.htm', locals(), context_instance=RequestContext(request))
 
+@loginDr
 def changepwd(request):
+    from forms import pwdFrm
+    frm = pwdFrm(request)
 
     return render_to_response('changepwd.htm', locals(), context_instance=RequestContext(request))
 
+@loginDr
 def myOrd(request):
     from order.models import Ord
     from produce.models import Pro
@@ -64,6 +72,7 @@ def myOrd(request):
 
     return render_to_response('myord.htm', locals(), context_instance=RequestContext(request))
 
+@loginDr
 def viewOrd(request):
     from order.models import Ord
     from produce.models import Pro

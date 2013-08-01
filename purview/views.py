@@ -51,7 +51,7 @@ class URLPurview:
                 if not self.request.path in element:
                     return self.error()
             else:
-                return rdrtLogin()
+                return rdrtLogin(self.request)
 
 
     # 页面元素加持

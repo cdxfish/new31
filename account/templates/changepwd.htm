@@ -4,31 +4,23 @@
     <div class="subMenu">
         <h4>设置</h4>
         <ul>
-            <li><a href="/account/settings/">基本资料</a></li>
-            <li><a href="/account/changepwd/" class="select" >密码</a></li>
+            <li><a href="{{ request.nPath.个人设置 }}">基本资料</a></li>
+            <li><a href="{{ request.nPath.修改密码 }}" class="select">密码</a></li>
         </ul>
     </div>
 {% endblock %}
 
 {% block content %}
         <div class="pWhite">
-            <form action="changepwd/" method="post">
+            <form action="{{ request.nPath.保存密码 }}" method="post">
+{% for i in frm %}
                 <div class="formBar">
-                    <span class="" data-valmsg-for="OldPassword" data-valmsg-replace="true"></span>
-                    <label for="OldPassword">当前密码</label>
-                    <input data-val="true" data-val-required="请输入当前密码" id="OldPassword" name="OldPassword" type="password" placeholder="请输入你当前使用的密码" />
+                    <label>{{ i.label }}</label>
+                    {{ i }}
                 </div>
-                <div class="formBar">
-                    <span class="" data-valmsg-for="NewPassword" data-valmsg-replace="true"></span>
-                    <label for="NewPassword">新密码</label>
-                    <input data-val="true" data-val-length="新密码至少6位以上，最多不超过16位。" data-val-length-max="16" data-val-length-min="6" data-val-required="请输入新密码" id="NewPassword" name="NewPassword" type="password" placeholder="可输入4-18位，区分大小写" />
-                </div>
-                <div class="formBar">
-                    <span class="" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
-                    <label for="ConfirmPassword">确认密码</label>
-                    <input data-val="true" data-val-equalto="新密码与确认密码不匹配。" data-val-equalto-other="*.NewPassword" id="ConfirmPassword" name="ConfirmPassword" type="password" />
-                </div>
+{% endfor %}
                 <div class="btnBox">
+                    {% csrf_token %}
                     <input class="btnG bBtn" type="submit" value="修改密码" />
                 </div>
             </form>

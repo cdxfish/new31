@@ -346,7 +346,7 @@ background:-ms-linear-gradient(top, #980000 0%,#8a0000 45%,#8a0000 46%,#7e0000 1
 /* .Settingbg{background-color:#FFFFFF;width:930px;padding:15px;border:1px solid #d9d9d9;} */
 /* .SettingPage{width:920px;position:relative;} */
 .box{padding:0 0 15px 0;position:relative;font-size:11px;}
-.box p{font-weight:bold;color:#666;font-size:14px;width:350px;padding:5px 0;position:relative;}
+.box p{font-weight:bold;color:#666;font-size:14px;width:350px;height:32px; padding:5px 0;position:relative;}
 .box .field-validation-error,.box .field-validation-valid{position:absolute;top:-26px;left:0;}
 .box .tips,.box .field-validation-error,.box .field-validation-valid{width:252px;}
 .box label{font-weight:bold;width:350px;padding:0 0 5px 0;}

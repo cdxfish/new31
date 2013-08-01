@@ -1295,6 +1295,11 @@ header,footer,article,aside,section,nav,menu,hgroup {
 	top: 32px;
 }
 
+.toolBar .messagePop ul {
+	min-height: 60px;
+	width: 100%;
+}
+
 .toolBar .messagePop h3 {
 	font-size: 12px;
 	font-weight: bold;
@@ -1311,14 +1316,16 @@ header,footer,article,aside,section,nav,menu,hgroup {
 }
 
 .toolBar .messagePop li {
-	float: none;
 	width: 100%;
 	margin: 0px;
+	float: none;
+	*float: left;
 }
 
 .toolBar .messagePop li a {
 	display: block;
 	height: 27px;
+	*width: 180px;
 	line-height: 27px;
 	padding: 0 10px;
 }
@@ -1362,6 +1369,8 @@ header,footer,article,aside,section,nav,menu,hgroup {
 	padding: 0 10px;
 	border-top: 1px  solid #e5e5e5;
 	text-align: right;
+	height: 32px;
+	line-height: 32px
 }
 
 .toolBar .messageBox .messagePop .confirm:hover {
@@ -1369,8 +1378,9 @@ header,footer,article,aside,section,nav,menu,hgroup {
 	background: #e5e5e5;
 	color: #000;
 	height: 32px;
-	line-height: 32px
+	line-height: 32px;
 }
+
 
 .toolBar .messagePop .picBig {
 	padding: 12px;

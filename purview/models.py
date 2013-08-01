@@ -45,9 +45,14 @@ class Element(models.Model):
     nPath = (
             (u'/', u'商城'),
             (u'/account/', u'用户中心'),
+            (u'/account/login/', u'登录'),
+            (u'/account/logout/', u'登出'),
+            (u'/account/settings/', u'个人设置'),
+            (u'/account/settings/', u'保存设置'),
+            (u'/account/changepwd/', u'修改密码'),
+            (u'/account/changepwd/', u'保存密码'),
             (u'/account/myord/', u'我的订单'),
             (u'/account/view/', u'订单详情'),
-            (u'/account/logout/', u'登出'),
             (u'/cart/', u'购物车'),
             (u'/cart/del/', u'删除商品'),
         )
