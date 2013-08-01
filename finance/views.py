@@ -106,7 +106,7 @@ class FncPur(BsPur):
         from models import Fnc
 
         super(FncPur, self).__init__(oList, request)
-        self.path = request.paths[u'财务']
+        self.path = request.pPath[u'财务']
 
         self.chcs = Fnc.chcs
         self.action = Fnc.act

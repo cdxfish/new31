@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    b.autoHight().intro().topToolsMessage().backToTopEle();
+    b.autoHight().intro().topToolsMessage().confirm().backToTopEle();
 
     if (jQuery.browser.msie && jQuery.browser.version === "6.0") {} else {
         b.scrollTop();
@@ -119,22 +119,20 @@ var b = {
         return this
     },
 
-    //将所有新消息数擦除
-    clearMessageData: function() {
-        $.post(URL_AJAX_GET_CLEAR_MESSAGE, function(result) {
-            if (result.Success) {
-                hideMessage();
-            } else {
-                alert(result.Message);
-                return false;
-            }
-        });
+    confirm:function(){
+        var self = this;
+        $('.confirm').click(function(){
+            self.hideMessage();
+
+            return false;
+        })
+
+        return this
     },
 
     // 隐藏消息层
     hideMessage: function() {
-        $(".messageBox").removeClass("on");
-        $(".messagePop").hide();
+        $(".messagePop").hide().prev().removeClass("on");
 
         return this
     },
@@ -147,7 +145,7 @@ var b = {
 
 
         });
-        return this;
+        return this
     }
 
 }

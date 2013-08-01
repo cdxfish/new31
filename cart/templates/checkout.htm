@@ -21,6 +21,7 @@
                     <th>商品名称</th>
                     <th>规格</th>
                     <th>价格</th>
+                    <th>折扣</th>
                     <th>数量</th>
                     <th>小计</th>
                 </tr>
@@ -29,9 +30,10 @@
                 <tr align="center">
                     <td>{{ i.item.name }}</td>
                     <td>{{ i.spec.spec.value }}</td>
-                    <td>￥{{ i.fee|floatformat:2 }} 元</td>
+                    <td>{{ i.fee|floatformat:2 }} | {{ i.nfee|floatformat:2 }}</td>
+                    <td>{{ i.dis.get_dis_display }}</td>
                     <td>{{ i.num }}</td>
-                    <td>￥<span class="st{{ i.v }}">{{ i.total|floatformat:2 }}</span> 元</td>
+                    <td><span class="st{{ i.v }}">{{ i.total|floatformat:2 }}</span></td>
                 </tr>
 {% endfor %}
 {% else %}
@@ -40,8 +42,8 @@
                 </tr>
 {% endif %}
                 <tr class="bLine">
-                    <td align="right" colspan="5"><span class="fBold font18">商品总价: ￥<span class="total">{{ cart.total|floatformat:2 }}</span> 元</span></td>
-                    <td></td>
+                    <td align="right" colspan="5"><span class="fBold font18">总计: <span class="total">{{ cart.total|floatformat:2 }}</span></span></td>
+                    <td>&nbsp;</td>
                 </tr>
             </table>
             <h3>赠送</h3>
@@ -57,8 +59,8 @@
                     <td colspan="6">无</td>
                 </tr>
                 <tr class="bLine">
-                    <td colspan="5" align="right"><span class="fBold font18">总计: ￥0.00 元</span></td>
-                    <td></td>
+                    <td colspan="5" align="right"><span class="fBold font18">总计: 0.00</span></td>
+                    <td>&nbsp;</td>
                 </tr>
             </table>
             <h3>收货人信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/cart/consignee/" class="btnB sBtn">修改</a></h3>

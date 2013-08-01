@@ -41,14 +41,14 @@
                     </form>
                 </li>
                 <li class="messageBox">
-                    <a id="lnkTopMessage" href="/account/order" class="newMessage" title="新消息"><span id="spanTopMessage" title="新消息">{% if user.allmsgCount %}{{user.allmsgCount}}{% else %}0{% endif %}</span></a>
+                    <a id="lnkTopMessage" href="{{ request.nPath.我的订单 }}" class="newMessage" title="新消息"><span id="spanTopMessage" title="新消息">{{ user.allMsg }}</span></a>
                     <div id="pnlTopMessage" class="messagePop" style="display:none;">
                         <h3>新消息</h3>
                         <ul>
-                            <li><a href="/account/order/">新订单（ {% if user.newOrdCount %}{{user.newOrdCount}}{% else %}0{% endif %} ）</a></li>
-                            <li><a href="/account/messages/">新留言（ {% if user.newMsgCount %}{{user.newMsgCount}}{% else %}0{% endif %} ）</a></li>
+                            <li><a href="{{ request.nPath.我的订单 }}">新订单（ {{ user.newOrd }} ）</a></li>
+                            <li><a href="/account/messages/">新留言（ {{ user.newMsg }} ）</a></li>
                         </ul>
-                        <a class="confirm" href="javascript:void(0)" onclick="clearMessageData();return false;">我知道了</a>
+                        <a class="confirm" href="javascript:void(0)">关闭</a>
                     </div>
                 </li>
                 <li><a href="/cart/">购物车</a></li>
@@ -60,7 +60,7 @@
                         <div class="editBox">
                             <ul>
                                 <li class="email"><em>{{ user.email}}</em></li>
-                                <li><a href="/account/order/">我的订单</a></li>
+                                <li><a href="{{ request.nPath.我的订单 }}">我的订单</a></li>
                                 <li><a href="/account/settings/">个人设置</a></li>
                                 <li><a href="/account/changepwd/">修改密码</a></li>
 {% if user.is_staff %}

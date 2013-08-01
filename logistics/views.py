@@ -50,7 +50,7 @@ def editLogcs(request, s):
 
     OrdSess(request).cpyOrd(sn)
     
-    return HttpResponseRedirect(request.paths[u'编辑物流'])
+    return HttpResponseRedirect(request.pPath[u'编辑物流'])
 
 # 提交物流
 @postDr
@@ -66,7 +66,7 @@ def logcsSub(request):
 
     messages.success(request, u'编辑成功: %s' % sn)
 
-    return rdrRange(request.paths[u'物流'], LogcSess(request).sess['date'], sn)
+    return rdrRange(request.pPath[u'物流'], LogcSess(request).sess['date'], sn)
 
 
 # 物流状态修改
@@ -246,7 +246,7 @@ class LogcsPur(BsPur):
 
         super(LogcsPur, self).__init__(oList, request)
 
-        self.path = request.paths[u'物流']
+        self.path = request.pPath[u'物流']
 
         self.chcs = Logcs.chcs
         self.action = Logcs.act

@@ -1,5 +1,6 @@
 #coding:utf-8
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from new31.func import rdrtBck
 
 # Create your decorator here.
@@ -26,7 +27,7 @@ def ordDr(func):
     return _func
 
 
-# 订单提交类提示用装饰器
+# 订单提交类提示用装饰器(类内部使用)
 def subMsg(s= ''):
     def _func(func):
         def __func(self):
@@ -44,4 +45,14 @@ def subMsg(s= ''):
 
             return self #强制返回self否则无法链式调用
         return __func
+    return _func
+
+# 订单提交类提示用装饰器
+def subDr(func):
+    def _func(request):
+        try:
+            return func(request)
+        except Exception, e:
+            return rdrtBck(request)
+
     return _func

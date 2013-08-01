@@ -10,12 +10,10 @@ class proManager(models.Manager):
 
     def getFeeBySN(self, sn):
         from new31.func import frMtFee
-        from order.models import Ord
 
-        ord = Ord.objects.select_related().get(sn=sn)
         total = 0
-        for i in ord.pro_set.all():
-            total += frMtFee(i.nfee * i.num)
+        for i in self.select_related().filter(ord=sn):
+            total += i.total()
 
         return total
 
@@ -33,7 +31,7 @@ class proManager(models.Manager):
         for v,i in items.items():
 
             item = Item.objects.getByID(id=i['itemID'])
-            spec = ItemSpec.objects.getBySid(id=i['specID']).spec
+            spec = ItemSpec.objects.getBySid(id=i['specID'])
             fee = ItemFee.objects.getBySid(id=i['specID'])
             dis = Dis.objects.getByid(id=i['disID'])
             nfee = frMtFee(fee.fee * Decimal(dis.dis))
@@ -43,11 +41,11 @@ class proManager(models.Manager):
                     ord=ord,
                     name=item.name,
                     sn=item.sn,
-                    spec=spec.value,
+                    spec=spec.spec.value,
                     num=i['num'],
-                    fee=fee.fee,
                     dis=dis.dis,
-                    nfee=nfee
+                    fee=fee.fee,
+                    nfee=nfee,
                     )
                 )
 
@@ -63,8 +61,9 @@ class proManager(models.Manager):
 
 class Pro(models.Model):
     from order.models import Ord
-    from item.models import ItemFee
     from discount.models import Dis
+
+
     chcs = (
                 (0, u'未产'),
                 (1, u'产求'),
@@ -86,13 +85,18 @@ class Pro(models.Model):
     sn = models.CharField(u'货号', max_length=30)
     spec = models.CharField(u'规格', max_length=30)
     num = models.SmallIntegerField(u'数量')
-    typ = models.SmallIntegerField(u'商品类型', default=0, choices=ItemFee.chcs)
+
     fee = models.DecimalField(u'原价', max_digits=10, decimal_places=2)
     nfee = models.DecimalField(u'现价', max_digits=10, decimal_places=2)
     dis = models.FloatField(u'折扣', default=1.0, choices=Dis.chcs)
     status = models.SmallIntegerField(u'生产状态', default=0, editable=False, choices=chcs)
 
     objects = proManager()
+
+    def total(self):
+        from new31.func import frMtFee
+
+        return frMtFee(self.nfee * self.num)
 
     def __unicode__(self):
         return u"%s - %s [ %s ]" % ( self.name, self.spec, self.status)

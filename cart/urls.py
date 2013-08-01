@@ -6,7 +6,7 @@ urlpatterns = patterns('',
     (r'^$', cart),
     (r'^consignee\/$', cnsgn),
     (r'^buy\/$', buy),
-    (r'^delete\/$', delete),
+    (r'^del\/$', delete),
     (r'^checkout\/$', checkout),
     (r'^submit\/$', submit),
 )

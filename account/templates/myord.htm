@@ -11,13 +11,13 @@
                     <th>订单状态</th>
                     <th>操作</th>
                 </tr>
-{% for i in orders %}
+{% for i in ords %}
                 <tr align="center">
-                    <td><a href="/account/order/?{{ i.sn }}">{{ i.sn }}</a></td>
+                    <td>{{ i.get_typ_display }} | <a href="{{ request.nPath.订单详情 }}?sn={{ i.sn }}">{{ i.sn }}</a></td>
                     <td>{{ i.ordlog_set.all.0.time|date:'Y-m-d H:i:s' }}</td>
-                    <td>{% for ii, vv in i.total.items %}{% if forloop.first %}{{ vv }}{% else %} | {{ vv }}{% endif %}{% endfor %}</td>
-                    <td>{{ i.get_status_display }} | {{ i.ordship.get_status_display }} | {{ i.fnc.get_status_display }}</td>
-                    <td><a href="/account/order/?{{ i.sn }}">查看详情</a></td>
+                    <td>{{ i.total|floatformat:2 }}</td>
+                    <td>{{ i.get_status_display }} | {{ i.logcs.get_status_display }} | {{ i.fnc.get_status_display }}</td>
+                    <td><a href="{{ request.nPath.订单详情 }}?sn={{ i.sn }}">查看详情</a></td>
                 </tr>
 {% endfor %}
             </table>

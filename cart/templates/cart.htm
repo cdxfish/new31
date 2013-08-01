@@ -23,12 +23,12 @@
                     <tr align="center">
                         <td>{{ i.item.name }}</td>
                         <td>{{ i.spec.spec.value }}</td>
-                        <td>￥<span id="am{{ i.mark }}">{{ i.fee|floatformat:2 }}</span> 元</td>
+                        <td><span id="am{{ i.mark }}">{{ i.nfee|floatformat:2 }}</span></td>
                         <td>
                             <input type="text" name="{{ i.mark }}" value="{{ i.num }}" size="1" class="iNum" />
                         </td>
-                        <td>￥<span id="st{{ i.mark }}">{{ i.total|floatformat:2 }}</span> 元</td>
-                        <td align="right"><a href="/cart/delete/?id={{ i.mark }}" class="btnB bBtn">删除</a></td>
+                        <td><span id="st{{ i.mark }}">{{ i.total|floatformat:2 }}</span></td>
+                        <td align="right"><a href="{{ request.nPath.删除商品 }}?id={{ i.mark }}" class="btnB bBtn">删除</a></td>
                     </tr>
 {% endfor %}
                     <tr class="bLine">

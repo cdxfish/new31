@@ -42,6 +42,17 @@ class Element(models.Model):
     from finance.models import Fnc
     from inventory.models import InvPro
 
+    nPath = (
+            (u'/', u'商城'),
+            (u'/account/', u'用户中心'),
+            (u'/account/myord/', u'我的订单'),
+            (u'/account/view/', u'订单详情'),
+            (u'/account/logout/', u'登出'),
+            (u'/cart/', u'购物车'),
+            (u'/cart/del/', u'删除商品'),
+        )
+
+
     pPath = (
                 (u'/office/', U'管理中心'),
                 (u'/order/', u'订单'),

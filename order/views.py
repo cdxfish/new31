@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from new31.decorator import postDr, rdrtBckDr
 from new31.func import frMtFee, rdrRange, page, rdrtBck
-from decorator import ordDr, subMsg
+from decorator import ordDr, subMsg, subDr
 from decimal import Decimal
 import time, datetime
 
@@ -27,11 +27,20 @@ def ordList(request):
 
 # 后台订单提交,提交成功后进行页面跳转至订单列表
 @postDr
+@subDr
 def submit(request):
     from logistics.views import LogcSess
-    LogcSess(request).setByDict(request.POST.dict())
+    logcs = LogcSess(request).setByDict(request.POST.dict())
 
-    return OrdSub(request).submit().redirOrd()
+    o = OrdSub(request).submit()
+
+    if o.error:
+        return o.showError()
+    else:
+        messages.success(request, u'订单提交成功: %s' % o.sn)
+
+        return rdrRange(request.pPath[u'订单'], logcs.sess['date'], o.sn)
+
 
 # 后台新单编辑操作编辑页面
 def newOrdUI(request):
@@ -46,7 +55,7 @@ def editOrd(request, s):
 
     OrdSess(request).copy(request.GET.get('sn'))
 
-    return HttpResponseRedirect(request.paths[u'编辑订单'])
+    return HttpResponseRedirect(request.pPath[u'编辑订单'])
 
 
 # 后台订单编辑操作编辑页面@
@@ -71,7 +80,7 @@ def editUI(request):
 def copyOrd(request,c):
     OrdSess(request).copy(int(request.GET.get('sn')))
 
-    return HttpResponseRedirect(request.paths[u'新订单'])
+    return HttpResponseRedirect(request.pPath[u'新订单'])
 
 @ordDr
 def cCon(request, s):
@@ -266,7 +275,7 @@ class OrdPur(BsPur):
         from models import Ord
 
         super(OrdPur, self).__init__(oList, request)
-        self.path = request.paths[u'订单']
+        self.path = request.pPath[u'订单']
 
         self.chcs = Ord.chcs
         self.action = Ord.act
@@ -319,6 +328,7 @@ class OrdSub(object):
 
         else:
             self.newSn()
+        # self.newSn()
 
         self.pushOrd()
         self.logcs()
@@ -433,27 +443,6 @@ class OrdSub(object):
 
         return self
 
-
-    # 显示订单号,主要用于前提用户级提示
-    def showOrdSN(self):
-        if self.error:
-            return self.showError()
-        else:
-            messages.success(self.request, u'您已成功提交订单!')
-            messages.success(self.request, u'感谢您在本店购物！请记住您的订单号: %s' % self.sn)
-
-            return HttpResponseRedirect('/')
-
-
-    # 重定向至订单列表页
-    def redirOrd(self):
-        from logistics.views import LogcSess
-        if self.error:
-            return self.showError()
-        else:
-            messages.success(self.request, u'订单提交成功: %s' % self.sn)
-
-            return rdrRange(self.request.paths[u'订单'], LogcSess(self.request).sess['date'], self.sn)
 
     # 粗粒用户级错误提示
     def showError(self):

@@ -112,7 +112,7 @@ class InvPur(BsPur):
         from models import InvPro
 
         super(InvPur, self).__init__(oList, request)
-        self.path = request.paths[u'备货']
+        self.path = request.pPath[u'备货']
 
         self.chcs = InvPro.typ
         self.action = InvPro.act

@@ -112,7 +112,7 @@ class ProPur(BsPur):
         from models import Pro
 
         super(ProPur, self).__init__(oList, request)
-        self.path = request.paths[u'生产']
+        self.path = request.pPath[u'生产']
 
         pro = Pro
         self.chcs = pro.chcs

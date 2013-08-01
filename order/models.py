@@ -8,14 +8,13 @@ from new31.func import *
 # Create your models here.
 
 class ordManager(models.Manager):
-    def getOrdByUser(self, user):
+    def getByUser(self, user):
 
-        ords = self.select_related(depth=2).filter(user=user)
+        return self.select_related(depth=2).filter(user=user)
 
-        for i in ords:
-            i.total = OrdItem.objects.getFeeBySN(i.sn)
+    def lenNewOrd(self, user):
 
-        return ords
+        return len(self.filter((models.Q(status=0) | models.Q(status=1)), user=user))
 
     def getActTuple(self, i):
 

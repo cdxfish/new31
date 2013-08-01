@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib import messages, auth
-from new31.func import rdrtLogin, rdrtBck
+from new31.func import rdrtLogin, rdrtBck, rdrtIndex
 
 # Create your views here.
 
@@ -53,14 +53,33 @@ def changepwd(request):
     return render_to_response('changepwd.htm', locals(), context_instance=RequestContext(request))
 
 def myOrd(request):
+    from order.models import Ord
+    from produce.models import Pro
 
-    orders = Ord.objects.getOrdByUser(request.user.id)
+    ords = Ord.objects.getByUser(request.user.id)
 
-    return render_to_response('myorder.htm', locals(), context_instance=RequestContext(request))
+    for i in ords:
+        i.total = Pro.objects.getFeeBySN(i.sn)
 
-def orderDetail(request, orderSn):
 
-    return render_to_response('orderdetail.htm', locals(), context_instance=RequestContext(request))
+    return render_to_response('myord.htm', locals(), context_instance=RequestContext(request))
+
+def viewOrd(request):
+    from order.models import Ord
+    from produce.models import Pro
+
+    sn = request.GET.get('sn')
+
+    o = Ord.objects.get(sn=sn)
+
+    if o.user != request.user:
+        messages.error(request, u'您无法查看当前订单。')
+
+        return rdrtBck(request)
+
+    o.total = Pro.objects.getFeeBySN(sn)
+
+    return render_to_response('vieword.htm', locals(), context_instance=RequestContext(request))
 
 
 class UserInfo:
@@ -68,20 +87,22 @@ class UserInfo:
     def __init__(self, obj):
         self.obj = obj
 
-    def newOrdCount(self):
-        self.obj.newOrdCount = 2
-        return self
+    def newOrd(self):
+        from order.models import Ord
 
-    def newMsgCount(self):
-        self.obj.newMsgCount = 1
-        return self
-
-    def allmsgCount(self):
-        self.obj.allmsgCount = self.newOrdCount().obj.newOrdCount + self.newMsgCount().obj.newMsgCount
+        self.obj.newOrd = Ord.objects.lenNewOrd(self.obj.id)
 
         return self
 
+    def newMsg(self):
+        self.obj.newMsg = 0
+        return self
 
-    def returnInfo(self):
+    def allMsg(self):
+        self.obj.allMsg = self.newOrd().obj.newOrd + self.newMsg().obj.newMsg
 
-        return self.obj
+        return self
+
+    def get(self):
+
+        return self.newOrd().newMsg().allMsg().obj

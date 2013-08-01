@@ -4,8 +4,9 @@ from django.template import RequestContext
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from item.decorator import itemonl
-from new31.decorator import postDr
-from new31.func import frMtFee, rdrtBck
+from new31.decorator import postDrR
+from order.decorator import subDr
+from new31.func import frMtFee, rdrtBck, rdrtIndex
 import time, datetime, math
 from decimal import Decimal
 
@@ -14,6 +15,8 @@ from decimal import Decimal
 # 前台购物车界面
 def cart(request):
     cart = CartSess(request).show()
+    # from order.models import Ord
+    # Ord.objects.all().delete()
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
 
@@ -31,7 +34,7 @@ def cnsgn(request):
 
 
 # 前台订单确认界面
-@postDr
+@postDrR('/cart/')
 def checkout(request):
     from logistics.forms import LogcsFrm
     from logistics.views import LogcSess
@@ -42,7 +45,7 @@ def checkout(request):
 
     cInfo = LogcSess(request).setByDict(post).getObj() #将联系人信息存入session,并获得对应的对象
     fInfo = FncSess(request).setByDict(post).getObj() #将联系人信息存入session,并获得对应的对象
-    OrdSess(request).frMt().setUser()
+    OrdSess(request).frMt().setSzero().setUser()
 
 
     form = LogcsFrm(post)
@@ -68,11 +71,23 @@ def checkout(request):
     return render_to_response('checkout.htm', locals(), context_instance=RequestContext(request))
 
 # 前台订单提交,并是用前台消息模板显示订单号等信息
-@postDr
+@postDrR('/cart/')
+# @subDr
 def submit(request):
     from order.views import OrdSub
 
-    return OrdSub(request).submit().showOrdSN()
+    o = OrdSub(request).submit()
+    if o.error:
+        return o.showError()
+    else:
+        messages.success(request, u'您已成功提交订单!')
+        messages.success(request, u'感谢您在本店购物！请记住您的订单号: %s' % o.sn)
+
+        if request.user.is_authenticated():
+            return HttpResponseRedirect(request.nPath[u'我的订单'])
+        else:
+            return rdrtIndex()
+
 
 # GET方式将物品放入购物车
 # @itemonl
@@ -226,16 +241,18 @@ class CartSess(BsSess):
         item = Item.objects.getByID(id=i['itemID'])
         spec = item.itemspec_set.getBySid(id=i['specID'])
         dis = Dis.objects.get(id=i['disID'])
-        fee = spec.itemfee_set.nomal().fee * Decimal(dis.dis)
+        fee = frMtFee(spec.itemfee_set.nomal().fee)
+        nfee = frMtFee(fee * dis.dis)
 
         return {
                 'mark': i['mark'],
                 'item': item,
                 'spec': spec, 
-                'fee': frMtFee(fee), 
+                'fee': fee, 
+                'nfee': nfee, 
                 'num': i['num'], 
                 'dis': dis, 
-                'total': frMtFee(fee * int(i['num']))
+                'total': frMtFee(nfee * int(i['num']))
             }
 
 

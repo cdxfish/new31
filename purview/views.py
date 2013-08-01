@@ -32,7 +32,8 @@ class URLPurview:
         self.isStaff = self.request.user.is_authenticated() and self.request.user.is_staff #用户登录状态
 
         self.purview = ( i[0] for i in Element.pPath ) #需要判定的url列表
-        self.request.paths = { v:i  for i, v in Element.pPath } #需要判定的url列表
+        self.request.pPath = { v:i for i, v in Element.pPath } #需要判定的url列表
+        self.request.nPath = { v:i for i, v in Element.nPath }
 
 
     def check(self):
