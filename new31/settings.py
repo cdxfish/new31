@@ -25,6 +25,19 @@ else:
     MYSQL_HOST_M = sae.const.MYSQL_HOST
     MYSQL_HOST_S = sae.const.MYSQL_HOST_S
     MYSQL_PORT = sae.const.MYSQL_PORT
+    
+    # 修改上传时文件在内存中可以存放的最大size为10m
+    FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760
+
+    # sae的本地文件系统是只读的，修改django的file storage backend为Storage
+    DEFAULT_FILE_STORAGE = 'sae.ext.django.storage.backend.Storage'
+
+    # 使用media这个bucket
+    STORAGE_BUCKET_NAME = 'media'
+    # ref: https://docs.djangoproject.com/en/dev/topics/files/
+
+    ALLOWED_HOSTS = ['*']
+
 
 # DEBUG = True
 
@@ -130,91 +143,27 @@ TEMPLATE_DIRS = (
 )
 
 APPS = {
-    'shop':{
-            'tempContext':'',
-            'middleware':'',
-        },
-    'account':{
-            'tempContext':'',
-            'middleware':'UserMiddleware',
-        },
-    'purview':{
-            'tempContext':'',
-            'middleware':'purviewMiddleware',
-        },
-    'item':{
-            'tempContext':'',
-            'middleware':'',
-        },        
-    'payment':{
-            'tempContext':'',
-            'middleware':'',
-        },        
-    'deliver':{
-            'tempContext':'',
-            'middleware':'',
-        },
-    'signtime':{
-            'tempContext':'',
-            'middleware':'',
-        },
-    'area':{
-            'tempContext':'',
-            'middleware':'',
-        },
-    'cart':{
-            'tempContext':'',
-            'middleware':'CartMiddleware',
-        },
-    'logistics':{
-            'tempContext':'',
-            'middleware':'CnsgnMiddleware',
-        },
-    'tag':{
-            'tempContext':'',
-            'middleware':'',
-        },
-    'search':{
-            'tempContext':'',
-            'middleware':'',
-        },
-
-    'ajax':{
-            'tempContext':'',
-            'middleware':'',
-        },
-    'office':{
-            'tempContext':'',
-            'middleware':'',
-        },
-    'order':{
-            'tempContext':'',
-            'middleware':'OrdMiddleware',
-        },
-    'finance':{
-            'tempContext':'',
-            'middleware':'FncMiddleware',
-        },
-    'spec':{
-            'tempContext':'',
-            'middleware':'',
-        },
-    'discount':{
-            'tempContext':'',
-            'middleware':'',
-        },
-    'produce':{
-            'tempContext':'',
-            'middleware':'',
-        },
-    'inventory':{
-            'tempContext':'',
-            'middleware':'',
-        },
-    'log':{
-            'tempContext':'',
-            'middleware':'',
-        },
+    'shop':'',
+    'account':'UserMiddleware',
+    'purview':'purviewMiddleware',
+    'cart':'CartMiddleware',
+    'logistics':'CnsgnMiddleware',
+    'order':'OrdMiddleware',
+    'finance':'FncMiddleware',
+    'item':'',        
+    'payment':'',        
+    'deliver':'',
+    'signtime':'',
+    'area':'',
+    'tag':'',
+    'search':'',
+    'ajax':'',
+    'office':'',
+    'spec':'',
+    'discount':'',
+    'produce':'',
+    'inventory':'',
+    'log':'',
     }
 
 
@@ -254,11 +203,8 @@ for i,v in APPS.items():
 
     djangoAPPS.append(i)
 
-    if v['middleware']:
-        djangoMidClass.append(u'%s.middleware.%s' % (i, v['middleware']))
-
-    if v['tempContext']:
-        djangoTempContext.append(u'%s.context.%s' % (i, v['tempContext']))
+    if v:
+        djangoMidClass.append(u'%s.middleware.%s' % (i, v))
 
 
 if DEBUG:
@@ -275,7 +221,8 @@ MIDDLEWARE_CLASSES = tuple(djangoMidClass)
 
 TEMPLATE_CONTEXT_PROCESSORS = tuple(djangoTempContext)
 
-
+# SESSION_COOKIE_AGE= 60 * 60 * 12
+# SESSION_COOKIE_NAME = 'new31'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -302,6 +249,6 @@ LOGGING = {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
             'propagate': True,
-        },
+        }
     }
 }

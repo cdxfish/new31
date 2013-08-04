@@ -44,6 +44,7 @@ class Element(models.Model):
 
     nPath = (
             (u'/', u'商城'),
+            (u'/admin/', u'站点管理'),
             (u'/account/', u'用户中心'),
             (u'/account/login/', u'登录'),
             (u'/account/logout/', u'登出'),

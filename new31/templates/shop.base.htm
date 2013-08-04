@@ -57,17 +57,18 @@
                     <a id="lnkTopSetting" class="pic">设置<b></b></a>
                     <div id="pnlTopProfile" class="messagePop" style="display: none;">
                         <h3>{{ user}}</h3>
-                        <!-- <div class="editBox"> -->
-                            <ul>
-                                <li class="email"><em>{{ user.email}}</em></li>
-                                <li><a href="{{ request.nPath.我的订单 }}">我的订单</a></li>
-                                <li><a href="{{ request.nPath.个人设置 }}">个人设置</a></li>
-                                <li><a href="{{ request.nPath.修改密码 }}">修改密码</a></li>
+                        <ul>
+                            <li class="email"><em>{{ user.email}}</em></li>
+                            <li><a href="{{ request.nPath.我的订单 }}">我的订单</a></li>
+                            <li><a href="{{ request.nPath.个人设置 }}">个人设置</a></li>
+                            <li><a href="{{ request.nPath.修改密码 }}">修改密码</a></li>
 {% if user.is_staff %}
-                                <li><a href="{{ request.pPath.管理中心 }}">管理中心</a></li>
+                            <li><a href="{{ request.pPath.管理中心 }}">管理中心</a></li>
 {% endif %}
-                            </ul>
-                        <!-- </div> -->
+{% if user.is_superuser %}
+                            <li><a href="{{ request.nPath.站点管理 }}">站点管理</a></li>
+{% endif %}
+                        </ul>
                         <a class="confirm" href="/account/logout/">退出登录</a>
                    </div>
                 </li>
