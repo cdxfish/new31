@@ -41,8 +41,6 @@ def subMsg(s= ''):
                     
                     messages.error(self.request, s)
 
-                    raise e
-
             return self #强制返回self否则无法链式调用
         return __func
     return _func

@@ -6,6 +6,7 @@
             <table width="100%">
                 <tr align="center">
                     <th>订单号</th>
+                    <th>类型</th>
                     <th>下单时间</th>
                     <th>金额</th>
                     <th>订单状态</th>
@@ -13,7 +14,8 @@
                 </tr>
 {% for i in ords %}
                 <tr align="center">
-                    <td>{{ i.get_typ_display }} | <a href="{{ request.nPath.订单详情 }}?sn={{ i.sn }}">{{ i.sn }}</a></td>
+                    <td><a href="{{ request.nPath.订单详情 }}?sn={{ i.sn }}">{{ i.sn }}</a></td>
+                    <td>{{ i.get_typ_display }}</td>
                     <td>{{ i.ordlog_set.all.0.time|date:'Y-m-d H:i:s' }}</td>
                     <td>{{ i.total|floatformat:2 }}</td>
                     <td>{{ i.get_status_display }} | {{ i.logcs.get_status_display }} | {{ i.fnc.get_status_display }}</td>

@@ -1,12 +1,61 @@
 #coding:utf-8
 from django.db import models
 from django.contrib.auth.models import User
-from purview.models import *
+from django.contrib import messages
 
 # Create your models here.
 
+class userInfoManager(models.Manager):
+    def set(self, request):
+
+        u = request.user.userinfo
+        print dir(u.sex)
+
+        if not u.sex:
+            u.sex = request.POST.get('sex')
+        else:
+            u.sex = u.sex
+            messages.warning(request, u'无法再次修改性别')
+
+        if not u.mon:
+            u.mon = request.POST.get('mon')
+        else:
+            u.mon = u.mon
+            messages.warning(request, u'无法再次修改月')
+
+        if not u.day:
+            u.day = request.POST.get('day')
+        else:
+            u.day = u.day
+            messages.warning(request, u'无法再次修改日')
+
+        u.save()
+
+
+    def frMt(self, request):
+        from order.models import Ord
+
+        try:
+            try:
+                u = self.get(user=request.user)
+            except Exception, e:
+                # raise e
+                u = UserInfo()
+                u.user = request.user
+                u.save()
+
+            request.user.newOrd = Ord.objects.lenNewOrd(u)
+            request.user.newMsg = 0
+            request.user.allMsg = request.user.newOrd + request.user.newMsg
+
+        except Exception, e:
+            pass
+
+
+
 class UserInfo(models.Model):
     mons = (
+                    (0, u'保密'), 
                     (1, u'一月'), 
                     (2, u'二月'), 
                     (3, u'三月'), 
@@ -21,6 +70,7 @@ class UserInfo(models.Model):
                     (12, u'十二月'), 
                 )
     days = (
+                    (0, u'保密'), 
                     (1, u'一日'), 
                     (2, u'二日'), 
                     (3, u'三日'), 
@@ -55,15 +105,18 @@ class UserInfo(models.Model):
                 )
 
     sexs =  (
-                (u'M', u'先生'), 
-                (u'F', u'女士'),
+                (0, u'保密'), 
+                (1, u'先生'), 
+                (2, u'女士'),
         )
 
     user = models.OneToOneField(User, verbose_name=u'用户')
-    birthMon = models.SmallIntegerField(u'出生月', choices=mons)
-    birthDay = models.SmallIntegerField(u'出生日', choices=days)
-    sex = models.CharField(u'性别',max_length=1, choices=sexs)
+    mon = models.SmallIntegerField(u'月', default=0, choices=mons)
+    day = models.SmallIntegerField(u'日', default=0, choices=days)
+    sex = models.SmallIntegerField(u'性别', default=0, choices=sexs)
     typ = models.SmallIntegerField(u'注册类型', default=0, editable=False)
 
+    objects = userInfoManager()
+
     def __unicode__(self):
-        return u"%s [ %s ] - %s" % (self.user, self.regTime)
+        return u"%s [ %s ]" % (self.user, self.sex)

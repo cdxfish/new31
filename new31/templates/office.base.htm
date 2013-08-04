@@ -148,7 +148,7 @@
 {% if messages %}
         <ul class="messagelist">
 {% for i in messages %}
-            <li class="{{ i.tags }}">{{ i }}</li>
+            <li class="{{ i.tags }}">{{ i|striptags }}</li>
 {% endfor %}
         </ul>
 {% endif %}

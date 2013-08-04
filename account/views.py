@@ -3,15 +3,18 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib import messages, auth
-from new31.func import rdrtLogin, rdrtBck, rdrtIndex
+from new31.func import rdrtLogin, rdrtBck, rdrtIndex, rdrtAcc
 from decorator import loginDr
 
 # Create your views here.
 
 def login(request):
+    from django.contrib.auth.forms import AuthenticationForm
 
     # 避免重复登录
     if not request.user.is_authenticated():
+        frm = AuthenticationForm(request)
+
         if request.method == 'POST':
             username = request.POST.get('username')
             password = request.POST.get('password')
@@ -21,7 +24,7 @@ def login(request):
                 # Correct password, and the user is marked "active"
                 auth.login(request, user)
                 # Redirect to a success page.
-                return rdrtBck(request)
+                return rdrtAcc(request)
             else:
                 # Show an error page
 
@@ -33,17 +36,14 @@ def login(request):
             return render_to_response('login.htm', locals(), context_instance=RequestContext(request))
 
     else:
-        # 避免循环跳转
-        if '/account/login/' == request.META.get('HTTP_REFERER', '/'):
-            return rdrtIndex()
-        else:
-            return rdrtBck(request)
+        return rdrtAcc(request)
 
 def logout(request):
 
     auth.logout(request)
 
     return rdrtIndex()
+
 
 @loginDr
 def settings(request):
@@ -53,11 +53,38 @@ def settings(request):
     return render_to_response('settings.htm', locals(), context_instance=RequestContext(request))
 
 @loginDr
+def saveSet(request):
+    from models import UserInfo
+
+    UserInfo.objects.set(request)
+
+    return rdrtBck(request)
+
+
+@loginDr
 def changepwd(request):
-    from forms import pwdFrm
-    frm = pwdFrm(request)
+    from django.contrib.auth.forms import PasswordChangeForm
+    frm = PasswordChangeForm(request.user)
+
 
     return render_to_response('changepwd.htm', locals(), context_instance=RequestContext(request))
+
+
+@loginDr
+def cPwd(request):
+    from django.contrib.auth.forms import PasswordChangeForm
+
+    frm = PasswordChangeForm(user=request.user, data=request.POST)
+    if frm.is_valid():
+        frm.save()
+        messages.success(request, u'密码修改成功。')
+    else:
+        for i in frm:
+            if i.errors:
+                messages.error(request, u'%s - %s' % (i.label, i.errors))
+
+    return rdrtBck(request)
+
 
 @loginDr
 def myOrd(request):

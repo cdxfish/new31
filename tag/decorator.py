@@ -9,6 +9,6 @@ def noTagDr(func):
         try:
             return func(self, tag)
         except:
-            messages.warning(self.request, '此标签不存在。')
+            messages.warning(self.request, u'此标签不存在。')
 
     return _func

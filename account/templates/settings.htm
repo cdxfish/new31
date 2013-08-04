@@ -12,7 +12,7 @@
 
 {% block content %}
         <div class="pWhite">
-            <form action="settings/" method="post">
+            <form action="{{ request.nPath.保存设置 }}" method="post">
 {% for i in frm %}
                 <div class="box">
                     <label>{{ i.label }}：</label>

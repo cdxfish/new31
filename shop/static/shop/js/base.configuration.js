@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    b.autoHight().intro().topToolsMessage().confirm().backToTopEle();
+    b.autoHight().intro().topToolsMessage().boxClose().backToTopEle();
 
     if (jQuery.browser.msie && jQuery.browser.version === "6.0") {} else {
         b.scrollTop();
@@ -119,9 +119,9 @@ var b = {
         return this
     },
 
-    confirm:function(){
+    boxClose:function(){
         var self = this;
-        $('.confirm').click(function(){
+        $('.boxClose').click(function(){
             self.hideMessage();
 
             return false;

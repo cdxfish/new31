@@ -15,8 +15,6 @@ from decimal import Decimal
 # 前台购物车界面
 def cart(request):
     cart = CartSess(request).show()
-    # from order.models import Ord
-    # Ord.objects.all().delete()
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
 
@@ -63,7 +61,7 @@ def checkout(request):
 
     if not cart['items']:
 
-        messages.warning(request, '购物车内无商品')
+        messages.warning(request, u'购物车内无商品')
 
         return HttpResponseRedirect('/cart/')
 
@@ -209,7 +207,7 @@ class CartSess(BsSess):
                 items.append(ii)
             except Exception, e:
                 del sess[i]
-                messages.warning(self.request, '部分商品已下架。')
+                messages.warning(self.request, u'部分商品已下架。')
 
         self.set(sess)
 

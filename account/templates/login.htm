@@ -4,22 +4,16 @@
 {% block content %}
         <div class="loginTitle">登录</div>
         <div class="loginBox">
-            <form action="/account/login/" method="post">{% csrf_token %}
+            <form action="/account/login/" method="post">
+            {% csrf_token %}
+{% for i in frm %}
                 <div class="formBar">
-                     <span class="" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
-                     <label for="UserName">帐号</label>
-                     <input data-val="true" data-val-remote="“用户名/邮箱”无效。" data-val-remote-additionalfields="*.UserName" data-val-remote-url="/Account/UserNameValidation" data-val-required="请输入账号" id="UserName" name="username" type="text" value="" placeholder="用户名/邮箱">
-
-               </div>
-               <div class="formBar">
-                     <span class="" data-valmsg-for="Password" data-valmsg-replace="true"></span>
-                     <label for="Password">密码</label>
-                     <input data-val="true" data-val-length="密码至少6位以上，最多不超过16位。" data-val-length-max="16" data-val-length-min="6" data-val-required="请输入密码" id="Password" name="password" type="password">
+                    <label>{{ i.label }}</label>
+                    {{ i }}
                 </div>
+{% endfor %}
                 <div class="loginSubmit">
-                   <p><input class="rememberMe" data-val="true" data-val-required="记住我? 字段是必需的。" id="RememberMe" name="RememberMe" type="checkbox" value="true"><input name="RememberMe" type="hidden" value="false"><label for="RememberMe">保持登录</label></p>
                    <input class="btnGr bBtn" type="submit" value="登录">
-                   <input type="hidden" name="next" value="/" />
                    <p><a class="forgetPassword" href="/account/getpwd">忘记密码</a></p>
                 </div>
             </form>

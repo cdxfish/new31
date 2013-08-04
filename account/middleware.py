@@ -3,9 +3,8 @@
 class UserMiddleware:
 
     def process_request(self, request):
-        from views import UserInfo
-        
-        if hasattr(request, 'user'):
-            request.user = UserInfo(request.user).get()
+        from models import UserInfo
+
+        UserInfo.objects.frMt(request)
 
         return None

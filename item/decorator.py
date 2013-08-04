@@ -11,7 +11,7 @@ def itemonl(func):
             return func(request)
             
         except:
-            messages.warning(request, '当前商品已下架')
+            messages.warning(request, u'当前商品已下架')
 
             return rdrtBck(request)
 

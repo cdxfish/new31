@@ -15,6 +15,10 @@ def keFrmt(fee):
 def rdrtLogin(request):
     return HttpResponseRedirect(request.nPath[u'登录'])
 
+# 重定向至用户中心
+def rdrtAcc(request):
+    return HttpResponseRedirect(request.nPath[u'用户中心'])
+
 
 # 重定向至首页
 def rdrtIndex():

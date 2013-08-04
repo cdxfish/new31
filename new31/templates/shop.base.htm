@@ -41,14 +41,14 @@
                     </form>
                 </li>
                 <li class="messageBox">
-                    <a id="lnkTopMessage" href="{{ request.nPath.我的订单 }}" class="newMessage" title="新消息"><span id="spanTopMessage" title="新消息">{{ user.allMsg }}</span></a>
+                    <a id="lnkTopMessage" href="{{ request.nPath.我的订单 }}" class="newMessage" title="新消息"><span id="spanTopMessage" title="新消息">{{ user.allMsg|default:0 }}</span></a>
                     <div id="pnlTopMessage" class="messagePop" style="display:none;">
                         <h3>新消息</h3>
                         <ul>
-                            <li><a href="{{ request.nPath.我的订单 }}">新订单（ {{ user.newOrd }} ）</a></li>
-                            <li><a href="/account/messages/">新留言（ {{ user.newMsg }} ）</a></li>
+                            <li><a href="{{ request.nPath.我的订单 }}">新订单（ {{ user.newOrd|default:0 }} ）</a></li>
+                            <li><a href="/account/messages/">新留言（ {{ user.newMsg|default:0 }} ）</a></li>
                         </ul>
-                        <a class="confirm" href="javascript:void(0)">关闭</a>
+                        <a class="confirm boxClose" href="javascript:void(0)">关闭</a>
                     </div>
                 </li>
                 <li><a href="/cart/">购物车</a></li>
@@ -113,7 +113,7 @@
 {% if messages %}
     <ul class="messagelist">
 {% for i in messages %}
-        <li class="{{ i.tags }}">{{ i }}</li>
+        <li class="{{ i.tags }}">{{ i|striptags }}</li>
 {% endfor %}
     </ul>
 {% endif %}
