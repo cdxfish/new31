@@ -12,9 +12,9 @@
         <div id="fadeFocus" style="display: block;">
             <div class="loading">Loading...<br /></div>
             <ul style="display:none;">
-              <li><a href="/tag/香浓巧克力/" target="_blank/" title="香浓巧克力"><img src="{{ MEDIA_URL }}images/afficheimg/userday12-31.jpg" width="930" height="240" /></a></li>
-              <li><img src="{{ MEDIA_URL }}images/afficheimg/sales.jpg" width="930" height="240" /></li>
-              <li><img src="{{ MEDIA_URL }}images/afficheimg/almond.jpg" width="930" height="240" /></li>
+{% for i in ad %}
+            <li><a href="{{ i.url }}"><img src="{{ i.img.url }}" width="930px" height="240px" /></a></li>
+{% endfor %}
             </ul>
         </div>
         <script type="text/javascript" src="{{ STATIC_URL }}js/scroll.js"></script>
@@ -57,7 +57,6 @@
             <h4>热销</h4>
             <ul>
                 <li><a href="/tag/evanescence/"><img width="32" height="32" src="{{ MEDIA_URL }}images/3133001b1a.jpg" alt="香浓巧克力" title="香浓巧克力" /></a></li>
-                <li><a href="/tag/evanescence/"><img width="32" height="32" src="{{ MEDIA_URL }}images/3133001b1b.jpg" alt="香浓巧克力" title="香浓巧克力" /></a></li>
         </div>
     </div>
 {% endblock %}

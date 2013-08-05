@@ -10,6 +10,8 @@ import random
 # APP For Shop UI
 def shop(request):
     from tag.views import TagSrch
+    from upload.models import Image
+
     try:
         items = ItemPin(10).getItems(sort)
     except Exception, e:
@@ -18,6 +20,8 @@ def shop(request):
     tags = Tag.objects.all()[:8]
 
     tagsCls = TagSrch.tagsCls
+
+    ad = Image.objects.getAll()
 
     return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))
 

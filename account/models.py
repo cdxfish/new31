@@ -110,13 +110,18 @@ class UserInfo(models.Model):
                 (2, u'女士'),
         )
 
+    typs =  (
+                (0, u'普通用户'), 
+                (1, u'试吃用户'), 
+        )
+
     user = models.OneToOneField(User, verbose_name=u'用户')
     mon = models.SmallIntegerField(u'月', default=0, choices=mons)
     day = models.SmallIntegerField(u'日', default=0, choices=days)
     sex = models.SmallIntegerField(u'性别', default=0, choices=sexs)
-    typ = models.SmallIntegerField(u'注册类型', default=0, editable=False)
+    typ = models.SmallIntegerField(u'注册类型', default=0, choices=typs, editable=False)
 
     objects = userInfoManager()
 
     def __unicode__(self):
-        return u"%s [ %s ]" % (self.user, self.sex)
+        return u"%s [ 性别：%s ] 生日：%s - %s" % (self.user, self.get_sex_display(), self.get_mon_display(), self.get_day_display())

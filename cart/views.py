@@ -15,6 +15,8 @@ from decimal import Decimal
 # 前台购物车界面
 def cart(request):
     cart = CartSess(request).show()
+    from item.models import Item
+    Item.objects.all().delete()
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
 
@@ -88,14 +90,12 @@ def submit(request):
 
 
 # GET方式将物品放入购物车
-# @itemonl
+@itemonl
 def buy(request):
 
-
     CartSess(request).pushBySid(request.GET.get('id'))
-   
-    # return rdrtBck(request)
-    return HttpResponseRedirect('/cart/')
+
+    return HttpResponseRedirect(request.nPath[u'购物车'])
 
 # GET方式将物品取出购物车
 def delete(request):

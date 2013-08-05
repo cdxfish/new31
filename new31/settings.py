@@ -164,6 +164,7 @@ APPS = {
     'produce':'',
     'inventory':'',
     'log':'',
+    'upload':'',
     }
 
 

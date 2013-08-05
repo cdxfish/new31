@@ -55,7 +55,9 @@ class Element(models.Model):
             (u'/account/myord/', u'我的订单'),
             (u'/account/view/', u'订单详情'),
             (u'/cart/', u'购物车'),
+            (u'/cart/buy/', u'购买商品'),
             (u'/cart/del/', u'删除商品'),
+            (u'/cart/consignee/', u'收货人信息'),
         )
 
 

@@ -8,3 +8,6 @@ class Spec(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.value
+
+    class Meta:
+        ordering = ['value']
