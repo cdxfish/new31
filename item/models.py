@@ -21,6 +21,10 @@ class itemManager(models.Manager):
 
         return self.select_related().filter(onl=True, tag__tag=tag)
 
+    def getShowByTag(self, tag):
+
+        return self.getByTag(tag).filter(show=True)
+
 
     def getItems(self):
 
@@ -51,11 +55,19 @@ class itemSpecManager(models.Manager):
 class itemImgManager(models.Manager):
     def getSImgs(self):
 
-        return self.select_related().filter((models.Q(typ=0) | models.Q(typ=1)), onl=True)
+        return self.select_related().filter((models.Q(typ=0) | models.Q(typ=1)), onl=True, item__onl=True)
+
+    def getShowSImgs(self):
+
+        return self.getSImgs().filter(item__show=True)
 
     def getBImgs(self):
 
-        return self.select_related().filter((models.Q(typ=2) | models.Q(typ=3)), onl=True)
+        return self.select_related().filter((models.Q(typ=2) | models.Q(typ=3)), onl=True, item__onl=True)
+
+    def getShowBImgs(self):
+
+        return self.getBImgs().filter(item__show=True)
 
 
 class itemFeeManager(models.Manager):

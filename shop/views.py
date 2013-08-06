@@ -63,7 +63,7 @@ class ItemPin(object):
         self.lSize = lSize
 
         from item.models import ItemImg
-        self.itemQuery = ItemImg.objects.getSImgs()  #初始化物品序列
+        self.itemQuery = ItemImg.objects.getShowSImgs()  #初始化物品序列
         self.matrix = []
 
     def getItems(self, func):

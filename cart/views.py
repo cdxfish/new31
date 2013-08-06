@@ -8,7 +8,6 @@ from new31.decorator import postDrR
 from order.decorator import subDr, checkDr
 from new31.func import frMtFee, rdrtBck, rdrtIndex
 import time, datetime, math
-from decimal import Decimal
 
 # Create your views here.
 

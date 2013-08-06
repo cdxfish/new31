@@ -43,7 +43,7 @@ class TagSrch(object):
 
     def getTag(self, tag):
         from item.models import Item
-        items = Item.objects.getByTag(tag)
+        items = Item.objects.getShowByTag(tag)
 
         for i in items:
             for ii in i.itemimg_set.getBImgs():
