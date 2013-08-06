@@ -48,9 +48,42 @@ def subMsg(s= ''):
 # 订单提交类提示用装饰器
 def subDr(func):
     def _func(request):
+
         try:
             return func(request)
         except Exception, e:
+            return rdrtBck(request)
+
+    return _func
+
+# 订单信息检测用装饰器
+def checkDr(func):
+    def _func(request):
+        from logistics.forms import LogcsFrm
+        from finance.forms import FncFrm
+
+        post = request.POST.dict()
+
+        logcsFrm = LogcsFrm(post)
+
+        if not logcsFrm.is_valid():
+
+            for i in logcsFrm:
+                if i.errors:
+
+                    messages.warning(request, '%s - %s' % ( i.label, u'这个字段是必填项。'))
+
+            return rdrtBck(request)
+
+        fncFrm = FncFrm(post)
+
+        if not fncFrm.is_valid():
+
+            for i in fncFrm:
+                if i.errors:
+
+                    messages.warning(request, '%s - %s' % ( i.label, u'这个字段是必填项。'))
+
             return rdrtBck(request)
 
     return _func

@@ -20,7 +20,7 @@ def getItemPin(request):
 def getSpec(request):
     from item.models import ItemSpec
 
-    return AjaxRJson().dumps([ {'id':i.id ,'spec':i.spec.value ,'fee': f02f(i.itemfee_set.nomal().fee), } for i in ItemSpec.objects.getByID(id=request.GET.get('id')) ])
+    return AjaxRJson().dumps([ {'id':i.id ,'spec':i.spec.value ,'fee': f02f(i.itemfee_set.nomal().fee), } for i in ItemSpec.objects.getByitemID(id=request.GET.get('id')) ])
 
 
 # 前台购物车界面修改购物车中商品数量

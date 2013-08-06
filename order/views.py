@@ -5,8 +5,9 @@ from django.template import RequestContext
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from new31.decorator import postDr, rdrtBckDr
+from cart.decorator import checkCartDr
 from new31.func import frMtFee, rdrRange, page, rdrtBck
-from decorator import ordDr, subMsg, subDr
+from decorator import ordDr, subMsg, subDr, checkDr
 from decimal import Decimal
 import time, datetime
 
@@ -27,9 +28,12 @@ def ordList(request):
 
 # 后台订单提交,提交成功后进行页面跳转至订单列表
 @postDr
+@checkCartDr
+@checkDr
 @subDr
 def submit(request):
     from logistics.views import LogcSess
+
     logcs = LogcSess(request).setByDict(request.POST.dict())
 
     o = OrdSub(request).submit()
@@ -110,7 +114,7 @@ def addItem(request):
 
 
 # 编辑界面中删除订单中的商品操作
-# @rdrtBckDr('无法删除商品，请与管理员联系。')
+@rdrtBckDr('无法删除商品，请与管理员联系。')
 def delItem(request):
     from cart.views import CartSess
 

@@ -3,9 +3,9 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from item.decorator import itemonl
+from decorator import itemshow, checkCartDr
 from new31.decorator import postDrR
-from order.decorator import subDr
+from order.decorator import subDr, checkDr
 from new31.func import frMtFee, rdrtBck, rdrtIndex
 import time, datetime, math
 from decimal import Decimal
@@ -15,8 +15,6 @@ from decimal import Decimal
 # 前台购物车界面
 def cart(request):
     cart = CartSess(request).show()
-    from item.models import Item
-    Item.objects.all().delete()
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
 
@@ -35,44 +33,27 @@ def cnsgn(request):
 
 # 前台订单确认界面
 @postDrR('/cart/')
+@checkCartDr
+@checkDr
 def checkout(request):
-    from logistics.forms import LogcsFrm
     from logistics.views import LogcSess
     from finance.views import FncSess
     from order.views import OrdSess
 
     post = request.POST.dict()
 
+
     cInfo = LogcSess(request).setByDict(post).getObj() #将联系人信息存入session,并获得对应的对象
     fInfo = FncSess(request).setByDict(post).getObj() #将联系人信息存入session,并获得对应的对象
     OrdSess(request).frMt().setSzero().setUser()
-
-
-    form = LogcsFrm(post)
-
-    if not form.is_valid():
-
-        for i in form:
-            if i.errors:
-
-                messages.warning(request, '%s - %s' % ( i.label, u'这个字段是必填项。'))
-
-        return rdrtBck(request)
-
-    cart = CartSess(request).show()
-
-    if not cart['items']:
-
-        messages.warning(request, u'购物车内无商品')
-
-        return HttpResponseRedirect('/cart/')
-
 
     return render_to_response('checkout.htm', locals(), context_instance=RequestContext(request))
 
 # 前台订单提交,并是用前台消息模板显示订单号等信息
 @postDrR('/cart/')
-# @subDr
+@checkCartDr
+@checkDr
+@subDr
 def submit(request):
     from order.views import OrdSub
 
@@ -90,7 +71,7 @@ def submit(request):
 
 
 # GET方式将物品放入购物车
-@itemonl
+@itemshow
 def buy(request):
 
     CartSess(request).pushBySid(request.GET.get('id'))
@@ -151,7 +132,6 @@ class CartSess(BsSess):
                 'mark': self.getMark(),
                 'itemID': Item.objects.getBySid(id=sid).id,
                 'specID': ItemSpec.objects.getBySid(sid).id,
-                # 'disID': ItemFee.objects.getDisBySpecID(id=sid).id if self.request.user.is_authenticated() else Dis.objects.default().id,
                 'disID': Dis.objects.getBySid(id=sid).id if self.request.user.is_authenticated() else Dis.objects.default().id,
                 'num': 1,
         }

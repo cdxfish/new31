@@ -6,11 +6,11 @@ from django.db import models
 class itemManager(models.Manager):
     def getBySid(self, id):
 
-        return self.select_related().get(itemspec__id=id, onl=True, show=True)
+        return self.select_related().get(itemspec__id=id, onl=True)
 
     def getByID(self, id):
 
-        return self.get(id=id, onl=True, show=True)
+        return self.get(id=id, onl=True)
 
     def likeNameOrSn(self, k):
 
@@ -19,7 +19,7 @@ class itemManager(models.Manager):
 
     def getByTag(self, tag):
 
-        return self.select_related().filter(onl=True, show=True, tag__tag=tag)
+        return self.select_related().filter(onl=True, tag__tag=tag)
 
 
     def getItems(self):
@@ -33,11 +33,11 @@ class itemManager(models.Manager):
 class itemSpecManager(models.Manager):
     def getBySid(self, id):
 
-        return self.select_related().get(id=id, onl=True, show=True)
+        return self.select_related().get(id=id, onl=True)
 
-    def getByID(self, id):
+    def getByitemID(self, id):
 
-        return Item.objects.select_related().get(id=id, onl=True, show=True).itemspec_set.filter(onl=True)
+        return self.select_related().filter(item__id=id, item__onl=True, onl=True)
 
     def default(self):
  
@@ -45,7 +45,7 @@ class itemSpecManager(models.Manager):
 
     def getTpl(self, id):
  
-        return ((i.id, i.spec.value) for i in  self.getByID(id))
+        return ((i.id, i.spec.value) for i in  self.getByitemID(id))
 
 
 class itemImgManager(models.Manager):
@@ -92,7 +92,7 @@ class ItemDesc(models.Model):
     desc = models.CharField(u'描述', max_length=60)
 
     def __unicode__(self):
-        return u"%s - %s" % (self.item, self.desc)
+        return u"%s - %s" % (self.item.name, self.desc)
 
     class Meta:
         ordering = ['?']
@@ -101,6 +101,7 @@ class ItemDesc(models.Model):
 
 class ItemSpec(models.Model):
     from spec.models import Spec
+
     item = models.ForeignKey(Item, verbose_name=u'商品')
     spec = models.ForeignKey(Spec, verbose_name=u'规格')
     onl = models.BooleanField(u'上线', default=False)
@@ -108,7 +109,7 @@ class ItemSpec(models.Model):
     objects = itemSpecManager()
 
     def __unicode__(self):
-        return u"%s - %s [ onl: %s ][ show: %s ]" % (self.item, self.spec, self.onl, self.show)
+        return u"%s - %s" % (self.item.name, self.spec)
 
     class Meta:
         ordering = ['spec']
@@ -148,7 +149,7 @@ class ItemImg(models.Model):
     objects = itemImgManager()
 
     def __unicode__(self):
-        return u"%s - %s[ %s ]" % (self.item, self.img, self.get_typ_display())
+        return u"%s - %s[ %s ]" % (self.item.name, self.img, self.get_typ_display())
 
     class Meta:
         ordering = ['?']
