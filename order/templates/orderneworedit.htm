@@ -29,7 +29,7 @@
               <td>{{ i.item.sn }}</td>
               <td>{{ i.forms.specID }}</td>
               <td>{{ i.forms.disID }}</td>
-              <td><span id="am{{ i.mark }}">{{ i.nfee|floatformat:2 }}</span></td>
+              <td><span id="nfee{{ i.mark }}">{{ i.nfee|floatformat:2 }}</span></td>
               <td>{{ i.forms.num }}</td>
               <td><span id="st{{ i.mark }}">{{ i.total|floatformat:2 }}</span></td>
               <td><a href="{{ request.pPath.删订单商品 }}?mark={{ i.mark }}" class="button">删除</a></td>

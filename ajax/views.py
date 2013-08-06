@@ -76,7 +76,7 @@ def cFnc(request):
 
 
 # ajax动态修改购物车内商品
-# @ajaxMsg('无法修改表单数据')
+@ajaxMsg('无法修改表单数据')
 def cItem(request):
     from cart.views import CartSess
     mark = int(request.GET.get('mark')[1:])
@@ -88,7 +88,8 @@ def cItem(request):
 
     return AjaxRJson().dumps({
         'mark': mark,
-        'am': f02f(i['fee']),
+        'fee': f02f(i['fee']),
+        'nfee': f02f(i['nfee']),
         'st': f02f(i['total']),
         'total': f02f(cc.total()),
     })

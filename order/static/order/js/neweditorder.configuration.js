@@ -88,7 +88,7 @@ aeog = {
         function() {
             var self = $(this);
             $(this).ajaxGET('/ajax/citem/?name=' + self.attr('name') + '&mark=' + self.attr('id') + '&value=' + self.val(), function(data) {
-                $('#am' + data.data.mark).text(data.data.am);
+                $('#nfee' + data.data.mark).text(data.data.nfee);
                 $('#st' + data.data.mark).text(data.data.st);
                 $('#total').text(data.data.total);
             });
