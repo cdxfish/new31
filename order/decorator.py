@@ -86,4 +86,6 @@ def checkDr(func):
 
             return rdrtBck(request)
 
+        return func(request)
+
     return _func

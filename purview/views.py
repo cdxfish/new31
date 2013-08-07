@@ -112,9 +112,11 @@ class BsPur(object):
         return self
 
     def beMixed(self):
+        print self.role
         for i in self.oList:
             for ii in i.action:
                 i.action[ii] = tuple([ iii for iii in i.action[ii] if u'%s%s/' % (ii, iii[0]) in self.role ])
+
 
         return self
 

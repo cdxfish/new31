@@ -8,6 +8,7 @@ from new31.func import rdrtBck
 # Create your views here.
 
 def fncUI(request):
+    from forms import FncSrchFrm
 
     o = FncSerch(request)
 
@@ -77,7 +78,7 @@ class FncSerch(OrdSerch):
         super(FncSerch, self).__init__(request)
 
     def search(self):
-        self.oList = self.baseSearch().oList.filter(ord__status__gt = 1)
+        self.oList = self.baseSearch().oList.filter(status__gt = 1)
 
         return self
 
