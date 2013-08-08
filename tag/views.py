@@ -24,8 +24,6 @@ def tagShow(request, tag):
 
 
 
-
-
 class TagSrch(object):
     from decorator import noTagDr
 
@@ -46,6 +44,8 @@ class TagSrch(object):
         items = Item.objects.getShowByTag(tag)
 
         for i in items:
+            Item.objects.click(i.id)
+            
             for ii in i.itemimg_set.getBImgs():
 
                 self.items.append(ii)

@@ -16,7 +16,7 @@
                     <ul class="pinInfo">
                         <li class="addDate">{{ i.item.addTime }}</li>
                         <li class="pv">销量 {{ i.item.click }}</li>
-                        <li class="like">喜欢 <span id="count_like_276268754">{{ i.item.like }}</span></li>
+                        <li class="like">喜欢 <span id="count_like_{{ i.item.id }}">{{ i.item.like }}</span></li>
                     </ul>
                     <div class="tags">
 {% for ii in i.item.tag.all|slice:":9" %}
@@ -24,14 +24,14 @@
 {% endfor %}
                     </div>
                     <div class="vote">
-                        <a class="btnLike" href="/ajax/like/8754/">喜欢</a>
+                        <a class="btnLike" href="/ajax/like/?id={{ i.item.id }}">喜欢</a>
                         <a class="btnReplay" href="/ajax/itemspec/?id={{ i.item.id }}">购买</a>
                     </div>
                 </div>
             </li>
 {% endfor %}
         </ul>
-        <div id="showMore" class="showMore">
+        <!-- <div id="showMore" class="showMore">
             <a href="" title="31客" class="fl" ></a>
             <center><a class="btnB bBtn" href="javascript:void(0)" onclick="getPhotoViewMoreClick();return false;">显示更多</a></center>
             <a href="" title="31客" class="fr" ></a>
@@ -39,7 +39,7 @@
         <div id="container_bottom_recommend" class="list_album_content userVouch" >
             <h3>销售记录</h3>
             <ul class="user list_album_user">
-<!--                 <li>
+                 <li>
                     <a href="/tag/德国烤奶酪/">
                         <img width="210" height="157" src="{{ MEDIA_URL }}images/3133002s.jpg" alt="德国烤奶酪" />
                     </a>
@@ -62,7 +62,7 @@
                         <img width="210" height="157" src="{{ MEDIA_URL }}images/3133004b.jpg" alt="市井布衣">
                     </a>
                     <span class="username fl">151****45</span>
-                </li> -->
+                </li>
             </ul>
-        </div>
+        </div> -->
 {% endblock %}

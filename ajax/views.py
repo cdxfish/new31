@@ -126,6 +126,18 @@ def cDman(logcs, value):
         logcs.dman = None
 
 
+# ajax动态修改商品喜欢
+@ajaxMsg('无法修改数据')
+def itemLike(request):
+    from item.models import Item
+
+    i = Item.objects.like(int(request.GET.get('id', 0)))
+
+    return AjaxRJson().dumps({'id': i.id, 'like': i.like})
+
+
+
+
 # JSON数据格式化类
 class AjaxRJson:
     """

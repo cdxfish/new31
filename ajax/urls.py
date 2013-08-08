@@ -1,6 +1,6 @@
 #coding:utf-8
 from django.conf.urls import patterns, include, url
-from views import getItemPin, getSpec, cNum, cLogcs, cOrd, cFnc, cAdv, cDman, cItem, getItemByKeyword
+from views import getItemPin, getSpec, cNum, cLogcs, cOrd, cFnc, cAdv, cDman, cItem, getItemByKeyword, itemLike
 
 urlpatterns = patterns('',
     (r'^itemmore\/$',getItemPin),
@@ -13,4 +13,5 @@ urlpatterns = patterns('',
     (r'^cdman\/$', cDman),
     (r'^citem\/$', cItem),
     (r'^item\/$', getItemByKeyword),
+    (r'^like\/$', itemLike),
 )

@@ -8,8 +8,12 @@ t = {
         $('.btnLike').live('click',
 
         function() {
+            $.dialog.ajaxGET($(this).attr('href'), function(data) {
+                $.dialog.msg('衷心感谢您的喜欢！...');
+                $('#count_like_'+ data.id).text(data.like);
 
-            $.dialog.message('衷心感谢您的喜欢！...');
+            });
+
 
             return false;
         });

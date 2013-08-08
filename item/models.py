@@ -34,6 +34,20 @@ class itemManager(models.Manager):
 
         return self.select_related().filter(onl=True)
 
+    def like(self, id):
+        i = self.get(id=id)
+        i.like += 1
+        i.save()
+
+        return i
+
+    def click(self, id):
+        i = self.get(id=id)
+        i.click += 1
+        i.save()
+
+        return i
+
 class itemSpecManager(models.Manager):
     def getBySid(self, id):
 
@@ -55,7 +69,7 @@ class itemSpecManager(models.Manager):
 class itemImgManager(models.Manager):
     def getSImgs(self):
 
-        return self.select_related().filter((models.Q(typ=0) | models.Q(typ=1)), onl=True, item__onl=True)
+        return self.select_related().filter((models.Q(typ=0) | models.Q(typ=1)), onl=True, item__onl=True).order_by('?')
 
     def getShowSImgs(self):
 
@@ -63,7 +77,7 @@ class itemImgManager(models.Manager):
 
     def getBImgs(self):
 
-        return self.select_related().filter((models.Q(typ=2) | models.Q(typ=3)), onl=True, item__onl=True)
+        return self.select_related().filter((models.Q(typ=2) | models.Q(typ=3)), onl=True, item__onl=True).order_by('?')
 
     def getShowBImgs(self):
 
@@ -89,8 +103,8 @@ class Item(models.Model):
     addTime = models.DateTimeField(u'添加时间', auto_now=True, auto_now_add=True)
     onl = models.BooleanField(u'上架', default=False)
     show = models.BooleanField(u'商城可见', default=False)
-    like = models.IntegerField(u'喜欢', default=0, editable=False)
-    click = models.IntegerField(u'点击', default=0, editable=False)
+    like = models.IntegerField(u'喜欢', default=0)
+    click = models.IntegerField(u'点击', default=0)
     tag = models.ManyToManyField(Tag, verbose_name=u'标签', blank=True, null=True)
 
     objects = itemManager()
@@ -101,7 +115,7 @@ class Item(models.Model):
 
 class ItemDesc(models.Model):
     item = models.ForeignKey(Item, verbose_name=u'商品')
-    desc = models.CharField(u'描述', max_length=60)
+    desc = models.CharField(u'描述', max_length=255)
 
     def __unicode__(self):
         return u"%s - %s" % (self.item.name, self.desc)
@@ -164,5 +178,5 @@ class ItemImg(models.Model):
         return u"%s - %s[ %s ]" % (self.item.name, self.img, self.get_typ_display())
 
     class Meta:
-        ordering = ['?']
+        ordering = ['item']
         unique_together=(("img"),)  
