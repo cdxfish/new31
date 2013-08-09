@@ -73,7 +73,7 @@
 .pinBox .pinSide450 .pinInfo{float:left;}
 .pinBox .pinSide960{background:#FFFFFF;padding:15px;min-height:165px;*height:165px;border-radius:3px;border:1px solid #D9D9D9}
 .pinBox .pinSide960 .pinInfo{float:right;}
-.pinBox .pinDes{/* display:block; */white-space:nowrap;width:470px;overflow:hidden;float:left;color:#999;padding:5px 0 10px 0;}
+.pinBox .pinDes{/* display:block; *//*white-space:nowrap;*/width:470px;/*overflow:hidden;*/float:left;color:#999;padding:5px 0 10px 0;}
 .pinBox .pinInfo{color:#999;width:230px;padding:8px 0;display:block;}
 .pinBox .pinInfo .addDate, .pinBox .pinInfo .loc,.pinBox .pinInfo .camera,.pinBox .pinInfo .pv,.pinBox .pinInfo .like{background:url(/static/images/photoDes.png) no-repeat;padding-left:30px;margin-bottom:5px;line-height: 18px;}
 .pinBox .pinInfo .loc{background-position:0 -25px}

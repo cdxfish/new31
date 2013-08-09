@@ -32,7 +32,7 @@ class TagSrch(object):
 
     """
 
-    tagsCls = ('DD9797','BA5252','D97D0F','E3BA9B','71BFCD','95BADD','A7CF50',)
+    tagsCls = ('DD9797','BA5252','D97D0F','E3BA9B','71BFCD','71BFCD','95BADD','95BADD','95BADD','A7CF50','A7CF50','A7CF50',)
 
     def __init__(self, request):
         self.items = []

@@ -16,7 +16,7 @@
                     <ul class="pinInfo">
                         <li class="addDate">{{ i.item.addTime }}</li>
                         <li class="pv">销量 {{ i.item.click }}</li>
-                        <li class="like">喜欢 <span id="count_like_{{ i.item.id }}">{{ i.item.like }}</span></li>
+                        <li class="like">喜欢 <span class="count_like_{{ i.item.id }}">{{ i.item.like }}</span></li>
                     </ul>
                     <div class="tags">
 {% for ii in i.item.tag.all|slice:":9" %}

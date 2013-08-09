@@ -138,7 +138,7 @@ class ItemSpec(models.Model):
         return u"%s - %s" % (self.item.name, self.spec)
 
     class Meta:
-        ordering = ['spec']
+        ordering = ['item', 'spec']
         unique_together=(("item","spec"),)           
 
 
@@ -163,7 +163,7 @@ class ItemFee(models.Model):
         return u"%s - %s [ %s ] [ %s ]" % (self.spec, self.fee, self.dis, self.get_typ_display())
 
     class Meta:
-        ordering = ['fee']
+        ordering = ['spec__item','fee']
         unique_together=(("spec", "typ"),)
 
 class ItemImg(models.Model):
@@ -178,5 +178,5 @@ class ItemImg(models.Model):
         return u"%s - %s[ %s ]" % (self.item.name, self.img, self.get_typ_display())
 
     class Meta:
-        ordering = ['item']
+        ordering = ['item', 'img']
         unique_together=(("img"),)  
