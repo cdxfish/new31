@@ -26,9 +26,7 @@ def checkCartDr(func):
     def _func(request):
         from views import CartSess
 
-        cart = CartSess(request).show()
-
-        if not cart['items']:
+        if not CartSess(request).show()['items']:
 
             messages.warning(request, u'购物车内无商品')
 

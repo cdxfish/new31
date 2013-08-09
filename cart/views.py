@@ -39,8 +39,9 @@ def checkout(request):
     from finance.views import FncSess
     from order.views import OrdSess
 
-    post = request.POST.dict()
+    cart = CartSess(request).show()
 
+    post = request.POST.dict()
 
     cInfo = LogcSess(request).setByDict(post).getObj() #将联系人信息存入session,并获得对应的对象
     fInfo = FncSess(request).setByDict(post).getObj() #将联系人信息存入session,并获得对应的对象
