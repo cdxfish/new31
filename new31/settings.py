@@ -167,7 +167,7 @@ APPS = {
     'upload':'',
     }
 
-if DEBUG:
+if not 'SERVER_SOFTWARE' in os.environ:
     APPS.update({'debug_toolbar': 'DebugToolbarMiddleware'})
     
     INTERNAL_IPS = ('127.0.0.1',)
