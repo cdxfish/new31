@@ -1,8 +1,6 @@
 #coding:utf-8
-from django.conf.urls import patterns, include, url
-from django.conf import settings
-from views import *
-import os.path
+from django.conf.urls import patterns
+from views import shop
 
 urlpatterns = patterns('',
     (r'^$', shop),

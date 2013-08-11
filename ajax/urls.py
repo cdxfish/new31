@@ -1,5 +1,5 @@
 #coding:utf-8
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns
 from views import getItemPin, getSpec, cNum, cLogcs, cOrd, cFnc, cAdv, cDman, cItem, getItemByKeyword, itemLike
 
 urlpatterns = patterns('',

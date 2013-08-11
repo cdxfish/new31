@@ -1,8 +1,6 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from new31.func import sort
-from tag.models import Tag
 import random
 
 # Create your views here.
@@ -10,7 +8,9 @@ import random
 # APP For Shop UI
 def shop(request):
     from tag.views import TagSrch
+    from tag.models import Tag
     from upload.models import Image
+    from new31.func import sort
 
     try:
         items = ItemPin(10).getItems(sort)
