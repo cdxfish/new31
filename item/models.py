@@ -48,6 +48,12 @@ class itemManager(models.Manager):
 
         return i
 
+class itemDescManager(models.Manager):
+    def getAll(self):
+
+        return self.select_related().order_by('?')
+
+
 class itemSpecManager(models.Manager):
     def getBySid(self, id):
 
@@ -117,11 +123,13 @@ class ItemDesc(models.Model):
     item = models.ForeignKey(Item, verbose_name=u'商品')
     desc = models.CharField(u'描述', max_length=255)
 
+    objects = itemDescManager()
+
     def __unicode__(self):
         return u"%s - %s" % (self.item.name, self.desc)
 
     class Meta:
-        ordering = ['?']
+        ordering = ['item', 'desc']
         unique_together=(("item","desc"),)     
 
 

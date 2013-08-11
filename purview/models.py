@@ -58,6 +58,7 @@ class Element(models.Model):
             (u'/cart/buy/', u'购买商品'),
             (u'/cart/del/', u'删除商品'),
             (u'/cart/consignee/', u'收货人信息'),
+            (u'/tag/', u'标签'),
         )
 
 

@@ -2,6 +2,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 import random
+from new31.func import f02f
 
 # Create your views here.
 
@@ -117,7 +118,7 @@ class ItemPin(object):
 
         return  {
             'name': i.item.name, 
-            'fee': '￥ %0.2f' % i.item.itemspec_set.default().itemfee_set.nomal().fee, 
+            'fee': '￥ %s' % f02f(i.item.itemspec_set.default().itemfee_set.nomal().fee), 
             'like': i.item.like, 
             'src': i.img.url,
             'width': i.img.width,

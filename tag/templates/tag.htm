@@ -11,8 +11,8 @@
          <li>
                 <img alt="{{ i.item.name }}" title="{{ i.item.name }}" src="{{ i.img.url }}" width="{{ i.img.width }}px" />
                 <div class="pinSide{{ i.img.width }}">
-                    <h2>{{ i.item.name }}</h2>
-                    <p class="pinDes">{{ i.item.itemdesc_set.all.0.desc }}</p>
+                    <h2><a href="{{ request.nPath.标签 }}{{ i.item.name }}/">{{ i.item.name }}</a></h2>
+                    <p class="pinDes">{{ i.item.itemdesc_set.getAll.0.desc }}</p>
                     <ul class="pinInfo">
                         <li class="addDate">{{ i.item.addTime }}</li>
                         <li class="pv">销量 {{ i.item.click }}</li>

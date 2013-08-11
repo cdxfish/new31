@@ -18,7 +18,7 @@ def tagShow(request, tag):
 
     tagsCls = TagSrch.tagsCls
 
-    items = sort(TagSrch(request).show(tag))[:8]
+    items = sort(TagSrch(request).show(tag))
 
     return render_to_response('tag.htm', locals(), context_instance=RequestContext(request))
 
