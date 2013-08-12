@@ -100,6 +100,10 @@ class itemFeeManager(models.Manager):
     def getBySid(self, id):
         return self.select_related().get(spec__id=id, typ=0)
 
+    def getByItemId(self, id):
+
+        return self.select_related().filter(spec__item__id=id, spec__onl=True)
+
 
 class Item(models.Model):
     from tag.models import Tag

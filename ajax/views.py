@@ -18,15 +18,14 @@ def getItemPin(request):
 # 前台弹出层中获取商品规格
 @ajaxMsg('当前商品已下架')
 def getSpec(request):
-    from item.models import ItemSpec
+    from item.models import ItemFee
     data = []
-    for i in ItemSpec.objects.getByitemID(id=request.GET.get('id')).filter(item__show=True, show=True):
-        fee = i.itemfee_set.nomal()
+    for i in ItemFee.objects.getByItemId(id=request.GET.get('id')).filter(spec__item__show=True, spec__show=True).filter(typ=0):
         data.append({
-            'id':i.id ,
-            'spec':i.spec.value , 
-            'fee': f02f(fee.fee), 
-            'nfee': f02f(fee.nfee()), 
+            'id':i.spec.spec.id ,
+            'spec':i.spec.spec.value , 
+            'fee': f02f(i.fee), 
+            'nfee': f02f(i.nfee()), 
             })
 
     return AjaxRJson().dumps(data)

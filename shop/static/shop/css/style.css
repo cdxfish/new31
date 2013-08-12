@@ -64,7 +64,7 @@
 
 /*pinBox:start*/
 
-.viewDown{background:url(/static/images/untitled.gif) no-repeat 380px 15px;padding-left: 400px;line-height:40px}
+.viewDown{background:url(/static/images/untitled.gif) no-repeat 330px 15px;padding-left: 350px;line-height:40px}
 .pinBox{width:100%;}
 .pinBox li{/* background:#FFFFFF; */margin-bottom:30px;width:100%;border-radius:1px;}
 .pinBox li h2{color:#666;}
