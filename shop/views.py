@@ -13,10 +13,7 @@ def shop(request):
     from upload.models import Image
     from new31.func import sort
 
-    try:
-        items = ItemPin(10).getItems(sort)
-    except Exception, e:
-        pass
+    items = ItemPin(10).getItems(sort)
 
     tags = Tag.objects.all()[:8]
 
@@ -81,7 +78,6 @@ class ItemPin(object):
     def __getRItem(self, rSize, func):
 
         for x in xrange(rSize):
-
             self.matrix += func(self.getLItem(self.lSize))
 
         return self
@@ -100,6 +96,7 @@ class ItemPin(object):
 
         return items
 
+
     def __getLItem(self, size, width):
         count = 0
         items = []
@@ -114,11 +111,16 @@ class ItemPin(object):
 
         return items
 
+
     def __item(self, i):
+        try:
+            fee = i.item.itemspec_set.default().itemfee_set.nomal().fee
+        except Exception, e:
+            fee = 9999
 
         return  {
             'name': i.item.name, 
-            'fee': '￥ %s' % f02f(i.item.itemspec_set.default().itemfee_set.nomal().fee), 
+            'fee': '￥ %s' % f02f(fee), 
             'like': i.item.like, 
             'src': i.img.url,
             'width': i.img.width,
