@@ -100,14 +100,15 @@ class ItemPin(object):
     def __getLItem(self, size, width):
         count = 0
         items = []
-        for x in xrange(10):
-            if count == size:
-                break
-            else:
-                i = self.random()
-                if i.img.width == width:
-                    count += 1
-                    items.append(self.__item(i))
+        # for x in xrange(10):
+        #     if count == size:
+        #         break
+        #     else:
+        #         i = self.random()
+        #         if i.img.width == width:
+        #             count += 1
+        #             items.append(self.__item(i))
+        items.append(self.__item(self.random()))
 
         return items
 
