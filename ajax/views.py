@@ -22,7 +22,7 @@ def getSpec(request):
     data = []
     for i in ItemFee.objects.getByItemId(id=request.GET.get('id')).filter(spec__item__show=True, spec__show=True).filter(typ=0):
         data.append({
-            'id':i.spec.spec.id ,
+            'id':i.spec.id ,
             'spec':i.spec.spec.value , 
             'fee': f02f(i.fee), 
             'nfee': f02f(i.nfee()), 
