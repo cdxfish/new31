@@ -73,7 +73,7 @@ var shop = {
                 var appendHtm = '';
 
                 $.each(data.data, function(i, v) {
-                    appendHtm += '<div class="s' + v.width + '">';
+                    appendHtm += '<div class="styp' + v.typ + '">';
                     appendHtm += '   <a href="/tag/' + v.name + '/" target="_blank/" title="' + v.name + '">';
                     appendHtm += '       <img src="' + v.src + '" alt="' + v.name + '" title="' + v.name + '" />';
                     appendHtm += '       <span class="floatInfo">';

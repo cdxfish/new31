@@ -27,10 +27,10 @@
 
 .pinStream img{border-radius:3px;}
 .pinStream .box{overflow:hidden;*zoom:1}
-.pinStream .s188,.s379,.s379379{margin:0 3px 3px 0;float:left;overflow:hidden;position:relative;}
-.pinStream .s188{width:188px;height:188px}
-.pinStream .s379{width:379px;height:188px}
-.pinStream .s379379{width:379px;height:379px}
+.pinStream .styp0,.styp1,.styp4{margin:0 3px 3px 0;float:left;overflow:hidden;position:relative;}
+.pinStream .styp0{width:188px;height:188px}
+.pinStream .styp1{width:379px;height:188px}
+.pinStream .styp4{width:379px;height:379px}
 /*.pinStream .s379 img{margin-top:-106px}*/
 .pinStream .boxInner{float:left;width:382px;height:570px}
 .floatInfo{color:#FFFFFF;position:relative;display:block;width:100%;position:absolute;left:0;bottom:-50px;height:50px;background:#000000;opacity:0.8;filter:alpha(opacity=80);-moz-opacity:0.8;border-radius: 3px;}
@@ -69,12 +69,14 @@
 .pinBox li{/* background:#FFFFFF; */margin-bottom:30px;width:100%;border-radius:1px;}
 .pinBox li h2{color:#666;}
 .pinBox li img{*position:relative;*float:left;*display:block;border-radius:3px;}
-.pinBox .pinSide450{background:#FFFFFF;padding:15px;width:470px;float:right;border-radius:3px;border:1px solid #D9D9D9}
-.pinBox .pinSide450 .pinInfo{float:left;}
-.pinBox .pinSide960{background:#FFFFFF;padding:15px;min-height:165px;*height:165px;border-radius:3px;border:1px solid #D9D9D9}
-.pinBox .pinSide960 .pinInfo{float:right;}
-.pinBox .pinSide450 .pinDes{/* display:block; *//*white-space:nowrap;*/width:470px;/*overflow:hidden;*/float:left;color:#999;padding:5px 0 10px 0;}
-.pinBox .pinSide960 .pinDes{white-space:nowrap;width:670px;overflow:hidden;float:left;color:#999;padding:5px 0 10px 0;}
+.pinBox .styp2{width:450px;min-height:450px;*height:450px}
+.pinBox .styp3{width:960px;min-height:750px;*height:750px}
+.pinBox .pinSide2{background:#FFFFFF;padding:15px;width:470px;float:right;border-radius:3px;border:1px solid #D9D9D9}
+.pinBox .pinSide2 .pinInfo{float:left;}
+.pinBox .pinSide3{background:#FFFFFF;padding:15px;min-height:165px;*height:165px;border-radius:3px;border:1px solid #D9D9D9}
+.pinBox .pinSide3 .pinInfo{float:right;}
+.pinBox .pinSide2 .pinDes{/* display:block; *//*white-space:nowrap;*/width:470px;/*overflow:hidden;*/float:left;color:#999;padding:5px 0 10px 0;}
+.pinBox .pinSide3 .pinDes{white-space:nowrap;width:670px;overflow:hidden;float:left;color:#999;padding:5px 0 10px 0;}
 .pinBox .pinInfo{color:#999;width:230px;padding:8px 0;display:block;}
 .pinBox .pinInfo .addDate, .pinBox .pinInfo .loc,.pinBox .pinInfo .camera,.pinBox .pinInfo .pv,.pinBox .pinInfo .like{background:url(/static/images/photoDes.png) no-repeat;padding-left:30px;margin-bottom:5px;line-height: 18px;}
 .pinBox .pinInfo .loc{background-position:0 -25px}

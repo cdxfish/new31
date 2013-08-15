@@ -24,8 +24,8 @@
 {% block content %}
     <div class="pinStream clearfix">
 {% for i in items %}
-        <div class="s{{ i.width }}">
-            <a href="/tag/{{ i.name }}/" target="_blank/" title="{{ i.name }}">
+        <div class="styp{{ i.typ }}">
+            <a href="{{ request.nPath.标签 }}{{ i.name }}/" target="_blank/" title="{{ i.name }}">
                 <img src="{{ i.src }}" alt="{{ i.name }}" title="{{ i.name }}" />
                 <span class="floatInfo">
                     <span class="price">{{ i.fee }}</span>
@@ -49,15 +49,17 @@
           <h4>标签</h4>
           <div class="tagsBox">
 {% for i in tags %}
-              <a href="/tag/{{ i.tag }}/"class="tags_{{ tagsCls|random }}">{{ i.tag }}</a>
+              <a href="{{ request.nPath.标签 }}{{ i.tag }}/"class="tags_{{ tagsCls|random }}">{{ i.tag }}</a>
 {% endfor %}
           </div>
         </div>
+{% if items %}
         <div class="buyList">
             <h4>热销</h4>
             <ul>
                 <li><a href="{{ request.nPath.标签 }}{{ items.0.name }}/"><img width="32" height="32" src="{{ items.0.src }}" alt="{{ items.0.name }}" title="{{ items.0.name }}" /></a></li>
             </ul>
         </div>
+{% endif %}
     </div>
 {% endblock %}

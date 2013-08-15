@@ -34,7 +34,7 @@ class ItemPin(object):
         实例化参数: 
 
         rSize(行长度) = 1
-        lSize(列长度) = ((2, 188), (1, 379))
+        lSize(列长度) = ((2, 0), (1, 1))
 
         使用方法: ItemPin(10).getItems()
 
@@ -46,8 +46,7 @@ class ItemPin(object):
                 'fee': '￥ %0.2f', 
                 'like': 123, 
                 'src': 'http://xxxxxx.jpg',
-                'width': 123,
-                'height': 123
+                'typ': 0,
              },
             .............
             ,
@@ -56,7 +55,7 @@ class ItemPin(object):
         ]
 
     """
-    def __init__(self, rSize=8, lSize=((2, 188), (1, 379))):
+    def __init__(self, rSize=8, lSize=((2, 0), (1, 1))):
         self.rSize = rSize
         self.lSize = lSize
 
@@ -97,18 +96,17 @@ class ItemPin(object):
         return items
 
 
-    def __getLItem(self, size, width):
+    def __getLItem(self, size, typ):
         count = 0
         items = []
-        # for x in xrange(10):
-        #     if count == size:
-        #         break
-        #     else:
-        #         i = self.random()
-        #         if i.img.width == width:
-        #             count += 1
-        #             items.append(self.__item(i))
-        items.append(self.__item(self.random()))
+        for x in xrange(10):
+            if count == size:
+                break
+            else:
+                i = self.random()
+                if i.typ == typ:
+                    count += 1
+                    items.append(self.__item(i))
 
         return items
 
@@ -124,8 +122,7 @@ class ItemPin(object):
             'fee': '￥ %s' % f02f(fee), 
             'like': i.item.like, 
             'src': i.img.url,
-            'width': i.img.width,
-            'height': i.img.height
+            'typ': i.typ,
         }
 
     def random(self):

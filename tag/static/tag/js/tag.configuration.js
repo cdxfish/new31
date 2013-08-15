@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    t.weiboShare().btnReplay().like();
+    t.weiboShare().btnReplay().like().img();
 });
 
 t = {
@@ -10,7 +10,7 @@ t = {
         function() {
             $(this).ajaxGET($(this).attr('href'), function(data) {
                 $.dialog.msg('衷心感谢您的喜欢！...');
-                $('.count_like_'+ data.data.id).text(data.data.like);
+                $('.count_like_' + data.data.id).text(data.data.like);
 
             });
 
@@ -44,6 +44,13 @@ t = {
 
             return false;
         });
+        return this;
+    },
+    img: function() {
+        $('.pinBox li img').each(function() {
+            $(this).attr('src', $(this).attr('data-src'));
+        })
+
         return this;
     },
 
