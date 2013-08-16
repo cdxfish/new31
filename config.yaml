@@ -1,23 +1,18 @@
 name: new31
-version: 20130522
+version: 20130811
 
 libraries:
 - name: "django"
   version: "1.5"
 
 handlers:
-- url: /static
+- url: /static/
   static_dir: static
   static_path: static
+  gzip: on
 
 - url: /robots.txt
   static_path: robots.txt
 
 - url: /favicon.ico
   static_path: favicon.ico
-
-- url: /static/
-  gzip: on
-
-- url: /a-big-file.txt
-  gzip: on

@@ -2,10 +2,6 @@
 
 {% block title %}{{ title }}{% endblock %}
 
-{% block js %}
-    <script type="text/javascript" src="{{ STATIC_URL }}shop/js/shop.configuration.js"></script>
-{% endblock %}
-
 
 {% block scrollBox %}
     <div class="scrollBox">
@@ -17,7 +13,6 @@
 {% endfor %}
             </ul>
         </div>
-        <script type="text/javascript" src="{{ STATIC_URL }}js/scroll.js"></script>
     </div>
 {% endblock %}
 
@@ -26,7 +21,7 @@
 {% for i in items %}
         <div class="styp{{ i.typ }}">
             <a href="{{ request.nPath.标签 }}{{ i.name }}/" target="_blank/" title="{{ i.name }}">
-                <img src="{{ i.src }}" alt="{{ i.name }}" title="{{ i.name }}" />
+                <img data-src="{{ i.src }}" alt="{{ i.name }}" title="{{ i.name }}" class="b{{ i.typ }}" />
                 <span class="floatInfo">
                     <span class="price">{{ i.fee }}</span>
                     <span class="like_icon">{{ i.like }}</span>
@@ -62,4 +57,9 @@
         </div>
 {% endif %}
     </div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{{ STATIC_URL }}shop/js/shop.configuration.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/scroll.js"></script>
 {% endblock %}

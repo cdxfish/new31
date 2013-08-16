@@ -48,7 +48,7 @@ t = {
     },
     img: function() {
         $('.pinBox li img').each(function() {
-            $(this).attr('src', $(this).attr('data-src'));
+            $(this).attr('src', $(this).attr('data-src')).attr('height', $(this).height()).attr('width', $(this).width());$(this).attr('src', $(this).attr('data-src'));
         })
 
         return this;

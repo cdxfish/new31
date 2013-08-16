@@ -11,12 +11,6 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.zebra_datepicker.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.jgd.dropdown.min.css" />
     <link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico" type="image/x-icon" />
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.zebra_datepicker.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.dialog.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jgd.dropdown.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}shop/js/base.configuration.js"></script>
-{% block js %}{% endblock %}
     <!--[if IE 6]>
     <script type="text/javascript" src="{{ STATIC_URL }}js/DD_belatedPNG.js"></script>
     <script type="text/javascript">
@@ -133,5 +127,11 @@
         </div>
         <div class="footerLayer"></div>
     </div>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.zebra_datepicker.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.dialog.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jgd.dropdown.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}shop/js/base.configuration.js"></script>
+{% block js %}{% endblock %}
 </body>
 </html>

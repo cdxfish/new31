@@ -75,7 +75,7 @@ var shop = {
                 $.each(data.data, function(i, v) {
                     appendHtm += '<div class="styp' + v.typ + '">';
                     appendHtm += '   <a href="/tag/' + v.name + '/" target="_blank/" title="' + v.name + '">';
-                    appendHtm += '       <img src="' + v.src + '" alt="' + v.name + '" title="' + v.name + '" />';
+                    appendHtm += '       <img src="' + v.src + '" alt="' + v.name + '" title="' + v.name + '" class="b' + v.typ + '" />';
                     appendHtm += '       <span class="floatInfo">';
                     appendHtm += '           <span class="price">' + v.fee + '</span>';
                     appendHtm += '           <span class="like_icon">' + v.like + '</span>';
@@ -94,6 +94,9 @@ var shop = {
 
     },
     pinStream: function() {
+        $('.pinStream img').each(function() {
+            $(this).attr('src', $(this).attr('data-src')).attr('height', $(this).height()).attr('width', $(this).width());
+        })
         $(".pinStream a").live('mouseenter', function() {
             $(this).children('.floatInfo').stop().animate({
                 'bottom': '0px'
