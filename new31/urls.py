@@ -1,5 +1,5 @@
 #coding:utf-8
-from django.conf.urls import patterns
+from django.conf.urls import patterns, url, include
 from django.conf import settings
 from account.views import UserInfo
 
