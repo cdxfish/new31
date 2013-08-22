@@ -15,7 +15,7 @@ def shop(request):
 
     items = ItemPin(10).getItems(sort)
 
-    tags = Tag.objects.all()[:8]
+    tags = Tag.objects.getByRandom()[:8]
 
     tagsCls = TagSrch.tagsCls
 

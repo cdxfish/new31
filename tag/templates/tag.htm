@@ -11,7 +11,7 @@
          <li>
                 <img alt="{{ i.item.name }}" title="{{ i.item.name }}" data-src="{{ i.img.url }}" class="styp{{ i.typ }}" />
                 <div class="pinSide{{ i.typ }}">
-                    <h2><a href="{{ request.nPath.标签 }}{{ i.item.name }}/">{{ i.item.name }}</a></h2>
+                    <h2><a href="{{ request.nPath.标签 }}{{ i.item.name|urlencode }}/">{{ i.item.name }}</a></h2>
                     <p class="pinDes">{{ i.item.itemdesc_set.getAll.0.desc }}</p>
                     <ul class="pinInfo">
                         <li class="addDate">{{ i.item.addTime }}</li>
@@ -19,8 +19,8 @@
                         <li class="like">喜欢 <span class="count_like_{{ i.item.id }}">{{ i.item.like }}</span></li>
                     </ul>
                     <div class="tags">
-{% for ii in i.item.tag.all|slice:":9" %}
-                        <a href="/tag/{{ ii.tag }}/" class="tags_{{ tagsCls|random }}">{{ ii.tag }}</a>
+{% for ii in i.item.tag.getByRandom|slice:":9" %}
+                        <a href="/tag/{{ ii.tag|urlencode }}/" class="tags_{{ tagsCls|random }}">{{ ii.tag }}</a>
 {% endfor %}
                     </div>
                     <div class="vote">

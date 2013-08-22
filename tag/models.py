@@ -10,7 +10,15 @@ class tagManager(models.Manager):
 
     def random(self):
 
-    	return self.select_related().filter(onl=True)[0]
+        return self.select_related().filter(onl=True).order_by('?')[0]
+
+    def getAll(self):
+
+        return self.select_related().filter(onl=True)
+
+    def getByRandom(self):
+        
+        return self.select_related().filter(onl=True).order_by('?')
 
 
 class Tag(models.Model):
@@ -23,4 +31,4 @@ class Tag(models.Model):
         return u"%s [ onl: %s ]" % (self.tag, self.onl)
 
     class Meta:
-        ordering = ['?']
+        ordering = ['tag']
