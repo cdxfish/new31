@@ -21,7 +21,7 @@
 {% if cart.items %}
 {% for i in cart.items %}
                     <tr align="center">
-                        <td>{{ i.item.name }}</td>
+                        <td><a href="{{ request.nPath.标签 }}{{ i.item.name|urlencode }}/">{{ i.item.name }}</a></td>
                         <td>{{ i.spec.spec.value }}</td>
                         <td><span id="am{{ i.mark }}">{{ i.nfee|floatformat:2 }}</span></td>
                         <td>

@@ -55,37 +55,3 @@ def subDr(func):
             return rdrtBck(request)
 
     return _func
-
-# 订单信息检测用装饰器
-def checkDr(func):
-    def _func(request):
-        from logistics.forms import LogcsFrm
-        from finance.forms import FncFrm
-
-        post = request.POST.dict()
-
-        logcsFrm = LogcsFrm(post)
-
-        if not logcsFrm.is_valid():
-
-            for i in logcsFrm:
-                if i.errors:
-
-                    messages.warning(request, '%s - %s' % ( i.label, u'这个字段是必填项。'))
-
-            return rdrtBck(request)
-
-        fncFrm = FncFrm(post)
-
-        if not fncFrm.is_valid():
-
-            for i in fncFrm:
-                if i.errors:
-
-                    messages.warning(request, '%s - %s' % ( i.label, u'这个字段是必填项。'))
-
-            return rdrtBck(request)
-
-        return func(request)
-
-    return _func

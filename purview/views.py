@@ -32,9 +32,12 @@ class URLPurview:
         self.isStaff = self.request.user.is_authenticated() and self.request.user.is_staff #用户登录状态
 
         self.purview = ( i[0] for i in Element.pPath ) #需要判定的url列表
-        self.request.pPath = { v:i for i, v in Element.pPath } #需要判定的url列表
-        self.request.nPath = { v:i for i, v in Element.nPath }
+        self.request.pPath = { i[1]:i[0] for i in Element.pPath } #需要判定的url列表
+        self.request.nPath = { i[1]:i[0] for i in Element.nPath }
 
+        for i in Element.pPath:
+            if self.request.path in i:
+                self.path = i
 
     def check(self):
         from models import Role
@@ -44,12 +47,12 @@ class URLPurview:
 
                 try:
                     self.domElement() #页面元素权限加持
-                    element = Role.objects.getPathByUser(self.request.user) #用户可进入的页面权限集
+                    #用户可进入的页面权限集
+                    if not self.request.path in Role.objects.getPathByUser(self.request.user): 
+                        return self.error()
                 except:
-                    return self.errorShow()
-
-                if not self.request.path in element:
                     return self.error()
+
             else:
                 return rdrtLogin(self.request)
 
@@ -67,19 +70,14 @@ class URLPurview:
     # 用户级错误提示
     def error(self):
 
-        if self.request.domElement.typ:
-
-            return self.errorShow()
-
-        else: 
-            from ajax.views import AjaxRJson
-            return AjaxRJson().messages(self.errStr).dumps()
-
-    def errorShow(self):
+        if self.path[2]:
             messages.error(self.request, self.errStr)
 
             return rdrtBck(self.request)
 
+        else:
+            from ajax.views import AjaxRJson
+            return AjaxRJson().message(self.errStr).dumps()
 
 
 class BsPur(object):
@@ -112,7 +110,7 @@ class BsPur(object):
         return self
 
     def beMixed(self):
-        print self.role
+
         for i in self.oList:
             for ii in i.action:
                 i.action[ii] = tuple([ iii for iii in i.action[ii] if u'%s%s/' % (ii, iii[0]) in self.role ])

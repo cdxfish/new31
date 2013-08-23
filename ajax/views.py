@@ -15,6 +15,16 @@ def getItemPin(request):
     return AjaxRJson().dumps(ItemPin(8).getItems(sort))
 
 
+# ajax动态修改商品喜欢
+@ajaxMsg('无法修改数据')
+def itemLike(request):
+    from item.models import Item
+
+    i = Item.objects.like(int(request.GET.get('id', 0)))
+
+    return AjaxRJson().dumps({'id': i.id, 'like': i.like})
+
+
 # 前台弹出层中获取商品规格
 @ajaxMsg('当前商品已下架')
 def getSpec(request):
@@ -43,17 +53,6 @@ def cNum(request):
     return AjaxRJson().dumps(data)
 
 
-# 商品查询，后台新订单及订单编辑用
-@ajaxMsg('未找到商品')
-def getItemByKeyword(request):
-    from item.models import Item
-
-    r = [ { 'name':i.name, 'sn': i.sn, 'id': i.id, } for i in Item.objects.likeNameOrSn(request.GET.get('k', ''))]
-
-    return AjaxRJson().dumps(r)
-
-
-
 # ajax动态写入收货人信息
 @ajaxMsg('无法填写表单')
 def cLogcs(request):
@@ -64,14 +63,6 @@ def cLogcs(request):
 
     return AjaxRJson().dumps()
 
-# ajax动态写入订单信息
-@ajaxMsg('无法填写表单')
-def cOrd(request):
-    from order.views import OrdSess
-    for i,v in request.GET.dict().items():
-        OrdSess(request).setByName(i, v)
-
-    return AjaxRJson().dumps()
 
 # ajax动态写入财务信息
 @ajaxMsg('无法填写表单')
@@ -102,7 +93,18 @@ def cItem(request):
         'total': f02f(cc.total()),
     })
 
-# ajax动态修改物流偏移量
+
+# 后台动态写入订单信息
+@ajaxMsg('无法填写表单')
+def cOrd(request):
+    from order.views import OrdSess
+    for i,v in request.GET.dict().items():
+        OrdSess(request).setByName(i, v)
+
+    return AjaxRJson().dumps()
+
+
+# 后台动态修改物流偏移量
 @ajaxMsg('无法修改表单数据')
 @aLogcsDr
 def cAdv(logcs, value):
@@ -110,9 +112,7 @@ def cAdv(logcs, value):
     logcs.advance = value
 
 
-
-
-# ajax动态修改物流师傅
+# 后台动态修改物流师傅
 @ajaxMsg('无法修改表单数据')
 @aLogcsDr
 def cDman(logcs, value):
@@ -125,17 +125,30 @@ def cDman(logcs, value):
         logcs.dman = None
 
 
-# ajax动态修改商品喜欢
-@ajaxMsg('无法修改数据')
-def itemLike(request):
+# 商品查询，后台新订单及订单编辑用
+@ajaxMsg('未找到商品')
+def getItemByKeyword(request):
     from item.models import Item
 
-    i = Item.objects.like(int(request.GET.get('id', 0)))
+    r = [ { 'name':i.name, 'sn': i.sn, 'id': i.id, } for i in Item.objects.likeNameOrSn(request.GET.get('k', ''))]
 
-    return AjaxRJson().dumps({'id': i.id, 'like': i.like})
+    return AjaxRJson().dumps(r)
 
 
+# 后台动态修改物流师傅
+@ajaxMsg('无此会员')
+def getUser(request):
+    from account.models import UserInfo
 
+    u = UserInfo.objects.get(user__username=request.GET.get('u'))
+
+    return AjaxRJson().dumps({
+            'username': u.user.username,
+            'first_name': u.user.first_name,
+            'last_name': u.user.last_name,
+            'email': u.user.email,
+            'date_joined': '%s' % u.user.date_joined,
+        })
 
 # JSON数据格式化类
 class AjaxRJson:

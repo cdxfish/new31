@@ -25,6 +25,7 @@ def logcsDr(func):
 
     return _func
 
+
 # 物流师傅必选装饰器
 def dManDr(func):
     def _func(request, s):
@@ -42,6 +43,7 @@ def dManDr(func):
             return func(request, s)
 
     return _func 
+
 
 # Ajax物流偏移量以及物流师傅选择装饰器
 def aLogcsDr(func):
@@ -62,5 +64,30 @@ def aLogcsDr(func):
         logcs.save()
 
         return AjaxRJson().dumps({'sn': sn, 'value': value})
+
+    return _func
+
+
+# 物流信息检查装饰器
+def chLogcsDr(func):
+    def _func(request):
+        from forms import LogcsFrm
+        from views import LogcSess
+
+        post = request.POST.dict() if len(request.POST.dict()) > 1 else LogcSess(request).sess
+
+        logcsFrm = LogcsFrm(post)
+
+        if not logcsFrm.is_valid():
+
+            for i in logcsFrm:
+                if i.errors:
+
+                    messages.warning(request, '%s - %s' % ( i.label, u'这个字段是必填项。'))
+
+            return rdrtBck(request)
+
+
+        return func(request)
 
     return _func

@@ -26,7 +26,7 @@ class ordManager(models.Manager):
         from views import OrdSess
         
         o = OrdSess(request).sess
-        print o
+
         if o['user']:
             ord.user= User.objects.get(username=o['user'])
         else:

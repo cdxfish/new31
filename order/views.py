@@ -7,7 +7,9 @@ from django.http import HttpResponseRedirect
 from new31.decorator import postDr, rdrtBckDr
 from cart.decorator import checkCartDr
 from new31.func import frMtFee, rdrRange, page, rdrtBck
-from decorator import ordDr, subMsg, subDr, checkDr
+from decorator import ordDr, subMsg, subDr
+from logistics.decorator import chLogcsDr
+from finance.decorator import chFncDr
 from decimal import Decimal
 import time, datetime
 
@@ -29,7 +31,8 @@ def ordList(request):
 # 后台订单提交,提交成功后进行页面跳转至订单列表
 @postDr
 @checkCartDr
-@checkDr
+@chLogcsDr
+@chFncDr
 @subDr
 def submit(request):
     from logistics.views import LogcSess

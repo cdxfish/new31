@@ -9,7 +9,6 @@ class userInfoManager(models.Manager):
     def set(self, request):
 
         u = request.user.userinfo
-        print dir(u.sex)
 
         if not u.sex:
             u.sex = request.POST.get('sex')

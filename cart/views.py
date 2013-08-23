@@ -5,7 +5,9 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from decorator import itemshow, checkCartDr
 from new31.decorator import postDrR
-from order.decorator import subDr, checkDr
+from order.decorator import subDr
+from logistics.decorator import chLogcsDr
+from finance.decorator import chFncDr
 from new31.func import frMtFee, rdrtBck, rdrtIndex
 import time, datetime, math
 
@@ -33,7 +35,8 @@ def cnsgn(request):
 # 前台订单确认界面
 @postDrR('/cart/')
 @checkCartDr
-@checkDr
+@chLogcsDr
+@chFncDr
 def checkout(request):
     from logistics.views import LogcSess
     from finance.views import FncSess
@@ -52,7 +55,8 @@ def checkout(request):
 # 前台订单提交,并是用前台消息模板显示订单号等信息
 @postDrR('/cart/')
 @checkCartDr
-@checkDr
+@chLogcsDr
+@chFncDr
 @subDr
 def submit(request):
     from order.views import OrdSub

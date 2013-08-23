@@ -24,3 +24,28 @@ def fncDetr(func):
             return func(request, s)
 
     return _func
+
+
+
+# 支付方式信息检查装饰器
+def chFncDr(func):
+    def _func(request):
+        from forms import FncFrm
+        from views import FncSess
+
+        post = request.POST.dict() if len(request.POST.dict()) > 1 else FncSess(request).sess
+
+        fncFrm = FncFrm(post)
+
+        if not fncFrm.is_valid():
+
+            for i in fncFrm:
+                if i.errors:
+
+                    messages.warning(request, '%s - %s' % ( i.label, u'这个字段是必填项。'))
+
+            return rdrtBck(request)
+
+        return func(request)
+
+    return _func
