@@ -106,6 +106,7 @@ aeog = {
 
                 $.each(data.data, function(i, v) {
                     html += '    <tr>  \r\n';
+                    html += '      <td>' + i + '</td>  \r\n';
                     html += '      <td>' + v + '</td>  \r\n';
                     html += '    </tr>  \r\n';
                 });
