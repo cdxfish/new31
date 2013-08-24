@@ -1,56 +1,98 @@
 {% extends "office.base.htm" %}
 
 {% block content %}
+<ul class="ull">
+  <li>
+{% regroup order by get_status_display as newOrd %}
       <table cellpadding="3" cellspacing="1" width="100%">
         <tr>
-          <th colspan="4" align="left"><h3>订单统计信息</h3></th>
+          <th colspan="2" align="left"><h3>订单统计</h3></th>
         </tr>
-        <tr>
-          <td width="15%"><a href="/office/order/0/">未确认订单:</a></td>
-          <td width="35%"><strong>5</strong></td>
-          <td width="15%"><a href="/office/order/10/">已确认订单:</a></td>
-          <td width="35%"><strong>34</strong></td>
+{% for i in newOrd %}
+        <tr align="center" class="tr_border_top_black">
+          <td>{{ i.grouper }}</td>
+          <td><strong><a href="{{ request.pPath.订单 }}?c={{ i.list.0.status }}" target="_blank">{{ i.list|length }}</a></strong></td>
         </tr>
-        <tr>
-          <td><a href="/office/order/4/">待支付订单:</a></td>
-          <td><strong>6224</strong></td>
-          <td><a href="/office/order/back/">已完成订单:</a></td>
-          <td><strong></strong></td>
+{% for ii in i.list %}
+        <tr align="center">
+          <td colspan="10"><strong><a href="{{ request.pPath.订单 }}?c={{ ii.status }}&k={{ ii.sn }}" target="_blank">{{ ii.sn }}</a></strong></td>
+        </tr>
+{% endfor %}
+{% endfor %}
+        <tr align="center" class="tr_border_top_black">
+          <td>全部</td>
+          <td><strong><a href="{{ request.pPath.订单 }}?c=-1" target="_blank">{{ order|length }}</a></strong></td>
         </tr>
       </table>
+  </li>
+  <li>
+{% regroup logcs by get_status_display as newLogcs %}
       <table cellpadding="3" cellspacing="1" width="100%">
         <tr>
-          <th colspan="4" align="left"><h3>物流统计信息</h3></th>
+          <th colspan="2" align="left"><h3>物流统计</h3></th>
         </tr>
-        <tr>
-          <td width="15%"><a href="/office/order/110/">待发货订单:</a></td>
-          <td width="35%"><strong style="color: red">21</strong></td>
-          <td width="15%"><a href="/office/order/0/">已发货订单:</a></td>
-          <td width="35%"><strong>5</strong></td>
+{% for i in newLogcs %}
+        <tr align="center" class="tr_border_top_black">
+          <td>{{ i.grouper }}</td>
+          <td><strong><a href="{{ request.pPath.物流 }}?c={{ i.list.0.status }}" target="_blank">{{ i.list|length }}</a></strong></strong></td>
         </tr>
+{% for ii in i.list %}
+        <tr align="center">
+          <td colspan="10"><strong><a href="{{ request.pPath.物流 }}?c={{ ii.ord.status }}&k={{ ii.ord.sn }}" target="_blank">{{ ii.ord.sn }}</a></strong></td>
+        </tr>
+{% endfor %}
+{% endfor %}
+        <tr align="center" class="tr_border_top_black">
+          <td>全部</td>
+          <td><strong><a href="{{ request.pPath.物流 }}?c=-1" target="_blank">{{ logcs|length }}</a></strong></td>
+        </tr>
+      </table>  
+  </li>
+  <li>
+{% regroup pro by get_status_display as newPro %}
+      <table cellpadding="3" cellspacing="1" width="100%">
         <tr>
-          <td><a href="/office/order/10/">已签订单:</a></td>
-          <td><strong>34</strong></td>
-          <td><a href="/office/order/4/">拒签订单:</a></td>
-          <td><strong>6224</strong></td>
+          <th colspan="2" align="left"><h3>生产统计</h3></th>
+        </tr>
+{% for i in newPro %}
+        <tr align="center" class="tr_border_top_black">
+          <td>{{ i.grouper }}</td>
+          <td><strong><a href="{{ request.pPath.生产 }}?c={{ i.list.0.status }}" target="_blank">{{ i.list|length }}</a></strong></strong></td>
+        </tr>
+{% for ii in i.list %}
+        <tr align="center">
+          <td colspan="10"><strong><a href="{{ request.pPath.生产 }}?c={{ ii.status }}&k={{ ii.ord.sn }}" target="_blank">{{ ii.ord.sn }}</a></strong></td>
+        </tr>
+{% endfor %}
+{% endfor %}
+        <tr align="center" class="tr_border_top_black">
+          <td>全部</td>
+          <td><strong><a href="{{ request.pPath.生产 }}?c=-1" target="_blank">{{ pro|length }}</a></strong></td>
         </tr>
       </table>
+  </li>
+  <li>
+{% regroup fnc by get_status_display as newFnc %}
       <table cellpadding="3" cellspacing="1" width="100%">
         <tr>
-          <th colspan="4" align="left"><h3>工厂统计信息</h3></th>
+          <th colspan="2" align="left"><h3>财务统计</h3></th>
         </tr>
-        <tr>
-          <td width="15%"><a href="/office/order/110/">生产请求:</a></td>
-          <td width="35%"><strong style="color: red">21</strong></td>
-          <td width="15%"><a href="/office/order/0/">已生产:</a></td>
-          <td width="35%"><strong>5</strong></td>
+{% for i in newFnc %}
+        <tr align="center" class="tr_border_top_black">
+          <td>{{ i.grouper }}</td>
+          <td><strong><a href="{{ request.pPath.财务 }}?c={{ i.list.0.status }}" target="_blank">{{ i.list|length }}</a></strong></strong></td>
         </tr>
-        <tr>
-          <td><a href="/office/order/10/">停产请求:</a></td>
-          <td><strong>34</strong></td>
-          <td><a href="/office/order/4/">已停产:</a></td>
-          <td><strong>6224</strong></td>
+{% for ii in i.list %}
+        <tr align="center">
+          <td colspan="10"><strong><a href="{{ request.pPath.财务 }}?c={{ ii.ord.status }}&k={{ ii.ord.sn }}" target="_blank">{{ ii.ord.sn }}</a></strong></td>
         </tr>
-      </table>        
-
+{% endfor %}
+{% endfor %}
+        <tr align="center" class="tr_border_top_black">
+          <td>全部</td>
+          <td><strong><a href="{{ request.pPath.财务 }}?c=-1" target="_blank">{{ fnc|length }}</a></strong></td>
+        </tr>
+      </table>
+  </li>
+</ul>
 {% endblock %}

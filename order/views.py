@@ -18,10 +18,12 @@ import time, datetime
 # 订单列表显示页面
 def ordList(request):
     from forms import OrdSrchFrm
+    from logistics.views import KpChng
 
     o = OrdSerch(request)
     oList = o.get()
     oList = OrdPur(oList, request).get()
+    oList = KpChng(oList, request).get()
 
     form = OrdSrchFrm(initial=o.initial)
 
@@ -222,7 +224,7 @@ class OrdSerch(object):
         
     def baseSearch(self):
 
-        q = (
+        self.oList = self.oList.filter(
                 Q(sn__contains=self.initial['k']) |
                 Q(user__username__contains=self.initial['k']) |
                 Q(logcs__consignee__contains=self.initial['k']) |
@@ -234,8 +236,6 @@ class OrdSerch(object):
                 Q(logcs__etime__contains=self.initial['k']) |
                 Q(logcs__note__contains=self.initial['k'])
             )
-
-        self.oList = self.oList.filter(q)
 
         if self.initial['o'] >= 0:
             self.oList = self.oList.filter(typ=self.initial['o'])
@@ -264,7 +264,7 @@ class OrdSerch(object):
 
     def get(self):
 
-        return self.baseSearch().search().chcs().range().page()
+        return self.baseSearch().search().range().chcs().page()
 
 
 from purview.views import BsPur

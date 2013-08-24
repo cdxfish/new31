@@ -44,7 +44,7 @@
 {% endif %}
           <tr>
             <td align="center">地址</td>
-            <td colspan="5"><a href="{{ request.pPath.地图 }}?k={{ i.logcs.address }}" target="_blank">[ {{ i.logcs.area }} ] {{ i.logcs.address }}</a></td>
+            <td colspan="5"><a href="{{ request.pPath.地图 }}?k={{ i.logcs.address|urlencode }}" target="_blank">[ {{ i.logcs.area }} ] {{ i.logcs.address }}</a></td>
           </tr>
           <tr align="center">
             <td>时间</td>

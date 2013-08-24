@@ -291,6 +291,7 @@ table td{
   width:99.5%;
   *width:99.3%;
   min-width:640px;
+  /*overflow: auto;*/
   margin:0 0 10px 0;
   padding:3px;
   background:#DDEEF2;
@@ -298,43 +299,6 @@ table td{
   border: 1px solid #BBDDE5;
 }
 
-#content table{
-  background: #EEF8F9;
-  border:1px solid #BBDDE5;
-  margin:0 0 15px;
-}
-
-#content table td{
-  /*background:#FFFFFF;*/
-  line-height:24px;
-  padding:0 5px 0 5px;
-  color:#192E32;
-}
-
-#content .sortTable th{
-  cursor: pointer;
-  white-space: nowrap;
-  background-repeat: no-repeat;
-  background-position: center right;
-}
-
-#content .sortTable .headerSortUp{
-  background-image: url(/static/images/s_asc.png);
-}
-
-#content .sortTable .headerSortDown{
-  background-image: url(/static/images/s_desc.png);
-}
-
-#content .sortTable .odd td{
-  background:#CFC;
-}
-
-
-#content .tr_border_top_black td{
-  background-color: #F4FAFB;
-  border-top: 1px solid #000;
-}
 
 #content a:hover{
   color:#9D7250;
@@ -421,6 +385,17 @@ table td{
 #content .pWhite{background-color:#FFFFFF;border:1px solid #d9d9d9;padding:35px;color:#000}
 #content .pWhite h3{font-family:'Microsoft Yahei';padding:10px 0;}
 #content .pWhite p{line-height:30px;}
+#content .ull {
+  overflow: auto;
+}
+#content .ull li {
+    width: 150px;
+    float: left;
+    margin: 0 5px 0 0;
+}
+#content .ull li a {
+  display: block;
+}
 
 /* content: End */
 

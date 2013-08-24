@@ -45,7 +45,7 @@ class OrdLog(models.Model):
     objects = logManager()
 
     def __unicode__(self):
-        return u"%s - [ %s ][ %s ]" % ( self.ord, self.get_log_display(), self.time )
+        return u"%s - [ %s ][ %s ]" % ( self.ord, self.get_typ_display(), self.time )
         
     class Meta:
         unique_together=(("ord","time"),)

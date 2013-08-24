@@ -12,16 +12,14 @@ def proDr(func):
         id = request.GET.get('id')
         pro =  Pro.objects.get(id=id)
 
-        act = Pro.objects.getActTuple(pro.status)
-
-        if not s in act:
-
-            messages.error(request, u'%s | %s - 无法%s' % (pro.ord.id, pro.name, Pro.chcs[s][1]))
-
-            return rdrtBck(request)
-
-        else:
+        # if s in Pro.objects.getActTuple(pro.status) and pro.ord.isConfrm():
+        if s in Pro.objects.getActTuple(pro.status):
 
             return func(request, s)
+
+        else:
+            messages.error(request, u'%s | %s - 无法%s' % (pro.ord.sn, pro.name, Pro.chcs[s][1]))
+
+            return rdrtBck(request)
 
     return _func

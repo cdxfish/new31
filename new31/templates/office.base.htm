@@ -131,14 +131,18 @@
         </div>
       </li>
       <li><a href="{{ request.nPath.商城 }}" target="_blank">查看网店</a></li>
+{% if user.is_superuser %}
+      <li><a href="{{ request.nPath.站点管理 }}" target="_blank">站点管理</a></li>
+{% endif %}
       <li><a href="{{ request.nPath.登出 }}">登出</a></li>
     </ul>
     <div id="header">
         <div id="urHere"><a href="/office/" id="index">31kecake 管理中心</a> {% if request.domElement %} <a href="{{ request.domElement.path }}">{{ request.domElement.get_path_display }}</a>{% endif %}</div>
         <ul id="toolsBar">
-          <li><a href="/order/new/">新订单</a></li>
-          <li><a href="/map/">地图</a></li>
-          <li><a href="/shipments/">出货安排</a></li>
+          <li><a href="{{ request.pPath.新订单 }}">新订单</a></li>
+          <li><a href="{{ request.pPath.地图 }}">地图</a></li>
+          <li><a href="{{ request.pPath.物流安排 }}?c=-1">物流安排</a></li>
+          <li><a href="{{ request.pPath.打印订单 }}">打印订单</a></li>
         </ul>
         <span id="adminName">{{ request.user.username }} [ {% if request.user.is_superuser %}超级管理员{% else %}普通管理{% endif %} ]</span>
     </div>

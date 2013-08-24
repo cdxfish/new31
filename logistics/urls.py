@@ -1,10 +1,11 @@
 #coding:utf-8
 from django.conf.urls import patterns
-from views import logcsUI, lCons, editUI, logcsSub
+from views import logcsUI, lCons, editUI, logcsSub, logcsView
 
 urlpatterns = patterns('',
     (r'^$', logcsUI),
     (r'^(?P<s>\d+)/$', lCons),
     (r'^edit/$', editUI),
     (r'^submit/$', logcsSub),
+    (r'^view/$', logcsView),
 )

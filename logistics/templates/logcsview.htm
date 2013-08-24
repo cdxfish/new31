@@ -1,0 +1,47 @@
+{% extends "office.base.htm" %}
+
+{% block content %}
+      {% include 'search.htm' %}
+        <table cellpadding="3" cellspacing="1" width="100%">
+          <tr>
+            <th>订单编号</th>
+            <th>类型 | 付款方式</th>
+            <th>联系人</th>
+            <th>物流师傅</th>
+            <th>状态</th>
+          </tr>
+{% for i,v in sList.items %}
+{% for ii,vv in v.items %}
+{% for iii,vvv in vv.items %}
+          <tr class="tr_border_top_black">
+            <td colspan="10">{{ i }} | {{ ii }} | {{ iii }} | <span class="wow_item_8">{{ vvv|length }}</span></td>
+          </tr>
+{% for iiii in vvv %}
+          <tr align="center">
+            <td width="80px"><a href="{{ request.pPath.订单 }}{{ iiii.sn }}/">{{ iiii.sn }}</a></td>
+            <td>{{ iiii.get_typ_display }} | {{ iiii.fnc.cod.get_cod_display }}</td>
+            <td>{{ iiii.logcs.consignee }} [ {{ iiii.logcs.tel }} ]</td>
+            <td width="220px">{% if iiii.form %}{{ iiii.form.dman }}{% else %}{{ iiii.logcs.dman }}{% endif %}</td>
+            <td>{{ iiii.get_status_display }} | {{ iiii.fnc.get_status_display }} | {{ iiii.logcs.get_status_display }}</td>
+          </tr>
+{% for item in iiii.pro_set.all %}
+          <tr align="center">
+            <td align="right" nowrap="true" colspan="2">{{ item.name }}</td>
+            <td>{{ item.spec }}</td>
+            <td>{{ item.num }}</td>
+            <td>{{ item.get_status_display }}</td>
+          </tr>
+{% endfor %}
+          <tr>
+            <td align="center">地址</td>
+            <td colspan="5"><a href="{{ request.pPath.地图 }}?k={{ iiii.logcs.address|urlencode }}" target="_blank">[ {{ iiii.logcs.area }} ] {{ iiii.logcs.address }}</a></td>
+          </tr>
+{% endfor %}
+{% endfor %}
+{% endfor %}
+{% endfor %}
+          <tr>
+            <td colspan="20" align="right">共 {{ oList|length }} 条记录</td>
+          </tr>
+        </table>
+{% endblock %}

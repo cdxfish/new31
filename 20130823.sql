@@ -819,7 +819,7 @@ DROP TABLE IF EXISTS `purview_element`;
 CREATE TABLE `purview_element` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `path` varchar(255) NOT NULL,
-  `typ` smallint(6) NOT NULL,
+  `typ` smallint(6) NOT 0,
   `onl` tinyint(1) NOT NULL,
   `sub_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),

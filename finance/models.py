@@ -32,6 +32,10 @@ class fncManager(models.Manager):
 
         return self.cStatus(sn, 4)
 
+    def getAll(self):
+
+        return self.select_related().filter(ord__status__gt=1)
+
 
 class Fnc(models.Model):
     from order.models import Ord
@@ -59,7 +63,7 @@ class Fnc(models.Model):
     objects = fncManager()
 
     def __unicode__(self):
-        return u"%s - %s [ %s ]" % ( self.ord, self.name, self.get_status_display() )
+        return u"%s - %s [ %s ]" % ( self.ord, self.cod.get_cod_display(), self.get_status_display() )
 
     # class Meta:
         # verbose_name = u'订单支付'

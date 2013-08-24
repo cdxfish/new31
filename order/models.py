@@ -79,8 +79,12 @@ class Ord(models.Model):
     typ = models.SmallIntegerField(u'订单类型', default=0, choices=typs)
     status = models.SmallIntegerField(u'订单状态', default=0, editable=False, choices=chcs)
 
-
     objects = ordManager()
+
+    def isConfrm(self):
+
+        return self.status == 2
+
 
     def __unicode__(self):
         return u"%s [ %s ] - %s" % (self.sn, self.user, self.get_typ_display())

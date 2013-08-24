@@ -1,6 +1,7 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.db.models import Q
 from decorator import proDr
 from new31.func import rdrtBck, page
 
@@ -17,12 +18,12 @@ def produceUI(request):
     oList = o.get()
     oList = ProPur(oList, request).get()
 
-    oList = sortList(oList)
+    oList = sortList(oList, o.initial)
 
     return render_to_response('produceui.htm', locals(), context_instance=RequestContext(request))
 
-
-def sortList(oList):
+# 订单排序
+def sortList(oList, initial):
     _oList = {}
     for i in oList:
         
@@ -30,7 +31,20 @@ def sortList(oList):
         lstime = u'%s' % i.logcs.lstime
         advance = u'%s' % i.logcs.get_advance_display()
 
-        i.items = [ ii for ii in i.items if ii.status ]
+        _items = []
+
+        if not hasattr(i, 'items'):
+            i.items = i.pro_set.all()
+
+        for ii in i.items:
+            if initial['c'] >= 0:
+                if ii.status == initial['c']:
+                    _items.append(ii)
+            else:
+                _items.append(ii)
+
+            i.items = _items
+
 
         if i.items:
 
@@ -46,7 +60,6 @@ def sortList(oList):
             _oList[date][lstime][advance].append(i)
 
     return _oList
-
 
 @proDr
 def pCon(request, s):
@@ -75,26 +88,20 @@ class ProSerch(OrdSerch):
         super(ProSerch, self).__init__(request)
 
     def search(self):
-        self.oList = self.baseSearch().oList.filter(status__gt = 1)
+        self.oList = self.baseSearch().oList.filter(Q(status=2) | Q(status=4))
 
         return self
 
     def chcs(self):
-        for i in self.oList:
-            items = []
-            for ii in i.pro_set.all():
-                if self.initial['c'] >= 0:
-                    if ii.status == self.initial['c']:
-                        items.append(ii)
-                else:
-                    items.append(ii)
 
-            i.items = items
+        if self.initial['c'] >= 0:
+            self.oList = self.oList.filter(pro__status=self.initial['c'])
 
         return self
 
     def range(self):
         self.oList = self.oList.filter(logcs__date__range=(self.initial['s'], self.initial['e']))
+        
 
         return self
 

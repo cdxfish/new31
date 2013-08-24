@@ -54,6 +54,11 @@ class logcsManager(models.Manager):
 
         return self.cStatus(sn, 5)
 
+    def getAll(self):
+
+        return self.select_related().filter(ord__status__gt=1)
+
+
 
 class Logcs(models.Model):
     from django.contrib.auth.models import User

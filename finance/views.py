@@ -82,9 +82,10 @@ class FncSerch(OrdSerch):
 
         return self
 
-    def status(self):
+    def chcs(self):
         if self.initial['c'] >= 0:
-            self.oList = self.oList.filter(ordship__status=self.initial['c'])
+
+            self.oList = self.oList.filter(fnc__status=self.initial['c'])
 
         return self
 

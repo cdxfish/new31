@@ -1,6 +1,7 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from new31.decorator import postDr
@@ -9,6 +10,46 @@ from new31.func import keFrmt, rdrtBck, rdrRange
 import time,datetime
 
 # Create your views here.
+
+# 物流安排界面
+def logcsView(request):
+    from forms import LogcSrchFrm
+    from finance.views import FncPur
+    from order.views import OrdPur
+    from produce.views import ProPur
+
+    o = LogcsSerch(request)
+
+    oList = o.get()
+    oList = LogcsPur(oList, request).get()
+
+    sList = sortList(oList, o.initial)
+
+    form = LogcSrchFrm(initial=o.initial)
+
+    return render_to_response('logcsview.htm', locals(), context_instance=RequestContext(request))
+
+# 订单排序
+def sortList(oList, initial):
+    _oList = {}
+    for i in oList:
+        
+        date = u'%s' % i.logcs.date
+        lstime = u'%s - %s' % (i.logcs.stime.strftime('%H:%M'), i.logcs.etime.strftime('%H:%M'))
+        advance = u'%s' % i.logcs.get_advance_display()
+
+        if not date in _oList:
+            _oList[date] = {}
+
+        if not lstime in _oList[date]:
+            _oList[date][lstime] = {}
+
+        if not advance in _oList[date][lstime]:
+            _oList[date][lstime][advance] = []
+
+        _oList[date][lstime][advance].append(i)
+
+    return _oList
 
 # 物流界面
 def logcsUI(request):
@@ -68,7 +109,6 @@ def logcsSub(request):
 
     return rdrRange(request.pPath[u'物流'], LogcSess(request).sess['date'], sn)
 
-
 # 物流状态修改
 @logcsDr
 @dManDr
@@ -85,12 +125,14 @@ def stopLogcs(request, s):
     from models import Logcs
     # from order.models import Ord
     # from finance.models import Fnc
+    from produce.models import Pro
 
     sn = request.GET.get('sn')
     
     Logcs.objects.stop(sn)
     # Ord.objects.stop(sn)
     # Fnc.objects.stop(sn)
+    Pro.objects.stop(sn)
 
 
     return rdrtBck(request)
@@ -100,8 +142,6 @@ def lCons(request, s):
     s = int(s)
 
     return [lCon, editLogcs, lCon, lCon, lCon, stopLogcs][s](request, s)
-
-
 
 
 
@@ -217,7 +257,7 @@ class LogcsSerch(OrdSerch):
         super(LogcsSerch, self).__init__(request)
 
     def search(self):
-        self.oList = self.baseSearch().oList.filter(status__gt=1)
+        self.oList = self.baseSearch().oList.filter(Q(status=2) | Q(status=4))
 
         return self
 

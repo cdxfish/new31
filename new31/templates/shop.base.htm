@@ -57,10 +57,10 @@
                             <li><a href="{{ request.nPath.个人设置 }}">个人设置</a></li>
                             <li><a href="{{ request.nPath.修改密码 }}">修改密码</a></li>
 {% if user.is_staff %}
-                            <li><a href="{{ request.pPath.管理中心 }}">管理中心</a></li>
+                            <li><a href="{{ request.pPath.管理中心 }}" target="_blank">管理中心</a></li>
 {% endif %}
 {% if user.is_superuser %}
-                            <li><a href="{{ request.nPath.站点管理 }}">站点管理</a></li>
+                            <li><a href="{{ request.nPath.站点管理 }}" target="_blank">站点管理</a></li>
 {% endif %}
                         </ul>
                         <a class="confirm" href="/account/logout/">退出登录</a>
@@ -90,7 +90,7 @@
     <div id="scrollTop">
         <div class="bar">
             <ul class="intro">
-                <li><p><span class="txt">喜欢就直接拨打电话吧，4000 - 5927 - 31。</span><br><span class="txtFrom">—— 31客</span></p></li>
+                <li><p><span class="txt">喜欢就拨打电话吧，4000 - 5927 - 31。</span><br><span class="txtFrom">—— 31客</span></p></li>
                 <li><p><span class="txt">吃个31客的蛋糕，喝喝下午茶，最幸福了。</span><br><span class="txtFrom">—— 晴天浅唱（微博网友）</span></p></li>
                 <li><p><span class="txt">第一次吃到杏仁咖啡，叹为观止。</span><br><span class="txtFrom">—— 韦夏（当代生活报记者）</span></p></li>
                 <li><p><span class="txt">美食，同大家一齐分享。</span><br><span class="txtFrom">—— 31客</span></p></li>

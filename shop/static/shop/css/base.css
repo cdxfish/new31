@@ -195,7 +195,7 @@ header,footer,article,aside,section,nav,menu,hgroup{display:block;margin:0;paddi
 .toolBar .newMessage span{color:white;background:#9A3838;border-radius:2px;text-shadow:0px 1px white;padding:0 5px;display:block;width:14px;height:24px;text-align:center;line-height:24px}
 .toolBar .on,.toolBar .on:hover{background:#FFF;border-radius:2px 2px 0 0;color:#474531;display:block;box-shadow:0 2px 4px rgba(30, 25, 25, 0.5);}
 .toolBar .on span{background:#676767;border-radius:2px;padding:0 5px;line-height:24px}
-.toolBar .messagePop{position:absolute;z-index:899;min-width:180px;background:#FFF;box-shadow:0 2px 4px rgba(30, 25, 25, 0.5);overflow:hidden;right:0;top:32px;}
+.toolBar .messagePop{position:absolute;z-index:899;min-width:180px;background:#FFF;box-shadow:0 4px 4px rgba(30, 25, 25, 0.5);overflow:hidden;right:0;top:32px;}
 .toolBar .messagePop ul{min-height:60px;width:100%;}
 .toolBar .messagePop h3{font-size:12px;font-weight:bold;border-bottom:1px solid #CECECE;line-height:32px;text-indent:12px;margin-bottom:10px}
 .toolBar .messagePop h4{font-size:14px;font-weight:bold;line-height:24px}

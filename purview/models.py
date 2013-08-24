@@ -47,6 +47,8 @@ class Element(models.Model):
     pPath = (
                 (u'/office/', u'管理中心', 1),
                 (u'/order/', u'订单', 1),
+                (u'/order/view/', u'查询订单', 1),
+                (u'/order/print/', u'打印订单', 1),
                 (u'/order/new/', u'新订单', 1),
                 (u'/order/additemtoorder/', u'增订单商品', 2),
                 (u'/order/delitem/', u'删订单商品', 3),
@@ -57,6 +59,8 @@ class Element(models.Model):
             (
                 (u'/back/', u'退款', 4),
                 (u'/logistics/', u'物流', 1),
+                (u'/logistics/map/', u'地图', 1),
+                (u'/logistics/view/', u'物流安排', 1),
                 (u'/logistics/edit/', u'编辑物流', 1),
                 (u'/logistics/submit/', u'提交物流', 1),
             ) + \
@@ -103,7 +107,6 @@ class Element(models.Model):
                 (u'/bom/', u'物料', 1),
                 (u'/area/', u'配送区域', 1),
                 (u'/filecheck/', u'文件校验', 1),
-                (u'/map/', u'地图', 1),
                 (u'/ajax/user/', u'ajax 会员查询', 0),
                 (u'/ajax/cord/', u'ajax 修改订单信息', 0),
                 (u'/ajax/cdman/', u'ajax 修改物流师傅', 0),
