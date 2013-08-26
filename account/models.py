@@ -5,7 +5,7 @@ from django.contrib import messages
 
 # Create your models here.
 
-class userInfoManager(models.Manager):
+class bsInfoManager(models.Manager):
     def set(self, request):
 
         u = request.user.userinfo
@@ -35,15 +35,15 @@ class userInfoManager(models.Manager):
         from order.models import Ord
 
         try:
-            try:
-                u = self.get(user=request.user)
-            except Exception, e:
-                # raise e
-                u = UserInfo()
-                u.user = request.user
-                u.save()
+            # try:
+            #     u = self.get(user=request.user)
+            # except Exception, e:
+            #     # raise e
+            #     u = UserInfo()
+            #     u.user = request.user
+            #     u.save()
 
-            request.user.newOrd = Ord.objects.lenNewOrd(u)
+            request.user.newOrd = Ord.objects.lenNewOrd(request.user)
             request.user.newMsg = 0
             request.user.allMsg = request.user.newOrd + request.user.newMsg
 
@@ -52,7 +52,7 @@ class userInfoManager(models.Manager):
 
 
 
-class UserInfo(models.Model):
+class BsInfo(models.Model):
     mons = (
                     (0, u'保密'), 
                     (1, u'一月'), 
@@ -120,16 +120,27 @@ class UserInfo(models.Model):
     sex = models.SmallIntegerField(u'性别', default=0, choices=sexs)
     typ = models.SmallIntegerField(u'注册类型', default=0, choices=typs, editable=False)
 
-    objects = userInfoManager()
+    objects = bsInfoManager()
 
     def __unicode__(self):
-        return u"%s [ 性别：%s ] 生日：%s - %s" % (self.user, self.get_sex_display(), self.get_mon_display(), self.get_day_display())
+        return u"%s [ 性别：%s ] [ 生日：%s %s ]" % (self.user, self.get_sex_display(), self.get_mon_display(), self.get_day_display())
 
+class Pts(models.Model):
+    user = models.OneToOneField(User, verbose_name=u'用户')
+    pt = models.IntegerField(u'积分', default=0)
+        
+    def __unicode__(self):
+        return u"%s [ 积分:%s ]" % (self.user, self.pt)
 
 class UserData(models.Model):
     user_name = models.CharField(u'用户名', max_length=30, unique=True)
     email = models.EmailField(u'邮箱', blank=True)
     name = models.CharField(u'姓名', max_length=30)
-    sex = models.SmallIntegerField(u'性别', default=0, choices=sexs)
+    sex = models.SmallIntegerField(u'性别', default=0)
     birthday = models.CharField(u'生日', max_length=30)
     register_type = models.SmallIntegerField(u'类型', default=0)
+
+
+class UserPonints(models.Model):
+    user_name = models.CharField(u'用户名', max_length=30, unique=True)
+    integral = models.IntegerField(u'积分', default=0)

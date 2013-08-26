@@ -54,9 +54,9 @@ def settings(request):
 
 @loginDr
 def saveSet(request):
-    from models import UserInfo
+    from models import BsInfo
 
-    UserInfo.objects.set(request)
+    BsInfo.objects.set(request)
 
     return rdrtBck(request)
 
@@ -97,6 +97,70 @@ def myOrd(request):
         i.total = Pro.objects.getFeeBySN(i.sn)
 
 
+    from models import UserData, BsInfo, Pts, UserPonints
+    from django.contrib.auth.models import User
+
+    users = UserData.objects.all()
+
+    for i in users:
+        try:
+
+            u = User.objects.create_user(username=i.user_name, email=i.email, password='4000592731') 
+            u.first_name = i.name[:1]
+            u.last_name = i.name[1:] 
+            u.is_active = True
+            u.save()
+
+            print '=' * 20
+            print 'User', u.id, u.username, u.email, u.first_name, u.last_name, u.is_active
+
+            d = i.birthday.split('-')
+
+            b = BsInfo()
+            b.user = u
+            try:
+                b.mon = d[0]
+            except Exception, e:
+                pass
+
+            try:
+                b.day = d[1]
+            except Exception, e:
+                pass
+
+            b.sex = i.sex
+            b.typ = i.register_type
+            b.save()
+
+            print 'BsInfo', b.id, b.user, b.mon, b.day, b.sex, b.typ
+
+            up = UserPonints.objects.get(user_name=i.user_name)
+            p = Pts()
+            p.user = u
+            p.pt = up.integral
+            p.save()
+
+            print 'Pts', p.id, p.user, p.pt
+            print '=' * 20
+
+        except Exception, e:
+            pass
+
+
+
+    # for i in User.objects.all():
+
+    #     b = BsInfo()
+    #     b.user = i
+
+    #     b.save()
+
+    #     p = Pts()
+    #     p.user = i
+
+    #     p.save()
+
+
     return render_to_response('myord.htm', locals(), context_instance=RequestContext(request))
 
 @loginDr
@@ -116,29 +180,3 @@ def viewOrd(request):
     o.total = Pro.objects.getFeeBySN(sn)
 
     return render_to_response('vieword.htm', locals(), context_instance=RequestContext(request))
-
-
-class UserInfo:
-
-    def __init__(self, obj):
-        self.obj = obj
-
-    def newOrd(self):
-        from order.models import Ord
-
-        self.obj.newOrd = Ord.objects.lenNewOrd(self.obj.id)
-
-        return self
-
-    def newMsg(self):
-        self.obj.newMsg = 0
-        return self
-
-    def allMsg(self):
-        self.obj.allMsg = self.newOrd().obj.newOrd + self.newMsg().obj.newMsg
-
-        return self
-
-    def get(self):
-
-        return self.newOrd().newMsg().allMsg().obj

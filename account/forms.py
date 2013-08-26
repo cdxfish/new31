@@ -5,16 +5,16 @@ from django import forms
 def setFrm(request):
 
     return SetFrm(initial={
-                'sex': request.user.userinfo.sex,
-                'mon': request.user.userinfo.mon,
-                'day': request.user.userinfo.day,
+                'sex': request.user.bsinfo.sex,
+                'mon': request.user.bsinfo.mon,
+                'day': request.user.bsinfo.day,
             })
 
 
 
 class SetFrm(forms.Form):
-    from models import UserInfo
+    from models import BsInfo
 
-    sex = forms.ChoiceField(label=u'性别', choices=UserInfo.sexs, widget=forms.Select(attrs={'class': 'sex' }))
-    mon = forms.ChoiceField(label=u'月',  choices=UserInfo.mons, widget=forms.Select(attrs={'class': 'mon' }))
-    day = forms.ChoiceField(label=u'日',  choices=UserInfo.days, widget=forms.Select(attrs={'class': 'day' }))
+    sex = forms.ChoiceField(label=u'性别', choices=BsInfo.sexs, widget=forms.Select(attrs={'class': 'sex' }))
+    mon = forms.ChoiceField(label=u'月',  choices=BsInfo.mons, widget=forms.Select(attrs={'class': 'mon' }))
+    day = forms.ChoiceField(label=u'日',  choices=BsInfo.days, widget=forms.Select(attrs={'class': 'day' }))

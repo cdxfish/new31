@@ -3,8 +3,8 @@
 class UserMiddleware:
 
     def process_request(self, request):
-        from models import UserInfo
+        from models import BsInfo
 
-        UserInfo.objects.frMt(request)
+        BsInfo.objects.frMt(request)
 
         return None
