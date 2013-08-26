@@ -98,7 +98,8 @@ def myOrd(request):
 
     # rAdmin()
 
-    rUser().user()
+    # rUserd()
+    # rUser().user()
 
 
     return render_to_response('myord.htm', locals(), context_instance=RequestContext(request))
@@ -155,9 +156,10 @@ def rUserd():
     from django.contrib.auth.models import User
 
     for i in UserData.objects.all():
+        u = User.objects.create_user(username=i.user_name, email=i.email, password='4000592731')
+
         try:
 
-            u = User.objects.create_user(username=i.user_name, email=i.email, password='4000592731') 
             u.first_name = i.name[:1]
             u.last_name = i.name[1:] 
             u.is_active = True
@@ -199,7 +201,12 @@ def rUserd():
             print '=' * 20
 
         except Exception, e:
-            pass
+            print '=' * 20
+            print '=' * 20
+            print 'false', u.id, u.username, u.email, u.first_name, u.last_name, u.is_active
+            print '=' * 20
+            print '=' * 20
+            u.delete()
 
 
 class rUser(object):

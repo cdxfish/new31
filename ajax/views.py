@@ -136,7 +136,7 @@ def getItemByKeyword(request):
 
 
 # 后台动态修改物流师傅
-# @ajaxMsg('无此会员')
+@ajaxMsg('无此会员')
 def getUser(request):
     from account.models import UserInfo
 
