@@ -96,13 +96,65 @@ def myOrd(request):
     for i in ords:
         i.total = Pro.objects.getFeeBySN(i.sn)
 
+    # rAdmin()
 
+    rUser().user()
+
+
+    return render_to_response('myord.htm', locals(), context_instance=RequestContext(request))
+
+@loginDr
+def viewOrd(request):
+    from order.models import Ord
+    from produce.models import Pro
+
+    sn = request.GET.get('sn')
+
+    o = Ord.objects.get(sn=sn)
+
+    if o.user != request.user:
+        messages.error(request, u'您无法查看当前订单。')
+
+        return rdrtBck(request)
+
+    o.total = Pro.objects.getFeeBySN(sn)
+
+    return render_to_response('vieword.htm', locals(), context_instance=RequestContext(request))
+
+
+def rAdmin():
+    from models import BsInfo, Pts
+    from django.contrib.auth.models import User
+
+    for u in User.objects.all():
+        try:
+            print '=' * 20
+            print 'User', u.id, u.username, u.email, u.first_name, u.last_name, u.is_active
+
+            b = BsInfo()
+            b.user = u
+
+            b.save()
+
+            print 'BsInfo', b.id, b.user, b.mon, b.day, b.sex, b.typ
+
+            p = Pts()
+            p.user = u
+
+            p.save()
+
+            print 'Pts', p.id, p.user, p.pt
+
+            print '=' * 20
+
+        except Exception, e:
+            pass
+
+def rUserd():
     from models import UserData, BsInfo, Pts, UserPonints
     from django.contrib.auth.models import User
 
-    users = UserData.objects.all()
-
-    for i in users:
+    for i in UserData.objects.all():
         try:
 
             u = User.objects.create_user(username=i.user_name, email=i.email, password='4000592731') 
@@ -134,10 +186,13 @@ def myOrd(request):
 
             print 'BsInfo', b.id, b.user, b.mon, b.day, b.sex, b.typ
 
-            up = UserPonints.objects.get(user_name=i.user_name)
             p = Pts()
+            try:
+                p.pt = UserPonints.objects.get(user_name=i.user_name).integral
+            except Exception, e:
+                pass
             p.user = u
-            p.pt = up.integral
+
             p.save()
 
             print 'Pts', p.id, p.user, p.pt
@@ -147,36 +202,76 @@ def myOrd(request):
             pass
 
 
+class rUser(object):
+    """
+        docstring for rUser
 
-    # for i in User.objects.all():
+    """
+    def __init__(self):
+        from models import UserData
 
-    #     b = BsInfo()
-    #     b.user = i
+        self.UserData = UserData.objects.all()
 
-    #     b.save()
+    def user(self):
+        from django.contrib.auth.models import User
 
-    #     p = Pts()
-    #     p.user = i
+        for i in self.UserData:
+            try:
 
-    #     p.save()
+                u = User.objects.create_user(username=i.user_name, email=i.email, password='4000592731') 
+                u.first_name = i.name[:1]
+                u.last_name = i.name[1:] 
+                u.is_active = True
+                u.save()
+
+                print 'User', u.id, u.username, u.email, u.first_name, u.last_name, u.is_active
+
+            except Exception, e:
+                pass 
 
 
-    return render_to_response('myord.htm', locals(), context_instance=RequestContext(request))
+        return self
 
-@loginDr
-def viewOrd(request):
-    from order.models import Ord
-    from produce.models import Pro
+    def bsinfo(self):
+        from models import BsInfo
 
-    sn = request.GET.get('sn')
+        for i in self.UserData:
+            d = i.birthday.split('-')
 
-    o = Ord.objects.get(sn=sn)
+            b = BsInfo()
+            b.user = u
+            try:
+                b.mon = d[0]
+            except Exception, e:
+                pass
 
-    if o.user != request.user:
-        messages.error(request, u'您无法查看当前订单。')
+            try:
+                b.day = d[1]
+            except Exception, e:
+                pass
 
-        return rdrtBck(request)
+            b.sex = i.sex
+            b.typ = i.register_type
+            b.save()
 
-    o.total = Pro.objects.getFeeBySN(sn)
+            print 'BsInfo', b.id, b.user, b.mon, b.day, b.sex, b.typ
 
-    return render_to_response('vieword.htm', locals(), context_instance=RequestContext(request))
+        return self
+
+    def pt(self):
+        from models import Pts
+
+        for i in self.UserData:
+            p = Pts()
+            try:
+                p.pt = UserPonints.objects.get(user_name=i.user_name).integral
+            except Exception, e:
+                pass
+            p.user = u
+
+            p.save()
+
+            print 'Pts', p.id, p.user, p.pt
+
+
+        return self
