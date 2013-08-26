@@ -124,3 +124,12 @@ class UserInfo(models.Model):
 
     def __unicode__(self):
         return u"%s [ 性别：%s ] 生日：%s - %s" % (self.user, self.get_sex_display(), self.get_mon_display(), self.get_day_display())
+
+
+class UserData(models.Model):
+    user_name = models.CharField(u'用户名', max_length=30, unique=True)
+    email = models.EmailField(u'邮箱', blank=True)
+    name = models.CharField(u'姓名', max_length=30)
+    sex = models.SmallIntegerField(u'性别', default=0, choices=sexs)
+    birthday = models.CharField(u'生日', max_length=30)
+    register_type = models.SmallIntegerField(u'类型', default=0)
