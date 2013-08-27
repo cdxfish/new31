@@ -131,16 +131,3 @@ class Pts(models.Model):
         
     def __unicode__(self):
         return u"%s [ 积分:%s ]" % (self.user, self.pt)
-
-class UserData(models.Model):
-    user_name = models.CharField(u'用户名', max_length=30, unique=True)
-    email = models.EmailField(u'邮箱', blank=True)
-    name = models.CharField(u'姓名', max_length=30)
-    sex = models.SmallIntegerField(u'性别', default=0)
-    birthday = models.CharField(u'生日', max_length=30)
-    register_type = models.SmallIntegerField(u'类型', default=0)
-
-
-class UserPonints(models.Model):
-    user_name = models.CharField(u'用户名', max_length=30, unique=True)
-    integral = models.IntegerField(u'积分', default=0)
