@@ -8,7 +8,7 @@ from signtime.models import *
 
 class bsSrchFrm(forms.Form):
 
-    chcs = ((-1, '全部'),) + Ord.chcs
+    chcs = ((-1, '全部'),) + Ord.typs
 
     o = forms.ChoiceField(label=u'订单类型', choices=chcs, widget=forms.Select(attrs={'class': 'o' }))
     s = forms.DateField(label="起始时间",widget=forms.DateInput(attrs={'class': 'dateNoDir', 'size': 7},format='%Y-%m-%d'))

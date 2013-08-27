@@ -45,7 +45,7 @@ class Dis(models.Model):
             (0.15, u'1.5 折'),
             (0.1, u'1.0 折'),
             (0.05, u'0.5 折'),
-            # (0.0, u'赠送'),
+            (0.0, u'赠送'),
         )
     dis = models.FloatField(u'折扣', default=1.0, choices=chcs)
     onl = models.BooleanField(u'上架', default=False)

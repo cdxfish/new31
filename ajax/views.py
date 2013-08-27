@@ -138,9 +138,9 @@ def getItemByKeyword(request):
 # 后台动态修改物流师傅
 @ajaxMsg('无此会员')
 def getUser(request):
-    from account.models import UserInfo
+    from account.models import BsInfo
 
-    u = UserInfo.objects.get(user__username=request.GET.get('u'))
+    u = BsInfo.objects.get(user__username=request.GET.get('u'))
 
     return AjaxRJson().dumps({
             u'用户名': u.user.username,
@@ -149,6 +149,7 @@ def getUser(request):
             u'性别': u.get_sex_display(),
             u'类型': u.get_typ_display(),
             u'邮箱': u.user.email,
+            u'积分': u.user.pts.pt,
             u'注册时间': '%s' % u.user.date_joined,
         })
 

@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Keywords" content="{$keywords}" />
+  <meta name="Description" content="{$description}" />
+  <title>打印订单 - 订单编号: {$order.order_sn}</title>
+  <link rel="shortcut icon" href="favicon.ico" />
+  <style type="text/css">
+    body,td { font-size:14px; }
+  </style>
+</head>
+<body style="margin-top:0px">
+<h3 align="center" style="margin:0px">31客订单</h3>
+<table width="100%" >
+    <tr>
+        <td width="75px" nowrap="nowrap">{$lang.label_consignee}</td>
+        <td nowrap="nowrap">{$order.consignee}</td>
+        <td align="right" width="10%" nowrap="nowrap">SN: {$order.order_sn}</td>
+    </tr>
+    <tr>
+        <td>{$lang.label_tel}</td>
+        <td colspan="10" nowrap="nowrap">{$order.tel}</td>
+    </tr>
+    <tr>
+        <td>{$lang.label_consignee_address}</td>
+        <td colspan="10" nowrap="nowrap">{$order.address}</td>
+    </tr>
+</table>
+<table width="100%" border="1" style="border: #000 1px bold; border-collapse: collapse;">
+  <tr align="center">
+      <td bgcolor="#cccccc">{$lang.goods_name}</td>
+      <td bgcolor="#cccccc">{$lang.goods_sn}</td>
+      <td bgcolor="#cccccc">{$lang.goods_attr}</td>
+      <td bgcolor="#cccccc">{$lang.goods_number}</td>
+      <td bgcolor="#cccccc">单价</td>
+      <td bgcolor="#cccccc">{$lang.subtotal}</td>
+  </tr>
+{foreach from=$goods_list item=goods key=key}
+  <tr>
+      <td>&nbsp;{$goods.goods_name}</td>
+      <td>&nbsp;{$goods.goods_sn}</td>
+      <td>&nbsp;{$goods.attr_value}</td>
+      <td align="right">{$goods.goods_number}&nbsp;</td>
+      <td align="right">{$goods.format_unit_price}&nbsp;{if $goods.goods_discount != "10.00" AND $goods.goods_discount != "0.0" AND  $goods.goods_typeid == 0}( {$goods.goods_discount} 折 ){elseif $goods.goods_discount == "0.0" AND $goods.goods_typeid == 0}( 赠送 ){/if}</td>
+      <td align="right">{$goods.subtotal}&nbsp;</td>
+  </tr>
+{/foreach}
+  <tr>
+      <td align="right" colspan="6">{$lang.label_money_dues}{$total.format_price_total} 和 {$total.format_integral_total}&nbsp;[{$lang.ps[$order.pay_status]}]&nbsp;</td>
+  </tr>
+</table>
+<table width="100%">
+  <tr>
+      <td width="350px" nowrap="nowrap">{$shop_name}（www.31kecake.com）</td>
+      <td nowrap="nowrap">订购电话: 4000-592731</td>
+      <td nowrap="nowrap">投诉电话: 0771-5676753</td>
+  </tr>
+  <tr>
+      <td colspan="10">{$lang.label_invoice_note} {$order.invoice_note} {$order.postscript} {$order.to_buyer} </td>
+  </tr>
+  <tr>
+      <td colspan="10">&nbsp;</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap">收货时间:{$order.best_date}  {$order.best_time}</td>
+    <td nowrap="nowrap">配送人员:{$order.deliveryman}</td>
+    <td nowrap="nowrap">客户签收:</td>
+  </tr>
+</table>
+</body>
+</html>

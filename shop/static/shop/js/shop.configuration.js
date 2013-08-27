@@ -101,11 +101,11 @@ var shop = {
             $(this).children('.floatInfo').stop().animate({
                 'bottom': '0px'
             }, 150);
-        });
+        })
         // .live('mouseleave',function () {
         //     $(this).children('.floatInfo').stop().animate({
         //         'bottom' : '-50px'
-        //     }, 150);
+        //     }, 3000);
         // });
         return this;
     }

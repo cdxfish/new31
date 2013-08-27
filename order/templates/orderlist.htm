@@ -36,7 +36,7 @@
           <tr>
             <td align="center">地址</td>
             <td colspan="5"><a href="{{ request.pPath.地图 }}?k={{ i.logcs.address|urlencode }}" target="_blank">[ {{ i.logcs.area }} ] {{ i.logcs.address }}</a></td>
-            <td align="center">{{ i.fee.paid|stringformat:"0.2f" }}</td>
+            <td align="center">{{ i.fee.total|stringformat:"0.2f" }}</td>
           </tr>          
           <tr>
             <td align="center">备注</td>

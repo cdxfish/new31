@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.db.models import Q, Min
-import random, json, os
+import datetime
 
 # Create your views here.
 
@@ -15,9 +15,16 @@ def office(request):
     from produce.models import Pro
     from finance.models import Fnc
 
-    order = Ord.objects.all()
-    logcs = Logcs.objects.getAll()
-    pro = Pro.objects.getAll()
-    fnc = Fnc.objects.getAll()
+
+    today = datetime.date.today()
+    oneDay = datetime.timedelta(days=1)
+
+    s = '%s' % today
+    e = '%s' % (today + oneDay)
+
+    order = Ord.objects.filter(ordlog__time__range=(s, e) )
+    logcs = Logcs.objects.filter(date__range=(s, e))
+    pro = Pro.objects.filter(ord__logcs__date__range=(s, e))
+    fnc = Fnc.objects.filter(ord__logcs__date__range=(s, e))
 
     return render_to_response('office.htm', locals(), context_instance=RequestContext(request))

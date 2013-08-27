@@ -165,6 +165,7 @@ APPS = {
     'inventory':'',
     'log':'',
     'upload':'',
+    'print':'',
     }
 
 if not 'SERVER_SOFTWARE' in os.environ:

@@ -48,7 +48,6 @@ class Element(models.Model):
                 (u'/office/', u'管理中心', 1),
                 (u'/order/', u'订单', 1),
                 (u'/order/view/', u'查询订单', 1),
-                (u'/order/print/', u'打印订单', 1),
                 (u'/order/new/', u'新订单', 1),
                 (u'/order/additemtoorder/', u'增订单商品', 2),
                 (u'/order/delitem/', u'删订单商品', 3),
@@ -88,11 +87,13 @@ class Element(models.Model):
             ) + \
             tuple([ (u'/finance/%s/' % i, u'财务%s' % v, 4) for i,v in Fnc.chcs ]) + \
             (
+                (u'/print/', u'票据打印', 1),
+                (u'/print/logcs/', u'打印物流票据', 0),
                 (u'/reimburse/', u'退款', 1),
                 (u'/statistics/', u'订单统计', 1),
                 (u'/statssale/', u'销售明细', 1),
-                (u'/member/', u'会员信息', 1),
-                (u'/memberint/', u'会员积分', 1),
+                (u'/account/member/', u'会员管理', 1),
+                (u'/account/int/', u'会员积分', 1),
                 (u'/purview/', u'权限分配', 1),
                 (u'/adminlog/', u'管理员日志', 1),
                 (u'/system/', u'系统设置', 1),

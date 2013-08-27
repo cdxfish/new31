@@ -38,9 +38,7 @@ aeog = {
 
         function() {
 
-            var keyword = $('#keyword').val();
-
-            $.dialog.ajaxGET('/ajax/item/', self.sg, {
+            $.dialog.ajaxGET('/ajax/item/?k='+ $('#keyword').val(), self.sg, {
                 'position': 'absolute',
                 'width': 400
             });
