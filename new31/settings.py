@@ -225,6 +225,8 @@ TEMPLATE_CONTEXT_PROCESSORS = tuple(djangoTempContext)
 
 # SESSION_COOKIE_AGE= 60 * 60 * 12
 # SESSION_COOKIE_NAME = 'new31'
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# SESSION_COOKIE_DOMAIN = 'www.31kecake.com'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
