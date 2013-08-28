@@ -40,10 +40,9 @@ class BsSess(object):
 
     def setByDict(self, d):
 
-        return self.set(dict({ i:v for i,v in d.items() if i in self.frmt}))
+        return self.set(dict({ i: u'%s' % v for i,v in d.items() if i in self.frmt}))
 
     def setByName(self, name, s):
-
         self.sess[name] = s
 
         return self.set(self.sess)

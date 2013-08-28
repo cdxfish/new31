@@ -204,4 +204,7 @@
 
 $(document).ready(function() {
     $.dialog.maskLayer().closeBtn();
+    // $.ajaxSetup({
+    //     cache: false //close AJAX cache
+    // });
 });

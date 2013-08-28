@@ -110,7 +110,7 @@ b = {
         function() {
             var self = $(this);
 
-            self.ajaxGET(url + '?' + self.attr('name') + '=' + self.val());
+            self.ajaxGET(url + '?' + self.attr('name') + '=' + encodeURI(self.val()));
         });
         return this;
     }

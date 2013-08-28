@@ -5,7 +5,7 @@ select,input,img,th{vertical-align:middle}
 select{height:28px;line-height:24px;border:solid 1px #CFCACA;}
 img{border:0 none;}
 ul,ol,li,dl,dt,dd{list-style-type:none}
-a{color:#4e78b5;text-decoration:none}
+a{color:#4e78b5;text-decoration:none;cursor: pointer;}
 a:hover{color:#345db5;text-decoration:none}
 a.a_bg:hover{background:#EFF3FB;text-decoration:none}
 a:focus,input[type=button],input[type=submit],button{outline:none}

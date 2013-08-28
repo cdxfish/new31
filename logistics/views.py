@@ -174,24 +174,24 @@ class LogcSess(BsSess):
         
         self.frmt = {
                             'dlvr': dlvrID, 
-                            'consignee':'', 
+                            'consignee': u'', 
                             'area': areaID, 
-                            'address':'', 
-                            'tel':'', 
-                            'date': '%s' % datetime.date.today(), 
+                            'address': u'', 
+                            'tel': u'', 
+                            'date': u'%s' % datetime.date.today(), 
                             'time': signID,
-                            'note':'',
+                            'note': u'',
                         } 
 
         super(LogcSess, self).__init__(request)
         
 
     def chkDate(self):
-        date = time.strptime(self.sess['date'], '%Y-%m-%d')
+        date = time.strptime(self.sess['date'], u'%Y-%m-%d')
         today = time.struct_time
 
         if today > date:
-            self.sess['date'] = '%s' % datetime.date.today()
+            self.sess['date'] = u'%s' % datetime.date.today()
 
         return self._set()
 
@@ -203,9 +203,9 @@ class LogcSess(BsSess):
         from area.models import Area
 
         self.obj = self.sess.copy()
-        self.obj['dlvr'] = Deliver.objects.getDlvrById(id=self.sess['dlvr'])
-        self.obj['time'] = SignTime.objects.getTimeById(id=self.sess['time'])
-        self.obj['area'] = Area.objects.getAreaById(id=self.sess['area'])
+        self.obj['dlvr'] = Deliver.objects.getDlvrById(id=self.sess[u'dlvr'])
+        self.obj['time'] = SignTime.objects.getTimeById(id=self.sess[u'time'])
+        self.obj['area'] = Area.objects.getAreaById(id=self.sess[u'area'])
 
         return self.obj
 
@@ -231,15 +231,15 @@ class LogcSess(BsSess):
         except Exception, e:
             time = SignTime.objects.default().id
 
-        logcs.sess['user'] = oLogcs.ord.user
+        logcs.sess['user'] = u'%s' % oLogcs.ord.user
         logcs.sess['pay'] = oLogcs.ord.fnc.cod.id
-        logcs.sess['consignee'] = oLogcs.consignee
+        logcs.sess['consignee'] = u'%s' % oLogcs.consignee
         logcs.sess['area'] = area
-        logcs.sess['address'] = oLogcs.address
+        logcs.sess['address'] = u'%s' % oLogcs.address
         logcs.sess['tel'] = oLogcs.tel
-        logcs.sess['date'] = '%s' % oLogcs.date
+        logcs.sess['date'] = u'%s' % oLogcs.date
         logcs.sess['time'] = time
-        logcs.sess['note'] = oLogcs.note
+        logcs.sess['note'] = u'%s' % oLogcs.note
 
         logcs._set()
 

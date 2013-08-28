@@ -141,7 +141,7 @@ var b = {
 
         function() {
             var self = $(this);
-            self.ajaxGET(url + '?' + $(this).attr('name') + '=' + $(this).val());
+            self.ajaxGET(url + '?' + $(this).attr('name') + '=' + encodeURI($(this).val()));
 
 
         });

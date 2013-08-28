@@ -59,7 +59,7 @@ def cLogcs(request):
     from logistics.views import LogcSess
 
     for i,v in request.GET.dict().items():
-        LogcSess(request).setByName(i, v)
+        LogcSess(request).setByName(i, u'%s' % v)
 
     return AjaxRJson().dumps()
 
@@ -82,8 +82,6 @@ def cItem(request):
     cc = CartSess(request).chngItem()
 
     i = cc.getItem(mark)
-
-
 
     return AjaxRJson().dumps({
         'mark': mark,
@@ -152,6 +150,7 @@ def getUser(request):
             u'积分': u.user.pts.pt,
             u'注册时间': '%s' % u.user.date_joined,
         })
+    
 
 # JSON数据格式化类
 class AjaxRJson:
