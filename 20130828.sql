@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `account_bsinfo` (
   `typ` smallint(6) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id` (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
 
 --
 -- 转存表中的数据 `account_bsinfo`
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `account_pts` (
   `pt` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id` (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
 
 --
 -- 转存表中的数据 `account_pts`
@@ -29351,7 +29351,7 @@ CREATE TABLE IF NOT EXISTS `area_area` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `area_area_b9d69275` (`sub_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- 转存表中的数据 `area_area`
@@ -29377,7 +29377,7 @@ CREATE TABLE IF NOT EXISTS `auth_group` (
   `name` varchar(80) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- 转存表中的数据 `auth_group`
@@ -29398,7 +29398,7 @@ CREATE TABLE IF NOT EXISTS `auth_group_permissions` (
   UNIQUE KEY `group_id` (`group_id`,`permission_id`),
   KEY `auth_group_permissions_5f412f9a` (`group_id`),
   KEY `auth_group_permissions_83d7f98b` (`permission_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- 转存表中的数据 `auth_group_permissions`
@@ -29419,7 +29419,7 @@ CREATE TABLE IF NOT EXISTS `auth_permission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `content_type_id` (`content_type_id`,`codename`),
   KEY `auth_permission_37ef4eb4` (`content_type_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=100 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=100 ;
 
 --
 -- 转存表中的数据 `auth_permission`
@@ -29546,7 +29546,7 @@ CREATE TABLE IF NOT EXISTS `auth_user` (
   `date_joined` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
 
 --
 -- 转存表中的数据 `auth_user`
@@ -29585,7 +29585,7 @@ CREATE TABLE IF NOT EXISTS `auth_user_groups` (
   UNIQUE KEY `user_id` (`user_id`,`group_id`),
   KEY `auth_user_groups_6340c63c` (`user_id`),
   KEY `auth_user_groups_5f412f9a` (`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- 转存表中的数据 `auth_user_groups`
@@ -29606,7 +29606,7 @@ CREATE TABLE IF NOT EXISTS `auth_user_user_permissions` (
   UNIQUE KEY `user_id` (`user_id`,`permission_id`),
   KEY `auth_user_user_permissions_6340c63c` (`user_id`),
   KEY `auth_user_user_permissions_83d7f98b` (`permission_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- 转存表中的数据 `auth_user_user_permissions`
@@ -29625,7 +29625,7 @@ CREATE TABLE IF NOT EXISTS `deliver_deliver` (
   `config` longtext NOT NULL,
   `onl` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- 转存表中的数据 `deliver_deliver`
@@ -29645,7 +29645,7 @@ CREATE TABLE IF NOT EXISTS `discount_dis` (
   `dis` double NOT NULL,
   `onl` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
 -- 转存表中的数据 `discount_dis`
@@ -29681,7 +29681,7 @@ CREATE TABLE IF NOT EXISTS `django_admin_log` (
   PRIMARY KEY (`id`),
   KEY `django_admin_log_6340c63c` (`user_id`),
   KEY `django_admin_log_37ef4eb4` (`content_type_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1045 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1045 ;
 
 --
 -- 转存表中的数据 `django_admin_log`
@@ -30748,7 +30748,7 @@ CREATE TABLE IF NOT EXISTS `django_content_type` (
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `app_label` (`app_label`,`model`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=34 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=34 ;
 
 --
 -- 转存表中的数据 `django_content_type`
@@ -30801,7 +30801,7 @@ CREATE TABLE IF NOT EXISTS `django_session` (
   `expire_date` datetime NOT NULL,
   PRIMARY KEY (`session_key`),
   KEY `django_session_b7b81f0c` (`expire_date`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `django_session`
@@ -30838,7 +30838,7 @@ CREATE TABLE IF NOT EXISTS `django_site` (
   `domain` varchar(100) NOT NULL,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- 转存表中的数据 `django_site`
@@ -30861,7 +30861,7 @@ CREATE TABLE IF NOT EXISTS `finance_fnc` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `ord_id` (`ord_id`),
   KEY `finance_fnc_29db09f1` (`cod_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- 转存表中的数据 `finance_fnc`
@@ -30884,7 +30884,7 @@ CREATE TABLE IF NOT EXISTS `inventory_invnum` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `pro_id` (`pro_id`,`date`),
   KEY `inventory_invnum_ec2abb26` (`pro_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=65 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=65 ;
 
 --
 -- 转存表中的数据 `inventory_invnum`
@@ -30968,7 +30968,7 @@ CREATE TABLE IF NOT EXISTS `inventory_invpro` (
   `onl` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `spec_id` (`spec_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=35 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=35 ;
 
 --
 -- 转存表中的数据 `inventory_invpro`
@@ -31028,7 +31028,7 @@ CREATE TABLE IF NOT EXISTS `item_item` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `sn` (`sn`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=40 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=40 ;
 
 --
 -- 转存表中的数据 `item_item`
@@ -31086,7 +31086,7 @@ CREATE TABLE IF NOT EXISTS `item_itemdesc` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `item_id` (`item_id`,`desc`),
   KEY `item_itemdesc_0a47aae8` (`item_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=168 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=168 ;
 
 --
 -- 转存表中的数据 `item_itemdesc`
@@ -31277,7 +31277,7 @@ CREATE TABLE IF NOT EXISTS `item_itemfee` (
   UNIQUE KEY `spec_id` (`spec_id`,`typ`),
   KEY `item_itemfee_421877ba` (`spec_id`),
   KEY `item_itemfee_3e24c92b` (`dis_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=120 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=120 ;
 
 --
 -- 转存表中的数据 `item_itemfee`
@@ -31419,7 +31419,7 @@ CREATE TABLE IF NOT EXISTS `item_itemimg` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `img` (`img`),
   KEY `item_itemimg_0a47aae8` (`item_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=290 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=290 ;
 
 --
 -- 转存表中的数据 `item_itemimg`
@@ -31726,7 +31726,7 @@ CREATE TABLE IF NOT EXISTS `item_itemspec` (
   UNIQUE KEY `item_id` (`item_id`,`spec_id`),
   KEY `item_itemspec_0a47aae8` (`item_id`),
   KEY `item_itemspec_421877ba` (`spec_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=120 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=120 ;
 
 --
 -- 转存表中的数据 `item_itemspec`
@@ -31867,7 +31867,7 @@ CREATE TABLE IF NOT EXISTS `item_item_tag` (
   UNIQUE KEY `item_id` (`item_id`,`tag_id`),
   KEY `item_item_tag_0a47aae8` (`item_id`),
   KEY `item_item_tag_5659cca2` (`tag_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=863 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=863 ;
 
 --
 -- 转存表中的数据 `item_item_tag`
@@ -32507,7 +32507,7 @@ CREATE TABLE IF NOT EXISTS `logistics_logcs` (
   UNIQUE KEY `ord_id` (`ord_id`),
   KEY `logistics_logcs_f18aae62` (`dman_id`),
   KEY `logistics_logcs_29db09f1` (`cod_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- 转存表中的数据 `logistics_logcs`
@@ -32533,7 +32533,7 @@ CREATE TABLE IF NOT EXISTS `log_ordlog` (
   UNIQUE KEY `ord_id` (`ord_id`,`time`),
   KEY `log_ordlog_64b36e1f` (`ord_id`),
   KEY `log_ordlog_6340c63c` (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- 转存表中的数据 `log_ordlog`
@@ -32555,7 +32555,7 @@ CREATE TABLE IF NOT EXISTS `order_ord` (
   `status` smallint(6) NOT NULL,
   PRIMARY KEY (`sn`),
   KEY `order_ord_6340c63c` (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `order_ord`
@@ -32576,7 +32576,7 @@ CREATE TABLE IF NOT EXISTS `payment_pay` (
   `config` longtext NOT NULL,
   `onl` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- 转存表中的数据 `payment_pay`
@@ -32605,7 +32605,7 @@ CREATE TABLE IF NOT EXISTS `produce_pro` (
   `status` smallint(6) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `produce_pro_64b36e1f` (`ord_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
 --
 -- 转存表中的数据 `produce_pro`
@@ -32628,7 +32628,7 @@ CREATE TABLE IF NOT EXISTS `purview_element` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `path` (`path`),
   KEY `purview_element_b9d69275` (`sub_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=48 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=48 ;
 
 --
 -- 转存表中的数据 `purview_element`
@@ -32695,7 +32695,7 @@ CREATE TABLE IF NOT EXISTS `purview_privilege` (
   `onl` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- 转存表中的数据 `purview_privilege`
@@ -32723,7 +32723,7 @@ CREATE TABLE IF NOT EXISTS `purview_privilege_element` (
   UNIQUE KEY `privilege_id` (`privilege_id`,`element_id`),
   KEY `purview_privilege_element_f822cd7c` (`privilege_id`),
   KEY `purview_privilege_element_00a8885a` (`element_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=254 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=254 ;
 
 --
 -- 转存表中的数据 `purview_privilege_element`
@@ -32853,7 +32853,7 @@ CREATE TABLE IF NOT EXISTS `purview_role` (
   `onl` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `role` (`role`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
 -- 转存表中的数据 `purview_role`
@@ -32888,7 +32888,7 @@ CREATE TABLE IF NOT EXISTS `purview_role_privilege` (
   UNIQUE KEY `role_id` (`role_id`,`privilege_id`),
   KEY `purview_role_privilege_278213e1` (`role_id`),
   KEY `purview_role_privilege_f822cd7c` (`privilege_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
 --
 -- 转存表中的数据 `purview_role_privilege`
@@ -32928,7 +32928,7 @@ CREATE TABLE IF NOT EXISTS `purview_role_user` (
   UNIQUE KEY `role_id` (`role_id`,`user_id`),
   KEY `purview_role_user_278213e1` (`role_id`),
   KEY `purview_role_user_6340c63c` (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 --
 -- 转存表中的数据 `purview_role_user`
@@ -32965,7 +32965,7 @@ CREATE TABLE IF NOT EXISTS `signtime_signtime` (
   `end` time NOT NULL,
   `onl` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
 -- 转存表中的数据 `signtime_signtime`
@@ -32995,7 +32995,7 @@ CREATE TABLE IF NOT EXISTS `spec_spec` (
   `value` varchar(30) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `value` (`value`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
 
 --
 -- 转存表中的数据 `spec_spec`
@@ -33045,7 +33045,7 @@ CREATE TABLE IF NOT EXISTS `tag_tag` (
   `onl` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `tag` (`tag`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=191 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=191 ;
 
 --
 -- 转存表中的数据 `tag_tag`
@@ -33257,7 +33257,7 @@ CREATE TABLE IF NOT EXISTS `upload_image` (
   `sort` smallint(6) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `img` (`img`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- 转存表中的数据 `upload_image`
