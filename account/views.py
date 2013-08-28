@@ -96,7 +96,7 @@ def myOrd(request):
     for i in ords:
         i.total = Pro.objects.getFeeBySN(i.sn)
 
-    from django.contrib.auth.models import User
+    rUserd()
 
 
     return render_to_response('myord.htm', locals(), context_instance=RequestContext(request))
@@ -118,3 +118,42 @@ def viewOrd(request):
     o.total = Pro.objects.getFeeBySN(sn)
 
     return render_to_response('vieword.htm', locals(), context_instance=RequestContext(request))
+
+def rUserd():
+    from models import uDATA, BsInfo, Pts
+    from django.contrib.auth.models import User
+
+    for i in uDATA.objects.all():
+        u = User.objects.create_user(username=i.username, email=i.email, password='4000592731')
+
+        u.first_name = i.first_name
+        u.last_name = i.last_name
+        u.is_active = True
+        u.save()
+
+        print '=' * 20
+        print 'User', u.id, u.username, u.email, u.last_name, u.first_name, u.is_active
+ 
+        b = BsInfo()
+        b.user = u
+
+        b.mon = i.mon
+
+        b.day = i.day
+
+        b.sex = i.sex
+        b.typ = i.typ
+        b.save()
+
+        print 'BsInfo', b.id, b.user, b.mon, b.day, b.sex, b.typ
+
+        p = Pts()
+
+        p.pt = i.pt
+
+        p.user = u
+
+        p.save()
+
+        print 'Pts', p.id, p.user, p.pt
+        print '=' * 20
