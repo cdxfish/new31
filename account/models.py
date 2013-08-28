@@ -124,13 +124,13 @@ class Pts(models.Model):
     def __unicode__(self):
         return u"%s [ 积分:%s ]" % (self.user, self.pt)
 
-class uDATA(models.Model):
-    username = models.CharField(u'用户名', max_length=30, unique=True)
-    first_name = models.CharField(u'名', max_length=30, blank=True)
-    last_name = models.CharField(u'姓', max_length=30, blank=True)
-    email = models.EmailField(u'邮箱', blank=True)
-    mon = models.SmallIntegerField(u'月', default=0)
-    day = models.SmallIntegerField(u'日', default=0)
-    sex = models.SmallIntegerField(u'性别', default=0)
-    typ = models.SmallIntegerField(u'注册类型', default=0)
-    pt = models.IntegerField(u'积分', default=0)
+# class uDATA(models.Model):
+#     username = models.CharField(u'用户名', max_length=30, unique=True)
+#     first_name = models.CharField(u'名', max_length=30, blank=True)
+#     last_name = models.CharField(u'姓', max_length=30, blank=True)
+#     email = models.EmailField(u'邮箱', blank=True)
+#     mon = models.SmallIntegerField(u'月', default=0)
+#     day = models.SmallIntegerField(u'日', default=0)
+#     sex = models.SmallIntegerField(u'性别', default=0)
+#     typ = models.SmallIntegerField(u'注册类型', default=0)
+#     pt = models.IntegerField(u'积分', default=0)

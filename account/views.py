@@ -96,8 +96,6 @@ def myOrd(request):
     for i in ords:
         i.total = Pro.objects.getFeeBySN(i.sn)
 
-    rUserd()
-
 
     return render_to_response('myord.htm', locals(), context_instance=RequestContext(request))
 
