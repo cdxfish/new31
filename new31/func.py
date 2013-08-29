@@ -1,5 +1,6 @@
 #coding:utf-8
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from django.conf.urls import patterns, url, include
 from django.http import HttpResponseRedirect
 import math, random, datetime
 
@@ -68,16 +69,23 @@ def frmtDate(date):
     return datetime.date(int(d[0]), int(d[1]), int(d[2]))
 
 
-def Patterns(*urls):
+def Patterns(apps):
+    """全局URL路由策略注册"""
+
+    return patterns('', *[ ( r'^%s/' % i , include('%s.urls' % i, app_name=i ) ) for i in apps ])
+
+
+def pPatterns(*urls):
     """
         格式化全局url路由策略
-        urls = (r'xxx', name, func, chcs, typ)
-        chcs = ((0, u'json'), (1, u'查'), (2, u'增'), (3, u'删'), (4, u'改'), )
-        typ = ((0, u'公共'), (1, u'私有'))
+        urls = (r'xxx', func, name, typ)
+        typ = ((0, u'公共json'), (1, u'私有json'), (2, u'公共web'), (3, u'私有web'))
     """
-    from django.conf.urls import patterns, url
+    _urls = []
+    for i in urls:
+        _url = url(regex=i[0], view=i[1], name=i[2])
+        _url.chcs = 0 if i[3] < 2 else 1
+        _url.typ = i[3] % 2 
+        _urls.append(_url)
 
-
-    _urls = ( {'regex':i[0], 'view':i[1], 'name':i[1].func_name} for i in urls )
-
-    return patterns('', *( url(**i) for i in _urls ) )
+    return patterns('', *_urls )

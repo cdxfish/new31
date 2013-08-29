@@ -7,17 +7,17 @@ import json
 
 # Create your views here.
 
-# 首页瀑布流获取更多商品
 @ajaxMsg('无更多商品')
 def getItemPin(request):
+    """首页瀑布流获取更多商品"""
     from shop.views import ItemPin
 
     return AjaxRJson().dumps(ItemPin(8).getItems(sort))
 
 
-# ajax动态修改商品喜欢
 @ajaxMsg('无法修改数据')
 def itemLike(request):
+    """ajax动态修改商品喜欢"""
     from item.models import Item
 
     i = Item.objects.like(int(request.GET.get('id', 0)))

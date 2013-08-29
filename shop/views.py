@@ -8,6 +8,7 @@ from new31.func import f02f
 
 # APP For Shop UI
 def shop(request):
+    u"""商城首页"""
     from tag.views import TagSrch
     from tag.models import Tag
     from upload.models import Image

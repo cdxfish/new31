@@ -1,5 +1,7 @@
 #coding:utf-8
 from django.db import models
+import re
+
 
 # Create your models here.
 
@@ -42,9 +44,32 @@ class Element(models.Model):
     from finance.models import Fnc
     from inventory.models import InvPro
 
+    from django.conf import settings
+    from new31.func import Patterns
+    from  django.core.urlresolvers import reverse
 
-    # import re
+    # modules = Patterns(settings.APPS.keys())
     # re.sub(r'(\n|\t)', '', i.__doc__)
+    pPath = []
+    nPath = []
+    for i in Patterns(settings.APPS.keys()):
+        for ii in i.url_patterns:
+            doc = ii.callback.__doc__
+            if doc:
+                doc = re.sub(r'(\n|\t)', '', ii.callback.__doc__)
+            else:
+                doc = ii.name
+
+            if ii.typ:
+                pPath.append(u'%s' % reverse(ii.name), u'%s' % doc, ii.chcs)
+            else:
+                nPath.append(u'%s' % reverse(ii.name), u'%s' % doc, ii.chcs)
+
+
+    pPath = tuple(pPath)
+    nPath = tuple(nPath)
+
+
 
     pPath = (
                 (u'/office/', u'管理中心', 1),

@@ -1,10 +1,10 @@
 #coding:utf-8
-from django.conf.urls import patterns
+from new31.func import pPatterns
 from views import login, logout, settings, saveSet, changepwd, cPwd, myOrd, viewOrd
 
-urlpatterns = patterns('',
-    (r'^$', myOrd),
-    (r'^login\/$', login),
+urlpatterns = pPatterns(
+    (r'^$', myOrd, 'myOrd', 1, 0),
+    (r'^login\/$', login, 1),
     (r'^logout\/$', logout),
     (r'^settings\/$', settings),
     (r'^sset\/$', saveSet),
