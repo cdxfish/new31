@@ -20,9 +20,9 @@ urlpatterns = patterns('',
 
 
 for i in settings.APPS.keys()[1:]:
-  urlpatterns += patterns('',
-      (r'^%s/' % i , include('%s.urls' % i)),
-  )
+    urlpatterns += patterns('',
+        url(r'^%s/' % i , include('%s.urls' % i), name=i),
+    )
 
 
 if settings.DEBUG:

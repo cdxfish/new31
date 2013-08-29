@@ -1,5 +1,4 @@
 #coding:utf-8
-from django.http import HttpResponseRedirect
 from django.contrib import messages
 from new31.func import rdrtBck, rdrtLogin
 

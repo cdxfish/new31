@@ -66,3 +66,18 @@ def f02f(i):
 def frmtDate(date):
     d = date.split('-')
     return datetime.date(int(d[0]), int(d[1]), int(d[2]))
+
+
+def Patterns(*urls):
+    """
+        格式化全局url路由策略
+        urls = (r'xxx', name, func, chcs, typ)
+        chcs = ((0, u'json'), (1, u'查'), (2, u'增'), (3, u'删'), (4, u'改'), )
+        typ = ((0, u'公共'), (1, u'私有'))
+    """
+    from django.conf.urls import patterns, url
+
+
+    _urls = ( {'regex':i[0], 'view':i[1], 'name':i[1].func_name} for i in urls )
+
+    return patterns('', *( url(**i) for i in _urls ) )

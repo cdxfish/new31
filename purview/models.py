@@ -42,7 +42,9 @@ class Element(models.Model):
     from finance.models import Fnc
     from inventory.models import InvPro
 
-    chcs = ((0, u'json'), (1, u'查'), (2, u'增'), (3, u'删'), (4, u'改'), )
+
+    # import re
+    # re.sub(r'(\n|\t)', '', i.__doc__)
 
     pPath = (
                 (u'/office/', u'管理中心', 1),
