@@ -150,8 +150,8 @@ APPS = {
     'logistics':'CnsgnMiddleware',
     'order':'OrdMiddleware',
     'finance':'FncMiddleware',
-    'item':'',        
-    'payment':'',        
+    'item':'',
+    'payment':'',
     'deliver':'',
     'signtime':'',
     'area':'',
@@ -168,13 +168,6 @@ APPS = {
     'print':'',
     }
 
-if not 'SERVER_SOFTWARE' in os.environ:
-    APPS.update({'debug_toolbar': 'DebugToolbarMiddleware'})
-    
-    INTERNAL_IPS = ('127.0.0.1',)
-    DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False,
-}
 
 djangoMidClass = [
     'django.middleware.common.CommonMiddleware',
@@ -215,6 +208,15 @@ for i,v in APPS.items():
 
     if v:
         djangoMidClass.append(u'%s.middleware.%s' % (i, v))
+
+if not 'SERVER_SOFTWARE' in os.environ:
+    djangoAPPS.append('debug_toolbar')
+    djangoMidClass.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+
+    INTERNAL_IPS = ('127.0.0.1',)
+    DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+}
 
 
 INSTALLED_APPS = tuple(djangoAPPS)

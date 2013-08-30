@@ -13,15 +13,15 @@ import time, datetime, math
 
 # Create your views here.
 
-# 前台购物车界面
 def cart(request):
+    u"""购物车"""
     cart = CartSess(request).show()
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
 
 
-# 收货人信息界面
 def cnsgn(request):
+    u"""收货人信息"""    
     from logistics.forms import logcsFrm
     from finance.forms import fncFrm
 
@@ -31,13 +31,12 @@ def cnsgn(request):
     return render_to_response('consignee.htm', locals(), context_instance=RequestContext(request))
 
 
-
-# 前台订单确认界面
 @postDrR('/cart/')
 @checkCartDr
 @chLogcsDr
 @chFncDr
 def checkout(request):
+    u"""购物车订单确认"""
     from logistics.views import LogcSess
     from finance.views import FncSess
     from order.views import OrdSess
@@ -52,13 +51,14 @@ def checkout(request):
 
     return render_to_response('checkout.htm', locals(), context_instance=RequestContext(request))
 
-# 前台订单提交,并是用前台消息模板显示订单号等信息
+
 @postDrR('/cart/')
 @checkCartDr
 @chLogcsDr
 @chFncDr
 @subDr
 def submit(request):
+    u"""购物车订单提交"""
     from order.views import OrdSub
 
     o = OrdSub(request).submit()
@@ -74,17 +74,16 @@ def submit(request):
             return rdrtIndex()
 
 
-# GET方式将物品放入购物车
 @itemshow
 def buy(request):
-
+    u"""加入购物车"""
     CartSess(request).pushBySid(request.GET.get('id'))
 
     return HttpResponseRedirect(request.nPath[u'购物车'])
 
-# GET方式将物品取出购物车
-def delete(request):
 
+def delete(request):
+    u"""取出购物车"""
     CartSess(request).delete(int(request.GET.get('id')))
 
     return rdrtBck(request)

@@ -10,13 +10,13 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    (r'^(nn\/$|cs\/$|km\/$|^$)', include('%s.urls' % settings.APPS.keys()[0])),
+    (r'^(nn\/$|cs\/$|km\/$|^$)', include('%s.urls' % settings.APPS.keys()[0], app_name=settings.APPS.keys()[0])),
 
     # Uncomment the admin/doc line below to enable admin documentation:
-    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    (r'^admin/doc/', include('django.contrib.admindocs.urls', app_name='admindocs')),
 
     # Uncomment the next line to enable the admin:
-    (r'^admin/', include(admin.site.urls)),
+    (r'^admin/', include(admin.site.urls, app_name='admin')),
 )
 
 urlpatterns += Patterns(settings.APPS.keys()[1:])

@@ -7,7 +7,8 @@ from new31.func import rdrtBck
 
 # Create your views here.
 
-def fncUI(request):
+def fnc(request):
+    u"""财务"""
     from forms import FncSrchFrm
 
     o = FncSerch(request)
@@ -21,17 +22,38 @@ def fncUI(request):
 
 
 @fncDetr
-def fCon(request, s):
+def modifyFnc(request, s):
+    u"""财务操作"""
     from models import Fnc
 
     Fnc.objects.cStatus(request.GET.get('sn'), s)
     
-
     return rdrtBck(request)
 
-def fCons(request, s):
-    s = int(s)
-    return [fCon, fCon, fCon, fCon, fCon][s](request, s)
+def unpaidFnc(request):
+    u"""财务未付"""
+
+    return modifyFnc(request, 0)
+
+def paidFnc(request, s):
+    u"""财务已付"""
+
+    return modifyFnc(request, 1)
+
+def closedFnc(request, s):
+    u"""财务已结"""
+
+    return modifyFnc(request, 2)
+
+def checkedFnc(request, s):
+    u"""财务已核"""
+
+    return modifyFnc(request, 3)
+
+def stopFnc(request, s):
+    u"""财务止付"""
+
+    return modifyFnc(request, 4)
 
 
 from new31.cls import BsSess

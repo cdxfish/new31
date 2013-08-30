@@ -1,8 +1,6 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
-from django.template import RequestContext
 from django.http import HttpResponseRedirect
-from django.db.models import Q, Min
 import datetime
 
 # Create your views here.
@@ -10,6 +8,7 @@ import datetime
 # APP For Shop UI
 
 def office(request):
+    u"""管理中心"""
     from order.models import Ord
     from logistics.models import Logcs
     from produce.models import Pro

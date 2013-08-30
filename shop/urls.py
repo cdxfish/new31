@@ -1,7 +1,7 @@
 #coding:utf-8
-from django.conf.urls import patterns
+from new31.func import pPatterns
 from views import shop
 
-urlpatterns = patterns('',
-    (r'^$', shop),
+urlpatterns = pPatterns(
+    (r'^$', shop, 'shop', 2)
 )

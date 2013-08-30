@@ -1,7 +1,7 @@
 #coding:utf-8
-from django.conf.urls import patterns
-# from views import logUI
+from new31.func import pPatterns
+from views import log
 
-urlpatterns = patterns('',
-    # (r'^$', logUI),
+urlpatterns = pPatterns(
+    (r'^$', log, 'log', 3)
 )   

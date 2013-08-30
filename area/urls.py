@@ -1,7 +1,7 @@
 #coding:utf-8
-from django.conf.urls import patterns
+from new31.func import pPatterns
+from views import area
 
-
-urlpatterns = patterns('',
-    # (r'^$', areaAdmin),
+urlpatterns = pPatterns(
+    (r'^$', area, 'area', 3)
 )

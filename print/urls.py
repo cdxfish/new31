@@ -1,7 +1,7 @@
 #coding:utf-8
-from django.conf.urls import patterns
-from views import prntOrd
+from new31.func import pPatterns
+from views import printOrd
 
-urlpatterns = patterns('',
-    (r'^$', prntOrd),
+urlpatterns = pPatterns(
+    (r'^$', printOrd, 'printOrd', 3)
 )

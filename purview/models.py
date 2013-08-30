@@ -2,7 +2,6 @@
 from django.db import models
 import re
 
-
 # Create your models here.
 
 class roleManager(models.Manager):
@@ -38,134 +37,37 @@ class elementManager(models.Manager):
 
 
 class Element(models.Model):
-    from order.models import Ord
-    from logistics.models import Logcs
-    from produce.models import Pro
-    from finance.models import Fnc
-    from inventory.models import InvPro
-
     from django.conf import settings
-    from new31.func import Patterns
-    from  django.core.urlresolvers import reverse
+    from new31.func import Patterns, reverses
+    from django.core.urlresolvers import reverse
 
-    # modules = Patterns(settings.APPS.keys())
-    # re.sub(r'(\n|\t)', '', i.__doc__)
-    pPath = []
-    nPath = []
-    for i in Patterns(settings.APPS.keys()):
-        for ii in i.url_patterns:
-            doc = ii.callback.__doc__
-            if doc:
-                doc = re.sub(r'(\n|\t)', '', ii.callback.__doc__)
-            else:
-                doc = ii.name
+    patterns = Patterns(settings.APPS.keys())
+    paths = reverses(patterns)
 
-            if ii.typ:
-                pPath.append(u'%s' % reverse(ii.name), u'%s' % doc, ii.chcs)
-            else:
-                nPath.append(u'%s' % reverse(ii.name), u'%s' % doc, ii.chcs)
+    # paths = [[],[]]
+    # for i in patterns:
+    #     for ii in i.url_patterns:
+    #         doc = ii.callback.__doc__
+    #         if doc:
+    #             doc = re.sub(r'(\n|\t)', '', ii.callback.__doc__)
+    #         else:
+    #             doc = ii.name
 
+    #         try:
+    #             url = reverse(ii.name)
+    #         except Exception, e:
+    #             url = 'except', '/%s/%s/' % ( i.app_name, ii.name)
 
-    pPath = tuple(pPath)
-    nPath = tuple(nPath)
+    #         print url, ii
+    #         print dir(ii)
+    #         print ii.name
 
+    #         paths[ii.typ] += [(url, doc, ii.chcs)]
 
+    nPath = tuple(paths[0])
+    pPath = tuple(paths[1])
 
-    pPath = (
-                (u'/office/', u'管理中心', 1),
-                (u'/order/', u'订单', 1),
-                (u'/order/view/', u'查询订单', 1),
-                (u'/order/new/', u'新订单', 1),
-                (u'/order/additemtoorder/', u'增订单商品', 2),
-                (u'/order/delitem/', u'删订单商品', 3),
-                (u'/order/edit/', u'编辑订单', 4),
-                (u'/order/submit/', u'提交订单', 2),
-            ) + \
-            tuple([ (u'/order/%s/' % i, u'订单%s' % v, 4) for i,v in Ord.chcs ]) + \
-            (
-                (u'/back/', u'退款', 4),
-                (u'/logistics/', u'物流', 1),
-                (u'/logistics/map/', u'地图', 1),
-                (u'/logistics/view/', u'物流安排', 1),
-                (u'/logistics/edit/', u'编辑物流', 1),
-                (u'/logistics/submit/', u'提交物流', 1),
-            ) + \
-            tuple([ (u'/logistics/%s/' % i, u'物流%s' % v, 4) for i,v in Logcs.chcs ]) + \
-            (
-                (u'/produce/', u'生产', 1),
-            ) + \
-            tuple([ (u'/produce/%s/' % i, u'生产%s' % v, 4) for i,v in Pro.chcs ]) + \
-            (
-                (u'/inventory/', u'备货', 1), 
-                (u'/inventory/list/', u'备货清单', 1), 
-                (u'/inventory/conl/', u'备货选择', 1), 
-                (u'/inventory/default/', u'备货格式化', 1), 
-            ) + \
-            tuple([ (u'/inventory/%s/' % i, u'备货%s' % v, 4) for i,v in InvPro.typ ]) + \
-            (
-                (u'/after/', u'售后反馈', 1),
-                (u'/tryeat/', u'试吃反馈', 1),
-                (u'/applytryeat/', u'试吃', 1),
-                (u'/discount/', u'会员折扣', 1),
-                (u'/ticket/', u'蛋糕券', 1),
-                (u'/integral/', u'积分换购', 1),
-                (u'/party/', u'活动', 1),
-                (u'/finance/', u'财务', 1),
-            ) + \
-            tuple([ (u'/finance/%s/' % i, u'财务%s' % v, 4) for i,v in Fnc.chcs ]) + \
-            (
-                (u'/print/', u'票据打印', 1),
-                (u'/print/logcs/', u'打印物流票据', 0),
-                (u'/reimburse/', u'退款', 1),
-                (u'/statistics/', u'订单统计', 1),
-                (u'/statssale/', u'销售明细', 1),
-                (u'/account/member/', u'会员管理', 1),
-                (u'/account/int/', u'会员积分', 1),
-                (u'/purview/', u'权限分配', 1),
-                (u'/adminlog/', u'管理员日志', 1),
-                (u'/system/', u'系统设置', 1),
-                (u'/item/item/', u'商品', 1),
-                (u'/tag/tag/', u'标签', 1),
-                (u'/spec/', u'规格', 1),
-                (u'/price/', u'价格', 1),
-                (u'/slide/', u'首页幻灯片', 1),
-                (u'/payment/', u'支付方式', 1),
-                (u'/signtime/', u'收货时间', 1),
-                (u'/logistics/time/', u'物流时间', 1),
-                (u'/bom/', u'物料', 1),
-                (u'/area/', u'配送区域', 1),
-                (u'/filecheck/', u'文件校验', 1),
-                (u'/ajax/user/', u'ajax 会员查询', 0),
-                (u'/ajax/cord/', u'ajax 修改订单信息', 0),
-                (u'/ajax/cdman/', u'ajax 修改物流师傅', 0),
-                (u'/ajax/cadv/', u'ajax 修改物流偏移量', 0),
-                (u'/ajax/item/', u'ajax 商品查询', 0),
-            )
-        #权限对照用列表,用于识别那些页面需要进行权限判定
-
-
-    nPath = (
-            (u'/', u'商城'),
-            (u'/admin/', u'站点管理'),
-            (u'/account/', u'用户中心'),
-            (u'/account/login/', u'登录'),
-            (u'/account/logout/', u'登出'),
-            (u'/account/settings/', u'个人设置'),
-            (u'/account/sset/', u'保存设置'),
-            (u'/account/changepwd/', u'修改密码'),
-            (u'/account/cpwd/', u'保存密码'),
-            (u'/account/myord/', u'我的订单'),
-            (u'/account/view/', u'订单详情'),
-            (u'/cart/', u'购物车'),
-            (u'/cart/buy/', u'购买商品'),
-            (u'/cart/del/', u'删除商品'),
-            (u'/cart/consignee/', u'收货人信息'),
-            (u'/tag/', u'标签'),
-        )
-
-    path = models.CharField(u'路径',max_length=255, choices=tuple([(i[0],i[1]) for i in pPath]), unique=True)
-    #权限类型共4种: {0:'查',1:'显',2:'增',3:'删',4:'改',} 其中显为界面显示专属
-    # typ = models.SmallIntegerField(u'权限类型',default=0, choices=chcs)
+    path = models.CharField(u'路径',max_length=255, choices=tuple((i[0],i[1]) for i in pPath), unique=True)
     onl = models.BooleanField(u'上线', default=True)
     sub = models.ForeignKey("self",related_name='sub_set', verbose_name=u'从属', blank=True, null=True)
 

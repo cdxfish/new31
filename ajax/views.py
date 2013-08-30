@@ -9,25 +9,24 @@ import json
 
 @ajaxMsg('无更多商品')
 def getItemPin(request):
-    """首页瀑布流获取更多商品"""
+    u"""首页: ajax获取更多商品"""
     from shop.views import ItemPin
 
     return AjaxRJson().dumps(ItemPin(8).getItems(sort))
 
-
 @ajaxMsg('无法修改数据')
 def itemLike(request):
-    """ajax动态修改商品喜欢"""
+    u"""标签: ajax商品喜欢"""
     from item.models import Item
 
     i = Item.objects.like(int(request.GET.get('id', 0)))
 
     return AjaxRJson().dumps({'id': i.id, 'like': i.like})
 
-
-# 前台弹出层中获取商品规格
 @ajaxMsg('当前商品已下架')
 def getSpec(request):
+    u"""标签: ajax获取商品规格"""
+
     from item.models import ItemFee
     data = []
     for i in ItemFee.objects.getByItemId(id=request.GET.get('id')).filter(spec__item__show=True, spec__show=True).filter(typ=0):
@@ -40,10 +39,9 @@ def getSpec(request):
 
     return AjaxRJson().dumps(data)
 
-
-# 前台购物车界面修改购物车中商品数量
 @ajaxMsg('当前商品已下架')
 def cNum(request):
+    u"""购物车: ajax修改购物车中商品数量"""
     from cart.views import CartSess
     mark = int(request.GET.get('mark'))
     num = int(request.GET.get('num'))
@@ -52,10 +50,9 @@ def cNum(request):
 
     return AjaxRJson().dumps(data)
 
-
-# ajax动态写入收货人信息
 @ajaxMsg('无法填写表单')
 def cLogcs(request):
+    u"""购物车: ajax修改收货人信息"""
     from logistics.views import LogcSess
 
     for i,v in request.GET.dict().items():
@@ -63,20 +60,9 @@ def cLogcs(request):
 
     return AjaxRJson().dumps()
 
-
-# ajax动态写入财务信息
-@ajaxMsg('无法填写表单')
-def cFnc(request):
-    from finance.views import FncSess
-    for i,v in request.GET.dict().items():
-        FncSess(request).setByName(i, v)
-
-    return AjaxRJson().dumps()
-
-
-# ajax动态修改购物车内商品
 @ajaxMsg('无法修改表单数据')
 def cItem(request):
+    u"""购物车: ajax修改购物车内商品"""
     from cart.views import CartSess
     mark = int(request.GET.get('mark')[1:])
     cc = CartSess(request).chngItem()
@@ -91,29 +77,17 @@ def cItem(request):
         'total': f02f(cc.total()),
     })
 
-
-# 后台动态写入订单信息
-@ajaxMsg('无法填写表单')
-def cOrd(request):
-    from order.views import OrdSess
-    for i,v in request.GET.dict().items():
-        OrdSess(request).setByName(i, v)
-
-    return AjaxRJson().dumps()
-
-
-# 后台动态修改物流偏移量
 @ajaxMsg('无法修改表单数据')
 @aLogcsDr
 def cAdv(logcs, value):
+    u"""物流: ajax修改物流偏移量"""
 
     logcs.advance = value
 
-
-# 后台动态修改物流师傅
 @ajaxMsg('无法修改表单数据')
 @aLogcsDr
 def cDman(logcs, value):
+    u"""物流: ajax修改物流师傅"""
     if value:
         from django.contrib.auth.models import User
 
@@ -122,20 +96,18 @@ def cDman(logcs, value):
     else:
         logcs.dman = None
 
-
-# 商品查询，后台新订单及订单编辑用
 @ajaxMsg('未找到商品')
 def getItemByKeyword(request):
+    u"""订单: ajax商品查询"""
     from item.models import Item
 
     r = [ { 'name':i.name, 'sn': i.sn, 'id': i.id, } for i in Item.objects.likeNameOrSn(request.GET.get('k', ''))]
 
     return AjaxRJson().dumps(r)
 
-
-# 后台动态修改物流师傅
 @ajaxMsg('无此会员')
 def getUser(request):
+    u"""订单: ajax查询会员"""
     from account.models import BsInfo
 
     u = BsInfo.objects.get(user__username=request.GET.get('u'))
@@ -150,7 +122,25 @@ def getUser(request):
             u'积分': u.user.pts.pt,
             u'注册时间': '%s' % u.user.date_joined,
         })
-    
+
+@ajaxMsg('无法填写表单')
+def cFnc(request):
+    u"""订单: ajax修改财务信息"""
+    from finance.views import FncSess
+    for i,v in request.GET.dict().items():
+        FncSess(request).setByName(i, v)
+
+    return AjaxRJson().dumps()
+
+@ajaxMsg('无法填写表单')
+def cOrd(request):
+    u"""订单: ajax修改订单信息"""
+    from order.views import OrdSess
+    for i,v in request.GET.dict().items():
+        OrdSess(request).setByName(i, v)
+
+    return AjaxRJson().dumps()
+
 
 # JSON数据格式化类
 class AjaxRJson:

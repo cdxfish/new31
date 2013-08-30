@@ -1,7 +1,7 @@
 #coding:utf-8
-from django.conf.urls import patterns
-from views import signtimeAdmin
+from new31.func import pPatterns
+from views import signtime
 
-urlpatterns = patterns('',
-    (r'^$', signtimeAdmin),
+urlpatterns = pPatterns(
+    (r'^$', signtime, 'signtime', 3)
 )

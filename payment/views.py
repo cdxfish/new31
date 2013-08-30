@@ -4,7 +4,8 @@ from django.template import RequestContext
 
 # Create your views here.
 
-def payList(request):
+def pays(request):
+	u"""支付: 支付方式"""
 
 	pay = Pay.objects.select_related().all()
 

@@ -9,12 +9,14 @@ import random
 # Create your views here.
 
 def randomShow(request):
+    u"""随机标签"""
     from models import Tag
 
     return tagShow(request, Tag.objects.random().tag)
 
 
 def tagShow(request, tag):
+    u"""标签"""
 
     tagsCls = TagSrch.tagsCls
 

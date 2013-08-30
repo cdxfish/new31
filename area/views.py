@@ -4,8 +4,9 @@ from django.template import RequestContext
 
 # Create your views here.
 
-def areaAdmin(request):
-	from models import Area
+def area(request):
+    u"""区域管理"""
+    from models import Area
 
     areaList = Area.objects.select_related().all().order_by('id')
  

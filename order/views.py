@@ -15,8 +15,8 @@ import time, datetime
 
 # Create your views here.
 
-# 订单列表显示页面
-def ordList(request):
+def ords(request):
+    u"""订单: 订单"""
     from forms import OrdSrchFrm
     from logistics.views import KpChng
 
@@ -29,14 +29,13 @@ def ordList(request):
 
     return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
 
-
-# 后台订单提交,提交成功后进行页面跳转至订单列表
 @postDr
 @checkCartDr
 @chLogcsDr
 @chFncDr
 @subDr
-def submit(request):
+def submitOrd(request):
+    u"""订单: 订单提交"""
     from logistics.views import LogcSess
 
     logcs = LogcSess(request).setByDict(request.POST.dict())
@@ -50,25 +49,14 @@ def submit(request):
 
         return rdrRange(request.pPath[u'订单'], logcs.sess['date'], o.sn)
 
-
-# 后台新单编辑操作编辑页面
-def newOrdUI(request):
+def newOrdFrm(request):
+    u"""订单: 新单表单"""
     OrdSess(request).setSzero()
 
-    return editUI(request)
+    return editOrdFrm(request)
 
-@ordDr
-def editOrd(request, s):
-    from models import Ord
-    Ord.objects.cStatus(request.GET.get('sn'), s)
-
-    OrdSess(request).copy(request.GET.get('sn'))
-
-    return HttpResponseRedirect(request.pPath[u'编辑订单'])
-
-
-# 后台订单编辑操作编辑页面@
-def editUI(request):
+def editOrdFrm(request):
+    u"""订单: 订单编辑表单"""
     from cart.views import CartSess
     from forms import ItemsForm, ordFrm
     from logistics.forms import logcsFrm
@@ -85,42 +73,57 @@ def editUI(request):
 
     return render_to_response('orderneworedit.htm', locals(), context_instance=RequestContext(request))
 
-
-def copyOrd(request,c):
-    OrdSess(request).copy(int(request.GET.get('sn')))
-
-    return HttpResponseRedirect(request.pPath[u'新订单'])
-
 @ordDr
-def cCon(request, s):
+def modifyOrd(request, s):
+    u"""订单: 订单状态修改"""
     from models import Ord
     Ord.objects.cStatus(request.GET.get('sn'), s)
 
     return rdrtBck(request)
 
+def copyOrd(request):
+    u"""订单: 订单复制"""
+    OrdSess(request).copy(int(request.GET.get('sn')))
 
-# 非新单及编辑以外的订单操作
-def cCons(request, s):
-    s = int(s)
+    return HttpResponseRedirect(request.pPath[u'新订单'])
 
-    cons = [copyOrd, editOrd, cCon, cCon, cCon ]
+@ordDr
+def editOrd(request):
+    u"""订单: 订单状态修改-> 订单编辑"""
+    from models import Ord
+    Ord.objects.cStatus(request.GET.get('sn'), 1)
 
-    return cons[s](request, s)
+    OrdSess(request).copy(request.GET.get('sn'))
 
+    return HttpResponseRedirect(request.pPath[u'编辑订单'])
 
-# 后台订单编辑中添加商品至订单操作
+def confirmOrd(request):
+    u"""订单: 订单状态修改-> 订单确认"""
+
+    return modifyOrd(request, 2)
+
+def nullOrd(request):
+    u"""订单: 订单状态修改-> 订单无效"""
+
+    return modifyOrd(request, 3)
+
+def stopOrd(request):
+    u"""订单: 订单状态修改-> 订单止单"""
+
+    return modifyOrd(request, 4)
+
 @postDr
 @rdrtBckDr('无法添加商品，部分商品已下架。')
-def addItem(request):
+def addItemOrd(request):
+    u"""订单: 添加商品"""
     from cart.views import CartSess
 
     CartSess(request).pushByIDs(request.POST.getlist('i'))
     return rdrtBck(request)
 
-
-# 编辑界面中删除订单中的商品操作
 @rdrtBckDr('无法删除商品，请与管理员联系。')
-def delItem(request):
+def delItemOrd(request):
+    u"""订单: 删除商品"""
     from cart.views import CartSess
 
     CartSess(request).delete(int(request.GET.get('mark')))

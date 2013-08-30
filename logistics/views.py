@@ -11,8 +11,28 @@ import time,datetime
 
 # Create your views here.
 
-# 物流安排界面
+def logcs(request):
+    u"""物流: 物流"""
+    from forms import LogcSrchFrm
+    from finance.views import FncPur
+    from order.views import OrdPur
+    from produce.views import ProPur
+
+    o = LogcsSerch(request)
+
+    form = LogcSrchFrm(initial=o.initial)
+
+    oList = o.get()
+    oList = LogcsPur(oList, request).get()
+    oList = FncPur(oList, request).get()
+    oList = OrdPur(oList, request).get()
+    oList = ProPur(oList, request).get()
+    oList = KpChng(oList, request).get()
+
+    return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))
+
 def logcsView(request):
+    u"""物流: 物流安排"""
     from forms import LogcSrchFrm
     from finance.views import FncPur
     from order.views import OrdPur
@@ -29,8 +49,9 @@ def logcsView(request):
 
     return render_to_response('logcsview.htm', locals(), context_instance=RequestContext(request))
 
-# 订单排序
+
 def sortList(oList, initial):
+    u"""物流: 订单排序"""
     _oList = {}
     for i in oList:
         
@@ -51,51 +72,18 @@ def sortList(oList, initial):
 
     return _oList
 
-# 物流界面
-def logcsUI(request):
-    from forms import LogcSrchFrm
-    from finance.views import FncPur
-    from order.views import OrdPur
-    from produce.views import ProPur
-
-    o = LogcsSerch(request)
-
-    form = LogcSrchFrm(initial=o.initial)
-
-    oList = o.get()
-    oList = LogcsPur(oList, request).get()
-    oList = FncPur(oList, request).get()
-    oList = OrdPur(oList, request).get()
-    oList = ProPur(oList, request).get()
-    oList = KpChng(oList, request).get()
-
-    return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))
-
-# 编辑物流界面
-def editUI(request):
+def logcsEditFrm(request):
+    u"""物流: 物流编辑表单"""
     from logistics.forms import logcsFrm
 
     logcs = logcsFrm(request)
 
     return render_to_response('logcsedit.htm', locals(), context_instance=RequestContext(request))
 
-# 编辑物流前置操作
-def editLogcs(request, s):
-    from models import Logcs
-    from order.views import OrdSess
 
-    sn = request.GET.get('sn')
-
-    Logcs.objects.cStatus(sn, s)
-    LogcSess(request).copy(sn)
-
-    OrdSess(request).cpyOrd(sn)
-    
-    return HttpResponseRedirect(request.pPath[u'编辑物流'])
-
-# 提交物流
 @postDr
 def logcsSub(request):
+    u"""物流: 物流编辑表单提交"""
     from order.views import OrdSess
     from models import Logcs
 
@@ -109,40 +97,64 @@ def logcsSub(request):
 
     return rdrRange(request.pPath[u'物流'], LogcSess(request).sess['date'], sn)
 
-# 物流状态修改
 @logcsDr
 @dManDr
-def lCon(request, s):
+def modifyLogcs(request, s):
+    u"""物流: 物流状态修改"""
     from models import Logcs
 
     Logcs.objects.cStatus(request.GET.get('sn'), s)
 
     return rdrtBck(request)
 
-# 止送
+def logcsUnsent(request):
+    u"""物流: 物流状态修改-> 物流未发"""
+
+    return modifyLogcs(request, 0)
+
+def logcsEdit(request):
+    u"""物流: 物流状态修改-> 物流编辑"""
+    from models import Logcs
+    from order.views import OrdSess
+
+    sn = request.GET.get('sn')
+
+    Logcs.objects.cStatus(sn, 1)
+    LogcSess(request).copy(sn)
+
+    OrdSess(request).cpyOrd(sn)
+    
+    return HttpResponseRedirect(request.pPath[u'编辑物流'])
+
+def logcsShip(request):
+    u"""物流: 物流状态修改-> 物流已发"""
+
+    return modifyLogcs(request, 2)
+
+def logcsRefused(request):
+    u"""物流: 物流状态修改-> 物流拒签"""
+
+    return modifyLogcs(request, 3)
+
+def logcsSign(request):
+    u"""物流: 物流状态修改-> 物流已签"""
+
+    return modifyLogcs(request, 4)
+
 @logcsDr
-def stopLogcs(request, s):
+def logcsStop(request):
+    u"""物流: 物流状态修改-> 物流止送"""
     from models import Logcs
     # from order.models import Ord
     # from finance.models import Fnc
     from produce.models import Pro
-
-    sn = request.GET.get('sn')
     
     Logcs.objects.stop(sn)
     # Ord.objects.stop(sn)
     # Fnc.objects.stop(sn)
     Pro.objects.stop(sn)
 
-
     return rdrtBck(request)
-
-# 非新单及编辑以外的订单操作
-def lCons(request, s):
-    s = int(s)
-
-    return [lCon, editLogcs, lCon, lCon, lCon, stopLogcs][s](request, s)
-
 
 
 from new31.cls import BsSess

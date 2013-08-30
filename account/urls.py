@@ -3,13 +3,12 @@ from new31.func import pPatterns
 from views import login, logout, settings, saveSet, changepwd, cPwd, myOrd, viewOrd
 
 urlpatterns = pPatterns(
-    (r'^$', myOrd, 'myOrd', 1, 0),
-    (r'^login\/$', login, 1),
-    (r'^logout\/$', logout),
-    (r'^settings\/$', settings),
-    (r'^sset\/$', saveSet),
-    (r'^changepwd\/$', changepwd),
-    (r'^cpwd\/$', cPwd),
-    (r'^myord\/$', myOrd),
-    (r'^view\/$', viewOrd),
+    (r'^$', myOrd, 'myOrd', 2),
+    (r'^login\/$', login, 'login', 2),
+    (r'^logout\/$', logout, 'logout', 2),
+    (r'^settings\/$', settings, 'userSet', 2),
+    (r'^sset\/$', saveSet, 'userSetSave', 2),
+    (r'^changepwd\/$', changepwd, 'changepwd', 2),
+    (r'^cpwd\/$', cPwd, 'cPwd', 2),
+    (r'^view\/$', viewOrd, 'UserViewOrd', 2)
 )

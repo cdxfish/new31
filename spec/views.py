@@ -4,6 +4,7 @@ from django.template import RequestContext
 
 # Create your views here.
 
-def specAdmin(request):
+def spec(request):
+    u"""规格"""
  
     return render_to_response('specadmin.htm', locals(), context_instance=RequestContext(request))    

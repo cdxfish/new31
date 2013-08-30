@@ -1,14 +1,14 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.db.models import Q
 from decorator import proDr
 from new31.func import rdrtBck, page
 
 
 # Create your views here.
 
-def produceUI(request):
+def produce(request):
+    u"""生产: 生产"""
     from forms import ProFrm
 
     o = ProSerch(request)
@@ -22,8 +22,8 @@ def produceUI(request):
 
     return render_to_response('produceui.htm', locals(), context_instance=RequestContext(request))
 
-# 订单排序
 def sortList(oList, initial):
+    u"""生产: 订单排序"""
     _oList = {}
     for i in oList:
         
@@ -62,17 +62,38 @@ def sortList(oList, initial):
     return _oList
 
 @proDr
-def pCon(request, s):
+def modifyPro(request, s):
+    u"""生产: 生产状态修改"""
     from models import Pro
 
     Pro.objects.cStatus(request.GET.get('id'), s)
 
     return rdrtBck(request)
 
-def pCons(request, s):
-    s = int(s)
+def nullPro(request):
+    u"""生产: 生产状态修改-> 生产未产"""    
 
-    return [pCon, pCon, pCon, pCon, pCon][s](request, s)
+    return modifyPro(request, 0)
+    
+def requirePro(request):
+    u"""生产: 生产状态修改-> 生产产求"""    
+
+    return modifyPro(request, 1)
+    
+def duringPro(request):
+    u"""生产: 生产状态修改-> 生产产中"""    
+
+    return modifyPro(request, 2)
+
+def refusePro(request):
+    u"""生产: 生产状态修改-> 生产拒产"""    
+
+    return modifyPro(request, 3)
+
+def readyPro(request):
+    u"""生产: 生产状态修改-> 生产已产"""    
+
+    return modifyPro(request, 4)
 
 
 from order.views import OrdSerch

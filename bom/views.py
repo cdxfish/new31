@@ -4,6 +4,7 @@ from django.template import RequestContext
 
 # Create your views here.
 
-def produceUI(request):
+def bom(request):
+	u"""物料"""
 
     return render_to_response('produceui.htm', locals(), context_instance=RequestContext(request))

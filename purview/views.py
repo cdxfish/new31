@@ -4,6 +4,12 @@ from new31.func import rdrtBck, rdrtLogin
 
 # Create your views here.
 
+def purview(request):
+    u"""权限: 权限"""
+
+    return render_to_response('purviewui.htm', locals(), context_instance=RequestContext(request))
+
+
 class URLPurview:
     """ 后台全局安全控制类
 

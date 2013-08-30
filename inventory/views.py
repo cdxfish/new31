@@ -6,7 +6,8 @@ from new31.decorator import rdrtBckDr
 import datetime
 # Create your views here.
 
-def iUI(request):
+def inv(request):
+    u"""备货"""
     from forms import InvSrchFrm
 
     p = InvSrch(request)
@@ -21,6 +22,7 @@ def iUI(request):
     return render_to_response('inventoryui.htm', locals(), context_instance=RequestContext(request))
 
 def sort(pro):
+    u"""排序"""
     _pro = {}
 
     for i in pro:
@@ -45,6 +47,7 @@ def sort(pro):
 
 
 def iList(request):
+    u"""备货清单"""
     from item.models import Item
 
     items = Item.objects.getAll()
@@ -53,6 +56,7 @@ def iList(request):
 
 @rdrtBckDr(u'该规格已下架')
 def cOnl(request):
+    u"""备货选择"""
     from models import InvPro
 
     InvPro.objects.cOnl(int(request.GET.get('id')))
@@ -60,6 +64,7 @@ def cOnl(request):
     return rdrtBck(request)
 
 def default(request):
+    u"""备货格式化"""
     from models import InvNum, InvPro
 
     InvNum.objects.default(InvSrch(request).initial['s'])
@@ -67,12 +72,14 @@ def default(request):
     return rdrtBck(request)
 
 def minus(request):
+    u"""备货减"""
     from models import InvNum
     InvNum.objects.minus(request.GET.get('id'))
 
     return rdrtBck(request)
 
 def plus(request):
+    u"""备货加"""
     from models import InvNum
     InvNum.objects.plus(request.GET.get('id'))
 

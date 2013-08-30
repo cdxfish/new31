@@ -1,8 +1,9 @@
 #coding:utf-8
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.conf.urls import patterns, url, include
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-import math, random, datetime
+import math, random, datetime, re
 
 
 # 格式化价格,舍弃小数位
@@ -89,3 +90,32 @@ def pPatterns(*urls):
         _urls.append(_url)
 
     return patterns('', *_urls )
+
+def reverses(patterns):
+    path = [[],[]]
+    for i in patterns:
+        for ii in i.url_patterns:
+            doc = ii.callback.__doc__
+            if doc:
+                doc = re.sub(r'(\n|\t)', '', ii.callback.__doc__)
+            else:
+                doc = ii.name
+            try:
+                url = reverse(ii.name)
+            except Exception, e:
+                url = '/%s/%s/' % ( i.app_name, ii._regex)
+
+            path[ii.typ] += [(url, doc, ii.chcs)]
+
+
+            print url, ii
+            print dir(ii)
+            print ii.name
+            
+    print '=' *40
+    print '=' *40
+    print reverse('order.views.newOrdFrm')
+    print '=' *40
+    print '=' *40
+
+    return tuple(path[0]), tuple(path[1])

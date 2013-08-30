@@ -4,7 +4,8 @@ from django.template import RequestContext
 
 # Create your views here.
 
-def prntOrd(request):
+def printOrd(request):
+    u"""票据打印: 票据打印"""
     from logistics.forms import LogcSrchFrm
     from logistics.views import LogcsSerch, KpChng, sortList
 
@@ -12,8 +13,6 @@ def prntOrd(request):
 
     oList = o.get()
     oList = KpChng(oList, request).get()
-
-    # sList = sortList(oList, o.initial)
 
     form = LogcSrchFrm(initial=o.initial)
 

@@ -1,7 +1,7 @@
 #coding:utf-8
-from django.conf.urls import patterns
-from views import *
+from new31.func import pPatterns
+from views import office
 
-urlpatterns = patterns('',
-    (r'^$', office),
+urlpatterns = pPatterns(
+    (r'^$', office, 'office', 3)
 )
