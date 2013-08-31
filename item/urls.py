@@ -3,5 +3,5 @@ from new31.func import pPatterns
 from views import items
 
 urlpatterns = pPatterns(
-    (r'^item\/$', items, 'items', 3)
+    (r'^item\/$', items, 3)
 )

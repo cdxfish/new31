@@ -166,6 +166,7 @@ APPS = {
     'log':'',
     'upload':'',
     'print':'',
+    'bom':'',
     }
 
 

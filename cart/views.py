@@ -1,6 +1,7 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from decorator import itemshow, checkCartDr
@@ -52,7 +53,7 @@ def checkout(request):
     return render_to_response('checkout.htm', locals(), context_instance=RequestContext(request))
 
 
-@postDrR('/cart/')
+@postDrR('cart')
 @checkCartDr
 @chLogcsDr
 @chFncDr
@@ -69,22 +70,22 @@ def submit(request):
         messages.success(request, u'感谢您在本店购物！请记住您的订单号: %s' % o.sn)
 
         if request.user.is_authenticated():
-            return HttpResponseRedirect(request.nPath[u'我的订单'])
+            return HttpResponseRedirect(reverse('myOrd'))
         else:
             return rdrtIndex()
 
 
 @itemshow
-def buy(request):
+def buy(request, sid):
     u"""加入购物车"""
-    CartSess(request).pushBySid(request.GET.get('id'))
+    CartSess(request).pushBySid(int(sid))
 
-    return HttpResponseRedirect(request.nPath[u'购物车'])
+    return HttpResponseRedirect(reverse('cart'))
 
 
-def delete(request):
+def delInCart(request, mark):
     u"""取出购物车"""
-    CartSess(request).delete(int(request.GET.get('id')))
+    CartSess(request).delete(int(mark))
 
     return rdrtBck(request)
 

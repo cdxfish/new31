@@ -3,5 +3,5 @@ from new31.func import pPatterns
 from views import bom
 
 urlpatterns = pPatterns(
-    (r'^$', bom, 'bom', 3)
+    (r'^$', bom, 3)
 )

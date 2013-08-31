@@ -18,7 +18,7 @@
           </tr>
 {% for iiii in vvv %}
           <tr align="center">
-            <td width="80px"><a href="{{ request.pPath.订单 }}{{ iiii.sn }}/">{{ iiii.sn }}</a></td>
+            <td width="80px"><a href="{% url 'order:viewOrd' iiii.sn %}">{{ iiii.sn }}</a></td>
             <td>{{ iiii.get_typ_display }} | {{ iiii.fnc.cod.get_cod_display }}</td>
             <td>{{ iiii.logcs.consignee }} [ {{ iiii.logcs.tel }} ]</td>
             <td width="220px">{% if iiii.form %}{{ iiii.form.dman }}{% else %}{{ iiii.logcs.dman }}{% endif %}</td>
@@ -34,7 +34,7 @@
 {% endfor %}
           <tr>
             <td align="center">地址</td>
-            <td colspan="5"><a href="{{ request.pPath.地图 }}?k={{ iiii.logcs.address|urlencode }}" target="_blank">[ {{ iiii.logcs.area }} ] {{ iiii.logcs.address }}</a></td>
+            <td colspan="5"><a href="{% url 'logistocs:baiduMap' iiii.logcs.address|urlencode %}" target="_blank">[ {{ iiii.logcs.area }} ] {{ iiii.logcs.address }}</a></td>
           </tr>
 {% endfor %}
 {% endfor %}

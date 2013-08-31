@@ -1,14 +1,14 @@
 #coding:utf-8
+u"""生产"""
 from django.shortcuts import render_to_response
+from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from decorator import proDr
 from new31.func import rdrtBck, page
-
-
 # Create your views here.
 
 def produce(request):
-    u"""生产: 生产"""
+    u"""生产"""
     from forms import ProFrm
 
     o = ProSerch(request)
@@ -23,7 +23,7 @@ def produce(request):
     return render_to_response('produceui.htm', locals(), context_instance=RequestContext(request))
 
 def sortList(oList, initial):
-    u"""生产: 订单排序"""
+    u"""订单排序"""
     _oList = {}
     for i in oList:
         
@@ -63,7 +63,7 @@ def sortList(oList, initial):
 
 @proDr
 def modifyPro(request, s):
-    u"""生产: 生产状态修改"""
+    u"""生产状态修改"""
     from models import Pro
 
     Pro.objects.cStatus(request.GET.get('id'), s)
@@ -71,27 +71,27 @@ def modifyPro(request, s):
     return rdrtBck(request)
 
 def nullPro(request):
-    u"""生产: 生产状态修改-> 生产未产"""    
+    u"""生产状态修改-> 生产未产"""    
 
     return modifyPro(request, 0)
     
 def requirePro(request):
-    u"""生产: 生产状态修改-> 生产产求"""    
+    u"""生产状态修改-> 生产产求"""    
 
     return modifyPro(request, 1)
     
 def duringPro(request):
-    u"""生产: 生产状态修改-> 生产产中"""    
+    u"""生产状态修改-> 生产产中"""    
 
     return modifyPro(request, 2)
 
 def refusePro(request):
-    u"""生产: 生产状态修改-> 生产拒产"""    
+    u"""生产状态修改-> 生产拒产"""    
 
     return modifyPro(request, 3)
 
 def readyPro(request):
-    u"""生产: 生产状态修改-> 生产已产"""    
+    u"""生产状态修改-> 生产已产"""    
 
     return modifyPro(request, 4)
 
@@ -140,7 +140,7 @@ class ProPur(BsPur):
         from models import Pro
 
         super(ProPur, self).__init__(oList, request)
-        self.path = request.pPath[u'生产']
+        self.path = reverse('produce:produce')
 
         pro = Pro
         self.chcs = pro.chcs

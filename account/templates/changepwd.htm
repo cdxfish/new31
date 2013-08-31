@@ -4,15 +4,15 @@
     <div class="subMenu">
         <h4>设置</h4>
         <ul>
-            <li><a href="{{ request.nPath.个人设置 }}">基本资料</a></li>
-            <li><a href="{{ request.nPath.修改密码 }}" class="select">密码</a></li>
+            <li><a href="{% url 'settings' %}">基本资料</a></li>
+            <li><a href="{% url 'changepwd' %}" class="select">密码</a></li>
         </ul>
     </div>
 {% endblock %}
 
 {% block content %}
         <div class="pWhite">
-            <form action="{{ request.nPath.保存密码 }}" method="post">
+            <form action="{% url 'cPwd' %}" method="post">
 {% for i in frm %}
                 <div class="formBar">
                     <label>{{ i.label }}</label>

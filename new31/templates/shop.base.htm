@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>{% block title %}{{ title }} {% endblock %}31客 - 源自欧洲经典口味！</title>
+    <title>{% block title %}{% if request.title %}{{ request.title }} {% endif %}{% endblock %}31客 - 源自欧洲经典口味！</title>
     <meta name="Keywords" content="{% block keywords %}31客,31客蛋糕,蛋糕{% endblock %}" />
     <meta name="Description" content="{% block description %}蛋糕电子商务{% endblock %}" />
     {% block meta %}{% endblock %}
@@ -21,7 +21,7 @@
 <body>
     <div id="header">
         <div class="toolBar">
-            <a href="/" title="31客" class="logo" ></a>
+            <a href="{% url 'shop:shop' %}" title="31客" class="logo" ></a>
             <ul class="fl">
                 <li><a href="/pub/">大客户</a></li>
                 <li><a href="/about/">订购指南</a></li>
@@ -35,17 +35,17 @@
                     </form>
                 </li>
                 <li class="messageBox">
-                    <a id="lnkTopMessage" href="{{ request.nPath.我的订单 }}" class="newMessage" title="新消息"><span id="spanTopMessage" title="新消息">{{ user.allMsg|default:0 }}</span></a>
+                    <a id="lnkTopMessage" href="{% url 'account:myOrd' %}" class="newMessage" title="新消息"><span id="spanTopMessage" title="新消息">{{ user.allMsg|default:0 }}</span></a>
                     <div id="pnlTopMessage" class="messagePop" style="display:none;">
                         <h3>新消息</h3>
                         <ul>
-                            <li><a href="{{ request.nPath.我的订单 }}">新订单（ {{ user.newOrd|default:0 }} ）</a></li>
+                            <li><a href="{% url 'account:myOrd' %}">新订单（ {{ user.newOrd|default:0 }} ）</a></li>
                             <li><a href="/account/messages/">新留言（ {{ user.newMsg|default:0 }} ）</a></li>
                         </ul>
                         <a class="confirm boxClose" href="javascript:void(0)">关闭</a>
                     </div>
                 </li>
-                <li><a href="/cart/">购物车</a></li>
+                <li><a href="{% url 'cart:cart' %}">购物车</a></li>
 {% if user.is_authenticated %}
                 <li class="messageBox">
                     <a id="lnkTopSetting" class="pic">设置<b></b></a>
@@ -53,25 +53,25 @@
                         <h3>{{ user}}</h3>
                         <ul>
                             <li class="email"><em>{{ user.email}}</em></li>
-                            <li><a href="{{ request.nPath.我的订单 }}">我的订单</a></li>
-                            <li><a href="{{ request.nPath.个人设置 }}">个人设置</a></li>
-                            <li><a href="{{ request.nPath.修改密码 }}">修改密码</a></li>
+                            <li><a href="{% url 'account:myOrd' %}">我的订单</a></li>
+                            <li><a href="{% url 'account:settings' %}">个人设置</a></li>
+                            <li><a href="{% url 'account:changepwd' %}">修改密码</a></li>
 {% if user.is_staff %}
-                            <li><a href="{{ request.pPath.管理中心 }}" target="_blank">管理中心</a></li>
+                            <li><a href="{% url 'office:office' %}" target="_blank">管理中心</a></li>
 {% endif %}
 {% if user.is_superuser %}
-                            <li><a href="{{ request.nPath.站点管理 }}" target="_blank">站点管理</a></li>
+                            <li><a href="{% url 'admin:index' %}" target="_blank">站点管理</a></li>
 {% endif %}
                         </ul>
-                        <a class="confirm" href="/account/logout/">退出登录</a>
+                        <a class="confirm" href="{% url 'account:logout' %}">退出登录</a>
                    </div>
                 </li>
 {% else %}
                 <li class="messageBox">
-                    <a href="/account/login/" id="lnkTopLogin" class="login">登录</a>
+                    <a href="{% url 'account:login' %}" id="lnkTopLogin" class="login">登录</a>
                     <div id="loginMessage" class="messagePop" style="display: none;">
                         <div class="topLoginBox">
-                            <form action="/account/login/" method="post">{% csrf_token %}
+                            <form action="{% url 'account:login' %}" method="post">{% csrf_token %}
                                 <ul>
                                     <li><label for="UserName">帐号：</label><input name="username" type="text" placeholder="用户名/邮箱" id="UserName" /></li>
                                     <li><label for="Password">密码：</label><input name="password" type="password" id="Password" /></li>
@@ -96,10 +96,10 @@
                 <li><p><span class="txt">美食，同大家一齐分享。</span><br><span class="txtFrom">—— 31客</span></p></li>
             </ul>
             <ul class="menu">
-                <li><a  href="/tag/cake/">蛋糕</a></li>
-                <li><a href="/tag/cookie/">曲奇</a><span></span></li>
-                <li><a href="/tag/chocolate/">巧克力</a></li>
-                <li><a href="/tag/pie/">水果派</a></li>
+                <li><a  href="{% url 'tag:tagShow' 'cake' %}">蛋糕</a></li>
+                <li><a href="{% url 'tag:tagShow' 'cookie' %}">曲奇</a><span></span></li>
+                <li><a href="{% url 'tag:tagShow' 'chocolate' %}">巧克力</a></li>
+                <li><a href="{% url 'tag:tagShow' 'pie' %}">水果派</a></li>
             </ul>
         </div>
     </div>

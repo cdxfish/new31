@@ -1,4 +1,5 @@
 #coding:utf-8
+u"""备货"""
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from new31.func import rdrtBck
@@ -6,7 +7,7 @@ from new31.decorator import rdrtBckDr
 import datetime
 # Create your views here.
 
-def inv(request):
+def inventory(request):
     u"""备货"""
     from forms import InvSrchFrm
 
@@ -46,7 +47,7 @@ def sort(pro):
     return [v for i,v in _pro.items()]
 
 
-def iList(request):
+def stockInv(request):
     u"""备货清单"""
     from item.models import Item
 
@@ -55,33 +56,33 @@ def iList(request):
     return render_to_response('inventorylist.htm', locals(), context_instance=RequestContext(request))
 
 @rdrtBckDr(u'该规格已下架')
-def cOnl(request):
+def cOnlInv(request, id):
     u"""备货选择"""
     from models import InvPro
 
-    InvPro.objects.cOnl(int(request.GET.get('id')))
+    InvPro.objects.cOnl(id=id)
 
     return rdrtBck(request)
 
-def default(request):
+def defaultInv(request, s):
     u"""备货格式化"""
     from models import InvNum, InvPro
 
-    InvNum.objects.default(InvSrch(request).initial['s'])
+    InvNum.objects.default(s)
 
     return rdrtBck(request)
 
-def minus(request):
+def minusInv(request, id):
     u"""备货减"""
     from models import InvNum
-    InvNum.objects.minus(request.GET.get('id'))
+    InvNum.objects.minus(id)
 
     return rdrtBck(request)
 
-def plus(request):
+def plusInv(request, id):
     u"""备货加"""
     from models import InvNum
-    InvNum.objects.plus(request.GET.get('id'))
+    InvNum.objects.plus(id)
 
     return rdrtBck(request)
 
@@ -119,7 +120,7 @@ class InvPur(BsPur):
         from models import InvPro
 
         super(InvPur, self).__init__(oList, request)
-        self.path = request.pPath[u'备货']
+        self.path = reverse('inventory:inventory')
 
         self.chcs = InvPro.typ
         self.action = InvPro.act

@@ -25,15 +25,3 @@ def forOprerate(parser, token):
     value = parser.compile_filter(text_name)  
 
     return oprerateTag(value)
-
-
-
-# @register.filter(name='optr')
-# @register.inclusion_tag('link.html', takes_context=True)
-# def forOprerate(value):
-#     s = ''
-#     for i,v in value.action.items():
-#         for ii,vv in v:
-#           s += '<a href="%s%s/?sn=%s" class="button">%s</a>' % (i, ii, value.sn, vv)
-
-#     return s

@@ -1,5 +1,7 @@
 #coding:utf-8
+u"""订单"""
 from django.shortcuts import render_to_response
+from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.template import RequestContext
 from django.contrib import messages
@@ -16,7 +18,21 @@ import time, datetime
 # Create your views here.
 
 def ords(request):
-    u"""订单: 订单"""
+    u"""订单"""
+    from forms import OrdSrchFrm
+    from logistics.views import KpChng
+
+    o = OrdSerch(request)
+    oList = o.get()
+    oList = OrdPur(oList, request).get()
+    oList = KpChng(oList, request).get()
+
+    form = OrdSrchFrm(initial=o.initial)
+
+    return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
+
+def viewOrd(request):
+    u"""查看订单"""
     from forms import OrdSrchFrm
     from logistics.views import KpChng
 
@@ -35,7 +51,7 @@ def ords(request):
 @chFncDr
 @subDr
 def submitOrd(request):
-    u"""订单: 订单提交"""
+    u"""订单提交"""
     from logistics.views import LogcSess
 
     logcs = LogcSess(request).setByDict(request.POST.dict())
@@ -50,13 +66,13 @@ def submitOrd(request):
         return rdrRange(request.pPath[u'订单'], logcs.sess['date'], o.sn)
 
 def newOrdFrm(request):
-    u"""订单: 新单表单"""
+    u"""新单表单"""
     OrdSess(request).setSzero()
 
     return editOrdFrm(request)
 
 def editOrdFrm(request):
-    u"""订单: 订单编辑表单"""
+    u"""订单编辑表单"""
     from cart.views import CartSess
     from forms import ItemsForm, ordFrm
     from logistics.forms import logcsFrm
@@ -75,21 +91,21 @@ def editOrdFrm(request):
 
 @ordDr
 def modifyOrd(request, s):
-    u"""订单: 订单状态修改"""
+    u"""订单状态修改"""
     from models import Ord
     Ord.objects.cStatus(request.GET.get('sn'), s)
 
     return rdrtBck(request)
 
 def copyOrd(request):
-    u"""订单: 订单复制"""
+    u"""订单复制"""
     OrdSess(request).copy(int(request.GET.get('sn')))
 
     return HttpResponseRedirect(request.pPath[u'新订单'])
 
 @ordDr
 def editOrd(request):
-    u"""订单: 订单状态修改-> 订单编辑"""
+    u"""订单状态修改-> 订单编辑"""
     from models import Ord
     Ord.objects.cStatus(request.GET.get('sn'), 1)
 
@@ -98,35 +114,35 @@ def editOrd(request):
     return HttpResponseRedirect(request.pPath[u'编辑订单'])
 
 def confirmOrd(request):
-    u"""订单: 订单状态修改-> 订单确认"""
+    u"""订单状态修改-> 订单确认"""
 
     return modifyOrd(request, 2)
 
 def nullOrd(request):
-    u"""订单: 订单状态修改-> 订单无效"""
+    u"""订单状态修改-> 订单无效"""
 
     return modifyOrd(request, 3)
 
 def stopOrd(request):
-    u"""订单: 订单状态修改-> 订单止单"""
+    u"""订单状态修改-> 订单止单"""
 
     return modifyOrd(request, 4)
 
 @postDr
 @rdrtBckDr('无法添加商品，部分商品已下架。')
 def addItemOrd(request):
-    u"""订单: 添加商品"""
+    u"""添加商品"""
     from cart.views import CartSess
 
     CartSess(request).pushByIDs(request.POST.getlist('i'))
     return rdrtBck(request)
 
 @rdrtBckDr('无法删除商品，请与管理员联系。')
-def delItemOrd(request):
-    u"""订单: 删除商品"""
+def delItemOrd(request, mark):
+    u"""删除商品"""
     from cart.views import CartSess
 
-    CartSess(request).delete(int(request.GET.get('mark')))
+    CartSess(request).delete(int(mark))
 
     return rdrtBck(request)
 
@@ -285,7 +301,7 @@ class OrdPur(BsPur):
         from models import Ord
 
         super(OrdPur, self).__init__(oList, request)
-        self.path = request.pPath[u'订单']
+        self.path = reverse('order:ords')
 
         self.chcs = Ord.chcs
         self.action = Ord.act

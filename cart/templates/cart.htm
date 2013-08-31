@@ -8,7 +8,7 @@
 
 {% block content %}
         <div class="pWhite">
-            <form name="toCart" method="post" action="cart/">
+            <form name="toCart" method="post" action="{% url 'cart:cart' %}">
                 <table width="100%" cellpadding="3" class="mBottom50">
                     <tr>
                         <th width="30%">商品名称</th>
@@ -21,14 +21,14 @@
 {% if cart.items %}
 {% for i in cart.items %}
                     <tr align="center">
-                        <td><a href="{{ request.nPath.标签 }}{{ i.item.name|urlencode }}/">{{ i.item.name }}</a></td>
+                        <td><a href="{% url 'tag:tagShow' i.item.name|urlencode %}">{{ i.item.name }}</a></td>
                         <td>{{ i.spec.spec.value }}</td>
                         <td><span id="am{{ i.mark }}">{{ i.nfee|floatformat:2 }}</span></td>
                         <td>
                             <input type="text" name="{{ i.mark }}" value="{{ i.num }}" size="1" class="iNum" />
                         </td>
                         <td><span id="st{{ i.mark }}">{{ i.total|floatformat:2 }}</span></td>
-                        <td align="right"><a href="{{ request.nPath.删除商品 }}?id={{ i.mark }}" class="btnB bBtn">删除</a></td>
+                        <td align="right"><a href="{% url 'cart:delInCart' i.mark %}" class="btnB bBtn">删除</a></td>
                     </tr>
 {% endfor %}
                     <tr class="bLine">
@@ -43,21 +43,21 @@
 
                     <tr>
                         <td colspan="4">
-                            <a href="/tag/" class="btnB bBtn">继续购物</a>
+                            <a href="{% url 'tag:randomShow' %}" class="btnB bBtn">继续购物</a>
                         </td>
-                        <td align="right" colspan="2"><a href="/cart/consignee/" class="btnB bBtn">结算</a></td>
+                        <td align="right" colspan="2"><a href="{% url 'cart:cnsgn' %}" class="btnB bBtn">结算</a></td>
                     </tr>
                 </table>
                 <table width="100%">
                     <tr>
                         <td>是否额外购买生日套装（生日牌/冷烟花/蜡烛）？</td>
                         <td>单价：3元/份</td>
-                        <td align="right"><a href="/cart/buy/?id=115" class="btnB bBtn">是的，我需要增加生日套装</a></td>
+                        <td align="right"><a href="{% url 'cart:buy' 115 %}" class="btnB bBtn">是的，我需要增加生日套装</a></td>
                     </tr>
                     <tr>
                         <td>除按蛋糕规格免费赠送的餐具数量外（详见下面说明），是否额外需要餐具？</td>
                         <td>单价：1元/份</td>
-                        <td align="right"><a href="/cart/buy/?id=116" class="btnB bBtn">是的，我需要增加餐具</a></td>
+                        <td align="right"><a href="{% url 'cart:buy' 116 %}" class="btnB bBtn">是的，我需要增加餐具</a></td>
                     </tr>
                 </table>
             </form>
@@ -67,14 +67,38 @@
             <p><img src="{{ STATIC_URL }}images/delivery_areas.jpg" /></p>
             <p><br /></p>
             <p>蛋糕规格及免费配送餐具：</p>
-            <ul class="specLi">
-                <li>1.0磅：约14×14(cm)&nbsp;&nbsp;适合2-3人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送3套餐具</li>
-                <li>1.5磅：约16×16(cm)&nbsp;&nbsp;适合5-6人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送6套餐具</li>
-                <li>2.5磅：约20×20(cm)&nbsp;&nbsp;适合8-9人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送10套餐具</li>
-                <li>3.5磅：约23×23(cm)&nbsp;&nbsp;适合12-13人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送15套餐具</li>
-                <li>5.5磅：约26×26(cm)&nbsp;&nbsp;适合18-22人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送25套餐具</li>
-                <li>10磅：约36×36(cm)&nbsp;&nbsp;&nbsp;适合35-40人食用&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;免费配送40套餐具</li>
-            </ul>
+            <table class="sTable">
+                <tr>
+                    <td>1.0磅：约14×14(cm)</td>
+                    <td>适合2-3人食用</td>
+                    <td>免费配送3套餐具</td>
+                </tr>
+                <tr>
+                    <td>1.5磅：约16×16(cm)</td>
+                    <td>适合5-6人食用</td>
+                    <td>免费配送6套餐具</td>
+                </tr>
+                <tr>
+                    <td>2.5磅：约20×20(cm)</td>
+                    <td>适合8-9人食用</td>
+                    <td>免费配送10套餐具</td>
+                </tr>
+                <tr>
+                    <td>3.5磅：约23×23(cm)</td>
+                    <td>适合12-13人食用</td>
+                    <td>免费配送15套餐具</td>
+                </tr>
+                <tr>
+                    <td>5.5磅：约26×26(cm)</td>
+                    <td>适合18-22人食用</td>
+                    <td>免费配送25套餐具</td>
+                </tr>
+                <tr>
+                    <td>10磅：约36×36(cm)</td>
+                    <td>适合35-40人食用</td>
+                    <td>免费配送40套餐具</td>
+                </tr>
+            </table>
             <p>订购10磅(含)以上规格的蛋糕请与客服人员联系，订购电话：4000-5927-31</p>
         </div>
 {% endblock %}

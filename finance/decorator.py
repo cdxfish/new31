@@ -1,12 +1,13 @@
 #coding:utf-8
 from django.contrib import messages
 from new31.func import rdrtBck
-
+from functools import wraps
 # Create your decorator here.
 
 
 # 支付状态操作装饰器
 def fncDetr(func):
+    @wraps(func)
     def _func(request, s):
         from finance.models import Fnc
         sn = request.GET.get('sn')
@@ -29,6 +30,7 @@ def fncDetr(func):
 
 # 支付方式信息检查装饰器
 def chFncDr(func):
+    @wraps(func)
     def _func(request):
         from forms import FncFrm
         from views import FncSess

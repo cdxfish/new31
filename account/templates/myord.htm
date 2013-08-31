@@ -14,12 +14,12 @@
                 </tr>
 {% for i in ords %}
                 <tr align="center">
-                    <td><a href="{{ request.nPath.订单详情 }}?sn={{ i.sn }}">{{ i.sn }}</a></td>
+                    <td><a href="{% url 'viewOrd' i.sn %}">{{ i.sn }}</a></td>
                     <td>{{ i.get_typ_display }}</td>
                     <td>{{ i.ordlog_set.all.0.time|date:'Y-m-d H:i:s' }}</td>
                     <td>{{ i.total|floatformat:2 }}</td>
                     <td>{{ i.get_status_display }} | {{ i.logcs.get_status_display }} | {{ i.fnc.get_status_display }}</td>
-                    <td><a href="{{ request.nPath.订单详情 }}?sn={{ i.sn }}">查看详情</a></td>
+                    <td><a href="{% url 'viewOrd' i.sn %}">查看详情</a></td>
                 </tr>
 {% endfor %}
             </table>

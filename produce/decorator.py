@@ -1,11 +1,12 @@
 #coding:utf-8
 from django.contrib import messages
 from new31.func import rdrtBck
-
+from functools import wraps
 # Create your decorator here.
 
 # 生产状态操作装饰器
 def proDr(func):
+    @wraps(func)
     def _func(request, s):
         from produce.models import Pro
 

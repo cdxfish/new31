@@ -3,7 +3,7 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.conf.urls import patterns, url, include
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-import math, random, datetime, re
+import math, random, datetime, re, importlib
 
 
 # 格式化价格,舍弃小数位
@@ -73,8 +73,7 @@ def frmtDate(date):
 def Patterns(apps):
     """全局URL路由策略注册"""
 
-    return patterns('', *[ ( r'^%s/' % i , include('%s.urls' % i, app_name=i ) ) for i in apps ])
-
+    return patterns('', *[ ( r'^%s/' % i , include('%s.urls' % i, namespace=i, app_name=i ) ) for i in apps ])
 
 def pPatterns(*urls):
     """
@@ -84,38 +83,33 @@ def pPatterns(*urls):
     """
     _urls = []
     for i in urls:
-        _url = url(regex=i[0], view=i[1], name=i[2])
-        _url.chcs = 0 if i[3] < 2 else 1
-        _url.typ = i[3] % 2 
+        _url = url(regex=i[0], view=i[1], name=i[1].__name__)
+        _url.chcs = 0 if i[2] < 2 else 1
+        _url.typ = i[2] % 2
+        _url.moduleName = importlib.import_module(i[1].__module__).__doc__
         _urls.append(_url)
 
     return patterns('', *_urls )
 
-def reverses(patterns):
+def resolves(patterns):
     path = [[],[]]
     for i in patterns:
         for ii in i.url_patterns:
-            doc = ii.callback.__doc__
-            if doc:
-                doc = re.sub(r'(\n|\t)', '', ii.callback.__doc__)
+            if ii.moduleName:
+                doc = '%s: ' % ii.moduleName
             else:
-                doc = ii.name
-            try:
-                url = reverse(ii.name)
-            except Exception, e:
-                url = '/%s/%s/' % ( i.app_name, ii._regex)
+                doc = '%s: ' % i.app_name
+            if doc:
+                doc += re.sub(r'(\n|\t)', '', ii.callback.__doc__)
+            else:
+                doc += ii.name
+            path[ii.typ] += [('%s:%s' % (i.app_name, ii.name), doc, ii.chcs)]
 
-            path[ii.typ] += [(url, doc, ii.chcs)]
-
-
-            print url, ii
-            print dir(ii)
-            print ii.name
-            
-    print '=' *40
-    print '=' *40
-    print reverse('order.views.newOrdFrm')
-    print '=' *40
-    print '=' *40
+    path[0].sort()
+    path[1].sort()
+    
+    for i in path:
+        for ii in i:
+            print ii[0], ' ' * 20, ii[1]
 
     return tuple(path[0]), tuple(path[1])

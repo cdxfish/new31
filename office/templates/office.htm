@@ -11,17 +11,17 @@
 {% for i in newOrd %}
         <tr align="center" class="tr_border_top_black">
           <td>{{ i.grouper }}</td>
-          <td><strong><a href="{{ request.pPath.订单 }}?c={{ i.list.0.status }}" target="_blank">{{ i.list|length }}</a></strong></td>
+          <td><strong><a href="{% url 'order:ords' %}?c={{ i.list.0.status }}" target="_blank">{{ i.list|length }}</a></strong></td>
         </tr>
 {% for ii in i.list %}
         <tr align="center">
-          <td colspan="10"><strong><a href="{{ request.pPath.订单 }}?c={{ ii.status }}&k={{ ii.sn }}" target="_blank">{{ ii.sn }}</a></strong></td>
+          <td colspan="10"><strong><a href="{% url 'order:ords' %}?c={{ ii.status }}&k={{ ii.sn }}" target="_blank">{{ ii.sn }}</a></strong></td>
         </tr>
 {% endfor %}
 {% endfor %}
         <tr align="center" class="tr_border_top_black">
           <td>全部</td>
-          <td><strong><a href="{{ request.pPath.订单 }}?c=-1" target="_blank">{{ order|length }}</a></strong></td>
+          <td><strong><a href="{% url 'order:ords' %}?c=-1" target="_blank">{{ order|length }}</a></strong></td>
         </tr>
       </table>
   </li>
@@ -34,17 +34,17 @@
 {% for i in newLogcs %}
         <tr align="center" class="tr_border_top_black">
           <td>{{ i.grouper }}</td>
-          <td><strong><a href="{{ request.pPath.物流 }}?c={{ i.list.0.status }}" target="_blank">{{ i.list|length }}</a></strong></strong></td>
+          <td><strong><a href="{% url 'logistics:logcs' %}?c={{ i.list.0.status }}" target="_blank">{{ i.list|length }}</a></strong></strong></td>
         </tr>
 {% for ii in i.list %}
         <tr align="center">
-          <td colspan="10"><strong><a href="{{ request.pPath.物流 }}?c={{ ii.ord.status }}&k={{ ii.ord.sn }}" target="_blank">{{ ii.ord.sn }}</a></strong></td>
+          <td colspan="10"><strong><a href="{% url 'logistics:logcs' %}?c={{ ii.ord.status }}&k={{ ii.ord.sn }}" target="_blank">{{ ii.ord.sn }}</a></strong></td>
         </tr>
 {% endfor %}
 {% endfor %}
         <tr align="center" class="tr_border_top_black">
           <td>全部</td>
-          <td><strong><a href="{{ request.pPath.物流 }}?c=-1" target="_blank">{{ logcs|length }}</a></strong></td>
+          <td><strong><a href="{% url 'logistics:logcs' %}?c=-1" target="_blank">{{ logcs|length }}</a></strong></td>
         </tr>
       </table>  
   </li>
@@ -57,17 +57,17 @@
 {% for i in newPro %}
         <tr align="center" class="tr_border_top_black">
           <td>{{ i.grouper }}</td>
-          <td><strong><a href="{{ request.pPath.生产 }}?c={{ i.list.0.status }}" target="_blank">{{ i.list|length }}</a></strong></strong></td>
+          <td><strong><a href="{% url 'produce:produce' %}?c={{ i.list.0.status }}" target="_blank">{{ i.list|length }}</a></strong></strong></td>
         </tr>
 {% for ii in i.list %}
         <tr align="center">
-          <td colspan="10"><strong><a href="{{ request.pPath.生产 }}?c={{ ii.status }}&k={{ ii.ord.sn }}" target="_blank">{{ ii.ord.sn }}</a></strong></td>
+          <td colspan="10"><strong><a href="{% url 'produce:produce' %}?c={{ ii.status }}&k={{ ii.ord.sn }}" target="_blank">{{ ii.ord.sn }}</a></strong></td>
         </tr>
 {% endfor %}
 {% endfor %}
         <tr align="center" class="tr_border_top_black">
           <td>全部</td>
-          <td><strong><a href="{{ request.pPath.生产 }}?c=-1" target="_blank">{{ pro|length }}</a></strong></td>
+          <td><strong><a href="{% url 'produce:produce' %}?c=-1" target="_blank">{{ pro|length }}</a></strong></td>
         </tr>
       </table>
   </li>
@@ -80,17 +80,17 @@
 {% for i in newFnc %}
         <tr align="center" class="tr_border_top_black">
           <td>{{ i.grouper }}</td>
-          <td><strong><a href="{{ request.pPath.财务 }}?c={{ i.list.0.status }}" target="_blank">{{ i.list|length }}</a></strong></strong></td>
+          <td><strong><a href="{% url 'finance:fnc' %}?c={{ i.list.0.status }}" target="_blank">{{ i.list|length }}</a></strong></strong></td>
         </tr>
 {% for ii in i.list %}
         <tr align="center">
-          <td colspan="10"><strong><a href="{{ request.pPath.财务 }}?c={{ ii.ord.status }}&k={{ ii.ord.sn }}" target="_blank">{{ ii.ord.sn }}</a></strong></td>
+          <td colspan="10"><strong><a href="{% url 'finance:fnc' %}?c={{ ii.ord.status }}&k={{ ii.ord.sn }}" target="_blank">{{ ii.ord.sn }}</a></strong></td>
         </tr>
 {% endfor %}
 {% endfor %}
         <tr align="center" class="tr_border_top_black">
           <td>全部</td>
-          <td><strong><a href="{{ request.pPath.财务 }}?c=-1" target="_blank">{{ fnc|length }}</a></strong></td>
+          <td><strong><a href="{% url 'finance:fnc' %}?c=-1" target="_blank">{{ fnc|length }}</a></strong></td>
         </tr>
       </table>
   </li>

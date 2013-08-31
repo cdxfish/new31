@@ -3,5 +3,5 @@ from new31.func import pPatterns
 from views import office
 
 urlpatterns = pPatterns(
-    (r'^$', office, 'office', 3)
+    (r'^$', office, 3)
 )

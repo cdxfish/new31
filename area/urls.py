@@ -3,5 +3,5 @@ from new31.func import pPatterns
 from views import area
 
 urlpatterns = pPatterns(
-    (r'^$', area, 'area', 3)
+    (r'^$', area, 3)
 )

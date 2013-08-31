@@ -1,4 +1,5 @@
 #coding:utf-8
+u"""用户中心"""
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
@@ -9,7 +10,7 @@ from decorator import loginDr
 # Create your views here.
 
 def login(request):
-    u"""用户: 用户登录"""
+    u"""用户登录"""
     from django.contrib.auth.forms import AuthenticationForm
 
     # 避免重复登录
@@ -40,7 +41,7 @@ def login(request):
         return rdrtAcc(request)
 
 def logout(request):
-    u"""用户: 用户登出"""
+    u"""用户登出"""
 
     auth.logout(request)
 
@@ -49,7 +50,7 @@ def logout(request):
 
 @loginDr
 def settings(request):
-    u"""用户: 用户设置"""
+    u"""用户设置"""
     from forms import setFrm
     frm = setFrm(request)
 
@@ -57,7 +58,7 @@ def settings(request):
 
 @loginDr
 def saveSet(request):
-    u"""用户: 用户设置保存"""
+    u"""用户设置保存"""
     from models import BsInfo
 
     BsInfo.objects.set(request)
@@ -67,7 +68,7 @@ def saveSet(request):
 
 @loginDr
 def changepwd(request):
-    u"""用户: 用户密码修改"""
+    u"""用户密码修改"""
     from django.contrib.auth.forms import PasswordChangeForm
     frm = PasswordChangeForm(request.user)
 
@@ -77,7 +78,7 @@ def changepwd(request):
 
 @loginDr
 def cPwd(request):
-    u"""用户: 用户密码保存"""
+    u"""用户密码保存"""
     from django.contrib.auth.forms import PasswordChangeForm
 
     frm = PasswordChangeForm(user=request.user, data=request.POST)
@@ -94,7 +95,7 @@ def cPwd(request):
 
 @loginDr
 def myOrd(request):
-    u"""用户: 我的订单"""
+    u"""我的订单"""
     from order.models import Ord
     from produce.models import Pro
 
@@ -107,12 +108,10 @@ def myOrd(request):
     return render_to_response('myord.htm', locals(), context_instance=RequestContext(request))
 
 @loginDr
-def viewOrd(request):
-    u"""用户: 订单详情"""
+def uViewOrd(request, sn):
+    u"""订单详情"""
     from order.models import Ord
     from produce.models import Pro
-
-    sn = request.GET.get('sn')
 
     o = Ord.objects.get(sn=sn)
 
@@ -126,7 +125,7 @@ def viewOrd(request):
     return render_to_response('vieword.htm', locals(), context_instance=RequestContext(request))
 
 def rUserd():
-    u"""用户: 会员数据导入"""
+    u"""会员数据导入"""
     from models import uDATA, BsInfo, Pts
     from django.contrib.auth.models import User
 

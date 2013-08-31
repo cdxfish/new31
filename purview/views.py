@@ -1,11 +1,13 @@
 #coding:utf-8
+u"""权限"""
 from django.contrib import messages
 from new31.func import rdrtBck, rdrtLogin
-
+from django.core.urlresolvers import resolve
+import re
 # Create your views here.
 
 def purview(request):
-    u"""权限: 权限"""
+    u"""权限"""
 
     return render_to_response('purviewui.htm', locals(), context_instance=RequestContext(request))
 
@@ -32,7 +34,9 @@ class URLPurview:
 
         self.errStr = u'权限不足。'
         self.request = request
-        self.request.domElement = [] #页面元素
+        self.request.domElement = resolve(self.request.path) #页面元素加持
+
+        self.request.title = re.sub(r'.*: ', '', self.request.domElement.func.__doc__)
 
         self.isStaff = self.request.user.is_authenticated() and self.request.user.is_staff #用户登录状态
 
@@ -51,7 +55,6 @@ class URLPurview:
             if self.request.user.is_authenticated() and self.request.user.is_staff:
 
                 try:
-                    self.domElement() #页面元素权限加持
                     #用户可进入的页面权限集
                     if not self.request.path in Role.objects.getPathByUser(self.request.user): 
                         return self.error()
@@ -60,16 +63,6 @@ class URLPurview:
 
             else:
                 return rdrtLogin(self.request)
-
-
-    # 页面元素加持
-    def domElement(self):
-        from models import Element
-
-        self.request.domElement = Element.objects.getPath(path=self.request.path)
-
-        return self
-
 
 
     # 用户级错误提示

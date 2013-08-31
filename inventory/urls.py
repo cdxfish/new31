@@ -1,12 +1,12 @@
 #coding:utf-8
 from new31.func import pPatterns
-from views import inv, iList, cOnl, default, minus, plus
+from views import inventory, stockInv, cOnlInv, defaultInv, minusInv, plusInv
 
 urlpatterns = pPatterns(
-    (r'^$', inv, 'inventory', 3),
-    (r'^list\/$', iList, 'invList', 3),
-    (r'^conl\/$', cOnl, 'invCOnl', 3),
-    (r'^default\/$', default, 'invDefault', 3),
-    (r'^minus\/$', minus, 'invmMinus', 3),
-    (r'^plus\/$', plus, 'invPlus', 3)
+    (r'^$', inventory, 3),
+    (r'^list\/$', stockInv, 3),
+    (r'^conl\/(?P<id>\d+)\/$', cOnlInv, 3),
+    (r'^default\/(?P<s>\d{4}-\d{2}-\d{2})\/$', defaultInv, 3),
+    (r'^minus\/(?P<id>\d+)\/$', minusInv, 3),
+    (r'^plus\/(?P<id>\d+)\/$', plusInv, 3)
 )

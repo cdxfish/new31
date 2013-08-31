@@ -2,12 +2,13 @@
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from new31.func import rdrtBck
-
+from functools import wraps
 # Create your decorator here.
 
 # 订单状态操作装饰器
 def ordDr(func):
-    def _func(request, s):
+    @wraps(func)
+    def _func(request, *args, **kwargs):
         from order.models import Ord
         sn = request.GET.get('sn')
         order =  Ord.objects.get(sn=sn)
@@ -22,7 +23,7 @@ def ordDr(func):
 
         else:
 
-            return func(request, s)
+            return func(request, *args, **kwargs)
 
     return _func
 
@@ -30,10 +31,11 @@ def ordDr(func):
 # 订单提交类提示用装饰器(类内部使用)
 def subMsg(s= ''):
     def _func(func):
-        def __func(self):
+        @wraps(func)
+        def __func(self, *args, **kwargs):
             if not self.error:
                 try:
-                    return func(self)
+                    return func(self, *args, **kwargs)
 
                 except Exception, e:
                     self.error = True
@@ -47,10 +49,11 @@ def subMsg(s= ''):
 
 # 订单提交类提示用装饰器
 def subDr(func):
-    def _func(request):
+    @wraps(func)
+    def _func(request, *args, **kwargs):
 
         try:
-            return func(request)
+            return func(request, *args, **kwargs)
         except Exception, e:
             return rdrtBck(request)
 

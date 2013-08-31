@@ -1,13 +1,14 @@
 #coding:utf-8
-
+from functools import wraps
 # Create your decorator here.
 
 # AJAX提示用
 def ajaxMsg(msg):
     def _func(func):
-        def __func(request):
+    	@wraps(func)
+        def __func(request, *args, **kwargs):
             try:
-                return func(request)
+                return func(request, *args, **kwargs)
 
             except:
                 from views import AjaxRJson

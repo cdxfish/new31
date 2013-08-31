@@ -1,5 +1,7 @@
 {% extends "shop.base.htm" %}
 
+{% block title %}{{ tag }} {% endblock %}
+
 {% block js %}
     <script type="text/javascript" src="{{ STATIC_URL }}tag/js/tag.configuration.js"></script>
 {% endblock %}
@@ -11,7 +13,7 @@
          <li>
                 <img alt="{{ i.item.name }}" title="{{ i.item.name }}" data-src="{{ i.img.url }}" class="styp{{ i.typ }}" />
                 <div class="pinSide{{ i.typ }}">
-                    <h2><a href="{{ request.nPath.标签 }}{{ i.item.name|urlencode }}/">{{ i.item.name }}</a></h2>
+                    <h2><a href="{% url 'tagShow' i.item.name|urlencode %}">{{ i.item.name }}</a></h2>
                     <p class="pinDes">{{ i.item.itemdesc_set.getAll.0.desc }}</p>
                     <ul class="pinInfo">
                         <li class="addDate">{{ i.item.addTime }}</li>
@@ -20,12 +22,12 @@
                     </ul>
                     <div class="tags">
 {% for ii in i.item.tag.getByRandom|slice:":9" %}
-                        <a href="/tag/{{ ii.tag|urlencode }}/" class="tags_{{ tagsCls|random }}">{{ ii.tag }}</a>
+                        <a href="{% url 'tagShow' ii.tag|urlencode %}" class="tags_{{ tagsCls|random }}">{{ ii.tag }}</a>
 {% endfor %}
                     </div>
                     <div class="vote">
-                        <a class="btnLike" href="/ajax/like/?id={{ i.item.id }}">喜欢</a>
-                        <a class="btnReplay" href="/ajax/itemspec/?id={{ i.item.id }}">购买</a>
+                        <a class="btnLike" href="{% url 'itemLike' i.item.id %}">喜欢</a>
+                        <a class="btnReplay" href="{% url 'getSpec' i.item.id %}">购买</a>
                     </div>
                 </div>
             </li>

@@ -1,12 +1,13 @@
 #coding:utf-8
+u"""支付"""
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 # Create your views here.
 
 def pays(request):
-	u"""支付: 支付方式"""
+    u"""支付方式"""
 
-	pay = Pay.objects.select_related().all()
+    pay = Pay.objects.select_related().all()
 
-	return render_to_response('paylist.htm', locals(), context_instance=RequestContext(request))
+    return render_to_response('paylist.htm', locals(), context_instance=RequestContext(request))

@@ -7,19 +7,20 @@ from new31.func import Patterns
 from django.contrib import admin
 admin.autodiscover()
 
-
 urlpatterns = patterns('',
     # Examples:
-    (r'^(nn\/$|cs\/$|km\/$|^$)', include('%s.urls' % settings.APPS.keys()[0], app_name=settings.APPS.keys()[0])),
+    url(r'^(nn\/$|cs\/$|km\/$|^$)', 'shop.views.shop', name='shop'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
-    (r'^admin/doc/', include('django.contrib.admindocs.urls', app_name='admindocs')),
+    # (r'^admin/doc/', include('django.contrib.admindocs.urls', app_name='admindocs')),
 
     # Uncomment the next line to enable the admin:
-    (r'^admin/', include(admin.site.urls, app_name='admin')),
+    # (r'^admin/', include(admin.site.urls, app_name='admin')),
+    (r'^admin/', include(admin.site.urls)),
+    # *[ ( r'^%s/' % i , include('%s.urls' % i, namespace=i, app_name=i ) ) for i in settings.APPS.keys() ]
 )
 
-urlpatterns += Patterns(settings.APPS.keys()[1:])
+urlpatterns += Patterns(settings.APPS.keys())
 
 if settings.DEBUG:
     urlpatterns += patterns('', 

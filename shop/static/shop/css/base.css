@@ -47,6 +47,7 @@ header,footer,article,aside,section,nav,menu,hgroup{display:block;margin:0;paddi
 .lBottom10{margin-left:10px}
 .rlPadding60{padding:0 60px;}
 .bLine{border:solid rgb(229, 229, 229);border-width:0 0 1px 0;}
+.sTable tr td{padding:0 10px}
 .sBtn{height:25px;line-height:25px;padding:0 8px;font-size:11px;}
 .bBtn{height:38px;line-height:38px;padding:0 30px;}
 .btnB,.btnB:focus{background-color:#4D90FE;background-image:-moz-linear-gradient(center top , #4D90FE, #4787ED);background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#4D90FE), color-stop(100%,#4787ED));background:-webkit-linear-gradient(top, #4D90FE 0%,#4787ED 100%);background:-o-linear-gradient(top, #4D90FE 0%,#4787ED 100%);background:linear-gradient(top, #4D90FE 0%,#4787ED 100%);border:1px solid #3079ED;color:#FFFFFF;text-shadow:0 1px rgba(0, 0, 0, 0.1);text-transform:uppercase;border-radius:2px 2px 2px 2px;cursor:pointer;font-weight:bold;outline:0 none;text-align:center;display:inline-block;text-decoration:none;}

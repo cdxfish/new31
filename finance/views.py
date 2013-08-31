@@ -1,5 +1,6 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
+from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from decorator import fncDetr
 from new31.func import rdrtBck
@@ -130,8 +131,7 @@ class FncPur(BsPur):
         from models import Fnc
 
         super(FncPur, self).__init__(oList, request)
-        self.path = request.pPath[u'财务']
-
+        self.path = reverse('finance:fnc')
         self.chcs = Fnc.chcs
         self.action = Fnc.act
 

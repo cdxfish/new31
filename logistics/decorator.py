@@ -1,11 +1,12 @@
 #coding:utf-8
 from django.contrib import messages
 from new31.func import rdrtBck
-
+from functools import wraps
 # Create your decorator here.
 
 # 物流状态操作装饰器
 def logcsDr(func):
+    @wraps(func)
     def _func(request, s):
         from logistics.models import Logcs
 
@@ -28,6 +29,7 @@ def logcsDr(func):
 
 # 物流师傅必选装饰器
 def dManDr(func):
+    @wraps(func)
     def _func(request, s):
         from logistics.models import Logcs
 
@@ -47,6 +49,7 @@ def dManDr(func):
 
 # Ajax物流偏移量以及物流师傅选择装饰器
 def aLogcsDr(func):
+    @wraps(func)
     def _func(request):
         from logistics.models import Logcs
         from ajax.views import AjaxRJson
@@ -70,6 +73,7 @@ def aLogcsDr(func):
 
 # 物流信息检查装饰器
 def chLogcsDr(func):
+    @wraps(func)
     def _func(request):
         from forms import LogcsFrm
         from views import LogcSess

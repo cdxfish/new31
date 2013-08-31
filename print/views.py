@@ -1,11 +1,12 @@
 #coding:utf-8
+u"""票据打印"""
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 # Create your views here.
 
 def printOrd(request):
-    u"""票据打印: 票据打印"""
+    u"""票据打印"""
     from logistics.forms import LogcSrchFrm
     from logistics.views import LogcsSerch, KpChng, sortList
 

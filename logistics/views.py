@@ -1,5 +1,7 @@
 #coding:utf-8
+u"""物流"""
 from django.shortcuts import render_to_response
+from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.db.models import Q
 from django.http import HttpResponseRedirect
@@ -12,7 +14,7 @@ import time,datetime
 # Create your views here.
 
 def logcs(request):
-    u"""物流: 物流"""
+    u"""物流"""
     from forms import LogcSrchFrm
     from finance.views import FncPur
     from order.views import OrdPur
@@ -31,8 +33,13 @@ def logcs(request):
 
     return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))
 
+def baiduMap(request, address):
+    u"""地图"""
+
+    return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))
+
 def logcsView(request):
-    u"""物流: 物流安排"""
+    u"""物流安排"""
     from forms import LogcSrchFrm
     from finance.views import FncPur
     from order.views import OrdPur
@@ -51,7 +58,7 @@ def logcsView(request):
 
 
 def sortList(oList, initial):
-    u"""物流: 订单排序"""
+    u"""订单排序"""
     _oList = {}
     for i in oList:
         
@@ -73,7 +80,7 @@ def sortList(oList, initial):
     return _oList
 
 def logcsEditFrm(request):
-    u"""物流: 物流编辑表单"""
+    u"""物流编辑表单"""
     from logistics.forms import logcsFrm
 
     logcs = logcsFrm(request)
@@ -83,7 +90,7 @@ def logcsEditFrm(request):
 
 @postDr
 def logcsSub(request):
-    u"""物流: 物流编辑表单提交"""
+    u"""物流编辑表单提交"""
     from order.views import OrdSess
     from models import Logcs
 
@@ -100,7 +107,7 @@ def logcsSub(request):
 @logcsDr
 @dManDr
 def modifyLogcs(request, s):
-    u"""物流: 物流状态修改"""
+    u"""物流状态修改"""
     from models import Logcs
 
     Logcs.objects.cStatus(request.GET.get('sn'), s)
@@ -108,12 +115,12 @@ def modifyLogcs(request, s):
     return rdrtBck(request)
 
 def logcsUnsent(request):
-    u"""物流: 物流状态修改-> 物流未发"""
+    u"""物流状态修改-> 物流未发"""
 
     return modifyLogcs(request, 0)
 
 def logcsEdit(request):
-    u"""物流: 物流状态修改-> 物流编辑"""
+    u"""物流状态修改-> 物流编辑"""
     from models import Logcs
     from order.views import OrdSess
 
@@ -127,23 +134,23 @@ def logcsEdit(request):
     return HttpResponseRedirect(request.pPath[u'编辑物流'])
 
 def logcsShip(request):
-    u"""物流: 物流状态修改-> 物流已发"""
+    u"""物流状态修改-> 物流已发"""
 
     return modifyLogcs(request, 2)
 
 def logcsRefused(request):
-    u"""物流: 物流状态修改-> 物流拒签"""
+    u"""物流状态修改-> 物流拒签"""
 
     return modifyLogcs(request, 3)
 
 def logcsSign(request):
-    u"""物流: 物流状态修改-> 物流已签"""
+    u"""物流状态修改-> 物流已签"""
 
     return modifyLogcs(request, 4)
 
 @logcsDr
 def logcsStop(request):
-    u"""物流: 物流状态修改-> 物流止送"""
+    u"""物流状态修改-> 物流止送"""
     from models import Logcs
     # from order.models import Ord
     # from finance.models import Fnc
@@ -298,7 +305,7 @@ class LogcsPur(BsPur):
 
         super(LogcsPur, self).__init__(oList, request)
 
-        self.path = request.pPath[u'物流']
+        self.path = reverse('logistics:logcs')
 
         self.chcs = Logcs.chcs
         self.action = Logcs.act

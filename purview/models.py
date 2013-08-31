@@ -38,32 +38,9 @@ class elementManager(models.Manager):
 
 class Element(models.Model):
     from django.conf import settings
-    from new31.func import Patterns, reverses
-    from django.core.urlresolvers import reverse
-
-    patterns = Patterns(settings.APPS.keys())
-    paths = reverses(patterns)
-
-    # paths = [[],[]]
-    # for i in patterns:
-    #     for ii in i.url_patterns:
-    #         doc = ii.callback.__doc__
-    #         if doc:
-    #             doc = re.sub(r'(\n|\t)', '', ii.callback.__doc__)
-    #         else:
-    #             doc = ii.name
-
-    #         try:
-    #             url = reverse(ii.name)
-    #         except Exception, e:
-    #             url = 'except', '/%s/%s/' % ( i.app_name, ii.name)
-
-    #         print url, ii
-    #         print dir(ii)
-    #         print ii.name
-
-    #         paths[ii.typ] += [(url, doc, ii.chcs)]
-
+    from new31.func import Patterns, resolves
+    
+    paths = resolves(Patterns(settings.APPS.keys()))
     nPath = tuple(paths[0])
     pPath = tuple(paths[1])
 
