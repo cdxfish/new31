@@ -10,6 +10,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^(nn\/$|cs\/$|km\/$|^$)', 'shop.views.shop', name='shop'),
+    url(r'^search/', include('haystack.urls', app_name='haystack')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),

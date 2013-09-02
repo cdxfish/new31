@@ -1,6 +1,5 @@
 #coding:utf-8
 from django.db import models
-from djangosphinx.models import SphinxSearch
 # Create your models here.
 
 class itemManager(models.Manager):
@@ -116,8 +115,6 @@ class Item(models.Model):
     like = models.IntegerField(u'喜欢', default=0)
     click = models.IntegerField(u'点击', default=0)
     tag = models.ManyToManyField(Tag, verbose_name=u'标签', blank=True, null=True)
-
-    search = SphinxSearch()
 
     objects = itemManager()
 
