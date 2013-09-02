@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-        <form action="{{ request.pPath.提交物流 }}" method="POST" id="checkout">
+        <form action="{% url 'logistics:logcsSub' %}" method="POST" id="checkout">
         <h3>收货人信息</h3>
             <table width="100%" cellpadding="3" cellspacing="1" id="logcs">
               <tr>

@@ -63,7 +63,7 @@ def submitOrd(request):
     else:
         messages.success(request, u'订单提交成功: %s' % o.sn)
 
-        return rdrRange(request.pPath[u'订单'], logcs.sess['date'], o.sn)
+        return rdrRange(reverse('order:viewOrd'), logcs.sess['date'], o.sn)
 
 def newOrdFrm(request):
     u"""新单表单"""
@@ -101,7 +101,7 @@ def copyOrd(request):
     u"""订单复制"""
     OrdSess(request).copy(int(request.GET.get('sn')))
 
-    return HttpResponseRedirect(request.pPath[u'新订单'])
+    return HttpResponseRedirect(reverse('order:newOrdFrm'))
 
 @ordDr
 def editOrd(request):
@@ -111,7 +111,7 @@ def editOrd(request):
 
     OrdSess(request).copy(request.GET.get('sn'))
 
-    return HttpResponseRedirect(request.pPath[u'编辑订单'])
+    return HttpResponseRedirect(reverse('order:editOrdFrm'))
 
 def confirmOrd(request):
     u"""订单状态修改-> 订单确认"""

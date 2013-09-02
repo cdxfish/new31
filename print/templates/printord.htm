@@ -3,7 +3,7 @@
 {% block content %}
       {% include 'search.htm' %}
       {% load tags %}
-      <form action="{{ request.pPath.打印物流票据 }}" method="post">
+      <form action="{% url 'print:printOrd' %}" method="post">
       <table cellpadding="3" cellspacing="1" width="100%" class="sortTable">
           <tr>
             <th><input type="checkbox" name="all" id="allS" /></th>
@@ -18,7 +18,7 @@
           <tr align="center" class="tr_border_top_black">
             <td><input type="checkbox" name="s{{ i.id }}" id="s{{ i.id }}" /></td>
             <td>{{ i.get_typ_display }}</td>
-            <td><a href="{{ request.pPath.订单 }}{{ i.sn }}/">{{ i.sn }}</a></td>
+            <td><a href="{% url 'order:viewOrd' i.sn %}">{{ i.sn }}</a></td>
             <td>{{ i.logcs.consignee }} [ {{ i.logcs.tel }} ]</td>
             <td>{{ i.fee.paid|stringformat:"0.2f" }} | {{ i.fee.kpchng|stringformat:"0.2f" }} | {{ i.fee.total|stringformat:"0.2f" }} | {{ i.fnc.cod.get_cod_display }}</td>
             <td>{{ i.get_status_display }} | {{ i.fnc.get_status_display }} | {{ i.logcs.get_status_display }}</td>
@@ -49,7 +49,7 @@
           <tr>
             <td>&nbsp;</td>
             <td align="center">地址</td>
-            <td colspan="5"><a href="{{ request.pPath.地图 }}?k={{ i.logcs.address|urlencode }}" target="_blank">[ {{ i.logcs.area }} ] {{ i.logcs.address }}</a></td>
+            <td colspan="5"><a href="{% url 'logistics:baiduMap' i.logcs.address|urlencode %}" target="_blank">[ {{ i.logcs.area }} ] {{ i.logcs.address }}</a></td>
           </tr>
           <tr align="center">
             <td>&nbsp;</td>

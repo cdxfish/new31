@@ -19,7 +19,7 @@
           </tr>
 {% for iiii in vvv %}
           <tr>
-            <td colspan="10"><a href="{{ request.pPath.订单 }}?sn={{ iiii.sn }}">{{ iiii.sn }}</a></td>
+            <td colspan="10"><a href="{% url 'order:viewOrd' iiii.sn %}">{{ iiii.sn }}</a></td>
           </tr>
 {% for item in iiii.items %}
           <tr align="center">

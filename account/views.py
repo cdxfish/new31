@@ -1,7 +1,6 @@
 #coding:utf-8
 u"""用户中心"""
 from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib import messages, auth
 from new31.func import rdrtLogin, rdrtBck, rdrtIndex, rdrtAcc

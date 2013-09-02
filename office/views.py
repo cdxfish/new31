@@ -13,7 +13,7 @@ def office(request):
     from logistics.models import Logcs
     from produce.models import Pro
     from finance.models import Fnc
-
+    # datetime.datetime.utcnow().replace(tzinfo=utc) - datetime.timedelta(settings.ACCOUNT_ACTIVATION_DAYS)
 
     today = datetime.date.today()
     oneDay = datetime.timedelta(days=1)

@@ -7,7 +7,7 @@ from new31.func import f02f
 # Create your views here.
 
 # APP For Shop UI
-def shop(request):
+def shop(request, *args):
     u"""商城首页"""
     from tag.views import TagSrch
     from tag.models import Tag

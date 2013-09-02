@@ -16,7 +16,7 @@
 {% for i in oList %}
           <tr align="center" class="tr_border_top_black">
             <td>{{ i.get_typ_display }}</td>
-            <td><a href="{{ request.pPath.订单 }}{{ i.sn }}/">{{ i.sn }}</a></td>
+            <td><a href="{% url 'order:viewOrd' i.sn %}">{{ i.sn }}</a></td>
             <td>{{ i.logcs.date|date:"Y-m-d" }} | {{ i.logcs.stime|time:"H:i" }} - {{ i.logcs.etime|time:"H:i" }}</td>
             <td>{{ i.logcs.consignee }}</td>
             <td>{{ i.logcs.tel }} | {{ i.user.username}}</td>
@@ -35,7 +35,7 @@
 {% endfor %}
           <tr>
             <td align="center">地址</td>
-            <td colspan="5"><a href="{{ request.pPath.地图 }}?k={{ i.logcs.address|urlencode }}" target="_blank">[ {{ i.logcs.area }} ] {{ i.logcs.address }}</a></td>
+            <td colspan="5"><a href="{% url 'logistics:baiduMap' i.logcs.address|urlencode %}" target="_blank">[ {{ i.logcs.area }} ] {{ i.logcs.address }}</a></td>
             <td align="center">{{ i.fee.total|stringformat:"0.2f" }}</td>
           </tr>          
           <tr>

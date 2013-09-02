@@ -15,22 +15,22 @@ def keFrmt(fee):
 
 # 重定向至登录页
 def rdrtLogin(request):
-    return HttpResponseRedirect(request.nPath[u'登录'])
+    return HttpResponseRedirect(reverse('account:login'))
 
 # 重定向至用户中心
 def rdrtAcc(request):
-    return HttpResponseRedirect(request.nPath[u'用户中心'])
+    return HttpResponseRedirect(reverse('account:myOrd'))
 
 
 # 重定向至首页
 def rdrtIndex():
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse('shop:shop'))
 
 
 # 重定向至前一页
 def rdrtBck(request):
 
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER',"/"))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER',reverse('shop:shop')))
 
 
 # 分页
@@ -73,7 +73,7 @@ def frmtDate(date):
 def Patterns(apps):
     """全局URL路由策略注册"""
 
-    return patterns('', *[ ( r'^%s/' % i , include('%s.urls' % i, namespace=i, app_name=i ) ) for i in apps ])
+    return patterns('', *[ ( r'^%s\/' % i , include('%s.urls' % i, namespace=i, app_name=i ) ) for i in apps ])
 
 def pPatterns(*urls):
     """
@@ -107,9 +107,5 @@ def resolves(patterns):
 
     path[0].sort()
     path[1].sort()
-    
-    for i in path:
-        for ii in i:
-            print ii[0], ' ' * 20, ii[1]
 
     return tuple(path[0]), tuple(path[1])

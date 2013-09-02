@@ -12,18 +12,16 @@ urlpatterns = patterns('',
     url(r'^(nn\/$|cs\/$|km\/$|^$)', 'shop.views.shop', name='shop'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
-    # (r'^admin/doc/', include('django.contrib.admindocs.urls', app_name='admindocs')),
+    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    # (r'^admin/', include(admin.site.urls, app_name='admin')),
-    (r'^admin/', include(admin.site.urls)),
-    # *[ ( r'^%s/' % i , include('%s.urls' % i, namespace=i, app_name=i ) ) for i in settings.APPS.keys() ]
+    (r'^admin\/', include(admin.site.urls)),
 )
 
 urlpatterns += Patterns(settings.APPS.keys())
 
 if settings.DEBUG:
     urlpatterns += patterns('', 
-        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+        url(r'^media\/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
         
     )

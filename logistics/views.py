@@ -102,7 +102,7 @@ def logcsSub(request):
 
     messages.success(request, u'编辑成功: %s' % sn)
 
-    return rdrRange(request.pPath[u'物流'], LogcSess(request).sess['date'], sn)
+    return rdrRange(reverse('logistics:logcs'), LogcSess(request).sess['date'], sn)
 
 @logcsDr
 @dManDr
@@ -131,7 +131,7 @@ def logcsEdit(request):
 
     OrdSess(request).cpyOrd(sn)
     
-    return HttpResponseRedirect(request.pPath[u'编辑物流'])
+    return HttpResponseRedirect(reverse('logistics:logcsEditFrm'))
 
 def logcsShip(request):
     u"""物流状态修改-> 物流已发"""

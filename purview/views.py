@@ -95,7 +95,7 @@ class BsPur(object):
         from models import Role
         self.oList = oList
         self.action = Ord.act
-        self.role = Role.objects.getPathByUser(request.user)
+        self.role = Role.objects.getPathByUser(request.user.id)
 
     def getElement(self):
 
