@@ -28,7 +28,7 @@ def logcs(request):
     oList = LogcsPur(oList, request).get()
     oList = FncPur(oList, request).get()
     oList = OrdPur(oList, request).get()
-    oList = ProPur(oList, request).get()
+    # oList = ProPur(oList, request).get()
     oList = KpChng(oList, request).get()
 
     return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))
@@ -106,20 +106,20 @@ def logcsSub(request):
 
 @logcsDr
 @dManDr
-def modifyLogcs(request, s):
+def modifyLogcs(request, sn, s):
     u"""物流状态修改"""
     from models import Logcs
 
-    Logcs.objects.cStatus(request.GET.get('sn'), s)
+    Logcs.objects.cStatus(sn, s)
 
     return rdrtBck(request)
 
-def logcsUnsent(request):
+def logcsUnsent(request, sn):
     u"""物流状态修改-> 物流未发"""
 
     return modifyLogcs(request, 0)
 
-def logcsEdit(request):
+def logcsEdit(request, sn):
     u"""物流状态修改-> 物流编辑"""
     from models import Logcs
     from order.views import OrdSess
@@ -133,23 +133,23 @@ def logcsEdit(request):
     
     return HttpResponseRedirect(reverse('logistics:logcsEditFrm'))
 
-def logcsShip(request):
+def logcsShip(request, sn):
     u"""物流状态修改-> 物流已发"""
 
     return modifyLogcs(request, 2)
 
-def logcsRefused(request):
+def logcsRefused(request, sn):
     u"""物流状态修改-> 物流拒签"""
 
     return modifyLogcs(request, 3)
 
-def logcsSign(request):
+def logcsSign(request, sn):
     u"""物流状态修改-> 物流已签"""
 
     return modifyLogcs(request, 4)
 
 @logcsDr
-def logcsStop(request):
+def logcsStop(request, sn):
     u"""物流状态修改-> 物流止送"""
     from models import Logcs
     # from order.models import Ord
@@ -305,28 +305,7 @@ class LogcsPur(BsPur):
 
         super(LogcsPur, self).__init__(oList, request)
 
-        self.path = reverse('logistics:logcs')
-
-        self.chcs = Logcs.chcs
         self.action = Logcs.act
-
-    # 获取订单可选操作项
-    def getElement(self):
-        from forms import AdvFrm
-
-        for i in self.oList:
-            if i.logcs.status < 2:
-                i.form = AdvFrm(i)
-
-            if not hasattr(i,'action'):
-                i.action = {}
-
-            i.action[self.path] = self.action[i.logcs.status]
-            i.optr = 'sn'
-            i.value = i.sn
-
-        return self
-
 
 class KpChng(object):
     """

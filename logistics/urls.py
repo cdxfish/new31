@@ -8,10 +8,10 @@ urlpatterns = pPatterns(
     (r'^view/$', logcsView, 3),
     (r'^edit/$', logcsEditFrm, 3),
     (r'^submit/$', logcsSub, 3),
-    (r'^0\/$', logcsUnsent, 3),
-    (r'^1\/$', logcsEdit, 3),
-    (r'^2\/$', logcsShip, 3),
-    (r'^3\/$', logcsRefused, 3),
-    (r'^4\/$', logcsSign, 3),
-    (r'^5\/$', logcsStop, 3)
+    (r'^0\/(?P<sn>\d{15})\/$', logcsUnsent, 3),
+    (r'^1\/(?P<sn>\d{15})\/$', logcsEdit, 3),
+    (r'^2\/(?P<sn>\d{15})\/$', logcsShip, 3),
+    (r'^3\/(?P<sn>\d{15})\/$', logcsRefused, 3),
+    (r'^4\/(?P<sn>\d{15})\/$', logcsSign, 3),
+    (r'^5\/(?P<sn>\d{15})\/$', logcsStop, 3)
 )

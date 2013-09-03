@@ -63,7 +63,7 @@ def submitOrd(request):
     else:
         messages.success(request, u'订单提交成功: %s' % o.sn)
 
-        return rdrRange(reverse('order:viewOrd'), logcs.sess['date'], o.sn)
+        return rdrRange(reverse('order:ords'), logcs.sess['date'], o.sn)
 
 def newOrdFrm(request):
     u"""新单表单"""
@@ -302,25 +302,8 @@ class OrdPur(BsPur):
         from models import Ord
 
         super(OrdPur, self).__init__(oList, request)
-        self.path = reverse('order:ords')
 
-        self.chcs = Ord.chcs
         self.action = Ord.act
-
-
-    # 获取订单可选操作项
-    def getElement(self):
-
-        for i in self.oList:
-            if not hasattr(i,'action'):
-                i.action = {}
-
-            i.action[self.path] = self.action[i.status]
-            i.optr = 'sn'
-            i.value = i.sn
-
-        return self
-
 
 class OrdSub(object):
     """ 

@@ -13,11 +13,9 @@ def ordDr(func):
         sn = args[0]
         order =  Ord.objects.get(sn=sn)
 
-        act = Ord.objects.getActTuple(order.status)
+        if not args[1] in Ord.objects.getActTuple(order.status):
 
-        if not s in act:
-
-            messages.error(request, u'%s - 无法%s' % (sn, Ord.chcs[s][1]))
+            messages.error(request, u'%s - 无法%s' % (sn, Ord.chcs[args[1]][1]))
 
             return rdrtBck(request)
 

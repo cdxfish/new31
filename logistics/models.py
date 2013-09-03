@@ -74,18 +74,20 @@ class Logcs(models.Model):
                 (3, '+ 90 m'),
         )
 
-    chcs = (
-                (0, u'未发'),
-                (1, u'编辑'),
-                (2, u'已发'), 
-                (3, u'拒签'), 
-                (4, u'已签'), 
-                (5, u'止送'), 
+    _chcs = (
+                (0, u'未发', 'logistics:logcsUnsent'),
+                (1, u'编辑', 'logistics:logcsEdit'),
+                (2, u'已发', 'logistics:logcsShip'), 
+                (3, u'拒签', 'logistics:logcsRefused'), 
+                (4, u'已签', 'logistics:logcsSign'), 
+                (5, u'止送', 'logistics:logcsStop'), 
         )
+    chcs= tuple((i[0],i[1]) for i in _chcs)
+
     act =   (
-                ((1, u'编辑'), (2, u'已发'),(5, u'止送'), ),
-                ((1, u'编辑'), (2, u'已发'),(5, u'止送'), ),
-                ((3, u'拒签'),(4, u'已签'),),
+                (_chcs[0], _chcs[2], _chcs[5], ),
+                (_chcs[1], _chcs[2], _chcs[5], ),
+                (_chcs[3], _chcs[4], ),
                 (),
                 (),
                 (),

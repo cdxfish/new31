@@ -7,22 +7,20 @@ from functools import wraps
 # 物流状态操作装饰器
 def logcsDr(func):
     @wraps(func)
-    def _func(request, s):
+    def _func(request, *args, **kwargs):
         from logistics.models import Logcs
 
-        sn = request.GET.get('sn')
+        act = Logcs.objects.getActTuple(Logcs.objects.get(ord__sn=args[0]).status)
 
-        act = Logcs.objects.getActTuple(Logcs.objects.get(ord__sn=sn).status)
+        if not args[1] in act:
 
-        if not s in act:
-
-            messages.error(request, u'%s - 无法%s' % (sn, Logcs.chcs[s][1]))
+            messages.error(request, u'%s - 无法%s' % (sn, Logcs.chcs[args[1]][1]))
 
             return rdrtBck(request)
 
         else:
 
-            return func(request, s)
+            return func(request, *args, **kwargs)
 
     return _func
 
@@ -30,7 +28,7 @@ def logcsDr(func):
 # 物流师傅必选装饰器
 def dManDr(func):
     @wraps(func)
-    def _func(request, s):
+    def _func(request, *args, **kwargs):
         from logistics.models import Logcs
 
         sn = request.GET.get('sn')
@@ -42,7 +40,7 @@ def dManDr(func):
 
         else:
 
-            return func(request, s)
+            return func(request, *args, **kwargs)
 
     return _func 
 
@@ -50,7 +48,7 @@ def dManDr(func):
 # Ajax物流偏移量以及物流师傅选择装饰器
 def aLogcsDr(func):
     @wraps(func)
-    def _func(request):
+    def _func(request, *args, **kwargs):
         from logistics.models import Logcs
         from ajax.views import AjaxRJson
         
@@ -74,7 +72,7 @@ def aLogcsDr(func):
 # 物流信息检查装饰器
 def chLogcsDr(func):
     @wraps(func)
-    def _func(request):
+    def _func(request, *args, **kwargs):
         from forms import LogcsFrm
         from views import LogcSess
 
@@ -92,6 +90,6 @@ def chLogcsDr(func):
             return rdrtBck(request)
 
 
-        return func(request)
+        return func(request, *args, **kwargs)
 
     return _func

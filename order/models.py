@@ -18,7 +18,7 @@ class ordManager(models.Manager):
 
     def getActTuple(self, i):
 
-        return tuple([ i for i, v in Ord.act[i]])
+        return tuple( i[0] for i in Ord.act[i])
 
 
     def saveOrd(self, ord, request):
@@ -57,22 +57,23 @@ class Ord(models.Model):
             )
 
 
-    chcs = (
-                (0, u'新单'), 
-                (1, u'编辑'), 
-                (2, u'确认'),
-                (3, u'无效'),
-                (4, u'止单'),
+    _chcs = (
+                (0, u'新单', 'order:copyOrd'), 
+                (1, u'编辑', 'order:editOrd'), 
+                (2, u'确认', 'order:confirmOrd'),
+                (3, u'无效', 'order:nullOrd'),
+                (4, u'止单', 'order:stopOrd'),
             )
+    chcs= tuple((i[0],i[1]) for i in _chcs)
+
 
     act =   ( 
-                ((0, u'新单'),(1, u'编辑'),(2, u'确认'),(3, u'无效'),),
-                ((0, u'新单'),(1, u'编辑'),(2, u'确认'),(3, u'无效'),),
-                ((0, u'新单'),(4, u'止单'),),
-                ((0, u'新单'),),
-                ((0, u'新单'),),
+                (_chcs[0], _chcs[1], _chcs[2], _chcs[3],),
+                (_chcs[0], _chcs[1], _chcs[2], _chcs[3],),
+                (_chcs[0], _chcs[4],),
+                (_chcs[0],),
+                (_chcs[0],),
             )
-
 
     sn = models.BigIntegerField(u'订单号', primary_key=True, unique=True)
     user = models.ForeignKey(User, verbose_name=u'会员', blank=True, null=True)

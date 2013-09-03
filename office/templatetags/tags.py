@@ -1,6 +1,6 @@
 #coding:utf-8
 from django import template
-
+from django.core.urlresolvers import reverse
 register = template.Library()  
 
 
@@ -12,9 +12,8 @@ class oprerateTag(template.Node):
         value = self.value.resolve(context, True) #获取标签解析的真实对象
 
         s = '<td nowrap="nowrap" align="center">'
-        for i,v in value.action.items():
-            for ii,vv in v:
-                s += '<a href="%s%s/?%s=%s" class="button">%s</a>' % (i, ii, value.optr, value.value, vv)
+        for i in value.action:
+            s += '<a href="%s" class="button">%s</a>' % (reverse(i[2], kwargs={'sn': value.sn}), i[1])
 
         return s + '</td>'
 

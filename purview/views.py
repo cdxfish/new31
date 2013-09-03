@@ -94,36 +94,26 @@ class BsPur(object):
         from order.models import Ord
         from models import Role
         self.oList = oList
-        self.action = Ord.act
+        self.action = ()
         self.role = Role.objects.getPathByUser(request.user.id)
-
-    def getElement(self):
-
-        for i in self.oList:
-            if not hasattr(i,'action'):
-                i.action = {}
-
-            i.action[self.path] = self.action[i.status]
-
-        return self
 
     def beMixed(self):
 
         for i in self.oList:
-            for ii in i.action:
-                i.action[ii] = tuple([ iii for iii in i.action[ii] if resolve(u'%s%s/' % (ii, iii[0])).view_name in self.role ])
+            if not hasattr(i,'action'):
+                i.action = []
+
+            for ii in self.action[i.status]:
+                try:
+                    if ii[2] in self.role:
+                        i.action.append(ii)
+                except Exception, e:
+                    # raise e
+                    pass
 
 
         return self
-
-
-    def mixedStatus(self):
-        for i in self.oList:
-            i.action[self.path] = tuple([ ii for ii in i.action[self.path] if ii in self.chcs ])
-
-        return self
-
 
     def get(self):
 
-        return self.getElement().beMixed().mixedStatus().oList
+        return self.beMixed().oList
