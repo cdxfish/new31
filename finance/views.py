@@ -1,4 +1,5 @@
 #coding:utf-8
+u"""财务"""
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from django.template import RequestContext

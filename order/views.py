@@ -31,7 +31,7 @@ def ords(request):
 
     return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
 
-def viewOrd(request):
+def viewOrd(request, sn):
     u"""查看订单"""
     from forms import OrdSrchFrm
     from logistics.views import KpChng
@@ -90,43 +90,44 @@ def editOrdFrm(request):
     return render_to_response('orderneworedit.htm', locals(), context_instance=RequestContext(request))
 
 @ordDr
-def modifyOrd(request, s):
+def modifyOrd(request, sn, s):
     u"""订单状态修改"""
     from models import Ord
-    Ord.objects.cStatus(request.GET.get('sn'), s)
+    Ord.objects.cStatus(sn, s)
 
     return rdrtBck(request)
 
-def copyOrd(request):
+def copyOrd(request, sn):
     u"""订单复制"""
-    OrdSess(request).copy(int(request.GET.get('sn')))
+    OrdSess(request).copy(int(sn))
 
     return HttpResponseRedirect(reverse('order:newOrdFrm'))
 
 @ordDr
-def editOrd(request):
+def editOrd(request, sn):
     u"""订单状态修改-> 订单编辑"""
     from models import Ord
-    Ord.objects.cStatus(request.GET.get('sn'), 1)
+    Ord.objects.cStatus(sn, 1)
 
-    OrdSess(request).copy(request.GET.get('sn'))
+    OrdSess(request).copy(sn)
 
     return HttpResponseRedirect(reverse('order:editOrdFrm'))
 
-def confirmOrd(request):
+
+def confirmOrd(request, sn):
     u"""订单状态修改-> 订单确认"""
 
-    return modifyOrd(request, 2)
+    return modifyOrd(request, sn, 2)
 
-def nullOrd(request):
+def nullOrd(request, sn):
     u"""订单状态修改-> 订单无效"""
 
-    return modifyOrd(request, 3)
+    return modifyOrd(request, sn, 3)
 
-def stopOrd(request):
+def stopOrd(request, sn):
     u"""订单状态修改-> 订单止单"""
 
-    return modifyOrd(request, 4)
+    return modifyOrd(request, sn, 4)
 
 @postDr
 @rdrtBckDr('无法添加商品，部分商品已下架。')

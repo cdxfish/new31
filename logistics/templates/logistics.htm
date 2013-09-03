@@ -58,6 +58,10 @@
             <td align="center">备注</td>
             <td colspan="6">速度送</td>
           </tr>
+{% empty %}
+          <tr>
+            <td align="center" colspan="10">无记录</td>
+          </tr>
 {% endfor %}
           {% include 'page.htm' %}
       </table>

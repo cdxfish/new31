@@ -51,7 +51,7 @@ class Element(models.Model):
     objects = elementManager()
 
     def __unicode__(self):
-        if hasattr(self.sub, 'get_typ_display'):
+        if hasattr(self.sub, 'get_path_display'):
             sub = self.sub.get_path_display()
         else:
             sub = None

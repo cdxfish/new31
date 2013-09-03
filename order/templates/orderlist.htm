@@ -43,6 +43,10 @@
             <td colspan="5">{{ i.logcs.note }}</td>
             {% optr i %}
           </tr>
+{% empty %}
+          <tr>
+            <td align="center" colspan="10">无记录</td>
+          </tr>
 {% endfor %}
           {% include 'page.htm' %}
       </table>

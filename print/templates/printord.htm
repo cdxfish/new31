@@ -65,6 +65,10 @@
             <td align="center">备注</td>
             <td colspan="6">速度送</td>
           </tr>
+{% empty %}
+          <tr>
+            <td align="center" colspan="10">无记录</td>
+          </tr>
 {% endfor %}
           <tr>
             <td align="center"><input type="submit" value="打印" class="button" /></td>

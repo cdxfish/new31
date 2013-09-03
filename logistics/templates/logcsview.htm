@@ -39,6 +39,10 @@
 {% endfor %}
 {% endfor %}
 {% endfor %}
+{% empty %}
+          <tr>
+            <td align="center" colspan="10">无记录</td>
+          </tr>
 {% endfor %}
           <tr>
             <td colspan="20" align="right">共 {{ oList|length }} 条记录</td>

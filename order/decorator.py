@@ -10,7 +10,7 @@ def ordDr(func):
     @wraps(func)
     def _func(request, *args, **kwargs):
         from order.models import Ord
-        sn = request.GET.get('sn')
+        sn = args[0]
         order =  Ord.objects.get(sn=sn)
 
         act = Ord.objects.getActTuple(order.status)

@@ -3,6 +3,7 @@ u"""生产"""
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
+from django.db.models import Q
 from decorator import proDr
 from new31.func import rdrtBck, page
 # Create your views here.
