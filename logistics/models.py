@@ -10,7 +10,7 @@ class logcsManager(models.Manager):
 
     def getActTuple(self, i):
 
-        return tuple([ i for i, v in Logcs.act[i]])
+        return tuple([ i[0] for i in Logcs.act[i]])
 
 
     def saveLogcs(self, ord, request):
@@ -107,8 +107,6 @@ class Logcs(models.Model):
     advance = models.SmallIntegerField(u'提前量', default=0, choices=advs)
     dman = models.ForeignKey(User, verbose_name=u'物流师傅', blank=True, null=True)
     note = models.CharField(u'备注', max_length=255, blank=True, null=True)
-    # pcod = models.ForeignKey(Pay, verbose_name=u'支付方式')
-    # dcod = models.ForeignKey(Deliver, verbose_name=u'送货方式')
     cod = models.ForeignKey(Deliver, verbose_name=u'送货方式')
     status = models.SmallIntegerField(u'物流状态', default=0, editable=False, choices=chcs)
 

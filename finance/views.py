@@ -24,38 +24,38 @@ def fnc(request):
 
 
 @fncDetr
-def modifyFnc(request, s):
+def modifyFnc(request, sn, s):
     u"""财务操作"""
     from models import Fnc
 
-    Fnc.objects.cStatus(request.GET.get('sn'), s)
+    Fnc.objects.cStatus(sn, s)
     
     return rdrtBck(request)
 
-def unpaidFnc(request):
-    u"""财务未付"""
+def unpaidFnc(request, sn):
+    u"""财务状态修改-> 财务未付"""
 
-    return modifyFnc(request, 0)
+    return modifyFnc(request, sn, 0)
 
-def paidFnc(request, s):
-    u"""财务已付"""
+def paidFnc(request, sn):
+    u"""财务状态修改-> 财务已付"""
 
-    return modifyFnc(request, 1)
+    return modifyFnc(request, sn, 1)
 
-def closedFnc(request, s):
-    u"""财务已结"""
+def closedFnc(request, sn):
+    u"""财务状态修改-> 财务已结"""
 
-    return modifyFnc(request, 2)
+    return modifyFnc(request, sn, 2)
 
-def checkedFnc(request, s):
-    u"""财务已核"""
+def checkedFnc(request, sn):
+    u"""财务状态修改-> 财务已核"""
 
-    return modifyFnc(request, 3)
+    return modifyFnc(request, sn, 3)
 
-def stopFnc(request, s):
-    u"""财务止付"""
+def stopFnc(request, sn):
+    u"""财务状态修改-> 财务止付"""
 
-    return modifyFnc(request, 4)
+    return modifyFnc(request, sn, 4)
 
 
 from new31.cls import BsSess
@@ -130,21 +130,24 @@ class FncPur(BsPur):
     """
     def __init__(self, oList, request):
         from models import Fnc
-
         super(FncPur, self).__init__(oList, request)
-        self.path = reverse('finance:fnc')
-        self.chcs = Fnc.chcs
+
         self.action = Fnc.act
 
-    # 获取订单可选操作项
-    def getElement(self):
-
+    def beMixed(self):
+        
         for i in self.oList:
-            if not hasattr(i,'action'):
-                i.action = {}
 
-            i.action[self.path] = self.action[i.fnc.status]
-            i.optr = 'sn'
-            i.value = i.sn
+            if not hasattr(i,'action'):
+                i.action = []
+
+            for ii in self.action[i.fnc.status]:
+                try:
+                    if ii[2] in self.role:
+                        i.action.append(ii)
+                except Exception, e:
+                    # raise e
+                    pass
+
 
         return self

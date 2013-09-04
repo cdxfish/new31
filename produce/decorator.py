@@ -7,19 +7,17 @@ from functools import wraps
 # 生产状态操作装饰器
 def proDr(func):
     @wraps(func)
-    def _func(request, s):
+    def _func(request, *args, **kwargs):
         from produce.models import Pro
 
-        id = request.GET.get('id')
-        pro =  Pro.objects.get(id=id)
+        pro =  Pro.objects.get(id=args[0])
 
-        # if s in Pro.objects.getActTuple(pro.status) and pro.ord.isConfrm():
-        if s in Pro.objects.getActTuple(pro.status):
+        if args[1] in Pro.objects.getActTuple(pro.status):
 
-            return func(request, s)
+            return func(request, *args, **kwargs)
 
         else:
-            messages.error(request, u'%s | %s - 无法%s' % (pro.ord.sn, pro.name, Pro.chcs[s][1]))
+            messages.error(request, u'%s | %s - 无法%s' % (pro.ord.sn, pro.name, Pro.chcs[args[1]][1]))
 
             return rdrtBck(request)
 

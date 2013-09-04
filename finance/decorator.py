@@ -8,30 +8,25 @@ from functools import wraps
 # 支付状态操作装饰器
 def fncDetr(func):
     @wraps(func)
-    def _func(request, s):
+    def _func(request, *args, **kwargs):
         from finance.models import Fnc
-        sn = request.GET.get('sn')
 
-        act = Fnc.objects.getActTuple(Fnc.objects.get(ord=sn).status)
+        act = Fnc.objects.getActTuple(Fnc.objects.get(ord=args[0]).status)
 
-        if not s in act:
+        if args[1] in act:
+            return func(request, *args, **kwargs)
 
-            messages.error(request, u'%s - 无法%s' % (sn, Fnc.chcs[s][1]))
+        else:
+            messages.error(request, u'%s - 无法%s' % (args[0], Fnc.chcs[args[1]][1]))
 
             return rdrtBck(request)
 
-        else:
-
-            return func(request, s)
-
     return _func
-
-
 
 # 支付方式信息检查装饰器
 def chFncDr(func):
     @wraps(func)
-    def _func(request):
+    def _func(request, *args, **kwargs):
         from forms import FncFrm
         from views import FncSess
 
@@ -48,6 +43,6 @@ def chFncDr(func):
 
             return rdrtBck(request)
 
-        return func(request)
+        return func(request, *args, **kwargs)
 
     return _func

@@ -8,6 +8,7 @@ from functools import wraps
 def logcsDr(func):
     @wraps(func)
     def _func(request, *args, **kwargs):
+        print args
         from logistics.models import Logcs
 
         act = Logcs.objects.getActTuple(Logcs.objects.get(ord__sn=args[0]).status)
@@ -31,10 +32,8 @@ def dManDr(func):
     def _func(request, *args, **kwargs):
         from logistics.models import Logcs
 
-        sn = request.GET.get('sn')
-
-        if not Logcs.objects.get(ord__sn=sn).dman:
-            messages.error(request, u'%s - 请选择物流师傅' % sn)
+        if not Logcs.objects.get(ord__sn=args[0]).dman:
+            messages.error(request, u'%s - 请选择物流师傅' % args[0])
 
             return rdrtBck(request)
 

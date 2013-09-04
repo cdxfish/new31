@@ -6,7 +6,7 @@ from django.db import models
 class fncManager(models.Manager):
     def getActTuple(self, i):
 
-        return tuple([ i for i, v in Fnc.act[i]])
+        return tuple([ i[0] for i in Fnc.act[i]])
 
 
     def saveFnc(self, ord, request):
@@ -40,18 +40,21 @@ class fncManager(models.Manager):
 class Fnc(models.Model):
     from order.models import Ord
     from payment.models import Pay
-    chcs = (
-                (0, u'未付'), 
-                (1, u'已付'),
-                (2, u'已结'),
-                (3, u'已核'),
-                (4, u'止付'),
+
+    _chcs = (
+                (0, u'未付', 'finance:unpaidFnc'), 
+                (1, u'已付', 'finance:paidFnc'),
+                (2, u'已结', 'finance:closedFnc'),
+                (3, u'已核', 'finance:checkedFnc'),
+                (4, u'止付', 'finance:stopFnc'),
             )
 
+    chcs= tuple((i[0],i[1]) for i in _chcs)
+
     act =   (
-                ((1, u'已付'),(4, u'止付'),),
-                ((2, u'已结'),),
-                ((3, u'已核'),),
+                (_chcs[1], _chcs[4],),
+                (_chcs[2],),
+                (_chcs[3],),
                 (),
                 (),
         )

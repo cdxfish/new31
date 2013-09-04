@@ -52,7 +52,7 @@
             <td>预发货</td>
             <td>{{ i.logcs.lstime|time:"H:i" }}</td>
             <td>{% if i.form %}{{ i.form.advance }}{% else %}{{ i.logcs.get_advance_display }}{% endif %}</td>
-            <td>{% if i.form %}{{ i.form.dman }}{% else %}{{ i.logcs.dman }}{% endif %}</td>
+            <td>{% if i.form %}{{ i.form.dman }}{% else %}{{ i.logcs.dman.last_name }}{{ i.logcs.dman.first_name }}{% endif %}</td>
           </tr>
           <tr>
             <td align="center">备注</td>

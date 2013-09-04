@@ -66,7 +66,6 @@ class Ord(models.Model):
             )
     chcs= tuple((i[0],i[1]) for i in _chcs)
 
-
     act =   ( 
                 (_chcs[0], _chcs[1], _chcs[2], _chcs[3],),
                 (_chcs[0], _chcs[1], _chcs[2], _chcs[3],),

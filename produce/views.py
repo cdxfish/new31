@@ -63,38 +63,38 @@ def sortList(oList, initial):
     return _oList
 
 @proDr
-def modifyPro(request, s):
+def modifyPro(request, sn, s):
     u"""生产状态修改"""
     from models import Pro
 
-    Pro.objects.cStatus(request.GET.get('id'), s)
+    Pro.objects.cStatus(sn, s)
 
     return rdrtBck(request)
 
-def nullPro(request):
+def nullPro(request, sn):
     u"""生产状态修改-> 生产未产"""    
 
-    return modifyPro(request, 0)
+    return modifyPro(request, sn, 0)
     
-def requirePro(request):
+def requirePro(request, sn):
     u"""生产状态修改-> 生产产求"""    
 
-    return modifyPro(request, 1)
+    return modifyPro(request, sn, 1)
     
-def duringPro(request):
+def duringPro(request, sn):
     u"""生产状态修改-> 生产产中"""    
 
-    return modifyPro(request, 2)
+    return modifyPro(request, sn, 2)
 
-def refusePro(request):
+def refusePro(request, sn):
     u"""生产状态修改-> 生产拒产"""    
 
-    return modifyPro(request, 3)
+    return modifyPro(request, sn, 3)
 
-def readyPro(request):
+def readyPro(request, sn):
     u"""生产状态修改-> 生产已产"""    
 
-    return modifyPro(request, 4)
+    return modifyPro(request, sn, 4)
 
 
 from order.views import OrdSerch
@@ -141,47 +141,25 @@ class ProPur(BsPur):
         from models import Pro
 
         super(ProPur, self).__init__(oList, request)
-        self.path = reverse('produce:produce')
-
-        pro = Pro
-        self.chcs = pro.chcs
-        self.action = pro.act
-
         for i in self.oList:
             i.items = i.pro_set.all()
 
-
-    # 获取订单可选操作项
-    def getElement(self):
-        from models import Pro
-
-        for i in self.oList:
-            items = []
-
-            for ii in i.items:
-                if not hasattr(ii,'action'):
-                    ii.action = {}
-
-                ii.action[self.path] = self.action[ii.status]
-                ii.optr = 'id'
-                ii.value = ii.id
-
-                items.append(ii)
-
-            i.items = items
-
-        return self
+        self.action = Pro.act
 
     def beMixed(self):
+
         for i in self.oList:
             for ii in i.items:
-                ii.action[self.path] = tuple([ iii for iii in ii.action[self.path] if u'%s%s/' % (self.path, iii[0]) in self.role ])
+                ii.sn = ii.id
+                if not hasattr(ii,'action'):
+                    ii.action = []
 
-        return self
-
-    def mixedStatus(self):
-        for i in self.oList:
-            for ii in i.items:
-                ii.action[self.path] = tuple([ iii for iii in ii.action[self.path] if iii in self.chcs ])
+                for iii in self.action[ii.status]:
+                    try:
+                        if iii[2] in self.role:
+                            ii.action.append(iii)
+                    except Exception, e:
+                        # raise e
+                        pass
 
         return self

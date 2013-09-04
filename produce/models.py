@@ -6,7 +6,7 @@ from django.db import models
 class proManager(models.Manager):
     def getActTuple(self, i):
 
-        return tuple([ i for i, v in Pro.act[i]])
+        return tuple([ i[0] for i in Pro.act[i]])
 
     def getFeeBySN(self, sn):
         from new31.func import frMtFee
@@ -72,21 +72,25 @@ class Pro(models.Model):
     from discount.models import Dis
 
 
-    chcs = (
-                (0, u'未产'),
-                (1, u'产求'),
-                (2, u'产中'),
-                (3, u'拒产'),
-                (4, u'已产'),
+    _chcs = (
+                (0, u'未产', 'produce:nullPro'),
+                (1, u'产求', 'produce:requirePro'),
+                (2, u'产中', 'produce:duringPro'),
+                (3, u'拒产', 'produce:refusePro'),
+                (4, u'已产', 'produce:readyPro'),
         )
 
-    act =   (
-                ((1, u'产求'), ),
-                ((2, u'产中'), (3, u'拒产'), ),
-                ((3, u'拒签'), (4, u'已产'), ),
-                ((1, u'产求'), ),
+
+    chcs = tuple((i[0],i[1]) for i in _chcs)
+
+    act =   ( 
+                (_chcs[1], ),
+                (_chcs[2], _chcs[3], ),
+                (_chcs[3], _chcs[4], ),
+                (_chcs[1], ),
                 (),
-        )
+            )
+
 
     ord = models.ForeignKey(Ord, verbose_name=u'订单')
     name = models.CharField(u'商品', max_length=30)

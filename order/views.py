@@ -13,7 +13,7 @@ from decorator import ordDr, subMsg, subDr
 from logistics.decorator import chLogcsDr
 from finance.decorator import chFncDr
 from decimal import Decimal
-import time, datetime
+import time, datetime, re
 
 # Create your views here.
 
@@ -63,7 +63,7 @@ def submitOrd(request):
     else:
         messages.success(request, u'订单提交成功: %s' % o.sn)
 
-        return rdrRange(reverse('order:ords'), logcs.sess['date'], o.sn)
+        return rdrRange(reverse('order:ords'), '%s' % datetime.date.today(), o.sn)
 
 def newOrdFrm(request):
     u"""新单表单"""
@@ -243,19 +243,21 @@ class OrdSerch(object):
 
         
     def baseSearch(self):
+        if re.search(ur'\d{4}\-\d{2}\-\d{2}', self.initial['k']):
+            self.oList = self.oList.filter(logcs__date=self.initial['k'])
+        else:
 
-        self.oList = self.oList.filter(
-                Q(sn__contains=self.initial['k']) |
-                Q(user__username__contains=self.initial['k']) |
-                Q(logcs__consignee__contains=self.initial['k']) |
-                Q(logcs__area__contains=self.initial['k']) |
-                Q(logcs__address__contains=self.initial['k']) |
-                Q(logcs__tel__contains=self.initial['k']) |
-                # Q(logcs__date=datetime.date.today()) |
-                Q(logcs__stime__contains=self.initial['k']) |
-                Q(logcs__etime__contains=self.initial['k']) |
-                Q(logcs__note__contains=self.initial['k'])
-            )
+            self.oList = self.oList.filter(
+                    Q(sn__contains=self.initial['k']) |
+                    Q(user__username__contains=self.initial['k']) |
+                    Q(logcs__consignee__contains=self.initial['k']) |
+                    Q(logcs__area__contains=self.initial['k']) |
+                    Q(logcs__address__contains=self.initial['k']) |
+                    Q(logcs__tel__contains=self.initial['k']) |
+                    Q(logcs__stime__contains=self.initial['k']) |
+                    Q(logcs__etime__contains=self.initial['k']) |
+                    Q(logcs__note__contains=self.initial['k'])
+                )
 
         if self.initial['o'] >= 0:
             self.oList = self.oList.filter(typ=self.initial['o'])

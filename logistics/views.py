@@ -28,7 +28,7 @@ def logcs(request):
     oList = LogcsPur(oList, request).get()
     oList = FncPur(oList, request).get()
     oList = OrdPur(oList, request).get()
-    # oList = ProPur(oList, request).get()
+    oList = ProPur(oList, request).get()
     oList = KpChng(oList, request).get()
 
     return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))
@@ -117,14 +117,12 @@ def modifyLogcs(request, sn, s):
 def logcsUnsent(request, sn):
     u"""物流状态修改-> 物流未发"""
 
-    return modifyLogcs(request, 0)
+    return modifyLogcs(request, sn, 0)
 
 def logcsEdit(request, sn):
     u"""物流状态修改-> 物流编辑"""
     from models import Logcs
     from order.views import OrdSess
-
-    sn = request.GET.get('sn')
 
     Logcs.objects.cStatus(sn, 1)
     LogcSess(request).copy(sn)
@@ -136,17 +134,17 @@ def logcsEdit(request, sn):
 def logcsShip(request, sn):
     u"""物流状态修改-> 物流已发"""
 
-    return modifyLogcs(request, 2)
+    return modifyLogcs(request, sn, 2)
 
 def logcsRefused(request, sn):
     u"""物流状态修改-> 物流拒签"""
 
-    return modifyLogcs(request, 3)
+    return modifyLogcs(request, sn, 3)
 
 def logcsSign(request, sn):
     u"""物流状态修改-> 物流已签"""
 
-    return modifyLogcs(request, 4)
+    return modifyLogcs(request, sn, 4)
 
 @logcsDr
 def logcsStop(request, sn):
@@ -207,7 +205,7 @@ class LogcSess(BsSess):
 
     def chkDate(self):
         date = time.strptime(self.sess['date'], u'%Y-%m-%d')
-        today = time.struct_time
+        today = time.strptime('%s' % datetime.date.today(), u'%Y-%m-%d')
 
         if today > date:
             self.sess['date'] = u'%s' % datetime.date.today()
@@ -307,6 +305,27 @@ class LogcsPur(BsPur):
 
         self.action = Logcs.act
 
+    def beMixed(self):
+        from forms import AdvFrm
+        
+        for i in self.oList:
+            if i.logcs.status < 2:
+                i.form = AdvFrm(i)
+
+            if not hasattr(i,'action'):
+                i.action = []
+
+            for ii in self.action[i.logcs.status]:
+                try:
+                    if ii[2] in self.role:
+                        i.action.append(ii)
+                except Exception, e:
+                    # raise e
+                    pass
+
+
+        return self
+
 class KpChng(object):
     """
         找零
@@ -320,7 +339,6 @@ class KpChng(object):
                     'total': 0,
                     'kpchng':0,
                 }
-            
 
     def cntFee(self):
         from produce.models import Pro
@@ -333,10 +351,8 @@ class KpChng(object):
 
             i.fee['kpchng'] = i.fee['paid'] - i.fee['total']
 
-
         return self
 
     def get(self):
 
         return self.cntFee().oList
-
