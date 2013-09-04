@@ -56,11 +56,11 @@ def stockInv(request):
     return render_to_response('inventorylist.htm', locals(), context_instance=RequestContext(request))
 
 @rdrtBckDr(u'该规格已下架')
-def cOnlInv(request, id):
+def cOnlInv(request, sn):
     u"""备货选择"""
     from models import InvPro
 
-    InvPro.objects.cOnl(id=id)
+    InvPro.objects.cOnl(id=sn)
 
     return rdrtBck(request)
 
@@ -72,17 +72,17 @@ def defaultInv(request, s):
 
     return rdrtBck(request)
 
-def minusInv(request, id):
+def minusInv(request, sn, num):
     u"""备货减"""
     from models import InvNum
-    InvNum.objects.minus(id)
+    InvNum.objects.minus(sn, int(num))
 
     return rdrtBck(request)
 
-def plusInv(request, id):
+def plusInv(request, sn, num):
     u"""备货加"""
     from models import InvNum
-    InvNum.objects.plus(id)
+    InvNum.objects.plus(sn, int(num))
 
     return rdrtBck(request)
 
@@ -120,20 +120,23 @@ class InvPur(BsPur):
         from models import InvPro
 
         super(InvPur, self).__init__(oList, request)
-        self.path = reverse('inventory:inventory')
 
-        self.chcs = InvPro.typ
         self.action = InvPro.act
 
-    # 获取订单可选操作项
-    def getElement(self):
+
+    def beMixed(self):
 
         for i in self.oList:
+            i.sn = i.id
             if not hasattr(i,'action'):
-                i.action = {}
+                i.action = []
 
-            i.action[self.path] = self.action[0]
-            i.optr = 'id'
-            i.value = i.invnum.id
+            for ii in self.action[i.onl]:
+                try:
+                    if ii[2] in self.role:
+                        i.action.append(ii)
+                except Exception, e:
+                    # raise e
+                    pass
 
         return self

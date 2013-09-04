@@ -70,7 +70,7 @@ def submit(request):
         messages.success(request, u'感谢您在本店购物！请记住您的订单号: %s' % o.sn)
 
         if request.user.is_authenticated():
-            return HttpResponseRedirect(reverse('myOrd'))
+            return HttpResponseRedirect(reverse('account:myOrd'))
         else:
             return rdrtIndex()
 
@@ -80,7 +80,7 @@ def buy(request, sid):
     u"""加入购物车"""
     CartSess(request).pushBySid(int(sid))
 
-    return HttpResponseRedirect(reverse('cart'))
+    return HttpResponseRedirect(reverse('cart:cart'))
 
 
 def delInCart(request, mark):

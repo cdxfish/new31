@@ -10,12 +10,13 @@ def itemshow(func):
     @wraps(func)
     def _func(request, *args, **kwargs):
         try:
+
             from item.models import ItemSpec
             ItemSpec.objects.get(id=kwargs['sid'], onl=True, show=True)
 
             return func(request, *args, **kwargs)
             
-        except:
+        except Exception, e:
             messages.warning(request, u'当前商品已下架')
 
             return rdrtBck(request)

@@ -157,11 +157,11 @@
 {% endfor %}
         </ul>
 {% endif %}
-{% if request.domElement.sub_set.getDomElement %}
+{% if request.domElement.sub_set %}
         <div id="tool">
           <ul class="action">
-{% for i in request.domElement.sub_set.getDomElement %}
-              <li><a href="{% url i.path %}" class="button">{{ i.get_path_display }}</a></li>
+{% for i in request.domElement.sub_set %}
+              <li><a href="{% url i.0 %}" class="button">{{ i.1 }}</a></li>
 {% endfor %}
           </ul>
         </div>

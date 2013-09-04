@@ -84,19 +84,19 @@ class invNumManager(models.Manager):
 
         return pros
 
-    def minus(self, id):
+    def minus(self, sn, num=1):
 
-        num = self.get(id=id)
-        num.num -= 1
+        inv = self.get(id=sn)
+        inv.num -= num
 
-        num.save()
+        inv.save()
 
-    def plus(self, id):
+    def plus(self, sn, num=1):
 
-        num = self.get(id=id)
-        num.num += 1
+        inv = self.get(id= sn)
+        inv.num += num
 
-        num.save()
+        inv.save()
 
 
 class InvPro(models.Model):
@@ -107,13 +107,15 @@ class InvPro(models.Model):
             (True, u'已备'),
         )
 
-    typ = (
-            ('minus', u'减'),
-            ('plus', u'加'),
+    _typ = (
+            (0, u'减', 'inventory:minusInv'),
+            (1, u'加', 'inventory:plusInv'),
         )
+
+    typ= tuple((i[0],i[1]) for i in _typ)
     act =   (
-                (('minus', u'减'),('plus', u'加'),),
-                (('minus', u'减'),('plus', u'加'),),
+                (_typ[0], _typ[1], ),
+                (_typ[0], _typ[1], ),
         )
 
     spec = models.OneToOneField(ItemSpec, verbose_name=u'商品规格')

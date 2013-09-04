@@ -15,6 +15,7 @@
             <th>名称</th>
             <th>规格</th>
             <th>预 | 库 | 总</th>
+            <th>数量</th>
             <th>操作</th>
           </tr>
 {% for i in pro %}
@@ -22,20 +23,29 @@
             <td>{{ i.name }}</td>
             <td>&nbsp;</td>
             <td><span class="wow_item_1">{{ i.adv }}</span> | <span class="wow_item_8">{{ i.count }}</span> | <span class="wow_item_0">{{ i.num }}</span></td>
-            <td>&nbsp;</td>
+            <td colspan="2">&nbsp;</td>
           </tr>
 {% for ii in i.invnum %}
           <tr align="center">
             <td>&nbsp;</td>
             <td>{{ ii.spec.spec.value }}</td>
             <td><span class="wow_item_1">{{ ii.invnum.adv }}</span> | <span class="wow_item_8">{{ ii.invnum.count }}</span> | <span class="wow_item_0">{{ ii.invnum.num }}</span></td>
-            {% optr ii %}
+            <td><input ytpe="text" name="n{{ ii.invnum.id }}" value="1" size="1" /></td>
+            <td nowrap="nowrap" align="center">
+{% for iii in ii.action  %}
+            <a href="{% url iii.2 ii.invnum.id 1 %}" class="button act">{{ iii.1 }}</a>
+{% endfor %}
+            </td>
           </tr>
 {% endfor %}
 {% endfor %}
           <tr>
-            <td align="center"><a href="{% url 'defaultInv' form.initial.s %}" class="button">备货格式化</a></td>
+            <td align="center"><a href="{% url 'inventory:defaultInv' form.initial.s %}" class="button">备货格式化</a></td>
             <td colspan="3">&nbsp;</td>
           </tr>
       </table>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}inventory/js/inv.configuration.js"></script>
 {% endblock %}

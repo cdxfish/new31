@@ -18,3 +18,15 @@ def printOrd(request):
     form = LogcSrchFrm(initial=o.initial)
 
     return render_to_response('printord.htm', locals(), context_instance=RequestContext(request))
+
+def pAct(request, sn):
+    u"""打印"""
+    from order.models import Ord
+    from produce.models import Pro
+
+    o = Ord.objects.get(sn=sn)
+    o.total = Pro.objects.getFeeBySN(sn)
+
+
+    return render_to_response('print.htm', locals(), context_instance=RequestContext(request))
+

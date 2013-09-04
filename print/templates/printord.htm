@@ -3,7 +3,7 @@
 {% block content %}
       {% include 'search.htm' %}
       {% load tags %}
-      <form action="{% url 'print:printOrd' %}" method="post">
+      <form action="{% url 'print:printOrd' %}" method="post" id="print">
       <table cellpadding="3" cellspacing="1" width="100%" class="sortTable">
           <tr>
             <th><input type="checkbox" name="all" id="allS" /></th>
@@ -16,7 +16,7 @@
           </tr>
 {% for i in oList %}
           <tr align="center" class="tr_border_top_black">
-            <td><input type="checkbox" name="s{{ i.id }}" id="s{{ i.id }}" /></td>
+            <td><input type="checkbox" name="{{ i.sn }}" id="s{{ i.id }}" /></td>
             <td>{{ i.get_typ_display }}</td>
             <td><a href="{% url 'order:viewOrd' i.sn %}">{{ i.sn }}</a></td>
             <td>{{ i.logcs.consignee }} [ {{ i.logcs.tel }} ]</td>
@@ -80,5 +80,5 @@
 {% endblock %}
 
 {% block js %}
-      <script type="text/javascript" src="{{ STATIC_URL }}print/js/print.configuration.js"></script>
+      <script type="text/javascript" src="{{ STATIC_URL }}print/js/printord.configuration.js"></script>
 {%  endblock %}
