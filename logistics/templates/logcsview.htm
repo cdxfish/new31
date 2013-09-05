@@ -2,6 +2,7 @@
 
 {% block content %}
       {% include 'search.htm' %}
+      {% regroup oList by logcs.date as newsList %}
         <table cellpadding="3" cellspacing="1" width="100%">
           <tr>
             <th>订单编号</th>
@@ -10,35 +11,42 @@
             <th>物流师傅</th>
             <th>状态</th>
           </tr>
-{% for i,v in sList.items %}
-{% for ii,vv in v.items %}
-{% for iii,vvv in vv.items %}
+{% for i in newsList %}
+{% regroup i.list by logcs.stime as newStime %}
+
+  {% for ii in newStime %}
+    {% regroup ii.list by logcs.get_advance_display as advs %}
+
+    {% for iii in advs %}
           <tr class="tr_border_top_black">
-            <td colspan="10">{{ i }} | {{ ii }} | {{ iii }} | <span class="wow_item_8">{{ vvv|length }}</span></td>
+            <td colspan="10">{{ i.grouper|date:"Y-m-d"  }} | {{ ii.grouper }} | {{ iii.grouper }} | <span class="wow_item_8">{{ iii.list|length }}</span></td>
           </tr>
-{% for iiii in vvv %}
-          <tr align="center">
-            <td width="80px"><a href="{% url 'order:viewOrd' iiii.sn %}">{{ iiii.sn }}</a></td>
-            <td>{{ iiii.get_typ_display }} | {{ iiii.fnc.cod.get_cod_display }}</td>
-            <td>{{ iiii.logcs.consignee }} [ {{ iiii.logcs.tel }} ]</td>
-            <td width="220px">{% if iiii.form %}{{ iiii.form.dman }}{% else %}{{ iiii.logcs.dman }}{% endif %}</td>
-            <td>{{ iiii.get_status_display }} | {{ iiii.fnc.get_status_display }} | {{ iiii.logcs.get_status_display }}</td>
-          </tr>
-{% for item in iiii.pro_set.all %}
-          <tr align="center">
-            <td align="right" nowrap="true" colspan="2">{{ item.name }}</td>
-            <td>{{ item.spec }}</td>
-            <td>{{ item.num }}</td>
-            <td>{{ item.get_status_display }}</td>
-          </tr>
+      {% for iiii in iii.list %}
+                <tr align="center">
+                  <td width="80px"><a href="{% url 'order:viewOrd' iiii.sn %}">{{ iiii.sn }}</a></td>
+                  <td>{{ iiii.get_typ_display }} | {{ iiii.fnc.cod.get_cod_display }}</td>
+                  <td>{{ iiii.logcs.consignee }} [ {{ iiii.logcs.tel }} ]</td>
+                  <td width="220px">{% if iiii.form %}{{ iiii.form.dman }}{% else %}{{ iiii.logcs.dman.last_name }}{{ iiii.logcs.dman.first_name }}{% endif %}</td>
+                  <td>{{ iiii.get_status_display }} | {{ iiii.fnc.get_status_display }} | {{ iiii.logcs.get_status_display }}</td>
+                </tr>
+        {% for item in iiii.pro_set.all %}
+                <tr align="center">
+                  <td align="right" nowrap="true" colspan="2">{{ item.name }}</td>
+                  <td>{{ item.spec }}</td>
+                  <td>{{ item.num }}</td>
+                  <td>{{ item.get_status_display }}</td>
+                </tr>
+        {% endfor %}
+                <tr>
+                  <td align="center">地址</td>
+                  <td colspan="5"><a href="{% url 'logistics:baiduMap' iiii.logcs.address|urlencode %}" target="_blank">[ {{ iiii.logcs.area }} ] {{ iiii.logcs.address }}</a></td>
+                </tr>
+      {% endfor %}
+    {% endfor %}
+  {% endfor %}
 {% endfor %}
-          <tr>
-            <td align="center">地址</td>
-            <td colspan="5"><a href="{% url 'logistocs:baiduMap' iiii.logcs.address|urlencode %}" target="_blank">[ {{ iiii.logcs.area }} ] {{ iiii.logcs.address }}</a></td>
-          </tr>
-{% endfor %}
-{% endfor %}
-{% endfor %}
+
+
 {% empty %}
           <tr>
             <td align="center" colspan="10">无记录</td>

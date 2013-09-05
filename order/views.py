@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from new31.decorator import postDr, rdrtBckDr
 from cart.decorator import checkCartDr
 from new31.func import frMtFee, rdrRange, page, rdrtBck
-from decorator import ordDr, subMsg, subDr
+from decorator import ordDr, subMsg, subDr, modifyDr
 from logistics.decorator import chLogcsDr
 from finance.decorator import chFncDr
 from decimal import Decimal
@@ -103,11 +103,12 @@ def copyOrd(request, sn):
 
     return HttpResponseRedirect(reverse('order:newOrdFrm'))
 
+@modifyDr(1)
 @ordDr
-def editOrd(request, sn):
+def editOrd(request, sn, i):
     u"""订单状态修改-> 订单编辑"""
     from models import Ord
-    Ord.objects.cStatus(sn, 1)
+    Ord.objects.cStatus(sn, i)
 
     OrdSess(request).copy(sn)
 

@@ -34,11 +34,11 @@
 {% for i in newLogcs %}
         <tr align="center" class="tr_border_top_black">
           <td>{{ i.grouper }}</td>
-          <td><strong><a href="{% url 'logistics:logcs' %}?c={{ i.list.0.status }}" target="_blank">{{ i.list|length }}</a></strong></strong></td>
+          <td><strong><a href="{% url 'logistics:logcs' %}?c={{ i.list.0.status }}" target="_blank">{{ i.list|length }}</a></strong></td>
         </tr>
 {% for ii in i.list %}
         <tr align="center">
-          <td colspan="10"><strong><a href="{% url 'logistics:logcs' %}?c={{ ii.ord.status }}&k={{ ii.ord.sn }}" target="_blank">{{ ii.ord.sn }}</a></strong></td>
+          <td colspan="10"><strong><a href="{% url 'logistics:logcs' %}?c={{ ii.status }}&k={{ ii.ord.sn }}" target="_blank">{{ ii.ord.sn }}</a></strong></td>
         </tr>
 {% endfor %}
 {% endfor %}
@@ -57,7 +57,7 @@
 {% for i in newPro %}
         <tr align="center" class="tr_border_top_black">
           <td>{{ i.grouper }}</td>
-          <td><strong><a href="{% url 'produce:produce' %}?c={{ i.list.0.status }}" target="_blank">{{ i.list|length }}</a></strong></strong></td>
+          <td><strong><a href="{% url 'produce:produce' %}?c={{ i.list.0.status }}" target="_blank">{{ i.list|length }}</a></strong></td>
         </tr>
 {% for ii in i.list %}
         <tr align="center">
@@ -80,11 +80,11 @@
 {% for i in newFnc %}
         <tr align="center" class="tr_border_top_black">
           <td>{{ i.grouper }}</td>
-          <td><strong><a href="{% url 'finance:fnc' %}?c={{ i.list.0.status }}" target="_blank">{{ i.list|length }}</a></strong></strong></td>
+          <td><strong><a href="{% url 'finance:fnc' %}?c={{ i.list.0.status }}" target="_blank">{{ i.list|length }}</a></strong></td>
         </tr>
 {% for ii in i.list %}
         <tr align="center">
-          <td colspan="10"><strong><a href="{% url 'finance:fnc' %}?c={{ ii.ord.status }}&k={{ ii.ord.sn }}" target="_blank">{{ ii.ord.sn }}</a></strong></td>
+          <td colspan="10"><strong><a href="{% url 'finance:fnc' %}?c={{ ii.status }}&k={{ ii.ord.sn }}" target="_blank">{{ ii.ord.sn }}</a></strong></td>
         </tr>
 {% endfor %}
 {% endfor %}

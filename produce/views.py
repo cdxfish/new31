@@ -19,48 +19,8 @@ def produce(request):
     oList = o.get()
     oList = ProPur(oList, request).get()
 
-    oList = sortList(oList, o.initial)
 
     return render_to_response('produceui.htm', locals(), context_instance=RequestContext(request))
-
-def sortList(oList, initial):
-    u"""订单排序"""
-    _oList = {}
-    for i in oList:
-        
-        date = u'%s' % i.logcs.date
-        lstime = u'%s' % i.logcs.lstime
-        advance = u'%s' % i.logcs.get_advance_display()
-
-        _items = []
-
-        if not hasattr(i, 'items'):
-            i.items = i.pro_set.all()
-
-        for ii in i.items:
-            if initial['c'] >= 0:
-                if ii.status == initial['c']:
-                    _items.append(ii)
-            else:
-                _items.append(ii)
-
-            i.items = _items
-
-
-        if i.items:
-
-            if not date in _oList:
-                _oList[date] = {}
-
-            if not lstime in _oList[date]:
-                _oList[date][lstime] = {}
-
-            if not advance in _oList[date][lstime]:
-                _oList[date][lstime][advance] = []
-
-            _oList[date][lstime][advance].append(i)
-
-    return _oList
 
 @proDr
 def modifyPro(request, sn, s):
@@ -110,14 +70,21 @@ class ProSerch(OrdSerch):
         super(ProSerch, self).__init__(request)
 
     def search(self):
-        self.oList = self.baseSearch().oList.filter(Q(status=2) | Q(status=4))
+        self.oList = self.baseSearch().oList.filter(Q(status=2) | Q(status=4)).order_by('-logcs__date', 'logcs__advance', '-logcs__stime', '-logcs__etime')
 
         return self
 
     def chcs(self):
 
         if self.initial['c'] >= 0:
-            self.oList = self.oList.filter(pro__status=self.initial['c'])
+            self.oList = self.oList.filter(pro__status=self.initial['c']).distinct()
+
+        for i in self.oList:
+            if self.initial['c'] >= 0:
+
+                i.items = i.pro_set.filter(status=self.initial['c'])
+            else:
+                i.items = i.pro_set.all()
 
         return self
 
@@ -142,7 +109,8 @@ class ProPur(BsPur):
 
         super(ProPur, self).__init__(oList, request)
         for i in self.oList:
-            i.items = i.pro_set.all()
+            if not hasattr(i, 'items'):
+                i.items = i.pro_set.all()
 
         self.action = Pro.act
 

@@ -33,7 +33,7 @@ t = {
                     html += '             <td>' + v.spec + '</td>  \r\n';
                     html += '             <td>原价：' + v.fee + '</td>  \r\n';
                     html += '             <td>现价：' + v.nfee + '</td>  \r\n';
-                    html += '             <td><a href="/cart/buy/?id=' + v.id + '" class="btnB sBtn">购买</a></td>  \r\n';
+                    html += '             <td><a href="/cart/buy/' + v.id + '/" class="btnB sBtn">购买</a></td>  \r\n';
                     html += '          </tr>  \r\n';
                 });
 

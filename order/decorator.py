@@ -27,6 +27,18 @@ def ordDr(func):
 
 
 # 订单提交类提示用装饰器(类内部使用)
+def modifyDr(i):
+    def _func(func):
+        @wraps(func)
+        def __func(request, *args, **kwargs):
+
+            return func(request, kwargs['sn'], i)
+
+        return __func
+    return _func
+
+
+# 订单提交类提示用装饰器(类内部使用)
 def subMsg(s= ''):
     def _func(func):
         @wraps(func)

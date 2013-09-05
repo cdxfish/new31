@@ -15,7 +15,7 @@
 {% for i in oList %}
           <tr align="center" class="tr_border_top_black">
             <td>{{ i.get_typ_display }}</td>
-            <td><a href="{% url 'viewOrd' i.sn %}">{{ i.sn }}</a></td>
+            <td><a href="{% url 'order:viewOrd' i.sn %}">{{ i.sn }}</a></td>
             <td>{{ i.logcs.consignee }} [ {{ i.logcs.tel }} ]</td>
             <td>200.00 | 11.00 | 189.00 | {{ i.fnc.cod.get_cod_display }}</td>
             <td>{{ i.get_status_display }} | {{ i.fnc.get_status_display }} | {{ i.logcs.get_status_display }}</td>
@@ -33,7 +33,7 @@
 {% endfor %}
           <tr>
             <td align="center">地址</td>
-            <td colspan="5"><a href="{% url 'map' i.logcs.address|urlencode %}" target="_blank">{{ i.logcs.address }}</a></td>
+            <td colspan="5"><a href="{% url 'logistics:baiduMap' i.logcs.address|urlencode %}" target="_blank">{{ i.logcs.address }}</a></td>
           </tr>
           <tr align="center">
             <td>时间</td>
@@ -41,7 +41,7 @@
             <td>预发货</td>
             <td>{{ i.logcs.lstime|time:"H:i" }}</td>
             <td>{{ i.logcs.get_advance_display }}</td>
-            <td>{{ i.logcs.dman.first_name }}{{ i.logcs.dman.last_name }}</td>
+            <td>{{ i.logcs.dman.last_name }}{{ i.logcs.dman.first_name }}</td>
           </tr>             
           <tr>
             <td align="center">备注</td>

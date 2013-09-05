@@ -22,7 +22,7 @@
             <td>{{ i.logcs.consignee }} [ {{ i.logcs.tel }} ]</td>
             <td>{{ i.fee.paid|stringformat:"0.2f" }} | {{ i.fee.kpchng|stringformat:"0.2f" }} | {{ i.fee.total|stringformat:"0.2f" }} | {{ i.fnc.cod.get_cod_display }}</td>
             <td>{{ i.get_status_display }} | {{ i.fnc.get_status_display }} | {{ i.logcs.get_status_display }}</td>
-            <td>&nbsp;</td>
+            <td><a href="{% url 'print:pAct' i.sn %}" target="_blank" class="button">打印</a></td>
           </tr>
 {% if i.items %}
 {% for i in i.items %}

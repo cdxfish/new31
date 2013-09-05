@@ -85,7 +85,7 @@ class Logcs(models.Model):
     chcs= tuple((i[0],i[1]) for i in _chcs)
 
     act =   (
-                (_chcs[0], _chcs[2], _chcs[5], ),
+                (_chcs[0], _chcs[1], _chcs[2], _chcs[5], ),
                 (_chcs[1], _chcs[2], _chcs[5], ),
                 (_chcs[3], _chcs[4], ),
                 (),
@@ -109,6 +109,23 @@ class Logcs(models.Model):
     note = models.CharField(u'备注', max_length=255, blank=True, null=True)
     cod = models.ForeignKey(Deliver, verbose_name=u'送货方式')
     status = models.SmallIntegerField(u'物流状态', default=0, editable=False, choices=chcs)
+
+    def ltime(self):
+
+        return u'%s - %s' % ( self.stime.strftime('%H:%M'), self.etime.strftime('%H:%M') )
+
+    def advTime(self):
+
+        time = self.advance * 0.5
+        hour = self.lstime.hour + int(time)
+        minute = 30 if (time % 1) else 0
+
+        if self.advance < 0 and time % 1:
+            hour -= 1
+
+        # e = datetime.timedelta(hour=i.logcs.advance * 0.5)
+
+        return self.lstime.replace(hour=hour, minute=minute)
 
     objects = logcsManager()
 

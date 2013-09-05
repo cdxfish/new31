@@ -50,34 +50,9 @@ def logcsView(request):
     oList = o.get()
     oList = LogcsPur(oList, request).get()
 
-    sList = sortList(oList, o.initial)
-
     form = LogcSrchFrm(initial=o.initial)
 
     return render_to_response('logcsview.htm', locals(), context_instance=RequestContext(request))
-
-
-def sortList(oList, initial):
-    u"""订单排序"""
-    _oList = {}
-    for i in oList:
-        
-        date = u'%s' % i.logcs.date
-        lstime = u'%s - %s' % (i.logcs.stime.strftime('%H:%M'), i.logcs.etime.strftime('%H:%M'))
-        advance = u'%s' % i.logcs.get_advance_display()
-
-        if not date in _oList:
-            _oList[date] = {}
-
-        if not lstime in _oList[date]:
-            _oList[date][lstime] = {}
-
-        if not advance in _oList[date][lstime]:
-            _oList[date][lstime][advance] = []
-
-        _oList[date][lstime][advance].append(i)
-
-    return _oList
 
 def logcsEditFrm(request):
     u"""物流编辑表单"""
@@ -274,7 +249,7 @@ class LogcsSerch(OrdSerch):
         super(LogcsSerch, self).__init__(request)
 
     def search(self):
-        self.oList = self.baseSearch().oList.filter(Q(status=2) | Q(status=4))
+        self.oList = self.baseSearch().oList.filter(Q(status=2) | Q(status=4)).order_by('-logcs__date', '-logcs__stime', '-logcs__etime', 'logcs__advance')
 
         return self
 

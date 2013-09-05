@@ -67,6 +67,7 @@ class Privilege(models.Model):
             (3, u'客服部'),
             (4, u'业务部'),
             (5, u'生产部'),
+            (6, u'财务部'),
         )
     name = models.SmallIntegerField(u'名称', choices=chcs, unique=True)
     onl = models.BooleanField(u'上线', default=True)

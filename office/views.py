@@ -13,7 +13,6 @@ def office(request):
     from logistics.models import Logcs
     from produce.models import Pro
     from finance.models import Fnc
-    # datetime.datetime.utcnow().replace(tzinfo=utc) - datetime.timedelta(settings.ACCOUNT_ACTIVATION_DAYS)
 
     today = datetime.date.today()
     oneDay = datetime.timedelta(days=1)
@@ -21,9 +20,9 @@ def office(request):
     s = '%s' % today
     e = '%s' % (today + oneDay)
 
-    order = Ord.objects.filter(ordlog__time__range=(s, e) )
-    logcs = Logcs.objects.filter(date__range=(s, e))
-    pro = Pro.objects.filter(ord__logcs__date__range=(s, e))
-    fnc = Fnc.objects.filter(ord__logcs__date__range=(s, e))
+    order = Ord.objects.filter(ordlog__time__range=(s, e) ).order_by('status')
+    logcs = Logcs.objects.filter(date__range=(s, e)).order_by('status')
+    pro = Pro.objects.filter(ord__logcs__date__range=(s, e)).order_by('status')
+    fnc = Fnc.objects.filter(ord__logcs__date__range=(s, e)).order_by('status')
 
     return render_to_response('office.htm', locals(), context_instance=RequestContext(request))

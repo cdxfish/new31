@@ -1,8 +1,8 @@
 {% extends "office.base.htm" %}
 
 {% block content %}
-      {% include 'search.htm' %}
-      {% load tags %}
+{% include 'search.htm' %}
+{% load tags %}
         <table cellpadding="3" cellspacing="1" width="100%">
           <tr>
             <th>名称</th>
@@ -11,32 +11,36 @@
             <th>状态</th>
             <th>操作</th>
           </tr>
-{% for i,v in oList.items %}
-{% for ii,vv in v.items %}
-{% for iii,vvv in vv.items %}
+{% regroup oList by logcs.date as newsList %}
+{% for i in newsList %}
+{% regroup i.list by logcs.advTime as newLstime %}
+
+  {% for ii in newLstime %}
           <tr class="tr_border_top_black">
-            <td colspan="10">{{ i }} | {{ ii }} | {{ iii }}</td>
+            <td colspan="10">{{ i.grouper|date:"Y-m-d"  }} | {{ ii.grouper|time:"H:i" }} | <span class="wow_item_8">{{ ii.list|length }}</span></td>
           </tr>
-{% for iiii in vvv %}
-          <tr>
-            <td colspan="10"><a href="{% url 'order:viewOrd' iiii.sn %}">{{ iiii.sn }}</a></td>
-          </tr>
-{% for item in iiii.items %}
-          <tr align="center">
-            <td align="right" nowrap="true">{{ item.name }}</td>
-            <td>{{ item.spec }}</td>
-            <td>{{ item.num }}</td>
-            <td>{{ item.get_status_display }}</td>
-            {% optr item %}
-          </tr>
-{% endfor %}
-{% endfor %}
-{% endfor %}
-{% endfor %}
+    {% for ord in ii.list %}
+            <tr>
+                <td colspan="10"><a href="{% url 'order:viewOrd' ord.sn %}">{{ ord.sn }}</a> | {{ ord.logcs.lstime }} | {{ ord.logcs.get_advance_display }}</td>
+            </tr>
+        {% for item in ord.items %}
+            <tr align="center">
+              <td align="right" nowrap="true">{{ item.name }}</td>
+              <td>{{ item.spec }}</td>
+              <td>{{ item.num }}</td>
+              <td>{{ item.get_status_display }}</td>
+              {% optr item %}
+            </tr>
+        {% endfor %}
+    {% endfor %}
+  {% endfor %}
 {% empty %}
           <tr>
             <td align="center" colspan="10">无记录</td>
           </tr>
 {% endfor %}
+          <tr>
+            <td colspan="20" align="right">共 {{ oList|length }} 条记录</td>
+          </tr>
         </table>
 {% endblock %}
