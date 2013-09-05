@@ -249,7 +249,7 @@ class LogcsSerch(OrdSerch):
         super(LogcsSerch, self).__init__(request)
 
     def search(self):
-        self.oList = self.baseSearch().oList.filter(Q(status=2) | Q(status=4)).order_by('-logcs__date', '-logcs__stime', '-logcs__etime', 'logcs__advance')
+        self.oList = self.baseSearch().oList.filter(Q(status=2) | Q(status=4)).order_by('-logcs__date', '-logcs__stime', '-logcs__advance', '-logcs__etime', '-logcs__dman' )
 
         return self
 

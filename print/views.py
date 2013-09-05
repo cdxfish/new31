@@ -8,7 +8,7 @@ from django.template import RequestContext
 def printOrd(request):
     u"""票据打印"""
     from logistics.forms import LogcSrchFrm
-    from logistics.views import LogcsSerch, KpChng, sortList
+    from logistics.views import LogcsSerch, KpChng
 
     o = LogcsSerch(request)
 

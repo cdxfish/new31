@@ -14,6 +14,9 @@ def produce(request):
 
     o = ProSerch(request)
 
+    if not request.GET.get('c'):
+        o.initial['c'] = 1
+
     form = ProFrm(initial=o.initial)
 
     oList = o.get()
@@ -70,7 +73,7 @@ class ProSerch(OrdSerch):
         super(ProSerch, self).__init__(request)
 
     def search(self):
-        self.oList = self.baseSearch().oList.filter(Q(status=2) | Q(status=4)).order_by('-logcs__date', 'logcs__advance', '-logcs__stime', '-logcs__etime')
+        self.oList = self.baseSearch().oList.filter(Q(status=2) | Q(status=4)).order_by('-logcs__date', '-logcs__stime', '-logcs__advance', '-logcs__etime')
 
         return self
 
