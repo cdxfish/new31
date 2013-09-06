@@ -30,6 +30,9 @@ class Dis(models.Model):
             (0.88, u'8.8 折'),
             (0.85, u'8.5 折'),
             (0.8, u'8.0 折'),
+            (0.795, u'7.95 折'),
+            (0.77, u'7.7 折'),
+            (0.752, u'7.52 折'),
             (0.75, u'7.5 折'),
             (0.7, u'7.0 折'),
             (0.65, u'6.5 折'),
@@ -54,3 +57,6 @@ class Dis(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.get_dis_display()
+
+    class Meta:
+        ordering = ['-dis']

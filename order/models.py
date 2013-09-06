@@ -67,17 +67,17 @@ class Ord(models.Model):
     chcs= tuple((i[0],i[1]) for i in _chcs)
 
     act =   ( 
-                (_chcs[0], _chcs[1], _chcs[2], _chcs[3],),
-                (_chcs[0], _chcs[1], _chcs[2], _chcs[3],),
-                (_chcs[0], _chcs[4],),
-                (_chcs[0],),
-                (_chcs[0],),
+                (_chcs[0], _chcs[1], _chcs[2], _chcs[3], ),
+                (_chcs[0], _chcs[1], _chcs[2], _chcs[3], ),
+                (_chcs[0], _chcs[4], ),
+                (_chcs[0], ),
+                (_chcs[0], ),
             )
 
     sn = models.BigIntegerField(u'订单号', primary_key=True, unique=True)
     user = models.ForeignKey(User, verbose_name=u'会员', blank=True, null=True)
     typ = models.SmallIntegerField(u'订单类型', default=0, choices=typs)
-    status = models.SmallIntegerField(u'订单状态', default=0, editable=False, choices=chcs)
+    status = models.SmallIntegerField(u'订单状态', default=0, choices=chcs)
 
     objects = ordManager()
 

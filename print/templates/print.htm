@@ -51,7 +51,7 @@
 {% endfor %}
                 <tr>
                     <td colspan="6" align="right"><span >总计: {{ o.total|floatformat:2 }}</span>&nbsp;&nbsp;</td>
-                    <td align="center">{{ o.fnc.get_status_display }}</td>
+                    <td align="center">{{ o.fnc.cod.get_cod_display }} | {{ o.fnc.get_status_display }}</td>
                 </tr>
             </table>
 <table width="100%">

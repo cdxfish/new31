@@ -60,7 +60,7 @@ def cOnlInv(request, sn):
     u"""备货选择"""
     from models import InvPro
 
-    InvPro.objects.cOnl(id=sn)
+    InvPro.objects.cOnl(sid=sn)
 
     return rdrtBck(request)
 

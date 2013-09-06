@@ -72,7 +72,7 @@ class invNumManager(models.Manager):
         pros = InvPro.objects.getAll()
 
         for i in pros:
-            adv = sum([v['num'] for v in Pro.objects.filter(sn=i.spec.item.sn, spec=i.spec.spec.value, ord__logcs__date=date).values('num')])
+            adv = sum([v['num'] for v in Pro.objects.filter(sn=i.spec.item.sn, spec=i.spec.spec.value, ord__logcs__date=date, ord__status=2).values('num')])
             try:
                 invnum = i.invnum_set.get(date=date)
             except Exception, e:

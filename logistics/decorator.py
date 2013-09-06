@@ -26,6 +26,18 @@ def logcsDr(func):
     return _func
 
 
+# 订单提交类提示用装饰器(类内部使用)
+def modifyLogcsDr(i):
+    def _func(func):
+        @wraps(func)
+        def __func(request, *args, **kwargs):
+
+            return func(request, kwargs['sn'], i)
+
+        return __func
+    return _func
+
+
 # 物流师傅必选装饰器
 def dManDr(func):
     @wraps(func)

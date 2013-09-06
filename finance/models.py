@@ -52,16 +52,16 @@ class Fnc(models.Model):
     chcs= tuple((i[0],i[1]) for i in _chcs)
 
     act =   (
-                (_chcs[1], _chcs[4],),
-                (_chcs[2],),
-                (_chcs[3],),
+                (_chcs[1], _chcs[4], ),
+                (_chcs[2], ),
+                (_chcs[3], ),
                 (),
-                (),
+                (_chcs[0], ),
         )
 
     ord = models.OneToOneField(Ord, verbose_name=u'订单')
     cod = models.ForeignKey(Pay, verbose_name=u'支付方式')
-    status = models.SmallIntegerField(u'支付状态', default=0, editable=False, choices=chcs)
+    status = models.SmallIntegerField(u'支付状态', default=0, choices=chcs)
 
     objects = fncManager()
 

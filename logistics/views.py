@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from new31.decorator import postDr
-from decorator import logcsDr, dManDr
+from decorator import logcsDr, dManDr, modifyLogcsDr
 from new31.func import keFrmt, rdrtBck, rdrRange
 import time,datetime
 
@@ -49,6 +49,8 @@ def logcsView(request):
 
     oList = o.get()
     oList = LogcsPur(oList, request).get()
+    for i in oList:
+        i.items = i.pro_set.filter(Q(sn__contains='33') | Q(sn__contains='55') | Q(sn__contains='77'))
 
     form = LogcSrchFrm(initial=o.initial)
 
@@ -121,8 +123,9 @@ def logcsSign(request, sn):
 
     return modifyLogcs(request, sn, 4)
 
+@modifyLogcsDr(5)
 @logcsDr
-def logcsStop(request, sn):
+def logcsStop(request, sn, i):
     u"""物流状态修改-> 物流止送"""
     from models import Logcs
     # from order.models import Ord
@@ -249,7 +252,7 @@ class LogcsSerch(OrdSerch):
         super(LogcsSerch, self).__init__(request)
 
     def search(self):
-        self.oList = self.baseSearch().oList.filter(Q(status=2) | Q(status=4)).order_by('-logcs__date', '-logcs__stime', '-logcs__advance', '-logcs__etime', '-logcs__dman' )
+        self.oList = self.baseSearch().oList.filter(Q(status=2) | Q(status=4)).order_by('-logcs__date', '-logcs__stime', '-logcs__advance', '-logcs__etime', '-logcs__dman', '-sn' )
 
         return self
 

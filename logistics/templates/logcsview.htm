@@ -6,8 +6,7 @@
         <table cellpadding="3" cellspacing="1" width="100%">
           <tr>
             <th>订单编号</th>
-            <th>类型 | 付款方式</th>
-            <th>联系人</th>
+            <th>地址</th>
             <th>物流师傅</th>
             <th>状态</th>
           </tr>
@@ -21,23 +20,17 @@
       {% for iii in ii.list %}
                 <tr align="center">
                   <td width="80px"><a href="{% url 'order:viewOrd' iii.sn %}">{{ iii.sn }}</a></td>
-                  <td>{{ iii.get_typ_display }} | {{ iii.fnc.cod.get_cod_display }}</td>
-                  <td>{{ iii.logcs.consignee }} [ {{ iii.logcs.tel }} ]</td>
+                  <td align="left"><a href="{% url 'logistics:baiduMap' iii.logcs.address|urlencode %}" target="_blank">[ {{ iii.logcs.area }} ] {{ iii.logcs.address }}</a></td>
                   <td width="220px">{% if iii.form %}{{ iii.form.dman }}{% else %}{{ iii.logcs.dman.last_name }}{{ iii.logcs.dman.first_name }}{% endif %}</td>
                   <td>{{ iii.get_status_display }} | {{ iii.fnc.get_status_display }} | {{ iii.logcs.get_status_display }}</td>
                 </tr>
-        {% for item in iii.pro_set.all %}
+        {% for item in iii.items %}
                 <tr align="center">
-                  <td align="right" nowrap="true" colspan="2">{{ item.name }}</td>
-                  <td>{{ item.spec }}</td>
-                  <td>{{ item.num }}</td>
+                  <td align="right" nowrap="true" colspan="2">{{ item.name }} {{ item.spec }} [ {{ item.num }} ]</td>
+                  <td>&nbsp;</td>
                   <td>{{ item.get_status_display }}</td>
                 </tr>
         {% endfor %}
-                <tr>
-                  <td align="center">地址</td>
-                  <td colspan="5"><a href="{% url 'logistics:baiduMap' iii.logcs.address|urlencode %}" target="_blank">[ {{ iii.logcs.area }} ] {{ iii.logcs.address }}</a></td>
-                </tr>
     {% endfor %}
   {% endfor %}
 {% empty %}

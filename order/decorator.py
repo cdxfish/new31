@@ -27,7 +27,7 @@ def ordDr(func):
 
 
 # 订单提交类提示用装饰器(类内部使用)
-def modifyDr(i):
+def modifyLogcsDr(i):
     def _func(func):
         @wraps(func)
         def __func(request, *args, **kwargs):

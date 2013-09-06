@@ -112,3 +112,7 @@ class Pro(models.Model):
 
     def __unicode__(self):
         return u"%s - %s [ %s ]" % ( self.name, self.spec, self.status)
+
+
+    class Meta:
+        ordering = ['sn']

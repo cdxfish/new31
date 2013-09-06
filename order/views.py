@@ -238,8 +238,8 @@ class OrdSerch(object):
                         'o': int(request.GET.get('o', -1)),
                         'c': int(request.GET.get('c', 0)), 
                         's': request.GET.get('s', '%s' % today).strip(),
-                        # 'e': request.GET.get('e', '%s' % (today + oneDay)).strip(),
-                        'e': request.GET.get('e', '%s' % today).strip(),
+                        'e': request.GET.get('e', '%s' % (today + oneDay)).strip(),
+                        # 'e': request.GET.get('e', '%s' % today).strip(),
                         'k': request.GET.get('k', '').strip(), 
             }
 

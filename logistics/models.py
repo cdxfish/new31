@@ -90,7 +90,7 @@ class Logcs(models.Model):
                 (_chcs[3], _chcs[4], ),
                 (),
                 (),
-                (),
+                (_chcs[0], ),
         )
 
 
@@ -108,7 +108,7 @@ class Logcs(models.Model):
     dman = models.ForeignKey(User, verbose_name=u'物流师傅', blank=True, null=True)
     note = models.CharField(u'备注', max_length=255, blank=True, null=True)
     cod = models.ForeignKey(Deliver, verbose_name=u'送货方式')
-    status = models.SmallIntegerField(u'物流状态', default=0, editable=False, choices=chcs)
+    status = models.SmallIntegerField(u'物流状态', default=0, choices=chcs)
 
     def ltime(self):
 

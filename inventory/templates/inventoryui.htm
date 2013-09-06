@@ -30,7 +30,7 @@
             <td>&nbsp;</td>
             <td>{{ ii.spec.spec.value }}</td>
             <td><span class="wow_item_1">{{ ii.invnum.adv }}</span> | <span class="wow_item_8">{{ ii.invnum.count }}</span> | <span class="wow_item_0">{{ ii.invnum.num }}</span></td>
-            <td><input ytpe="text" name="n{{ ii.invnum.id }}" value="1" size="1" /></td>
+            <td>{% if ii.action %}<input ytpe="text" name="n{{ ii.invnum.id }}" value="1" size="1" />{% else %}&nbsp;{% endif %}</td>
             <td nowrap="nowrap" align="center">
 {% for iii in ii.action  %}
             <a href="{% url iii.2 ii.invnum.id 1 %}" class="button act">{{ iii.1 }}</a>
