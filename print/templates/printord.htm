@@ -49,7 +49,7 @@
           <tr>
             <td>&nbsp;</td>
             <td align="center">地址</td>
-            <td colspan="5"><a href="{% url 'logistics:baiduMap' i.logcs.address|urlencode %}" target="_blank">[ {{ i.logcs.area }} ] {{ i.logcs.address }}</a></td>
+            <td colspan="5"><a href="{% url 'logistics:baiduMap' %}?address={{ i.logcs.address|urlencode }}" target="_blank">[ {{ i.logcs.area }} ] {{ i.logcs.address }}</a></td>
           </tr>
           <tr align="center">
             <td>&nbsp;</td>

@@ -13,7 +13,7 @@ class oprerateTag(template.Node):
 
         s = '<td nowrap="nowrap" align="center">'
         for i in value.action:
-            s += '<a href="%s" class="button">%s</a>' % (reverse(i[2], kwargs={'sn': value.sn}), i[1])
+            s += '<a href="%s" class="button %s">%s</a>' % (reverse(i[2], kwargs={'sn': value.sn}), i[2], i[1])
 
         return s + '</td>'
 

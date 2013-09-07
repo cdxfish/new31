@@ -4,7 +4,7 @@ from views import logcs, baiduMap, logcsView, logcsUnsent, logcsEdit, logcsShip,
 
 urlpatterns = pPatterns(
     (r'^$', logcs, 3),
-    (r'^map\/(?P<address>.*)\/$', baiduMap, 3),
+    (r'^map\/$', baiduMap, 3),
     (r'^view/$', logcsView, 3),
     (r'^edit/$', logcsEditFrm, 3),
     (r'^submit/$', logcsSub, 3),

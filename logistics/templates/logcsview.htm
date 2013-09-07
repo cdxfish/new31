@@ -20,7 +20,7 @@
       {% for iii in ii.list %}
                 <tr align="center">
                   <td width="80px"><a href="{% url 'order:viewOrd' iii.sn %}">{{ iii.sn }}</a></td>
-                  <td align="left"><a href="{% url 'logistics:baiduMap' iii.logcs.address|urlencode %}" target="_blank">[ {{ iii.logcs.area }} ] {{ iii.logcs.address }}</a></td>
+                  <td align="left"><a href="{% url 'logistics:baiduMap' %}?address={{ i.logcs.address|urlencode }}" target="_blank">[ {{ iii.logcs.area }} ] {{ iii.logcs.address }}</a></td>
                   <td width="220px">{% if iii.form %}{{ iii.form.dman }}{% else %}{{ iii.logcs.dman.last_name }}{{ iii.logcs.dman.first_name }}{% endif %}</td>
                   <td>{{ iii.get_status_display }} | {{ iii.fnc.get_status_display }} | {{ iii.logcs.get_status_display }}</td>
                 </tr>

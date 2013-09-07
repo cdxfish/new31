@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from decorator import ajaxMsg
 from logistics.decorator import aLogcsDr
 from new31.func import sort, f02f, frMtFee
+from new31.cls import AjaxRJson
 import json
 
 # Create your views here.
@@ -141,34 +142,3 @@ def cOrd(request):
         OrdSess(request).setByName(i, v)
 
     return AjaxRJson().dumps()
-
-
-# JSON数据格式化类
-class AjaxRJson:
-    """
-        统一全局JSON 字典格式化
-
-        {
-            error: False,
-            msg: 'success',
-            data: {},
-        }
-
-    """
-    def __init__(self):
-        self.error = False
-        self.msg = 'success'
-        self.data = {}
-
-    def dumps(self, data=''):
-        if data:
-            self.data = data
-
-        return HttpResponse(json.dumps({'err':self.error, 'msg':self.msg, 'data':self.data }))
-
-    def message(self, msg = ''):
-        
-        self.msg = msg
-        self.error = True
-
-        return self

@@ -33,10 +33,12 @@ def logcs(request):
 
     return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))
 
-def baiduMap(request, address):
+def baiduMap(request):
     u"""地图"""
 
-    return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))
+    address = request.GET.get('address', '')
+
+    return render_to_response('baidumap.htm', locals(), context_instance=RequestContext(request))
 
 def logcsView(request):
     u"""物流安排"""

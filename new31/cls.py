@@ -1,6 +1,5 @@
 #coding:utf-8
 
-
 class BsSess(object):
     """
         session
@@ -51,3 +50,35 @@ class BsSess(object):
     def clear(self):
 
         return self.set(self.frmt)
+
+
+
+# JSON数据格式化类
+class AjaxRJson:
+    """
+        统一全局JSON 字典格式化
+
+        {
+            error: False,
+            msg: 'success',
+            data: {},
+        }
+
+    """
+    def __init__(self):
+        self.error = False
+        self.msg = 'success'
+        self.data = {}
+
+    def dumps(self, data=''):
+        if data:
+            self.data = data
+
+        return HttpResponse(json.dumps({'err':self.error, 'msg':self.msg, 'data':self.data }))
+
+    def message(self, msg = ''):
+        
+        self.msg = msg
+        self.error = True
+
+        return self

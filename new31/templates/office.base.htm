@@ -30,7 +30,7 @@
 </head>          
 <body>
     <ul id="navMenu">
-      <li><a href="/" id="showNav"></a></li>
+      <li><a href="{% url 'shop:shop' %}" id="showNav"></a></li>
       <li>
         <a href="{% url 'order:ords' %}" class="nav">订单管理</a>
         <div class="messagePop" style="display:none;">
@@ -141,7 +141,7 @@
         <div id="urHere"><a href="{% url 'office:office' %}" id="index">31kecake 管理中心</a> {% if request.domElement %} <a href="{% url request.domElement.view_name %}">{{ request.title }}</a>{% endif %}</div>
         <ul id="toolsBar">
           <li><a href="{% url 'order:newOrdFrm' %}">新订单</a></li>
-          <li><a href="{% url 'logistics:baiduMap' '#' %}">地图</a></li>
+          <li><a href="{% url 'logistics:baiduMap' %}">地图</a></li>
           <li><a href="{% url 'logistics:logcsView' %}?c=-1">物流安排</a></li>
           <li><a href="{% url 'print:printOrd' %}">票据打印</a></li>
         </ul>
