@@ -7,8 +7,10 @@ from django.template import RequestContext
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from new31.decorator import postDr, rdrtBckDr
+from new31.func import frMtFee, rdrRange, page, rdrtBck, f02f
+from new31.cls import AjaxRJson
+from ajax.decorator import ajaxMsg
 from cart.decorator import checkCartDr
-from new31.func import frMtFee, rdrRange, page, rdrtBck
 from decorator import ordDr, subMsg, subDr, modifyDr
 from logistics.decorator import chLogcsDr
 from finance.decorator import chFncDr
@@ -149,6 +151,59 @@ def delItemOrd(request, mark):
     return rdrtBck(request)
 
 
+# @ajaxMsg('无法修改表单数据')
+def cItem(request):
+    u"""ajax-> 修改购物车内商品"""
+    from cart.views import CartSess
+    mark = int(request.GET.get('mark')[1:])
+    cc = CartSess(request).chngItem()
+
+    i = cc.getItem(mark)
+
+    return AjaxRJson().dumps({
+        'mark': mark,
+        'fee': f02f(i['fee']),
+        'nfee': f02f(i['nfee']),
+        'st': f02f(i['total']),
+        'total': f02f(cc.total()),
+    })
+
+
+@ajaxMsg('未找到商品')
+def getItemByKeyword(request):
+    u"""ajax-> 商品查询"""
+    from item.models import Item
+
+    r = [ { 'name':i.name, 'sn': i.sn, 'id': i.id, } for i in Item.objects.likeNameOrSn(request.GET.get('k', ''))]
+
+    return AjaxRJson().dumps(r)
+
+@ajaxMsg('无此会员')
+def getUser(request):
+    u"""ajax-> 查询会员"""
+    from account.models import BsInfo
+
+    u = BsInfo.objects.get(user__username=request.GET.get('u'))
+
+    return AjaxRJson().dumps({
+            u'用户名': u.user.username,
+            u'姓名': '%s %s' % (u.user.last_name, u.user.first_name),
+            u'生日': '%s %s' % (u.get_mon_display(), u.get_day_display()),
+            u'性别': u.get_sex_display(),
+            u'类型': u.get_typ_display(),
+            u'邮箱': u.user.email,
+            u'积分': u.user.pts.pt,
+            u'注册时间': '%s' % u.user.date_joined,
+        })
+
+@ajaxMsg('无法填写表单')
+def cOrd(request):
+    u"""ajax-> 修改订单信息"""
+    for i,v in request.GET.dict().items():
+        OrdSess(request).setByName(i, v)
+
+    return AjaxRJson().dumps()
+
 from new31.cls import BsSess
 class OrdSess(BsSess):
     """ 
@@ -258,7 +313,9 @@ class OrdSerch(object):
                     Q(logcs__tel__contains=self.initial['k']) |
                     Q(logcs__stime__contains=self.initial['k']) |
                     Q(logcs__etime__contains=self.initial['k']) |
-                    Q(logcs__note__contains=self.initial['k'])
+                    Q(logcs__note__contains=self.initial['k']) |
+                    Q(logcs__dman__last_name__contains=self.initial['k']) |
+                    Q(logcs__dman__first_name__contains=self.initial['k'])
                 )
 
         if self.initial['o'] >= 0:

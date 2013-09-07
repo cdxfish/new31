@@ -38,7 +38,7 @@ aeog = {
 
         function() {
 
-            $.dialog.ajaxGET('/ajax/item/?k='+ $('#keyword').val(), self.sg, {
+            $.dialog.ajaxGET('/order/item/?k='+ $('#keyword').val(), self.sg, {
                 'position': 'absolute',
                 'width': 400
             });
@@ -85,7 +85,7 @@ aeog = {
 
         function() {
             var self = $(this);
-            self.ajaxGET('/ajax/citem/?name=' + self.attr('name') + '&mark=' + self.attr('id') + '&value=' + self.val(), function(data) {
+            self.ajaxGET('/order/citem/?name=' + self.attr('name') + '&mark=' + self.attr('id') + '&value=' + self.val(), function(data) {
                 $('#nfee' + data.data.mark).text(data.data.nfee);
                 $('#st' + data.data.mark).text(data.data.st);
                 $('#total').text(data.data.total);
@@ -98,7 +98,7 @@ aeog = {
     u: function() {
         $('#checkUser').click(function() {
             var self = $(this);
-            $.dialog.ajaxGET('/ajax/user/?u=' + self.prev().val(), function(data) {
+            $.dialog.ajaxGET('/order/user/?u=' + self.prev().val(), function(data) {
                 var html = '';
                 html += '        <table width="100%" cellpadding="3" cellspacing="1" class="sortTable">  \r\n';
 

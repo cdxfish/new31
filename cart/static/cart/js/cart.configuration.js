@@ -11,7 +11,7 @@ var cart = {
             var self = $(this);
             var val = self.val();
             if (parseInt(val) == val) {
-                self.ajaxGET('/ajax/cnum/?mark=' + self.attr('name') + '&num=' + val,
+                self.ajaxGET('/cart/cnum/' + self.attr('name') + '/' + val + '/',
 
                 function(data) {
 

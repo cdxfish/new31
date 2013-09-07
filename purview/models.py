@@ -57,6 +57,9 @@ class Element(models.Model):
             sub = None
 
         return u"%s [ sub: %s ][ onl: %s ] - %s" % (self.get_path_display(), sub, self.onl, self.path)
+        
+    class Meta:
+        ordering = ['-path']
 
 
 class Privilege(models.Model):

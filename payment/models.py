@@ -16,11 +16,18 @@ class PayManager(models.Manager):
 
         return tuple([(i.id, i.get_cod_display()) for i in self.filter(onl=True)])
 
+    def getTplToShow(self):
+
+        return tuple([(i.id, i.get_cod_display()) for i in self.filter((models.Q(cod='payafter') | models.Q(cod='alipay') | models.Q(cod='post') ), onl=True)])
+
 class Pay(models.Model):
     chcs = (
-                ('payafter', u'货到付款'), 
-                ('alipay', u'支付宝'), 
-                ('post', u'货到付款 ( 刷卡 )'), 
+                ('payafter', u'货到付款'),
+                ('alipay', u'支付宝'),
+                ('post', u'货到付款 ( 刷卡 )'),
+                ('quarter', u'季结'),
+                ('monthly', u'月结'),
+                ('weekly', u'周结'),
         )
 
     cod = models.CharField(u'代码', max_length=30, choices=chcs)

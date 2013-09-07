@@ -7,7 +7,8 @@ from office.forms import bsSrchFrm
 class FncFrm(forms.Form):
     from payment.models import Pay
 
-    pay = forms.ChoiceField(label=u'支付方式', choices=Pay.objects.getTpl())
+    pay = forms.ChoiceField(label=u'支付方式', choices=Pay.objects.getTpl(), required=False)
+    spay = forms.ChoiceField(label=u'支付方式', choices=Pay.objects.getTplToShow(), required=False)
 
 
 def fncFrm(request):

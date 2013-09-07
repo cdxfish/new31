@@ -1,6 +1,6 @@
 $(document).ready(function() {
     c.strFocusText($('#id_note'), c.noteText).strFocusText($('#id_tel'), c.telText).submit();
-    b.chng($('#logcs input, #logcs select, #logcs textarea'), '/ajax/clogcs/');
+    b.chng($('#logcs input, #logcs select, #logcs textarea'), '/logistics/clogcs/');
 });
 
 

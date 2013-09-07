@@ -8,7 +8,7 @@ var logcs = {
         $('.ad').change(function() {
             var self = $(this);
 
-            self.ajaxGET('/ajax/cadv/?sn=' + self.attr('id') + '&value=' + self.val());
+            self.ajaxGET('/logistics/cadv/?sn=' + self.attr('id') + '&value=' + self.val());
         });
 
         return this
@@ -17,7 +17,7 @@ var logcs = {
         $('.dman').change(function() {
             var self = $(this);
 
-            self.ajaxGET('/ajax/cdman/?sn=' + self.attr('id') + '&value=' + self.val());
+            self.ajaxGET('/logistics/cdman/?sn=' + self.attr('id') + '&value=' + self.val());
         });
 
         return this

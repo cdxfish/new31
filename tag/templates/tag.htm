@@ -26,8 +26,8 @@
 {% endfor %}
                     </div>
                     <div class="vote">
-                        <a class="btnLike" href="{% url 'ajax:itemLike' i.item.id %}">喜欢</a>
-                        <a class="btnReplay" href="{% url 'ajax:getSpec' i.item.id %}">购买</a>
+                        <a class="btnLike" href="{% url 'tag:itemLike' i.item.id %}">喜欢</a>
+                        <a class="btnReplay" href="{% url 'tag:getSpec' i.item.id %}">购买</a>
                     </div>
                 </div>
             </li>

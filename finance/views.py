@@ -5,8 +5,8 @@ from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from decorator import fncDetr
 from new31.func import rdrtBck
-
-
+from new31.cls import AjaxRJson
+from ajax.decorator import ajaxMsg
 # Create your views here.
 
 def fnc(request):
@@ -56,6 +56,15 @@ def stopFnc(request, sn):
     u"""财务状态修改-> 财务止付"""
 
     return modifyFnc(request, sn, 4)
+
+
+@ajaxMsg('无法填写表单')
+def cFnc(request):
+    u"""ajax-> 修改财务信息"""
+    for i,v in request.GET.dict().items():
+        FncSess(request).setByName(i, v)
+
+    return AjaxRJson().dumps()
 
 
 from new31.cls import BsSess

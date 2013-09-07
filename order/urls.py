@@ -1,6 +1,6 @@
 #coding:utf-8
 from new31.func import pPatterns
-from views import ords, viewOrd, newOrdFrm, editOrdFrm, submitOrd, copyOrd, editOrd, confirmOrd, nullOrd, stopOrd, addItemOrd, delItemOrd
+from views import ords, viewOrd, newOrdFrm, editOrdFrm, submitOrd, copyOrd, editOrd, confirmOrd, nullOrd, stopOrd, addItemOrd, delItemOrd, cItem, cOrd, getItemByKeyword, getUser
 
 urlpatterns = pPatterns(
     (r'^$', ords, 3),
@@ -15,4 +15,8 @@ urlpatterns = pPatterns(
     (r'^4\/(?P<sn>\d{15})\/$', stopOrd, 3),
     (r'^additem\/$', addItemOrd, 3),
     (r'^delitem\/(?P<mark>\d+)\/$', delItemOrd, 3),
+    (r'^citem\/$', cItem, 1),     
+    (r'^cord\/$', cOrd, 1),
+    (r'^item\/$', getItemByKeyword, 1),
+    (r'^user\/$', getUser, 1)
 )

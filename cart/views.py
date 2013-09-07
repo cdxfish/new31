@@ -5,8 +5,11 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from decorator import itemshow, checkCartDr
-from new31.decorator import postDrR
 from order.decorator import subDr
+from new31.func import f02f
+from new31.cls import AjaxRJson
+from new31.decorator import postDrR
+from ajax.decorator import ajaxMsg
 from logistics.decorator import chLogcsDr
 from finance.decorator import chFncDr
 from new31.func import frMtFee, rdrtBck, rdrtIndex
@@ -88,6 +91,14 @@ def delInCart(request, mark):
     CartSess(request).delete(int(mark))
 
     return rdrtBck(request)
+
+@ajaxMsg('当前商品已下架')
+def cNum(request, mark, num):
+    u"""ajax-> 修改购物车中商品数量"""
+
+    data =  f02f(CartSess(request).chngNum(int(mark), int(num)).total())
+
+    return AjaxRJson().dumps(data)
 
 
 from new31.cls import BsSess

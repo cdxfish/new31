@@ -1,8 +1,10 @@
 #coding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from new31.func import f02f, sort
+from new31.cls import AjaxRJson
+from ajax.decorator import ajaxMsg
 import random
-from new31.func import f02f
 
 # Create your views here.
 
@@ -12,7 +14,6 @@ def shop(request, *args):
     from tag.views import TagSrch
     from tag.models import Tag
     from upload.models import Image
-    from new31.func import sort
 
     items = ItemPin(10).getItems(sort)
 
@@ -24,6 +25,12 @@ def shop(request, *args):
 
     return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))
 
+@ajaxMsg('无更多商品')
+def getItemPin(request):
+    u"""首页-> 获取更多商品"""
+    from shop.views import ItemPin
+
+    return AjaxRJson().dumps(ItemPin(8).getItems(sort))
 
 
 class ItemPin(object):

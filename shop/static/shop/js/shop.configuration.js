@@ -65,7 +65,7 @@ var shop = {
             load.remove();
         });
 
-        $.getJSON('/ajax/itemmore/', function(data) {
+        $.getJSON('/shop/itemmore/', function(data) {
 
             if (data.err) {
                 alert(data.msg);

@@ -2,7 +2,9 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib import messages
-from new31.func import sort
+from ajax.decorator import ajaxMsg
+from new31.cls import AjaxRJson
+from new31.func import sort, f02f
 import random
 
 
@@ -24,7 +26,30 @@ def tagShow(request, tag):
 
     return render_to_response('tag.htm', locals(), context_instance=RequestContext(request))
 
+@ajaxMsg('无法修改数据')
+def itemLike(request, id):
+    u"""标签-> 商品喜欢"""
+    from item.models import Item
 
+    i = Item.objects.like(id=id)
+
+    return AjaxRJson().dumps({'id': i.id, 'like': i.like})
+
+@ajaxMsg('当前商品已下架')
+def getSpec(request, id):
+    u"""标签-> 获取商品规格"""
+
+    from item.models import ItemFee
+    data = []
+    for i in ItemFee.objects.getByItemId(id=id).filter(spec__item__show=True, spec__show=True).filter(typ=0):
+        data.append({
+            'id':i.spec.id ,
+            'spec':i.spec.spec.value , 
+            'fee': f02f(i.fee), 
+            'nfee': f02f(i.nfee()), 
+            })
+
+    return AjaxRJson().dumps(data)
 
 class TagSrch(object):
     from decorator import noTagDr

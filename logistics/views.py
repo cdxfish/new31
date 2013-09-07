@@ -7,7 +7,9 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from new31.decorator import postDr
-from decorator import logcsDr, dManDr, modifyLogcsDr
+from new31.cls import AjaxRJson
+from ajax.decorator import ajaxMsg
+from decorator import logcsDr, dManDr, modifyLogcsDr, aLogcsDr
 from new31.func import keFrmt, rdrtBck, rdrRange
 import time,datetime
 
@@ -140,6 +142,34 @@ def logcsStop(request, sn, i):
     Pro.objects.stop(sn)
 
     return rdrtBck(request)
+
+@ajaxMsg('无法修改表单数据')
+@aLogcsDr
+def cDman(logcs, value):
+    u"""ajax-> 修改物流师傅"""
+    if value:
+        from django.contrib.auth.models import User
+
+        user = User.objects.get(id=value)
+        logcs.dman = user
+    else:
+        logcs.dman = None
+
+@ajaxMsg('无法修改表单数据')
+@aLogcsDr
+def cAdv(logcs, value):
+    u"""ajax-> 修改物流偏移量"""
+
+    logcs.advance = value
+
+@ajaxMsg('无法填写表单')
+def cLogcs(request):
+    u"""ajax-> 修改收货人信息"""
+
+    for i,v in request.GET.dict().items():
+        LogcSess(request).setByName(i, u'%s' % v)
+
+    return AjaxRJson().dumps()
 
 
 from new31.cls import BsSess
@@ -290,7 +320,8 @@ class LogcsPur(BsPur):
         
         for i in self.oList:
             if i.logcs.status < 2:
-                i.form = AdvFrm(i)
+                if 'logistics:cDman' in self.role:
+                    i.form = AdvFrm(i)
 
             if not hasattr(i,'action'):
                 i.action = []
