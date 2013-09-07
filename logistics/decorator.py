@@ -2,22 +2,20 @@
 from django.contrib import messages
 from new31.func import rdrtBck
 from functools import wraps
+from new31.cls import AjaxRJson
 # Create your decorator here.
 
 # 物流状态操作装饰器
 def logcsDr(func):
     @wraps(func)
     def _func(request, *args, **kwargs):
-        print args
-        from logistics.models import Logcs
+        from models import Logcs
 
         act = Logcs.objects.getActTuple(Logcs.objects.get(ord__sn=args[0]).status)
 
         if not args[1] in act:
 
-            messages.error(request, u'%s - 无法%s' % (sn, Logcs.chcs[args[1]][1]))
-
-            return rdrtBck(request)
+            return AjaxRJson().err( u'%s - 无法%s' % (args[0], Logcs.chcs[args[1]][1]) )
 
         else:
 
@@ -42,12 +40,11 @@ def modifyLogcsDr(i):
 def dManDr(func):
     @wraps(func)
     def _func(request, *args, **kwargs):
-        from logistics.models import Logcs
+        from models import Logcs
 
         if not Logcs.objects.get(ord__sn=args[0]).dman:
-            messages.error(request, u'%s - 请选择物流师傅' % args[0])
 
-            return rdrtBck(request)
+            return AjaxRJson().err( u'请选择物流师傅')
 
         else:
 
@@ -60,8 +57,8 @@ def dManDr(func):
 def aLogcsDr(func):
     @wraps(func)
     def _func(request, *args, **kwargs):
-        from logistics.models import Logcs
-        from ajax.views import AjaxRJson
+        from models import Logcs
+        from new31.cls import AjaxRJson
         
         sn = int(request.GET.get('sn')[1:])
         value = int(request.GET.get('value', 0))
@@ -69,7 +66,7 @@ def aLogcsDr(func):
         logcs = Logcs.objects.get(ord=sn)
 
         if logcs.status > 1:
-            return AjaxRJson.message(u'无法修改表单数据').dumps()
+            return AjaxRJson().err(u'无法修改表单数据')
 
         func(logcs, value)
 

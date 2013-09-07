@@ -85,15 +85,22 @@ def logcsSub(request):
 
     return rdrRange(reverse('logistics:logcs'), LogcSess(request).sess['date'], sn)
 
-@logcsDr
-@dManDr
+# @logcsDr
+# @dManDr
 def modifyLogcs(request, sn, s):
     u"""物流状态修改"""
     from models import Logcs
+    
+    oact = []
+    for i in Logcs._act[Logcs.objects.get(ord__sn=sn).status]:
+        oact.append( (i[0], i[1], i[2].replace(':',''), reverse(i[2], kwargs={'sn': sn})) )
 
     Logcs.objects.cStatus(sn, s)
+    act = []
+    for i in Logcs.act[s]:
+        act.append( (i[0], i[1], i[2].replace(':',''), reverse(i[2], kwargs={'sn': sn})) )
 
-    return rdrtBck(request)
+    return AjaxRJson().dumps({'sn':sn, 'act':act, 'oact':oact })
 
 def logcsUnsent(request, sn):
     u"""物流状态修改-> 物流未发"""

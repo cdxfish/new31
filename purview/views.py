@@ -91,7 +91,7 @@ class URLPurview:
 
         else:
             from ajax.views import AjaxRJson
-            return AjaxRJson().message(self.errStr).dumps()
+            return AjaxRJson().err(self.errStr)
 
 
 class BsPur(object):

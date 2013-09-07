@@ -27,7 +27,7 @@
             <td align="right" nowrap="true" colspan="2">{{ i.name }}</td>
             <td>{{ i.spec }}</td>
             <td>{{ i.num }}</td>
-            <td>{{ i.get_status_display }}</td>
+            <td><span class="wow_item_{{ i.status }}">{{ i.get_status_display }}</span></td>
             {% optr i %}
           </tr>
 {% endfor %}
@@ -37,7 +37,7 @@
             <td align="right" nowrap="true" colspan="2">{{ i.name }}</td>
             <td>{{ i.spec }}</td>
             <td>{{ i.num }}</td>
-            <td>{{ i.get_status_display }}</td>
+            <td><span class="wow_item_{{ i.status }}">{{ i.get_status_display }}</span></td>
             <td>&nbsp;</td>
           </tr>
 {% endfor %}

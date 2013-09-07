@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    logcs.ad().dman();
+    logcs.ad().dman().act();
 
 });
 
@@ -18,6 +18,18 @@ var logcs = {
             var self = $(this);
 
             self.ajaxGET('/logistics/cdman/?sn=' + self.attr('id') + '&value=' + self.val());
+        });
+
+        return this
+    },
+    act: function(){
+        $('.logisticslogcsUnsent').click(function(){
+            var self = $(this);
+            self.ajaxGET(self.attr('href'), function(data){
+                
+            });
+
+            return false
         });
 
         return this

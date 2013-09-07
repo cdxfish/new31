@@ -35,17 +35,13 @@ def ords(request):
 
 def viewOrd(request, sn):
     u"""查看订单"""
-    from forms import OrdSrchFrm
-    from logistics.views import KpChng
+    from order.models import Ord
+    from produce.models import Pro
 
-    o = OrdSerch(request)
-    oList = o.get()
-    oList = OrdPur(oList, request).get()
-    oList = KpChng(oList, request).get()
+    o = Ord.objects.get(sn=sn)
+    o.total = Pro.objects.getFeeBySN(sn)
 
-    form = OrdSrchFrm(initial=o.initial)
-
-    return render_to_response('orderlist.htm', locals(), context_instance=RequestContext(request))
+    return render_to_response('orderview.htm', locals(), context_instance=RequestContext(request))
 
 @postDr
 @checkCartDr

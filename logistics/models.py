@@ -86,10 +86,10 @@ class Logcs(models.Model):
 
     act =   (
                 (_chcs[0], _chcs[1], _chcs[2], _chcs[5], ),
-                (_chcs[1], _chcs[2], _chcs[5], ),
-                (_chcs[3], _chcs[4], ),
-                (),
-                (),
+                (_chcs[0], _chcs[1], _chcs[2], _chcs[5], ),
+                (_chcs[0], _chcs[3], _chcs[4], ),
+                (_chcs[0], ),
+                (_chcs[0], ),
                 (_chcs[0], ),
         )
 

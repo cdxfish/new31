@@ -73,14 +73,14 @@ class AjaxRJson:
         self.data = {}
 
     def dumps(self, data=''):
-        if data:
-            self.data = data
+        
+        self.data = data if data else ''
 
         return HttpResponse(json.dumps({'err':self.error, 'msg':self.msg, 'data':self.data }))
 
-    def message(self, msg = ''):
+    def err(self, msg = ''):
         
         self.msg = msg
         self.error = True
 
-        return self
+        return self.dumps()
