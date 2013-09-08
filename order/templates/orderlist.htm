@@ -1,5 +1,9 @@
 {% extends "office.base.htm" %}
 
+{% block js %}
+<script type="text/javascript" src="{{ STATIC_URL }}order/js/ord.configuration.js"></script>
+{% endblock %}
+
 {% block content %}
       {% include 'search.htm' %}
       {% load tags %}
@@ -21,7 +25,7 @@
             <td>{{ i.logcs.consignee }}</td>
             <td>{{ i.logcs.tel }} | {{ i.user.username}}</td>
             <td>{{ i.fnc.cod.get_cod_display }}</td>
-            <td>{{ i.get_status_display }} | {{ i.fnc.get_status_display }} | {{ i.logcs.get_status_display }}</td>
+            {% status i %}
           </tr>
 {% for item in i.pro_set.all %}
           <tr align="center">
@@ -41,7 +45,7 @@
           <tr>
             <td align="center">备注</td>
             <td colspan="5">{{ i.logcs.note }}</td>
-            {% optr i %}
+            {% oprt i %}
           </tr>
 {% empty %}
           <tr>

@@ -119,6 +119,16 @@ a.button:active{
 .wow_item_7{ color: #E5CC80 !important; } /* heirloom (gold) */
 .wow_item_8{ color: RED !important; } /* epic (red) */
 
+.status_0{ color: #9D9D9D !important; }
+.status_1{ color: #000000 !important; }
+.status_2{ color: #3e4145 !important; }
+.status_3{ color: #0081FF !important; }
+.status_4{ color: #C600FF !important; }
+.status_5{ color: #FF8000 !important; }
+.status_6{ color: #E5CC80 !important; }
+.status_7{ color: #E5CC80 !important; }
+.status_8{ color: RED !important; }
+
 .on{color: #EB8A3D;}
 .cp{cursor: pointer;}
 .fr{float: right;}
@@ -160,6 +170,11 @@ table td{
 
 .tr_border_top_black td{
   background-color: #F4FAFB;
+  border-top: 1px solid #000;
+}
+
+.tr_border_top_rare td{
+  background-color: #C7ECFF;
   border-top: 1px solid #000;
 }
 

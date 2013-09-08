@@ -11,7 +11,7 @@ from new31.func import frMtFee, rdrRange, page, rdrtBck, f02f
 from new31.cls import AjaxRJson
 from ajax.decorator import ajaxMsg
 from cart.decorator import checkCartDr
-from decorator import ordDr, subMsg, subDr, modifyDr
+from decorator import ordDr, ajaxOrdDr, subMsg, subDr, modifyDr
 from logistics.decorator import chLogcsDr
 from finance.decorator import chFncDr
 from decimal import Decimal
@@ -87,13 +87,33 @@ def editOrdFrm(request):
 
     return render_to_response('orderneworedit.htm', locals(), context_instance=RequestContext(request))
 
-@ordDr
+@ajaxOrdDr
 def modifyOrd(request, sn, s):
     u"""订单状态修改"""
     from models import Ord
-    Ord.objects.cStatus(sn, s)
+    from purview.models import Role
 
-    return rdrtBck(request)
+    o = Ord.objects.get(sn=sn)
+    
+    _act = []
+    for i in o.act[ o.status ]:
+        _act.append( (i[0], i[1], i[2].replace(':',''), reverse(i[2], kwargs={'sn': sn})) )
+
+    act = []
+    for i in Role.objects.getActByUser(request.user.id, o.act[s]):
+        act.append( (i[0], i[1], i[2].replace(':',''), reverse(i[2], kwargs={'sn': sn})) )
+
+    _o = Ord.objects.cStatus(sn, s)
+
+    return AjaxRJson().dumps({
+        'sn':sn, 
+        'act':act, 
+        '_act':_act, 
+        's': _o.status,
+        'sStr': _o.get_status_display(),
+        'obj': 'logcs'
+        })
+
 
 def copyOrd(request, sn):
     u"""订单复制"""

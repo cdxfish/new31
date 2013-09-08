@@ -17,9 +17,9 @@
             <td>{{ i.get_typ_display }}</td>
             <td><a href="{% url 'order:viewOrd' i.sn %}">{{ i.sn }}</a></td>
             <td>{{ i.logcs.consignee }} [ {{ i.logcs.tel }} ]</td>
-            <td>200.00 | 11.00 | 189.00 | {{ i.fnc.cod.get_cod_display }}</td>
+            <td>{{ i.fee.paid|stringformat:"0.2f" }} | {{ i.fee.kpchng|stringformat:"0.2f" }} | {{ i.fee.total|stringformat:"0.2f" }} | {{ i.fnc.cod.get_cod_display }}</td>
             <td>{{ i.get_status_display }} | {{ i.fnc.get_status_display }} | {{ i.logcs.get_status_display }}</td>
-            {% optr i %}
+            {% oprt i %}
           </tr>
 {% for item in i.orditem_set.all %}
           <tr align="center">

@@ -1,6 +1,6 @@
 #coding:utf-8
 from django.db import models
-
+from datetime import datetime
 # Create your models here.
 
 class logcsManager(models.Manager):
@@ -49,6 +49,8 @@ class logcsManager(models.Manager):
         logcs.status = s
 
         logcs.save()
+
+        return logcs
 
     def stop(self, sn):
 
@@ -110,10 +112,13 @@ class Logcs(models.Model):
     cod = models.ForeignKey(Deliver, verbose_name=u'送货方式')
     status = models.SmallIntegerField(u'物流状态', default=0, choices=chcs)
 
+    @property
     def ltime(self):
 
         return u'%s - %s' % ( self.stime.strftime('%H:%M'), self.etime.strftime('%H:%M') )
 
+
+    @property
     def advTime(self):
 
         time = self.advance * 0.5
@@ -123,9 +128,7 @@ class Logcs(models.Model):
         if self.advance < 0 and time % 1:
             hour -= 1
 
-        # e = datetime.timedelta(hour=i.logcs.advance * 0.5)
-
-        return self.lstime.replace(hour=hour, minute=minute)
+        return datetime.combine(self.date, self.lstime.replace(hour=hour, minute=minute))
 
     objects = logcsManager()
 

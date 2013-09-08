@@ -2,6 +2,7 @@
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from new31.func import rdrtBck
+from new31.cls import AjaxRJson
 from functools import wraps
 # Create your decorator here.
 
@@ -18,6 +19,22 @@ def ordDr(func):
             messages.error(request, u'%s - 无法%s' % (sn, Ord.chcs[args[1]][1]))
 
             return rdrtBck(request)
+
+        else:
+
+            return func(request, *args, **kwargs)
+
+    return _func
+
+def ajaxOrdDr(func):
+    @wraps(func)
+    def _func(request, *args, **kwargs):
+        from order.models import Ord
+        order =  Ord.objects.get(sn=args[0])
+
+        if not args[1] in Ord.objects.getActTuple(order.status):
+
+            return AjaxRJson().err( u'%s - 无法%s' % (args[0], Ord.chcs[args[1]][1]) )
 
         else:
 

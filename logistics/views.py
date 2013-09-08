@@ -9,7 +9,7 @@ from django.contrib import messages
 from new31.decorator import postDr
 from new31.cls import AjaxRJson
 from ajax.decorator import ajaxMsg
-from decorator import logcsDr, dManDr, modifyLogcsDr, aLogcsDr
+from decorator import logcsDr, ajaxlogcsDr, dManDr, modifyLogcsDr, aLogcsDr
 from new31.func import keFrmt, rdrtBck, rdrRange
 import time,datetime
 
@@ -85,28 +85,40 @@ def logcsSub(request):
 
     return rdrRange(reverse('logistics:logcs'), LogcSess(request).sess['date'], sn)
 
-# @logcsDr
+@ajaxlogcsDr
 # @dManDr
 def modifyLogcs(request, sn, s):
     u"""物流状态修改"""
     from models import Logcs
+    from purview.models import Role
+    l = Logcs.objects.get(ord__sn=sn)
     
-    oact = []
-    for i in Logcs._act[Logcs.objects.get(ord__sn=sn).status]:
-        oact.append( (i[0], i[1], i[2].replace(':',''), reverse(i[2], kwargs={'sn': sn})) )
+    _act = []
+    for i in l.act[ l.status ]:
+        _act.append( (i[0], i[1], i[2].replace(':',''), reverse(i[2], kwargs={'sn': sn})) )
 
-    Logcs.objects.cStatus(sn, s)
     act = []
-    for i in Logcs.act[s]:
+    for i in Role.objects.getActByUser(request.user.id, l.act[s]):
         act.append( (i[0], i[1], i[2].replace(':',''), reverse(i[2], kwargs={'sn': sn})) )
 
-    return AjaxRJson().dumps({'sn':sn, 'act':act, 'oact':oact })
+    _l = Logcs.objects.cStatus(sn, s)
+
+    return AjaxRJson().dumps({
+        'sn':sn, 
+        'act':act, 
+        '_act':_act, 
+        's': _l.status,
+        'sStr': _l.get_status_display(),
+        'obj': 'logcs'
+        })
 
 def logcsUnsent(request, sn):
     u"""物流状态修改-> 物流未发"""
 
     return modifyLogcs(request, sn, 0)
 
+
+@logcsDr
 def logcsEdit(request, sn):
     u"""物流状态修改-> 物流编辑"""
     from models import Logcs
@@ -134,21 +146,19 @@ def logcsSign(request, sn):
 
     return modifyLogcs(request, sn, 4)
 
-@modifyLogcsDr(5)
-@logcsDr
-def logcsStop(request, sn, i):
+def logcsStop(request, sn):
     u"""物流状态修改-> 物流止送"""
-    from models import Logcs
+    # from models import Logcs
     # from order.models import Ord
     # from finance.models import Fnc
     from produce.models import Pro
     
-    Logcs.objects.stop(sn)
+    # Logcs.objects.stop(sn)
     # Ord.objects.stop(sn)
     # Fnc.objects.stop(sn)
     Pro.objects.stop(sn)
 
-    return rdrtBck(request)
+    return modifyLogcs(request, sn, 5)
 
 @ajaxMsg('无法修改表单数据')
 @aLogcsDr
@@ -292,7 +302,6 @@ class LogcsSerch(OrdSerch):
 
     def search(self):
         self.oList = self.baseSearch().oList.filter(Q(status=2) | Q(status=4)).order_by('-logcs__date', '-logcs__stime', '-logcs__advance', '-logcs__etime', '-logcs__dman', '-sn' )
-
         return self
 
     def chcs(self):

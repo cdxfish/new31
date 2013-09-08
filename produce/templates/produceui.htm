@@ -13,7 +13,7 @@
           </tr>
 {% regroup oList by logcs.date as newsList %}
 {% for i in newsList %}
-{% regroup i.list by logcs.advTime as newLstime %}
+{% regroup i.list by advTime as newLstime %}
 
   {% for ii in newLstime %}
           <tr class="tr_border_top_black">
@@ -29,7 +29,7 @@
               <td>{{ item.spec }}</td>
               <td>{{ item.num }}</td>
               <td>{{ item.get_status_display }}</td>
-              {% optr item %}
+              {% oprt item %}
             </tr>
         {% endfor %}
     {% endfor %}

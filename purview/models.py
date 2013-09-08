@@ -26,6 +26,12 @@ class roleManager(models.Manager):
 
         return tuple([(i.id, u'%s%s' % (i.last_name, i.first_name) if (i.last_name or i.first_name) else i.username) for i in dMan])
 
+    def getActByUser(self, user, act):
+
+        return tuple( i for i in act if i[2] in self.getPathByUser(user))
+
+
+
 class elementManager(models.Manager):
     def getPath(self, path = ''):
 

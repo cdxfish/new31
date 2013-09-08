@@ -11,7 +11,7 @@ def frMtFee(fee):
     return math.floor(fee)
 
 def keFrmt(fee):
-    return math.floor(fee / 100) * 100 + 50 if fee % 100 < 50 else math.ceil(fee / 100) * 100
+    return fee and math.floor(fee / 100) * 100 + 50 if fee % 100 < 50 else math.ceil(fee / 100) * 100
 
 # 重定向至登录页
 def rdrtLogin(request):

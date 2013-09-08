@@ -23,6 +23,26 @@ def logcsDr(func):
 
     return _func
 
+# 物流状态操作装饰器
+def ajaxlogcsDr(func):
+    @wraps(func)
+    def _func(request, *args, **kwargs):
+        from models import Logcs
+
+        act = Logcs.objects.getActTuple(Logcs.objects.get(ord__sn=args[0]).status)
+
+        if not args[1] in act:
+
+            messages.error(request, u'%s - 无法%s' % (args[0], Logcs.chcs[args[1]][1]))
+
+            return rdrtBck(request)
+
+        else:
+
+            return func(request, *args, **kwargs)
+
+    return _func
+
 
 # 订单提交类提示用装饰器(类内部使用)
 def modifyLogcsDr(i):

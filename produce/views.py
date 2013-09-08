@@ -74,6 +74,7 @@ class ProSerch(OrdSerch):
 
     def search(self):
         self.oList = self.baseSearch().oList.filter(Q(status=2) | Q(status=4)).order_by('-logcs__date', '-logcs__stime', '-logcs__advance', '-logcs__etime')
+        self.oList = sorted(self.oList, key=lambda x: x.logcs.advTime)
 
         return self
 

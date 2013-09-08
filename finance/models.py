@@ -27,6 +27,8 @@ class fncManager(models.Manager):
         fnc.status = s
 
         fnc.save()
+
+        return fnc
         
     def stop(self, sn):
 

@@ -12,6 +12,7 @@ from ajax.decorator import ajaxMsg
 def fnc(request):
     u"""财务"""
     from forms import FncSrchFrm
+    from logistics.views import KpChng
 
     o = FncSerch(request)
 
@@ -19,6 +20,7 @@ def fnc(request):
 
     oList = o.get()
     oList = FncPur(oList, request).get()
+    oList = KpChng(oList, request).get()
 
     return render_to_response('financeui.htm', locals(), context_instance=RequestContext(request))
 

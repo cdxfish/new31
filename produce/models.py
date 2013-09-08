@@ -58,6 +58,8 @@ class proManager(models.Manager):
 
         pro.save()
 
+        return pro
+
     def getAll(self):
 
         return self.select_related().filter(models.Q(ord__status=2) | models.Q(ord__status=4))
