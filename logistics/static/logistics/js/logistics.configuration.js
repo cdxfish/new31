@@ -2,7 +2,6 @@ $(document).ready(function() {
     logcs.ad().dman();
 
     b.act(function(data){
-        $('#l'+ data.data.sn).text(data.data.sStr).removeClass().addClass('status_' + data.data.s);
 
     })
 

@@ -9,7 +9,7 @@ from django.contrib import messages
 from new31.decorator import postDr
 from new31.cls import AjaxRJson
 from ajax.decorator import ajaxMsg
-from decorator import logcsDr, ajaxlogcsDr, dManDr, modifyLogcsDr, aLogcsDr
+from decorator import logcsDr, dManDr, modifyLogcsDr, aLogcsDr
 from new31.func import keFrmt, rdrtBck, rdrRange
 import time,datetime
 
@@ -85,7 +85,7 @@ def logcsSub(request):
 
     return rdrRange(reverse('logistics:logcs'), LogcSess(request).sess['date'], sn)
 
-@ajaxlogcsDr
+@logcsDr(1)
 # @dManDr
 def modifyLogcs(request, sn, s):
     u"""物流状态修改"""
@@ -93,20 +93,14 @@ def modifyLogcs(request, sn, s):
     from purview.models import Role
     l = Logcs.objects.get(ord__sn=sn)
     
-    _act = []
-    for i in l.act[ l.status ]:
-        _act.append( (i[0], i[1], i[2].replace(':',''), reverse(i[2], kwargs={'sn': sn})) )
-
-    act = []
-    for i in Role.objects.getActByUser(request.user.id, l.act[s]):
-        act.append( (i[0], i[1], i[2].replace(':',''), reverse(i[2], kwargs={'sn': sn})) )
-
     _l = Logcs.objects.cStatus(sn, s)
 
+    r = Role.objects
+
     return AjaxRJson().dumps({
-        'sn':sn, 
-        'act':act, 
-        '_act':_act, 
+        'sn': sn, 
+        'act': r.getAjaxAct(r.getActByUser(request.user.id, l.act[s]), sn), 
+        '_act': r.getAjaxAct(l.act[ l.status ], sn), 
         's': _l.status,
         'sStr': _l.get_status_display(),
         'obj': 'logcs'
@@ -117,14 +111,14 @@ def logcsUnsent(request, sn):
 
     return modifyLogcs(request, sn, 0)
 
-
-@logcsDr
-def logcsEdit(request, sn):
+@modifyLogcsDr(1)
+@logcsDr()
+def logcsEdit(request, sn, i):
     u"""物流状态修改-> 物流编辑"""
     from models import Logcs
     from order.views import OrdSess
 
-    Logcs.objects.cStatus(sn, 1)
+    Logcs.objects.cStatus(sn, i)
     LogcSess(request).copy(sn)
 
     OrdSess(request).cpyOrd(sn)

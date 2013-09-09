@@ -11,7 +11,7 @@ from new31.func import frMtFee, rdrRange, page, rdrtBck, f02f
 from new31.cls import AjaxRJson
 from ajax.decorator import ajaxMsg
 from cart.decorator import checkCartDr
-from decorator import ordDr, ajaxOrdDr, subMsg, subDr, modifyDr
+from decorator import ordDr, subMsg, subDr, modifyDr
 from logistics.decorator import chLogcsDr
 from finance.decorator import chFncDr
 from decimal import Decimal
@@ -87,31 +87,24 @@ def editOrdFrm(request):
 
     return render_to_response('orderneworedit.htm', locals(), context_instance=RequestContext(request))
 
-@ajaxOrdDr
+@ordDr(1)
 def modifyOrd(request, sn, s):
     u"""订单状态修改"""
     from models import Ord
     from purview.models import Role
 
     o = Ord.objects.get(sn=sn)
-    
-    _act = []
-    for i in o.act[ o.status ]:
-        _act.append( (i[0], i[1], i[2].replace(':',''), reverse(i[2], kwargs={'sn': sn})) )
-
-    act = []
-    for i in Role.objects.getActByUser(request.user.id, o.act[s]):
-        act.append( (i[0], i[1], i[2].replace(':',''), reverse(i[2], kwargs={'sn': sn})) )
-
     _o = Ord.objects.cStatus(sn, s)
 
+    r = Role.objects
+
     return AjaxRJson().dumps({
-        'sn':sn, 
-        'act':act, 
-        '_act':_act, 
+        'sn': sn, 
+        'act': r.getAjaxAct(r.getActByUser(request.user.id, o.act[s])), 
+        '_act': r.getAjaxAct(o.act[ o.status ]), 
         's': _o.status,
         'sStr': _o.get_status_display(),
-        'obj': 'logcs'
+        'obj': 'ord'
         })
 
 
@@ -122,7 +115,7 @@ def copyOrd(request, sn):
     return HttpResponseRedirect(reverse('order:newOrdFrm'))
 
 @modifyDr(1)
-@ordDr
+@ordDr()
 def editOrd(request, sn, i):
     u"""订单状态修改-> 订单编辑"""
     from models import Ord

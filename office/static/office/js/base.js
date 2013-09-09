@@ -137,6 +137,7 @@ b = {
                 self.siblings(s).remove();
                 self.parent().prepend(act);
                 self.remove();
+                $('#'+ data.data.obj + data.data.sn).text(data.data.sStr).removeClass().addClass('status_' + data.data.s);
 
                 return func(data);
 

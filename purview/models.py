@@ -1,4 +1,5 @@
 #coding:utf-8
+from django.core.urlresolvers import reverse
 from django.db import models
 import re
 
@@ -29,6 +30,12 @@ class roleManager(models.Manager):
     def getActByUser(self, user, act):
 
         return tuple( i for i in act if i[2] in self.getPathByUser(user))
+
+
+    def getAjaxAct(self, l, sn):
+        
+        return tuple( ( i[0], i[1], i[2].replace(':',''), reverse(i[2], kwargs={'sn': sn}) ) for i in l )
+
 
 
 

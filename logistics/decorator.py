@@ -6,41 +6,28 @@ from new31.cls import AjaxRJson
 # Create your decorator here.
 
 # 物流状态操作装饰器
-def logcsDr(func):
-    @wraps(func)
-    def _func(request, *args, **kwargs):
-        from models import Logcs
+def logcsDr(typ=0):
+    def _func(func):
+        @wraps(func)
+        def __func(request, *args, **kwargs):
+            from models import Logcs
 
-        act = Logcs.objects.getActTuple(Logcs.objects.get(ord__sn=args[0]).status)
+            act = Logcs.objects.getActTuple(Logcs.objects.get(ord__sn=args[0]).status)
 
-        if not args[1] in act:
+            if not args[1] in act:
+                if typ:
 
-            return AjaxRJson().err( u'%s - 无法%s' % (args[0], Logcs.chcs[args[1]][1]) )
+                    return AjaxRJson().err( u'%s - 无法%s' % (args[0], Logcs.chcs[args[1]][1]) )
+                else:
+                    messages.error(request, u'%s - 无法%s' % (args[0], Logcs.chcs[args[1]][1]))
 
-        else:
+                    return rdrtBck(request)
 
-            return func(request, *args, **kwargs)
+            else:
 
-    return _func
+                return func(request, *args, **kwargs)
 
-# 物流状态操作装饰器
-def ajaxlogcsDr(func):
-    @wraps(func)
-    def _func(request, *args, **kwargs):
-        from models import Logcs
-
-        act = Logcs.objects.getActTuple(Logcs.objects.get(ord__sn=args[0]).status)
-
-        if not args[1] in act:
-
-            messages.error(request, u'%s - 无法%s' % (args[0], Logcs.chcs[args[1]][1]))
-
-            return rdrtBck(request)
-
-        else:
-
-            return func(request, *args, **kwargs)
-
+        return __func
     return _func
 
 

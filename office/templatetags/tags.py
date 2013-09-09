@@ -38,7 +38,7 @@ class statusTag(template.Node):
 
         s = '<td nowrap="nowrap" align="center"><span class="status">'
 
-        s += '<span class="status_%s" id="o%s">%s</span> | <span class="status_%s" id="f%s">%s</span>| <span class="status_%s" id="l%s">%s</span>' % (
+        s += '<span class="status_%s" id="ord%s">%s</span> | <span class="status_%s" id="fnc%s">%s</span>| <span class="status_%s" id="logcs%s">%s</span>' % (
                 value.status,
                 value.sn,
                 value.get_status_display(),
