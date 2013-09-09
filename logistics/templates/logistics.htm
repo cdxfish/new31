@@ -49,9 +49,10 @@
           </tr>
           {% endfor %}
         {% endif %}
-          <tr>
-            <td align="center">地址</td>
-            <td colspan="5"><a href="{% url 'logistics:baiduMap' %}?address={{ iii.logcs.address|urlencode }}" target="_blank">[ {{ iii.logcs.area }} ] {{ iii.logcs.address }}</a></td>
+          <tr align="center">
+            <td>地址</td>
+            <td colspan="4" align="left"><a href="{% url 'logistics:baiduMap' %}?address={{ iii.logcs.address|urlencode }}" target="_blank">[ {{ iii.logcs.area }} ] {{ iii.logcs.address }}</a></td>
+            <td><a href="{% url 'print:pAct' iii.sn %}" target="_blank" class="button">打印</a></td>
           </tr>
           <tr align="center">
             <td>时间</td>
