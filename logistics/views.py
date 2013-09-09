@@ -54,7 +54,7 @@ def logcsView(request):
     oList = o.get()
     oList = LogcsPur(oList, request).get()
     for i in oList:
-        i.items = i.pro_set.filter(Q(sn__contains='33') | Q(sn__contains='55') | Q(sn__contains='77'))
+        i.items = i.pro_set.filter(Q(sn__contains='33') | Q(sn__contains='44') | Q(sn__contains='55') | Q(sn__contains='77'))
 
     form = LogcSrchFrm(initial=o.initial)
 

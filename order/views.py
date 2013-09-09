@@ -100,8 +100,8 @@ def modifyOrd(request, sn, s):
 
     return AjaxRJson().dumps({
         'sn': sn, 
-        'act': r.getAjaxAct(r.getActByUser(request.user.id, o.act[s])), 
-        '_act': r.getAjaxAct(o.act[ o.status ]), 
+        'act': r.getAjaxAct(r.getActByUser(request.user.id, o.act[s]), sn), 
+        '_act': r.getAjaxAct(o.act[ o.status ], sn), 
         's': _o.status,
         'sStr': _o.get_status_display(),
         'obj': 'ord'
@@ -408,7 +408,6 @@ class OrdSub(object):
 
         else:
             self.newSn()
-        # self.newSn()
 
         self.pushOrd()
         self.logcs()

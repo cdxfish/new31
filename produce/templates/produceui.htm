@@ -13,7 +13,7 @@
           </tr>
 {% regroup oList by logcs.date as newsList %}
 {% for i in newsList %}
-{% regroup i.list by advTime as newLstime %}
+{% regroup i.list by logcs.advTime as newLstime %}
 
   {% for ii in newLstime %}
           <tr class="tr_border_top_black">
@@ -28,7 +28,7 @@
               <td align="right" nowrap="true">{{ item.name }}</td>
               <td>{{ item.spec }}</td>
               <td>{{ item.num }}</td>
-              <td>{{ item.get_status_display }}</td>
+              {% proStatus item %}
               {% oprt item %}
             </tr>
         {% endfor %}
@@ -43,4 +43,8 @@
             <td colspan="20" align="right">共 {{ oList|length }} 条记录</td>
           </tr>
         </table>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}produce/js/pro.configuration.js"></script>
 {% endblock %}

@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.db.models import Q
 from decorator import proDr
 from new31.func import rdrtBck, page
+from new31.cls import AjaxRJson
 # Create your views here.
 
 def produce(request):
@@ -21,7 +22,7 @@ def produce(request):
 
     oList = o.get()
     oList = ProPur(oList, request).get()
-
+    oList = sorted(oList, key=lambda x: x.logcs.advTime)
 
     return render_to_response('produceui.htm', locals(), context_instance=RequestContext(request))
 
@@ -29,10 +30,20 @@ def produce(request):
 def modifyPro(request, sn, s):
     u"""生产状态修改"""
     from models import Pro
+    from purview.models import Role
+    
+    r = Role.objects
+    p = Pro.objects.get(id=sn)
+    _p = Pro.objects.cStatus(sn, s)
 
-    Pro.objects.cStatus(sn, s)
-
-    return rdrtBck(request)
+    return AjaxRJson().dumps({
+        'sn': sn, 
+        'act': r.getAjaxAct(r.getActByUser(request.user.id, p.act[s]), sn), 
+        '_act': r.getAjaxAct(p.act[ p.status ], sn), 
+        's': _p.status,
+        'sStr': _p.get_status_display(),
+        'obj': 'pro'
+        })
 
 def nullPro(request, sn):
     u"""生产状态修改-> 生产未产"""    
@@ -74,7 +85,6 @@ class ProSerch(OrdSerch):
 
     def search(self):
         self.oList = self.baseSearch().oList.filter(Q(status=2) | Q(status=4)).order_by('-logcs__date', '-logcs__stime', '-logcs__advance', '-logcs__etime')
-        self.oList = sorted(self.oList, key=lambda x: x.logcs.advTime)
 
         return self
 
@@ -94,7 +104,6 @@ class ProSerch(OrdSerch):
 
     def range(self):
         self.oList = self.oList.filter(logcs__date__range=(self.initial['s'], self.initial['e']))
-        
 
         return self
 

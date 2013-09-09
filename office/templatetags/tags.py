@@ -61,3 +61,30 @@ def forStatus(parser, token):
     value = parser.compile_filter(text_name)  
 
     return statusTag(value)
+
+class proStatusTag(template.Node):
+    def __init__(self, value):
+        self.value = value
+
+    def render(self, context):
+        value = self.value.resolve(context, True) #获取标签解析的真实对象
+
+        s = '<td nowrap="nowrap" align="center"><span class="status">'
+
+        s += '<span class="status_%s" id="pro%s">%s</span>' % (
+                value.status,
+                value.sn,
+                value.get_status_display()
+            )
+
+
+        return s + '</span></td>'
+
+
+@register.tag(name='proStatus')
+def forStatus(parser, token):
+    tag_name, text_name = token.split_contents() #分解标签传递的token字符串
+
+    value = parser.compile_filter(text_name)  
+
+    return proStatusTag(value)

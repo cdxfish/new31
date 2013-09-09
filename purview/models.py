@@ -37,8 +37,6 @@ class roleManager(models.Manager):
         return tuple( ( i[0], i[1], i[2].replace(':',''), reverse(i[2], kwargs={'sn': sn}) ) for i in l )
 
 
-
-
 class elementManager(models.Manager):
     def getPath(self, path = ''):
 

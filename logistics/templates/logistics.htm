@@ -34,7 +34,7 @@
             <td align="right" nowrap="true" colspan="2">{{ item.name }}</td>
             <td>{{ item.spec }}</td>
             <td>{{ item.num }}</td>
-            <td><span class="status_{{ item.status }}">{{ item.get_status_display }}</span></td>
+            {% proStatus item %}
             {% oprt item %}
           </tr>
           {% endfor %}
@@ -75,5 +75,8 @@
 {% endfor %}
           {% include 'page.htm' %}
       </table>
+{% endblock %}
+
+{% block js %}
       <script type="text/javascript" src="{{ STATIC_URL }}logistics/js/logistics.configuration.js"></script>
 {% endblock %}

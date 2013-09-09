@@ -12,7 +12,8 @@ def ordDr(typ=0):
         @wraps(func)
         def __func(request, *args, **kwargs):
             from order.models import Ord
-            order =  Ord.objects.get(sn=args[0])
+            sn = args[0]
+            order =  Ord.objects.get(sn=sn)
 
             if not args[1] in Ord.objects.getActTuple(order.status):
 
@@ -30,6 +31,7 @@ def ordDr(typ=0):
 
         return __func
     return _func
+
 
 # 订单提交类提示用装饰器(类内部使用)
 def modifyDr(i):

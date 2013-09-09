@@ -21,19 +21,21 @@ class ordManager(models.Manager):
         return tuple( i[0] for i in Ord.act[i])
 
 
-    def saveOrd(self, o, request):
+    def saveOrd(self, obj, request):
         from django.contrib.auth.models import User
         from views import OrdSess
         
         o = OrdSess(request).sess
 
         if o['user']:
-            o.user= User.objects.get(username=o['user'])
+            obj.user= User.objects.get(username=o['user'])
         else:
-            o.user = None
+            obj.user = None
 
-        o.typ = o['typ']
-        o.save()
+        obj.typ = o['typ']
+        obj.save()
+
+        return obj
 
     def cStatus(self, sn , s):
         o = self.get(sn=sn)

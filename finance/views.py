@@ -29,10 +29,20 @@ def fnc(request):
 def modifyFnc(request, sn, s):
     u"""财务操作"""
     from models import Fnc
-
-    Fnc.objects.cStatus(sn, s)
+    from purview.models import Role
     
-    return rdrtBck(request)
+    r = Role.objects
+    f = Fnc.objects.get(ord__sn=sn)
+    _f = Fnc.objects.cStatus(sn, s)
+    
+    return AjaxRJson().dumps({
+        'sn': sn, 
+        'act': r.getAjaxAct(r.getActByUser(request.user.id, f.act[s]), sn), 
+        '_act': r.getAjaxAct(f.act[ f.status ], sn), 
+        's': _f.status,
+        'sStr': _f.get_status_display(),
+        'obj': 'fnc'
+        })
 
 def unpaidFnc(request, sn):
     u"""财务状态修改-> 财务未付"""
