@@ -17,9 +17,9 @@ class dlvrManager(models.Manager):
         return tuple([(i.id, i.get_cod_display()) for i in self.filter(onl=True)])
 
 class Deliver(models.Model):
-    chcs = (
-                ('cod', u'市区内免费送货上门'), 
-        )
+    import api
+
+    chcs = tuple( [ (i, api.__dict__[i].__doc__, ) for i in dir(api) if i[0] != '_' ] )
 
     cod = models.CharField(u'代码', max_length=30, choices=chcs)
     config = models.TextField(u'配置')
