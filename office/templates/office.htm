@@ -113,7 +113,7 @@
 {% endfor %}
         <tr align="center" class="tr_border_top_black">
           <td>全部</td>
-          <td><strong><a href="{% url 'order:ords' %}?c=-1&s={{ y }}" target="_blank">{{ order|length }}</a></strong></td>
+          <td><strong><a href="{% url 'order:ords' %}?c=-1&s={{ y }}" target="_blank">{{ yorder|length }}</a></strong></td>
         </tr>
       </table>
   </li>
@@ -136,7 +136,7 @@
 {% endfor %}
         <tr align="center" class="tr_border_top_black">
           <td>全部</td>
-          <td><strong><a href="{% url 'logistics:logcs' %}?c=-1&s={{ y }}" target="_blank">{{ logcs|length }}</a></strong></td>
+          <td><strong><a href="{% url 'logistics:logcs' %}?c=-1&s={{ y }}" target="_blank">{{ ylogcs|length }}</a></strong></td>
         </tr>
       </table>  
   </li>
@@ -159,7 +159,7 @@
 {% endfor %}
         <tr align="center" class="tr_border_top_black">
           <td>全部</td>
-          <td><strong><a href="{% url 'produce:produce' %}?c=-1&s={{ y }}" target="_blank">{{ pro|length }}</a></strong></td>
+          <td><strong><a href="{% url 'produce:produce' %}?c=-1&s={{ y }}" target="_blank">{{ ypro|length }}</a></strong></td>
         </tr>
       </table>
   </li>
@@ -182,7 +182,7 @@
 {% endfor %}
         <tr align="center" class="tr_border_top_black">
           <td>全部</td>
-          <td><strong><a href="{% url 'finance:fnc' %}?c=-1&s={{ y }}" target="_blank">{{ fnc|length }}</a></strong></td>
+          <td><strong><a href="{% url 'finance:fnc' %}?c=-1&s={{ y }}" target="_blank">{{ yfnc|length }}</a></strong></td>
         </tr>
       </table>
   </li>

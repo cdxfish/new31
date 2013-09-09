@@ -16,11 +16,11 @@
 {% regroup i.list by logcs.advTime as newLstime %}
 
   {% for ii in newLstime %}
-          <tr class="tr_border_top_black">
+          <tr class="tr_border_top_rare">
             <td colspan="10">{{ i.grouper|date:"Y-m-d"  }} | {{ ii.grouper|time:"H:i" }} | <span class="wow_item_8">{{ ii.list|length }}</span></td>
           </tr>
     {% for ord in ii.list %}
-            <tr>
+            <tr class="tr_border_top_black">
                 <td colspan="10"><a href="{% url 'order:viewOrd' ord.sn %}">{{ ord.sn }}</a> | {{ ord.logcs.lstime }} | {{ ord.logcs.get_advance_display }}</td>
             </tr>
         {% for item in ord.items %}

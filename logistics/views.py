@@ -35,13 +35,6 @@ def logcs(request):
 
     return render_to_response('logistics.htm', locals(), context_instance=RequestContext(request))
 
-def baiduMap(request):
-    u"""地图"""
-
-    address = request.GET.get('address', '')
-
-    return render_to_response('baidumap.htm', locals(), context_instance=RequestContext(request))
-
 def logcsView(request):
     u"""物流安排"""
     from forms import LogcSrchFrm
@@ -59,6 +52,14 @@ def logcsView(request):
     form = LogcSrchFrm(initial=o.initial)
 
     return render_to_response('logcsview.htm', locals(), context_instance=RequestContext(request))
+
+def baiduMap(request):
+    u"""地图"""
+
+    address = request.GET.get('address', '')
+
+    return render_to_response('baidumap.htm', locals(), context_instance=RequestContext(request))
+
 
 def logcsEditFrm(request):
     u"""物流编辑表单"""

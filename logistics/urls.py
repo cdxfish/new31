@@ -1,11 +1,11 @@
 #coding:utf-8
 from new31.func import pPatterns
-from views import logcs, baiduMap, logcsView, logcsUnsent, logcsEdit, logcsShip, logcsRefused, logcsSign, logcsStop, logcsEditFrm, logcsSub, cDman, cAdv, cLogcs
+from views import logcs, logcsView, baiduMap, logcsUnsent, logcsEdit, logcsShip, logcsRefused, logcsSign, logcsStop, logcsEditFrm, logcsSub, cDman, cAdv, cLogcs
 
 urlpatterns = pPatterns(
     (r'^$', logcs, 3),
-    (r'^map\/$', baiduMap, 3),
     (r'^view/$', logcsView, 3),
+    (r'^map\/$', baiduMap, 3),
     (r'^edit/$', logcsEditFrm, 3),
     (r'^submit/$', logcsSub, 3),
     (r'^0\/(?P<sn>\d{15})\/$', logcsUnsent, 1),
