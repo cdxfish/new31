@@ -237,7 +237,7 @@ header,footer,article,aside,section,nav,menu,hgroup{display:block;margin:0;paddi
 .other{padding:5px 0;background:#D9D4D4;border-top:1px solid #CFCACA;}
 .other ul{width:960px;margin:0 auto;}
 .other ul li{display:inline}
-.other a{padding:3px 10px;color:#89706D}
+.other a{padding:3px 5px 3px 0;color:#89706D}
 .other span{color:#89706D}
 .footerLayer{border-radius:0 0 10px 10px;background:#FFF;padding:15px;z-index:999;box-shadow:0px 3px 3px #A7A3A3;}
 .pWhite{background-color:#FFFFFF;border:1px solid #d9d9d9;padding:35px;margin:0 0 30px 0;}

@@ -85,7 +85,7 @@
 
         var options = $("option", $obj);
         var id = "jgd_dd_" + get_id($obj);
-        $obj.after('<dl id="' + id + '" class="' + settings.cls + '"></dl>');
+        $obj.after('<span class="' + settings.cls + '-span"><dl id="' + id + '" class="' + settings.cls + '"></dl></span>');
         if (iTitle === '') {
             iTitle = selected.text();
             iVal = selected.val();

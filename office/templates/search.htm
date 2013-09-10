@@ -1,7 +1,7 @@
       <div class="search" nowrap="true" colspan="3">
           <form action="{{ request.path }}" method="get">
 {% for i in form %}
-              {{ i }}
+           {{ i }}
 {% endfor %}
             <input type="submit" value=" 搜索 " class="button" />
             <input type="button" value=" 清空 " class="button" onclick="javascript:(function(){ $('#id_k').val(''); })()"/>

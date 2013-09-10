@@ -1,4 +1,5 @@
 #coding:utf-8
+u"""管理中心"""
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 import datetime

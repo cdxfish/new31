@@ -160,7 +160,7 @@ def delItemOrd(request, mark):
     return rdrtBck(request)
 
 
-# @ajaxMsg('无法修改表单数据')
+@ajaxMsg('无法修改表单数据')
 def cItem(request):
     u"""ajax-> 修改购物车内商品"""
     from cart.views import CartSess
