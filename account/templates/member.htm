@@ -1,0 +1,40 @@
+{% extends "office.base.htm" %}
+
+{% block content %}
+      <div class="search" nowrap="true" colspan="3">
+          <form action="{{ request.path }}" method="get">
+            <input type="text" name="k" value="{{ k }}" id="id_k" />
+            <input type="submit" value=" 搜索 " class="button" />
+            <input type="button" value=" 清空 " class="button" onclick="javascript:(function(){ $('#id_k').val(''); })()"/>
+          </form>
+      </div>
+      <table cellpadding="3" cellspacing="1" width="100%" class="sortTable">
+          <tr>
+            <th>类型</th>
+            <th>帐号</th>
+            <th>姓名</th>
+            <th>生日</th>
+            <th>性别</th>
+            <th>积分</th>
+          </tr>
+{% for i in u %}
+          <tr align="center">
+            <td>{{ i.bsinfo.get_typ_display }}</td>
+            <td>{{ i.username }}</td>
+            <td>{{ i.last_name }}{{ i.first_name }}</td>
+            <td>{{ i.bsinfo.get_mon_display }}{{ i.bsinfo.get_day_display }}</td>
+            <td>{{ i.bsinfo.get_sex_display }}</td>
+            <td>{{ i.pts.pt }}</td>
+          </tr>
+{% empty %}
+          <tr>
+            <td align="center" colspan="10">无记录</td>
+          </tr>
+{% endfor %}
+          {% include 'page.htm' %}
+      </table>
+{% endblock %}
+
+{% block js %}
+      <script type="text/javascript" src="{{ STATIC_URL }}logistics/js/logistics.configuration.js"></script>
+{% endblock %}

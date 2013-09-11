@@ -1,0 +1,34 @@
+{% extends "office.base.htm" %}
+
+{% block content %}
+        <form action="{% url 'account:register' %}" method="POST" id="checkout">
+      <table cellpadding="3" cellspacing="1" width="100%" class="sortTable">
+{% for i in user %}
+          <tr>
+            <th width="100px">{{ i.label }}</th>
+            <td>{{ i }}</td>
+          </tr>
+{% endfor %}
+{% for i in bsinfo %}
+          <tr>
+            <th>{{ i.label }}</th>
+            <td>{{ i }}</td>
+          </tr>
+{% endfor %}
+{% for i in pts %}
+          <tr>
+            <th>{{ i.label }}</th>
+            <td>{{ i }}</td>
+          </tr>
+{% endfor %}
+      </table>
+      <center>
+          {% csrf_token %}
+          <input type="submit" name="submit" value="确认" class="button" />
+      </center>
+    </form>
+{% endblock %}
+
+{% block js %}
+      <script type="text/javascript" src="{{ STATIC_URL }}logistics/js/logistics.configuration.js"></script>
+{% endblock %}

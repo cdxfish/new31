@@ -42,8 +42,6 @@ class bsInfoManager(models.Manager):
         except Exception, e:
             pass
 
-
-
 class BsInfo(models.Model):
     mons = (
                     (0, u'保密'), 
@@ -102,20 +100,52 @@ class BsInfo(models.Model):
         )
 
     typs =  (
-                (0, u'普通用户'), 
-                (1, u'试吃用户'), 
+                (0, u'普通'), 
+                (1, u'试吃'), 
         )
 
     user = models.OneToOneField(User, verbose_name=u'用户')
     mon = models.SmallIntegerField(u'月', default=0, choices=mons)
     day = models.SmallIntegerField(u'日', default=0, choices=days)
     sex = models.SmallIntegerField(u'性别', default=0, choices=sexs)
-    typ = models.SmallIntegerField(u'注册类型', default=0, choices=typs, editable=False)
+    typ = models.SmallIntegerField(u'类型', default=0, choices=typs)
 
     objects = bsInfoManager()
 
     def __unicode__(self):
         return u"%s [ 性别：%s ] [ 生日：%s %s ]" % (self.user, self.get_sex_display(), self.get_mon_display(), self.get_day_display())
+
+    def newUser(self, dic):
+
+        u = User.objects.create_user(username=dic['username'], email=dic['email'], password='4000592731')
+        try:
+            u.first_name = dic['first_name']
+            u.last_name = dic['last_name']
+            u.is_active = True
+            u.save()
+
+            self.user = u
+
+            self.mon = int(dic['mon'])
+
+            self.day = int(dic['day'])
+
+            self.sex = int(dic['sex'])
+            self.typ = int(dic['typ'])
+            self.save()
+
+            p = Pts()
+
+            p.pt = int(dic['pt']) if dic['pt'] else 0
+
+            p.user = u
+
+            p.save()
+        except Exception, e:
+            u.delete()
+            # raise e
+
+        return self
 
 class Pts(models.Model):
     user = models.OneToOneField(User, verbose_name=u'用户')

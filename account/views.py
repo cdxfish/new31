@@ -1,9 +1,14 @@
 #coding:utf-8
 u"""用户中心"""
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib import messages, auth
 from new31.func import rdrtLogin, rdrtBck, rdrtIndex, rdrtAcc
+from new31.decorator import postDr
 from decorator import loginDr
 
 # Create your views here.
@@ -50,8 +55,8 @@ def logout(request):
 @loginDr
 def settings(request):
     u"""用户设置"""
-    from forms import setFrm
-    frm = setFrm(request)
+    from forms import bsInfoFrm
+    frm = bsInfoFrm(request)
 
     return render_to_response('settings.htm', locals(), context_instance=RequestContext(request))
 
@@ -70,7 +75,6 @@ def changepwd(request):
     u"""用户密码修改"""
     from django.contrib.auth.forms import PasswordChangeForm
     frm = PasswordChangeForm(request.user)
-
 
     return render_to_response('changepwd.htm', locals(), context_instance=RequestContext(request))
 
@@ -109,6 +113,78 @@ def myOrd(request):
 @loginDr
 def uViewOrd(request, sn):
     u"""订单详情"""
+    from order.models import Ord
+    from produce.models import Pro
+
+    o = Ord.objects.get(sn=sn)
+
+    if o.user != request.user:
+        messages.error(request, u'您无法查看当前订单。')
+
+        return rdrtBck(request)
+
+    o.total = Pro.objects.getFeeBySN(sn)
+
+    return render_to_response('vieword.htm', locals(), context_instance=RequestContext(request))
+
+@postDr
+def register(request):
+    u"""新会员表单提交"""
+    from forms import NerUserFrm, BsInfoFrm, PtsFrm
+    post = request.POST.dict()
+
+    user = NerUserFrm({
+                'username': post[u'username'],
+                'last_name': post[u'last_name'],
+                'first_name': post[u'first_name'],
+            })
+
+    bsinfo = BsInfoFrm({
+                'sex': post[u'sex'],
+                'mon': post[u'mon'],
+                'day': post[u'day'],
+                'typ': post[u'typ'],
+            })
+
+    pts = PtsFrm({
+                'typ': post[u'typ']
+            })
+
+    if user.is_valid() and bsinfo.is_valid():
+        from models import BsInfo
+
+        BsInfo().newUser(post)
+    else:
+        for i in user:
+            if i.errors:
+                messages.error(request, u'%s - %s' % (i.label, i.errors))
+
+        for i in bsinfo:
+            if i.errors:
+                messages.error(request, u'%s - %s' % (i.label, i.errors))
+
+        return HttpResponseRedirect(reverse('account:newUserFrm'))
+
+    return HttpResponseRedirect(u'%s?k=%s' % (reverse('account:member'), post[u'username']))
+
+def member(request):
+    u"""会员信息"""
+    k = request.GET.get('k', '')
+    u = User.objects.filter(username__contains=k).order_by('-id')[:100]
+
+    return render_to_response('member.htm', locals(), context_instance=RequestContext(request))
+
+def newUserFrm(request):
+    u"""新会员表单"""
+    from forms import NerUserFrm, BsInfoFrm, PtsFrm
+    user = NerUserFrm()
+    bsinfo = BsInfoFrm()
+    pts = PtsFrm(initial={'typ':0})
+
+    return render_to_response('newuser.htm', locals(), context_instance=RequestContext(request))
+
+def integral(request, sn):
+    u"""会员积分"""
     from order.models import Ord
     from produce.models import Pro
 

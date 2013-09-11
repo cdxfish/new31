@@ -14,7 +14,7 @@ def postDr(func):
             return func(request, *args, **kwargs)
 
         else:
-            messages.error(request, '订单提交方式错误')
+            messages.error(request, '提交方式错误')
 
             return rdrtBck(request)
     return _func
@@ -28,7 +28,7 @@ def postDrR(name):
                 return func(request, *args, **kwargs)
 
             else:
-                messages.error(request, '订单提交方式错误')
+                messages.error(request, '提交方式错误')
 
                 return HttpResponseRedirect(reverse(name))
         return __func
