@@ -1,5 +1,6 @@
 #coding:utf-8
 from django import forms
+import re
 # Create your forms here.
 
 def bsInfoFrm(request):
@@ -46,3 +47,11 @@ class NerUserFrm(forms.ModelForm):
         #     'first_name': forms.TextInput(attrs={'size': 60}),
         #     'email': forms.TextInput(attrs={'size': 100}, required=False),
         # }
+
+
+    def clean_username(self):
+        username = self.cleaned_data['username'].split()
+        if not re.search(ur'[1][3|4|5|8][0-9]\d{8}', str(username)):
+
+            raise forms.ValidationError(u'请填写正确的手机号码!')
+        return username

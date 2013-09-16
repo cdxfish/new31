@@ -127,6 +127,15 @@ def uViewOrd(request, sn):
 
     return render_to_response('vieword.htm', locals(), context_instance=RequestContext(request))
 
+def newUserFrm(request):
+    u"""新会员表单"""
+    from forms import NerUserFrm, BsInfoFrm, PtsFrm
+    user = NerUserFrm()
+    bsinfo = BsInfoFrm()
+    pts = PtsFrm(initial={'typ':0})
+
+    return render_to_response('newuser.htm', locals(), context_instance=RequestContext(request))
+
 @postDr
 def register(request):
     u"""新会员表单提交"""
@@ -173,15 +182,6 @@ def member(request):
     u = User.objects.filter(username__contains=k).order_by('-id')[:100]
 
     return render_to_response('member.htm', locals(), context_instance=RequestContext(request))
-
-def newUserFrm(request):
-    u"""新会员表单"""
-    from forms import NerUserFrm, BsInfoFrm, PtsFrm
-    user = NerUserFrm()
-    bsinfo = BsInfoFrm()
-    pts = PtsFrm(initial={'typ':0})
-
-    return render_to_response('newuser.htm', locals(), context_instance=RequestContext(request))
 
 def integral(request, sn):
     u"""会员积分"""

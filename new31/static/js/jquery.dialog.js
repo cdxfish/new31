@@ -184,7 +184,6 @@
     $.fn.extend({
         ajaxGET: function(url, func) {
             $.dialog.loading('努力加载中，请稍候')
-            // $.getJSON(url, $.dialog.msg);
             $.getJSON(url, function(data) {
 
                 if (data.err) {
@@ -204,7 +203,7 @@
 
 $(document).ready(function() {
     $.dialog.maskLayer().closeBtn();
-    // $.ajaxSetup({
-    //     cache: false //close AJAX cache
-    // });
+    $.ajaxSetup({
+        cache: false //close AJAX cache
+    });
 });
