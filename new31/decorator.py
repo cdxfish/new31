@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from new31.func import rdrtBck
 from functools import wraps
+import time
 # Create your decorator here.
 
 # 提交模式检测包装函数
@@ -47,3 +48,16 @@ def rdrtBckDr(msg):
                 return rdrtBck(request)
         return _func
     return func
+
+def timeit(func):
+    @wraps(func)
+    def wrapper(request, *args, **kwargs):
+        start = time.clock()
+        print 'start', start
+        a = func(request, *args, **kwargs)
+        end =time.clock()
+        print 'end', end
+        print 'used:', end - start
+
+        return a
+    return wrapper

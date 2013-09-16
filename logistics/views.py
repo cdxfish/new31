@@ -367,7 +367,7 @@ class KpChng(object):
 
         for i in self.oList:
             i.fee = self.fee.copy()
-            i.fee['total'] = Pro.objects.getFeeBySN(i.sn)
+            i.fee['total'] = Pro.objects.total(i.pro_set.all())
 
             i.fee['paid'] = keFrmt(i.fee['total'])
 

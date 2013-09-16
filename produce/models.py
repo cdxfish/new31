@@ -17,6 +17,14 @@ class proManager(models.Manager):
 
         return total
 
+    def total(self, pros):
+        total = 0
+
+        for i in pros:
+            total += i.total()
+
+        return total
+
     def savePro(self, ord, request):
         from cart.views import CartSess
         from item.models import Item, ItemSpec, ItemFee

@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.template import RequestContext
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from new31.decorator import postDr, rdrtBckDr
+from new31.decorator import postDr, rdrtBckDr, timeit
 from new31.func import frMtFee, rdrRange, page, rdrtBck, f02f
 from new31.cls import AjaxRJson
 from ajax.decorator import ajaxMsg
@@ -18,7 +18,7 @@ from decimal import Decimal
 import time, datetime, re
 
 # Create your views here.
-
+# @timeit
 def ords(request):
     u"""订单"""
     from forms import OrdSrchFrm
