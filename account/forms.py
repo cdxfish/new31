@@ -50,8 +50,8 @@ class NerUserFrm(forms.ModelForm):
 
 
     def clean_username(self):
-        username = self.cleaned_data['username'].split()
-        if not re.search(ur'[1][3|4|5|8][0-9]\d{8}', str(username)):
+        username = self.cleaned_data['username'].strip()
+        if not re.search(ur'[1][3|4|5|8][0-9]\d{8}', username):
 
             raise forms.ValidationError(u'请填写正确的手机号码!')
         return username

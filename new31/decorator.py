@@ -51,10 +51,10 @@ def rdrtBckDr(msg):
 
 def timeit(func):
     @wraps(func)
-    def wrapper(request, *args, **kwargs):
+    def wrapper(*args, **kwargs):
         start = time.clock()
         print 'start', start
-        a = func(request, *args, **kwargs)
+        a = func(*args, **kwargs)
         end =time.clock()
         print 'end', end
         print 'used:', end - start

@@ -75,7 +75,9 @@ def logcsSub(request):
     u"""物流编辑表单提交"""
     from order.views import OrdSess
     from models import Logcs
-
+    from cart.views import CartSess
+    from finance.views import FncSess
+    
     sn = OrdSess(request).sess['sn']
 
     logcs = Logcs.objects.get(ord=sn)
@@ -83,6 +85,11 @@ def logcsSub(request):
     Logcs.objects.saveLogcs(logcs.ord, request)
 
     messages.success(request, u'编辑成功: %s' % sn)
+
+    CartSess(self.request).clear()
+    LogcSess(self.request).clear()
+    OrdSess(self.request).clear()
+    FncSess(self.request).clear()
 
     return rdrRange(reverse('logistics:logcs'), LogcSess(request).sess['date'], sn)
 
@@ -296,7 +303,7 @@ class LogcsSerch(OrdSerch):
         super(LogcsSerch, self).__init__(request)
 
     def search(self):
-        self.oList = self.baseSearch().oList.filter(Q(status=2) | Q(status=4)).order_by('-logcs__date', '-logcs__stime', '-logcs__advance', '-logcs__etime', '-logcs__dman', '-sn' )
+        self.oList = self.baseSearch().oList.filter(Q(status=2) | Q(status=4)).order_by('-logcs__date', '-logcs__stime', 'logcs__area', 'logcs__address', '-sn' )
         return self
 
     def chcs(self):

@@ -2,7 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib import messages
-
+from new31.decorator import timeit
 # Create your models here.
 
 class bsInfoManager(models.Manager):
@@ -41,6 +41,52 @@ class bsInfoManager(models.Manager):
 
         except Exception, e:
             pass
+
+    @timeit
+    def rUserd(self):
+        u"""会员数据导入"""
+        from models import uDATA, BsInfo, Pts
+        from django.contrib.auth.models import User
+
+        for i in uDATA.objects.all()[:100]:
+            try:
+                u = User.objects.get(username=i.username)
+                u.pts.pt = i.pt
+                u.pts.save()
+
+            except Exception, e:
+                # raise e
+                u = User.objects.create_user(username=i.username, email=i.email, password='4000592731')
+
+                u.first_name = i.first_name
+                u.last_name = i.last_name
+                u.is_active = True
+                u.save()
+         
+                b = BsInfo()
+                b.user = u
+
+                b.mon = i.mon
+
+                b.day = i.day
+
+                b.sex = i.sex
+                b.typ = i.typ
+                b.save()
+
+                p = Pts()
+
+                p.pt = i.pt
+
+                p.user = u
+
+                p.save()
+            try:
+                print '%06d - > %06d' % (i.id, u.id), u.username, '%02d-%02d' % (u.bsinfo.mon, u.bsinfo.day), u.pts.pt
+            except Exception, e:
+                # raise e
+                u.delete()
+
 
 class BsInfo(models.Model):
     mons = (
@@ -154,13 +200,13 @@ class Pts(models.Model):
     def __unicode__(self):
         return u"%s [ 积分:%s ]" % (self.user, self.pt)
 
-# class uDATA(models.Model):
-#     username = models.CharField(u'用户名', max_length=30, unique=True)
-#     first_name = models.CharField(u'名', max_length=30, blank=True)
-#     last_name = models.CharField(u'姓', max_length=30, blank=True)
-#     email = models.EmailField(u'邮箱', blank=True)
-#     mon = models.SmallIntegerField(u'月', default=0)
-#     day = models.SmallIntegerField(u'日', default=0)
-#     sex = models.SmallIntegerField(u'性别', default=0)
-#     typ = models.SmallIntegerField(u'注册类型', default=0)
-#     pt = models.IntegerField(u'积分', default=0)
+class uDATA(models.Model):
+    username = models.CharField(u'用户名', max_length=30, unique=True)
+    first_name = models.CharField(u'名', max_length=30, blank=True)
+    last_name = models.CharField(u'姓', max_length=30, blank=True)
+    email = models.EmailField(u'邮箱', blank=True)
+    mon = models.SmallIntegerField(u'月', default=0)
+    day = models.SmallIntegerField(u'日', default=0)
+    sex = models.SmallIntegerField(u'性别', default=0)
+    typ = models.SmallIntegerField(u'注册类型', default=0)
+    pt = models.IntegerField(u'积分', default=0)
