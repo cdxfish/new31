@@ -33,7 +33,7 @@ def ordDr(typ=0):
     return _func
 
 
-# 订单提交类提示用装饰器(类内部使用)
+# 订单状态修改用装饰器
 def modifyDr(i):
     def _func(func):
         @wraps(func)
