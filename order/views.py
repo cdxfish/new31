@@ -351,7 +351,7 @@ class OrdSerch(object):
 
     def range(self):
 
-        self.oList = self.oList.filter((Q(ordlog__typ=0) | Q(ordlog__typ=1)), ordlog__time__range=(self.initial['s'], self.initial['e']) )
+        self.oList = self.oList.filter((Q(ordlog__act='order:submitOrd') | Q(ordlog__act='order:editOrd')), ordlog__time__range=(self.initial['s'], self.initial['e']) ).distinct()
 
         return self
 

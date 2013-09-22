@@ -125,9 +125,11 @@ def logcsEdit(request, sn, i):
     u"""物流状态修改-> 物流编辑"""
     from models import Logcs
     from order.views import OrdSess
+    from finance.views import FncSess
 
     Logcs.objects.cStatus(sn, i)
     LogcSess(request).copy(sn)
+    FncSess(request).copy(sn)
 
     OrdSess(request).cpyOrd(sn)
     

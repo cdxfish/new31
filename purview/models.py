@@ -77,11 +77,15 @@ class Privilege(models.Model):
     chcs = (
             (0, u'技术部'),
             (1, u'物流部'),
-            (2, u'后勤部'),
-            (3, u'客服部'),
-            (4, u'业务部'),
-            (5, u'生产部'),
-            (6, u'财务部'),
+            (2, u'后勤部A'),
+            (3, u'客服部A'),
+            (4, u'业务部A'),
+            (5, u'生产部A'),
+            (6, u'财务部A'),
+            (7, u'客服部B'),
+            (8, u'业务部B'),
+            (9, u'生产部B'),
+            (10, u'财务部B'),
         )
     name = models.SmallIntegerField(u'名称', choices=chcs, unique=True)
     onl = models.BooleanField(u'上线', default=True)
@@ -109,6 +113,8 @@ class Role(models.Model):
             (11, u'生产'),
             (12, u'总经理'),
             (13, u'副经理'),
+            (14, u'会计'),
+            (15, u'出纳'),
         )
 
     role = models.SmallIntegerField(u'角色', choices=chcs, unique=True)

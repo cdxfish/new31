@@ -115,7 +115,7 @@ class FncSess(BsSess):
 
         self.sess['pay'] = fnc.cod.id
 
-        return self
+        return self._set()
 
 
 from order.views import OrdSerch

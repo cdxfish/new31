@@ -74,16 +74,14 @@
             <table width="100%" class="mBottom10">
                 <tr>
                     <th>操作者</th>
-                    <th>类型</th>
                     <th>时间</th>
-                    <th>备注</th>
+                    <th>动作</th>
                 </tr>
 {% for i in o.ordlog_set.all %}
                 <tr align="center">
                     <td>{{ i.user.last_name }}{{ i.user.first_name }}</td>
-                    <td>{{ i.get_typ_display }}</td>
                     <td>{{ i.time|date:"Y-m-d H:i" }} </td>
-                    <td>{{ i.note }}</td>
+                    <td>{{ i.act }}</td>
                 </tr>
 {% endfor %}
             </table>
