@@ -261,7 +261,7 @@ class LogcSess(BsSess):
         from area.models import Area
         from signtime.models import SignTime
 
-        logcs = LogcSess(self.request)
+        # logcs = LogcSess(self.request)
 
         oLogcs = Logcs.objects.get(ord__sn=sn)
  
@@ -277,17 +277,17 @@ class LogcSess(BsSess):
         except Exception, e:
             time = SignTime.objects.default().id
 
-        logcs.sess['user'] = u'%s' % oLogcs.ord.user
-        logcs.sess['pay'] = oLogcs.ord.fnc.cod.id
-        logcs.sess['consignee'] = u'%s' % oLogcs.consignee
-        logcs.sess['area'] = area
-        logcs.sess['address'] = u'%s' % oLogcs.address
-        logcs.sess['tel'] = oLogcs.tel
-        logcs.sess['date'] = u'%s' % oLogcs.date
-        logcs.sess['time'] = time
-        logcs.sess['note'] = u'%s' % oLogcs.note
+        # self.sess['user'] = u'%s' % oLogcs.ord.user
+        # self.sess['pay'] = oLogcs.ord.fnc.cod.id
+        self.sess['consignee'] = u'%s' % oLogcs.consignee
+        self.sess['area'] = area
+        self.sess['address'] = u'%s' % oLogcs.address
+        self.sess['tel'] = oLogcs.tel
+        self.sess['date'] = u'%s' % oLogcs.date
+        self.sess['time'] = time
+        self.sess['note'] = u'%s' % oLogcs.note
 
-        logcs._set()
+        return self._set()
 
 
 

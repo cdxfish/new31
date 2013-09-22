@@ -108,7 +108,15 @@ class FncSess(BsSess):
         self.obj['pay'] = Pay.objects.getPayById(id=self.sess['pay'])
 
         return self.obj
-        
+
+    def copy(self, sn):
+        from models import Fnc
+        fnc = Fnc.objects.get(ord__sn=sn)
+
+        self.sess['pay'] = fnc.cod.id
+
+        return self
+
 
 from order.views import OrdSerch
 class FncSerch(OrdSerch):

@@ -254,7 +254,7 @@ class OrdSess(BsSess):
 
     def copy(self, sn):
 
-        return self.cpyOrd(sn).cpyLogcs(sn).cpyItem(sn)
+        return self.cpyOrd(sn).cpyLogcs(sn).cpyFnc(sn).cpyItem(sn)
 
 
     def cpyOrd(self, sn):
@@ -279,6 +279,13 @@ class OrdSess(BsSess):
         from cart.views import CartSess
 
         CartSess(self.request).copy(sn)
+
+        return self
+
+    def cpyFnc(self, sn):
+        from finance.views import FncSess
+
+        FncSess(self.request).copy(sn)
 
         return self
 
