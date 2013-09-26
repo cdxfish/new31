@@ -33,12 +33,13 @@ class OrdLog(models.Model):
     #         (9, u'拒签'),
     #         (10, u'付款'),
     #     )
+    chcs = tuple((i[0],i[1]) for i in Element.pPath + Element.nPath)
 
     ord = models.ForeignKey(Ord, verbose_name=u'订单')
     user = models.ForeignKey(User, verbose_name=u'用户')
     # act = models.ForeignKey(Element, verbose_name=u'动作')
     # typ = models.SmallIntegerField(u'日志类型', default=0, choices=chcs)
-    act = models.CharField(u'动作', max_length=60)
+    act = models.CharField(u'动作', max_length=60, choices=chcs)
     time = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True, editable=False)
 
     objects = logManager()
