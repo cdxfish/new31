@@ -7,6 +7,7 @@ from decorator import fncDetr
 from new31.func import rdrtBck
 from new31.cls import AjaxRJson
 from ajax.decorator import ajaxMsg
+from log.decorator import ordLogDr
 # Create your views here.
 
 def fnc(request):
@@ -44,26 +45,31 @@ def modifyFnc(request, sn, s):
         'obj': 'fnc'
         })
 
+@ordLogDr
 def unpaidFnc(request, sn):
     u"""财务状态修改-> 财务未付"""
 
     return modifyFnc(request, sn, 0)
 
+@ordLogDr
 def paidFnc(request, sn):
     u"""财务状态修改-> 财务已付"""
 
     return modifyFnc(request, sn, 1)
 
+@ordLogDr
 def closedFnc(request, sn):
     u"""财务状态修改-> 财务已结"""
 
     return modifyFnc(request, sn, 2)
 
+@ordLogDr
 def checkedFnc(request, sn):
     u"""财务状态修改-> 财务已核"""
 
     return modifyFnc(request, sn, 3)
 
+@ordLogDr
 def stopFnc(request, sn):
     u"""财务状态修改-> 财务止付"""
 

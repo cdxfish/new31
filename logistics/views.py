@@ -9,6 +9,7 @@ from django.contrib import messages
 from new31.decorator import postDr
 from new31.cls import AjaxRJson
 from ajax.decorator import ajaxMsg
+from log.decorator import ordLogDr
 from decorator import logcsDr, dManDr, modifyLogcsDr, aLogcsDr
 from new31.func import keFrmt, rdrtBck, rdrRange
 import time,datetime
@@ -69,7 +70,6 @@ def logcsEditFrm(request):
 
     return render_to_response('logcsedit.htm', locals(), context_instance=RequestContext(request))
 
-
 @postDr
 def logcsSub(request):
     u"""物流编辑表单提交"""
@@ -114,11 +114,13 @@ def modifyLogcs(request, sn, s):
         'obj': 'logcs'
         })
 
+@ordLogDr
 def logcsUnsent(request, sn):
     u"""物流状态修改-> 物流未发"""
 
     return modifyLogcs(request, sn, 0)
 
+@ordLogDr
 @modifyLogcsDr(1)
 @logcsDr()
 def logcsEdit(request, sn, i):
@@ -135,21 +137,25 @@ def logcsEdit(request, sn, i):
     
     return HttpResponseRedirect(reverse('logistics:logcsEditFrm'))
 
+@ordLogDr
 def logcsShip(request, sn):
     u"""物流状态修改-> 物流已发"""
 
     return modifyLogcs(request, sn, 2)
 
+@ordLogDr
 def logcsRefused(request, sn):
     u"""物流状态修改-> 物流拒签"""
 
     return modifyLogcs(request, sn, 3)
 
+@ordLogDr
 def logcsSign(request, sn):
     u"""物流状态修改-> 物流已签"""
 
     return modifyLogcs(request, sn, 4)
 
+@ordLogDr
 def logcsStop(request, sn):
     u"""物流状态修改-> 物流止送"""
     # from models import Logcs
@@ -164,6 +170,7 @@ def logcsStop(request, sn):
 
     return modifyLogcs(request, sn, 5)
 
+@ordLogDr
 @ajaxMsg('无法修改表单数据')
 @aLogcsDr
 def cDman(logcs, value):
@@ -176,12 +183,14 @@ def cDman(logcs, value):
     else:
         logcs.dman = None
 
+@ordLogDr
 @ajaxMsg('无法修改表单数据')
 @aLogcsDr
 def cAdv(logcs, value):
     u"""ajax-> 修改物流偏移量"""
 
     logcs.advance = value
+
 
 @ajaxMsg('无法填写表单')
 def cLogcs(request):

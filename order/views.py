@@ -10,6 +10,7 @@ from new31.decorator import postDr, rdrtBckDr, timeit
 from new31.func import frMtFee, rdrRange, page, rdrtBck, f02f
 from new31.cls import AjaxRJson
 from ajax.decorator import ajaxMsg
+from log.decorator import ordLogDr
 from cart.decorator import checkCartDr
 from decorator import ordDr, subMsg, subDr, modifyDr
 from logistics.decorator import chLogcsDr
@@ -114,6 +115,7 @@ def copyOrd(request, sn):
 
     return HttpResponseRedirect(reverse('order:newOrdFrm'))
 
+@ordLogDr
 @modifyDr(1)
 @ordDr()
 def editOrd(request, sn, i):
@@ -125,17 +127,19 @@ def editOrd(request, sn, i):
 
     return HttpResponseRedirect(reverse('order:editOrdFrm'))
 
-
+@ordLogDr
 def confirmOrd(request, sn):
     u"""订单状态修改-> 订单确认"""
 
     return modifyOrd(request, sn, 2)
 
+@ordLogDr
 def nullOrd(request, sn):
     u"""订单状态修改-> 订单无效"""
 
     return modifyOrd(request, sn, 3)
 
+@ordLogDr
 def stopOrd(request, sn):
     u"""订单状态修改-> 订单止单"""
 

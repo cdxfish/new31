@@ -66,9 +66,10 @@ def aLogcsDr(func):
     def _func(request, *args, **kwargs):
         from models import Logcs
         from new31.cls import AjaxRJson
+
         
-        sn = int(request.GET.get('sn')[1:])
-        value = int(request.GET.get('value', 0))
+        sn = int(kwargs['sn'])
+        value = int(kwargs['id'])
 
         logcs = Logcs.objects.get(ord=sn)
 

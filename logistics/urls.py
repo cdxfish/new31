@@ -14,8 +14,8 @@ urlpatterns = pPatterns(
     (r'^3\/(?P<sn>\d{15})\/$', logcsRefused, 1),
     (r'^4\/(?P<sn>\d{15})\/$', logcsSign, 1),
     (r'^5\/(?P<sn>\d{15})\/$', logcsStop, 1),
-    (r'^cdman\/$', cDman, 1),
-    (r'^cadv\/$', cAdv, 1),
+    (r'^cdman\/d(?P<sn>\d{15})\/(?P<id>\d+)\/$', cDman, 1),
+    (r'^cadv\/a(?P<sn>\d{15})\/(?P<id>.+)\/$', cAdv, 1),
     (r'^clogcs\/$', cLogcs, 0)
 
 )

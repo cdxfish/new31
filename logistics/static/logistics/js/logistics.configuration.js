@@ -12,7 +12,7 @@ var logcs = {
         $('.ad').change(function() {
             var self = $(this);
 
-            self.ajaxGET('/logistics/cadv/?sn=' + self.attr('id') + '&value=' + self.val());
+            self.ajaxGET('/logistics/cadv/' + self.attr('id') + '/' + self.val() + '/');
         });
 
         return this
@@ -21,7 +21,7 @@ var logcs = {
         $('.dman').change(function() {
             var self = $(this);
 
-            self.ajaxGET('/logistics/cdman/?sn=' + self.attr('id') + '&value=' + self.val());
+            self.ajaxGET('/logistics/cdman/' + self.attr('id') + '/' + self.val() + '/');
         });
 
         return this
