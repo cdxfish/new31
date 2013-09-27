@@ -264,43 +264,17 @@ LOGGING = {
 
 HAYSTACK_CONNECTIONS = {
     'default': {
-        # For Solr:
+        # For Whoosh:
         'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
-        'URL': 'http://localhost:9001/solr/example',
+        # 'URL': 'http://localhost:9001/solr/example',
         'TIMEOUT': 60 * 5,
         'INCLUDE_SPELLING': True,
         'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
     },
     'whoosh': {
         # For Whoosh:
-        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
         'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
         'INCLUDE_SPELLING': True,
     },
 }
-
-# HAYSTACK_CONNECTIONS = {
-#     'default': {
-#         # For Solr:
-#         'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
-#         'URL': 'http://localhost:9001/solr/example',
-#         'TIMEOUT': 60 * 5,
-#         'INCLUDE_SPELLING': True,
-#         'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
-#     },
-#     'whoosh': {
-#         # For Whoosh:
-#         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-#         'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
-#         'INCLUDE_SPELLING': True,
-#     },
-#     'simple': {
-#         # For Simple:
-#         'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
-#     },
-#     'xapian': {
-#         # For Xapian (requires the third-party install):
-#         'ENGINE': 'xapian_haystack.xapian_backend.XapianEngine',
-#         'PATH': os.path.join(os.path.dirname(__file__), 'xapian_index'),
-#     }
-# }
