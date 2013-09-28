@@ -105,6 +105,7 @@ def chLogcsDr(func):
 
             return rdrtBck(request)
 
+        LogcSess(request).setByDict(post)
 
         return func(request, *args, **kwargs)
 

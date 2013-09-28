@@ -43,6 +43,8 @@ def chFncDr(func):
 
             return rdrtBck(request)
 
+        FncSess(request).setByDict(post)
+
         return func(request, *args, **kwargs)
 
     return _func

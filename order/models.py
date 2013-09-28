@@ -67,7 +67,7 @@ class Ord(models.Model):
                 (3, u'无效', 'order:nullOrd'),
                 (4, u'止单', 'order:stopOrd'),
             )
-    chcs= tuple((i[0],i[1]) for i in _chcs)
+    chcs= tuple((i[0], i[1]) for i in _chcs)
 
     act =   ( 
                 (_chcs[0], _chcs[1], _chcs[2], _chcs[3], ),

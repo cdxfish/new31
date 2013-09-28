@@ -75,3 +75,42 @@ def subDr(func):
             return rdrtBck(request)
 
     return _func
+
+# 订单提交基本信息监测装饰器
+def ordSubDr(func):
+    @wraps(func)
+    def _func(request, *args, **kwargs):
+        from forms import OrdFrm
+        from views import OrdSess
+        from models import Ord
+
+        post = request.POST.dict() if len(request.POST.dict()) > 1 else OrdSess(request).sess
+
+        ordFrm = OrdFrm(post)
+
+        if not ordFrm.is_valid():
+
+            for i in ordFrm:
+                if i.errors:
+
+                    messages.warning(request, '%s - %s' % ( i.label, u'这个字段是必填项。'))
+
+            return rdrtBck(request)
+
+        sn = int(post['sn'])
+        if sn:
+            order = Ord.objects.get(sn=sn)
+            if Ord._chcs[1][0] in Ord.objects.getActTuple(order.status):
+
+                OrdSess(request).setOrdToEdit(sn)
+            else:
+                messages.warning(request, '%d - %s' % ( sn, u'当前订单不可编辑.'))
+
+                return rdrtBck(request)
+
+        else:
+            OrdSess(request).setOrdtoNew()
+
+        return func(request, *args, **kwargs)
+
+    return _func

@@ -15,8 +15,7 @@ class OrdFrm(forms.Form):
     from models import Ord
 
     user = forms.CharField(label=u'会员帐号', required=False)
-    sn = forms.IntegerField(label=u'订单编号', required=False, max_value=13, min_value=13)
-    status = forms.ChoiceField(label=u'订单状态', required=False, choices=Ord.chcs, widget=forms.Select(attrs={'class': 'status' }))
+    sn = forms.IntegerField(label=u'操作类型', widget=forms.HiddenInput(attrs={'class': 'sn' }))
     typ = forms.ChoiceField(label=u'订单类型', choices=Ord.typs, widget=forms.Select(attrs={'class': 'typ' }))
 
 

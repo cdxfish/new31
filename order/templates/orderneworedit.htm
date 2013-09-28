@@ -50,7 +50,11 @@
           </table>
           <table width="100%" cellpadding="3" cellspacing="1" id="ord">
             <tr>
-              <td width="100px" align="right">{{ ord.user.label }}</td>
+              <td align="right">{{ ord.sn.label }}：</td>
+              <td>{% if ord.sn.value %}{{ ord.sn.value }}{% else %}新单{% endif %}{{ ord.sn }}</td>
+            </tr>
+            <tr>
+              <td width="100px" align="right">{{ ord.user.label }}：</td>
               <td width="90%">{{ ord.user }}<input type="button" value="会员查询" class="button" id="checkUser" /></td>
             </tr>
             <tr>

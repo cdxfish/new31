@@ -12,7 +12,7 @@ from new31.cls import AjaxRJson
 from ajax.decorator import ajaxMsg
 from log.decorator import ordLogDr
 from cart.decorator import checkCartDr
-from decorator import ordDr, subMsg, subDr, modifyDr
+from decorator import ordDr, subMsg, subDr, modifyDr, ordSubDr
 from logistics.decorator import chLogcsDr
 from finance.decorator import chFncDr
 from decimal import Decimal
@@ -45,15 +45,13 @@ def viewOrd(request, sn):
     return render_to_response('orderview.htm', locals(), context_instance=RequestContext(request))
 
 @postDr
-@checkCartDr
+@ordSubDr
 @chLogcsDr
 @chFncDr
+@checkCartDr
 @subDr
 def submitOrd(request):
     u"""订单提交"""
-    from logistics.views import LogcSess
-
-    logcs = LogcSess(request).setByDict(request.POST.dict())
 
     o = OrdSub(request).submit()
 
@@ -66,7 +64,7 @@ def submitOrd(request):
 
 def newOrdFrm(request):
     u"""新单表单"""
-    OrdSess(request).setSzero()
+    OrdSess(request).setOrdtoNew()
 
     return editOrdFrm(request)
 
@@ -231,7 +229,7 @@ class OrdSess(BsSess):
         self.s = 'o'
         self.frmt =  {
                         'typ': Ord.typs[0][0],
-                        'status': Ord.chcs[0][0],
+                        # 'status': Ord.chcs[0][0],
                         'sn': 0,
                         'user': '',
             }
@@ -244,14 +242,13 @@ class OrdSess(BsSess):
         return self._set()
 
 
-    def setSzero(self):
-        self.sess['status'] = 0
+    def setOrdtoNew(self):
+        self.sess['sn'] = 0
 
         return self._set()
 
-
-    def setSone(self):
-        self.sess['status'] = 1
+    def setOrdToEdit(self, sn):
+        self.sess['sn'] = sn
 
         return self._set()
 
@@ -266,10 +263,9 @@ class OrdSess(BsSess):
         
         order = Ord.objects.get(sn=sn)
         self.sess['typ'] = order.typ
-        self.sess['sn'] = sn
         self.sess['user'] = order.user
 
-        return self.setSone()
+        return self.setOrdToEdit(sn)
 
 
     def cpyLogcs(self, sn):
@@ -414,7 +410,7 @@ class OrdSub(object):
 
     def submit(self):
 
-        if self.o['status']:
+        if self.o['sn']:
             self.editOrdFmt()
 
         else:

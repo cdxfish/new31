@@ -272,8 +272,6 @@ class LogcSess(BsSess):
         from area.models import Area
         from signtime.models import SignTime
 
-        # logcs = LogcSess(self.request)
-
         oLogcs = Logcs.objects.get(ord__sn=sn)
  
         areas = oLogcs.area.split(' - ')
@@ -288,8 +286,6 @@ class LogcSess(BsSess):
         except Exception, e:
             time = SignTime.objects.default().id
 
-        # self.sess['user'] = u'%s' % oLogcs.ord.user
-        # self.sess['pay'] = oLogcs.ord.fnc.cod.id
         self.sess['consignee'] = u'%s' % oLogcs.consignee
         self.sess['area'] = area
         self.sess['address'] = u'%s' % oLogcs.address

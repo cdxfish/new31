@@ -5,27 +5,25 @@ $(document).ready(function() {
 });
 
 var shop = {
-    count: (function() {
-        var i = 0;
-        this.plusi = function() {
-            i++;
+    plus: function() {
+        var self = arguments.callee;
+        if ( !! !self.i) {
+            self.i = 0;
         }
-
-        return function() {
-            return i;
-        }
-    })(),
+        self.i++;
+        return self;
+    },
     speedLimit: (function(t) {
-        var i = true;
-        this.timeSwitch = function() {
-            return i
-        }
-        return function() {
-            i = false;
+
+        return (function() {
+            var self = arguments.callee;
+            self.i = false;
             setTimeout(function() {
-                i = true
+                self.i = true
             }, t);
-        }
+
+            return self;
+        })()
 
     })(2000),
     getMoreItem: function(num) {
@@ -41,7 +39,7 @@ var shop = {
             var pinHeight = pinStream.outerHeight();
 
             if (scrollTop + winHeight + 600 >= pinTop + pinHeight) {
-                if (self.count() < num && timeSwitch()) {
+                if (self.plus().i < num && self.speedLimit.i) {
                     self.speedLimit()
                     self.ajaxGetItems(pinStream);
                 }
@@ -91,6 +89,8 @@ var shop = {
             }
 
         });
+
+        return this;
 
     },
     pinStream: function() {
