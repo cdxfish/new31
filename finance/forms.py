@@ -4,17 +4,23 @@ from office.forms import bsSrchFrm
 
 # Create your forms here.
 
-class FncFrm(forms.Form):
-    from payment.models import Pay
+def FncFrm(request):
+    class _FncFrm(forms.Form):
+        from payment.models import Pay
 
-    pay = forms.ChoiceField(label=u'支付方式', choices=Pay.objects.getTpl(), required=False)
-    spay = forms.ChoiceField(label=u'支付方式', choices=Pay.objects.getTplToShow(), required=False)
+        if request.user.is_staff:
+            pay = forms.ChoiceField(label=u'支付方式', choices=Pay.objects.getTpl(), required=False)
 
+        else:
+
+            pay = forms.ChoiceField(label=u'支付方式', choices=Pay.objects.getTplToShow(), required=False)
+
+    return _FncFrm
 
 def fncFrm(request):
     from views import FncSess
 
-    return FncFrm(initial={i:v for i, v in FncSess(request).sess.items()})
+    return FncFrm(request)(initial=FncSess(request).sess)
 
 class FncSrchFrm(bsSrchFrm):
     from models import Fnc

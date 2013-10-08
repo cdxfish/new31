@@ -22,12 +22,12 @@ def office(request):
     e = '%s' % (today + oneDay)
     y = '%s' % (today - oneDay)
 
-    order = Ord.objects.filter(ordlog__time__range=(s, e)).order_by('status', '-sn')
+    order = Ord.objects.filter(ordlog__time__range=(s, e), ordlog__act__in=['order:submitOrd', 'order:editOrd']).distinct().order_by('status', '-sn')
     logcs = Logcs.objects.filter(date=s).order_by('status', '-ord__sn')
     pro = Pro.objects.filter(ord__logcs__date=s).order_by('status', '-ord__sn')
     fnc = Fnc.objects.filter(ord__logcs__date=s).order_by('status', '-ord__sn')
 
-    yorder = Ord.objects.filter(ordlog__time__range=(y, s)).order_by('status', '-sn')
+    yorder = Ord.objects.filter(ordlog__time__range=(y, s), ordlog__act__in=['order:submitOrd', 'order:editOrd']).distinct().order_by('status', '-sn')
     ylogcs = Logcs.objects.filter(date=y).order_by('status', '-ord__sn')
     ypro = Pro.objects.filter(ord__logcs__date=y).order_by('status', '-ord__sn')
     yfnc = Fnc.objects.filter(ord__logcs__date=y).order_by('status', '-ord__sn')

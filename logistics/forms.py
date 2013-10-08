@@ -28,7 +28,7 @@ class LogcsFrm(forms.ModelForm):
 def logcsFrm(request):
     from views import LogcSess
 
-    return LogcsFrm(initial={i:v for i, v in LogcSess(request).sess.items()})
+    return LogcsFrm(initial=LogcSess(request).sess)
 
 
 from office.forms import bsSrchFrm

@@ -32,7 +32,7 @@ def chFncDr(func):
 
         post = request.POST.dict() if len(request.POST.dict()) > 1 else FncSess(request).sess
 
-        fncFrm = FncFrm(post)
+        fncFrm = FncFrm(request)(post)
 
         if not fncFrm.is_valid():
 

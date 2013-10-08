@@ -18,7 +18,7 @@ class PayManager(models.Manager):
 
     def getTplToShow(self):
 
-        return tuple([(i.id, i.get_cod_display()) for i in self.filter((models.Q(cod='payafter') | models.Q(cod='alipay') | models.Q(cod='post') ), onl=True)])
+        return tuple([(i.id, i.get_cod_display()) for i in self.filter(cod__in=['payafter', 'alipay', 'post'], onl=True)])
 
 class Pay(models.Model):
     import api
@@ -32,7 +32,7 @@ class Pay(models.Model):
     objects = PayManager()
 
     def __unicode__(self):
-        return u"%s - %s" % (self.cod, self.onl)
+        return u"%s - %s" % (self.get_cod_display(), self.onl)
 
-    # class Meta:
-        # verbose_name = u'支付方式'
+    class Meta:
+        verbose_name = u'支付方式'

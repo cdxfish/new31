@@ -35,7 +35,7 @@ def cnsgn(request):
     return render_to_response('consignee.htm', locals(), context_instance=RequestContext(request))
 
 
-@postDrR('/cart/')
+@postDrR('cart:cart')
 @checkCartDr
 @chLogcsDr
 @chFncDr
@@ -51,12 +51,12 @@ def checkout(request):
 
     cInfo = LogcSess(request).setByDict(post).getObj() #将联系人信息存入session,并获得对应的对象
     fInfo = FncSess(request).setByDict(post).getObj() #将联系人信息存入session,并获得对应的对象
-    OrdSess(request).frMt().setSzero().setUser()
+    OrdSess(request).frMt().setOrdtoNew().setUser()
 
     return render_to_response('checkout.htm', locals(), context_instance=RequestContext(request))
 
 
-@postDrR('cart')
+@postDrR('cart:cart')
 @checkCartDr
 @chLogcsDr
 @chFncDr

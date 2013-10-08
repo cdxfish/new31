@@ -8,7 +8,7 @@ from office.forms import bsSrchFrm
 def ordFrm(request):
     from views import OrdSess
 
-    return OrdFrm(initial= OrdSess(request).sess)
+    return OrdFrm(initial=OrdSess(request).sess)
 
 
 class OrdFrm(forms.Form):

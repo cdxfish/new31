@@ -86,10 +86,10 @@ def logcsSub(request):
 
     messages.success(request, u'编辑成功: %s' % sn)
 
-    CartSess(self.request).clear()
-    LogcSess(self.request).clear()
-    OrdSess(self.request).clear()
-    FncSess(self.request).clear()
+    CartSess(request).clear()
+    LogcSess(request).clear()
+    OrdSess(request).clear()
+    FncSess(request).clear()
 
     return rdrRange(reverse('logistics:logcs'), LogcSess(request).sess['date'], sn)
 
