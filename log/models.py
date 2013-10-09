@@ -23,7 +23,7 @@ class OrdLog(models.Model):
     chcs = tuple((i[0],i[1]) for i in Element.pPath + Element.nPath)
 
     ord = models.ForeignKey(Ord, verbose_name=u'订单')
-    user = models.ForeignKey(User, verbose_name=u'用户')
+    user = models.ForeignKey(User, verbose_name=u'用户', blank=True, null=True)
     act = models.CharField(u'动作', max_length=60, choices=chcs)
     time = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True, editable=False)
 

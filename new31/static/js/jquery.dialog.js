@@ -51,26 +51,26 @@
 
             },
             maskLayer: function() {
+                var self = this;
                 $('body').append('<div id="dialog"><div id="maskLayer"></div><div id="floatLayer"></div></div>');
-                $('#dialog').css($.dialog.css.dialog).css({
+                $(self.id).css(self.css.dialog).css({
                     'height': $(document).height()
                 });
-                $('#maskLayer').css($.dialog.css.maskLayer);
-                $('#floatLayer').css($.dialog.css.floatLayer);
+                $('#maskLayer').css(self.css.maskLayer);
+                $('#floatLayer').css(self.css.floatLayer);
 
-                return this;
+                return self;
             },
             close: function() {
-                $("#dialog").hide();
+                $(this.id).hide();
                 return this;
             },
             closeBtn: function() {
-                $('.close').live('click',
-
-                function() {
-                    $.dialog.close();
-                });
-                return this;
+                var self = this;
+                $(document).on('click', '.close', function(){
+                    self.close();
+                })
+                return self;
             },
             show: function(h, obj) {
                 var cssObj = obj ? obj : {};
@@ -99,7 +99,7 @@
 
                     $("#floatLayer").css(cssObj);
 
-                    $.dialog.center();
+                    this.center();
 
                 }
 
