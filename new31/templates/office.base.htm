@@ -9,11 +9,13 @@
     <link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico" type="image/x-icon" />
     <link href="{{ STATIC_URL }}office/css/style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.zebra_datepicker.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.debug.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.jgd.dropdown.min.css" />
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.zebra_datepicker.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.dialog.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.debug.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jgd.dropdown.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}office/js/base.js"></script>
     <script type="text/javascript">
@@ -32,7 +34,7 @@
     <ul id="navMenu">
       <li><a href="{% url 'shop:shop' %}" id="showNav"></a></li>
       <li>
-        <a href="{% url 'order:ords' %}" class="nav">订单管理</a>
+        <a href="{% url 'order:ords' %}" class="nav" title="订单管理">订单管理</a>
         <div class="messagePop" style="display:none;">
           <ul>
             <li><a href="{% url 'order:ords' %}">订单</a></li>
@@ -146,8 +148,6 @@
         </ul>
         <span id="adminName">{{ request.user.username }} [ {% if request.user.is_superuser %}超级管理员{% else %}普通管理{% endif %} ]</span>
     </div>
-        <div class="pWhite">
-
     <div id="content">
 {% if messages %}
         <ul class="messagelist">
@@ -158,17 +158,18 @@
 {% endif %}
 {% if request.domElement.sub_set %}
         <div id="tool">
-          <ul class="action">
+            <ul class="action">
 {% for i in request.domElement.sub_set %}
-              <li><a href="{% url i.0 %}" class="button">{{ i.1 }}</a></li>
+                <li><a href="{% url i.0 %}" class="button">{{ i.1 }}</a></li>
 {% endfor %}
-          </ul>
+            </ul>
         </div>
 {% endif %}
 {% block content %}{% endblock %}
     </div>
-      <div id="footer">
-        <p>版权所有 &copy; 2012-2013 leiddx，并保留所有权利。</p>
-      </div>
+    <div id="footer">
+      <p>版权所有 &copy; 2012-2013 leiddx，并保留所有权利。</p>
+    </div>
+<!-- <div id="area-info" style="display: block;"><p class="item debug" style="left: 0px; opacity: 1;"><i class="icon white icon-comment"></i>Debug: 当前页未插入统计代码。</p><p class="item debug" style="left: 0px; opacity: 1;"><i class="icon white icon-comment"></i>Debug: 用户权限[会员]。</p><p class="item debug" style="left: 0px; opacity: 1;"><i class="icon white icon-comment"></i>Debug: [$.fn.card()]不存在于舞台上的非法元素。</p><p class="item debug" style="left: 0px; opacity: 1;"><i class="icon white icon-comment"></i>Debug: 系统加载完毕于<span class="ping" style="color:rgb(0%,100%,0%); margin:0 4px;">350ms</span>。</p><p class="item debug" style="left: 0px; opacity: 1;"><i class="icon white icon-comment"></i>Debug: [$.exe()]不存在的非法参数[third]。</p></div> -->
 </body>
 </html>
