@@ -9,7 +9,6 @@
  *
  */
 (function($) {
-    $('body').append('<div id="area-info" style="display: block;"></div><div id="area-window" style="display: block;"></div>');
 
     $.fn.hoverInfo = function(param, callback) {
         var func = {
@@ -23,6 +22,53 @@
             })
         })
     };
+
+    $.debug = function() {
+        var self = arguments.callee
+        self.id = '#debug'
+
+        return {
+            css: {},
+            success: function() {},
+            error: function() {},
+            warning: function() {},
+            debug: function() {},
+            info: function() {},
+            show: function() {},
+            ready: function(self) {
+                $(document).ready(function() {
+                    $('body').append('<div id="' + self.id.slice(1) + '"></div>')
+                    $(self.id).hide();
+                })
+                return self;
+            }(self)
+        }
+
+    }()
+
+
+    // $.debug = {
+    //     id: '#debug',
+    //     css: {
+    //     },
+    //     success: function() {},
+    //     error: function() {},
+    //     warning: function() {},
+    //     debug: function() {},
+    //     info: function() {},
+    //     show: function() {
+    //     },
+    //     ready: function(self) {
+    //         console.dir(self);
+    //         // var self = this;
+    //         // $(document).ready(function() {
+    //         //     $('body').append('<div id="'+ self.id.slice(1) +'"></div>')
+    //         //     $(self.id).hide();
+    //         // })
+    //         return self;
+    //     }($.debug),
+    //     msg: function() {}
+    // }
     $.info = function(para, callback) {
         var func = {
             name: '$.info()',
