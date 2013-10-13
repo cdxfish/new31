@@ -123,8 +123,8 @@
                 return this.show(this.css.debug, text, func);
             },
             show: function(css, text, func) {
-                var wrapper = $(this.id);
-                var item = wrapper.append('<p>' + text + '</p>').show().children('p:last').css($.extend(this.css.item, css));
+                var item = $('<p>').text(text).css($.extend(this.css.item, css));
+                var wrapper = $(this.id).append(item).show();
                 var w = item.width();
 
                 item.one('mouseover', function() {
@@ -158,8 +158,8 @@
             ready: function() {
                 var self = this;
                 $(document).ready(function() {
-                    $('body').append('<div id="' + self.id.slice(1) + '"></div>')
-                    $(self.id).css(self.css.wrapper).hide();
+
+                    $('body').append($('<div>').attr('id', self.id.slice(1)).css(self.css.wrapper).hide());
                 })
                 return self;
             }
