@@ -42,10 +42,12 @@ header,footer,article,aside,section,nav,menu,hgroup{display:block;margin:0;paddi
 .mBottom50{margin-bottom:50px}
 .mBottom30{margin-bottom:30px}
 .mBottom10{margin-bottom:10px}
-.lBottom50{margin-left:50px}
-.lBottom30{margin-left:30px}
-.lBottom10{margin-left:10px}
-.rlPadding60{padding:0 60px;}
+.lMargin50{margin-left:50px}
+.lMargin40{margin-left:40px}
+.lMargin30{margin-left:30px}
+.lMargin10{margin-left:10px}
+.lrPadding10{padding:0 5px;}
+.lrPadding30{padding:0 60px;}
 .bLine{border:solid rgb(229, 229, 229);border-width:0 0 1px 0;}
 .sTable tr td{padding:0 10px}
 .sBtn{height:25px;line-height:25px;padding:0 8px;font-size:11px;}
@@ -240,9 +242,16 @@ header,footer,article,aside,section,nav,menu,hgroup{display:block;margin:0;paddi
 .other a{padding:3px 5px 3px 0;color:#89706D}
 .other span{color:#89706D}
 .footerLayer{border-radius:0 0 10px 10px;background:#FFF;padding:15px;z-index:999;box-shadow:0px 3px 3px #A7A3A3;}
-.pWhite{background-color:#FFFFFF;border:1px solid #d9d9d9;padding:35px;margin:0 0 30px 0;}
-.pWhite h3{font-family:'Microsoft Yahei';padding:10px 0;}
-.pWhite p{line-height:30px;}
+#cart table{margin:25px 0 25px 0;}
+#cart table tr td{padding:7px;line-height:26px;}
+.pWhite{background-color:#FFFFFF;border:1px solid #d9d9d9;padding:10px;margin:0 0 30px 0;}
+.pWhite h1{font-family:'Microsoft Yahei';}
+.pWhite h2{font-family:'Microsoft Yahei';padding:20px 0 20px 20px;}
+.pWhite h3{font-family:'Microsoft Yahei';padding:20px 0 20px 30px;}
+.pWhite p{line-height:24px;padding:0 0 0 40px}
+.pWhite ul li{margin:0 0 0 40px;line-height: 24px;}
+.pWhite table.ml40{margin:0 0 0 40px}
+.pWhite table.ml40 tr td{padding:0 10px}
 #redirectionMsg{font-size:8px;color:#999;}
 .minus, .plus{cursor:pointer;font-size:20px;font-weight:bold;vertical-align:bottom;}
 .backToTop{width:50px;height:50px;color:#FFF;font-size:12px;text-align:center;position:fixed;_position:absolute;right:20px;bottom:60px;_bottom:"auto";cursor:pointer;background:url(/static/images/back_top.png) 0 0 no-repeat;opacity:.6;filter:Alpha(opacity=60);z-index:1000;}

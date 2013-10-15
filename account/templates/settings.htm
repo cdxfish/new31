@@ -4,21 +4,27 @@
     <div class="subMenu">
         <h4>设置</h4>
         <ul>
-            <li><a href="{% url 'settings' %}" class="select">基本资料</a></li>
-            <li><a href="{% url 'changepwd' %}">密码</a></li>
+            <li><a href="{% url 'account:settings' %}" class="select">基本资料</a></li>
+            <li><a href="{% url 'account:changepwd' %}">密码</a></li>
         </ul>
     </div>
 {% endblock %}
 
 {% block content %}
         <div class="pWhite">
-            <form action="{% url 'saveSet' %}" method="post">
-{% for i in frm %}
+            <form action="{% url 'account:saveSet' %}" method="post">
                 <div class="box">
-                    <label>{{ i.label }}：</label>
-                    <p>{{ i }}</p>
+                    <label>{{ frm.sex.label }}：</label>
+                    <p>{{ frm.sex }}</p>
                 </div>
-{% endfor %}
+                <div class="box">
+                    <label>{{ frm.mon.label }}：</label>
+                    <p>{{ frm.mon }}</p>
+                </div>
+                <div class="box">
+                    <label>{{ frm.day.label }}：</label>
+                    <p>{{ frm.day }}</p>
+                </div>
                 <div class="btnBox">
     {% csrf_token %}
                     <input type="submit" class="btnG bBtn" value="保存" />

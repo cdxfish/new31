@@ -156,7 +156,7 @@ APPS = {
     'signtime':'',
     'area':'',
     'tag':'',
-    # 'search':'',
+    'message':'',
     'ajax':'',
     'office':'',
     'spec':'',
@@ -167,6 +167,7 @@ APPS = {
     'upload':'',
     'print':'',
     'bom':'',
+    'about':'',
     }
 
 
@@ -220,7 +221,6 @@ if not 'SERVER_SOFTWARE' in os.environ:
     'INTERCEPT_REDIRECTS': False,
 }
 
-
 INSTALLED_APPS = tuple(djangoAPPS)
 
 MIDDLEWARE_CLASSES = tuple(djangoMidClass)
@@ -231,6 +231,8 @@ SESSION_COOKIE_AGE= 60 * 60 * 12
 # SESSION_COOKIE_NAME = 'new31'
 # SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # SESSION_COOKIE_DOMAIN = 'www.31kecake.com'
+
+# MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

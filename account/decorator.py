@@ -12,7 +12,7 @@ def loginDr(func):
     def _func(request, *args, **kwargs):
         if request.user.is_active:
             
-            return func(request)
+            return func(request, *args, **kwargs)
         else:
             return rdrtLogin(request, *args, **kwargs)
 

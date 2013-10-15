@@ -8,6 +8,7 @@
 
 {% block content %}
         <div class="pWhite">
+            <div id="cart">
             <form name="toCart" method="post" action="{% url 'cart:cart' %}">
                 <table width="100%" cellpadding="3" class="mBottom50">
                     <tr>
@@ -61,13 +62,14 @@
                     </tr>
                 </table>
             </form>
+            </div>
             <h3>小提示：</h3>
             <p>蓝圈内为免费配送范围，超出免费配送范围须加收10元，收费配送范围为红圈以内蓝圈以外。</p>
-            <p><br /></p>
+            <p>&nbsp;</p>
             <p><img src="{{ STATIC_URL }}images/delivery_areas.jpg" /></p>
             <p><br /></p>
             <p>蛋糕规格及免费配送餐具：</p>
-            <table class="sTable">
+            <table class="ml40">
                 <tr>
                     <td>1.0磅：约14×14(cm)</td>
                     <td>适合2-3人食用</td>
