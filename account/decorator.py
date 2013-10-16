@@ -6,7 +6,7 @@ from functools import wraps
 # Create your decorator here.
 
 
-# 订单提交类提示用装饰器
+# 登录验证装饰器
 def loginDr(func):
     @wraps(func)
     def _func(request, *args, **kwargs):

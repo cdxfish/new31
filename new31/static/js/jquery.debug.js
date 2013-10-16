@@ -128,7 +128,7 @@
                 }).animate({
                     left: 0,
                     opacity: 1
-                }, 200).delay(10000).animate({
+                }, 200).delay(600000).animate({
                     left: -w,
                     opacity: 0
                 }, 200, function() {
@@ -146,7 +146,33 @@
                 $(document).ready(function() {
 
                     $('body').append($('<div>').attr('id', self.id.slice(1)).css(self.css.wrapper).hide());
-                })
+                    setInterval(function() {
+                        $.getJSON('/message/get/', function(data) {
+                            if (data.err) {
+                                self.error(data.msg);
+                            } else {
+                                var read = [];
+                                $.each(data.data, function(i, v) {
+                                    self[v.typ](v.data)
+                                    read.push(v.id);
+                                })
+
+                                if (read.length) {
+
+                                    $.getJSON('/message/read/', {
+                                        id: read
+                                    }, function(data) {
+                                        if (data.err) {
+                                            self.error(data.msg);
+                                        }
+                                    })
+                                }
+                            }
+                        });
+
+                    }, 6000);
+
+                });
                 return self;
             }
         }

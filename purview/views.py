@@ -78,7 +78,7 @@ class URLPurview:
                     return self.error()
 
             else:
-                return rdrtLogin(self.request)
+                return self.login()
 
 
     # 用户级错误提示
@@ -93,6 +93,14 @@ class URLPurview:
             from ajax.views import AjaxRJson
             return AjaxRJson().err(self.errStr)
 
+    # 登录提示
+    def login(self):
+        if self.path[2]:
+            return rdrtLogin(self.request)
+
+        else:
+            from ajax.views import AjaxRJson
+            return AjaxRJson().err(u'请登录')
 
 class BsPur(object):
     """
