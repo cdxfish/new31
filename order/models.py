@@ -1,10 +1,6 @@
 #coding:utf-8
 from django.db import models
 from django.contrib.auth.models import User
-from item.models import *
-from discount.models import *
-from new31.func import *
-
 # Create your models here.
 
 class ordManager(models.Manager):
@@ -22,7 +18,6 @@ class ordManager(models.Manager):
 
 
     def saveOrd(self, obj, request):
-        from django.contrib.auth.models import User
         from views import OrdSess
         
         o = OrdSess(request).sess
