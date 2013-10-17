@@ -153,7 +153,7 @@
                             } else {
                                 var read = [];
                                 $.each(data.data, function(i, v) {
-                                    self[v.typ](v.data)
+                                    self[v.typ](v.time + '： ' + v.data)
                                     read.push(v.id);
                                 })
 

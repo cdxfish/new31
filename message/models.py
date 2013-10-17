@@ -6,16 +6,16 @@ import json
 
 class msgManager(models.Manager):
     
-    def push(self, msg, user):
+    def push(self, typ, data, user):
 
-        Msg.objects.create(_data=json.dumps(msg), user=user)
+        Msg.objects.create(typ=typ, _data=json.dumps(data), user=user)
 
         return self
 
-    def pushs(self, msg, *role):
+    def pushs(self, typ, data, *role):
 
         for i in User.objects.filter(role__role__in=list(role), role__onl=True):
-            Msg.objects.create(_data=json.dumps(msg), user=i)
+            Msg.objects.create(typ=typ, _data=json.dumps(data), user=i)
 
         return self
 
@@ -29,16 +29,20 @@ class msgManager(models.Manager):
         else:
             return self.filter(user=user, read=False)
 
-    def success(self):
-        pass
-    def debug(self):
-        pass
-    def info(self):
-        pass
-    def warning(self):
-        pass
-    def error(self):
-        pass
+    def warning(self, data, *role):
+        return self.pushs(0, data, *role)
+
+    def error(self, data, *role):
+        return self.pushs(1, data, *role)
+
+    def success(self, data, *role):
+        return self.pushs(2, data, *role)
+
+    def info(self, data, *role):
+        return self.pushs(3, data, *role)
+
+    def debug(self, data, *role):
+        return self.pushs(4, data, *role)
 
 
 
