@@ -80,7 +80,7 @@
 {% for i in o.ordlog_set.all %}
                 <tr align="center">
                     <td>{{ i.user.last_name }}{{ i.user.first_name }}</td>
-                    <td>{{ i.time|date:"Y-m-d H:i" }} </td>
+                    <td>{{ i.time|date:"Y-m-d H:i" }}</td>
                     <td>{{ i.get_act_display }}</td>
                 </tr>
 {% endfor %}

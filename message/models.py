@@ -6,16 +6,17 @@ import json
 
 class msgManager(models.Manager):
     
-    def push(self, typ, data, user):
+    def pushToUser(self, typ, data, user):
 
         Msg.objects.create(typ=typ, _data=json.dumps(data), user=user)
 
         return self
 
-    def pushs(self, typ, data, *role):
+    def push(self, typ, data, path):
+        from purview.models import Element
 
-        for i in User.objects.filter(role__role__in=list(role), role__onl=True):
-            Msg.objects.create(typ=typ, _data=json.dumps(data), user=i)
+        for i in Element.objects.getUserByPath(path=path):
+            self.pushToUser(typ=typ, data=data, user=i)
 
         return self
 
@@ -29,20 +30,20 @@ class msgManager(models.Manager):
         else:
             return self.filter(user=user, read=False)
 
-    def warning(self, data, *role):
-        return self.pushs(0, data, *role)
+    def warning(self, data, path):
+        return self.push(0, data, path)
 
-    def error(self, data, *role):
-        return self.pushs(1, data, *role)
+    def error(self, data, path):
+        return self.push(1, data, path)
 
-    def success(self, data, *role):
-        return self.pushs(2, data, *role)
+    def success(self, data, path):
+        return self.push(2, data, path)
 
-    def info(self, data, *role):
-        return self.pushs(3, data, *role)
+    def info(self, data, path):
+        return self.push(3, data, path)
 
-    def debug(self, data, *role):
-        return self.pushs(4, data, *role)
+    def debug(self, data, path):
+        return self.push(4, data, path)
 
 
 

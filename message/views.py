@@ -2,7 +2,8 @@
 u"""消息"""
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from new31.cls import AjaxRJson
+from django.utils import dateformat
+from new31.cls import AjaxRJson, UTC
 from decorator import readDr
 # Create your views here.
 
@@ -10,7 +11,7 @@ def get(request):
     u"""消息推送"""
     from models import Msg
 
-    return AjaxRJson().dumps([ {'id':i.id, 'data':i.data(), 'typ': i.get_typ_display(), 'time': '%s' % i.time.strftime('%Y-%m-%d %H:%M:%S')} for i in Msg.objects.get(request.user) ])
+    return AjaxRJson().dumps([ {'id':i.id, 'data':i.data(), 'typ': i.get_typ_display(), 'time': '%s' % i.time.astimezone(UTC(8)).strftime('%Y-%m-%d %H:%M:%S')} for i in Msg.objects.get(request.user) ])
 
 @readDr
 def read(request):

@@ -15,6 +15,8 @@ from cart.decorator import checkCartDr
 from decorator import ordDr, subMsg, subDr, modifyDr, ordSubDr
 from logistics.decorator import chLogcsDr
 from finance.decorator import chFncDr
+from message.decorator import msgDr
+from message.models import Msg
 from decimal import Decimal
 import time, datetime, re
 
@@ -60,6 +62,11 @@ def submitOrd(request):
     else:
         messages.success(request, u'订单提交成功: %s' % o.sn)
 
+        if o.o['sn']:
+            Msg.objects.success(u'订单编辑完成: %s' % o.sn, request.path)
+        else:
+            Msg.objects.success(u'新订单已提交: %s' % o.sn, request.path)
+
         return rdrRange(reverse('order:ords'), '%s' % datetime.date.today(), o.sn)
 
 def newOrdFrm(request):
@@ -87,6 +94,8 @@ def editOrdFrm(request):
     return render_to_response('orderneworedit.htm', locals(), context_instance=RequestContext(request))
 
 @ordDr(1)
+@ordLogDr
+@msgDr
 def modifyOrd(request, sn, s):
     u"""订单状态修改"""
     from models import Ord
@@ -113,9 +122,10 @@ def copyOrd(request, sn):
 
     return HttpResponseRedirect(reverse('order:newOrdFrm'))
 
-@ordLogDr
 @modifyDr(1)
 @ordDr()
+@ordLogDr
+@msgDr
 def editOrd(request, sn, i):
     u"""订单状态修改-> 订单编辑"""
     from models import Ord
@@ -125,19 +135,16 @@ def editOrd(request, sn, i):
 
     return HttpResponseRedirect(reverse('order:editOrdFrm'))
 
-@ordLogDr
 def confirmOrd(request, sn):
     u"""订单状态修改-> 订单确认"""
 
     return modifyOrd(request, sn, 2)
 
-@ordLogDr
 def nullOrd(request, sn):
     u"""订单状态修改-> 订单无效"""
 
     return modifyOrd(request, sn, 3)
 
-@ordLogDr
 def stopOrd(request, sn):
     u"""订单状态修改-> 订单止单"""
 
@@ -431,7 +438,7 @@ class OrdSub(object):
         sExpiryDate = self.request.session.get_expiry_date()
         sCount = (sExpiryDate.hour * sExpiryDate.minute * sExpiryDate.second ) % 100
 
-        return int('%d%d%06d%02d' % (t.tm_year, t.tm_yday, tCount, sCount))
+        return int('%04d%03d%06d%02d' % (t.tm_year, t.tm_yday, tCount, sCount))
 
 
     # 锁定新订单进行订单号占位
@@ -506,13 +513,11 @@ class OrdSub(object):
 
         return self
 
-
     # 删除新订单
     def delNewOrd(self):
         self.ord.delete()
 
         return self
-
 
     # 订单提交完成
     @subMsg(u'订单提交无法完成。')

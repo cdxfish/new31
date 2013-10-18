@@ -47,6 +47,18 @@ class elementManager(models.Manager):
         return self.select_related().filter(onl=True)
 
 
+    def getUserByPath(self, path):
+        from django.core.urlresolvers import resolve
+        users = []
+        for i in self.select_related().get(path=resolve(path).view_name).privilege_set.all():
+            for ii in i.role_set.all():
+                for iii in ii.user.all():
+                    if not iii in users:
+                        users.append(iii) 
+
+        return users
+
+
 class Element(models.Model):
     from django.conf import settings
     from new31.func import Patterns, resolves

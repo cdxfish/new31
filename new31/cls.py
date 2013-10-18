@@ -1,6 +1,6 @@
 #coding:utf-8
 from django.http import HttpResponse
-import json
+import json, datetime
 
 class BsSess(object):
     """
@@ -84,3 +84,24 @@ class AjaxRJson:
         self.error = True
 
         return self.dumps()
+
+
+
+
+"""
+tzinfo是关于时区信息的类
+tzinfo是一个抽象类，所以不能直接被实例化
+"""
+class UTC(datetime.tzinfo):
+    """UTC"""
+    def __init__(self,offset = 0):
+        self._offset = offset
+
+    def utcoffset(self, dt):
+        return datetime.timedelta(hours=self._offset)
+
+    def tzname(self, dt):
+        return "UTC +%s" % self._offset
+
+    def dst(self, dt):
+        return datetime.timedelta(hours=self._offset)

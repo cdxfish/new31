@@ -144,33 +144,7 @@
             ready: function() {
                 var self = this;
                 $(document).ready(function() {
-
                     $('body').append($('<div>').attr('id', self.id.slice(1)).css(self.css.wrapper).hide());
-                    setInterval(function() {
-                        $.getJSON('/message/get/', function(data) {
-                            if (data.err) {
-                                self.error(data.msg);
-                            } else {
-                                var read = [];
-                                $.each(data.data, function(i, v) {
-                                    self[v.typ](v.time + '： ' + v.data)
-                                    read.push(v.id);
-                                })
-
-                                if (read.length) {
-
-                                    $.getJSON('/message/read/', {
-                                        id: read
-                                    }, function(data) {
-                                        if (data.err) {
-                                            self.error(data.msg);
-                                        }
-                                    })
-                                }
-                            }
-                        });
-
-                    }, 6000);
 
                 });
                 return self;
