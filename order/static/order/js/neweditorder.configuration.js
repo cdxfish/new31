@@ -7,7 +7,7 @@ aeog = {
     a: function() {
         var self = this;
         //添加商品
-        $("#addNewGoods").live("click",
+        $(document).on("click", '#addNewGoods',
 
         function() {
 
@@ -34,7 +34,7 @@ aeog = {
         var self = this;
 
         // 搜索商品
-        $("#goodsSearch").live('click',
+        $(document).on('click', '#goodsSearch',
 
         function() {
 
@@ -54,7 +54,7 @@ aeog = {
         html += aeog.sgBtn();
 
         html += '        <form action="/order/additem/" method="POST">  \r\n';
-        html += '        <table width="100%" cellpadding="3" cellspacing="1" id="searchGoodslist" class="sortTable">  \r\n';
+        html += '        <table width="100%" cellpadding="3" cellspacing="1" id="searchGoodslist">  \r\n';
         html += '        <tr>  \r\n';
         html += '          <th width="20px"></th>  \r\n';
         html += '          <th>商品名称</th>  \r\n';

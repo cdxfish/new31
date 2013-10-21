@@ -53,7 +53,7 @@ def sort(i):
     return i
 
 
-def rdrRange(url,date,sn):
+def rdrRange(url, date, sn):
     d = datetime.datetime.strptime(date, "%Y-%m-%d")
     s = d - datetime.timedelta(days=1)
     e = d + datetime.timedelta(days=1)

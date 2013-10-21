@@ -10,7 +10,9 @@ from new31.decorator import postDr
 from new31.cls import AjaxRJson
 from ajax.decorator import ajaxMsg
 from log.decorator import ordLogDr
-from decorator import logcsDr, dManDr, modifyLogcsDr, aLogcsDr
+from message.decorator import msgDr
+from message.models import Msg
+from decorator import logcsDr, aLogcsDr
 from new31.func import keFrmt, rdrtBck, rdrRange
 import time,datetime
 
@@ -84,7 +86,8 @@ def logcsSub(request):
 
     Logcs.objects.saveLogcs(logcs.ord, request)
 
-    messages.success(request, u'编辑成功: %s' % sn)
+    messages.success(request, u'物流编辑成功: %s' % sn)
+    Msg.objects.success(u'物流编辑成功', {'sn': sn}, request.path)
 
     CartSess(request).clear()
     LogcSess(request).clear()
@@ -93,12 +96,15 @@ def logcsSub(request):
 
     return rdrRange(reverse('logistics:logcs'), LogcSess(request).sess['date'], sn)
 
-@logcsDr(1)
+
 # @dManDr
+@ordLogDr
 def modifyLogcs(request, sn, s):
     u"""物流状态修改"""
     from models import Logcs
     from purview.models import Role
+
+    s = int(s)
     l = Logcs.objects.get(ord__sn=sn)
     
     _l = Logcs.objects.cStatus(sn, s)
@@ -114,22 +120,22 @@ def modifyLogcs(request, sn, s):
         'obj': 'logcs'
         })
 
-@ordLogDr
-def logcsUnsent(request, sn):
+@logcsDr(1)
+@msgDr
+def logcsUnsent(request, sn, s):
     u"""物流状态修改-> 物流未发"""
 
-    return modifyLogcs(request, sn, 0)
+    return modifyLogcs(request=request, sn=sn, s=s)
 
-@ordLogDr
-@modifyLogcsDr(1)
 @logcsDr()
-def logcsEdit(request, sn, i):
+@msgDr
+def logcsEdit(request, sn, s):
     u"""物流状态修改-> 物流编辑"""
     from models import Logcs
     from order.views import OrdSess
     from finance.views import FncSess
 
-    Logcs.objects.cStatus(sn, i)
+    modifyLogcs(request=request, sn=sn, s=s)
     LogcSess(request).copy(sn)
     FncSess(request).copy(sn)
 
@@ -137,26 +143,30 @@ def logcsEdit(request, sn, i):
     
     return HttpResponseRedirect(reverse('logistics:logcsEditFrm'))
 
-@ordLogDr
-def logcsShip(request, sn):
+@logcsDr(1)
+@msgDr
+def logcsShip(request, sn, s):
     u"""物流状态修改-> 物流已发"""
 
-    return modifyLogcs(request, sn, 2)
+    return modifyLogcs(request=request, sn=sn, s=s)
 
-@ordLogDr
-def logcsRefused(request, sn):
+@logcsDr(1)
+@msgDr
+def logcsRefused(request, sn, s):
     u"""物流状态修改-> 物流拒签"""
 
-    return modifyLogcs(request, sn, 3)
+    return modifyLogcs(request=request, sn=sn, s=s)
 
-@ordLogDr
-def logcsSign(request, sn):
+@logcsDr(1)
+@msgDr
+def logcsSign(request, sn, s):
     u"""物流状态修改-> 物流已签"""
 
-    return modifyLogcs(request, sn, 4)
+    return modifyLogcs(request=request, sn=sn, s=s)
 
-@ordLogDr
-def logcsStop(request, sn):
+@logcsDr(1)
+@msgDr
+def logcsStop(request, sn, s):
     u"""物流状态修改-> 物流止送"""
     # from models import Logcs
     # from order.models import Ord
@@ -168,28 +178,54 @@ def logcsStop(request, sn):
     # Fnc.objects.stop(sn)
     Pro.objects.stop(sn)
 
-    return modifyLogcs(request, sn, 5)
+    return modifyLogcs(request=request, sn=sn, s=s)
 
-@ordLogDr
-@ajaxMsg('无法修改表单数据')
+# @ajaxMsg('无法修改表单数据')
 @aLogcsDr
-def cDman(logcs, value):
+@ordLogDr
+@msgDr
+def cDman(request, sn, user):
     u"""ajax-> 修改物流师傅"""
-    if value:
+    from purview.models import Role
+    from models import Logcs
+
+    users = Role.objects.get(role=1).user.all()
+    logcs = Logcs.objects.get(ord=sn)
+
+    if user:
         from django.contrib.auth.models import User
 
-        user = User.objects.get(id=value)
-        logcs.dman = user
+        user = User.objects.get(id=user)
+
+        if user in users:
+            logcs.dman = user
+        else:
+            return  AjaxRJson().err(u'无法修改物流师傅')
     else:
         logcs.dman = None
 
-@ordLogDr
+    logcs.save()
+
+    return AjaxRJson().dumps()
+
 @ajaxMsg('无法修改表单数据')
 @aLogcsDr
-def cAdv(logcs, value):
+@ordLogDr
+@msgDr
+def cAdv(request, sn, value):
     u"""ajax-> 修改物流偏移量"""
+    from models import Logcs
+    sn = int(sn)
+    value = int(value)
+    advs = [i[0] for i in Logcs.advs]
+    if not value in advs:
+        return  AjaxRJson().err(u'无法修改修改物流偏移量')
 
+    logcs = Logcs.objects.get(ord=sn)
     logcs.advance = value
+    logcs.save()
+
+    return AjaxRJson().dumps()
 
 
 @ajaxMsg('无法填写表单')

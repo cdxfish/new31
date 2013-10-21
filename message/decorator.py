@@ -20,11 +20,10 @@ def readDr(func):
 
 # 消息推送装饰器
 def msgDr(func):
-    doc = func.__doc__
     @wraps(func)
     def __func(request, *args, **kwargs):
         from models import Msg
-        Msg.objects.success(u'%s：%s' % (doc, args[0]), request.path)
+        Msg.objects.success(u'%s' % func.__doc__, {'sn': kwargs['sn']}, request.path)
 
         return func(request, *args, **kwargs)
 

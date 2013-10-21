@@ -34,7 +34,7 @@ class roleManager(models.Manager):
 
     def getAjaxAct(self, l, sn):
         
-        return tuple( ( i[0], i[1], i[2].replace(':',''), reverse(i[2], kwargs={'sn': sn}) ) for i in l )
+        return tuple( ( i[0], i[1], i[2].replace(':',''), reverse(i[2], kwargs={'sn': sn, 's': i[0]}) ) for i in l )
 
 
 class elementManager(models.Manager):

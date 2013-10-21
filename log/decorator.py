@@ -9,7 +9,7 @@ def ordLogDr(func):
         from order.models import Ord
         from models import OrdLog
 
-        OrdLog.objects.saveLog(Ord.objects.get(sn=args[0]), request)
+        OrdLog.objects.saveLog(Ord.objects.get(sn=kwargs['sn']), request)
 
         return func(request, *args, **kwargs)
 

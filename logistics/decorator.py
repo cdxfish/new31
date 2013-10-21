@@ -11,15 +11,17 @@ def logcsDr(typ=0):
         @wraps(func)
         def __func(request, *args, **kwargs):
             from models import Logcs
+            sn = kwargs['sn']
+            s = int(kwargs['s'])
 
-            act = Logcs.objects.getActTuple(Logcs.objects.get(ord__sn=args[0]).status)
+            act = Logcs.objects.getActTuple(Logcs.objects.get(ord__sn=sn).status)
 
-            if not args[1] in act:
+            if not s in act:
                 if typ:
 
-                    return AjaxRJson().err( u'%s - 无法%s' % (args[0], Logcs.chcs[args[1]][1]) )
+                    return AjaxRJson().err( u'%s - 无法%s' % (sn, Logcs.chcs[s][1]) )
                 else:
-                    messages.error(request, u'%s - 无法%s' % (args[0], Logcs.chcs[args[1]][1]))
+                    messages.error(request, u'%s - 无法%s' % (sn, Logcs.chcs[s][1]))
 
                     return rdrtBck(request)
 
@@ -30,57 +32,22 @@ def logcsDr(typ=0):
         return __func
     return _func
 
-
-# 订单提交类提示用装饰器(类内部使用)
-def modifyLogcsDr(i):
-    def _func(func):
-        @wraps(func)
-        def __func(request, *args, **kwargs):
-
-            return func(request, kwargs['sn'], i)
-
-        return __func
-    return _func
-
-
-# 物流师傅必选装饰器
-def dManDr(func):
-    @wraps(func)
-    def _func(request, *args, **kwargs):
-        from models import Logcs
-
-        if not Logcs.objects.get(ord__sn=args[0]).dman:
-
-            return AjaxRJson().err( u'请选择物流师傅')
-
-        else:
-
-            return func(request, *args, **kwargs)
-
-    return _func 
-
-
 # Ajax物流偏移量以及物流师傅选择装饰器
 def aLogcsDr(func):
     @wraps(func)
     def _func(request, *args, **kwargs):
         from models import Logcs
         from new31.cls import AjaxRJson
-
         
         sn = int(kwargs['sn'])
-        value = int(kwargs['id'])
 
         logcs = Logcs.objects.get(ord=sn)
 
         if logcs.status > 1:
             return AjaxRJson().err(u'无法修改表单数据')
 
-        func(logcs, value)
-
-        logcs.save()
-
-        return AjaxRJson().dumps({'sn': sn, 'value': value})
+        else:
+            return func(request, *args, **kwargs)
 
     return _func
 

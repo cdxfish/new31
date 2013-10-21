@@ -5,7 +5,7 @@ $(document).ready(function() {
 
 var cart = {
     itemNum: function() {
-        $('.iNum').live('change',
+        $(document).on('change', '.iNum',
 
         function() {
             var self = $(this);

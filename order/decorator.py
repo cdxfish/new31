@@ -12,34 +12,23 @@ def ordDr(typ=0):
         @wraps(func)
         def __func(request, *args, **kwargs):
             from order.models import Ord
-            sn = args[0]
+            sn = kwargs['sn']
+            s = int(kwargs['s'])
             order =  Ord.objects.get(sn=sn)
 
-            if not args[1] in Ord.objects.getActTuple(order.status):
+            if not s in Ord.objects.getActTuple(order.status):
 
                 if typ:
 
-                    return AjaxRJson().err( u'%s - 无法%s' % (args[0], Ord.chcs[args[1]][1]) )
+                    return AjaxRJson().err( u'%s - 无法%s' % (sn, Ord.chcs[s][1]) )
                 else:
-                    messages.error(request, u'%s - 无法%s' % (args[0], Ord.chcs[args[1]][1]))
+                    messages.error(request, u'%s - 无法%s' % (sn, Ord.chcs[s][1]))
 
                     return rdrtBck(request)
 
             else:
 
                 return func(request, *args, **kwargs)
-
-        return __func
-    return _func
-
-
-# 订单状态修改用装饰器
-def modifyDr(i):
-    def _func(func):
-        @wraps(func)
-        def __func(request, *args, **kwargs):
-
-            return func(request, kwargs['sn'], i)
 
         return __func
     return _func

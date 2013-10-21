@@ -14,7 +14,7 @@ class oprerateTag(template.Node):
         s = '<td nowrap="nowrap" align="center"><span class="oprt">'
         if value.action:
             for i in value.action:
-                s += '<a href="%s" class="button %s">%s</a>' % (reverse(i[2], kwargs={'sn': value.sn}), i[2].replace(':',''), i[1])
+                s += '<a href="%s" class="button %s">%s</a>' % (reverse(i[2], kwargs={'sn': value.sn, 's': i[0]}), i[2].replace(':',''), i[1])
         else:
             s += '&nbsp;' 
 

@@ -45,30 +45,30 @@ def modifyPro(request, sn, s):
         'obj': 'pro'
         })
 
-def nullPro(request, sn):
+def nullPro(request, sn, s):
     u"""生产状态修改-> 生产未产"""    
 
-    return modifyPro(request, sn, 0)
+    return modifyPro(request, sn, s)
     
-def requirePro(request, sn):
+def requirePro(request, sn, s):
     u"""生产状态修改-> 生产产求"""    
 
-    return modifyPro(request, sn, 1)
+    return modifyPro(request, sn, s)
     
-def duringPro(request, sn):
+def duringPro(request, sn, s):
     u"""生产状态修改-> 生产产中"""    
 
-    return modifyPro(request, sn, 2)
+    return modifyPro(request, sn, s)
 
-def refusePro(request, sn):
+def refusePro(request, sn, s):
     u"""生产状态修改-> 生产拒产"""    
 
-    return modifyPro(request, sn, 3)
+    return modifyPro(request, sn, s)
 
-def readyPro(request, sn):
+def readyPro(request, sn, s):
     u"""生产状态修改-> 生产已产"""    
 
-    return modifyPro(request, sn, 4)
+    return modifyPro(request, sn, s)
 
 
 from order.views import OrdSerch

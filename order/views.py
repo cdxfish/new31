@@ -12,7 +12,7 @@ from new31.cls import AjaxRJson
 from ajax.decorator import ajaxMsg
 from log.decorator import ordLogDr
 from cart.decorator import checkCartDr
-from decorator import ordDr, subMsg, subDr, modifyDr, ordSubDr
+from decorator import ordDr, subMsg, subDr, ordSubDr
 from logistics.decorator import chLogcsDr
 from finance.decorator import chFncDr
 from message.decorator import msgDr
@@ -63,11 +63,11 @@ def submitOrd(request):
         messages.success(request, u'订单提交成功: %s' % o.sn)
 
         if o.o['sn']:
-            Msg.objects.success(u'订单编辑完成: %s' % o.sn, request.path)
+            Msg.objects.success(u'订单编辑成功', {'sn': o.sn}, request.path)
         else:
-            Msg.objects.success(u'新订单已提交: %s' % o.sn, request.path)
+            Msg.objects.success(u'订单提交成功', {'sn': o.sn}, request.path)
 
-        return rdrRange(reverse('order:ords'), '%s' % datetime.date.today(), o.sn)
+    return rdrRange(reverse('order:ords'), '%s' % datetime.date.today(), o.sn)
 
 def newOrdFrm(request):
     u"""新单表单"""
@@ -93,14 +93,13 @@ def editOrdFrm(request):
 
     return render_to_response('orderneworedit.htm', locals(), context_instance=RequestContext(request))
 
-@ordDr(1)
 @ordLogDr
-@msgDr
 def modifyOrd(request, sn, s):
     u"""订单状态修改"""
     from models import Ord
     from purview.models import Role
 
+    s = int(s)
     o = Ord.objects.get(sn=sn)
     _o = Ord.objects.cStatus(sn, s)
 
@@ -116,39 +115,42 @@ def modifyOrd(request, sn, s):
         })
 
 
-def copyOrd(request, sn):
+def copyOrd(request, sn, s):
     u"""订单复制"""
     OrdSess(request).copy(int(sn))
 
     return HttpResponseRedirect(reverse('order:newOrdFrm'))
 
-@modifyDr(1)
 @ordDr()
-@ordLogDr
 @msgDr
-def editOrd(request, sn, i):
+def editOrd(request, sn, s):
     u"""订单状态修改-> 订单编辑"""
-    from models import Ord
-    Ord.objects.cStatus(sn, i)
+    modifyOrd(request=request, sn=sn, s=s)
 
     OrdSess(request).copy(sn)
 
     return HttpResponseRedirect(reverse('order:editOrdFrm'))
 
-def confirmOrd(request, sn):
+@ordDr(1)
+@msgDr
+def confirmOrd(request, sn, s):
     u"""订单状态修改-> 订单确认"""
 
-    return modifyOrd(request, sn, 2)
+    return modifyOrd(request=request, sn=sn, s=s)
 
-def nullOrd(request, sn):
+@ordDr(1)
+@msgDr
+def nullOrd(request, sn, s):
     u"""订单状态修改-> 订单无效"""
 
-    return modifyOrd(request, sn, 3)
+    return modifyOrd(request=request, sn=sn, s=s)
 
-def stopOrd(request, sn):
+@ordDr(1)
+@msgDr
+def stopOrd(request, sn, s):
     u"""订单状态修改-> 订单止单"""
 
-    return modifyOrd(request, sn, 4)
+    return modifyOrd(request=request, sn=sn, s=s)
 
 @postDr
 @rdrtBckDr('无法添加商品，部分商品已下架。')

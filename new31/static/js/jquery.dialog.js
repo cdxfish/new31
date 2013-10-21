@@ -67,7 +67,7 @@
             },
             closeBtn: function() {
                 var self = this;
-                $(document).on('click', '.close', function(){
+                $(document).on('click', '.close', function() {
                     self.close();
                 })
                 return self;
@@ -135,6 +135,7 @@
             },
 
             msg: function(msg, t, obj) {
+                var self = this;
                 var cssObj = obj ? obj : {
                     width: 220
                 };
@@ -143,7 +144,9 @@
 
                 this.show('<span class="message" style="text-align:center; width:220px">' + msg + '</span>', cssObj);
 
-                setTimeout(this.close, time);
+                setTimeout(function(){
+                    self.close();
+                }, time);
 
                 return this;
             },
@@ -168,12 +171,20 @@
             ajaxGET: function(url, func, obj) {
                 var self = this;
 
-                self.loading('努力加载中，请稍候')
-                $.getJSON(url, function(data) {
-                    self.bnMsg(data, func, obj ? obj : {
-                        width: 460
-                    })
-                })
+                self.loading('努力加载中，请稍候');
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    dataType: 'json',
+                    success: function(data) {
+                        self.bnMsg(data, func, obj ? obj : {
+                            width: 460
+                        });
+                    },
+                    error: function() {
+                        $.dialog.msg('加载出错，请稍候再试');
+                    }
+                });
             }
 
         }
@@ -183,21 +194,29 @@
 
     $.fn.extend({
         ajaxGET: function(url, func) {
-            $.dialog.loading('努力加载中，请稍候')
-            $.getJSON(url, function(data) {
+            $.dialog.loading('努力加载中，请稍候');
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: 'json',
+                success: function(data) {
+                    if (data.err) {
+                        $.dialog.msg(data.msg);
 
-                if (data.err) {
-                    $.dialog.msg(data.msg);
+                    } else {
+                        $.dialog.close();
 
-                } else {
-                    $.dialog.close();
+                        !! func && func(data)
 
-                    !! func && func(data)
-
+                    }
+                },
+                error: function() {
+                    $.dialog.msg('加载出错，请稍候再试');
                 }
             });
         }
-    })
+
+    });
 
 })(jQuery);
 

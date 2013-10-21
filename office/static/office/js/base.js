@@ -1,33 +1,22 @@
 // 置顶工具条
 $(document).ready(function() {
-    b.nav().odd('odd').odds().plugin().loadMsg();
+    b.nav().odd('odd').plugin().loadMsg();
 })
 
 b = {
     // 表格鼠标移入移出特效
     odd: function(c) {
-        $("table tr").live('mouseover',
+        $(document).on('click', '.oddbox', function(event) {
+            event.stopPropagation();
+        }).on('mouseover', 'table tr',
 
         function() {
             $(this).addClass(c);
-        }).live('mouseout',
+        }).on('mouseout', 'table tr',
 
         function() {
             $(this).removeClass(c);
-        });
-
-        return this;
-    },
-
-    odds: function() {
-
-        $('.oddbox').live('click',
-
-        function(event) {
-            event.stopPropagation();
-        });
-
-        $("table tr").live('click',
+        }).on('click', 'table tr',
 
         function() {
             var oddbox = $(this).find('.oddbox');
@@ -114,7 +103,7 @@ b = {
         return this;
     },
     act: function(func) {
-        $('.oprt a:not(.logisticslogcsEdit, .ordercopyOrd, .ordereditOrd)').live('click', function() {
+        $('.oprt').on('click', 'a:not(.logisticslogcsEdit, .ordercopyOrd, .ordereditOrd)', function() {
             var self = $(this);
             self.ajaxGET(self.attr('href'), function(data) {
                 var s = '';
@@ -148,30 +137,30 @@ b = {
     },
     loadMsg: function() {
         var load = function() {
-            $.getJSON('/message/get/', function(data) {
-                if (data.err) {
-                    $.debug.error(data.msg);
-                } else {
-                    var read = [];
-                    $.each(data.data, function(i, v) {
-                        $.debug[v.typ](v.time + '： ' + v.data)
-                        read.push(v.id);
-                    })
-
-                    if (read.length) {
-
-                        $.getJSON('/message/read/', {
-                            id: read
-                        }, function(data) {
-                            if (data.err) {
-                                $.debug.error(data.msg);
-                            }
+                $.getJSON('/message/get/', function(data) {
+                    if (data.err) {
+                        $.debug.error(data.msg);
+                    } else {
+                        var read = [];
+                        $.each(data.data, function(i, v) {
+                            $.debug[v.typ](v.time + '： ' + v.msg + ' [' + v.data.sn + ']')
+                            read.push(v.id);
                         })
-                    }
-                }
-            });
 
-        }
+                        if (read.length) {
+
+                            $.getJSON('/message/read/', {
+                                id: read
+                            }, function(data) {
+                                if (data.err) {
+                                    $.debug.error(data.msg);
+                                }
+                            })
+                        }
+                    }
+                });
+
+            }
         load();
         setInterval(load, 6000);
 

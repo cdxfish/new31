@@ -6,17 +6,17 @@ import json
 
 class msgManager(models.Manager):
     
-    def pushToUser(self, typ, data, user):
+    def pushToUser(self, typ, msg, data, user):
 
-        Msg.objects.create(typ=typ, _data=json.dumps(data), user=user)
+        Msg.objects.create(typ=typ, msg=msg, _data=json.dumps(data), user=user)
 
         return self
 
-    def push(self, typ, data, path):
+    def push(self, typ, msg, data, path):
         from purview.models import Element
 
         for i in Element.objects.getUserByPath(path=path):
-            self.pushToUser(typ=typ, data=data, user=i)
+            self.pushToUser(typ=typ, msg=msg, data=data, user=i)
 
         return self
 
@@ -30,20 +30,20 @@ class msgManager(models.Manager):
         else:
             return self.filter(user=user, read=False)
 
-    def warning(self, data, path):
-        return self.push(0, data, path)
+    def warning(self, msg, data, path):
+        return self.push(0, msg, data, path)
 
-    def error(self, data, path):
-        return self.push(1, data, path)
+    def error(self, msg, data, path):
+        return self.push(1, msg, data, path)
 
-    def success(self, data, path):
-        return self.push(2, data, path)
+    def success(self, msg, data, path):
+        return self.push(2, msg, data, path)
 
-    def info(self, data, path):
-        return self.push(3, data, path)
+    def info(self, msg, data, path):
+        return self.push(3, msg, data, path)
 
-    def debug(self, data, path):
-        return self.push(4, data, path)
+    def debug(self, msg, data, path):
+        return self.push(4, msg, data, path)
 
 
 
@@ -54,6 +54,7 @@ class Msg(models.Model):
     user = models.ForeignKey(User, verbose_name=u'用户')
     read = models.BooleanField(u'已读', default=False)
     _data = models.CharField(u'数据', max_length=1024)
+    msg = models.CharField(u'消息', max_length=1024)
     typ = models.SmallIntegerField(u'类型', default=0, choices=chcs)
     time = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True, editable=False)
 
@@ -64,7 +65,7 @@ class Msg(models.Model):
 
 
     def __unicode__(self):
-        return u"%s [ %s ] - %s" % (self.user, self.read, self._data)
+        return u"%s [ %s ] - %s" % (self.user, self.read, self.msg)
 
     class Meta:
         ordering = ['time']

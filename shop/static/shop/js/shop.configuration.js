@@ -97,12 +97,12 @@ var shop = {
         $('.pinStream img').each(function() {
             $(this).attr('src', $(this).attr('data-src')).attr('height', $(this).height()).attr('width', $(this).width());
         })
-        $(".pinStream a").live('mouseenter', function() {
+        $(".pinStream").on('mouseenter', 'a', function() {
             $(this).children('.floatInfo').stop().animate({
                 'bottom': '0px'
             }, 150);
         })
-        // .live('mouseleave',function () {
+        // .on('mouseleave', 'a', function () {
         //     $(this).children('.floatInfo').stop().animate({
         //         'bottom' : '-50px'
         //     }, 3000);

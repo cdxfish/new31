@@ -5,7 +5,7 @@ $(document).ready(function() {
 t = {
     like: function() {
 
-        $('.btnLike').live('click',
+        $(document).live('click', '.btnLike',
 
         function() {
             $(this).ajaxGET($(this).attr('href'), function(data) {
@@ -48,7 +48,8 @@ t = {
     },
     img: function() {
         $('.pinBox li img').each(function() {
-            $(this).attr('src', $(this).attr('data-src')).attr('height', $(this).height()).attr('width', $(this).width());$(this).attr('src', $(this).attr('data-src'));
+            $(this).attr('src', $(this).attr('data-src')).attr('height', $(this).height()).attr('width', $(this).width());
+            $(this).attr('src', $(this).attr('data-src'));
         })
 
         return this;
