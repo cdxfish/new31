@@ -20,7 +20,7 @@ def ordDr(typ=0):
 
                 if typ:
 
-                    return AjaxRJson().err( u'%s - 无法%s' % (sn, Ord.chcs[s][1]) )
+                    return AjaxRJson().error( u'%s - 无法%s' % (sn, Ord.chcs[s][1]) )
                 else:
                     messages.error(request, u'%s - 无法%s' % (sn, Ord.chcs[s][1]))
 

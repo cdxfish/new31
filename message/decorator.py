@@ -12,7 +12,7 @@ def readDr(func):
 
             if i.user.id != request.user.id:
 
-                return AjaxRJson().err(u'权限不足')
+                return AjaxRJson().error(u'权限不足')
 
         return func(request, *args, **kwargs)
 

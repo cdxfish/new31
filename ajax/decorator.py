@@ -14,6 +14,6 @@ def ajaxMsg(msg):
             except:
                 from views import AjaxRJson
 
-                return AjaxRJson().err(msg)
+                return AjaxRJson().error(msg)
         return __func
     return _func

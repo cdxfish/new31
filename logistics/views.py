@@ -200,7 +200,7 @@ def cDman(request, sn, user):
         if user in users:
             logcs.dman = user
         else:
-            return  AjaxRJson().err(u'无法修改物流师傅')
+            return  AjaxRJson().error(u'无法修改物流师傅')
     else:
         logcs.dman = None
 
@@ -219,7 +219,7 @@ def cAdv(request, sn, value):
     value = int(value)
     advs = [i[0] for i in Logcs.advs]
     if not value in advs:
-        return  AjaxRJson().err(u'无法修改修改物流偏移量')
+        return  AjaxRJson().error(u'无法修改修改物流偏移量')
 
     logcs = Logcs.objects.get(ord=sn)
     logcs.advance = value

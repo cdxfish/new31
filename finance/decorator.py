@@ -21,7 +21,7 @@ def fncDetr(func):
 
         else:
 
-            return AjaxRJson().err( u'%s - 无法%s' % (sn, Fnc.chcs[s][1]) )
+            return AjaxRJson().error( u'%s - 无法%s' % (sn, Fnc.chcs[s][1]) )
 
     return _func
 

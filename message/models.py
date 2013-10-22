@@ -1,29 +1,60 @@
 #coding:utf-8
 from django.db import models
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 import json
 # Create your models here.
 
-class msgManager(models.Manager):
-    def pushToUser(self, typ, msg, data, user):
+class AjaxRJson(object):
+    def __init__(self, msg='success'):
 
-        Msg.objects.create(typ=typ, msg=msg, _data=json.dumps(data), user=user)
+        self.msg = msg
+        self.typ = {
+            'warning': 'warning',
+            'error': 'error',
+            'success': 'success',
+            'info': 'info',
+            'debug': 'debug',
+            
+        }
+        self.data = {}
 
-        return self
+    def dump(self, data={}, typ='success', msg=''):
 
-    def push(self, typ, msg, data, path):
-        from purview.models import Element
+        self.data = data
+        self.msg = msg
 
-        for i in Element.objects.getUserByPath(path=path):
-            self.pushToUser(typ=typ, msg=msg, data=data, user=i)
+        return json.dumps({'msg':self.msg, 'typ': self.typ[typ], 'data':self.data })
 
-        return self
+    def dumps(self, data={}, typ='success'):
 
-    def pushToRole(self, typ, msg, data, *role):
-        for i in User.objects.filter(role__role__in=list(role), role__onl=True):
-            self.pushToUser(typ=typ, msg=msg, data=data, user=i)
+        return HttpResponse(self.dump(data, typ))
 
-        return self
+    def warning(self, data={}, msg=''):
+
+        return self.dumps(data, 'warning', msg)
+
+    def error(self, data={}, msg=''):
+
+        return self.dumps(data, 'error', msg)
+
+    def success(self, data={}, msg=''):
+
+        return self.dumps(data, 'success', msg)
+
+    def info(self, data={}, msg=''):
+
+        return self.dumps(data, 'info', msg)
+
+    def debug(self, data={}, msg=''):
+
+        return self.dumps(data, 'debug', msg)
+
+  
+
+class msgManager(models.Manager, AjaxRJson):
+    def __init__(self, *arg, **kwarg):
+        super(msgManager, self).__init__(*arg, **kwarg)
 
     def read(self, *ids):
 
@@ -35,32 +66,33 @@ class msgManager(models.Manager):
         else:
             return self.filter(user=user, read=False)
 
-    def warning(self, msg, data, path):
-        return self.push(0, msg, data, path)
+    def push(self, data, user, typ='success', msg=''):
 
-    def error(self, msg, data, path):
-        return self.push(1, msg, data, path)
+        Msg.objects.create(_data=self.dump(data=data, typ=typ, msg=msg), user=user)
 
-    def success(self, msg, data, path):
-        return self.push(2, msg, data, path)
+        return self
 
-    def info(self, msg, data, path):
-        return self.push(3, msg, data, path)
+    def pushByPath(self, data, path, typ='success', msg=''):
+        from purview.models import Element
 
-    def debug(self, msg, data, path):
-        return self.push(4, msg, data, path)
+        for i in Element.objects.getUserByPath(path=path):
+            self.push(data=data, user=i, typ=typ, msg=msg)
+
+        return self
+
+    # def pushToRole(self, typ, data, *role):
+    #     for i in User.objects.filter(role__role__in=list(role), role__onl=True):
+    #         self.pushToUser(typ=typ, data=data, user=i)
+
+    #     return self
+
 
 
 
 class Msg(models.Model):
-
-    chcs = ((0, u'warning'), (1, u'error'), (2, u'success'), (3, u'info'), (4, u'debug'),)
-
     user = models.ForeignKey(User, verbose_name=u'用户')
     read = models.BooleanField(u'已读', default=False)
     _data = models.CharField(u'数据', max_length=1024)
-    msg = models.CharField(u'消息', max_length=1024)
-    typ = models.SmallIntegerField(u'类型', default=0, choices=chcs)
     time = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True, editable=False)
 
     def data(self):

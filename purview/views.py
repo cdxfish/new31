@@ -91,7 +91,7 @@ class URLPurview:
 
         else:
             from ajax.views import AjaxRJson
-            return AjaxRJson().err(self.errStr)
+            return AjaxRJson().error(self.errStr)
 
     # 登录提示
     def login(self):
@@ -100,7 +100,7 @@ class URLPurview:
 
         else:
             from ajax.views import AjaxRJson
-            return AjaxRJson().err(u'请登录')
+            return AjaxRJson().error(u'请登录')
 
 class BsPur(object):
     """

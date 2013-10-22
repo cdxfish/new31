@@ -54,40 +54,6 @@ class BsSess(object):
         return self.set(self.frmt)
 
 
-
-# JSON数据格式化类
-class AjaxRJson:
-    """
-        统一全局JSON 字典格式化
-
-        {
-            error: False,
-            msg: 'success',
-            data: {},
-        }
-
-    """
-    def __init__(self):
-        self.error = False
-        self.msg = 'success'
-        self.data = {}
-
-    def dumps(self, data=''):
-        
-        self.data = data if data else ''
-
-        return HttpResponse(json.dumps({'err':self.error, 'msg':self.msg, 'data':self.data }))
-
-    def err(self, msg = ''):
-        
-        self.msg = msg
-        self.error = True
-
-        return self.dumps()
-
-
-
-
 """
 tzinfo是关于时区信息的类
 tzinfo是一个抽象类，所以不能直接被实例化

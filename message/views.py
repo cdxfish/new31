@@ -11,7 +11,7 @@ def get(request):
     u"""消息推送"""
     from models import Msg
 
-    return AjaxRJson().dumps([ {'id':i.id, 'data':i.data(), 'msg': i.msg, 'typ': i.get_typ_display(), 'time': '%s' % i.time.astimezone(UTC(8)).strftime('%Y-%m-%d %H:%M:%S')} for i in Msg.objects.get(request.user) ])
+    return AjaxRJson().dumps([ {'id':i.id, 'data':i.data(), 'time': '%s' % i.time.astimezone(UTC(8)).strftime('%Y-%m-%d %H:%M:%S')} for i in Msg.objects.get(request.user) ])
 
 @readDr
 def read(request):

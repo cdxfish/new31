@@ -19,7 +19,7 @@ def logcsDr(typ=0):
             if not s in act:
                 if typ:
 
-                    return AjaxRJson().err( u'%s - 无法%s' % (sn, Logcs.chcs[s][1]) )
+                    return AjaxRJson().error( u'%s - 无法%s' % (sn, Logcs.chcs[s][1]) )
                 else:
                     messages.error(request, u'%s - 无法%s' % (sn, Logcs.chcs[s][1]))
 
@@ -44,7 +44,7 @@ def aLogcsDr(func):
         logcs = Logcs.objects.get(ord=sn)
 
         if logcs.status > 1:
-            return AjaxRJson().err(u'无法修改表单数据')
+            return AjaxRJson().error(u'无法修改表单数据')
 
         else:
             return func(request, *args, **kwargs)

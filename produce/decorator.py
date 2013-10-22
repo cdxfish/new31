@@ -22,6 +22,6 @@ def proDr(func):
 
         else:
 
-            return AjaxRJson().err( u'%s | %s - 无法%s' % (pro.ord.sn, pro.name, Pro.chcs[s][1]) )
+            return AjaxRJson().error( u'%s | %s - 无法%s' % (pro.ord.sn, pro.name, Pro.chcs[s][1]) )
 
     return _func
