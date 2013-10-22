@@ -6,6 +6,7 @@ from django.template import RequestContext
 from decorator import fncDetr
 from new31.func import rdrtBck
 from new31.cls import AjaxRJson
+from message.decorator import msgDr
 from ajax.decorator import ajaxMsg
 from log.decorator import ordLogDr
 # Create your views here.
@@ -26,11 +27,13 @@ def fnc(request):
     return render_to_response('financeui.htm', locals(), context_instance=RequestContext(request))
 
 
-@fncDetr
+@ordLogDr
 def modifyFnc(request, sn, s):
     u"""财务操作"""
     from models import Fnc
     from purview.models import Role
+
+    s = int(s)
     
     r = Role.objects
     f = Fnc.objects.get(ord__sn=sn)
@@ -45,35 +48,40 @@ def modifyFnc(request, sn, s):
         'obj': 'fnc'
         })
 
-@ordLogDr
-def unpaidFnc(request, sn):
+@fncDetr
+@msgDr
+def unpaidFnc(request, sn, s):
     u"""财务状态修改-> 财务未付"""
 
-    return modifyFnc(request, sn, 0)
+    return modifyFnc(request=request, sn=sn, s=s)
 
-@ordLogDr
-def paidFnc(request, sn):
+@fncDetr
+@msgDr
+def paidFnc(request, sn, s):
     u"""财务状态修改-> 财务已付"""
 
-    return modifyFnc(request, sn, 1)
+    return modifyFnc(request=request, sn=sn, s=s)
 
-@ordLogDr
-def closedFnc(request, sn):
+@fncDetr
+@msgDr
+def closedFnc(request, sn, s):
     u"""财务状态修改-> 财务已结"""
 
-    return modifyFnc(request, sn, 2)
+    return modifyFnc(request=request, sn=sn, s=s)
 
-@ordLogDr
-def checkedFnc(request, sn):
+@fncDetr
+@msgDr
+def checkedFnc(request, sn, s):
     u"""财务状态修改-> 财务已核"""
 
-    return modifyFnc(request, sn, 3)
+    return modifyFnc(request=request, sn=sn, s=s)
 
-@ordLogDr
-def stopFnc(request, sn):
+@fncDetr
+@msgDr
+def stopFnc(request, sn, s):
     u"""财务状态修改-> 财务止付"""
 
-    return modifyFnc(request, sn, 4)
+    return modifyFnc(request=request, sn=sn, s=s)
 
 
 @ajaxMsg('无法填写表单')

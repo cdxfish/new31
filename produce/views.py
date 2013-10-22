@@ -7,6 +7,8 @@ from django.db.models import Q
 from decorator import proDr
 from new31.func import rdrtBck, page
 from new31.cls import AjaxRJson
+from message.decorator import msgDr
+from message.models import Msg
 # Create your views here.
 
 def produce(request):
@@ -26,11 +28,13 @@ def produce(request):
 
     return render_to_response('produceui.htm', locals(), context_instance=RequestContext(request))
 
-@proDr
+
 def modifyPro(request, sn, s):
     u"""生产状态修改"""
     from models import Pro
     from purview.models import Role
+
+    s = int(s)
     
     r = Role.objects
     p = Pro.objects.get(id=sn)
@@ -45,30 +49,40 @@ def modifyPro(request, sn, s):
         'obj': 'pro'
         })
 
+@proDr
+@msgDr
 def nullPro(request, sn, s):
     u"""生产状态修改-> 生产未产"""    
 
-    return modifyPro(request, sn, s)
-    
+    return modifyPro(request=request, sn=sn, s=s)
+   
+@proDr
+@msgDr
 def requirePro(request, sn, s):
     u"""生产状态修改-> 生产产求"""    
 
-    return modifyPro(request, sn, s)
-    
+    return modifyPro(request=request, sn=sn, s=s)
+  
+@proDr
+@msgDr
 def duringPro(request, sn, s):
     u"""生产状态修改-> 生产产中"""    
 
-    return modifyPro(request, sn, s)
+    return modifyPro(request=request, sn=sn, s=s)
 
+@proDr
+@msgDr
 def refusePro(request, sn, s):
     u"""生产状态修改-> 生产拒产"""    
 
-    return modifyPro(request, sn, s)
+    return modifyPro(request=request, sn=sn, s=s)
 
+@proDr
+@msgDr
 def readyPro(request, sn, s):
     u"""生产状态修改-> 生产已产"""    
 
-    return modifyPro(request, sn, s)
+    return modifyPro(request=request, sn=sn, s=s)
 
 
 from order.views import OrdSerch

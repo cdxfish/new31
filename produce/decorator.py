@@ -11,14 +11,17 @@ def proDr(func):
     def _func(request, *args, **kwargs):
         from produce.models import Pro
 
-        pro =  Pro.objects.get(id=args[0])
+        sn = int(kwargs['sn'])
+        s = int(kwargs['s'])
 
-        if args[1] in Pro.objects.getActTuple(pro.status):
+        pro =  Pro.objects.get(id=sn)
+
+        if s in Pro.objects.getActTuple(pro.status):
 
             return func(request, *args, **kwargs)
 
         else:
 
-            return AjaxRJson().err( u'%s | %s - 无法%s' % (pro.ord.sn, pro.name, Pro.chcs[args[1]][1]) )
+            return AjaxRJson().err( u'%s | %s - 无法%s' % (pro.ord.sn, pro.name, Pro.chcs[s][1]) )
 
     return _func

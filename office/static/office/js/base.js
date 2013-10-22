@@ -143,19 +143,23 @@ b = {
                     } else {
                         var read = [];
                         $.each(data.data, function(i, v) {
-                            $.debug[v.typ](v.time + '： ' + v.msg + ' [' + v.data.sn + ']')
+                            if (v.data.sn) {
+                                $.debug[v.typ](v.time + '： ' + v.msg + ' [' + v.data.sn + ']')
+                            } else {
+                                $.debug[v.typ](v.time + '： ' + v.msg)
+                            }
                             read.push(v.id);
-                        })
+                        });
 
                         if (read.length) {
-
                             $.getJSON('/message/read/', {
                                 id: read
                             }, function(data) {
                                 if (data.err) {
                                     $.debug.error(data.msg);
                                 }
-                            })
+                            });
+
                         }
                     }
                 });

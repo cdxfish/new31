@@ -31,7 +31,7 @@
         {% if iii.items %}
           {% for item in iii.items %}
           <tr align="center">
-            <td align="right" nowrap="true" colspan="2">{{ item.name }}</td>
+            <td align="right" nowrap="true" colspan="2">{{ item.name }} [ {{ item.id }} ]</td>
             <td>{{ item.spec }}</td>
             <td>{{ item.num }}</td>
             {% proStatus item %}
@@ -41,7 +41,7 @@
         {% else %}
           {% for item in iii.pro_set.all %}
           <tr align="center">
-            <td align="right" nowrap="true" colspan="2">{{ item.name }}</td>
+            <td align="right" nowrap="true" colspan="2">{{ item.name }}[ {{ item.id }} ]</td>
             <td>{{ item.spec }}</td>
             <td>{{ item.num }}</td>
             <td><span class="status_{{ item.status }}">{{ item.get_status_display }}</span></td>

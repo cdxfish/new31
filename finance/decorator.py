@@ -11,15 +11,17 @@ def fncDetr(func):
     @wraps(func)
     def _func(request, *args, **kwargs):
         from finance.models import Fnc
+        sn = int(kwargs['sn'])
+        s = int(kwargs['s'])
 
-        act = Fnc.objects.getActTuple(Fnc.objects.get(ord=args[0]).status)
+        act = Fnc.objects.getActTuple(Fnc.objects.get(ord__sn=sn).status)
 
-        if args[1] in act:
+        if s in act:
             return func(request, *args, **kwargs)
 
         else:
 
-            return AjaxRJson().err( u'%s - 无法%s' % (args[0], Fnc.chcs[args[1]][1]) )
+            return AjaxRJson().err( u'%s - 无法%s' % (sn, Fnc.chcs[s][1]) )
 
     return _func
 

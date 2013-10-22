@@ -5,7 +5,6 @@ import json
 # Create your models here.
 
 class msgManager(models.Manager):
-    
     def pushToUser(self, typ, msg, data, user):
 
         Msg.objects.create(typ=typ, msg=msg, _data=json.dumps(data), user=user)
@@ -16,6 +15,12 @@ class msgManager(models.Manager):
         from purview.models import Element
 
         for i in Element.objects.getUserByPath(path=path):
+            self.pushToUser(typ=typ, msg=msg, data=data, user=i)
+
+        return self
+
+    def pushToRole(self, typ, msg, data, *role):
+        for i in User.objects.filter(role__role__in=list(role), role__onl=True):
             self.pushToUser(typ=typ, msg=msg, data=data, user=i)
 
         return self

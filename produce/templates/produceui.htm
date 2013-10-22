@@ -25,7 +25,7 @@
             </tr>
         {% for item in ord.items %}
             <tr align="center">
-              <td align="right" nowrap="true">{{ item.name }}</td>
+              <td align="right" nowrap="true">{{ item.name }} [ {{ item.id }} ]</td>
               <td>{{ item.spec }}</td>
               <td>{{ item.num }}</td>
               {% proStatus item %}
