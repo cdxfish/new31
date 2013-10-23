@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 from decorator import itemshow, checkCartDr
 from order.decorator import subDr
 from new31.func import f02f
-from new31.cls import AjaxRJson
+from message.models import AjaxRJson
 from new31.decorator import postDrR
 from ajax.decorator import ajaxMsg
 from logistics.decorator import chLogcsDr

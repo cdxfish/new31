@@ -6,7 +6,7 @@ from django.template import RequestContext
 from django.db.models import Q
 from decorator import proDr
 from new31.func import rdrtBck, page
-from new31.cls import AjaxRJson
+from message.models import AjaxRJson
 from message.decorator import msgDr
 from message.models import Msg
 # Create your views here.

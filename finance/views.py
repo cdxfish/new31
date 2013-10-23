@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from decorator import fncDetr
 from new31.func import rdrtBck
-from new31.cls import AjaxRJson
+from message.models import AjaxRJson
 from message.decorator import msgDr
 from ajax.decorator import ajaxMsg
 from log.decorator import ordLogDr
@@ -39,7 +39,7 @@ def modifyFnc(request, sn, s):
     f = Fnc.objects.get(ord__sn=sn)
     _f = Fnc.objects.cStatus(sn, s)
     
-    return AjaxRJson().dumps({
+    return AjaxRJson().dumps(**{
         'sn': sn, 
         'act': r.getAjaxAct(r.getActByUser(request.user.id, f.act[s]), sn), 
         '_act': r.getAjaxAct(f.act[ f.status ], sn), 

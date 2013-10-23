@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib import messages
 from ajax.decorator import ajaxMsg
-from new31.cls import AjaxRJson
+from message.models import AjaxRJson
 from new31.func import sort, f02f
 import random
 

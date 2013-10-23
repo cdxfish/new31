@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from new31.decorator import postDr, rdrtBckDr, timeit
 from new31.func import frMtFee, rdrRange, page, rdrtBck, f02f
-from new31.cls import AjaxRJson
+from message.models import AjaxRJson
 from ajax.decorator import ajaxMsg
 from log.decorator import ordLogDr
 from cart.decorator import checkCartDr

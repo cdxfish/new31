@@ -2,7 +2,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from new31.func import f02f, sort
-from new31.cls import AjaxRJson
+from message.models import AjaxRJson
 from ajax.decorator import ajaxMsg
 import random
 

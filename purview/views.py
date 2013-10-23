@@ -100,7 +100,7 @@ class URLPurview:
 
         else:
             from ajax.views import AjaxRJson
-            return AjaxRJson().error(u'请登录')
+            return AjaxRJson(u'请登录').error()
 
 class BsPur(object):
     """

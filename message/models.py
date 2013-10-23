@@ -19,36 +19,36 @@ class AjaxRJson(object):
         }
         self.data = {}
 
-    def dump(self, data={}, typ='success', msg=''):
-
+    def dump(self, data, typ, msg=''):
         self.data = data
-        self.msg = msg
+        if msg: self.msg = msg
 
         return json.dumps({'msg':self.msg, 'typ': self.typ[typ], 'data':self.data })
 
-    def dumps(self, data={}, typ='success'):
+
+    def dumps(self, data, typ='success'):
 
         return HttpResponse(self.dump(data, typ))
 
-    def warning(self, data={}, msg=''):
+    def warning(self, **kwarg):
 
-        return self.dumps(data, 'warning', msg)
+        return self.dumps(kwarg, 'warning')
 
-    def error(self, data={}, msg=''):
+    def error(self, **kwarg):
 
-        return self.dumps(data, 'error', msg)
+        return self.dumps(kwarg, 'error')
 
-    def success(self, data={}, msg=''):
+    def success(self, **kwarg):
 
-        return self.dumps(data, 'success', msg)
+        return self.dumps(kwarg, 'success')
 
-    def info(self, data={}, msg=''):
+    def info(self, **kwarg):
 
-        return self.dumps(data, 'info', msg)
+        return self.dumps(kwarg, 'info')
 
-    def debug(self, data={}, msg=''):
+    def debug(self, **kwarg):
 
-        return self.dumps(data, 'debug', msg)
+        return self.dumps(kwarg, 'debug')
 
   
 
@@ -72,7 +72,7 @@ class msgManager(models.Manager, AjaxRJson):
 
         return self
 
-    def pushByPath(self, data, path, typ='success', msg=''):
+    def pushByPath(self, path, data, typ='success', msg=''):
         from purview.models import Element
 
         for i in Element.objects.getUserByPath(path=path):
@@ -80,11 +80,11 @@ class msgManager(models.Manager, AjaxRJson):
 
         return self
 
-    # def pushToRole(self, typ, data, *role):
-    #     for i in User.objects.filter(role__role__in=list(role), role__onl=True):
-    #         self.pushToUser(typ=typ, data=data, user=i)
+    def pushToRole(self, typ, data, *role):
+        for i in User.objects.filter(role__role__in=list(role), role__onl=True):
+            self.pushToUser(typ=typ, data=data, user=i)
 
-    #     return self
+        return self
 
 
 

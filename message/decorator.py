@@ -1,6 +1,6 @@
 #coding:utf-8
 from functools import wraps
-from new31.cls import AjaxRJson
+from message.models import AjaxRJson
 # Create your decorator here.
 
 # 信息验证装饰器
@@ -12,7 +12,7 @@ def readDr(func):
 
             if i.user.id != request.user.id:
 
-                return AjaxRJson().error(u'权限不足')
+                return AjaxRJson(u'权限不足').error()
 
         return func(request, *args, **kwargs)
 
@@ -23,7 +23,7 @@ def msgDr(func):
     @wraps(func)
     def __func(request, *args, **kwargs):
         from models import Msg
-        Msg.objects.success(u'%s' % func.__doc__, {'sn': kwargs['sn']}, request.path)
+        Msg.objects.pushByPath(path=request.path, data={'sn': kwargs['sn'], 'from': u'%s%s' % (request.user.last_name, request.user.first_name)}, msg=u'%s' % func.__doc__)
 
         return func(request, *args, **kwargs)
 

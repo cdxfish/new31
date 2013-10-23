@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from new31.decorator import postDr
-from new31.cls import AjaxRJson
+from message.models import AjaxRJson
 from ajax.decorator import ajaxMsg
 from log.decorator import ordLogDr
 from message.decorator import msgDr
@@ -111,7 +111,7 @@ def modifyLogcs(request, sn, s):
 
     r = Role.objects
 
-    return AjaxRJson().dumps({
+    return AjaxRJson().success(**{
         'sn': sn, 
         'act': r.getAjaxAct(r.getActByUser(request.user.id, l.act[s]), sn), 
         '_act': r.getAjaxAct(l.act[ l.status ], sn), 
@@ -200,13 +200,13 @@ def cDman(request, sn, user):
         if user in users:
             logcs.dman = user
         else:
-            return  AjaxRJson().error(u'无法修改物流师傅')
+            return  AjaxRJson(u'无法修改物流师傅').error()
     else:
         logcs.dman = None
 
     logcs.save()
 
-    return AjaxRJson().dumps()
+    return AjaxRJson().success()
 
 @ajaxMsg('无法修改表单数据')
 @aLogcsDr
@@ -219,13 +219,13 @@ def cAdv(request, sn, value):
     value = int(value)
     advs = [i[0] for i in Logcs.advs]
     if not value in advs:
-        return  AjaxRJson().error(u'无法修改修改物流偏移量')
+        return  AjaxRJson(u'无法修改修改物流偏移量').error()
 
     logcs = Logcs.objects.get(ord=sn)
     logcs.advance = value
     logcs.save()
 
-    return AjaxRJson().dumps()
+    return AjaxRJson().success()
 
 
 @ajaxMsg('无法填写表单')
@@ -235,7 +235,7 @@ def cLogcs(request):
     for i,v in request.GET.dict().items():
         LogcSess(request).setByName(i, u'%s' % v)
 
-    return AjaxRJson().dumps()
+    return AjaxRJson().success()
 
 
 from new31.cls import BsSess

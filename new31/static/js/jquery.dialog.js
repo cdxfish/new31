@@ -153,7 +153,7 @@
 
             bnMsg: function(data, func, obj) {
                 var cssObj = obj ? obj : {};
-                if (data.err) {
+                if (data.typ == 'error') {
                     this.msg(data.msg);
 
                 } else {
@@ -200,7 +200,7 @@
                 url: url,
                 dataType: 'json',
                 success: function(data) {
-                    if (data.err) {
+                    if (data.typ == 'error') {
                         $.dialog.msg(data.msg);
 
                     } else {

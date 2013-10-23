@@ -1,6 +1,6 @@
 #coding:utf-8
 from functools import wraps
-from new31.cls import AjaxRJson
+from message.models import AjaxRJson
 # Create your decorator here.
 
 # AJAX提示用
@@ -14,6 +14,6 @@ def ajaxMsg(msg):
             except:
                 from views import AjaxRJson
 
-                return AjaxRJson().error(msg)
+                return AjaxRJson(msg).error()
         return __func
     return _func

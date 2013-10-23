@@ -138,15 +138,15 @@ b = {
     loadMsg: function() {
         var load = function() {
                 $.getJSON('/message/get/', function(data) {
-                    if (data.err) {
+                    if (data.typ == 'error') {
                         $.debug.error(data.msg);
                     } else {
                         var read = [];
                         $.each(data.data, function(i, v) {
                             if (v.data.sn) {
-                                $.debug[v.typ](v.time + '： ' + v.msg + ' [' + v.data.sn + ']')
+                                $.debug[v.typ](v.data.from + ' [' + v.time + ']： ' + v.msg + ' [' + v.data.sn + ']')
                             } else {
-                                $.debug[v.typ](v.time + '： ' + v.msg)
+                                $.debug[v.typ](v.data.from + ' [' + v.time + ']： ' + v.msg)
                             }
                             read.push(v.id);
                         });
@@ -155,7 +155,7 @@ b = {
                             $.getJSON('/message/read/', {
                                 id: read
                             }, function(data) {
-                                if (data.err) {
+                                if (data.typ == 'error') {
                                     $.debug.error(data.msg);
                                 }
                             });

@@ -2,7 +2,7 @@
 u"""ajax"""
 from decorator import ajaxMsg
 from new31.func import sort, f02f, frMtFee
-from new31.cls import AjaxRJson
+from message.models import AjaxRJson
 from django.core.urlresolvers import reverse
 # Create your views here.
     
