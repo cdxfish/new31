@@ -1,7 +1,6 @@
 #coding:utf-8
 from django.db import models
 from django.contrib.auth.models import User
-from django.http import HttpResponse
 import json
 # Create your models here.
 
@@ -52,9 +51,17 @@ class AjaxRJson(object):
 
   
 
-class msgManager(models.Manager, AjaxRJson):
+class msgManager(models.Manager):
     def __init__(self, *arg, **kwarg):
         super(msgManager, self).__init__(*arg, **kwarg)
+        self.typ = {
+            'warning': 'warning',
+            'error': 'error',
+            'success': 'success',
+            'info': 'info',
+            'debug': 'debug',
+            
+        }
 
     def read(self, *ids):
 
@@ -66,27 +73,51 @@ class msgManager(models.Manager, AjaxRJson):
         else:
             return self.filter(user=user, read=False)
 
-    def push(self, data, user, typ='success', msg=''):
+    def dumps(self, typ, msg='', data=[]):
+        self.msg = msg
+        self.data = data
 
-        Msg.objects.create(_data=self.dump(data=data, typ=typ, msg=msg), user=user)
+        return json.dumps({ 'typ': self.typ[typ], 'msg':self.msg, 'data':self.data })
+
+    def push(self, user, **kwarg):
+
+        Msg.objects.create(_data=self.dumps(**kwarg), user=user)
 
         return self
 
-    def pushByPath(self, path, data, typ='success', msg=''):
+    def pushByPath(self, path, **kwarg):
         from purview.models import Element
 
         for i in Element.objects.getUserByPath(path=path):
-            self.push(data=data, user=i, typ=typ, msg=msg)
+            self.push(user=i, **kwarg)
 
         return self
 
-    def pushToRole(self, typ, data, *role):
+    def pushToRole(self, *role, **kwarg):
         for i in User.objects.filter(role__role__in=list(role), role__onl=True):
-            self.pushToUser(typ=typ, data=data, user=i)
+            self.push(user=i, **kwarg)
 
         return self
 
+    def warning(self, **kwarg):
 
+        return self.push(typ='warning', **kwarg)
+
+    def error(self, **kwarg):
+
+        return self.push(typ='error', **kwarg)
+
+    def success(self, **kwarg):
+
+        return self.push(typ='success', **kwarg)
+
+    def info(self, **kwarg):
+
+        return self.push(typ='info', **kwarg)
+
+    def debug(self, **kwarg):
+
+        return self.push(typ='debug', **kwarg)
 
 
 class Msg(models.Model):

@@ -157,7 +157,6 @@ APPS = {
     'area':'',
     'tag':'',
     'message':'',
-    'ajax':'',
     'office':'',
     'spec':'',
     'discount':'',

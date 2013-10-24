@@ -1,6 +1,6 @@
 #coding:utf-8
 from functools import wraps
-from message.models import AjaxRJson
+from django.http import HttpResponse
 # Create your decorator here.
 
 # AJAX提示用
@@ -12,8 +12,8 @@ def ajaxMsg(msg):
                 return func(request, *args, **kwargs)
 
             except:
-                from views import AjaxRJson
+                from message.models import Msg
 
-                return AjaxRJson(msg).error()
+                return HttpResponse(Msg.objects.dumps(msg=msg))
         return __func
     return _func
