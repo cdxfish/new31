@@ -64,6 +64,7 @@ def checkout(request):
 def submit(request):
     u"""购物车订单提交"""
     from order.views import OrdSub
+    from message.models import Msg
 
     o = OrdSub(request).submit()
     if o.error:
@@ -71,6 +72,8 @@ def submit(request):
     else:
         messages.success(request, u'您已成功提交订单!')
         messages.success(request, u'感谢您在本店购物！请记住您的订单号: %s' % o.sn)
+
+        Msg.objects.pushToRole(-1, 7, 8, 9, 10, 12, 13, typ='success', msg='前台成功提交订单', data={'sn': o.sn} )
 
         if request.user.is_authenticated():
             return HttpResponseRedirect(reverse('account:myOrd'))

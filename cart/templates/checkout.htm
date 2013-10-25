@@ -2,8 +2,8 @@
 
 
 {% block content %}
-        <div class="pWhite">
-        <form action="/cart/submit/" method="post" name="to_checkout" id="toCheckout">
+        <div class="pWhite pd30">
+        <form action="{% url 'cart:submit' %}" method="post" name="to_checkout" id="toCheckout">
              <h3>订单状态</h3>
             <table width="100%" class="mBottom10">
                 <tr>

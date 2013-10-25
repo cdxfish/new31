@@ -146,7 +146,7 @@ def logcsEdit(request, sn, s):
 
 @logcsDr(1)
 @msgPushDr
-@msgPushToRoleDr(7, 8, 9, 10, 12, 13)
+@msgPushToRoleDr(-1, 7, 8, 9, 10, 12, 13)
 def logcsShip(request, sn, s):
     u"""物流状态修改-> 物流已发"""
 
@@ -168,7 +168,7 @@ def logcsSign(request, sn, s):
 
 @logcsDr(1)
 @msgPushDr
-@msgPushToRoleDr(7, 8, 9, 10, 12, 13)
+@msgPushToRoleDr(-1, 7, 8, 9, 10, 12, 13)
 def logcsStop(request, sn, s):
     u"""物流状态修改-> 物流止送"""
     # from models import Logcs
@@ -300,9 +300,9 @@ class LogcSess(BsSess):
         from area.models import Area
 
         self.obj = self.sess.copy()
-        self.obj['dlvr'] = Deliver.objects.getDlvrById(id=self.sess[u'dlvr'])
-        self.obj['time'] = SignTime.objects.getTimeById(id=self.sess[u'time'])
-        self.obj['area'] = Area.objects.getAreaById(id=self.sess[u'area'])
+        self.obj['dlvr'] = Deliver.objects.getDlvrById(id=self.sess['dlvr'])
+        self.obj['time'] = SignTime.objects.getTimeById(id=self.sess['time'])
+        self.obj['area'] = Area.objects.getAreaById(id=self.sess['area'])
 
         return self.obj
 

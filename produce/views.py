@@ -60,7 +60,7 @@ def nullPro(request, sn, s):
    
 @proDr
 @msgPushDr
-@msgPushToRoleDr(11)
+@msgPushToRoleDr(-1, 11)
 def requirePro(request, sn, s):
     u"""生产状态修改-> 生产产求"""    
 

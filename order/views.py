@@ -133,7 +133,7 @@ def editOrd(request, sn, s):
 
 @ordDr(1)
 @msgPushDr
-@msgPushToRoleDr(2)
+@msgPushToRoleDr(-1, 2)
 def confirmOrd(request, sn, s):
     u"""订单状态修改-> 订单确认"""
 
@@ -148,7 +148,7 @@ def nullOrd(request, sn, s):
 
 @ordDr(1)
 @msgPushDr
-@msgPushToRoleDr(2)
+@msgPushToRoleDr(-1, 2)
 def stopOrd(request, sn, s):
     u"""订单状态修改-> 订单止单"""
 
