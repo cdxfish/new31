@@ -1,8 +1,10 @@
 #coding:utf-8
 u"""权限"""
 from django.contrib import messages
+from django.http import HttpResponse
 from new31.func import rdrtBck, rdrtLogin
 from django.core.urlresolvers import resolve, reverse
+from message.models import Msg
 import re
 # Create your views here.
 
@@ -99,8 +101,7 @@ class URLPurview:
             return rdrtLogin(self.request)
 
         else:
-            from ajax.views import AjaxRJson
-            return AjaxRJson(u'请登录').error()
+            return HttpResponse(Msg.objects.dumps(typ='error', msg=u'请登录'))
 
 class BsPur(object):
     """

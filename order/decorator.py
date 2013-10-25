@@ -1,8 +1,8 @@
 #coding:utf-8
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from new31.func import rdrtBck
-from message.models import AjaxRJson
+from message.models import Msg
 from functools import wraps
 # Create your decorator here.
 
@@ -20,7 +20,7 @@ def ordDr(typ=0):
 
                 if typ:
 
-                    return AjaxRJson().error( u'%s - 无法%s' % (sn, Ord.chcs[s][1]) )
+                    return HttpResponse(Msg.objects.dumps(msg=u'%s - 无法%s' % (sn, Ord.chcs[s][1])))
                 else:
                     messages.error(request, u'%s - 无法%s' % (sn, Ord.chcs[s][1]))
 

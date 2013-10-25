@@ -1,6 +1,6 @@
 #coding:utf-8
 from functools import wraps
-from message.models import AjaxRJson
+from models import Msg
 from django.http import HttpResponse
 # Create your decorator here.
 
@@ -8,31 +8,47 @@ from django.http import HttpResponse
 def readDr(func):
     @wraps(func)
     def _func(request, *args, **kwargs):
-        from models import Msg
         for i in Msg.objects.filter(id__in=request.GET.getlist('id[]')):
 
             if i.user.id != request.user.id:
 
-                return AjaxRJson(u'权限不足').error()
+                return HttpResponse(Msg.objects.dumps(typ='error', msg=u'权限不足'))
 
         return func(request, *args, **kwargs)
 
     return _func
 
 # 消息推送装饰器
-def msgDr(func):
+def msgPushDr(func):
     @wraps(func)
     def __func(request, *args, **kwargs):
-        from models import Msg
-        Msg.objects.pushByPath(path=request.path, data={'sn': kwargs['sn'], 'from': u'%s%s' % (request.user.last_name, request.user.first_name)}, msg=u'%s' % func.__doc__)
+        Msg.objects.pushByPath(path=request.path, data={
+                'sn': kwargs['sn'], 
+                'from': u'%s%s' % (request.user.last_name, request.user.first_name)
+            }, msg=u'%s' % func.__doc__)
 
         return func(request, *args, **kwargs)
 
     return __func
 
+# 消息推送装饰器
+def msgPushToRoleDr(*role):
+    def _func(func):
+        @wraps(func)
+        def __func(request, *args, **kwargs):
+            Msg.objects.pushToRole(*role, data={
+                    'sn': kwargs['sn'], 
+                    'from': u'%s%s' % (request.user.last_name, request.user.first_name)
+                }, msg=u'%s' % func.__doc__)
 
-# AJAX提示用
-def ajaxMsg(msg):
+            return func(request, *args, **kwargs)
+
+        return __func
+    return _func
+
+
+# AJAX提错误提示示用
+def ajaxErrMsg(msg):
     def _func(func):
         @wraps(func)
         def __func(request, *args, **kwargs):
@@ -40,8 +56,6 @@ def ajaxMsg(msg):
                 return func(request, *args, **kwargs)
 
             except:
-                from message.models import Msg
-
                 return HttpResponse(Msg.objects.dumps(msg=msg))
         return __func
     return _func

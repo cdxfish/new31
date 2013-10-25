@@ -3,11 +3,11 @@ u"""生产"""
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
+from django.http import HttpResponse
 from django.db.models import Q
 from decorator import proDr
 from new31.func import rdrtBck, page
-from message.models import AjaxRJson
-from message.decorator import msgDr
+from message.decorator import msgPushDr, msgPushToRoleDr
 from message.models import Msg
 # Create your views here.
 
@@ -40,45 +40,48 @@ def modifyPro(request, sn, s):
     p = Pro.objects.get(id=sn)
     _p = Pro.objects.cStatus(sn, s)
 
-    return AjaxRJson().dumps({
-        'sn': sn, 
-        'act': r.getAjaxAct(r.getActByUser(request.user.id, p.act[s]), sn), 
-        '_act': r.getAjaxAct(p.act[ p.status ], sn), 
-        's': _p.status,
-        'sStr': _p.get_status_display(),
-        'obj': 'pro'
-        })
+    return HttpResponse(Msg.objects.dumps(data={
+                'sn': sn, 
+                'act': r.getAjaxAct(r.getActByUser(request.user.id, p.act[s]), sn), 
+                '_act': r.getAjaxAct(p.act[ p.status ], sn), 
+                's': _p.status,
+                'sStr': _p.get_status_display(),
+                'obj': 'pro'
+            }
+        )
+    )
 
 @proDr
-@msgDr
+@msgPushDr
 def nullPro(request, sn, s):
     u"""生产状态修改-> 生产未产"""    
 
     return modifyPro(request=request, sn=sn, s=s)
    
 @proDr
-@msgDr
+@msgPushDr
+@msgPushToRoleDr(11)
 def requirePro(request, sn, s):
     u"""生产状态修改-> 生产产求"""    
 
     return modifyPro(request=request, sn=sn, s=s)
   
 @proDr
-@msgDr
+@msgPushDr
 def duringPro(request, sn, s):
     u"""生产状态修改-> 生产产中"""    
 
     return modifyPro(request=request, sn=sn, s=s)
 
 @proDr
-@msgDr
+@msgPushDr
 def refusePro(request, sn, s):
     u"""生产状态修改-> 生产拒产"""    
 
     return modifyPro(request=request, sn=sn, s=s)
 
 @proDr
-@msgDr
+@msgPushDr
 def readyPro(request, sn, s):
     u"""生产状态修改-> 生产已产"""    
 

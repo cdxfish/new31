@@ -3,13 +3,13 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from decorator import itemshow, checkCartDr
 from order.decorator import subDr
 from new31.func import f02f
-from message.models import AjaxRJson
 from new31.decorator import postDrR
-from ajax.decorator import ajaxMsg
+from message.models import Msg
+from message.decorator import ajaxErrMsg
 from logistics.decorator import chLogcsDr
 from finance.decorator import chFncDr
 from new31.func import frMtFee, rdrtBck, rdrtIndex
@@ -92,13 +92,13 @@ def delInCart(request, mark):
 
     return rdrtBck(request)
 
-@ajaxMsg('当前商品已下架')
+@ajaxErrMsg('当前商品已下架')
 def cNum(request, mark, num):
     u"""ajax-> 修改购物车中商品数量"""
 
     data =  f02f(CartSess(request).chngNum(int(mark), int(num)).total())
 
-    return AjaxRJson().dumps(data)
+    return HttpResponse(Msg.objects.dumps(typ='success', data=data, msg='修改成功'))
 
 
 from new31.cls import BsSess

@@ -5,17 +5,15 @@ from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.template import RequestContext
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from new31.decorator import postDr, rdrtBckDr, timeit
 from new31.func import frMtFee, rdrRange, page, rdrtBck, f02f
-from message.models import AjaxRJson
-from ajax.decorator import ajaxMsg
 from log.decorator import ordLogDr
 from cart.decorator import checkCartDr
 from decorator import ordDr, subMsg, subDr, ordSubDr
 from logistics.decorator import chLogcsDr
 from finance.decorator import chFncDr
-from message.decorator import msgDr
+from message.decorator import msgPushDr, ajaxErrMsg, msgPushToRoleDr
 from message.models import Msg
 from decimal import Decimal
 import time, datetime, re
@@ -63,9 +61,9 @@ def submitOrd(request):
         messages.success(request, u'订单提交成功: %s' % o.sn)
 
         if o.o['sn']:
-            Msg.objects.success(u'订单编辑成功', {'sn': o.sn}, request.path)
+            Msg.objects.pushByPath(path=request.path, msg=u'订单编辑成功', data={'sn': o.sn})
         else:
-            Msg.objects.success(u'订单提交成功', {'sn': o.sn}, request.path)
+            Msg.objects.pushByPath(path=request.path, msg=u'订单提交成功', data={'sn': o.sn})
 
     return rdrRange(reverse('order:ords'), '%s' % datetime.date.today(), o.sn)
 
@@ -105,14 +103,16 @@ def modifyOrd(request, sn, s):
 
     r = Role.objects
 
-    return AjaxRJson().dumps({
-        'sn': sn, 
-        'act': r.getAjaxAct(r.getActByUser(request.user.id, o.act[s]), sn), 
-        '_act': r.getAjaxAct(o.act[ o.status ], sn), 
-        's': _o.status,
-        'sStr': _o.get_status_display(),
-        'obj': 'ord'
-        })
+    return HttpResponse(Msg.objects.dumps(data={
+                'sn': sn, 
+                'act': r.getAjaxAct(r.getActByUser(request.user.id, o.act[s]), sn), 
+                '_act': r.getAjaxAct(o.act[ o.status ], sn), 
+                's': _o.status,
+                'sStr': _o.get_status_display(),
+                'obj': 'ord'
+            }
+        )
+    )
 
 
 def copyOrd(request, sn, s):
@@ -122,7 +122,7 @@ def copyOrd(request, sn, s):
     return HttpResponseRedirect(reverse('order:newOrdFrm'))
 
 @ordDr()
-@msgDr
+@msgPushDr
 def editOrd(request, sn, s):
     u"""订单状态修改-> 订单编辑"""
     modifyOrd(request=request, sn=sn, s=s)
@@ -132,21 +132,23 @@ def editOrd(request, sn, s):
     return HttpResponseRedirect(reverse('order:editOrdFrm'))
 
 @ordDr(1)
-@msgDr
+@msgPushDr
+@msgPushToRoleDr(2)
 def confirmOrd(request, sn, s):
     u"""订单状态修改-> 订单确认"""
 
     return modifyOrd(request=request, sn=sn, s=s)
 
 @ordDr(1)
-@msgDr
+@msgPushDr
 def nullOrd(request, sn, s):
     u"""订单状态修改-> 订单无效"""
 
     return modifyOrd(request=request, sn=sn, s=s)
 
 @ordDr(1)
-@msgDr
+@msgPushDr
+@msgPushToRoleDr(2)
 def stopOrd(request, sn, s):
     u"""订单状态修改-> 订单止单"""
 
@@ -171,7 +173,7 @@ def delItemOrd(request, mark):
     return rdrtBck(request)
 
 
-@ajaxMsg('无法修改表单数据')
+@ajaxErrMsg('无法修改表单数据')
 def cItem(request):
     u"""ajax-> 修改购物车内商品"""
     from cart.views import CartSess
@@ -180,49 +182,59 @@ def cItem(request):
 
     i = cc.getItem(mark)
 
-    return AjaxRJson().dumps({
-        'mark': mark,
-        'fee': f02f(i['fee']),
-        'nfee': f02f(i['nfee']),
-        'st': f02f(i['total']),
-        'total': f02f(cc.total()),
-    })
+    return HttpResponse(Msg.objects.dumps(data={
+                'mark': mark,
+                'fee': f02f(i['fee']),
+                'nfee': f02f(i['nfee']),
+                'st': f02f(i['total']),
+                'total': f02f(cc.total()),
+            }
+        )
+    )
 
 
-@ajaxMsg('未找到商品')
+@ajaxErrMsg('未找到商品')
 def getItemByKeyword(request):
     u"""ajax-> 商品查询"""
     from item.models import Item
 
-    r = [ { 'name':i.name, 'sn': i.sn, 'id': i.id, } for i in Item.objects.likeNameOrSn(request.GET.get('k', ''))]
+    return HttpResponse(Msg.objects.dumps(data=[
+                { 
+                    'name':i.name, 
+                    'sn': i.sn, 
+                    'id': i.id, 
+                } for i in Item.objects.likeNameOrSn(request.GET.get('k', ''))
+            ]
+        )
+    )
 
-    return AjaxRJson().dumps(r)
-
-@ajaxMsg('无此会员')
+@ajaxErrMsg('无此会员')
 def getUser(request):
     u"""ajax-> 查询会员"""
     from account.models import BsInfo
 
     u = BsInfo.objects.get(user__username=request.GET.get('u'))
 
-    return AjaxRJson().dumps({
-            u'用户名': u.user.username,
-            u'姓名': '%s %s' % (u.user.last_name, u.user.first_name),
-            u'生日': '%s %s' % (u.get_mon_display(), u.get_day_display()),
-            u'性别': u.get_sex_display(),
-            u'类型': u.get_typ_display(),
-            u'邮箱': u.user.email,
-            u'积分': u.user.pts.pt,
-            u'注册时间': '%s' % u.user.date_joined,
-        })
+    return HttpResponse(Msg.objects.dumps(data={
+                u'用户名': u.user.username,
+                u'姓名': '%s %s' % (u.user.last_name, u.user.first_name),
+                u'生日': '%s %s' % (u.get_mon_display(), u.get_day_display()),
+                u'性别': u.get_sex_display(),
+                u'类型': u.get_typ_display(),
+                u'邮箱': u.user.email,
+                u'积分': u.user.pts.pt,
+                u'注册时间': '%s' % u.user.date_joined,
+            }
+        )
+    )
 
-@ajaxMsg('无法填写表单')
+@ajaxErrMsg('无法填写表单')
 def cOrd(request):
     u"""ajax-> 修改订单信息"""
     for i,v in request.GET.dict().items():
         OrdSess(request).setByName(i, v)
 
-    return AjaxRJson().dumps()
+    return HttpResponse(Msg.objects.dumps())
 
 from new31.cls import BsSess
 class OrdSess(BsSess):
@@ -359,7 +371,10 @@ class OrdSerch(object):
         return self
 
     def range(self):
-        self.oList = self.oList.filter(ordlog__act__in=['order:submitOrd', 'order:editOrd'], ordlog__time__range=(self.initial['s'], self.initial['e']) ).distinct()
+        self.oList = self.oList.filter(
+                ordlog__act__in=['order:submitOrd', 'order:editOrd'], 
+                ordlog__time__range=(self.initial['s'], self.initial['e']) 
+            ).distinct()
 
         return self
 

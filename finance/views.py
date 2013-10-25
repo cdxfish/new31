@@ -3,11 +3,11 @@ u"""财务"""
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
+from django.http import HttpResponse
 from decorator import fncDetr
 from new31.func import rdrtBck
-from message.models import AjaxRJson
-from message.decorator import msgDr
-from ajax.decorator import ajaxMsg
+from message.models import Msg
+from message.decorator import msgPushDr, ajaxErrMsg
 from log.decorator import ordLogDr
 # Create your views here.
 
@@ -39,58 +39,61 @@ def modifyFnc(request, sn, s):
     f = Fnc.objects.get(ord__sn=sn)
     _f = Fnc.objects.cStatus(sn, s)
     
-    return AjaxRJson().dumps(**{
-        'sn': sn, 
-        'act': r.getAjaxAct(r.getActByUser(request.user.id, f.act[s]), sn), 
-        '_act': r.getAjaxAct(f.act[ f.status ], sn), 
-        's': _f.status,
-        'sStr': _f.get_status_display(),
-        'obj': 'fnc'
-        })
+    return HttpResponse(
+        Msg.objects.dumps(typ='success', data={
+                'sn': sn, 
+                'act': r.getAjaxAct(r.getActByUser(request.user.id, f.act[s]), sn), 
+                '_act': r.getAjaxAct(f.act[ f.status ], sn), 
+                's': _f.status,
+                'sStr': _f.get_status_display(),
+                'obj': 'fnc'
+                }
+            )
+        )
 
 @fncDetr
-@msgDr
+@msgPushDr
 def unpaidFnc(request, sn, s):
     u"""财务状态修改-> 财务未付"""
 
     return modifyFnc(request=request, sn=sn, s=s)
 
 @fncDetr
-@msgDr
+@msgPushDr
 def paidFnc(request, sn, s):
     u"""财务状态修改-> 财务已付"""
 
     return modifyFnc(request=request, sn=sn, s=s)
 
 @fncDetr
-@msgDr
+@msgPushDr
 def closedFnc(request, sn, s):
     u"""财务状态修改-> 财务已结"""
 
     return modifyFnc(request=request, sn=sn, s=s)
 
 @fncDetr
-@msgDr
+@msgPushDr
 def checkedFnc(request, sn, s):
     u"""财务状态修改-> 财务已核"""
 
     return modifyFnc(request=request, sn=sn, s=s)
 
 @fncDetr
-@msgDr
+@msgPushDr
 def stopFnc(request, sn, s):
     u"""财务状态修改-> 财务止付"""
 
     return modifyFnc(request=request, sn=sn, s=s)
 
 
-@ajaxMsg('无法填写表单')
+@ajaxErrMsg('无法填写表单')
 def cFnc(request):
     u"""ajax-> 修改财务信息"""
     for i,v in request.GET.dict().items():
         FncSess(request).setByName(i, v)
 
-    return AjaxRJson().dumps()
+    return HttpResponse(Msg.objects.dumps(typ='success', msg='修改成功'))
 
 
 from new31.cls import BsSess

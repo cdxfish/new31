@@ -4,13 +4,11 @@ from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 from new31.decorator import postDr
-from message.models import AjaxRJson
-from ajax.decorator import ajaxMsg
 from log.decorator import ordLogDr
-from message.decorator import msgDr
+from message.decorator import msgPushDr, ajaxErrMsg, msgPushToRoleDr
 from message.models import Msg
 from decorator import logcsDr, aLogcsDr
 from new31.func import keFrmt, rdrtBck, rdrRange
@@ -87,7 +85,7 @@ def logcsSub(request):
     Logcs.objects.saveLogcs(logcs.ord, request)
 
     messages.success(request, u'物流编辑成功: %s' % sn)
-    Msg.objects.success(u'物流编辑成功', {'sn': sn}, request.path)
+    Msg.objects.pushByPath(paht=request.path, msg=u'物流编辑成功', data={'sn': sn})
 
     CartSess(request).clear()
     LogcSess(request).clear()
@@ -111,24 +109,27 @@ def modifyLogcs(request, sn, s):
 
     r = Role.objects
 
-    return AjaxRJson().success(**{
-        'sn': sn, 
-        'act': r.getAjaxAct(r.getActByUser(request.user.id, l.act[s]), sn), 
-        '_act': r.getAjaxAct(l.act[ l.status ], sn), 
-        's': _l.status,
-        'sStr': _l.get_status_display(),
-        'obj': 'logcs'
-        })
+    return HttpResponse(
+        Msg.objects.dumps(data={
+                'sn': sn, 
+                'act': r.getAjaxAct(r.getActByUser(request.user.id, l.act[s]), sn), 
+                '_act': r.getAjaxAct(l.act[ l.status ], sn), 
+                's': _l.status,
+                'sStr': _l.get_status_display(),
+                'obj': 'logcs'
+                }
+            )
+        )
 
 @logcsDr(1)
-@msgDr
+@msgPushDr
 def logcsUnsent(request, sn, s):
     u"""物流状态修改-> 物流未发"""
 
     return modifyLogcs(request=request, sn=sn, s=s)
 
 @logcsDr()
-@msgDr
+@msgPushDr
 def logcsEdit(request, sn, s):
     u"""物流状态修改-> 物流编辑"""
     from models import Logcs
@@ -144,28 +145,30 @@ def logcsEdit(request, sn, s):
     return HttpResponseRedirect(reverse('logistics:logcsEditFrm'))
 
 @logcsDr(1)
-@msgDr
+@msgPushDr
+@msgPushToRoleDr(7, 8, 9, 10, 12, 13)
 def logcsShip(request, sn, s):
     u"""物流状态修改-> 物流已发"""
 
     return modifyLogcs(request=request, sn=sn, s=s)
 
 @logcsDr(1)
-@msgDr
+@msgPushDr
 def logcsRefused(request, sn, s):
     u"""物流状态修改-> 物流拒签"""
 
     return modifyLogcs(request=request, sn=sn, s=s)
 
 @logcsDr(1)
-@msgDr
+@msgPushDr
 def logcsSign(request, sn, s):
     u"""物流状态修改-> 物流已签"""
 
     return modifyLogcs(request=request, sn=sn, s=s)
 
 @logcsDr(1)
-@msgDr
+@msgPushDr
+@msgPushToRoleDr(7, 8, 9, 10, 12, 13)
 def logcsStop(request, sn, s):
     u"""物流状态修改-> 物流止送"""
     # from models import Logcs
@@ -180,10 +183,10 @@ def logcsStop(request, sn, s):
 
     return modifyLogcs(request=request, sn=sn, s=s)
 
-# @ajaxMsg('无法修改表单数据')
+@ajaxErrMsg('无法修改表单数据')
 @aLogcsDr
 @ordLogDr
-@msgDr
+@msgPushDr
 def cDman(request, sn, user):
     u"""ajax-> 修改物流师傅"""
     from purview.models import Role
@@ -206,12 +209,12 @@ def cDman(request, sn, user):
 
     logcs.save()
 
-    return AjaxRJson().success()
+    return HttpResponse(Msg.objects.dumps())
 
-@ajaxMsg('无法修改表单数据')
+@ajaxErrMsg('无法修改表单数据')
 @aLogcsDr
 @ordLogDr
-@msgDr
+@msgPushDr
 def cAdv(request, sn, value):
     u"""ajax-> 修改物流偏移量"""
     from models import Logcs
@@ -219,23 +222,24 @@ def cAdv(request, sn, value):
     value = int(value)
     advs = [i[0] for i in Logcs.advs]
     if not value in advs:
-        return  AjaxRJson(u'无法修改修改物流偏移量').error()
+        return HttpResponse(Msg.objects.dumps(typ='error', msg=u'无法修改修改物流偏移量'))
 
     logcs = Logcs.objects.get(ord=sn)
     logcs.advance = value
     logcs.save()
 
-    return AjaxRJson().success()
+    return HttpResponse(Msg.objects.dumps())
 
 
-@ajaxMsg('无法填写表单')
+
+@ajaxErrMsg('无法填写表单')
 def cLogcs(request):
     u"""ajax-> 修改收货人信息"""
 
     for i,v in request.GET.dict().items():
         LogcSess(request).setByName(i, u'%s' % v)
 
-    return AjaxRJson().success()
+    return HttpResponse(Msg.objects.dumps())
 
 
 from new31.cls import BsSess

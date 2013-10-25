@@ -1,7 +1,8 @@
 #coding:utf-8
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 from new31.func import rdrtBck
-from message.models import AjaxRJson
+from message.models import Msg
 from functools import wraps
 # Create your decorator here.
 
@@ -21,7 +22,7 @@ def fncDetr(func):
 
         else:
 
-            return AjaxRJson().error( u'%s - 无法%s' % (sn, Fnc.chcs[s][1]) )
+            return HttpResponse(Msg.objects.dumps(typ='error', msg=u'%s - 无法%s' % (sn, Fnc.chcs[s][1]) ))
 
     return _func
 

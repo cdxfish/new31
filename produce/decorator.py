@@ -1,7 +1,8 @@
 #coding:utf-8
 from django.contrib import messages
+from django.http import HttpResponse
 from new31.func import rdrtBck
-from message.models import AjaxRJson
+from message.models import Msg
 from functools import wraps
 # Create your decorator here.
 
@@ -14,14 +15,14 @@ def proDr(func):
         sn = int(kwargs['sn'])
         s = int(kwargs['s'])
 
-        pro =  Pro.objects.get(id=sn)
+        p = Pro.objects.get(id=sn)
 
-        if s in Pro.objects.getActTuple(pro.status):
+        if s in Pro.objects.getActTuple(p.status):
 
             return func(request, *args, **kwargs)
 
         else:
 
-            return AjaxRJson().error( u'%s | %s - 无法%s' % (pro.ord.sn, pro.name, Pro.chcs[s][1]) )
+            return HttpResponse(Msg.objects.dumps(typ='error', msg= u'%s | %s - 当前状态无法%s' % (p.ord.sn, p.name, Pro.chcs[s][1]) ))
 
     return _func

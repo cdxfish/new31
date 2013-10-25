@@ -4,53 +4,6 @@ from django.contrib.auth.models import User
 import json
 # Create your models here.
 
-class AjaxRJson(object):
-    def __init__(self, msg='success'):
-
-        self.msg = msg
-        self.typ = {
-            'warning': 'warning',
-            'error': 'error',
-            'success': 'success',
-            'info': 'info',
-            'debug': 'debug',
-            
-        }
-        self.data = {}
-
-    def dump(self, data, typ, msg=''):
-        self.data = data
-        if msg: self.msg = msg
-
-        return json.dumps({'msg':self.msg, 'typ': self.typ[typ], 'data':self.data })
-
-
-    def dumps(self, data, typ='success'):
-
-        return HttpResponse(self.dump(data, typ))
-
-    def warning(self, **kwarg):
-
-        return self.dumps(kwarg, 'warning')
-
-    def error(self, **kwarg):
-
-        return self.dumps(kwarg, 'error')
-
-    def success(self, **kwarg):
-
-        return self.dumps(kwarg, 'success')
-
-    def info(self, **kwarg):
-
-        return self.dumps(kwarg, 'info')
-
-    def debug(self, **kwarg):
-
-        return self.dumps(kwarg, 'debug')
-
-  
-
 class msgManager(models.Manager):
     def __init__(self, *arg, **kwarg):
         super(msgManager, self).__init__(*arg, **kwarg)
@@ -68,18 +21,21 @@ class msgManager(models.Manager):
         return self.filter(id__in=list(ids), read=False).update(read=True)
 
     def get(self, user):
-        if type(user) == 'str':
+        if type(user) == type('str'):
             return self.filter(user__username=user, read=False)
         else:
             return self.filter(user=user, read=False)
 
-    def dumps(self, typ, msg='', data=[]):
+    def dumps(self, typ='success', msg='', data=[]):
         self.msg = msg
         self.data = data
 
         return json.dumps({ 'typ': self.typ[typ], 'msg':self.msg, 'data':self.data })
 
     def push(self, user, **kwarg):
+        if type(user) == type('str'):
+
+            user = User.objects.get(username=user)
 
         Msg.objects.create(_data=self.dumps(**kwarg), user=user)
 

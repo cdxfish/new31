@@ -117,7 +117,7 @@ b = {
 
                 var act = '';
                 for (var i in data.data.act) {
-                    act += '<a href="' + data.data.act[i][3] + '" class="button ' + data.data.act[i][2] + '">' + data.data.act[i][1] + '</a>'
+                    act += '<a href="' + data.data.act[i][3] + '" class="button ' + data.data.act[i][2] + '">' + data.data.act[i][1] + '</a>';
 
                 }
 
@@ -143,11 +143,14 @@ b = {
                     } else {
                         var read = [];
                         $.each(data.data, function(i, v) {
-                            if (v.data.sn) {
-                                $.debug[v.typ](v.data.from + ' [' + v.time + ']： ' + v.msg + ' [' + v.data.sn + ']')
-                            } else {
-                                $.debug[v.typ](v.data.from + ' [' + v.time + ']： ' + v.msg)
-                            }
+                            var str = '';
+                            !! v.data.from && (str += v.data.from + ' ');
+                            !! v.time && (str += v.time + '：');
+                            !! v.msg && (str += v.msg + ' ');
+                            !! v.data.sn && (str += v.data.sn + ' ');
+
+                            $.debug[v.typ](str);
+
                             read.push(v.id);
                         });
 

@@ -1,8 +1,9 @@
 #coding:utf-8
 from django.contrib import messages
+from django.http import HttpResponse
 from new31.func import rdrtBck
 from functools import wraps
-from message.models import AjaxRJson
+from message.models import Msg
 # Create your decorator here.
 
 # 物流状态操作装饰器
@@ -19,7 +20,7 @@ def logcsDr(typ=0):
             if not s in act:
                 if typ:
 
-                    return AjaxRJson(u'%s - 无法%s' % (sn, Logcs.chcs[s][1])).error()
+                    return HttpResponse(Msg.objects.dumps(typ='error', msg=u'%s - 无法%s' % (sn, Logcs.chcs[s][1]) ))
                 else:
                     messages.error(request, u'%s - 无法%s' % (sn, Logcs.chcs[s][1]))
 
@@ -37,14 +38,13 @@ def aLogcsDr(func):
     @wraps(func)
     def _func(request, *args, **kwargs):
         from models import Logcs
-        from message.models import AjaxRJson
         
         sn = int(kwargs['sn'])
 
         logcs = Logcs.objects.get(ord=sn)
 
         if logcs.status > 1:
-            return AjaxRJson(u'无法修改表单数据').error()
+            return HttpResponse(Msg.objects.dumps(typ='error', msg=u'无法修改表单数据'))
 
         else:
             return func(request, *args, **kwargs)

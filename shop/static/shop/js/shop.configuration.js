@@ -52,42 +52,49 @@ var shop = {
 
     },
     ajaxGetItems: function(obj) {
-        if (!$(".moreLoading").length) {
-            obj.append("<div class=\"moreLoading\" style=\"display:none;\"><span class=\"loading_black\"></span>努力加载中...</div>");
-        }
+        var self = this;
 
-        var load = $(".moreLoading");
-        obj.ajaxStart(function() {
-            load.show()
-        }).ajaxSuccess(function() {
-            load.remove();
-        });
+        var load = $('<div class=\"moreLoading\"><span class=\"loading_black\"></span>努力加载中...</div>');
 
-        $.getJSON('/shop/itemmore/', function(data) {
+        $.ajax({
+            type: 'GET',
+            url: '/shop/itemmore/',
+            dataType: 'json',
+            success: function(data) {
+                if (data.typ == 'error') {
+                    $.dialog.msg('加载出错，请稍候再试');
+                } else {
+                    var appendHtm = '';
 
-            if (data.err) {
-                alert(data.msg);
-            } else {
-                var appendHtm = '';
+                    $.each(data.data, function(i, v) {
+                        appendHtm += '<div class="styp' + v.typ + '">';
+                        appendHtm += '   <a href="/tag/' + v.name + '/" target="_blank/" title="' + v.name + '">';
+                        appendHtm += '       <img src="' + v.src + '" alt="' + v.name + '" title="' + v.name + '" class="b' + v.typ + '" />';
+                        appendHtm += '       <span class="floatInfo">';
+                        appendHtm += '           <span class="price">' + v.fee + '</span>';
+                        appendHtm += '           <span class="like_icon">' + v.like + '</span>';
+                        appendHtm += '           <span class="name">' + v.name + '</span>';
+                        appendHtm += '       </span>';
+                        appendHtm += '   </a>';
+                        appendHtm += '</div>';
+                    });
 
-                $.each(data.data, function(i, v) {
-                    appendHtm += '<div class="styp' + v.typ + '">';
-                    appendHtm += '   <a href="/tag/' + v.name + '/" target="_blank/" title="' + v.name + '">';
-                    appendHtm += '       <img src="' + v.src + '" alt="' + v.name + '" title="' + v.name + '" class="b' + v.typ + '" />';
-                    appendHtm += '       <span class="floatInfo">';
-                    appendHtm += '           <span class="price">' + v.fee + '</span>';
-                    appendHtm += '           <span class="like_icon">' + v.like + '</span>';
-                    appendHtm += '           <span class="name">' + v.name + '</span>';
-                    appendHtm += '       </span>';
-                    appendHtm += '   </a>';
-                    appendHtm += '</div>';
-                });
+                    obj.append(appendHtm);
 
-                obj.append(appendHtm);
+                    self.plus();
+                }
 
-                plusi();
+            },
+            beforeSend: function() {
+                obj.append(load);
+            },
+            error: function() {
+                $.dialog.msg('加载出错，请稍候再试');
+
+            },
+            complete: function() {
+                load.remove();
             }
-
         });
 
         return this;

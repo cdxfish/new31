@@ -142,7 +142,7 @@
                 var time = !t ? 1000 : t;
 
 
-                this.show('<span class="message" style="text-align:center; width:220px">' + msg + '</span>', cssObj);
+                this.show('<span class="message" style="text-align:center; width:300px">' + msg + '</span>', cssObj);
 
                 setTimeout(function(){
                     self.close();
