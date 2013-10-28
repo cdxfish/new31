@@ -166,7 +166,7 @@ APPS = {
     'upload':'',
     'print':'',
     'bom':'',
-    'about':'',
+    'article':'',
     }
 
 

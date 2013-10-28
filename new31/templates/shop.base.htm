@@ -23,9 +23,9 @@
         <div class="toolBar">
             <a href="{% url 'shop:shop' %}" title="31客" class="logo" ></a>
             <ul class="fl">
-                <li><a href="/pub/">大客户</a></li>
-                <li><a href="/about/">订购指南</a></li>
-                <li><a href="/ex/">K金换购</a></li>
+                <li><a href="{% url 'article:about' %}">关于31客</a></li>
+                <li><a href="{% url 'article:guide' %}">订购指南</a></li>
+                <li><a href="{% url 'article:ex' %}">K金换购</a></li>
             </ul>
             <ul class="fr">
                 <li>

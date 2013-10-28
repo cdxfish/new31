@@ -169,7 +169,7 @@ b = {
 
             }
         load();
-        setInterval(load, 6000);
+        setInterval(load, 10000);
 
         return this;
     }
