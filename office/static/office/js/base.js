@@ -1,6 +1,7 @@
 // 置顶工具条
 $(document).ready(function() {
     b.nav().odd('odd').plugin().loadMsg();
+    // $(window).on('focus', b.loadMsg);
 })
 
 b = {
@@ -143,11 +144,7 @@ b = {
                     } else {
                         var read = [];
                         $.each(data.data, function(i, v) {
-                            var str = '';
-                            !! v.data.from && (str += v.data.from + ' ');
-                            !! v.time && (str += v.time + '：');
-                            !! v.msg && (str += v.msg + ' ');
-                            !! v.data.sn && (str += v.data.sn + ' ');
+                            var str = ''; !! v.data.from && (str += v.data.from + ' '); !! v.time && (str += v.time + '：'); !! v.msg && (str += v.msg + ' '); !! v.data.sn && (str += v.data.sn + ' ');
 
                             $.debug[v.typ](str);
 
@@ -168,8 +165,13 @@ b = {
                 });
 
             }
-        load();
-        setInterval(load, 10000);
+        var stime;
+        $(window).on('focus', function() {
+            load();
+            stime = setInterval(load, 10000);
+        }).on('blur', function() {
+            clearInterval(stime);
+        });
 
         return this;
     }

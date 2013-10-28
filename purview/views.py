@@ -92,8 +92,8 @@ class URLPurview:
             return rdrtBck(self.request)
 
         else:
-            from ajax.views import AjaxRJson
-            return AjaxRJson().error(self.errStr)
+            from message.models import Msg
+            return HttpResponse(Msg.objects.dumps(typ='error', msg=self.errStr))
 
     # 登录提示
     def login(self):

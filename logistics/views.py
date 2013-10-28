@@ -85,7 +85,7 @@ def logcsSub(request):
     Logcs.objects.saveLogcs(logcs.ord, request)
 
     messages.success(request, u'物流编辑成功: %s' % sn)
-    Msg.objects.pushByPath(paht=request.path, msg=u'物流编辑成功', data={'sn': sn})
+    Msg.objects.pushByPath(path=request.path, msg=u'物流编辑成功', data={'sn': sn})
 
     CartSess(request).clear()
     LogcSess(request).clear()
