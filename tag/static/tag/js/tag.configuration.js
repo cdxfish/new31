@@ -5,7 +5,7 @@ $(document).ready(function() {
 t = {
     like: function() {
 
-        $(document).live('click', '.btnLike',
+        $(document).on('click', '.btnLike',
 
         function() {
             $(this).ajaxGET($(this).attr('href'), function(data) {
@@ -22,7 +22,7 @@ t = {
     },
 
     btnReplay: function() {
-        $('.btnReplay').live('click', function() {
+        $(document).on('click', '.btnReplay', function() {
             $.dialog.ajaxGET($(this).attr('href'), function(data) {
                 var html = '';
                 html += '   <h3>请选择规格</h3>  \r\n';

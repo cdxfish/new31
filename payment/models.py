@@ -20,6 +20,7 @@ class PayManager(models.Manager):
 
         return tuple([(i.id, i.get_cod_display()) for i in self.filter(cod__in=['payafter', 'alipay', 'post'], onl=True)])
 
+
 class Pay(models.Model):
     import api
 
@@ -30,6 +31,21 @@ class Pay(models.Model):
     onl = models.BooleanField(u'上线')
 
     objects = PayManager()
+
+    def sub(self, ord):
+        getattr(self.api, self.cod).main(ord).sub()
+
+        return self
+    
+    def pay(self, ord):
+        getattr(self.api, self.cod).main(ord).pay()
+
+        return self
+    
+    def re(self, ord):
+        getattr(self.api, self.cod).main(ord).re()
+
+        return self
 
     def __unicode__(self):
         return u"%s - %s" % (self.get_cod_display(), self.onl)

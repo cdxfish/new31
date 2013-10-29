@@ -50,7 +50,7 @@ def getSpec(request, id):
             'nfee': f02f(i.nfee()), 
             })
 
-    return AjaxRJson().dumps(data)
+        return HttpResponse(Msg.objects.dumps(data=data))
 
 class TagSrch(object):
     from decorator import noTagDr

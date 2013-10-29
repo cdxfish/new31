@@ -11,15 +11,23 @@ class fncManager(models.Manager):
 
     def saveFnc(self, ord, request):
         from views import FncSess
+        from payment.models import Pay
+
+        cod = FncSess(request).getObj()['pay']
+
         try:
             fnc = ord.fnc
         except Exception, e:
             fnc = Fnc()
 
         fnc.ord = ord
-        fnc.cod = FncSess(request).getObj()['pay']
+        fnc.cod = cod
 
         fnc.save()
+
+        cod.sub(ord)
+
+        return self
 
     def cStatus(self, sn , s):
         fnc = self.get(ord=sn)
