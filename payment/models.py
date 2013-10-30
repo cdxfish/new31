@@ -33,7 +33,10 @@ class Pay(models.Model):
     objects = PayManager()
 
     def sub(self, ord):
-        getattr(self.api, self.cod).main(ord).sub()
+        try:
+            getattr(self.api, self.cod).main(ord).sub()
+        except Exception, e:
+            raise e
 
         return self
     

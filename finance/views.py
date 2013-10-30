@@ -52,35 +52,30 @@ def modifyFnc(request, sn, s):
         )
 
 @fncDetr
-@msgPushDr
 def unpaidFnc(request, sn, s):
     u"""财务状态修改-> 财务未付"""
 
     return modifyFnc(request=request, sn=sn, s=s)
 
 @fncDetr
-@msgPushDr
 def paidFnc(request, sn, s):
     u"""财务状态修改-> 财务已付"""
 
     return modifyFnc(request=request, sn=sn, s=s)
 
 @fncDetr
-@msgPushDr
 def closedFnc(request, sn, s):
     u"""财务状态修改-> 财务已结"""
 
     return modifyFnc(request=request, sn=sn, s=s)
 
 @fncDetr
-@msgPushDr
 def checkedFnc(request, sn, s):
     u"""财务状态修改-> 财务已核"""
 
     return modifyFnc(request=request, sn=sn, s=s)
 
 @fncDetr
-@msgPushDr
 def stopFnc(request, sn, s):
     u"""财务状态修改-> 财务止付"""
 

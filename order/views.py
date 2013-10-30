@@ -122,7 +122,6 @@ def copyOrd(request, sn, s):
     return HttpResponseRedirect(reverse('order:newOrdFrm'))
 
 @ordDr()
-@msgPushDr
 def editOrd(request, sn, s):
     u"""订单状态修改-> 订单编辑"""
     modifyOrd(request=request, sn=sn, s=s)
@@ -132,8 +131,7 @@ def editOrd(request, sn, s):
     return HttpResponseRedirect(reverse('order:editOrdFrm'))
 
 @ordDr(1)
-@msgPushDr
-@msgPushToRoleDr(-1, 2)
+@msgPushToRoleDr(2)
 def confirmOrd(request, sn, s):
     u"""订单状态修改-> 订单确认"""
 
@@ -147,8 +145,7 @@ def nullOrd(request, sn, s):
     return modifyOrd(request=request, sn=sn, s=s)
 
 @ordDr(1)
-@msgPushDr
-@msgPushToRoleDr(-1, 2)
+@msgPushToRoleDr(2)
 def stopOrd(request, sn, s):
     u"""订单状态修改-> 订单止单"""
 
@@ -443,6 +440,7 @@ class OrdSub(object):
         self.logcs()
         self.pro()
         self.fnc()
+        self.pay()
         self.log()
         self.done()
 
@@ -516,6 +514,14 @@ class OrdSub(object):
         from finance.models import Fnc
 
         Fnc.objects.saveFnc(self.ord, self.request)
+
+        return self
+
+    
+    # 支付流程后续处理
+    @subMsg(u'无法处理后续支付流程。')
+    def pay(self):
+        self.ord.fnc.cod.sub(self.ord)
 
         return self
 

@@ -122,14 +122,12 @@ def modifyLogcs(request, sn, s):
         )
 
 @logcsDr(1)
-@msgPushDr
 def logcsUnsent(request, sn, s):
     u"""物流状态修改-> 物流未发"""
 
     return modifyLogcs(request=request, sn=sn, s=s)
 
 @logcsDr()
-@msgPushDr
 def logcsEdit(request, sn, s):
     u"""物流状态修改-> 物流编辑"""
     from models import Logcs
@@ -145,22 +143,18 @@ def logcsEdit(request, sn, s):
     return HttpResponseRedirect(reverse('logistics:logcsEditFrm'))
 
 @logcsDr(1)
-@msgPushDr
-@msgPushToRoleDr(-1, 7, 8, 9, 10, 12, 13)
 def logcsShip(request, sn, s):
     u"""物流状态修改-> 物流已发"""
 
     return modifyLogcs(request=request, sn=sn, s=s)
 
 @logcsDr(1)
-@msgPushDr
 def logcsRefused(request, sn, s):
     u"""物流状态修改-> 物流拒签"""
 
     return modifyLogcs(request=request, sn=sn, s=s)
 
 @logcsDr(1)
-@msgPushDr
 def logcsSign(request, sn, s):
     u"""物流状态修改-> 物流已签"""
 
@@ -168,7 +162,7 @@ def logcsSign(request, sn, s):
 
 @logcsDr(1)
 @msgPushDr
-@msgPushToRoleDr(-1, 7, 8, 9, 10, 12, 13)
+@msgPushToRoleDr(7, 8, 9, 10, 12, 13)
 def logcsStop(request, sn, s):
     u"""物流状态修改-> 物流止送"""
     # from models import Logcs
@@ -186,7 +180,6 @@ def logcsStop(request, sn, s):
 @ajaxErrMsg('无法修改表单数据')
 @aLogcsDr
 @ordLogDr
-@msgPushDr
 def cDman(request, sn, user):
     u"""ajax-> 修改物流师傅"""
     from purview.models import Role
@@ -214,7 +207,6 @@ def cDman(request, sn, user):
 @ajaxErrMsg('无法修改表单数据')
 @aLogcsDr
 @ordLogDr
-@msgPushDr
 def cAdv(request, sn, value):
     u"""ajax-> 修改物流偏移量"""
     from models import Logcs

@@ -1,7 +1,6 @@
 // 置顶工具条
 $(document).ready(function() {
     b.nav().odd('odd').plugin().loadMsg();
-    // $(window).on('focus', b.loadMsg);
 })
 
 b = {
