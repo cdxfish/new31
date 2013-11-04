@@ -1,0 +1,34 @@
+{% extends "new.base.htm" %}
+
+{% block middle %}
+                <div id="right">
+                    <div id="show">
+                        <div id="m_i">
+                            <span id="result"></span>
+                            <form action="" method="post">
+                                <table width="670" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td colspan="2">输入订单号查询订单状态</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">订单号：</td>
+                                        <td><input type="text" id="onum" name="onum" class="input" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>
+                                            <input type="button" value="" class="btn_cx" onClick="return chekq(this)" />
+                                            <input type="hidden" name="action" value="query" />
+                                            <input type="hidden" name="class" value="22" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+{% endblock %}
+
+{% block js %}
+        <script type="text/javascript" src="{{ STATIC_URL }}new/js/sides.js"></script>
+{% endblock %}

@@ -167,6 +167,7 @@ APPS = {
     'print':'',
     'bom':'',
     'article':'',
+    'new':'',
     }
 
 

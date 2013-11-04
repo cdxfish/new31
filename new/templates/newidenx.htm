@@ -1,0 +1,161 @@
+{% extends "new.base.htm" %}
+
+{% block middle %}
+                <div id="bner">
+                    <div id="imgPlay">
+                        <ul class="imgs" id="actor">
+                            <li><a href="/" target="_blank"><img src="{{ STATIC_URL }}new/images/13679842939718.jpg"></a></li>
+                            <li><a href="/" target="_blank"><img src="{{ STATIC_URL }}new/images/13804380515243.jpg"></a></li>
+                            <li><a href="/" target="_blank"><img src="{{ STATIC_URL }}new/images/13743081906304.jpg"></a></li>
+                        </ul>
+                        <div class="num" style="left: 394px;">
+                            <p class="mc" style="width: 72px;">
+                            </p>
+                        </div>
+                        <div class="num" id="numInner" style="width: 72px; left: 407px;">
+                            <span class="">
+                            </span>
+                            <span class="">
+                            </span>
+                            <span class="">
+                            </span>
+                            <span class="">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <dl class="mti" id="cake">
+                    <dt>CAKE</dt>
+                    <dd><!-- <img src="{{ STATIC_URL }}new/images/13741335652678.jpg" width="150" height="86"/> --></dd>
+                </dl>
+                <ul class="menu">
+                    <li>
+                        <a href="{% url 'new:newindex' %}#logo">首页</a>
+                    </li>
+                    <li>
+                        <a class="on" href="{% url 'new:newindex' %}#cake">蛋糕</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'new:newindex' %}#cookie">曲奇</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'new:newindex' %}#chocolate">巧克力</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'new:newindex' %}#pie">派</a>
+                    </li>
+                </ul>
+                <div class="lsv">
+                    <a href=""><img src="{{ STATIC_URL }}new/images/13736245379911.jpg" data-url="/UploadFiles/20130712/13736245379911.jpg" title="巧克力酱球" style=""></a>
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/13738608759264.jpg" data-url="/UploadFiles/20130715/13738608759264.jpg" title="黑&amp;白" style=""></a>
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/13738609147394.jpg" data-url="/UploadFiles/20130715/13738609147394.jpg" title="黑方" style=""></a>
+                    <a href=""><img src="{{ STATIC_URL }}new/images/1373624631806.jpg" data-url="/UploadFiles/20130712/1373624631806.jpg" title="巧克力英文文字图" style=""></a>
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/13738616471004.jpg" data-url="/UploadFiles/20130715/13738616471004.jpg" title="黑森林" style="float:right;"></a>
+                    <a href=""><img src="{{ STATIC_URL }}new/images/13738616151536.jpg" data-url="/UploadFiles/20130715/13738616151536.jpg" title="巧克力条" style=""></a>
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/13738616747156.jpg" data-url="/UploadFiles/20130715/13738616747156.jpg" title="杏仁巧克力" style=""></a>
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/13738617233898.jpg" data-url="/UploadFiles/20130715/13738617233898.jpg" title="歌剧" style=""></a>
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/13738617458376.jpg" data-url="/UploadFiles/20130715/13738617458376.jpg" title="巧克力提拉" style=""></a>
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/13738617684119.jpg" data-url="/UploadFiles/20130715/13738617684119.jpg" title="布朗尼" style=""></a>
+                </div>
+                <div class="more"><a href="{% url 'tag:tagShow' 'cake' %}">更多...</a></div>
+                <dl class="mti" id="cookie">
+                    <dt>COOKIE</dt>
+                    <dd><!-- <img src="{{ STATIC_URL }}new/images/13741335652678.jpg" width="150" height="86"/> --></dd>
+                </dl>
+                <ul class="menu">
+                    <li>
+                        <a href="{% url 'new:newindex' %}#logo">首页</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'new:newindex' %}#cake">蛋糕</a>
+                    </li>
+                    <li>
+                        <a class="on" href="{% url 'new:newindex' %}#cookie">曲奇</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'new:newindex' %}#chocolate">巧克力</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'new:newindex' %}#pie">派</a>
+                    </li>
+                </ul>
+                <div class="lsv">
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/13738628662144.jpg" data-url="/UploadFiles/20130715/13738628662144.jpg" style=""></a>
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/13738628864422.jpg" data-url="/UploadFiles/20130715/13738628864422.jpg" style=""></a>
+                    <a href=""><img src="{{ STATIC_URL }}new/images/13736248085549.jpg" data-url="/UploadFiles/20130712/13736248085549.jpg" style=""></a>
+                    <a href=""><img src="{{ STATIC_URL }}new/images/13736248312318.jpg" data-url="/UploadFiles/20130712/13736248312318.jpg" style=""></a>
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/13738629037259.jpg" data-url="/UploadFiles/20130715/13738629037259.jpg" style="float:right;"></a>
+                    <a href=""><img src="{{ STATIC_URL }}new/images/13738629754790.jpg" data-url="/UploadFiles/20130715/13738629754790.jpg" style=""></a>
+                    <a href=""><img src="{{ STATIC_URL }}new/images/13736248574566.jpg" data-url="/UploadFiles/20130712/13736248574566.jpg" style=""></a>
+                </div>
+                <div class="more"><a href="{% url 'tag:tagShow' 'cookie' %}">更多...</a></div>
+                <dl class="mti" id="chocolate">
+                    <dt>CHOCOLATE</dt>
+                    <dd><!-- <img src="{{ STATIC_URL }}new/images/13741335652678.jpg" width="150" height="86"/> --></dd>
+                </dl>
+                <ul class="menu">
+                    <li>
+                        <a href="{% url 'new:newindex' %}#logo">首页</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'new:newindex' %}#cake">蛋糕</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'new:newindex' %}#cookie">曲奇</a>
+                    </li>
+                    <li>
+                        <a class="on" href="{% url 'new:newindex' %}#chocolate">巧克力</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'new:newindex' %}#pie">派</a>
+                    </li>
+                </ul>
+                <div class="lsv">
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/13738619058052.jpg" data-url="/UploadFiles/20130715/13738619058052.jpg" style=""></a>
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/13738619536204.jpg" data-url="/UploadFiles/20130715/13738619536204.jpg" style=""></a>
+                    <a href=""><img src="{{ STATIC_URL }}new/images/13736251408095.jpg" data-url="/UploadFiles/20130712/13736251408095.jpg" style=""></a>
+                    <a href=""><img src="{{ STATIC_URL }}new/images/13736251811199.jpg" data-url="/UploadFiles/20130712/13736251811199.jpg" style=""></a>
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/13738620062092.jpg" data-url="/UploadFiles/20130715/13738620062092.jpg" style="float:right"></a>
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/13738620435036.jpg" data-url="/UploadFiles/20130715/13738620435036.jpg" style=""></a>
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/1373862161576.jpg" data-url="/UploadFiles/20130715/1373862161576.jpg" style=""></a>
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/13738622176590.jpg" data-url="/UploadFiles/20130715/13738622176590.jpg" style=""></a>
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/13738623022765.jpg" data-url="/UploadFiles/20130715/13738623022765.jpg" style=""></a>
+                    <a href=""><img src="{{ STATIC_URL }}new/images/1373625248513.jpg" data-url="/UploadFiles/20130712/1373625248513.jpg" style=""></a>
+                </div>
+                <div class="more"><a href="{% url 'tag:tagShow' 'chocolate' %}">更多...</a></div>
+                <dl class="mti" id="pie">
+                    <dt>PIE</dt>
+                    <dd><!-- <img src="{{ STATIC_URL }}new/images/13741335652678.jpg" width="150" height="86"/> --></dd>
+                </dl>
+                <ul class="menu">
+                    <li>
+                        <a href="{% url 'new:newindex' %}#logo">首页</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'new:newindex' %}#cake">蛋糕</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'new:newindex' %}#cookie">曲奇</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'new:newindex' %}#chocolate">巧克力</a>
+                    </li>
+                    <li>
+                        <a class="on" href="{% url 'new:newindex' %}#pie">派</a>
+                    </li>
+                </ul>
+                <div class="lsv">
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/1373862457642.jpg" data-url="/UploadFiles/20130715/1373862457642.jpg" style=""></a>
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/1373862478225.jpg" data-url="/UploadFiles/20130715/1373862478225.jpg" style=""></a>
+                    <a href=""><img src="{{ STATIC_URL }}new/images/13736249661235.jpg" data-url="/UploadFiles/20130712/13736249661235.jpg" style=""></a>
+                    <a href=""><img src="{{ STATIC_URL }}new/images/13736249424812.jpg" data-url="/UploadFiles/20130712/13736249424812.jpg" style=""></a>
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/13738625287697.jpg" data-url="/UploadFiles/20130715/13738625287697.jpg" style="float:right"></a>
+                    <a href="/"><img src="{{ STATIC_URL }}new/images/13738625469318.jpg" data-url="/UploadFiles/20130715/13738625469318.jpg" style=""></a>
+                    <a href=""><img src="{{ STATIC_URL }}new/images/13736250118174.jpg" data-url="/UploadFiles/20130712/13736250118174.jpg" style=""></a>
+                </div>
+                <div class="more"><a href="{% url 'tag:tagShow' 'pie' %}">更多...</a></div>
+{% endblock %}
+
+{% block js %}
+        <script type="text/javascript" src="{{ STATIC_URL }}new/js/sides.js"></script>
+{% endblock %}
