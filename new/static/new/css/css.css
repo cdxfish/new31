@@ -1,135 +1,641 @@
 /* CSS Document */
-*{margin:0;padding:0;}
-a{text-decoration:none;color:#4b3c37;}
-a:hover{text-decoration:none;border-bottom:thick solid #5B2900;}
-img{border:0;float:left;}
-body{font-size:12px;color:#4b3c37;font-family:Arial, Helvetica, sans-serif;background:#FFF;}
-ul, ol, dl{list-style:none;}
-.clear{clear:both;line-height:0;height:0;font-size:0;}
+* {
+    margin: 0;
+    padding: 0;
+}
 
-*html{/* 只有IE6支持 */background-image: url(about:blank); /* 使用空背景 */background-attachment: fixed; /* 固定背景 */}
-#tb{width:100%;position:fixed;top:0;left:0;z-index:1000;background:#FFF;}
-#tb{_position:absolute;_top: expression(documentElement.scrollTop + "px");}
-#tb #bar{width:886px;padding:10px 0;margin:0 auto;line-height:24px;}
-#tb #bar dt{float:left;font-size:24px;}
-#tb #bar dd{float:right;}
-#tb #bar dd a{margin: 0 5px;}
+a {
+    text-decoration: none;
+    color: #4b3c37;
+}
 
-#main{ width:886px; margin:0 auto; background:#FFF; padding:0 58px;}
+a:hover {
+    /*color:#cb9767;*/
+    text-decoration: none;
+    border-bottom: thick solid #5B2900;
+}
 
-#main #top, #main #middle, #main #ft{width:100%;float:left;}
+a.on {
+    border-bottom: thick solid #5B2900;
+}
 
-#main .mti{width:100%;float:left;}
-#main .mti a{color:#5b2900;border:none;text-decoration:none;}
-#main .mti a:hover{border:none;text-decoration:none;}
-#main .mti dt{color:#5b2900;font-size:30px;float:left;padding-top:50px;}
-#main .mti dd{width:150px;height:86px;position:relative;float:right;top:45px;background:url(/static/new/images/13741335652678.jpg)}
-#main .menu{width:100%;float:left;margin-bottom:20px;background:url(/static/new/images/menu.jpg) bottom repeat-x;height:30px;overflow:hidden;line-height:22px;margin-top:15px;}
-#main .menu li{ width:92px; height:30px; float:left; padding-right:20px;}
-#main .menu li a{ display:block; width:72px; height:30px; float:left; background:url(/static/new/images/menu_no.jpg) no-repeat; color:#cf9764; padding-left:20px;}
-#main .menu li a:hover{ background:url(/static/new/images/menu_on.jpg) no-repeat;border:none;text-decoration:none;}
-#main .menu li a.on{ background:url(/static/new/images/menu_on.jpg) no-repeat;border:none;text-decoration:none; }
+img {
+    border: 0;
+    float: left;
+}
 
-#main #middle{ min-height:550px;padding:0 0 50px;}
+body {
+    font-size: 12px;
+    color: #4b3c37;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #FFF;
+}
 
-#main #middle #bner{ padding-bottom:20px;float:left;}
+ul, ol, dl {
+    list-style: none;
+}
 
-#main #middle .lsv{ float:left; padding-bottom:15px;}
-#main #middle .lsv img{ padding:2px;}
-#main #middle .more{ text-align:right;padding:0 5px 15px;}
+.clear {
+    clear: both;
+    line-height: 0;
+    height: 0;
+    font-size: 0;
+}
 
-#main #middle #m{ float:left; padding:15px 0;}
-#main #middle #m li{ width:218px; height:135px; float:left; padding:1px;}
+.input {
+    border: 1px solid #cc9866;
+    padding: 3px;
+}
 
-#main #middle #plist{ float:left;}
-#main #middle #plist dl{ width:886px; float:left; padding:20px 0; border-bottom:1px solid #a59d9a; color:#422819;}
-#main #middle #plist dl dt{ width:200px; height:144px; float:left;}
-#main #middle #plist dl dd.t{ width:460px; float:left; line-height:2; font-size:13px; padding-left:30px; padding-right:10px;}
-#main #middle #plist dl dd.n{ width:80px; float:right; font-size:50px; font-weight:bold; text-align:center;}
-#main #middle #plist dl dd.p{ width:100px; float:left; text-align:center;}
-#main #middle #plist dl dd a{ font-size:14px; font-weight:bold; color:#422819;}
+.btn {
+    height: 24px;
+    line-height: 24px;
+    padding: 0 24px;
+    font-size: 12px;
+}
 
-#main #middle #left{ width:170px; float:left;}
-#main #middle #left #lm{ width:170px; float:left; font-size:14px; line-height:2;}
-#main #middle #left #lm li{ width:170px; float:left;}
-#main #middle #left #lm li a:hover{ color:#cb9767;}
-#main #middle #left #lm li a.on{ color:#cb9767;}
+.bbtn {
+    height: 38px;
+    line-height: 38px;
+    padding: 0 48px;
+    font-size: 14px;
+}
 
-#main #middle #right{width:670px; float:right;}
-#main #middle #right #show{width:670px; float:left;}
-#main #middle #right #show{_height:415px;}
-#main #middle #right #show #news{ width:670px; float:left; line-height:2;}
-#main #middle #right #show #news dl{ width:670px; float:left; padding:10px 0;}
-#main #middle #right #show #news dl dt{ width:670px; float:left;}
-#main #middle #right #show #news dl dt a{ color:#5b2a01;}
-#main #middle #right #show #news dl dd{ width:670px; float:left;}
+.bbbtn {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+}
 
-#main #middle #right #show #m_od{ width:670px; float:left; line-height:30px;}
-#main #middle #right #show #m_od img{ float:none;}
-#main #middle #right #show #m_od table{ border-collapse:collapse;}
-#main #middle #right #show #m_od td{ border:1px solid #a59d9b; padding:0 2px;}
+.btnbr, .btnbr:focus{
+    background-color: #5b2900;
+    border: 1px solid transparent;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+}
 
-#main #middle #right #show #m_o{ width:670px; float:left;}
-#main #middle #right #show #m_o dl{ width:160px; float:left; padding:3px;}
-#main #middle #right #show #m_o dl dt{ width:160px; height:86px;}
-#main #middle #right #show #m_o dl dd{ width:160px; float:left; padding-top:10px;}
+.btnbr:hover {
+    color: #cf9764;
+}
 
-#main #middle #right #show img{ float:none;}
-#main #middle #right #show #m_i{ width:670px; float:left; line-height:30px;}
-#main #middle #right #show .input{ border:1px solid #cb9866; padding:3px;}
-#main #middle #right #show #m_i .btn_bc{ width:73px; height:24px; border:0; background:url(/static/new/images/btn_bc.jpg) no-repeat;}
-#main #middle #right #show .r{ color:#F00;}
-#main #middle #right #show #m_i .btn_cx{ width:73px; height:24px; border:0; background:url(/static/new/images/btn_cx.jpg) no-repeat;}
-#main #middle #right #show #m_i .btn_tj{ width:73px; height:24px; border:0; background:url(/static/new/images/btn_tj.jpg) no-repeat;}
-#main #middle #right #show #m_i #result{ color:#F00;}
-#main #middle #right #show #m_i .btn_tjdd{ width:75px; height:21px; border:0; background:url(/static/new/images/btn_tjdd.jpg) no-repeat;}
-#main #middle #right #show #m_i .btn_zf{width:113px; height:19px; border:0; background:url(/static/new/images/btn_tjdd.jpg) no-repeat;}
+.btnbr:active {
+    box-shadow:0 0 0 1px #FFFFFF inset;
+}
 
-#main #middle #right #show #ab{ width:670px; float:left; line-height:2;}
+.btn_disable, .bbtn_disable, .bbbtn_disable {
+    background-color: #cf9764;
+    border: 1px solid #cf9764;
+    opacity: 0.5;
+    color: #FFFFFF;
+    display: inline-block;
+}
 
-#main #middle #right #show .ltb{ width:335px; float:left; line-height:35px;}
-#main #middle #right #show .ltb .input{ border:1px solid #cc9866; padding:3px;}
-#main #middle #right #show .ltb .btn_login{ width:73px; height:24px; border:0; background:url(/static/new/images/btn_login.jpg) no-repeat;}
-#main #middle #right #show .ltb .btn_tj{ width:73px; height:24px; border:0; background:url(/static/new/images/btn_tj.jpg) no-repeat;}
+*html {
+    /* 只有IE6支持 */
+    background-image: url(about:blank);
+    /* 使用空背景 */
+    background-attachment: fixed;
+    /* 固定背景 */
+}
 
-#main #middle #pshow{ width:886px; float:left; padding-bottom:15px;}
+#tb {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: #FFF;
+}
 
-#main #middle #pshow #titbe{ width:886px; float:left; font-size:30px; color:#7c3b00;}
-#main #middle #pshow #img{ width:535px; height:385px; float:left;}
-#main #middle #pshow #pr{ width:270px; float:right;}
-#main #middle #pshow #pr #ul{ width:270px; float:left; line-height:2;}
-#main #middle #pshow #pr #gm{ width:270px; float:left; text-align:right; padding:10px 0;}
-#main #middle #pshow #pr #money{ font-size:27px; color:#5b2900; float:left; text-align:right; width:190px;}
-#main #middle #pshow #pr #btn{ width:73px; float:right;}
-#main #middle #pshow #pr #btn .btn_buy{ width:73px; height:24px; border:0; background:url(/static/new/images/btn_buy.jpg) no-repeat; margin-bottom:5px;}
-#main #middle #pshow #pr .th{}
+#tb {
+    _position: absolute;
+    _top: expression(documentElement.scrollTop + "px");
+}
 
-#main #middle #sl{ width:630px; float:left; line-height:2;}
-#main #middle #sr{ width:230px; float:right; line-height:2;}
-#main #middle #sr #detail{ width:230px; float:left; padding-bottom:20px;}
-#main #middle #sr .info{ width:230px; float:left; padding:20px 0; border-top:1px solid #CCC;}
-#main #middle #sr .info .l{ width:100px; float:left; background:#cc9866; line-height:20px;}
-#main #middle #sr .info .l dt{ background:#5a2900;}
+#tb #bar {
+    width: 886px;
+    padding: 10px 0;
+    margin: 0 auto;
+    line-height: 24px;
+}
 
-#main #middle #sr #cmd{ width:230px; float:left;}
-#main #middle #sr #cmd li{ width:61px; height:61px; float:left; padding:5px;}
+#tb #bar dt {
+    float: left;
+    font-size: 24px;
+}
 
-#main #ft{font-size:14px;padding-bottom:5px;}
-#main #ft #foot{padding:10px 0;line-height:24px;}
-#main #ft #foot dt{float:left;}
-#main #ft #foot dd{float:right;}
+#tb #bar dd {
+    float: right;
+}
 
-.paper{width:100%; float:left; text-align:center; padding:10px 0;}
+#tb #bar dd a {
+    margin: 0 5px;
+}
 
-#imgPlay {overflow:hidden; width:886px; zoom:1; position:relative; height:531px; float:left; overflow:hidden;}
-#imgPlay .imgs img {width:886px; height:531px;}
-#imgPlay .imgs li {width:886px; float: left; position: relative}
-#imgPlay .imgs {width: 5260px}
-#imgPlay .prev {background: url(/static/new/images/imgPlayer.png) no-repeat; left:0; width: 46px; cursor: pointer; text-indent: -9999px; position: absolute; top: 110px; height: 81px}
-#imgPlay .next {background: url(/static/new/images/imgPlayer.png) no-repeat; left:0; width: 46px; cursor: pointer; text-indent: -9999px; position: absolute; top: 110px; height: 81px}
-#imgPlay .next {background-position: right 0px; right: 1px; left: auto}
-#imgPlay .num {display: inline; left: 400px; position: absolute; top: 275px; height: 19px}
-#imgPlay .num span {display: inline-block; background: url(/static/new/images/imgPlayer.png) no-repeat -19px -83px; margin: 0px 2px; overflow: hidden; width: 14px; cursor: pointer; line-height: 0; height: 13px}
-#imgPlay .num span.on {background-position: 1px -83px}
-#imgPlay .num .mc { float: left; width: 13px; height: 16px;}
-#imgPlay #numInner {background: none transparent scroll repeat 0% 0%;padding-top:3px; position: absolute; top:510px; text-align:center}
+#main {
+    width: 886px;
+    margin: 0 auto;
+    background: #FFF;
+    padding: 0 58px;
+}
+
+#main #top, #main #middle, #main #ft {
+    width: 100%;
+    float: left;
+}
+
+#main .mti {
+    width: 100%;
+    float: left;
+}
+
+#main .mti a {
+    color: #5b2900;
+    border: none;
+    text-decoration: none;
+}
+
+#main .mti a:hover {
+    border: none;
+    text-decoration: none;
+}
+
+#main .mti dt {
+    color: #5b2900;
+    font-size: 30px;
+    float: left;
+    padding-top: 50px;
+}
+
+#main .mti dd {
+    width: 150px;
+    height: 86px;
+    position: relative;
+    float: right;
+    top: 45px;
+    background: url(/static/new/images/13741335652678.jpg)
+}
+
+#main .menu {
+    width: 100%;
+    float: left;
+    margin-bottom: 20px;
+    background: url(/static/new/images/menu.jpg) bottom repeat-x;
+    height: 30px;
+    overflow: hidden;
+    line-height: 22px;
+    margin-top: 15px;
+}
+
+#main .menu li {
+    width: 92px;
+    height: 30px;
+    float: left;
+    padding-right: 20px;
+}
+
+#main .menu li a {
+    display: block;
+    width: 72px;
+    height: 30px;
+    float: left;
+    background: url(/static/new/images/menu_no.jpg) no-repeat;
+    color: #cf9764;
+    padding-left: 20px;
+}
+
+#main .menu li a:hover, #main .menu li a.on {
+    background: url(/static/new/images/menu_on.jpg) no-repeat;
+}
+
+#main #middle {
+    min-height: 550px;
+    padding: 0 0 50px;
+}
+
+#main #middle #bner {
+    padding-bottom: 20px;
+    float: left;
+}
+
+#main #middle .lsv {
+    float: left;
+    padding-bottom: 15px;
+}
+
+#main #middle .lsv img {
+    padding: 2px;
+}
+
+#main #middle .more {
+    text-align: right;
+    padding: 0 5px 15px;
+}
+
+#main #middle #m {
+    float: left;
+    padding: 15px 0;
+}
+
+#main #middle #m li {
+    width: 218px;
+    height: 135px;
+    float: left;
+    padding: 1px;
+}
+
+#main #middle #plist {
+    float: left;
+}
+
+#main #middle #plist dl {
+    width: 886px;
+    float: left;
+    padding: 20px 0;
+    border-bottom: 1px solid #a59d9a;
+    color: #422819;
+}
+
+#main #middle #plist dl dt {
+    width: 200px;
+    height: 144px;
+    float: left;
+}
+
+#main #middle #plist dl dd.t {
+    width: 460px;
+    float: left;
+    line-height: 2;
+    font-size: 13px;
+    padding-left: 30px;
+    padding-right: 10px;
+}
+
+#main #middle #plist dl dd.n {
+    width: 80px;
+    float: right;
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#main #middle #plist dl dd.p {
+    width: 100px;
+    float: left;
+    text-align: center;
+}
+
+#main #middle #plist dl dd a {
+    font-size: 14px;
+    font-weight: bold;
+    color: #422819;
+}
+
+#main #middle #left {
+    width: 20%;
+    float: left;
+}
+
+#main #middle #left #lm {
+    float: left;
+    font-size: 14px;
+    line-height: 2;
+}
+
+#main #middle #left #lm li {
+    width: 100%;
+    float: left;
+}
+
+#main #middle #right {
+    width: 80%;
+    float: right;
+}
+
+#main #middle #right #show {
+    width: 670px;
+    float: left;
+}
+
+#main #middle #right #show {
+    _height: 415px;
+}
+
+#main #middle #right #show #news {
+    width: 670px;
+    float: left;
+    line-height: 2;
+}
+
+#main #middle #right #show #news dl {
+    width: 670px;
+    float: left;
+    padding: 10px 0;
+}
+
+#main #middle #right #show #news dl dt {
+    width: 670px;
+    float: left;
+}
+
+#main #middle #right #show #news dl dt a {
+    color: #5b2a01;
+}
+
+#main #middle #right #show #news dl dd {
+    width: 670px;
+    float: left;
+}
+
+#main #middle #right #show #m_od {
+    width: 670px;
+    float: left;
+    line-height: 30px;
+}
+
+#main #middle #right #show #m_od img {
+    float: none;
+}
+
+#main #middle #right #show #m_od table {
+    border-collapse: collapse;
+}
+
+#main #middle #right #show #m_od td {
+    border: 1px solid #a59d9b;
+    padding: 0 2px;
+}
+
+#main #middle #right #show #m_o {
+    width: 670px;
+    float: left;
+}
+
+#main #middle #right #show #m_o dl {
+    width: 160px;
+    float: left;
+    padding: 3px;
+}
+
+#main #middle #right #show #m_o dl dt {
+    width: 160px;
+    height: 86px;
+}
+
+#main #middle #right #show #m_o dl dd {
+    width: 160px;
+    float: left;
+    padding-top: 10px;
+}
+
+#main #middle #right #show img {
+    float: none;
+}
+
+#main #middle #right #show #m_i {
+    width: 670px;
+    float: left;
+    line-height: 30px;
+}
+
+#main #middle #right #show #m_i #result {
+    color: #F00;
+}
+
+#main #middle #right #show #ab {
+    width: 670px;
+    float: left;
+    line-height: 2;
+}
+
+#main #middle #right .ltb {
+    width: 335px;
+    float: left;
+    line-height: 35px;
+}
+
+#main #middle #pshow {
+    width: 886px;
+    float: left;
+    padding-bottom: 15px;
+}
+
+#main #middle #pshow #titbe {
+    width: 886px;
+    float: left;
+    font-size: 30px;
+    color: #7c3b00;
+}
+
+#main #middle #pshow #img {
+    width: 535px;
+    height: 385px;
+    float: left;
+}
+
+#main #middle #pshow #pr {
+    width: 270px;
+    float: right;
+}
+
+#main #middle #pshow #pr #ul {
+    width: 270px;
+    float: left;
+    line-height: 2;
+}
+
+#main #middle #pshow #pr #gm {
+    width: 270px;
+    float: left;
+    text-align: right;
+    padding: 10px 0;
+}
+
+#main #middle #pshow #pr #money {
+    font-size: 27px;
+    color: #5b2900;
+    float: left;
+    text-align: right;
+    width: 190px;
+}
+
+#main #middle #pshow #pr #btn {
+    width: 73px;
+    float: right;
+}
+
+#main #middle #pshow #pr #btn .btn_buy {
+    width: 73px;
+    height: 24px;
+    border: 0;
+    background: url(/static/new/images/btn_buy.jpg) no-repeat;
+    margin-bottom: 5px;
+}
+
+#main #middle #pshow #pr .th {
+}
+
+#main #middle #sl {
+    width: 630px;
+    float: left;
+    line-height: 2;
+}
+
+#main #middle #sr {
+    width: 230px;
+    float: right;
+    line-height: 2;
+}
+
+#main #middle #sr #detail {
+    width: 230px;
+    float: left;
+    padding-bottom: 20px;
+}
+
+#main #middle #sr .info {
+    width: 230px;
+    float: left;
+    padding: 20px 0;
+    border-top: 1px solid #CCC;
+}
+
+#main #middle #sr .info .l {
+    width: 100px;
+    float: left;
+    background: #cc9866;
+    line-height: 20px;
+}
+
+#main #middle #sr .info .l dt {
+    background: #5a2900;
+}
+
+#main #middle #sr #cmd {
+    width: 230px;
+    float: left;
+}
+
+#main #middle #sr #cmd li {
+    width: 61px;
+    height: 61px;
+    float: left;
+    padding: 5px;
+}
+
+#main #ft {
+    font-size: 14px;
+    padding-bottom: 5px;
+}
+
+#main #ft #foot {
+    padding: 10px 0;
+    line-height: 24px;
+}
+
+#main #ft #foot dt {
+    float: left;
+}
+
+#main #ft #foot dd {
+    float: right;
+}
+
+.paper {
+    width: 100%;
+    float: left;
+    text-align: center;
+    padding: 10px 0;
+}
+
+#imgPlay {
+    overflow: hidden;
+    width: 886px;
+    zoom: 1;
+    position: relative;
+    height: 531px;
+    float: left;
+    overflow: hidden;
+}
+
+#imgPlay .imgs img {
+    width: 886px;
+    height: 531px;
+}
+
+#imgPlay .imgs li {
+    width: 886px;
+    float: left;
+    position: relative
+}
+
+#imgPlay .imgs {
+    width: 5260px
+}
+
+#imgPlay .prev {
+    background: url(/static/new/images/imgPlayer.png) no-repeat;
+    left: 0;
+    width: 46px;
+    cursor: pointer;
+    text-indent: -9999px;
+    position: absolute;
+    top: 110px;
+    height: 81px
+}
+
+#imgPlay .next {
+    background: url(/static/new/images/imgPlayer.png) no-repeat;
+    left: 0;
+    width: 46px;
+    cursor: pointer;
+    text-indent: -9999px;
+    position: absolute;
+    top: 110px;
+    height: 81px
+}
+
+#imgPlay .next {
+    background-position: right 0px;
+    right: 1px;
+    left: auto
+}
+
+#imgPlay .num {
+    display: inline;
+    left: 400px;
+    position: absolute;
+    top: 275px;
+    height: 19px
+}
+
+#imgPlay .num span {
+    display: inline-block;
+    background: url(/static/new/images/imgPlayer.png) no-repeat -19px -83px;
+    margin: 0px 2px;
+    overflow: hidden;
+    width: 14px;
+    cursor: pointer;
+    line-height: 0;
+    height: 13px
+}
+
+#imgPlay .num span.on {
+    background-position: 1px -83px
+}
+
+#imgPlay .num .mc {
+    float: left;
+    width: 13px;
+    height: 16px;
+}
+
+#imgPlay #numInner {
+    background: none transparent scroll repeat 0% 0%;
+    padding-top: 3px;
+    position: absolute;
+    top: 510px;
+    text-align: center
+}

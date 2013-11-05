@@ -150,7 +150,7 @@
                 return self;
             }
         }
-        var debug = debug.ready();
+        debug = debug.ready();
         debug.w = debug.warning;
         debug.e = debug.error;
         debug.s = debug.success;

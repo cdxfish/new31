@@ -14,3 +14,8 @@ def newquery(request):
     u"""订单查询"""
 
     return render_to_response('newquery.htm', locals(), context_instance=RequestContext(request))
+
+def newlogin(request):
+    u"""登录"""
+
+    return render_to_response('newlogin.htm', locals(), context_instance=RequestContext(request))

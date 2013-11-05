@@ -1,7 +1,7 @@
 /*
  *
  * dialog 0.0 - jquery弹窗插件
- * Version 0.0.1
+ * Version 0.1.0
  * @requires jQuery v1.8.3
  *
  * Copyright (c) 2013 leiddx
@@ -10,143 +10,97 @@
  */
 
 (function($) {
-    $.extend({
-        dialog: {
-            id: '#dialog',
-            css: {
-                dialog: {
-                    'display': 'none',
-                    'z-index': 997,
-                    'background': 'none transparent scroll repeat 0% 0%',
-                    'width': '100%',
-                    'height': '100%',
-                    'position': 'absolute',
-                    'left': '0px',
-                    'top': '0px'
-                },
-                maskLayer: {
-                    'z-index': -1,
-                    'filter': 'alpha(opacity=75)',
-                    'left': '0px',
-                    'top': '0px',
-                    'position': 'fixed',
-                    'width': '100%',
-                    'height': '100%',
-                    'background-color': '#000',
-                    'opacity': 0.45,
-                    'overflow': 'hidden'
-                },
-                floatLayer: {
-                    'border-radius': '10px',
-                    'background': '#FFF',
-                    'padding': '10px 20px',
-                    'box-shadow': '1px 2px 5px #000',
-                    'z-index': 999,
-                    'height': 'auto',
-                    'margin-left': 'auto',
-                    'margin-right': 'auto',
-                    'position': 'fixed',
-                    'color': '#000'
-                }
-
-            },
-            maskLayer: function() {
-                var self = this;
-                $('body').append('<div id="dialog"><div id="maskLayer"></div><div id="floatLayer"></div></div>');
-                $(self.id).css(self.css.dialog).css({
-                    'height': $(document).height()
-                });
-                $('#maskLayer').css(self.css.maskLayer);
-                $('#floatLayer').css(self.css.floatLayer);
-
-                return self;
-            },
+    $.dialog = function() {
+        var obj = {
+            id: 'dialog',
+            css: [{
+                'z-index': 999,
+                'background': 'none transparent scroll repeat 0% 0%',
+                'width': '100%',
+                'height': '100%',
+                'position': 'absolute',
+                'left': '0px',
+                'top': '0px'
+            }, {
+                'filter': 'alpha(opacity=75)',
+                'width': '100%',
+                'height': '100%',
+                'background-color': '#000',
+                'opacity': 0.45,
+                'overflow': 'hidden'
+            }, {
+                'border-radius': '1px',
+                'background': '#FFF',
+                'padding': '10px 20px',
+                'box-shadow': '1px 2px 5px #000',
+                'position': 'fixed',
+                'color': '#000'
+            }, {
+                'width': 'auto',
+                'padding-left': '22px',
+                'background': 'url(/static/images/loading_s.gif) no-repeat'
+            }],
             close: function() {
-                $(this.id).hide();
+                $('#' + this.id).hide(function() {
+                    $(this).children(':last').html('');
+                });
                 return this;
             },
-            closeBtn: function() {
+            ready: function() {
                 var self = this;
-                $(document).on('click', '.close', function() {
-                    self.close();
-                })
-                return self;
-            },
-            show: function(h, obj) {
-                var cssObj = obj ? obj : {};
 
-                document.getElementById("floatLayer").innerHTML = h;
-                $(this.id).show();
-
-
-                // 该死的IE
-                if (jQuery.browser.msie && jQuery.browser.version === "6.0") {
-
-
-                    $("#floatLayer").css({
-                        width: $("#floatLayer .box").outerWidth(),
-                        top: $(window).scrollTop() + 150,
-                        position: 'relative'
-                    }).css(cssObj);
-
-
-                    $('#maskLayer').css({
-                        position: 'absolute'
-                    })
-
-
-                } else {
-
-                    $("#floatLayer").css(cssObj);
-
-                    this.center();
-
-                }
+                $(document).ready(function() {
+                    $('<div>', {
+                        id: self.id
+                    }).css(self.css[0]).css({
+                        'height': $(document).height()
+                    }).hide().append($('<div>').css(self.css[1]), $('<div>').css(self.css[2])).appendTo('body').on('click', '.close', function() {
+                        self.close();
+                    });
+                });
 
                 return this;
+            },
+
+            show: function(htm, t) {
+                var time = t ? t : 100000;
+                $('#' + this.id).show(function() {
+                    $(this).children(':last').html(htm);
+                });
+
+                return this.center();
             },
 
             center: function() {
+                var divs = $('#' + this.id + ' div');
 
                 var windowHeight = $(window).outerHeight();
                 var windowouterWidth = $('body').outerWidth();
-                var floatLayerHeight = $("#floatLayer").outerHeight() + 100;
-                var floatLayerouterWidth = $("#floatLayer").outerWidth();
-                var topPx = windowHeight < floatLayerHeight ? 0 : (windowHeight - floatLayerHeight) / 2;
-                var leftPx = windowouterWidth < floatLayerouterWidth ? 0 : (windowouterWidth - floatLayerouterWidth) / 2;
+                var fOuterHeight = divs.eq(1).outerHeight() + 100;
+                var fOuterWidth = divs.eq(1).outerWidth();
+                var topPx = windowHeight < fOuterHeight ? 0 : (windowHeight - fOuterHeight) / 2;
+                var leftPx = windowouterWidth < fOuterWidth ? 0 : (windowouterWidth - fOuterWidth) / 2;
 
-                $("#floatLayer").css({
+                divs.eq(1).css({
                     top: topPx,
                     left: leftPx
                 });
 
-                $('#maskLayer').css({
-                    position: 'fixed'
-                })
-            },
-
-            loading: function(t, obj) {
-                var cssObj = obj ? obj : {
-                    width: 220
-                };
-                this.show('<span class="loading" style="width:auto; padding-left:22px;background: url(/static/images/loading_s.gif) no-repeat;">' + t + '</span>', cssObj)
-
                 return this;
             },
 
-            msg: function(msg, t, obj) {
+            loading: function(msg) {
+
+                return this.show($('<span>').html(msg).css(this.css[3]));
+            },
+
+            msg: function(msg) {
                 var self = this;
-                var cssObj = obj ? obj : {
-                    width: 220
-                };
+
                 var time = !t ? 1000 : t;
 
 
-                this.show('<span class="message" style="text-align:center; width:300px">' + msg + '</span>', cssObj);
-
-                setTimeout(function(){
-                    self.close();
-                }, time);
+                this.show(msg).close();
 
                 return this;
             },
@@ -189,40 +143,12 @@
 
         }
 
+        obj = obj.ready();
 
-    });
+        return obj;
 
-    $.fn.extend({
-        ajaxGET: function(url, func) {
-            $.dialog.loading('努力加载中，请稍候');
-            $.ajax({
-                type: "GET",
-                url: url,
-                dataType: 'json',
-                success: function(data) {
-                    if (data.typ == 'error') {
-                        $.dialog.msg(data.msg);
+    }()
 
-                    } else {
-                        $.dialog.close();
 
-                        !! func && func(data)
-
-                    }
-                },
-                error: function() {
-                    $.dialog.msg('加载出错，请稍候再试');
-                }
-            });
-        }
-
-    });
-
+    // $.extend({});
 })(jQuery);
-
-$(document).ready(function() {
-    $.dialog.maskLayer().closeBtn();
-    $.ajaxSetup({
-        cache: false //close AJAX cache
-    });
-});
