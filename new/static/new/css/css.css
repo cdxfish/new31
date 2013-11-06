@@ -190,8 +190,6 @@ ul, ol, dl {
 }
 
 #main .menu li {
-    width: 92px;
-    height: 30px;
     float: left;
     padding-right: 20px;
 }
@@ -204,6 +202,7 @@ ul, ol, dl {
     background: url(/static/new/images/menu_no.jpg) no-repeat;
     color: #cf9764;
     padding-left: 20px;
+    _border:0;
 }
 
 #main .menu li a:hover, #main .menu li a.on {

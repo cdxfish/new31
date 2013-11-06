@@ -1,8 +1,5 @@
 // JavaScript Document
-if (typeof(xDialog)!='undefined')
-{
-	var dialog = new xDialog;
-}
+
 function cheklog(o)
 {
 	var mov=/^([0-9]{11})?$/;
@@ -385,3 +382,24 @@ function getcmd(str)
 		$("#cmd").html(data)
 		})
 }
+
+var clone = function(obj){
+	var newobj, s;
+    if(typeof obj !== 'object'){
+      return;
+    }
+    newobj = obj.constructor === Object ? {} : [];
+	if(window.JSON){
+		s = JSON.stringify(obj), //系列化对象
+		newobj = JSON.parse(s); //反系列化（还原）
+	}else{
+		if(newobj.constructor === Array){
+			newobj.concat(obj);
+		}else{
+			for(var i in obj){
+				newobj[i] = obj[i];
+			}
+		}
+	}
+	return newobj;
+};
