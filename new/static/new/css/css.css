@@ -24,6 +24,15 @@ img {
     float: left;
 }
 
+html {
+    cursor: url("/static/images/cursor.ico"),auto
+}
+
+::selection {
+    background: #ff5f3e;
+    color: #fff
+}
+
 body {
     font-size: 12px;
     color: #4b3c37;
