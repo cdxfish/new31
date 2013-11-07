@@ -10,8 +10,7 @@
  */
 
 (function($) {
-    $.dialog = function() {
-        return {
+    $.dialog = {
             body: $('<div>', {
                 id: 'dialog'
             }).css({
@@ -177,9 +176,6 @@
             }
 
         }.ready();
-
-    }()
-
 
     // $.extend({});
 })(jQuery);
