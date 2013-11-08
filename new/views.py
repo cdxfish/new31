@@ -19,3 +19,8 @@ def newlogin(request):
     u"""登录"""
 
     return render_to_response('newlogin.htm', locals(), context_instance=RequestContext(request))
+
+def newcart(request):
+    u"""购物车"""
+
+    return render_to_response('newcart.htm', locals(), context_instance=RequestContext(request))

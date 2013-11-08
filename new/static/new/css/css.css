@@ -10,7 +10,6 @@ a {
 }
 
 a:hover {
-    /*color:#cb9767;*/
     text-decoration: none;
     border-bottom: thick solid #5B2900;
 }
@@ -42,6 +41,22 @@ body {
 
 ul, ol, dl {
     list-style: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+table tr td {
+    padding: 5px;
+    height: 26px;
+    line-height: 26px;
+}
+
+p {
+    line-height: 24px;
+    padding-left: 10px;
 }
 
 .clear {
@@ -77,7 +92,7 @@ ul, ol, dl {
     font-size: 16px;
 }
 
-.btnbr, .btnbr:focus{
+.btnbr, .btnbr:focus {
     background-color: #5b2900;
     border: 1px solid transparent;
     color: #FFFFFF;
@@ -87,10 +102,11 @@ ul, ol, dl {
 
 .btnbr:hover {
     color: #cf9764;
+    border: 1px solid transparent;
 }
 
 .btnbr:active {
-    box-shadow:0 0 0 1px #FFFFFF inset;
+    box-shadow: 0 0 0 1px #FFFFFF inset;
 }
 
 .btn_disable, .bbtn_disable, .bbbtn_disable {
@@ -99,6 +115,47 @@ ul, ol, dl {
     opacity: 0.5;
     color: #FFFFFF;
     display: inline-block;
+}
+
+.fBold {
+    font-weight: bold
+}
+
+.font20 {
+    font-size: 20px
+}
+
+.font18 {
+    font-size: 18px
+}
+
+.font14 {
+    font-size: 14px
+}
+
+.bline {
+    border: solid #E5E5E5;
+    border-width: 0 0 1px 0;
+}
+
+.mtb25 {
+    margin: 25px 0;
+}
+
+.ml40{
+    margin-left: 40px; 
+}
+
+.ptb25 {
+    padding: 25px 0;
+}
+
+.pd7 {
+    padding: 7px;
+}
+
+.lh26 {
+    line-height: 26px;
 }
 
 *html {
@@ -211,7 +268,7 @@ ul, ol, dl {
     background: url(/static/new/images/menu_no.jpg) no-repeat;
     color: #cf9764;
     padding-left: 20px;
-    _border:0;
+    _border: 0;
 }
 
 #main .menu li a:hover, #main .menu li a.on {
