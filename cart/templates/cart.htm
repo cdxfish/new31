@@ -1,106 +1,115 @@
-{% extends "shop.base.htm" %}
+{% extends "shop.base.htm" %} 
 
-{% block title %}购物车{% endblock %}
-
-{% block js %}
-    <script type="text/javascript" src="{{ STATIC_URL }}cart/js/cart.configuration.js"></script>
-{% endblock %}
-
-{% block content %}
-        <div class="pWhite pd10">
-            <div id="cart">
-            <form name="toCart" method="post" action="{% url 'cart:cart' %}">
-                <table width="100%" cellpadding="3" class="mBottom50">
-                    <tr>
-                        <th width="30%">商品名称</th>
-                        <th width="20%">商品规格</th>
-                        <th width="10%">价格</th>
-                        <th width="15%">数量</th>
-                        <th width="10%">小计</th>
-                        <th></th>
-                    </tr>
+{% block middle %}
+<form name="toCart" method="post" action="/cart/">
+    <table width="100%" class="mtb25">
+        <tr>
+            <th>商品名称</th>
+            <th width="20%">商品规格</th>
+            <th width="10%">价格</th>
+            <th width="53px">数量</th>
+            <th width="10%">小计</th>
+            <th width="84px">&nbsp;</th>
+        </tr>
 {% if cart.items %}
 {% for i in cart.items %}
-                    <tr align="center">
-                        <td><a href="{% url 'tag:tagShow' i.item.name|urlencode %}">{{ i.item.name }}</a></td>
-                        <td>{{ i.spec.spec.value }}</td>
-                        <td><span id="am{{ i.mark }}">{{ i.nfee|floatformat:2 }}</span></td>
-                        <td>
-                            <input type="text" name="{{ i.mark }}" value="{{ i.num }}" size="1" class="iNum" />
-                        </td>
-                        <td><span id="st{{ i.mark }}">{{ i.total|floatformat:2 }}</span></td>
-                        <td align="right"><a href="{% url 'cart:delInCart' i.mark %}" class="btnB bBtn">删除</a></td>
-                    </tr>
+        <tr align="center">
+            <td><a href="{% url 'tag:tagShow' i.item.name|urlencode %}">{{ i.item.name }}</a></td>
+            <td>{{ i.spec.spec.value }}</td>
+            <td><span id="am{{ i.mark }}">{{ i.nfee|floatformat:2 }}</span></td>
+            <td>
+                <input type="text" name="{{ i.mark }}" value="{{ i.num }}" size="1" class="num input" />
+            </td>
+            <td><span id="st{{ i.mark }}">{{ i.total|floatformat:2 }}</span></td>
+            <td align="right"><a href="{% url 'cart:delInCart' i.mark %}" class="btn btnbr">删除</a></td>
+        </tr>
 {% endfor %}
-                    <tr class="bLine">
-                        <td align="right" colspan="5"><span class="fBold font18">商品总价: ￥<span class="total">{{ cart.total|floatformat:2 }}</span> 元</span></td>
-                        <td></td>
-                    </tr>
+        <tr class="bline">
+            <td align="right" colspan="5"><span class="fBold font18">商品总价: ￥<span class="total">{{ cart.total|floatformat:2 }}</span> 元</span></td>
+            <td></td>
+        </tr>
 {% else %}
-                    <tr class="bLine">
-                        <td align="center" colspan="6">您的购物车是空的</td>
-                    </tr>
+        <tr class="bline">
+            <td align="center" colspan="6">您的购物车是空的</td>
+        </tr>
 {% endif %}
+        <tr>
+            <td colspan="4">
+                <a href="{% url 'tag:randomShow' %}" class="btn btnbr">继续购物</a>
+            </td>
+            <td align="right" colspan="2">
+                <a href="{% url 'cart:cnsgn' %}" class="btn btnbr">结算</a>
+            </td>
+        </tr>
+    </table>
+    <table width="100%" class="mtb25">
+        <tr>
+            <td>
+                是否额外购买生日套装（生日牌/冷烟花/蜡烛）？
+            </td>
+            <td>
+                单价：3元/份
+            </td>
+            <td align="right">
+                <a href="{% url 'cart:buy' 115 %}" class="btn btnbr">是的，我需要增加生日套装</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                除按蛋糕规格免费赠送的餐具数量外（详见下面说明），是否额外需要餐具？
+            </td>
+            <td>
+                单价：1元/份
+            </td>
+            <td align="right">
+                <a href="{% url 'cart:buy' 116 %}" class="btn btnbr">是的，我需要增加餐具</a>
+            </td>
+        </tr>
+    </table>
+</form>
+<h3>小提示：</h3>
+<p>蓝圈内为免费配送范围，超出免费配送范围须加收10元，收费配送范围为红圈以内蓝圈以外。</p>
+<p>&nbsp;</p>
+<p><img src="{{ STATIC_URL }}images/delivery_areas.jpg" /></p>
+<p class="clear">&nbsp;</p>
+<p>&nbsp;</p>
+<p>蛋糕规格及免费配送餐具：</p>
+<table class="ml40">
+    <tr>
+        <td>1.0磅：约14×14(cm)</td>
+        <td>适合2-3人食用</td>
+        <td>免费配送3套餐具</td>
+    </tr>
+    <tr>
+        <td>1.5磅：约16×16(cm)</td>
+        <td>适合5-6人食用</td>
+        <td>免费配送6套餐具</td>
+    </tr>
+    <tr>
+        <td>2.5磅：约20×20(cm)</td>
+        <td>适合8-9人食用</td>
+        <td>免费配送10套餐具</td>
+    </tr>
+    <tr>
+        <td>3.5磅：约23×23(cm)</td>
+        <td>适合12-13人食用</td>
+        <td>免费配送15套餐具</td>
+    </tr>
+    <tr>
+        <td>5.5磅：约26×26(cm)</td>
+        <td>适合18-22人食用</td>
+        <td>免费配送25套餐具</td>
+    </tr>
+    <tr>
+        <td>10磅：约36×36(cm)</td>
+        <td>适合35-40人食用</td>
+        <td>免费配送40套餐具</td>
+    </tr>
+</table>
+<p>订购10磅(含)以上规格的蛋糕请与客服人员联系，订购电话：4000-5927-31</p>
+{% endblock %}
 
-                    <tr>
-                        <td colspan="4">
-                            <a href="{% url 'tag:randomShow' %}" class="btnB bBtn">继续购物</a>
-                        </td>
-                        <td align="right" colspan="2"><a href="{% url 'cart:cnsgn' %}" class="btnB bBtn">结算</a></td>
-                    </tr>
-                </table>
-                <table width="100%">
-                    <tr>
-                        <td>是否额外购买生日套装（生日牌/冷烟花/蜡烛）？</td>
-                        <td>单价：3元/份</td>
-                        <td align="right"><a href="{% url 'cart:buy' 115 %}" class="btnB bBtn">是的，我需要增加生日套装</a></td>
-                    </tr>
-                    <tr>
-                        <td>除按蛋糕规格免费赠送的餐具数量外（详见下面说明），是否额外需要餐具？</td>
-                        <td>单价：1元/份</td>
-                        <td align="right"><a href="{% url 'cart:buy' 116 %}" class="btnB bBtn">是的，我需要增加餐具</a></td>
-                    </tr>
-                </table>
-            </form>
-            </div>
-            <h3>小提示：</h3>
-            <p>蓝圈内为免费配送范围，超出免费配送范围须加收10元，收费配送范围为红圈以内蓝圈以外。</p>
-            <p>&nbsp;</p>
-            <p><img src="{{ STATIC_URL }}images/delivery_areas.jpg" /></p>
-            <p><br /></p>
-            <p>蛋糕规格及免费配送餐具：</p>
-            <table class="ml40">
-                <tr>
-                    <td>1.0磅：约14×14(cm)</td>
-                    <td>适合2-3人食用</td>
-                    <td>免费配送3套餐具</td>
-                </tr>
-                <tr>
-                    <td>1.5磅：约16×16(cm)</td>
-                    <td>适合5-6人食用</td>
-                    <td>免费配送6套餐具</td>
-                </tr>
-                <tr>
-                    <td>2.5磅：约20×20(cm)</td>
-                    <td>适合8-9人食用</td>
-                    <td>免费配送10套餐具</td>
-                </tr>
-                <tr>
-                    <td>3.5磅：约23×23(cm)</td>
-                    <td>适合12-13人食用</td>
-                    <td>免费配送15套餐具</td>
-                </tr>
-                <tr>
-                    <td>5.5磅：约26×26(cm)</td>
-                    <td>适合18-22人食用</td>
-                    <td>免费配送25套餐具</td>
-                </tr>
-                <tr>
-                    <td>10磅：约36×36(cm)</td>
-                    <td>适合35-40人食用</td>
-                    <td>免费配送40套餐具</td>
-                </tr>
-            </table>
-            <p>订购10磅(含)以上规格的蛋糕请与客服人员联系，订购电话：4000-5927-31</p>
-        </div>
+
+{% block js %}
+        <script type="text/javascript" src="{{ STATIC_URL }}cart/js/cart.configuration.js"></script>
 {% endblock %}

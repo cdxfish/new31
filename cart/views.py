@@ -19,6 +19,8 @@ import time, datetime, math
 
 def cart(request):
     u"""购物车"""
+    messages.success(request, 'success')
+    messages.error(request, 'error')
     cart = CartSess(request).show()
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))

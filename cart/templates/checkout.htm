@@ -1,95 +1,94 @@
 {% extends "shop.base.htm" %}
 
 
-{% block content %}
-        <div class="pWhite pd30">
-        <form action="{% url 'cart:submit' %}" method="post" name="to_checkout" id="toCheckout">
-             <h3>订单状态</h3>
-            <table width="100%" class="mBottom10">
-                <tr>
-                    <td width="100px">付款方式：</td>
-                    <td><strong>{{ fInfo.pay.get_cod_display }}</strong></td>
-                </tr>
-                <tr>
-                    <td>配送方式：</td>
-                    <td><strong>{{ cInfo.dlvr.get_cod_display }}</strong></td>
-                </tr>
-            </table>
-            <h3>商品列表</h3>
-            <table width="100%" class="mBottom10">
-                <tr>
-                    <th>商品名称</th>
-                    <th>规格</th>
-                    <th>价格</th>
-                    <th>折扣</th>
-                    <th>数量</th>
-                    <th>小计</th>
-                </tr>
+{% block middle %}
+    <form action="{% url 'cart:submit' %}" method="post" name="to_checkout" id="toCheckout">
+         <h3>订单状态</h3>
+        <table width="100%" class="mb10">
+            <tr>
+                <td width="100px">付款方式：</td>
+                <td><strong>{{ fInfo.pay.get_cod_display }}</strong></td>
+            </tr>
+            <tr>
+                <td>配送方式：</td>
+                <td><strong>{{ cInfo.dlvr.get_cod_display }}</strong></td>
+            </tr>
+        </table>
+        <h3>商品列表</h3>
+        <table width="100%" class="mb10">
+            <tr>
+                <th>商品名称</th>
+                <th>规格</th>
+                <th>价格</th>
+                <th wdith="60px">折扣</th>
+                <th wdith="40px">数量</th>
+                <th width="10%">小计</th>
+            </tr>
 {% if cart.items %}
 {% for i in cart.items %}
-                <tr align="center">
-                    <td>{{ i.item.name }}</td>
-                    <td>{{ i.spec.spec.value }}</td>
-                    <td>{{ i.fee|floatformat:2 }} | {{ i.nfee|floatformat:2 }}</td>
-                    <td>{{ i.dis.get_dis_display }}</td>
-                    <td>{{ i.num }}</td>
-                    <td><span class="st{{ i.v }}">{{ i.total|floatformat:2 }}</span></td>
-                </tr>
+            <tr align="center">
+                <td>{{ i.item.name }}</td>
+                <td>{{ i.spec.spec.value }}</td>
+                <td>{{ i.fee|floatformat:2 }} | {{ i.nfee|floatformat:2 }}</td>
+                <td>{{ i.dis.get_dis_display }}</td>
+                <td>{{ i.num }}</td>
+                <td><span class="st{{ i.v }}">{{ i.total|floatformat:2 }}</span></td>
+            </tr>
 {% endfor %}
 {% else %}
-                <tr align="center">
-                    <td colspan="6">无</td>
-                </tr>
+            <tr align="center">
+                <td colspan="10">无</td>
+            </tr>
 {% endif %}
-                <tr class="bLine">
-                    <td align="right" colspan="5"><span class="fBold font18">总计: <span class="total">{{ cart.total|floatformat:2 }}</span></span></td>
-                    <td>&nbsp;</td>
-                </tr>
-            </table>
-            <h3>赠送</h3>
-            <table width="100%" class="mBottom10">
-                <tr>
-                    <th>商品名称</th>
-                    <th>规格</th>
-                    <th>价格</th>
-                    <th>数量</th>
-                    <th>小计</th>
-                </tr>
-                <tr align="center">
-                    <td colspan="6">无</td>
-                </tr>
-                <tr class="bLine">
-                    <td colspan="5" align="right"><span class="fBold font18">总计: 0.00</span></td>
-                    <td>&nbsp;</td>
-                </tr>
-            </table>
-            <h3>收货人信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/cart/consignee/" class="btnB sBtn">修改</a></h3>
-            <table width="100%" class="mBottom10">
-                <tr>
-                    <td width="100px">收货人姓名：</td>
-                    <td>{{ cInfo.consignee }}</td>
-                </tr>
-                <tr>
-                    <td>详细地址：</td>
-                    <td>[ {{ cInfo.area.sub.name }} - {{ cInfo.area.name }} ]&nbsp;&nbsp;{{ cInfo.address }}</td>
-                </tr>
-                <tr>
-                    <td>电话：</td>
-                    <td>{{ cInfo.tel }}</td>
-                </tr>
-                <tr>
-                    <td>最佳收货时间：</td>
-                    <td>{{ cInfo.date }}&nbsp;&nbsp;{{ cInfo.time.start|time:"H:i" }} - {{ cInfo.time.end|time:"H:i" }}</td>
-                </tr>
-                <tr>
-                    <td>备注：</td>
-                    <td>{{ cInfo.note }}</td>
-                </tr>
-            </table>
-            <center>
-                {% csrf_token %}
-                <input type="submit" class="btnB bBtn" value="确认订单" />
-            </center>
-      </form>
-        </div>
+            <tr class="bline">
+                <td align="right" colspan="5"><span class="fBold font18">总计: <span class="total">{{ cart.total|floatformat:2 }}</span></span></td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+        <h3>赠送</h3>
+        <table width="100%" class="mb10">
+            <tr>
+                <th>商品名称</th>
+                <th>规格</th>
+                <th>价格</th>
+                <th wdith="60px">折扣</th>
+                <th wdith="40px">数量</th>
+                <th width="10%">小计</th>
+            </tr>
+            <tr align="center">
+                <td colspan="10">无</td>
+            </tr>
+            <tr class="bline">
+                <td colspan="5" align="right"><span class="fBold font18">总计: 0.00</span></td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+        <h3>收货人信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'cart:cnsgn' %}" class="sbtn btnbr">修改</a></h3>
+        <table width="100%" class="mb10">
+            <tr>
+                <td width="100px">收货人姓名：</td>
+                <td>{{ cInfo.consignee }}</td>
+            </tr>
+            <tr>
+                <td>详细地址：</td>
+                <td>[ {{ cInfo.area.sub.name }} - {{ cInfo.area.name }} ]&nbsp;&nbsp;{{ cInfo.address }}</td>
+            </tr>
+            <tr>
+                <td>电话：</td>
+                <td>{{ cInfo.tel }}</td>
+            </tr>
+            <tr>
+                <td>最佳收货时间：</td>
+                <td>{{ cInfo.date }}&nbsp;&nbsp;{{ cInfo.time.start|time:"H:i" }} - {{ cInfo.time.end|time:"H:i" }}</td>
+            </tr>
+            <tr>
+                <td>备注：</td>
+                <td>{{ cInfo.note }}</td>
+            </tr>
+        </table>
+        <center>
+            {% csrf_token %}
+            <input type="submit" class="btn btnbr" value="确认订单" />
+        </center>
+    </form>
 {% endblock %}

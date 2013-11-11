@@ -1,63 +1,58 @@
 {% extends "shop.base.htm" %}
 
-{% block title %}收货人信息{% endblock %}
+{% block middle %}
+    <h3>收货人信息</h3>
+    <p>（请填写详细收货地址及准确的最佳送货时间，以便更快捷将您订购的蛋糕送达！）</p>
+    <form action="{% url 'cart:checkout' %}" method="POST" name="checkout" id="checkout">
+        <table width="100%" id="fnc">                        
+            <tr>
+                <td align="right" width="100px">{{ fnc.pay.label }}：</td>
+                <td>{{ fnc.pay }}</td>
+            </tr>
+        </table>
+        <table width="100%" id="logcs">
+            <tr>
+                <td align="right" width="100px">{{ cnsgn.dlvr.label }}：</td>
+                <td>{{ cnsgn.dlvr }}</td>
+            </tr>
+            <tr>
+                <td align="right">{{ cnsgn.consignee.label }}：</td>
+                <td>{{ cnsgn.consignee }}</td>
+            </tr>
+            <tr>
+                <td align="right">{{ cnsgn.area.label }}：</td>
+                <td>{{ cnsgn.area }}</td>
+            </tr>
+            <tr>
+                <td align="right">{{ cnsgn.address.label }}：</td>
+                <td>{{ cnsgn.address }}</td>
+            </tr>
+            <tr>
+                <td align="right">{{ cnsgn.tel.label }}：</td>
+                <td>{{ cnsgn.tel }}</td>
+            </tr>
+            <tr>
+                <td align="right">{{ cnsgn.date.label }}：</td>
+                <td>{{ cnsgn.date }}</td>
+            </tr>
+        <tr>
+            <td align="right">{{ cnsgn.time.label }}：</td>
+            <td>{{ cnsgn.time }}</td>
+        </tr>
+        <tr>
+            <td align="right" valign="top">{{ cnsgn.note.label }}：</td>
+            <td>{{ cnsgn.note }}</td>
+        </tr>
+        </table>
+        <center>
+            {% csrf_token %}
+            <input type="submit" name="submit" value="确认" class="btn btnbr" />
+        </center>
+    </form>
+{% endblock %}
+
 
 {% block js %}
     <script type="text/javascript" src="{{ STATIC_URL }}logistics/js/consignee.configuration.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}finance/js/fnc.configuration.js"></script>
-{% endblock %}
-
-{% block content %}
-        <div class="pWhite">
-            <div class="mBottom50">
-                <h3>收货人信息</h3>
-                <p>（请填写详细收货地址及准确的最佳送货时间，以便更快捷将您订购的蛋糕送达！）</p>
-                <form action="{% url 'cart:checkout' %}" method="POST" name="checkout" id="checkout">
-                    <table width="100%" id="fnc">                        
-                        <tr>
-                            <td align="right" width="100px">{{ fnc.pay.label }}：</td>
-                            <td>{{ fnc.pay }}</td>
-                        </tr>
-                    </table>
-                    <table width="100%" id="logcs">
-                        <tr>
-                            <td align="right" width="100px">{{ cnsgn.dlvr.label }}：</td>
-                            <td>{{ cnsgn.dlvr }}</td>
-                        </tr>
-                        <tr>
-                            <td align="right">{{ cnsgn.consignee.label }}：</td>
-                            <td>{{ cnsgn.consignee }}</td>
-                        </tr>
-                        <tr>
-                            <td align="right">{{ cnsgn.area.label }}：</td>
-                            <td>{{ cnsgn.area }}</td>
-                        </tr>
-                        <tr>
-                            <td align="right">{{ cnsgn.address.label }}：</td>
-                            <td>{{ cnsgn.address }}</td>
-                        </tr>
-                        <tr>
-                            <td align="right">{{ cnsgn.tel.label }}：</td>
-                            <td>{{ cnsgn.tel }}</td>
-                        </tr>
-                        <tr>
-                            <td align="right">{{ cnsgn.date.label }}：</td>
-                            <td>{{ cnsgn.date }}</td>
-                        </tr>
-                    <tr>
-                        <td align="right">{{ cnsgn.time.label }}：</td>
-                        <td>{{ cnsgn.time }}</td>
-                    </tr>
-                    <tr>
-                        <td align="right" valign="top">{{ cnsgn.note.label }}：</td>
-                        <td>{{ cnsgn.note }}</td>
-                    </tr>
-                    </table>
-                    <center>
-                        {% csrf_token %}
-                        <input type="submit" name="submit" value="确认" class="btnB bBtn" />
-                    </center>
-                </form>
-            </div>
-        </div>
 {% endblock %}

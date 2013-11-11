@@ -5,13 +5,13 @@ $(document).ready(function() {
 
 var cart = {
     itemNum: function() {
-        $(document).on('change', '.iNum',
+        $(document).on('change', '.num',
 
         function() {
             var self = $(this);
             var val = self.val();
             if (parseInt(val) == val) {
-                self.ajaxGET('/cart/cnum/' + self.attr('name') + '/' + val + '/',
+                $.dialog.ajax('/cart/cnum/' + self.attr('name') + '/' + val + '/',
 
                 function(data) {
 
@@ -21,7 +21,7 @@ var cart = {
 
                     $('.total').text(data.data);
 
-                })
+                });
 
 
             } else {

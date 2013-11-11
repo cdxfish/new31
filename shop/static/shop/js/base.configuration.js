@@ -1,14 +1,7 @@
 $(document).ready(function() {
-    b.autoHight().intro().topToolsMessage().boxClose().backToTopEle();
-
-    if (jQuery.browser.msie && jQuery.browser.version === "6.0") {} else {
-        b.scrollTop();
-    }
-
     $('.date').Zebra_DatePicker({
         direction: true
     }); //日期选择控件
-
     $('select').jgdDropdown({
         clsLIExpand: false
         // selected: 'RS'
@@ -17,85 +10,6 @@ $(document).ready(function() {
 });
 
 var b = {
-
-    scrollTop: function() {
-        $(window).scroll(function() {
-
-            var scrollTop = $("#scrollTop");
-            var bar = $('#scrollTop .bar');
-
-            var scrollTopPrevTop = scrollTop.prev().length > 0 ? scrollTop.prev().offset().top + scrollTop.prev().outerHeight() : 0;
-
-            if ($(window).scrollTop() >= scrollTopPrevTop) {
-
-                var windowWidth = $(window).width();
-
-                windowWidth < 928 && $(".intro").hide();
-
-                var barWidth = windowWidth < 928 ? windowWidth - 20 : "928px";
-                var barLeft = windowWidth - bar.outerWidth() >= 0 ? (windowWidth - bar.outerWidth()) / 2 : 0;
-
-                bar.css({
-                    "width": barWidth,
-                    "position": "fixed",
-                    "top": "0",
-                    "left": barLeft
-                })
-
-            } else {
-
-                bar.css({
-                    "width": "928px",
-                    "position": "relative",
-                    "left": "0px"
-                })
-            }
-        });
-
-        return this
-
-    },
-
-
-    intro: function() {
-        $(".intro").show();
-        setInterval(
-
-        function() {
-            var introLi = $(".intro li");
-            introLi.eq(Math.floor(Math.random() * 10 % introLi.length)).slideToggle("slow");
-        }, 2000);
-        return this
-    },
-
-
-    autoHight: function() {
-        if ($(window).height() > $('body').height()) {
-            var content = $('#content');
-            var conHeight = $(window).height() - content.prev().offset().top - content.prev().outerHeight() - content.next().outerHeight() - content.outerHeight() + content.height();
-            if (jQuery.browser.msie && jQuery.browser.version === "6.0") {
-                content.css({
-                    'height': conHeight
-                });
-            } else {
-                content.css({
-                    'min-height': conHeight
-                });
-            }
-        }
-
-        return this
-    },
-
-    topToolsMessage: function() {
-        $("#lnkTopMessage, #lnkTopSetting, #lnkTopLogin").click(function() {
-            $(this).toggleClass("on").next(".messagePop").toggle();
-            return false;
-            // event.stopPropagation();
-        });
-
-        return this
-    },
 
     // 返回顶部按钮
     backToTopEle: function() {
@@ -119,50 +33,14 @@ var b = {
         return this
     },
 
-    boxClose:function(){
-        var self = this;
-        $('.boxClose').click(function(){
-            self.hideMessage();
-
-            return false;
-        })
-
-        return this
-    },
-
-    // 隐藏消息层
-    hideMessage: function() {
-        $(".messagePop").hide().prev().removeClass("on");
-
-        return this
-    },
     chng: function(obj, url) {
-        obj.change(
-
-        function() {
+        obj.change(function() {
             var self = $(this);
-            self.ajaxGET(url + '?' + $(this).attr('name') + '=' + encodeURI($(this).val()));
+            $.dialog.ajax(url + '?' + self.attr('name') + '=' + encodeURI(self.val()));
 
 
         });
-        return this
+        return this;
     }
 
-}
-
-
-var w3c = (document.getElementById) ? true : false;
-var agt = navigator.userAgent.toLowerCase();
-var ie = ((agt.indexOf("msie") != -1) && (agt.indexOf("opera") == -1) && (agt.indexOf("omniweb") == -1));
-
-ieTrueBody = function() {
-    return (document.compatMode && document.compatMode != "BackCompat") ? document.documentElement : document.body;
-}
-
-getScrollTop = function() {
-    return ie ? ieTrueBody().scrollTop : window.pageYOffset;
-}
-
-getScrollLeft = function() {
-    return ie ? ieTrueBody().scrollLeft : window.pageXOffset;
 }

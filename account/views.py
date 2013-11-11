@@ -127,6 +127,11 @@ def uViewOrd(request, sn):
 
     return render_to_response('vieword.htm', locals(), context_instance=RequestContext(request))
 
+def queryOrd(request):
+    u"""订单查询"""
+
+    return render_to_response('queryord.htm', locals(), context_instance=RequestContext(request))
+
 def newUserFrm(request):
     u"""新会员表单"""
     from forms import NerUserFrm, BsInfoFrm, PtsFrm

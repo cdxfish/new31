@@ -59,6 +59,39 @@ p {
     padding-left: 10px;
 }
 
+input[type=text],input[type=password],textarea {
+    height: 16px;
+    padding: 3px;
+    border: 1px solid #cc9866;
+    border-radius: 2px;
+    background: #FFF;
+}
+
+input {
+    *height: 16px;
+    *padding: 3px;
+    *border: 1px solid #cc9866;
+    *border-radius: 2px;
+    *background: #FFF;
+}
+
+textarea {
+    height: 80px;
+    padding: 5px;
+    font-size: 12px;
+    line-height: 1.4em
+}
+
+input:focus,textarea:focus {
+    background: #FFF;
+    box-shadow: 1px 1px 3px #ccc inset;
+}
+
+.input {
+    border: 1px solid #cc9866;
+    padding: 3px;
+}
+
 .clear {
     clear: both;
     line-height: 0;
@@ -66,9 +99,11 @@ p {
     font-size: 0;
 }
 
-.input {
-    border: 1px solid #cc9866;
-    padding: 3px;
+.sbtn {
+    height: 15px;
+    line-height: 15px;
+    padding: 0 8px;
+    font-size: 8px;
 }
 
 .btn {
@@ -142,8 +177,12 @@ p {
     margin: 25px 0;
 }
 
-.ml40{
-    margin-left: 40px; 
+.ml40 {
+    margin-left: 40px;
+}
+
+.mb10 {
+    margin-bottom: 10px;
 }
 
 .ptb25 {
@@ -241,14 +280,14 @@ p {
     position: relative;
     float: right;
     top: 45px;
-    background: url(/static/new/images/13741335652678.jpg)
+    background: url(/static/shop/images/13741335652678.jpg)
 }
 
 #main .menu {
     width: 100%;
     float: left;
     margin-bottom: 20px;
-    background: url(/static/new/images/menu.jpg) bottom repeat-x;
+    background: url(/static/shop/images/menu.jpg) bottom repeat-x;
     height: 30px;
     overflow: hidden;
     line-height: 22px;
@@ -265,19 +304,40 @@ p {
     width: 72px;
     height: 30px;
     float: left;
-    background: url(/static/new/images/menu_no.jpg) no-repeat;
+    background: url(/static/shop/images/menu_no.jpg) no-repeat;
     color: #cf9764;
     padding-left: 20px;
     _border: 0;
 }
 
 #main .menu li a:hover, #main .menu li a.on {
-    background: url(/static/new/images/menu_on.jpg) no-repeat;
+    background: url(/static/shop/images/menu_on.jpg) no-repeat;
 }
 
 #main #middle {
     min-height: 550px;
     padding: 0 0 50px;
+}
+
+#main #middle .messagelist {
+    padding: 0 0 5px 0;
+    margin: 0;
+}
+
+#main #middle .messagelist li {
+    display: block;
+    padding: 4px 5px 4px 25px;
+    margin: 0 0 3px 0;
+  /*background: #ffc url(/static/images/icon_success.gif) 5px .3em no-repeat;*/
+    background: url(/static/images/icon_success.gif) 5px .3em no-repeat;
+}
+
+#main #middle .messagelist li.warning {
+    background-image: url(/static/images/icon_alert.gif);
+}
+
+#main #middle .messagelist li.error {
+    background-image: url(/static/images/icon_error.gif);
 }
 
 #main #middle #bner {
@@ -535,7 +595,7 @@ p {
     width: 73px;
     height: 24px;
     border: 0;
-    background: url(/static/new/images/btn_buy.jpg) no-repeat;
+    background: url(/static/shop/images/btn_buy.jpg) no-repeat;
     margin-bottom: 5px;
 }
 
@@ -641,7 +701,7 @@ p {
 }
 
 #imgPlay .prev {
-    background: url(/static/new/images/imgPlayer.png) no-repeat;
+    background: url(/static/shop/images/imgPlayer.png) no-repeat;
     left: 0;
     width: 46px;
     cursor: pointer;
@@ -652,7 +712,7 @@ p {
 }
 
 #imgPlay .next {
-    background: url(/static/new/images/imgPlayer.png) no-repeat;
+    background: url(/static/shop/images/imgPlayer.png) no-repeat;
     left: 0;
     width: 46px;
     cursor: pointer;
@@ -678,7 +738,7 @@ p {
 
 #imgPlay .num span {
     display: inline-block;
-    background: url(/static/new/images/imgPlayer.png) no-repeat -19px -83px;
+    background: url(/static/shop/images/imgPlayer.png) no-repeat -19px -83px;
     margin: 0px 2px;
     overflow: hidden;
     width: 14px;
