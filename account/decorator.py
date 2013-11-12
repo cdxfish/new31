@@ -14,6 +14,6 @@ def loginDr(func):
             
             return func(request, *args, **kwargs)
         else:
-            return rdrtLogin(request, *args, **kwargs)
+            return rdrtLogin(request)
 
     return _func

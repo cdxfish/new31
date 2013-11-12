@@ -6,7 +6,7 @@ $(document).ready(function() {
         clsLIExpand: false
         // selected: 'RS'
     });
-
+    $("img").scrollLoading(); //异步加载图片
 });
 
 var b = {

@@ -54,7 +54,7 @@ def logout(request):
 
 @loginDr
 def settings(request):
-    u"""用户设置"""
+    u"""个人信息"""
     from forms import bsInfoFrm
     frm = bsInfoFrm(request)
 
@@ -126,11 +126,6 @@ def uViewOrd(request, sn):
     o.total = Pro.objects.getFeeBySN(sn)
 
     return render_to_response('vieword.htm', locals(), context_instance=RequestContext(request))
-
-def queryOrd(request):
-    u"""订单查询"""
-
-    return render_to_response('queryord.htm', locals(), context_instance=RequestContext(request))
 
 def newUserFrm(request):
     u"""新会员表单"""

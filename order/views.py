@@ -44,6 +44,13 @@ def viewOrd(request, sn):
 
     return render_to_response('orderview.htm', locals(), context_instance=RequestContext(request))
 
+
+def queryOrd(request):
+    u"""订单查询"""
+
+    return render_to_response('queryord.htm', locals(), context_instance=RequestContext(request))
+
+
 @postDr
 @ordSubDr
 @chLogcsDr

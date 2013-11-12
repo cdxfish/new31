@@ -1,48 +1,37 @@
 {% extends "shop.base.htm" %}
 
 {% block middle %}
-        <div id="left">
-            <ul id="lm">
-                <li><a href="/list.php?class=14" id="14">我的订单</a></li>
-                <li><a href="/list.php?class=15" id="15">会员章程</a></li>
-                <li><a href="/list.php?class=16" id="16" class="on">注册登录</a></li>
-                <li><a href="/list.php?class=17" id="17">会员储值</a></li>
-                <li><a href="/list.php?class=19" id="19">会员活动</a></li>
-                <li><a href="/list.php?class=20" id="20">个人信息</a></li>
-            </ul>
-        </div>
         <div id="right">
             <div class="ltb">
-                <form action="chklogin.php" method="post" onSubmit="return cheklog(this)">
+                <form action="{% url 'account:login' %}" method="post">
+                {% csrf_token %}
                 <table cellpadding="0" cellspacing="0" width="335">
                     <tr>
                         <td colspan="2">用户登录</td>
                     </tr>
+{% for i in frm %}
                     <tr>
-                        <td align="right">手机号码：</td>
-                        <td><input type="text" name="uname" class="input" maxlength="11"/></td>
+                        <td align="right">{{ i.label }}：</td>
+                        <td>{{ i }}</td>
                     </tr>
+{% endfor %}
                     <tr>
-                        <td align="right">密码：</td>
-                        <td><input type="password" name="pwd" class="input"/></td>
-                    </tr>
-                    <tr>
-                        <td></td>
+                        <td>&nbsp;</td>
                         <td>
                             <input type="submit" value="登录" class="btn btnbr"/>
-                            <input type="hidden" name="action" value="login"/>
                             <input type="hidden" name="ref" value="list.php?class=14"/>
                         </td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td><a href="/list.php?class=53">找回密码</a></td>
+                        <td><a href="{% url 'account:changepwd' %}">找回密码</a></td>
                     </tr>
                 </table>
                 </form>
             </div>
             <div class="ltb">
-                <form action="chklogin.php" method="post" onSubmit="return chekreg(this)">
+                <form action="{% url 'account:register' %}" method="post" onSubmit="return chekreg(this)">
+                {% csrf_token %}
                 <table cellpadding="0" cellspacing="0" width="335">
                     <tr>
                         <td colspan="2">用户注册</td>
