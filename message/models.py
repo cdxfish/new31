@@ -89,7 +89,7 @@ class Msg(models.Model):
 
 
     def __unicode__(self):
-        return u"%s [ %s ] - %s" % (self.user, self.read, self.msg)
+        return u"%s [ %s ] - %s" % (self.user, self.read, self._data)
 
     class Meta:
         ordering = ['time']

@@ -9,3 +9,17 @@ import ccbtransfer
 import icbctransfer
 import abctransfer
 import points
+
+
+class APIs(object):
+    """docstring for APIs"""
+    def __init__(self, ord, *args, **kwarg):
+        self.ord = ord
+
+        self.args = args
+        self.kwarg = kwarg
+        
+    def payUrl(self):
+        
+
+        return '/'
