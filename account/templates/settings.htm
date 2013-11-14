@@ -16,6 +16,10 @@
                         <td colspan="2">个人信息</td>
                     </tr>
                     <tr>
+                        <td align="right">积分：</td>
+                        <td>{{ request.user.pts.pt }}</td>
+                    </tr>                    
+                    <tr>
                         <td align="right">{{ frm.sex.label }}：</td>
                         <td>{{ frm.sex }}</td>
                     </tr>

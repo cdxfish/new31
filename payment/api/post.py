@@ -1,18 +1,18 @@
 #coding:utf-8
 u"""货到刷卡"""
-from __init__ import APIs
 
-class main(APIs):
-    """docstring for main"""
-    def __init__(self, ord, *args, **kwarg):
-        super(main, self).__init__(ord, *args, **kwarg)
+class Main(object):
+    u"""
+        货到刷卡
 
+    """
 
     def sub(self):
         from message.models import Msg
         print Msg.objects.all()
         print 'post' * 20
-        
+        print self.ord
+
         return self
 
     def pay(self):

@@ -1,29 +1,35 @@
 #coding:utf-8
 from django.db import models
+from new31.func import frMtFee
 
 # Create your models here.
+class ProQuerySet(models.query.QuerySet):
+    '''Use this class to define methods on queryset itself.'''
+
+    def pts(self):
+        total = 0
+
+        for i in self:
+            total += i.total()
+
+        return frMtFee(total / 10)
+        
+    def total(self):
+        total = 0
+
+        for i in self:
+            total += i.total()
+
+        return total
 
 class proManager(models.Manager):
+    '''Use this class to define methods just on Entry.objects.'''
+    def get_query_set(self):
+        return ProQuerySet(self.model)
+
     def getActTuple(self, i):
 
         return tuple([ i[0] for i in Pro.act[i]])
-
-    def getFeeBySN(self, sn):
-        from new31.func import frMtFee
-
-        total = 0
-        for i in self.select_related().filter(ord=sn):
-            total += i.total()
-
-        return total
-
-    def total(self, pros):
-        total = 0
-
-        for i in pros:
-            total += i.total()
-
-        return total
 
     def savePro(self, ord, request):
         from cart.views import CartSess

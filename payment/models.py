@@ -20,6 +20,29 @@ class PayManager(models.Manager):
 
         return tuple([(i.id, i.get_cod_display()) for i in self.filter(cod__in=['payafter', 'alipay', 'post'], onl=True)])
 
+class APIBase(object):
+    u"""支付插件基本类"""
+    def __init__(self, ord, request, *args, **kwargs):
+        self.ord = ord
+        self.request = request
+        self.args = args
+        self.kwargs = kwargs
+
+    def sub(self):
+        
+        return self
+
+    def pay(self):
+        
+        return self
+
+    def re(self):
+        
+        return self
+
+    def button(self):
+
+        return self
 
 class Pay(models.Model):
     import api
@@ -32,26 +55,30 @@ class Pay(models.Model):
 
     objects = PayManager()
 
-    def sub(self, ord):
+    def __init__(self, *args, **kwargs):
+        super(Pay, self).__init__(*args, **kwargs)
+
         try:
-            getattr(self.api, self.cod).main(ord).sub()
+            main = getattr(self.api, self.cod).Main
+
         except Exception, e:
-            raise e
+            # raise e
+            class main(object):
+                pass
 
-        return self
-    
-    def pay(self, ord):
-        getattr(self.api, self.cod).main(ord).pay()
+        class Main(main, APIBase):
+            u"""
+                支付插件主类
+                动态构成
+                根据第一顺位父类的实例方法决定执行的动作
+            """
+            def __init__(self, ord, *args, **kwargs):
+                super(Main, self).__init__(ord, *args, **kwargs)
 
-        return self
-    
-    def re(self, ord):
-        getattr(self.api, self.cod).main(ord).re()
-
-        return self
+        self.main = Main
 
     def __unicode__(self):
-        return u"%s - %s" % (self.get_cod_display(), self.onl)
+        return u"%s - %s [ %s ]" % (self.get_cod_display(), self.cod, self.onl)
 
     class Meta:
         verbose_name = u'支付方式'

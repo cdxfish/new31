@@ -104,10 +104,6 @@ def myOrd(request):
 
     ords = Ord.objects.getByUser(request.user.id)
 
-    for i in ords:
-        i.total = Pro.objects.getFeeBySN(i.sn)
-
-
     return render_to_response('myord.htm', locals(), context_instance=RequestContext(request))
 
 @loginDr
@@ -122,8 +118,6 @@ def uViewOrd(request, sn):
         messages.error(request, u'您无法查看当前订单。')
 
         return rdrtBck(request)
-
-    o.total = Pro.objects.getFeeBySN(sn)
 
     return render_to_response('vieword.htm', locals(), context_instance=RequestContext(request))
 
@@ -182,19 +176,3 @@ def member(request):
     u = User.objects.filter(username__contains=k).order_by('-id')[:100]
 
     return render_to_response('member.htm', locals(), context_instance=RequestContext(request))
-
-def integral(request, sn):
-    u"""会员积分"""
-    from order.models import Ord
-    from produce.models import Pro
-
-    o = Ord.objects.get(sn=sn)
-
-    if o.user != request.user:
-        messages.error(request, u'您无法查看当前订单。')
-
-        return rdrtBck(request)
-
-    o.total = Pro.objects.getFeeBySN(sn)
-
-    return render_to_response('vieword.htm', locals(), context_instance=RequestContext(request))

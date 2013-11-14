@@ -40,7 +40,6 @@ def viewOrd(request, sn):
     from produce.models import Pro
 
     o = Ord.objects.get(sn=sn)
-    o.total = Pro.objects.getFeeBySN(sn)
 
     return render_to_response('orderview.htm', locals(), context_instance=RequestContext(request))
 
@@ -528,7 +527,7 @@ class OrdSub(object):
     # 支付流程后续处理
     @subMsg(u'无法处理后续支付流程。')
     def pay(self):
-        self.ord.fnc.cod.sub(self.ord)
+        self.ord.fnc.cod.main(self.ord, self.request).sub()
 
         return self
 

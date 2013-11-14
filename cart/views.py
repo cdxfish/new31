@@ -19,8 +19,6 @@ import time, datetime, math
 
 def cart(request):
     u"""购物车"""
-    messages.success(request, 'success')
-    messages.error(request, 'error')
     cart = CartSess(request).show()
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
@@ -206,6 +204,7 @@ class CartSess(BsSess):
                 total += ii['total']
                 items.append(ii)
             except Exception, e:
+                # raise e
                 del sess[i]
                 messages.warning(self.request, u'部分商品已下架。')
 

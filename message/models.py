@@ -75,7 +75,6 @@ class msgManager(models.Manager):
 
         return self.push(typ='debug', **kwarg)
 
-
 class Msg(models.Model):
     user = models.ForeignKey(User, verbose_name=u'用户')
     read = models.BooleanField(u'已读', default=False)
@@ -84,6 +83,10 @@ class Msg(models.Model):
 
     def data(self):
         return json.loads(self._data)
+
+    def pt(self):
+
+        return self
 
     objects = msgManager()
 
