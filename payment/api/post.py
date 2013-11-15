@@ -6,7 +6,7 @@ class Main(object):
         货到刷卡
 
     """
-
+    urls = ()
     def sub(self):
         from message.models import Msg
         print Msg.objects.all()

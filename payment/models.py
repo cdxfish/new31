@@ -22,6 +22,9 @@ class PayManager(models.Manager):
 
 class APIBase(object):
     u"""支付插件基本类"""
+    
+    urls = ()
+
     def __init__(self, ord, request, *args, **kwargs):
         self.ord = ord
         self.request = request

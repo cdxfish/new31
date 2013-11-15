@@ -42,6 +42,16 @@ class bsInfoManager(models.Manager):
         except Exception, e:
             pass
 
+class ptManager(models.Manager):
+    def set(self, num):
+        from django.contrib import messages
+
+        assert self.pt + num < 0
+
+        self.pt += num
+
+        return self.save()
+
 
 class BsInfo(models.Model):
     mons = (
@@ -151,6 +161,8 @@ class BsInfo(models.Model):
 class Pts(models.Model):
     user = models.OneToOneField(User, verbose_name=u'用户')
     pt = models.IntegerField(u'积分', default=0)
+
+    objects = ptManager()
         
     def __unicode__(self):
         return u"%s [ 积分:%s ]" % (self.user, self.pt)

@@ -2,28 +2,12 @@
 
 {% block middle %}
                 <div id="bner">
-                    <div id="imgPlay">
-                        <ul class="imgs" id="actor">
-                            <li><a href="/" target="_blank"><img data-src="{{ STATIC_URL }}shop/images/13679842939718.jpg"></a></li>
-                            <li><a href="/" target="_blank"><img data-src="{{ STATIC_URL }}shop/images/13743081412997.jpg"></a></li>
-                            <li><a href="/" target="_blank"><img data-src="{{ STATIC_URL }}shop/images/13804380515243.jpg"></a></li>
-                            <li><a href="/" target="_blank"><img data-src="{{ STATIC_URL }}shop/images/13743081906304.jpg"></a></li>
-                        </ul>
-                        <div class="num" style="left: 394px;">
-                            <p class="mc" style="width: 72px;">
-                            </p>
-                        </div>
-                        <div class="num" id="numInner" style="width: 72px; left: 407px;">
-                            <span class="">
-                            </span>
-                            <span class="">
-                            </span>
-                            <span class="">
-                            </span>
-                            <span class="">
-                            </span>
-                        </div>
-                    </div>
+                    <ul style="display: none;">
+                        <li><a href="/" target="_blank"><img data-src="{{ STATIC_URL }}shop/images/13679842939718.jpg"></a></li>
+                        <li><a href="/" target="_blank"><img data-src="{{ STATIC_URL }}shop/images/13743081412997.jpg"></a></li>
+                        <li><a href="/" target="_blank"><img data-src="{{ STATIC_URL }}shop/images/13804380515243.jpg"></a></li>
+                        <li><a href="/" target="_blank"><img data-src="{{ STATIC_URL }}shop/images/13743081906304.jpg"></a></li>
+                    </ul>
                 </div>
                 <dl class="mti" id="cake">
                     <dt>CAKE</dt>
@@ -158,5 +142,8 @@
 {% endblock %}
 
 {% block js %}
-        <script type="text/javascript" src="{{ STATIC_URL }}js/sides.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.sides.js"></script>
+    <script type="text/javascript">
+        $('#bner').sides();
+    </script>
 {% endblock %}
