@@ -21,7 +21,9 @@
         <script type="text/javascript" src="{{ STATIC_URL }}shop/js/base.configuration.js"></script>
         <script type="text/javascript">
             var csrf = "{% csrf_token %}";
-            {% block javascript %}{% endblock %}
+            $(document).ready(function() {
+                {% block javascript %}{% endblock %}
+            });
         </script>
         {% block js %}{% endblock %}
     <!--[if IE 6]>

@@ -705,22 +705,3 @@ input:focus,textarea:focus {
     text-align: center;
     padding: 10px 0;
 }
-
-
-.num span {
-    display: inline-block;
-    background: url(/static/shop/images/imgPlayer.png) no-repeat -19px -83px;
-    margin: 0px 2px;
-    overflow: hidden;
-    width: 14px;
-    cursor: pointer;
-    height: 13px
-}
-
-.num span:hover {
-    background-position: 1px -83px
-}
-
-.num span.on {
-    background-position: 1px -83px
-}

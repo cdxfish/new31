@@ -10,35 +10,52 @@
  */
 (function($) {
     $.fn.extend({
-        sides: function(self) {
+        sides: function() {
+            return {
+                id: $(this),
+                num: $('<center>', {
+                    'class': 'num'
+                }).css({
+                    'position': 'relative',
+                    'bottom': '20px'
+                }),
+                ready: function() {
+                    var self = this;
+                    self.id.css({
+                        'height': '100%',
+                        'overflow': 'hidden',
+                        'list-style': 'none'
+                    }).show().find('li').each(function() {
+                        var li = $(this);
+                        self.num.append(
+                        $('<span>').css({
+                            'display': 'inline-block',
+                            'background': 'url(/static/shop/images/imgPlayer.png) no-repeat -19px -83px',
+                            'margin': '0px 2px',
+                            'overflow': 'hidden',
+                            'width': '14px',
+                            'cursor': 'pointer',
+                            'height': '13px'
+                        }).hover(function() {
+                            li.css({
+                                'background-position': '1px -83px'
+                            });
 
+                        }, function() {
+                            li.css({
+                                'background-position': '-19px -83px'
+                            });
+                        }));
 
-            // return this.each(function() {
-            //     console.log($(this));
-            // });
-            // console.log(self);
-
-            console.log($(this));
-            // $(this).show()
-            // return {
-            //     id: $('ul'),
-            //     num: $('<center>', {
-            //         'class': 'num'
-            //     }).css({
-            //         'position': 'relative',
-            //         'bottom': '20px'
-            //     }),
-            //     ready: function() {
-            //         var self = this;
-            //         $(document).ready(function() {
-            //             // self.id.css({
-            //             //     'height': '100%',
-            //             //     'overflow': 'hidden',
-            //             // });
-            //         });
-            //         return this;
-            //     }
-            // }.ready();
+                        li.css({
+                            'float': 'left'
+                        }).find('a').css({
+                            'float': 'left'
+                        });
+                    });
+                    return this;
+                }
+            }.ready();
         }
     });
 
