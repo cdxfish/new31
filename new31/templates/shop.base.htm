@@ -26,12 +26,6 @@
             });
         </script>
         {% block js %}{% endblock %}
-    <!--[if IE 6]>
-        <script type="text/javascript" src="{{ STATIC_URL }}js/DD_belatedPNG.js"></script>
-        <script type="text/javascript">
-           DD_belatedPNG.fix('img, .jgd-dropdown dt'); 
-        </script>
-    <![endif]-->
     </head> 
     <body>
         <div id="tb">
@@ -94,5 +88,13 @@
             </div>
             <!--[if !IE]><!--><div class="clear"></div><!--<![endif]-->
         </div>
+    <!--[if IE 6]>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/DD_belatedPNG.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+               DD_belatedPNG.fix('img, .jgd-dropdown dt, #bner .num span'); 
+            });
+        </script>
+    <![endif]-->
     </body>
 </html>
