@@ -8,17 +8,11 @@ b = {
     odd: function(c) {
         $(document).on('click', '.oddbox', function(event) {
             event.stopPropagation();
-        }).on('mouseover', 'table tr',
-
-        function() {
+        }).on('mouseover', 'table tr', function() {
             $(this).addClass(c);
-        }).on('mouseout', 'table tr',
-
-        function() {
+        }).on('mouseout', 'table tr', function() {
             $(this).removeClass(c);
-        }).on('click', 'table tr',
-
-        function() {
+        }).on('click', 'table tr', function() {
             var oddbox = $(this).find('.oddbox');
 
             if (oddbox.length) {

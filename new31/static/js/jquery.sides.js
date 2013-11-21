@@ -14,10 +14,12 @@
             var $this = $(this);
             var css = {
                 on: {
-                    'background-position': '1px -83px'
+                    'background-color': '#ca3c5b'
+                    // 'background-position': '1px -83px'
                 },
                 off: {
-                    'background-position': '-19px -83px'
+                    'background-color': '#8d8d8d'
+                    // 'background-position': '-19px -83px'
                 }
             }
             return {
@@ -25,7 +27,7 @@
                     'height': '100%',
                     'overflow': 'hidden',
                     'list-style': 'none'
-                }),
+                }).show(),
                 //切换间隔时间
                 interv: 5000,
                 //切换速速
@@ -52,23 +54,34 @@
                     var self = this;
                     return $('<span>').css({
                         'display': 'inline-block',
-                        'background': 'url(/static/shop/images/imgPlayer.png) no-repeat -19px -83px',
+                        // 'background': 'url(/static/shop/images/imgPlayer.png) no-repeat -19px -83px',
+                        'background-color': '#8d8d8d',
                         'margin': '0px 2px',
                         'overflow': 'hidden',
-                        'width': '14px',
+                        'width': '12px',
+                        'height': '12px',
                         'cursor': 'pointer',
-                        'height': '13px'
+                        'border-radius': '20px'
                     }).hover(function() {
                         $(this).css(css.on);
+                        self.stop();
                     }, function() {
                         if (!$(this).hasClass('on')) {
                             $(this).css(css.off);
                         }
+                        self.start();
                     }).click(function() {
                         $(this).addClass('on').css(css.on).siblings().removeClass('on').css(css.off);
+                        // 不要问我为什么不用index, 都是傻逼ie6
+                        var index = $(this).prevAll('span').length;
+                        var width = 0;
+
+                        for (var i = 0; i < index; i++) {
+                            width  += self.site[i].width();
+                             };
 
                         self.ul.animate({
-                            "marginLeft": self.site[$(this).index()].width() * $(this).index() * -1
+                            "marginLeft": -width
                         }, self.speed);
                     });
                 },
@@ -84,7 +97,8 @@
                     }
                 },
                 roll: function() {
-                    var i = this.num.find('.on').index() + 1;
+                    // 不要问我为什么不用index, 都是傻逼ie6
+                    var i = this.num.find('.on').prevAll('span').length + 1;
 
                     this.btns[(i == this.site.length) ? 0 : i].click();
 
@@ -96,9 +110,7 @@
                         'float': 'left'
                     });
 
-                    self.ul.css({
-                        'width': 3544
-                    }).find('li').each(function(i) {
+                    self.ul.find('li').each(function(i) {
                         self.site.push($(this));
                         self.btns.push(self.button());
                     });
@@ -106,6 +118,10 @@
                     self.btns[0].addClass('on').css(css.on);
 
                     $this.after(self.warper.append(self.ul, self.num.append(self.btns))).hide();
+
+                    self.ul.css({
+                        'width': self.ul.width() * self.site.length
+                    })
 
                     return this.start();
                 }
