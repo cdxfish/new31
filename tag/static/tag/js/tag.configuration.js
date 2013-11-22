@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    t.weiboShare().btnReplay().like().img();
+    t.btnReplay().like();
 });
 
 t = {
@@ -46,15 +46,6 @@ t = {
         });
         return this;
     },
-    img: function() {
-        $('.pinBox li img').each(function() {
-            $(this).attr('src', $(this).attr('data-src')).attr('height', $(this).height()).attr('width', $(this).width());
-            $(this).attr('src', $(this).attr('data-src'));
-        })
-
-        return this;
-    },
-
 
     // 微博分享
     weiboShare: function() {

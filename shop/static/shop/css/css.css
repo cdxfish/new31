@@ -18,9 +18,9 @@ a.on {
     border-bottom: thick solid #5B2900;
 }
 
-h3{
+h3 {
     line-height: 2;
-    padding-left:5px;
+    padding-left: 5px;
 }
 
 img {
@@ -54,8 +54,8 @@ table {
 }
 
 table tr td {
-    height:24px;
-    padding: 0 5px; 
+    height: 24px;
+    padding: 0 5px;
     line-height: 2;
 }
 
@@ -178,6 +178,9 @@ input:focus,textarea:focus {
     border-width: 0 0 1px 0;
 }
 
+.mtb5 {
+    margin: 5px 0;
+}
 .mtb25 {
     margin: 25px 0;
 }
@@ -190,8 +193,20 @@ input:focus,textarea:focus {
     margin-left: 40px;
 }
 
+.mlr10 {
+    margin: 0 10px;
+}
+
+.mlr5 {
+    margin: 0 5px;
+}
+
 .mb10 {
     margin-bottom: 10px;
+}
+
+.mb30 {
+    margin-bottom: 30px;
 }
 
 .mt5 {
@@ -210,6 +225,10 @@ input:focus,textarea:focus {
     padding: 25px 0;
 }
 
+.mg5 {
+    margin: 5px;
+}
+
 .pd7 {
     padding: 7px;
 }
@@ -218,7 +237,15 @@ input:focus,textarea:focus {
     line-height: 26px;
 }
 
-.tdptd5 tr td{
+.fl{
+    float:left;
+}
+
+.w100{
+    width: 100%;
+}
+
+.tdptd5 tr td {
     padding-top: 5px;
     padding-bottom: 5px;
 }
@@ -367,7 +394,7 @@ input:focus,textarea:focus {
 
 #main #middle #bner {
     width: 100%;
-    height:530px;
+    height: 530px;
     padding-bottom: 20px;
     float: left;
 }
@@ -704,4 +731,141 @@ input:focus,textarea:focus {
     float: left;
     text-align: center;
     padding: 10px 0;
+}
+
+.pinBox {
+    width: 100%;
+    float: left;
+}
+
+.viewDown {
+    background: url(/static/images/untitled.gif) no-repeat 330px 15px;
+    padding-left: 350px;
+    line-height: 40px
+}
+
+.pinBox li {
+    float: left
+}
+
+.pinBox li h2 a{
+    color: #cf9764;
+}
+
+.pinBox li img {
+    *position: relative;
+    *float: left;
+    *display: block;
+    border-radius: 3px;
+}
+
+.pinBox .styp2 {
+    width: 450px;
+    min-height: 450px;
+    *height: 450px
+}
+
+.pinBox .styp3 {
+    width: 100%;
+    min-height: 750px;
+    *height: 750px
+}
+
+.pinBox .pinSide2 {
+    background: #FFFFFF;
+    padding: 15px;
+    width: 400px;
+    float: right;
+    border-radius: 3px;
+    border: 1px solid #D9D9D9
+}
+
+.pinBox .pinSide2 .pinInfo {
+    float: left;
+}
+
+.pinBox .pinSide3 {
+    background: #FFFFFF;
+    float: left;
+    padding: 15px;
+    margin-top: 4px;
+    min-height: 165px;
+    *height: 165px;
+    border-radius: 3px;
+    border: 1px solid #D9D9D9
+}
+
+.pinBox .pinSide3 .pinInfo {
+    float: right;
+}
+
+.pinBox .pinSide2 .pinDes {
+    width: 100%;
+    float: left;
+    color: #999;
+    padding: 5px 0 10px 0;
+}
+
+.pinBox .pinSide3 .pinDes {
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    float: left;
+    color: #999;
+    padding: 5px 0 10px 0;
+}
+
+.pinBox .pinInfo {
+    color: #999;
+    width: 100%;
+    padding: 8px 0;
+    display: block;
+}
+
+.pinBox .pinInfo .addDate, .pinBox .pinInfo .loc,.pinBox .pinInfo .camera,.pinBox .pinInfo .pv,.pinBox .pinInfo .like {
+    background: url(/static/images/photoDes.png) no-repeat;
+    padding-left: 30px;
+    margin-bottom: 5px;
+    line-height: 18px;
+    width: 80%;
+}
+
+.pinBox .pinInfo .loc {
+    background-position: 0 -25px
+}
+
+.pinBox .pinInfo .camera {
+    background-position: 0 -87px
+}
+
+.pinBox .pinInfo .pv {
+    background-position: 0 -113px
+}
+
+.pinBox .pinInfo .like {
+    background-position: 0 -142px
+}
+
+.pinBox .tags {
+    width: 100%;
+    float: left;
+    display: block;
+    *height: 30px;
+}
+
+.pinBox .vote {
+    width: 100%;
+    float: left;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    margin-top: 20px
+}
+
+.pinBox .vote a {
+    margin-right: 10px
+}
+
+.pinBox .vote .linkCancel a {
+    margin: 0
 }

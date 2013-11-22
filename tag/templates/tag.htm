@@ -6,11 +6,11 @@
     <script type="text/javascript" src="{{ STATIC_URL }}tag/js/tag.configuration.js"></script>
 {% endblock %}
 
-{% block content %}
+{% block middle %}
         <p class="viewDown">向下滚动浏览更多关于:　{{ tag }} 标签商品</p>
         <ul class="pinBox">
 {% for i in items %}
-         <li>
+         <li class="w100 mb30">
                 <img alt="{{ i.item.name }}" title="{{ i.item.name }}" data-src="{{ i.img.url }}" class="styp{{ i.typ }}" />
                 <div class="pinSide{{ i.typ }}">
                     <h2><a href="{% url 'tag:tagShow' i.item.name|urlencode %}">{{ i.item.name }}</a></h2>
@@ -21,13 +21,15 @@
                         <li class="like">喜欢 <span class="count_like_{{ i.item.id }}">{{ i.item.like }}</span></li>
                     </ul>
                     <div class="tags">
+                        <ul class="fl">
 {% for ii in i.item.tag.getByRandom|slice:":9" %}
-                        <a href="{% url 'tag:tagShow' ii.tag|urlencode %}" class="tags_{{ tagsCls|random }}">{{ ii.tag }}</a>
+                        <li class="mlr5 lh26"><a href="{% url 'tag:tagShow' ii.tag|urlencode %}">{{ ii.tag }}</a></li>
 {% endfor %}
+                        </ul>
                     </div>
                     <div class="vote">
-                        <a class="btnLike" href="{% url 'tag:itemLike' i.item.id %}">喜欢</a>
-                        <a class="btnReplay" href="{% url 'tag:getSpec' i.item.id %}">购买</a>
+                        <a class="btn btnbr" href="{% url 'tag:itemLike' i.item.id %}">喜欢</a>
+                        <a class="btn btnbr" href="{% url 'tag:getSpec' i.item.id %}">购买</a>
                     </div>
                 </div>
             </li>
