@@ -334,7 +334,7 @@ class OrdSerch(object):
 
         
     def baseSearch(self):
-        if re.search(ur'\d{4}\-\d{2}\-\d{2}', self.initial['k']):
+        if re.match(ur'\d{4}\-\d{2}\-\d{2}', self.initial['k']):
             self.oList = self.oList.filter(logcs__date=self.initial['k'])
         else:
 

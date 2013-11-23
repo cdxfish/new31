@@ -20,9 +20,9 @@
 {% for i in u %}
           <tr align="center">
             <td>{{ i.bsinfo.get_typ_display }}</td>
-            <td>{{ i.username }}</td>
+            <td><a href="{% url 'account:userEditFrm' i.username %}">{{ i.username }}</a></td>
             <td>{{ i.last_name }}{{ i.first_name }}</td>
-            <td>{{ i.bsinfo.get_mon_display }}{{ i.bsinfo.get_day_display }}</td>
+            <td>{{ i.bsinfo.get_mon_display }}-{{ i.bsinfo.get_day_display }}</td>
             <td>{{ i.bsinfo.get_sex_display }}</td>
             <td>{{ i.pts.pt }}</td>
           </tr>
@@ -31,10 +31,19 @@
             <td align="center" colspan="10">无记录</td>
           </tr>
 {% endfor %}
-          {% include 'page.htm' %}
+          <tr>
+            <td align="right" nowrap="true" colspan="10">
+              总计 {{ u.paginator.count }} 条记录，共 {{ u.paginator.num_pages }} 页，当前第 {{ u.paginator.p }} 页
+              <span id="pageLink">
+                <a href="{{ request.path }}?{% for i in form %}{{ i.name }}={{ i.value }}&{% endfor %}p=1">第一页</a>
+{% if u.has_previous %}
+                <a href="{{ request.path }}?{% for i in form %}{{ i.name }}={{ i.value }}&{% endfor %}p={{ u.previous_page_number }}">上一页</a>
+{% endif %}
+{% if u.has_next %}
+                  <a href="{{ request.path }}?{% for i in form %}{{ i.name }}={{ i.value }}&{% endfor %}p={{ u.next_page_number }}">下一页</a>
+{% endif %}
+              </span>           
+            </td>
+          </tr>
       </table>
-{% endblock %}
-
-{% block js %}
-      <script type="text/javascript" src="{{ STATIC_URL }}logistics/js/logistics.configuration.js"></script>
 {% endblock %}

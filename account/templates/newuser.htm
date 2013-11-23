@@ -3,19 +3,19 @@
 {% block content %}
         <form action="{% url 'account:register' %}" method="POST" id="checkout">
       <table cellpadding="3" cellspacing="1" width="100%" class="sortTable">
-{% for i in user %}
+{% for i in uFrm %}
           <tr>
             <th width="100px">{{ i.label }}</th>
             <td>{{ i }}</td>
           </tr>
 {% endfor %}
-{% for i in bsinfo %}
+{% for i in bsFrm %}
           <tr>
             <th>{{ i.label }}</th>
             <td>{{ i }}</td>
           </tr>
 {% endfor %}
-{% for i in pts %}
+{% for i in pFrm %}
           <tr>
             <th>{{ i.label }}</th>
             <td>{{ i }}</td>
@@ -24,6 +24,7 @@
       </table>
       <center>
           {% csrf_token %}
+          {% if user %}<input type="hidden" name="u" value="{{ user.username }}" />{% endif %}
           <input type="submit" name="submit" value="确认" class="button" />
       </center>
     </form>

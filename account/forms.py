@@ -50,8 +50,16 @@ class NerUserFrm(forms.ModelForm):
 
 
     def clean_username(self):
-        username = self.cleaned_data['username'].strip()
-        if not re.search(ur'[1][3|4|5|8][0-9]\d{8}', username):
+        from models import BsInfo
+        username = self.cleaned_data['username']
+
+        if not re.match(BsInfo.ure, username):
 
             raise forms.ValidationError(u'请填写正确的手机号码!')
         return username
+
+
+
+class UserSrech(forms.Form):
+    k = forms.CharField(label=u'关键字', required=False)
+
