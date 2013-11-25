@@ -80,6 +80,18 @@ class Element(models.Model):
         ordering = ['-path']
 
 
+class EleSub(models.Model):
+    path = models.ForeignKey(Element, verbose_name=u'路径')
+    sub = models.ForeignKey(Element, verbose_name=u'从属', related_name='sub')
+
+    def __unicode__(self):
+
+        return u"%s -> %s" % (self.path.get_path_display(), self.sub.get_path_display())
+        
+    class Meta:
+        ordering = ['-path']
+
+
 class Privilege(models.Model):
     chcs = (
             (0, u'技术部'),

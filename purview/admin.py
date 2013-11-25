@@ -1,14 +1,18 @@
 #coding:utf-8
 from django.contrib import admin
-from models import Element, Privilege, Role
+from models import EleSub, Element, Privilege, Role
 
-class elementAdmin(admin.ModelAdmin):
-    filter_horizontal = ('element',)
+class eleSubAdmin(admin.ModelAdmin):
+    filter_horizontal = ('sub',)
 
 class privilegeAdmin(admin.ModelAdmin):
+    filter_horizontal = ('element',)
+
+class roleAdmin(admin.ModelAdmin):
     filter_horizontal = ('user', 'privilege',)
 
 
 admin.site.register(Element)
-admin.site.register(Privilege, elementAdmin)
-admin.site.register(Role, privilegeAdmin)
+admin.site.register(EleSub)
+admin.site.register(Privilege, privilegeAdmin)
+admin.site.register(Role, roleAdmin)
