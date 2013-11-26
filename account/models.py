@@ -119,7 +119,6 @@ class BsInfo(models.Model):
         return u"%s [ 性别：%s ] [ 生日：%s %s ]" % (self.user, self.get_sex_display(), self.get_mon_display(), self.get_day_display())
 
     def newUser(self, dic):
-
         u = User.objects.create_user(username=dic['username'], email=dic['email'], password='4000592731')
         try:
             u.first_name = dic['first_name']
@@ -147,6 +146,24 @@ class BsInfo(models.Model):
         except Exception, e:
             u.delete()
             # raise e
+
+        return self
+
+    def editUser(self, dic):
+        u = User.objects.get(username=dic['u'])
+        u.username = dic['username']
+        u.first_name = dic['first_name']
+        u.last_name = dic['last_name']
+        u.save()
+
+        u.bsinfo.mon = int(dic['mon'])
+        u.bsinfo.day = int(dic['day'])
+        u.bsinfo.sex = int(dic['sex'])
+        u.bsinfo.typ = int(dic['typ'])
+        u.bsinfo.save()
+
+        u.pts.pt = int(dic['pt']) if dic['pt'] else 0
+        u.pts.save()
 
         return self
 

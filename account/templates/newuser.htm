@@ -1,7 +1,7 @@
 {% extends "office.base.htm" %}
 
 {% block content %}
-        <form action="{% url 'account:register' %}" method="POST" id="checkout">
+        <form action="{% if user %}{% url 'account:userEdit' %}{% else %}{% url 'account:register' %}{% endif %}" method="POST" id="checkout">
       <table cellpadding="3" cellspacing="1" width="100%" class="sortTable">
 {% for i in uFrm %}
           <tr>
@@ -24,7 +24,7 @@
       </table>
       <center>
           {% csrf_token %}
-          {% if user %}<input type="hidden" name="u" value="{{ user.username }}" />{% endif %}
+          {% if user %}<input type="hidden" name="u" value="{{ u.username }}" />{% endif %}
           <input type="submit" name="submit" value="确认" class="button" />
       </center>
     </form>

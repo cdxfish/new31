@@ -11,7 +11,7 @@ from django.template import RequestContext
 from django.db.models import Q
 from new31.func import rdrtLogin, rdrtBck, rdrtIndex, rdrtAcc
 from new31.decorator import postDr
-from decorator import loginDr
+from decorator import loginDr, uInfoDr, checkUserDr
 import re
 # Create your views here.
 
@@ -137,63 +137,51 @@ def newUserFrm(request):
 
     return render_to_response('newuser.htm', locals(), context_instance=RequestContext(request))
 
+@postDr
+@uInfoDr
+def register(request):
+    u"""新会员表单提交"""
+    from models import BsInfo
+
+    post = request.POST.dict()
+
+    BsInfo().newUser(post)
+
+    return HttpResponseRedirect(u'%s?k=%s' % (reverse('account:member'), post[u'username']))
+
+@checkUserDr
 def userEditFrm(request, u):
     u"""会员信息编辑表单"""
     from forms import NerUserFrm, BsInfoFrm, PtsFrm
-    try:
-        user = User.objects.get(username=u)
-    except Exception, e:
-        # raise e
-        messages.error(request, u'[ %s ] 会员存在' % u)
 
-        return rdrtBck(request)
-
-    else:
-        uFrm = NerUserFrm()
-        bsFrm = BsInfoFrm()
-        pFrm = PtsFrm(initial={'typ':0})
+    u = User.objects.get(username=u)
+    uFrm = NerUserFrm(initial={
+        'username': u.username, 
+        'first_name': u.first_name, 
+        'last_name': u.last_name,
+        'email': u.email
+        })
+    bsFrm = BsInfoFrm(initial={
+        'sex': u.bsinfo.sex,
+        'mon': u.bsinfo.mon,
+        'day': u.bsinfo.day,
+        'typ': u.bsinfo.typ,
+        })
+    pFrm = PtsFrm(initial={'pt':u.pts.pt})
 
     return render_to_response('newuser.htm', locals(), context_instance=RequestContext(request))
 
 @postDr
-def register(request):
-    u"""新会员表单提交"""
-    from forms import NerUserFrm, BsInfoFrm, PtsFrm
+@uInfoDr
+def userEdit(request):
+    u"""会员信息编辑提交"""
+    from models import BsInfo
+
     post = request.POST.dict()
 
-    user = NerUserFrm({
-                'username': post['username'],
-                'last_name': post['last_name'],
-                'first_name': post['first_name'],
-            })
-
-    bsinfo = BsInfoFrm({
-                'sex': post['sex'],
-                'mon': post['mon'],
-                'day': post['day'],
-                'typ': post['typ'],
-            })
-
-    pts = PtsFrm({
-                'typ': post['typ']
-            })
-
-    if user.is_valid() and bsinfo.is_valid():
-        from models import BsInfo
-
-        BsInfo().newUser(post)
-    else:
-        for i in user:
-            if i.errors:
-                messages.error(request, u'%s - %s' % (i.label, i.errors))
-
-        for i in bsinfo:
-            if i.errors:
-                messages.error(request, u'%s - %s' % (i.label, i.errors))
-
-        return HttpResponseRedirect(reverse('account:newUserFrm'))
-
+    BsInfo().editUser(post)
     return HttpResponseRedirect(u'%s?k=%s' % (reverse('account:member'), post[u'username']))
+
 
 def member(request):
     u"""会员信息"""
@@ -227,7 +215,7 @@ class UserSrch(object):
         if re.match(ur'\d{2}\-\d{2}', self.initial['k']):
             self.uList = self.uList.filter(bsinfo__mon=int(self.initial['k'][:2]), bsinfo__day=int(self.initial['k'][3:]))
         else:
-            self.uList = self.uList.filter(username__regex=BsInfo.ure).filter(
+            self.uList = self.uList.filter(is_staff=False).filter(
                     Q(username__contains=self.initial['k']) |
                     Q(first_name__contains=self.initial['k']) |
                     Q(last_name__contains=self.initial['k'])

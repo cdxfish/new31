@@ -74,7 +74,8 @@
             <td align="center"><input type="submit" value="打印" class="button" /></td>
             <td colspan="7">&nbsp;</td>
           </tr>
-          {% include 'page.htm' %}
+          {% load page %}
+          {% page u request form %}
       </table>
       </form>
 {% endblock %}
