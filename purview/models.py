@@ -69,17 +69,24 @@ class Element(models.Model):
 
     path = models.CharField(u'路径',max_length=255, choices=tuple((i[0],i[1]) for i in pPath), unique=True)
     onl = models.BooleanField(u'上线', default=True)
-    sub = models.ForeignKey("self",related_name='sub_set', verbose_name=u'从属', blank=True, null=True)
 
     objects = elementManager()
 
     def __unicode__(self):
-        if hasattr(self.sub, 'get_path_display'):
-            sub = self.sub.get_path_display()
-        else:
-            sub = None
 
-        return u"%s [ sub: %s ][ onl: %s ] - %s" % (self.get_path_display(), sub, self.onl, self.path)
+        return u"%s [ onl: %s ] - %s" % (self.get_path_display(), self.onl, self.path)
+        
+    class Meta:
+        ordering = ['-path']
+
+
+class EleSub(models.Model):
+    path = models.ForeignKey(Element, verbose_name=u'路径')
+    sub = models.ForeignKey(Element, verbose_name=u'从属', related_name='sub')
+
+    def __unicode__(self):
+
+        return u"%s -> %s" % (self.path.get_path_display(), self.sub.get_path_display())
         
     class Meta:
         ordering = ['-path']

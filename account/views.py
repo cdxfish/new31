@@ -1,21 +1,22 @@
 #coding:utf-8
 u"""用户中心"""
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+from django.contrib import messages, auth
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.contrib import messages, auth
+from django.db.models import Q
 from new31.func import rdrtLogin, rdrtBck, rdrtIndex, rdrtAcc
 from new31.decorator import postDr
-from decorator import loginDr
-
+from decorator import loginDr, uInfoDr, checkUserDr
+import re
 # Create your views here.
 
 def login(request):
     u"""用户登录"""
-    from django.contrib.auth.forms import AuthenticationForm
 
     # 避免重复登录
     if not request.user.is_authenticated():
@@ -124,55 +125,108 @@ def uViewOrd(request, sn):
 def newUserFrm(request):
     u"""新会员表单"""
     from forms import NerUserFrm, BsInfoFrm, PtsFrm
-    user = NerUserFrm()
-    bsinfo = BsInfoFrm()
-    pts = PtsFrm(initial={'typ':0})
+    uFrm = NerUserFrm()
+    bsFrm = BsInfoFrm()
+    pFrm = PtsFrm(initial={'pt':1000})
 
     return render_to_response('newuser.htm', locals(), context_instance=RequestContext(request))
 
 @postDr
+@uInfoDr
 def register(request):
     u"""新会员表单提交"""
-    from forms import NerUserFrm, BsInfoFrm, PtsFrm
+    from models import BsInfo
+
     post = request.POST.dict()
 
-    user = NerUserFrm({
-                'username': post[u'username'],
-                'last_name': post[u'last_name'],
-                'first_name': post[u'first_name'],
-            })
-
-    bsinfo = BsInfoFrm({
-                'sex': post[u'sex'],
-                'mon': post[u'mon'],
-                'day': post[u'day'],
-                'typ': post[u'typ'],
-            })
-
-    pts = PtsFrm({
-                'typ': post[u'typ']
-            })
-
-    if user.is_valid() and bsinfo.is_valid():
-        from models import BsInfo
-
-        BsInfo().newUser(post)
-    else:
-        for i in user:
-            if i.errors:
-                messages.error(request, u'%s - %s' % (i.label, i.errors))
-
-        for i in bsinfo:
-            if i.errors:
-                messages.error(request, u'%s - %s' % (i.label, i.errors))
-
-        return HttpResponseRedirect(reverse('account:newUserFrm'))
+    BsInfo().newUser(post)
 
     return HttpResponseRedirect(u'%s?k=%s' % (reverse('account:member'), post[u'username']))
 
+@checkUserDr
+def userEditFrm(request, u):
+    u"""会员信息编辑表单"""
+    from forms import NerUserFrm, BsInfoFrm, PtsFrm
+
+    u = User.objects.get(username=u)
+    uFrm = NerUserFrm(initial={
+        'username': u.username, 
+        'first_name': u.first_name, 
+        'last_name': u.last_name,
+        'email': u.email
+        })
+    bsFrm = BsInfoFrm(initial={
+        'sex': u.bsinfo.sex,
+        'mon': u.bsinfo.mon,
+        'day': u.bsinfo.day,
+        'typ': u.bsinfo.typ,
+        })
+    pFrm = PtsFrm(initial={'pt':u.pts.pt})
+
+    return render_to_response('newuser.htm', locals(), context_instance=RequestContext(request))
+
+@postDr
+@uInfoDr
+def userEdit(request):
+    u"""会员信息编辑提交"""
+    from models import BsInfo
+
+    post = request.POST.dict()
+
+    BsInfo().editUser(post)
+    return HttpResponseRedirect(u'%s?k=%s' % (reverse('account:member'), post[u'username']))
+
+
 def member(request):
     u"""会员信息"""
-    k = request.GET.get('k', '')
-    u = User.objects.filter(username__contains=k).order_by('-id')[:100]
+    from forms import UserSrech
+
+    _u = UserSrch(request)
+    u = _u.get()
+
+    form = UserSrech(initial=_u.initial)
 
     return render_to_response('member.htm', locals(), context_instance=RequestContext(request))
+
+
+
+class UserSrch(object):
+    """
+        订单基本搜索类
+
+    """
+    def __init__(self, request):
+        self.request = request
+
+        self.uList = User.objects.select_related().all()
+        self.initial = {
+                        'k': request.GET.get('k', '').strip(), 
+            }
+
+        
+    def baseSearch(self):
+        from models import BsInfo
+        if re.match(ur'\d{2}\-\d{2}', self.initial['k']):
+            self.uList = self.uList.filter(bsinfo__mon=int(self.initial['k'][:2]), bsinfo__day=int(self.initial['k'][3:]))
+        else:
+            self.uList = self.uList.filter(is_staff=False).filter(
+                    Q(username__contains=self.initial['k']) |
+                    Q(first_name__contains=self.initial['k']) |
+                    Q(last_name__contains=self.initial['k'])
+                ).order_by('-id')
+
+        return self
+
+    def search(self):
+
+        return self
+
+
+    def page(self):
+        from new31.func import page
+
+        return page(l=self.uList, p=int(self.request.GET.get('p', 1)))
+
+    def get(self):
+
+        return self.baseSearch().search().page()

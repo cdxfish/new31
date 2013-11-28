@@ -41,17 +41,34 @@ class NerUserFrm(forms.ModelForm):
 
         model = User
         fields = ('username', 'last_name', 'first_name', 'email',)
-        # widgets = {
-        #     'username': forms.TextInput(attrs={'size': 60}),
-        #     'last_name': forms.TextInput(attrs={'size': 60}),
-        #     'first_name': forms.TextInput(attrs={'size': 60}),
-        #     'email': forms.TextInput(attrs={'size': 100}, required=False),
-        # }
-
 
     def clean_username(self):
-        username = self.cleaned_data['username'].strip()
-        if not re.search(ur'[1][3|4|5|8][0-9]\d{8}', username):
+        from models import BsInfo
+        username = self.cleaned_data['username']
+
+        if not re.match(BsInfo.ure, username):
 
             raise forms.ValidationError(u'请填写正确的手机号码!')
         return username
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data['last_name']
+
+        if len(last_name) > 2:
+            raise forms.ValidationError(u'请填写正确的姓氏!')
+
+        return last_name
+
+
+class EditUserFrm(NerUserFrm):
+    username = forms.CharField(label=u'用户名')
+
+    class Meta:
+        from django.contrib.auth.models import User
+
+        model = User
+        fields = ('last_name', 'first_name', 'email',)
+
+
+class UserSrech(forms.Form):
+    k = forms.CharField(label=u'关键字', required=False)

@@ -36,3 +36,13 @@ class OrdLog(models.Model):
         unique_together=(("ord","time"),)
         # verbose_name = u'订单日志'
         # 记录类似于下单时间.付款时间.发货时间等
+
+
+
+# class AccountLog(models.Model):
+#     from django.contrib.auth.models import User
+
+#     user = models.ForeignKey(User, verbose_name=u'用户', related_name='userlog')
+#     act = models.ForeignKey(User, verbose_name=u'操作者', related_name='actlog')
+#     note = models.CharField(u'动作', max_length=1024)
+#     time = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True, editable=False)

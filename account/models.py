@@ -55,53 +55,53 @@ class ptManager(models.Manager):
 
 class BsInfo(models.Model):
     mons = (
-                    (0, u'保密'), 
-                    (1, u'一月'), 
-                    (2, u'二月'), 
-                    (3, u'三月'), 
-                    (4, u'四月'), 
-                    (5, u'五月'), 
-                    (6, u'六月'), 
-                    (7, u'七月'), 
-                    (8, u'八月'), 
-                    (9, u'九月'), 
-                    (10, u'十月'),  
-                    (11, u'十一月'), 
-                    (12, u'十二月'), 
+                    (0, u'00'), 
+                    (1, u'01'), 
+                    (2, u'02'), 
+                    (3, u'03'), 
+                    (4, u'04'), 
+                    (5, u'05'), 
+                    (6, u'06'), 
+                    (7, u'07'), 
+                    (8, u'08'), 
+                    (9, u'09'), 
+                    (10, u'10'),  
+                    (11, u'11'), 
+                    (12, u'12'), 
                 )
     days = (
-                    (0, u'保密'), 
-                    (1, u'一日'), 
-                    (2, u'二日'), 
-                    (3, u'三日'), 
-                    (4, u'四日'), 
-                    (5, u'五日'),
-                    (6, u'六日'), 
-                    (7, u'七日'), 
-                    (8, u'八日'), 
-                    (9, u'九日'), 
-                    (10, u'十日'), 
-                    (11, u'十一日'), 
-                    (12, u'十二日'), 
-                    (13, u'十三日'), 
-                    (14, u'十四日'), 
-                    (15, u'十五日'),
-                    (16, u'十六日'), 
-                    (17, u'十七日'), 
-                    (18, u'十八日'), 
-                    (19, u'十九日'), 
-                    (20, u'二十日'), 
-                    (21, u'二十一日'), 
-                    (22, u'二十二日'), 
-                    (23, u'二十三日'), 
-                    (24, u'二十四日'), 
-                    (25, u'二十五日'),
-                    (26, u'二十六日'), 
-                    (27, u'二十七日'), 
-                    (28, u'二十八日'), 
-                    (29, u'二十九日'), 
-                    (30, u'三十日'), 
-                    (31, u'三十一日'), 
+                    (0, u'00'), 
+                    (1, u'01'), 
+                    (2, u'02'), 
+                    (3, u'03'), 
+                    (4, u'04'), 
+                    (5, u'05'),
+                    (6, u'06'), 
+                    (7, u'07'), 
+                    (8, u'08'), 
+                    (9, u'09'), 
+                    (10, u'10'), 
+                    (11, u'11'), 
+                    (12, u'12'), 
+                    (13, u'13'), 
+                    (14, u'14'), 
+                    (15, u'15'),
+                    (16, u'16'), 
+                    (17, u'17'), 
+                    (18, u'18'), 
+                    (19, u'19'), 
+                    (20, u'20'), 
+                    (21, u'21'), 
+                    (22, u'22'), 
+                    (23, u'23'), 
+                    (24, u'24'), 
+                    (25, u'25'),
+                    (26, u'26'), 
+                    (27, u'27'), 
+                    (28, u'28'), 
+                    (29, u'29'), 
+                    (30, u'30'), 
+                    (31, u'31'), 
                 )
 
     sexs =  (
@@ -121,13 +121,14 @@ class BsInfo(models.Model):
     sex = models.SmallIntegerField(u'性别', default=0, choices=sexs)
     typ = models.SmallIntegerField(u'类型', default=0, choices=typs)
 
+    ure = ur'[1][3|4|5|8][0-9]\d{8}'
+
     objects = bsInfoManager()
 
     def __unicode__(self):
         return u"%s [ 性别：%s ] [ 生日：%s %s ]" % (self.user, self.get_sex_display(), self.get_mon_display(), self.get_day_display())
 
     def newUser(self, dic):
-
         u = User.objects.create_user(username=dic['username'], email=dic['email'], password='4000592731')
         try:
             u.first_name = dic['first_name']
@@ -155,6 +156,24 @@ class BsInfo(models.Model):
         except Exception, e:
             u.delete()
             # raise e
+
+        return self
+
+    def editUser(self, dic):
+        u = User.objects.get(username=dic['u'])
+        u.username = dic['username']
+        u.first_name = dic['first_name']
+        u.last_name = dic['last_name']
+        u.save()
+
+        u.bsinfo.mon = int(dic['mon'])
+        u.bsinfo.day = int(dic['day'])
+        u.bsinfo.sex = int(dic['sex'])
+        u.bsinfo.typ = int(dic['typ'])
+        u.bsinfo.save()
+
+        u.pts.pt = int(dic['pt']) if dic['pt'] else 0
+        u.pts.save()
 
         return self
 

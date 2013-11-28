@@ -52,6 +52,7 @@
             <td align="center" colspan="10">无记录</td>
           </tr>
 {% endfor %}
-          {% include 'page.htm' %}
+          {% load page %}
+          {% page u request form %}
       </table>
 {% endblock %}
