@@ -1,19 +1,15 @@
 $(document).ready(function() {
-    t.btnReplay().like();
+    t.buy().like();
 });
 
 t = {
     like: function() {
-
-        $(document).on('click', '.btnLike',
-
-        function() {
-            $(this).ajaxGET($(this).attr('href'), function(data) {
-                $.dialog.msg('衷心感谢您的喜欢！...');
+        $(document).on('click', '.btnLike', function() {
+            $.dialog.ajax($(this).attr('href'), function(data) {
+                $.dialog.msg('衷心感谢您的喜欢！');
                 $('.count_like_' + data.data.id).text(data.data.like);
 
             });
-
 
             return false;
         });
@@ -21,25 +17,33 @@ t = {
         return this;
     },
 
-    btnReplay: function() {
-        $(document).on('click', '.btnReplay', function() {
-            $.dialog.ajaxGET($(this).attr('href'), function(data) {
-                var html = '';
-                html += '   <h3>请选择规格</h3>  \r\n';
-                html += '        <table width="100%">  \r\n';
+    buy: function() {
+        $(document).on('click', '.btnBuy', function() {
+            $.dialog.ajax($(this).attr('href'), function(data) {
+                $.dialog.popup(data, function(data) {
+                    var table = $('<table>', {
+                        width: '100%',
+                        class: 'tdpd5'
+                    });
+                    $.each(data.data, function(i, v) {
+                        table.append(
+                            $('<tr>').append(
+                                $('<td>').text(v.spec), 
+                                $('<td>').text('原价：' + v.fee), 
+                                $('<td>').text('现价：' + v.nfee), 
+                                $('<td>').append(
+                                    $('<a>', {
+                                    herf: '/cart/buy/' + v.id + '/',
+                                    class: 'btn btnbr'
+                                }).text('购买')
+                                )
+                            )
+                        );
+                    });
 
-                $.each(data.data, function(i, v) {
-                    html += '          <tr>  \r\n';
-                    html += '             <td>' + v.spec + '</td>  \r\n';
-                    html += '             <td>原价：' + v.fee + '</td>  \r\n';
-                    html += '             <td>现价：' + v.nfee + '</td>  \r\n';
-                    html += '             <td><a href="/cart/buy/' + v.id + '/" class="btnB sBtn">购买</a></td>  \r\n';
-                    html += '          </tr>  \r\n';
+                    return $('<h3>').text('请选择规格').after(table);
+
                 });
-
-                html += '        </table>  \r\n';
-
-                return html;
             });
 
             return false;

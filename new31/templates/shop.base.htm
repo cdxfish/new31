@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-        <title>{% block title %}{% if request.title %}{{ request.title }} {% endif %}{% endblock %} - new31管理中心</title>
+        <title>{% block title %}{% if request.title %}{{ request.title }} {% endif %}{% endblock %} 31客 - 源自欧洲经典口味！</title>
         <meta name="Keywords" content="{% block keywords %}31客,31客蛋糕,蛋糕{% endblock %}" />
         <meta name="Description" content="{% block description %}蛋糕电子商务{% endblock %}" />
         <link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico" type="image/x-icon" />
@@ -47,24 +47,24 @@
         <div id="main">
             <div id="top">
                 <dl class="mti" id="logo">
-                    <dt><a href="{% url 'shop:shop' %}" title="31客"><img src="http://www.31kecake.com/templates/images/logo.gif" alt="" width="50%" height="50%" /></a></dt>
-                    <dd><!-- <img src="{{ static }}new31/images/13741335652678.jpg" width="150" height="86"/> --></dd>
+                    <dt><a href="{% url 'shop:shop' %}" title="31客"><img src="{{ STATIC_URL }}images/logo.gif" alt="" width="50%" height="50%" /></a></dt>
+                    <dd></dd>
                 </dl>
                 <ul class="menu">
                     <li>
                         <a href="{% url 'shop:shop' %}#logo">首页</a>
                     </li>
                     <li>
-                        <a href="{% url 'shop:shop' %}#cake">蛋糕</a>
+                        <a href="{% url 'tag:tagShow' 'cake' %}">蛋糕</a>
                     </li>
                     <li>
-                        <a href="{% url 'shop:shop' %}#cookie">曲奇</a>
+                        <a href="{% url 'tag:tagShow' 'cookie' %}">曲奇</a>
                     </li>
                     <li>
-                        <a href="{% url 'shop:shop' %}#chocolate">巧克力</a>
+                        <a href="{% url 'tag:tagShow' 'chocolate' %}">巧克力</a>
                     </li>
                     <li>
-                        <a href="{% url 'shop:shop' %}#pie">派</a>
+                        <a href="{% url 'tag:tagShow' 'pie' %}">派</a>
                     </li>
                 </ul>
             </div>

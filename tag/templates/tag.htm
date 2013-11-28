@@ -28,8 +28,8 @@
                         </ul>
                     </div>
                     <div class="vote">
-                        <a class="btn btnbr" href="{% url 'tag:itemLike' i.item.id %}">喜欢</a>
-                        <a class="btn btnbr" href="{% url 'tag:getSpec' i.item.id %}">购买</a>
+                        <a class="btn btnbr btnLike" href="{% url 'tag:itemLike' i.item.id %}">喜欢</a>
+                        <a class="btn btnbr btnBuy" href="{% url 'tag:getSpec' i.item.id %}">购买</a>
                     </div>
                 </div>
             </li>

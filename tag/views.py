@@ -43,7 +43,7 @@ def getSpec(request, id):
 
     from item.models import ItemFee
     data = []
-    for i in ItemFee.objects.getByItemId(id=id).filter(spec__item__show=True, spec__show=True).filter(typ=0):
+    for i in ItemFee.objects.getByItemId(id=id).filter(typ=0, spec__item__show=True, spec__show=True):
         data.append({
             'id':i.spec.id ,
             'spec':i.spec.spec.value , 
@@ -51,12 +51,12 @@ def getSpec(request, id):
             'nfee': f02f(i.nfee()), 
             })
 
-        return HttpResponse(Msg.objects.dumps(data=data))
+    return HttpResponse(Msg.objects.dumps(data=data))
 
 class TagSrch(object):
     from decorator import noTagDr
 
-    """
+    u"""
         标签页相关
 
     """

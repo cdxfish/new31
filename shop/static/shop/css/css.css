@@ -250,6 +250,9 @@ input:focus,textarea:focus {
     padding-top: 5px;
     padding-bottom: 5px;
 }
+.tdpd5 tr td {
+    padding: 5px;
+}
 
 *html {
     /* 只有IE6支持 */
@@ -264,7 +267,7 @@ input:focus,textarea:focus {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 998;
     background: #FFF;
 }
 
