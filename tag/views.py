@@ -25,6 +25,8 @@ def tagShow(request, tag):
 
     # items = sort(TagSrch(request).show(tag))
     items = TagSrch(request).show(tag)
+    from item.models import Item
+    items = Item.objects.getShowByTag(tag)
 
     return render_to_response('tag.htm', locals(), context_instance=RequestContext(request))
 
