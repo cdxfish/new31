@@ -6,7 +6,7 @@
       <form action="{% url 'print:printOrd' %}" method="post" id="print">
       <table cellpadding="3" cellspacing="1" width="100%" class="sortTable">
           <tr>
-            <th><input type="checkbox" name="all" id="allS" /></th>
+            <th><input type="checkbox" name="all" id="all" /></th>
             <th>类型</th>
             <th>订单编号</th>
             <th>联系人</th>
@@ -14,57 +14,39 @@
             <th>状态</th>
             <th><input type="submit" value="打印" class="button" /></th>
           </tr>
-{% for i in oList %}
+{% regroup oList by logcs.date as newsList %}
+{% for i in newsList %}
+{% regroup i.list by logcs.ltime as newStime %}
+  {% for ii in newStime %}
+          <tr class="tr_border_top_rare">
+            <td colspan="10">{{ i.grouper|date:"Y-m-d"  }} | {{ ii.grouper }} | <span class="wow_item_8">{{ ii.list|length }}</span></td>
+          </tr>
+      {% for iii in ii.list %}
           <tr align="center" class="tr_border_top_black">
-            <td><input type="checkbox" name="{{ i.sn }}" id="s{{ i.id }}" /></td>
-            <td>{{ i.get_typ_display }}</td>
-            <td><a href="{% url 'order:viewOrd' i.sn %}">{{ i.sn }}</a></td>
-            <td>{{ i.logcs.consignee }} [ {{ i.logcs.tel }} ]</td>
-            <td>{{ i.fee.paid|stringformat:"0.2f" }} | {{ i.fee.kpchng|stringformat:"0.2f" }} | {{ i.fee.total|stringformat:"0.2f" }} | {{ i.fnc.cod.get_cod_display }}</td>
-            {% status i %}
-            <td><a href="{% url 'print:pAct' i.sn %}" target="_blank" class="button">打印</a></td>
+            <td><input type="checkbox" name="{{ iii.sn }}" id="s{{ iii.id }}" /></td>
+            <td>{{ iii.get_typ_display }}</td>
+            <td><a href="{% url 'order:viewOrd' iii.sn %}">{{ iii.sn }}</a></td>
+            <td>{{ iii.logcs.consignee }} [ {{ iii.logcs.tel }} ]</td>
+            <td>{{ iii.fee.paid|stringformat:"0.2f" }} | {{ iii.fee.kpchng|stringformat:"0.2f" }} | {{ iii.fee.total|stringformat:"0.2f" }} | {{ iii.fnc.cod.get_cod_display }}</td>
+            {% status iii %}
+            <td><a href="{% url 'print:pAct' iii.sn %}" target="_blank" class="button">打印</a></td>
           </tr>
-{% if i.items %}
-{% for i in i.items %}
-          <tr align="center">
-            <td>&nbsp;</td>
-            <td align="right" nowrap="true" colspan="2">{{ i.name }}</td>
-            <td>{{ i.spec }}</td>
-            <td>{{ i.num }}</td>
-            <td>{{ i.get_status_display }}</td>
-          </tr>
-{% endfor %}
-{% else %}
-{% for i in i.pro_set.all %}
-          <tr align="center">
-            <td>&nbsp;</td>
-            <td align="right" nowrap="true" colspan="2">{{ i.name }}</td>
-            <td>{{ i.spec }}</td>
-            <td>{{ i.num }}</td>
-            <td>{{ i.get_status_display }}</td>
-            <td>&nbsp;</td>
-          </tr>
-{% endfor %}
-{% endif %}
           <tr>
             <td>&nbsp;</td>
             <td align="center">地址</td>
-            <td colspan="5"><a href="{% url 'logistics:baiduMap' %}?address={{ i.logcs.address|urlencode }}" target="_blank">[ {{ i.logcs.area }} ] {{ i.logcs.address }}</a></td>
+            <td colspan="5"><a href="{% url 'logistics:baiduMap' %}?address={{ iii.logcs.address|urlencode }}" target="_blank">[ {{ iii.logcs.area }} ] {{ iii.logcs.address }}</a></td>
           </tr>
           <tr align="center">
             <td>&nbsp;</td>
             <td>时间</td>
-            <td align="left">{{ i.logcs.date|date:"Y-m-d" }} | {{ i.logcs.stime|time:"H:i" }} - {{ i.logcs.etime|time:"H:i" }}</td>
+            <td align="left">{{ iii.logcs.date|date:"Y-m-d" }} | {{ iii.logcs.stime|time:"H:i" }} - {{ iii.logcs.etime|time:"H:i" }}</td>
             <td>预发货</td>
-            <td>{{ i.logcs.lstime|time:"H:i" }}</td>
-            <td>{% if i.form %}{{ i.form.advance }}{% else %}{{ i.logcs.get_advance_display }}{% endif %}</td>
-            <td>{% if iii.form %}{{ iii.form.dman }}{% else %}{{ iii.logcs.dman.last_name }}{{ iii.logcs.dman.first_name }}{% endif %}</td>
+            <td>{{ iiii.logcs.lstime|time:"H:i" }}</td>
+            <td>{{ iii.logcs.get_advance_display }}</td>
+            <td>{{ iii.logcs.dman.last_name }}{{ iii.logcs.dman.first_name }}</td>
           </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td align="center">备注</td>
-            <td colspan="6">{{ i.logcs.note }}</td>
-          </tr>
+    {% endfor %}
+  {% endfor %}
 {% empty %}
           <tr>
             <td align="center" colspan="10">无记录</td>
@@ -75,7 +57,7 @@
             <td colspan="7">&nbsp;</td>
           </tr>
           {% load page %}
-          {% page u request form %}
+          {% page oList request form %}
       </table>
       </form>
 {% endblock %}

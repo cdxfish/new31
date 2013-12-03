@@ -37,7 +37,8 @@
             'background': '#FFF',
             'padding': 5,
             'box-shadow': '1px 2px 5px #000',
-            'position': 'fixed'
+            'position': 'absolute',
+            'color': '#000'
         }),
 
         interval: [],
@@ -89,8 +90,6 @@
         },
 
         center: function() {
-            var self = this;
-
             var windowHeight = $(window).outerHeight();
             var windowouterWidth = $('body').outerWidth();
             var mOuterHeight = this.msgBox.outerHeight() + 100;
@@ -99,9 +98,12 @@
             var leftPx = windowouterWidth < mOuterWidth ? 0 : (windowouterWidth - mOuterWidth) / 2;
 
             this.msgBox.css({
-                top: topPx,
+                top: topPx + $(window).scrollTop(),
                 left: leftPx
             });
+            this.body.css({
+                    'height': $(document).height()
+                });
 
             return this;
         },
@@ -119,7 +121,7 @@
             var self = this.show(element).clear();
             self.interval.push(setTimeout(function() {
                 self.close()
-            }, 3000));
+            }, 1500));
 
             return this;
         },

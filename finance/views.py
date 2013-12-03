@@ -176,7 +176,6 @@ class FncPur(BsPur):
         self.action = Fnc.act
 
     def beMixed(self):
-        
         for i in self.oList:
 
             if not hasattr(i,'action'):
@@ -184,7 +183,7 @@ class FncPur(BsPur):
 
             for ii in self.action[i.fnc.status]:
                 try:
-                    if ii[2] in self.role:
+                    if ii[2] in self.role or self.request.user.is_superuser:
                         i.action.append(ii)
                 except Exception, e:
                     # raise e

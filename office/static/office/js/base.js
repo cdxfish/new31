@@ -88,18 +88,16 @@ b = {
     },
     chng: function(obj, url) {
         obj.change(
-
         function() {
             var self = $(this);
-
-            self.ajaxGET(url + '?' + self.attr('name') + '=' + encodeURI(self.val()));
+            $.dialog.ajax(url + '?' + self.attr('name') + '=' + encodeURI(self.val()));
         });
         return this;
     },
     act: function(func) {
         $('.oprt').on('click', 'a:not(.logisticslogcsEdit, .ordercopyOrd, .ordereditOrd)', function() {
             var self = $(this);
-            self.ajaxGET(self.attr('href'), function(data) {
+            $.dialog.ajax(self.attr('href'), function(data) {
                 var s = '';
                 for (var i in data.data._act) {
                     s += '.' + data.data._act[i][2]

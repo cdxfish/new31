@@ -22,8 +22,8 @@ t = {
             $.dialog.ajax($(this).attr('href'), function(data) {
                 $.dialog.popup(data, function(data) {
                     var table = $('<table>', {
-                        width: '100%',
-                        class: 'tdpd5'
+                        'width': '100%',
+                        'class': 'tdpd5'
                     });
                     $.each(data.data, function(i, v) {
                         table.append(
@@ -33,8 +33,8 @@ t = {
                                 $('<td>').text('现价：' + v.nfee), 
                                 $('<td>').append(
                                     $('<a>', {
-                                    herf: '/cart/buy/' + v.id + '/',
-                                    class: 'btn btnbr'
+                                    'href': '/cart/buy/' + v.id + '/',
+                                    'class': 'btn btnbr'
                                 }).text('购买')
                                 )
                             )

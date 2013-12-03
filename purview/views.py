@@ -123,24 +123,23 @@ class BsPur(object):
     def __init__(self, oList, request):
         from order.models import Ord
         from models import Role
+        self.request = request
         self.oList = oList
         self.action = ()
         self.role = Role.objects.getPathByUser(request.user.id)
 
     def beMixed(self):
-
         for i in self.oList:
             if not hasattr(i,'action'):
                 i.action = []
 
             for ii in self.action[i.status]:
                 try:
-                    if ii[2] in self.role:
+                    if ii[2] in self.role or self.request.user.is_superuser:
                         i.action.append(ii)
                 except Exception, e:
                     # raise e
                     pass
-
 
         return self
 

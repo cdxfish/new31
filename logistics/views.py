@@ -377,7 +377,7 @@ class LogcsPur(BsPur):
         
         for i in self.oList:
             if i.logcs.status < 2:
-                if 'logistics:cDman' in self.role:
+                if 'logistics:cDman' in self.role or self.request.user.is_superuser:
                     i.form = AdvFrm(i)
 
             if not hasattr(i,'action'):
@@ -385,7 +385,7 @@ class LogcsPur(BsPur):
 
             for ii in self.action[i.logcs.status]:
                 try:
-                    if ii[2] in self.role:
+                    if ii[2] in self.role or self.request.user.is_superuser:
                         i.action.append(ii)
                 except Exception, e:
                     # raise e

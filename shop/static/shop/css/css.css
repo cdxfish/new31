@@ -67,7 +67,7 @@ p {
 input[type=text],input[type=password],textarea {
     height: 16px;
     padding: 3px;
-    border: 1px solid #cc9866;
+    border: 1px solid #CDCDCD;
     border-radius: 2px;
     background: #FFF;
 }
@@ -75,7 +75,7 @@ input[type=text],input[type=password],textarea {
 *input {
     height: 16px;
     padding: 3px;
-    border: 1px solid #cc9866;
+    border: 1px solid #CDCDCD;
     border-radius: 2px;
     background: #FFF;
 }
@@ -326,6 +326,7 @@ input:focus,textarea:focus {
     color: #5b2900;
     border: none;
     text-decoration: none;
+    float: left;
 }
 
 #main .mti a:hover {

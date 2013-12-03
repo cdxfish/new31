@@ -12,7 +12,6 @@ class logcsManager(models.Manager):
 
         return tuple([ i[0] for i in Logcs.act[i]])
 
-
     def saveLogcs(self, ord, request):
         from views import LogcSess
 

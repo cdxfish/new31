@@ -7,25 +7,23 @@ from new31.decorator import timeit
 
 class bsInfoManager(models.Manager):
     def set(self, request):
+        messages.success(request, '个人信息已提交')
 
         u = request.user.bsinfo
 
         if not u.sex:
             u.sex = request.POST.get('sex')
         else:
-            u.sex = u.sex
             messages.warning(request, u'无法再次修改性别')
 
         if not u.mon:
             u.mon = request.POST.get('mon')
         else:
-            u.mon = u.mon
             messages.warning(request, u'无法再次修改月')
 
         if not u.day:
             u.day = request.POST.get('day')
         else:
-            u.day = u.day
             messages.warning(request, u'无法再次修改日')
 
         u.save()
