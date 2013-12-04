@@ -1,6 +1,6 @@
 #coding:utf-8
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from new31.func import rdrtBck
 from functools import wraps
@@ -31,7 +31,7 @@ def postDrR(name):
             else:
                 messages.error(request, '提交方式错误')
 
-                return HttpResponseRedirect(reverse(name))
+                return redirect(name)
         return __func
     return _func
 

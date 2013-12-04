@@ -1,10 +1,11 @@
 #coding:utf-8
 from new31.func import pPatterns
-from views import login, logout, settings, saveSet, changepwd, cPwd, myOrd, uViewOrd, register, member, newUserFrm, userEditFrm, userEdit
+from views import login, quicklyREG, logout, settings, saveSet, changepwd, cPwd, myOrd, uViewOrd, register, member, newUserFrm, userEditFrm, userEdit
 
 urlpatterns = pPatterns(
     (r'^$', myOrd, 2),
     (r'^login\/$', login, 2),
+    (r'^quicklyreg\/$', quicklyREG, 2),
     (r'^logout\/$', logout, 2),
     (r'^settings\/$', settings, 2),
     (r'^sset\/$', saveSet, 2),

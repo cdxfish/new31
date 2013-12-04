@@ -1,4 +1,5 @@
 #coding:utf-8
+from django.contrib.auth.forms import UserCreationForm
 from django import forms
 import re
 # Create your forms here.
@@ -70,5 +71,9 @@ class EditUserFrm(NerUserFrm):
         fields = ('last_name', 'first_name', 'email',)
 
 
-class UserSrech(forms.Form):
+class QuicklyNewUserFrm(NerUserFrm, UserCreationForm):
+    def __init__(self, *args, **kwarg):
+        super(QuicklyNewUserFrm, self).__init__(*args, **kwarg)
+
+class UserSrechFrm(forms.Form):
     k = forms.CharField(label=u'关键字', required=False)

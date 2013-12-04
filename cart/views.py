@@ -1,9 +1,10 @@
 #coding:utf-8
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib import messages
-from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from decorator import itemshow, checkCartDr
 from order.decorator import subDr
 from new31.func import f02f
@@ -12,7 +13,7 @@ from message.models import Msg
 from message.decorator import ajaxErrMsg
 from logistics.decorator import chLogcsDr
 from finance.decorator import chFncDr
-from new31.func import frMtFee, rdrtBck, rdrtIndex
+from new31.func import frMtFee, rdrtBck
 import time, datetime, math
 
 # Create your views here.
@@ -23,7 +24,7 @@ def cart(request):
 
     return render_to_response('cart.htm', locals(), context_instance=RequestContext(request))
 
-
+@login_required
 def cnsgn(request):
     u"""收货人信息"""    
     from logistics.forms import logcsFrm
@@ -76,9 +77,9 @@ def submit(request):
         Msg.objects.pushToRole(-1, 7, 8, 9, 10, 12, 13, typ='success', msg='前台成功提交订单', data={'sn': o.sn} )
 
         if request.user.is_authenticated():
-            return HttpResponseRedirect(reverse('account:myOrd'))
+            return redirect('account:myOrd')
         else:
-            return rdrtIndex()
+            return redirect('shop:shop')
 
 
 @itemshow
@@ -86,7 +87,7 @@ def buy(request, sid):
     u"""加入购物车"""
     CartSess(request).pushBySid(int(sid))
 
-    return HttpResponseRedirect(reverse('cart:cart'))
+    return redirect('cart:cart')
 
 
 def delInCart(request, mark):

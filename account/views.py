@@ -1,59 +1,74 @@
 #coding:utf-8
 u"""用户中心"""
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib import messages, auth
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.db.models import Q
-from new31.func import rdrtLogin, rdrtBck, rdrtIndex, rdrtAcc
+from new31.func import rdrtBck
 from new31.decorator import postDr
-from decorator import loginDr, uInfoDr, checkUserDr
+from forms import QuicklyNewUserFrm
+from decorator import uInfoDr, checkUserDr
 import re
 # Create your views here.
 
 def login(request):
     u"""用户登录"""
-
     # 避免重复登录
     if not request.user.is_authenticated():
-        frm = AuthenticationForm(request)
+        if request.method == 'GET':
+            nfrm = UserCreationForm()
+            frm = AuthenticationForm(request)
+            next = request.GET.get('next', 'account:myOrd')
 
-        if request.method == 'POST':
+            return render_to_response('login.htm', locals(), context_instance=RequestContext(request))
+
+        elif request.method == 'POST':
             username = request.POST.get('username')
             password = request.POST.get('password')
+            next = request.POST.get('next', 'account:myOrd')
+
             user = auth.authenticate(username=username, password=password)
 
             if user and user.is_active:
                 # Correct password, and the user is marked "active"
                 auth.login(request, user)
                 # Redirect to a success page.
-                return rdrtAcc(request)
+                return redirect(next)
             else:
                 # Show an error page
-
                 messages.error(request, '用户名或密码错误')
 
-                return rdrtLogin(request)
-
-        else:
-            return render_to_response('login.htm', locals(), context_instance=RequestContext(request))
-
+                return redirect(request.META.get('HTTP_REFERER', 'shop:shop'))
     else:
-        return rdrtAcc(request)
+        return redirect('account:myOrd')
+
+@postDr
+def quicklyREG(request):
+    u"""快速注册"""
+    form = QuicklyNewUserFrm(request.POST)
+    if form.is_valid():
+        new_user = form.save()
+
+        return redirect('account:settings')
+    else:
+        for i in form:
+            if i.errors:
+                messages.error(request, u'%s - %s' % (i.label, i.errors))
+        return redirect('account:login')
 
 def logout(request):
     u"""用户登出"""
 
     auth.logout(request)
 
-    return rdrtIndex()
+    return redirect('account:login')
 
 
-@loginDr
+@login_required
 def settings(request):
     u"""个人信息"""
     from forms import bsInfoFrm
@@ -61,7 +76,7 @@ def settings(request):
 
     return render_to_response('settings.htm', locals(), context_instance=RequestContext(request))
 
-@loginDr
+@login_required
 def saveSet(request):
     u"""用户设置保存"""
     from models import BsInfo
@@ -71,7 +86,7 @@ def saveSet(request):
     return rdrtBck(request)
 
 
-@loginDr
+@login_required
 def changepwd(request):
     u"""用户密码修改"""
     from django.contrib.auth.forms import PasswordChangeForm
@@ -80,7 +95,7 @@ def changepwd(request):
     return render_to_response('changepwd.htm', locals(), context_instance=RequestContext(request))
 
 
-@loginDr
+@login_required
 def cPwd(request):
     u"""用户密码保存"""
     from django.contrib.auth.forms import PasswordChangeForm
@@ -97,7 +112,7 @@ def cPwd(request):
     return rdrtBck(request)
 
 
-@loginDr
+@login_required
 def myOrd(request):
     u"""我的订单"""
     from order.models import Ord
@@ -107,7 +122,7 @@ def myOrd(request):
 
     return render_to_response('myord.htm', locals(), context_instance=RequestContext(request))
 
-@loginDr
+@login_required
 def uViewOrd(request, sn):
     u"""订单详情"""
     from order.models import Ord
@@ -141,7 +156,7 @@ def register(request):
 
     BsInfo().newUser(post)
 
-    return HttpResponseRedirect(u'%s?k=%s' % (reverse('account:member'), post[u'username']))
+    return redirect(u'%s?k=%s' % (reverse('account:member'), post[u'username']))
 
 @checkUserDr
 def userEditFrm(request, u):
@@ -174,17 +189,17 @@ def userEdit(request):
     post = request.POST.dict()
 
     BsInfo().editUser(post)
-    return HttpResponseRedirect(u'%s?k=%s' % (reverse('account:member'), post[u'username']))
+    return redirect(u'%s?k=%s' % (reverse('account:member'), post[u'username']))
 
 
 def member(request):
     u"""会员信息"""
-    from forms import UserSrech
+    from forms import UserSrechFrm
 
     _u = UserSrch(request)
     u = _u.get()
 
-    form = UserSrech(initial=_u.initial)
+    form = UserSrechFrm(initial=_u.initial)
 
     return render_to_response('member.htm', locals(), context_instance=RequestContext(request))
 

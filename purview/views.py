@@ -1,8 +1,9 @@
 #coding:utf-8
 u"""权限"""
+from django.shortcuts import render_to_response, redirect
 from django.contrib import messages
 from django.http import HttpResponse
-from new31.func import rdrtBck, rdrtLogin
+from new31.func import rdrtBck
 from django.core.urlresolvers import resolve, reverse
 from message.models import Msg
 import re
@@ -103,7 +104,7 @@ class URLPurview:
     # 登录提示
     def login(self):
         if self.path[2]:
-            return rdrtLogin(self.request)
+            return redirect('account:login')
 
         else:
             return HttpResponse(Msg.objects.dumps(typ='error', msg=u'请登录'))

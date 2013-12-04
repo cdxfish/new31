@@ -3,6 +3,7 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.conf.urls import patterns, url, include
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 import math, random, datetime, re, importlib
 
 
@@ -13,25 +14,10 @@ def frMtFee(fee):
 def keFrmt(fee):
     return fee and math.floor(fee / 100) * 100 + 50 if fee % 100 < 50 else math.ceil(fee / 100) * 100
 
-# 重定向至登录页
-def rdrtLogin(request):
-    return HttpResponseRedirect(reverse('account:login'))
-
-# 重定向至用户中心
-def rdrtAcc(request):
-    return HttpResponseRedirect(reverse('account:myOrd'))
-
-
-# 重定向至首页
-def rdrtIndex():
-    return HttpResponseRedirect(reverse('shop:shop'))
-
-
 # 重定向至前一页
 def rdrtBck(request):
 
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER',reverse('shop:shop')))
-
+    return redirect(request.META.get('HTTP_REFERER', '/'))
 
 # 分页
 def page(l, p=1, pSize=150):
@@ -58,7 +44,7 @@ def rdrRange(url, date, sn):
     s = d - datetime.timedelta(days=1)
     e = d + datetime.timedelta(days=1)
 
-    return HttpResponseRedirect(u'%s?o=-1&c=-1&s=%s&e=%s&k=%s' % (url, s.strftime('%Y-%m-%d').strip(), e.strftime('%Y-%m-%d').strip(), sn))
+    return redirect(u'%s?o=-1&c=-1&s=%s&e=%s&k=%s' % (url, s.strftime('%Y-%m-%d').strip(), e.strftime('%Y-%m-%d').strip(), sn))
 
 
 def f02f(i):

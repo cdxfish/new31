@@ -1,11 +1,11 @@
 #coding:utf-8
 u"""订单"""
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.template import RequestContext
 from django.contrib import messages
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponse
 from new31.decorator import postDr, rdrtBckDr, timeit
 from new31.func import frMtFee, rdrRange, page, rdrtBck, f02f
 from log.decorator import ordLogDr
@@ -125,7 +125,7 @@ def copyOrd(request, sn, s):
     u"""订单复制"""
     OrdSess(request).copy(int(sn))
 
-    return HttpResponseRedirect(reverse('order:newOrdFrm'))
+    return redirect('order:newOrdFrm')
 
 @ordDr()
 def editOrd(request, sn, s):
@@ -134,7 +134,7 @@ def editOrd(request, sn, s):
 
     OrdSess(request).copy(sn)
 
-    return HttpResponseRedirect(reverse('order:editOrdFrm'))
+    return redirect('order:editOrdFrm')
 
 @ordDr(1)
 @msgPushToRoleDr(2)

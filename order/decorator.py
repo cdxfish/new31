@@ -1,6 +1,6 @@
 #coding:utf-8
 from django.contrib import messages
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponse
 from new31.func import rdrtBck
 from message.models import Msg
 from functools import wraps

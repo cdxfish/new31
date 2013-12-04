@@ -1,10 +1,10 @@
 #coding:utf-8
 u"""物流"""
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.db.models import Q
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponse
 from django.contrib import messages
 from new31.decorator import postDr
 from log.decorator import ordLogDr
@@ -140,7 +140,7 @@ def logcsEdit(request, sn, s):
 
     OrdSess(request).cpyOrd(sn)
     
-    return HttpResponseRedirect(reverse('logistics:logcsEditFrm'))
+    return redirect('logistics:logcsEditFrm')
 
 @logcsDr(1)
 def logcsShip(request, sn, s):
