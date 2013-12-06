@@ -39,6 +39,7 @@ def uInfoDr(func):
                     'username': post['username'],
                     'last_name': post['last_name'],
                     'first_name': post['first_name'],
+                    'email': post['email'],
                 })
 
         bsinfo = BsInfoFrm({
@@ -49,7 +50,7 @@ def uInfoDr(func):
                 })
 
         pts = PtsFrm({
-                    'typ': post['typ']
+                    'pt': post['pt']
                 })
 
         if user.is_valid() and bsinfo.is_valid():
@@ -68,3 +69,43 @@ def uInfoDr(func):
 
     return _func
 
+def userLogDr(func):
+    @wraps(func)
+    def _func(request, *args, **kwargs):
+        from log.models import AccountLog
+        try:
+            u = User.objects.get(username=request.POST.get('u'))
+
+            rObj = func(request, *args, **kwargs)
+
+            _u = User.objects.get(username=request.POST.get('username'))
+
+            edit = 'edit: '
+
+            edit += '[%s %s > %s] ' % (u'用户名', u.username, _u.username)
+            edit += '[%s %s > %s] ' % (u'姓氏', u.last_name, _u.last_name)
+            edit += '[%s %s > %s] ' % (u'名字', u.first_name, _u.first_name)
+            edit += '[%s %s > %s] ' % (u'电子邮件地址', u.email, _u.email)
+            edit += '[%s %s > %s] ' % (u'性别', u.bsinfo.get_sex_display(), _u.bsinfo.get_sex_display())
+            edit += '[%s %s > %s] ' % (u'月', u.bsinfo.get_mon_display(), _u.bsinfo.get_mon_display())
+            edit += '[%s %s > %s] ' % (u'日', u.bsinfo.get_day_display(), _u.bsinfo.get_day_display())
+            edit += '[%s %s > %s] ' % (u'类型', u.bsinfo.get_typ_display(), _u.bsinfo.get_typ_display())
+            edit += '[%s %s > %s] ' % (u'积分', u.pts.pt, _u.pts.pt)
+
+            a = AccountLog()
+            a.user = _u
+            a.act = request.user
+            a.note = edit
+            a.save()
+
+
+        except Exception, e:
+            # raise e
+            messages.error(request, u'无法写入会员日志')
+
+            return rdrtBck(request)
+        finally:
+
+            return rObj
+
+    return _func

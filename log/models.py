@@ -39,10 +39,10 @@ class OrdLog(models.Model):
 
 
 
-# class AccountLog(models.Model):
-#     from django.contrib.auth.models import User
+class AccountLog(models.Model):
+    from django.contrib.auth.models import User
 
-#     user = models.ForeignKey(User, verbose_name=u'用户', related_name='userlog')
-#     act = models.ForeignKey(User, verbose_name=u'操作者', related_name='actlog')
-#     note = models.CharField(u'动作', max_length=1024)
-#     time = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True, editable=False)
+    user = models.ForeignKey(User, verbose_name=u'用户', related_name='userlog')
+    act = models.ForeignKey(User, verbose_name=u'操作者', related_name='actlog')
+    note = models.CharField(u'动作', max_length=1024)
+    time = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True, editable=False)

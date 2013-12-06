@@ -1,7 +1,7 @@
 {% extends "office.base.htm" %}
 
 {% block content %}
-        <form action="{% if u %}{% url 'account:userEdit' %}{% else %}{% url 'account:register' %}{% endif %}" method="POST" id="checkout">
+        <form action="{% if user %}{% url 'account:userEdit' %}{% else %}{% url 'account:register' %}{% endif %}" method="POST" id="checkout">
       <table cellpadding="3" cellspacing="1" width="100%" class="sortTable">
 {% for i in uFrm %}
           <tr>
@@ -24,27 +24,10 @@
       </table>
       <center>
           {% csrf_token %}
-          {% if u %}<input type="hidden" name="u" value="{{ u.username }}" />{% endif %}
+          {% if user %}<input type="hidden" name="u" value="{{ u.username }}" />{% endif %}
           <input type="submit" name="submit" value="确认" class="button" />
       </center>
     </form>
-    {% if u %}
-    <h3>帐户记录</h3>
-      <table cellpadding="3" cellspacing="1" width="100%">
-      <tr>
-          <th>操作者</th>
-          <th>时间</th>
-          <th>动作</th>
-      </tr>
-{% for i in u.userlog.all %}
-      <tr align="center">
-          <td>{{ i.act.last_name }}{{ i.act.first_name }}</td>
-          <td>{{ i.time|date:"Y-m-d H:i" }}</td>
-          <td>{{ i.note }}</td>
-      </tr>
-{% endfor %}
-      </table>
-    {% endif %}
 {% endblock %}
 
 {% block js %}

@@ -11,7 +11,7 @@ from django.db.models import Q
 from new31.func import rdrtBck
 from new31.decorator import postDr
 from forms import QuicklyNewUserFrm
-from decorator import uInfoDr, checkUserDr
+from decorator import uInfoDr, checkUserDr, userLogDr
 import re
 # Create your views here.
 
@@ -182,6 +182,7 @@ def userEditFrm(request, u):
 
 @postDr
 @uInfoDr
+@userLogDr
 def userEdit(request):
     u"""会员信息编辑提交"""
     from models import BsInfo

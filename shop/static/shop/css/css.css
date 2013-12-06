@@ -849,20 +849,17 @@ input:focus,textarea:focus {
     float: right;
 }
 
-.pinBox .pinSide2 .pinDes {
+.pinBox .pinSide2 .pinDes, .pinBox .pinSide3 .pinDes {
     width: 100%;
     float: left;
     color: #999;
     padding: 5px 0 10px 0;
+    text-indent: 0;
 }
 
 .pinBox .pinSide3 .pinDes {
     white-space: nowrap;
-    width: 100%;
     overflow: hidden;
-    float: left;
-    color: #999;
-    padding: 5px 0 10px 0;
 }
 
 .pinBox .pinInfo {
