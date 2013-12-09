@@ -345,6 +345,8 @@ class OrdSerch(object):
         else:
 
             self.oList = self.oList.filter(
+                    logcs__area__in=self.request.user.attribution_set.getAreaName()
+                ).filter(
                     Q(sn__contains=self.initial['k']) |
                     Q(user__username__contains=self.initial['k']) |
                     Q(logcs__consignee__contains=self.initial['k']) |
@@ -375,7 +377,7 @@ class OrdSerch(object):
 
     def range(self):
         self.oList = self.oList.filter(
-                ordlog__act__in=['order:submitOrd', 'order:editOrd'], 
+                ordlog__act__in=['order:submitOrd', 'order:editOrd', 'cart:submit', ], 
                 ordlog__time__range=(self.initial['s'], self.initial['e']) 
             ).distinct()
 

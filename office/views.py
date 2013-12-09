@@ -21,17 +21,21 @@ def office(request):
     s = '%s' % today
     e = '%s' % (today + oneDay)
     y = '%s' % (today - oneDay)
+    area = request.user.attribution_set.getAreaName()
 
-    order = Ord.objects.filter(ordlog__time__range=(s, e), ordlog__act__in=['order:submitOrd', 'order:editOrd']).distinct().order_by('status', '-sn')
-    logcs = Logcs.objects.filter(date=s).order_by('status', '-ord__sn')
-    pro = Pro.objects.filter(ord__logcs__date=s).order_by('status', '-ord__sn')
-    fnc = Fnc.objects.filter(ord__logcs__date=s).order_by('status', '-ord__sn')
+    o = Ord.objects.filter(logcs__area__in=area, ordlog__act__in=['order:submitOrd', 'order:editOrd', 'cart:submit']).distinct().order_by('status', '-sn')
+    l = Logcs.objects.filter(area__in=area).order_by('status', '-ord__sn')
+    p = Pro.objects.filter(ord__logcs__area__in=area).order_by('status', '-ord__sn')
+    f = Fnc.objects.filter(ord__logcs__area__in=area).order_by('status', '-ord__sn')
 
-    yorder = Ord.objects.filter(ordlog__time__range=(y, s), ordlog__act__in=['order:submitOrd', 'order:editOrd']).distinct().order_by('status', '-sn')
-    ylogcs = Logcs.objects.filter(date=y).order_by('status', '-ord__sn')
-    ypro = Pro.objects.filter(ord__logcs__date=y).order_by('status', '-ord__sn')
-    yfnc = Fnc.objects.filter(ord__logcs__date=y).order_by('status', '-ord__sn')
+    order = o.filter(ordlog__time__range=(s, e))
+    logcs = l.filter(date=s)
+    pro = p.filter(ord__logcs__date=s)
+    fnc = f.filter(ord__logcs__date=s)
 
-
+    yorder = o.filter(ordlog__time__range=(y, s))
+    ylogcs = l.filter(date=y)
+    ypro = p.filter(ord__logcs__date=y)
+    yfnc = f.filter(ord__logcs__date=y)
 
     return render_to_response('office.htm', locals(), context_instance=RequestContext(request))

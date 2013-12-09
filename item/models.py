@@ -133,7 +133,7 @@ class ItemDesc(models.Model):
 
     class Meta:
         ordering = ['item', 'desc']
-        unique_together=(("item","desc"),)     
+        unique_together=(('item', 'desc'),)     
 
 
 class ItemSpec(models.Model):

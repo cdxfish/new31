@@ -29,7 +29,7 @@ class logcsManager(models.Manager):
         logcs.ord = ord
 
         logcs.consignee = c['consignee']
-        logcs.area = '%s - %s' % (area.sub.name, area.name)
+        logcs.area = area.get_name_display()
         logcs.address = c['address']
         logcs.tel = c['tel']
         logcs.date = c['date']

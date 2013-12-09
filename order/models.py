@@ -16,7 +16,6 @@ class ordManager(models.Manager):
 
         return tuple( i[0] for i in Ord.act[i])
 
-
     def saveOrd(self, obj, request):
         from views import OrdSess
         
