@@ -23,7 +23,7 @@ class roleManager(models.Manager):
 
     def getDmanToTuple(self):
 
-        dMan = self.select_related().get(role=1,onl=True).user.all()
+        dMan = self.select_related().get(role=1,onl=True).user.filter(is_staff=True, is_active=True)
 
         return tuple([(i.id, u'%s%s' % (i.last_name, i.first_name) if (i.last_name or i.first_name) else i.username) for i in dMan])
 
