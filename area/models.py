@@ -11,7 +11,7 @@ class AreaManager(models.Manager):
 
     def default(self):
 
-        return self.select_related().filter(onl=True)[0].sub_set.filter(onl=True)[0]
+        return self.select_related().filter(onl=True)[0]
 
     def getTpl(self):
 

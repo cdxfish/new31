@@ -127,7 +127,7 @@ class BsPur(object):
         self.request = request
         self.oList = oList
         self.action = ()
-        self.role = Role.objects.getPathByUser(request.user.id)
+        self.role = Role.objects.getPathByUser(request.user)
 
     def beMixed(self):
         for i in self.oList:

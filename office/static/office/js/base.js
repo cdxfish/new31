@@ -88,6 +88,7 @@ b = {
     },
     chng: function(obj, url) {
         obj.change(
+
         function() {
             var self = $(this);
             $.dialog.ajax(url + '?' + self.attr('name') + '=' + encodeURI(self.val()));
@@ -97,31 +98,33 @@ b = {
     act: function(func) {
         $('.oprt').on('click', 'a:not(.logisticslogcsEdit, .ordercopyOrd, .ordereditOrd)', function() {
             var self = $(this);
-            $.dialog.ajax(self.attr('href'), function(data) {
-                var s = '';
-                for (var i in data.data._act) {
-                    s += '.' + data.data._act[i][2]
-                    if (i < data.data._act.length - 1) {
-                        s += ', ';
+            // if (confirm('确认执行' + self.text())) {
+
+                $.dialog.ajax(self.attr('href'), function(data) {
+                    var s = '';
+                    for (var i in data.data._act) {
+                        s += '.' + data.data._act[i][2]
+                        if (i < data.data._act.length - 1) {
+                            s += ', ';
+                        }
+
                     }
 
-                }
+                    var act = '';
+                    for (var i in data.data.act) {
+                        act += '<a href="' + data.data.act[i][3] + '" class="button ' + data.data.act[i][2] + '">' + data.data.act[i][1] + '</a>';
 
-                var act = '';
-                for (var i in data.data.act) {
-                    act += '<a href="' + data.data.act[i][3] + '" class="button ' + data.data.act[i][2] + '">' + data.data.act[i][1] + '</a>';
+                    }
 
-                }
+                    self.siblings(s).remove();
+                    self.parent().prepend(act);
+                    self.remove();
+                    $('#' + data.data.obj + data.data.sn).text(data.data.sStr).removeClass().addClass('status_' + data.data.s);
 
-                self.siblings(s).remove();
-                self.parent().prepend(act);
-                self.remove();
-                $('#' + data.data.obj + data.data.sn).text(data.data.sStr).removeClass().addClass('status_' + data.data.s);
+                    return func(data);
 
-                return func(data);
-
-            });
-
+                });
+            // }
             return false
         });
 

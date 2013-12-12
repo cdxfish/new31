@@ -14,10 +14,16 @@ class roleManager(models.Manager):
         element = []
         role = self.select_related().filter(user=user, onl=True)
 
-        for i in role:
-            for ii in i.privilege.filter(onl=True):
-                for iii in ii.element.filter(onl=True):
-                    element.append(iii.path)
+        if user.is_superuser:
+            for i in Element.objects.filter(onl=True):
+                element.append(i.path)
+
+        else:
+
+            for i in role:
+                for ii in i.privilege.filter(onl=True):
+                    for iii in ii.element.filter(onl=True):
+                        element.append(iii.path)
 
         return element
 

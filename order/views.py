@@ -111,7 +111,7 @@ def modifyOrd(request, sn, s):
 
     return HttpResponse(Msg.objects.dumps(data={
                 'sn': sn, 
-                'act': r.getAjaxAct(r.getActByUser(request.user.id, o.act[s]), sn), 
+                'act': r.getAjaxAct(r.getActByUser(request.user, o.act[s]), sn), 
                 '_act': r.getAjaxAct(o.act[ o.status ], sn), 
                 's': _o.status,
                 'sStr': _o.get_status_display(),
