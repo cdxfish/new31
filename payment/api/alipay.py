@@ -6,7 +6,6 @@ class Main(object):
     urls = ()
 
     def button(self):
+    	print dir(self)
 
-    	pass
-
-    	# return
+    	return 'https://mapi.alipay.com/gateway.do?'

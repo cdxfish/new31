@@ -109,3 +109,18 @@ def userLogDr(func):
             return rObj
 
     return _func
+
+# 订单所属检查装饰器, 用于检查订单是否属于当前会员
+def checkOrdByUserDr(func):
+    @wraps(func)
+    def _func(request, *args, **kwargs):
+        from order.models import Ord
+        o = Ord.objects.get(sn=kwargs['sn'])
+
+        if o.user != request.user:
+            messages.error(request, u'您无法查看当前订单。')
+
+            return rdrtBck(request)
+        else:
+            return func(request, *args, **kwargs)
+    return _func

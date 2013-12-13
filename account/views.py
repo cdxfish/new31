@@ -11,7 +11,7 @@ from django.db.models import Q
 from new31.func import rdrtBck
 from new31.decorator import postDr
 from forms import QuicklyNewUserFrm
-from decorator import uInfoDr, checkUserDr, userLogDr
+from decorator import uInfoDr, checkUserDr, userLogDr, checkOrdByUserDr
 import re
 # Create your views here.
 
@@ -123,17 +123,13 @@ def myOrd(request):
     return render_to_response('myord.htm', locals(), context_instance=RequestContext(request))
 
 @login_required
+@checkOrdByUserDr
 def uViewOrd(request, sn):
     u"""订单详情"""
     from order.models import Ord
-    from produce.models import Pro
 
     o = Ord.objects.get(sn=sn)
-
-    if o.user != request.user:
-        messages.error(request, u'您无法查看当前订单。')
-
-        return rdrtBck(request)
+    o.pay = o.fnc.cod.main(o, request)
 
     return render_to_response('vieword.htm', locals(), context_instance=RequestContext(request))
 
