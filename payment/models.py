@@ -24,6 +24,7 @@ class APIBase(object):
     u"""支付插件基本类"""
     
     urls = ()
+    config = ()
 
     def __init__(self, ord, request, *args, **kwargs):
         self.ord = ord
@@ -45,7 +46,7 @@ class APIBase(object):
 
     def button(self):
 
-        return self
+        return ''
 
 class Pay(models.Model):
     import api
@@ -55,6 +56,10 @@ class Pay(models.Model):
     cod = models.CharField(u'代码', max_length=30, choices=chcs)
     config = models.TextField(u'配置')
     onl = models.BooleanField(u'上线')
+
+    def _config(self):
+        import json
+        return json.loads(self.config)
 
     objects = PayManager()
 

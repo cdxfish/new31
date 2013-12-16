@@ -1,5 +1,7 @@
 #coding:utf-8
-from django.conf.urls import patterns
+from new31.func import pPatterns
+from views import upload
 
-urlpatterns = patterns('',
+urlpatterns = pPatterns(
+    (r'^$', upload, 3)
 )

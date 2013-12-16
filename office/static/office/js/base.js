@@ -1,6 +1,6 @@
 // 置顶工具条
 $(document).ready(function() {
-    b.nav().odd('odd').plugin().loadMsg();
+    b.nav().odd('odd').plugin();
 })
 
 b = {

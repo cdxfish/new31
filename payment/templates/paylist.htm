@@ -1,21 +1,6 @@
 {% extends "office.base.htm" %}
 
-{% block title %}支付方式{% endblock %}
-
-{% block urHere %} - <a href="/payment/">支付方式</a>{% endblock %}
-
-{% block js %}
-    <script type="text/javascript" src="/js/office/payment.js"></script>
-{% endblock %}
-
 {% block content %}
-        <div id="search">{% csrf_token %}
-          <form action="/payment/" metho="POST">
-            <img src="/images/icon_search.gif" border="0" alt="SEARCH" />
-            <input type="text" name="k" size="15" value="" />
-            <input type="submit" value=" 搜索 " class="button" />
-          </form>
-        </div>
         <table cellpadding="3" cellspacing="1" width="100%" id="myTable">
             <thead>
               <tr>
@@ -26,10 +11,10 @@
             </thead>
             <tbody>
 {% for i in pay %}
-              <tr class="odd" align="center">
+              <tr align="center">
                 <td>{{ i.id }}</td>
-                <td align="left"><a href="/payment/{{ i.id }}/" title="{{ i.name }}">{{ i.name }}</a></td>
-                <td><a href="/payment/onl/{{ i.id }}/" title="{{ i.onl }}"><img src="/images/{% if i.onl %}yes{% else %}no{% endif %}.gif" /></a></td>
+                <td align="left"><a href="{% url 'payment:editPay' i.id %}" title="{{ i.get_cod_display }}">{{ i.get_cod_display }}</a></td>
+                <td><a href="/payment/onl/{{ i.id }}/" title="{{ i.onl }}"><img src="{{ STATIC_URL }}images/{% if i.onl %}yes{% else %}no{% endif %}.gif" /></a></td>
               </tr>
 {% endfor %}
             </tbody>

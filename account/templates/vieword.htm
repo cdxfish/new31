@@ -21,7 +21,7 @@
                 </tr>
                 <tr>
                     <td>付款状态：</td>
-                    <td><strong>{{ o.fnc.cod.get_cod_display }}</strong> | <font color="red">{{ o.fnc.get_status_display }}</font>{{ o.fnc.cod.main }}{% if not o.fnc.status %} | <a href="{{ o.pay.button }}" target="_blank" class="btn btnbr">支付</a>{% endif %}</td>
+                    <td><strong>{{ o.fnc.cod.get_cod_display }}</strong> | <font color="red">{{ o.fnc.get_status_display }}</font>{{ o.fnc.cod.main }}{% if not o.fnc.status and o.pay.button %} | <a href="{{ o.pay.button }}" target="_blank" class="btn btnbr">支付</a>{% endif %}</td>
                 </tr>
                 <tr>
                     <td>配送状态：</td>

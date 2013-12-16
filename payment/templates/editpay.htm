@@ -1,0 +1,16 @@
+{% extends "office.base.htm" %}
+
+{% block content %}
+      <table cellpadding="3" cellspacing="1" width="100%">
+        <tr>
+          <td width="200px" align="right">插件名称：</td>
+          <td>{{ pay.get_cod_display }}</td>
+        </tr>
+{% for i in pay.form %}
+        <tr>
+          <td align="right">{{ i.label }}：</td>
+          <td>{{ i }}</td>
+        </tr>
+{% endfor %}
+      </table>
+{% endblock %}
