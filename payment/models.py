@@ -66,24 +66,7 @@ class Pay(models.Model):
     def __init__(self, *args, **kwargs):
         super(Pay, self).__init__(*args, **kwargs)
 
-        try:
-            main = getattr(self.api, self.cod).Main
-
-        except Exception, e:
-            # raise e
-            class main(object):
-                pass
-
-        class Main(main, APIBase):
-            u"""
-                支付插件主类
-                动态构成
-                根据第一顺位父类的实例方法决定执行的动作
-            """
-            def __init__(self, ord, *args, **kwargs):
-                super(Main, self).__init__(ord, *args, **kwargs)
-
-        self.main = Main
+        self.main = type('Main', (getattr(self.api, self.cod).Main, APIBase,), {})
 
     def __unicode__(self):
         return u"%s - %s [ %s ]" % (self.get_cod_display(), self.cod, self.onl)

@@ -1,6 +1,7 @@
 {% extends "office.base.htm" %}
 
 {% block content %}
+  <form action="{% url 'payment:subEdit' %}" name="edit" method="POST">
       <table cellpadding="3" cellspacing="1" width="100%">
         <tr>
           <td width="200px" align="right">插件名称：</td>
@@ -13,4 +14,10 @@
         </tr>
 {% endfor %}
       </table>
+      <center>
+        {% csrf_token %}
+        <input type="hidden" name="id" value="{{ pay.id }}" />
+        <input type="submit" value="保存" class="button" />
+      </center>
+  </form>
 {% endblock %}

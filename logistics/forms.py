@@ -49,16 +49,13 @@ def AdvFrm(o):
 
     initial = {'advance': o.logcs.advance, 'dman': d}
 
-    class _AdvFrm(bsSrchFrm):
-        from purview.models import Role
-        try:
-            dman = Role.objects.getDmanToTuple()
-        except Exception, e:
-            dman = ()
+    from purview.models import Role
+    try:
+        ds = Role.objects.getDmanToTuple()
+    except Exception, e:
+        ds = ()
 
-        advance = forms.ChoiceField(label=u'提前量', choices=Logcs.advs, widget=forms.Select(attrs={'class': 'ad', 'id': 'a%s' %  o.sn }))
-        dman = forms.ChoiceField(label=u'物流师傅', choices=tuple([(0, u'物流师傅')] + list(dman)), widget=forms.Select(attrs={'class': 'dman', 'id': 'd%s' %  o.sn }))
+    advance = forms.ChoiceField(label=u'提前量', choices=Logcs.advs, widget=forms.Select(attrs={'class': 'ad', 'id': 'a%s' %  o.sn }))
+    dman = forms.ChoiceField(label=u'物流师傅', choices=tuple([(0, u'物流师傅')] + list(ds)), widget=forms.Select(attrs={'class': 'dman', 'id': 'd%s' %  o.sn }))
 
-    return _AdvFrm(initial=initial)
-
-
+    return type('_AdvFrm', (bsSrchFrm,), {'advance': advance, 'dman': dman})(initial=initial)
