@@ -33,7 +33,7 @@ class fncManager(models.Manager):
         fnc.save()
 
         return fnc
-        
+
     def stop(self, sn):
 
         return self.cStatus(sn, 4)
@@ -48,7 +48,7 @@ class Fnc(models.Model):
     from payment.models import Pay
 
     _chcs = (
-                (0, u'未付', 'finance:unpaidFnc'), 
+                (0, u'未付', 'finance:unpaidFnc'),
                 (1, u'已付', 'finance:paidFnc'),
                 (2, u'已结', 'finance:closedFnc'),
                 (3, u'已核', 'finance:checkedFnc'),

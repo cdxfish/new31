@@ -4,20 +4,16 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 class Main(object):
-    u"""
-        积分
-
-    """
+    u"""积分"""
 
     def sub(self):
         u"""订单提交"""
         from django.contrib import messages
 
-        uPt = self.ord.user.pts
-        oPt = self.ord.pro_set.all().pts()
-        
+        oPt = self.ord.pro_set.all().total()
+
         try:
-            uPt.objects.set(oPt)
+            self.ord.user.pts.set(-oPt)
         except Exception, e:
             messages.success(self.request, u'积分不足，无法支付。')
             raise e
@@ -26,11 +22,17 @@ class Main(object):
 
         return self
 
-    def htm(request):
-        u"""订单提交"""
+    def re(self):
+         u"""订单退款"""
+        from django.contrib import messages
 
-        return render_to_response('office.htm', locals(), context_instance=RequestContext(request))
+        oPt = self.ord.pro_set.all().total()
+        try:
+            self.ord.user.pts.set(oPt)
+        except Exception, e:
+            messages.success(self.request, u'积分无法退还至帐户。')
+            raise e
+        else:
+            messages.success(self.request, u'积分已退还至帐户。')
 
-    urls = (
-        (r'sub', htm),
-        )
+        return self

@@ -10,6 +10,9 @@ class Main(object):
             ('sign_type', u'签名方式', 'MD5'),
         )
 
+    def pay(self):
+        pass
+
     # 前台根据此方法返回的url地址生成支付按钮
     def button(self):
 

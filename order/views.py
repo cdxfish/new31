@@ -110,9 +110,9 @@ def modifyOrd(request, sn, s):
     r = Role.objects
 
     return HttpResponse(Msg.objects.dumps(data={
-                'sn': sn, 
-                'act': r.getAjaxAct(r.getActByUser(request.user, o.act[s]), sn), 
-                '_act': r.getAjaxAct(o.act[ o.status ], sn), 
+                'sn': sn,
+                'act': r.getAjaxAct(r.getActByUser(request.user, o.act[s]), sn),
+                '_act': r.getAjaxAct(o.act[ o.status ], sn),
                 's': _o.status,
                 'sStr': _o.get_status_display(),
                 'obj': 'ord'
@@ -202,10 +202,10 @@ def getItemByKeyword(request):
     from item.models import Item
 
     return HttpResponse(Msg.objects.dumps(data=[
-                { 
-                    'name':i.name, 
-                    'sn': i.sn, 
-                    'id': i.id, 
+                {
+                    'name':i.name,
+                    'sn': i.sn,
+                    'id': i.id,
                 } for i in Item.objects.likeNameOrSn(request.GET.get('k', ''))
             ]
         )
@@ -241,7 +241,7 @@ def cOrd(request):
 
 from new31.cls import BsSess
 class OrdSess(BsSess):
-    """ 
+    """
         订单基本信息类
 
         存储于seesion数据的操作类
@@ -284,7 +284,7 @@ class OrdSess(BsSess):
 
     def cpyOrd(self, sn):
         from models import Ord
-        
+
         order = Ord.objects.get(sn=sn)
         self.sess['typ'] = order.typ
         self.sess['user'] = order.user
@@ -331,14 +331,14 @@ class OrdSerch(object):
 
         self.initial = {
                         'o': int(request.GET.get('o', -1)),
-                        'c': int(request.GET.get('c', 0)), 
+                        'c': int(request.GET.get('c', 0)),
                         's': request.GET.get('s', '%s' % today).strip(),
                         'e': request.GET.get('e', '%s' % (today + oneDay)).strip(),
                         # 'e': request.GET.get('e', '%s' % today).strip(),
-                        'k': request.GET.get('k', '').strip(), 
+                        'k': request.GET.get('k', '').strip(),
             }
 
-        
+
     def baseSearch(self):
         if re.match(ur'\d{4}\-\d{2}\-\d{2}', self.initial['k']):
             self.oList = self.oList.filter(logcs__date=self.initial['k'])
@@ -377,8 +377,8 @@ class OrdSerch(object):
 
     def range(self):
         self.oList = self.oList.filter(
-                ordlog__act__in=['order:submitOrd', 'order:editOrd', 'cart:submit', ], 
-                ordlog__time__range=(self.initial['s'], self.initial['e']) 
+                ordlog__act__in=['order:submitOrd', 'order:editOrd', 'cart:submit', ],
+                ordlog__time__range=(self.initial['s'], self.initial['e'])
             ).distinct()
 
         return self
@@ -411,7 +411,7 @@ class OrdPur(BsPur):
         self.action = Ord.act
 
 class OrdSub(object):
-    """ 
+    """
         订单提交类.
 
         订单提交只需实例后, 使用 <<submit>> 方法即可
@@ -525,7 +525,7 @@ class OrdSub(object):
 
         return self
 
-    
+
     # 支付流程后续处理
     @subMsg(u'无法处理后续支付流程。')
     def pay(self):

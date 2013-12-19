@@ -7,7 +7,7 @@ class PayManager(models.Manager):
     def getPayById(self, id = ''):
 
         return self.select_related().get(onl=True, id=id)
-        
+
     def default(self):
 
         return self.select_related().filter(onl=True)[0]
@@ -22,7 +22,7 @@ class PayManager(models.Manager):
 
 class APIBase(object):
     u"""支付插件基本类"""
-    
+
     urls = ()
     config = ()
 
@@ -33,15 +33,15 @@ class APIBase(object):
         self.kwargs = kwargs
 
     def sub(self):
-        
+
         return self
 
     def pay(self):
-        
+
         return self
 
     def re(self):
-        
+
         return self
 
     def button(self):
@@ -66,7 +66,7 @@ class Pay(models.Model):
     def __init__(self, *args, **kwargs):
         super(Pay, self).__init__(*args, **kwargs)
 
-        self.main = type('Main', (getattr(self.api, self.cod).Main, APIBase,), {})
+        self.main = type('Main', (getattr(self.api, self.cod).Main, APIBase,), {'conf': self._config()})
 
     def __unicode__(self):
         return u"%s - %s [ %s ]" % (self.get_cod_display(), self.cod, self.onl)

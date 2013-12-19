@@ -40,77 +40,67 @@ class bsInfoManager(models.Manager):
         except Exception, e:
             pass
 
-class ptManager(models.Manager):
-    def set(self, num):
-        from django.contrib import messages
-
-        assert self.pt + num < 0
-
-        self.pt += num
-
-        return self.save()
-
 
 class BsInfo(models.Model):
     mons = (
-                    (0, u'00'), 
-                    (1, u'01'), 
-                    (2, u'02'), 
-                    (3, u'03'), 
-                    (4, u'04'), 
-                    (5, u'05'), 
-                    (6, u'06'), 
-                    (7, u'07'), 
-                    (8, u'08'), 
-                    (9, u'09'), 
-                    (10, u'10'),  
-                    (11, u'11'), 
-                    (12, u'12'), 
+                    (0, u'00'),
+                    (1, u'01'),
+                    (2, u'02'),
+                    (3, u'03'),
+                    (4, u'04'),
+                    (5, u'05'),
+                    (6, u'06'),
+                    (7, u'07'),
+                    (8, u'08'),
+                    (9, u'09'),
+                    (10, u'10'),
+                    (11, u'11'),
+                    (12, u'12'),
                 )
     days = (
-                    (0, u'00'), 
-                    (1, u'01'), 
-                    (2, u'02'), 
-                    (3, u'03'), 
-                    (4, u'04'), 
+                    (0, u'00'),
+                    (1, u'01'),
+                    (2, u'02'),
+                    (3, u'03'),
+                    (4, u'04'),
                     (5, u'05'),
-                    (6, u'06'), 
-                    (7, u'07'), 
-                    (8, u'08'), 
-                    (9, u'09'), 
-                    (10, u'10'), 
-                    (11, u'11'), 
-                    (12, u'12'), 
-                    (13, u'13'), 
-                    (14, u'14'), 
+                    (6, u'06'),
+                    (7, u'07'),
+                    (8, u'08'),
+                    (9, u'09'),
+                    (10, u'10'),
+                    (11, u'11'),
+                    (12, u'12'),
+                    (13, u'13'),
+                    (14, u'14'),
                     (15, u'15'),
-                    (16, u'16'), 
-                    (17, u'17'), 
-                    (18, u'18'), 
-                    (19, u'19'), 
-                    (20, u'20'), 
-                    (21, u'21'), 
-                    (22, u'22'), 
-                    (23, u'23'), 
-                    (24, u'24'), 
+                    (16, u'16'),
+                    (17, u'17'),
+                    (18, u'18'),
+                    (19, u'19'),
+                    (20, u'20'),
+                    (21, u'21'),
+                    (22, u'22'),
+                    (23, u'23'),
+                    (24, u'24'),
                     (25, u'25'),
-                    (26, u'26'), 
-                    (27, u'27'), 
-                    (28, u'28'), 
-                    (29, u'29'), 
-                    (30, u'30'), 
-                    (31, u'31'), 
+                    (26, u'26'),
+                    (27, u'27'),
+                    (28, u'28'),
+                    (29, u'29'),
+                    (30, u'30'),
+                    (31, u'31'),
                 )
 
     sexs =  (
-                (0, u'保密'), 
-                (1, u'先生'), 
+                (0, u'保密'),
+                (1, u'先生'),
                 (2, u'女士'),
         )
 
     typs =  (
-                (0, u'普通'), 
-                (1, u'试吃'), 
+                (0, u'普通'),
+                (1, u'试吃'),
         )
 
     user = models.OneToOneField(User, verbose_name=u'用户')
@@ -179,7 +169,12 @@ class Pts(models.Model):
     user = models.OneToOneField(User, verbose_name=u'用户')
     pt = models.IntegerField(u'积分', default=0)
 
-    objects = ptManager()
-        
+    def set(self, i):
+        assert self.pt + i >= 0
+
+        self.pt += i
+
+        return self.save()
+
     def __unicode__(self):
         return u"%s [ 积分:%s ]" % (self.user, self.pt)
