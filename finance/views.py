@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.http import HttpResponse
-from decorator import fncDetr
+from decorator import fncDetr, payFncDr
 from new31.func import rdrtBck
 from message.models import Msg
 from message.decorator import msgPushDr, ajaxErrMsg
@@ -34,16 +34,16 @@ def modifyFnc(request, sn, s):
     from purview.models import Role
 
     s = int(s)
-    
+
     r = Role.objects
     f = Fnc.objects.get(ord__sn=sn)
     _f = Fnc.objects.cStatus(sn, s)
-    
+
     return HttpResponse(
         Msg.objects.dumps(typ='success', data={
-                'sn': sn, 
-                'act': r.getAjaxAct(r.getActByUser(request.user.id, f.act[s]), sn), 
-                '_act': r.getAjaxAct(f.act[ f.status ], sn), 
+                'sn': sn,
+                'act': r.getAjaxAct(r.getActByUser(request.user, f.act[s]), sn),
+                '_act': r.getAjaxAct(f.act[ f.status ], sn),
                 's': _f.status,
                 'sStr': _f.get_status_display(),
                 'obj': 'fnc'
@@ -58,6 +58,7 @@ def unpaidFnc(request, sn, s):
     return modifyFnc(request=request, sn=sn, s=s)
 
 @fncDetr
+@payFncDr('paid')
 def paidFnc(request, sn, s):
     u"""财务状态修改-> 财务已付"""
 
@@ -78,6 +79,13 @@ def checkedFnc(request, sn, s):
 @fncDetr
 def stopFnc(request, sn, s):
     u"""财务状态修改-> 财务止付"""
+
+    return modifyFnc(request=request, sn=sn, s=s)
+
+@fncDetr
+@payFncDr('reimburse')
+def reimburseFnc(request, sn, s):
+    u"""财务状态修改-> 财务退付"""
 
     return modifyFnc(request=request, sn=sn, s=s)
 
@@ -114,9 +122,9 @@ class FncSess(BsSess):
 
     def getObj(self):
         from payment.models import Pay
-        
+
         self.obj = self.sess.copy()
-        
+
         self.obj['pay'] = Pay.objects.getPayById(id=self.sess['pay'])
 
         return self.obj
@@ -164,7 +172,7 @@ class FncSerch(OrdSerch):
 from purview.views import BsPur
 class FncPur(BsPur):
     """
-        首先获取当前角色可进行的订单操作权限. 
+        首先获取当前角色可进行的订单操作权限.
 
         其后获取订单的可选操作. 两者进行交集
 

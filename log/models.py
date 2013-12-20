@@ -15,6 +15,17 @@ class logManager(models.Manager):
 
         log.save()
 
+class AccountLog(models.Manager):
+
+    def update(self, user, act, note):
+        a = AccountLog()
+
+        a.user = user
+        a.act = act
+        a.note = note
+
+        return a.save()
+
 class OrdLog(models.Model):
     from django.contrib.auth.models import User
     from order.models import Ord
@@ -31,7 +42,7 @@ class OrdLog(models.Model):
 
     def __unicode__(self):
         return u"%s - [ %s ][ %s ]" % ( self.ord, self.get_typ_display(), self.time )
-        
+
     class Meta:
         unique_together=(("ord","time"),)
         # verbose_name = u'订单日志'
@@ -46,3 +57,5 @@ class AccountLog(models.Model):
     act = models.ForeignKey(User, verbose_name=u'操作者', related_name='actlog')
     note = models.CharField(u'动作', max_length=1024)
     time = models.DateTimeField(u'时间', auto_now=True, auto_now_add=True, editable=False)
+
+    objects = AccountLog()

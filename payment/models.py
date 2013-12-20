@@ -32,21 +32,26 @@ class APIBase(object):
         self.args = args
         self.kwargs = kwargs
 
-    def sub(self):
+    def submit(self):
 
         return self
 
-    def pay(self):
+    def paid(self):
+        u"""订单支付"""
+        self.ord.user.pts.set(self.ord.pro_set.all().pts())
 
         return self
 
-    def re(self):
+    def reimburse(self):
+        u"""订单退付"""
+        self.ord.user.pts.set(-self.ord.pro_set.all().pts())
 
         return self
 
     def button(self):
 
         return ''
+
 
 class Pay(models.Model):
     import api

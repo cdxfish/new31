@@ -1,0 +1,278 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"d",
+				"document"
+			],
+			[
+				"re",
+				"return"
+			],
+			[
+				"tue",
+				"true"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/D/wamp/www/1211170930/includes/modules/payment/alipay.php",
+			"settings":
+			{
+				"buffer_size": 5188,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "payment/api/alipay.py",
+			"settings":
+			{
+				"buffer_size": 391,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 146.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/F/django/new31/message/decorator.py",
+		"/F/django/new31/new31/static/js/jquery.dialog.js",
+		"/F/django/new31/payment/api/alipay.py",
+		"/F/django/new31/payment/api/monthly.py",
+		"/F/django/new31/payment/api/payafter.py",
+		"/F/django/new31/payment/api/quarter.py",
+		"/F/django/new31/payment/api/post.py",
+		"/F/django/new31/payment/api/abctransfer.py",
+		"/F/django/new31/payment/api/icbctransfer.py",
+		"/F/django/new31/payment/api/coupons.py",
+		"/F/django/new31/payment/api/ccbtransfer.py",
+		"/F/django/new31/order/templates/orderview.htm",
+		"/F/django/new31/account/templates/newuser.htm",
+		"/F/django/new31/payment/api/points.py",
+		"/F/django/new31/payment/models.py",
+		"/F/django/new31/finance/decorator.py",
+		"/F/django/new31/account/models.py",
+		"/F/django/new31/log/models.py",
+		"/F/django/new31/order/decorator.py",
+		"/F/django/new31/finance/views.py",
+		"/F/django/new31/order/views.py",
+		"/F/django/new31/finance/models.py",
+		"/F/django/new31/finance/urls.py",
+		"/D/Sublime Text 3/Data/Packages/User/Preferences.sublime-settings",
+		"/D/Sublime Text 3/Data/Packages/LiuFengQingYin/LiuFengQingYin",
+		"/D/Sublime Text 3/Data/Packages/Default/Preferences.sublime-settings"
+	],
+	"find":
+	{
+		"height": 25.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"fatrlse"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/D/wamp/www/1211170930/includes/modules/payment/alipay.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5188,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1892,
+								1897
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1487.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "payment/api/alipay.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 391,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								272,
+								272
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"project": "new31.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"d",
+				"finance\\decorator.py"
+			],
+			[
+				"models",
+				"log\\models.py"
+			],
+			[
+				"v",
+				"finance\\views.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

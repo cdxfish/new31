@@ -2,5 +2,4 @@
 u"""提货券"""
 
 class Main(object):
-    """docstring for Main"""
-    urls = ()
+    pass

@@ -48,7 +48,7 @@ def subMsg(s= ''):
                     self.delNewOrd()
 
                     messages.error(self.request, s)
-                    # raise e # 如需debug这取消此注释
+                    raise e # 如需debug这取消此注释
 
 
             return self #强制返回self否则无法链式调用
@@ -64,7 +64,7 @@ def subDr(func):
             return func(request, *args, **kwargs)
         except Exception, e:
 
-            # raise e # 如需debug这取消此注释
+            raise e # 如需debug这取消此注释
             return rdrtBck(request)
 
     return _func

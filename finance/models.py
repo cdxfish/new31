@@ -53,16 +53,18 @@ class Fnc(models.Model):
                 (2, u'已结', 'finance:closedFnc'),
                 (3, u'已核', 'finance:checkedFnc'),
                 (4, u'止付', 'finance:stopFnc'),
+                (5, u'退付', 'finance:reimburseFnc'),
             )
 
     chcs= tuple((i[0],i[1]) for i in _chcs)
 
     act =   (
                 (_chcs[0], _chcs[1], _chcs[4], ),
-                (_chcs[0], _chcs[2], ),
+                (_chcs[0], _chcs[2], _chcs[5], ),
                 (_chcs[0], _chcs[3], ),
                 (_chcs[0], ),
                 (_chcs[0], ),
+                (_chcs[0], _chcs[1], _chcs[4], ),
         )
 
     ord = models.OneToOneField(Ord, verbose_name=u'订单')

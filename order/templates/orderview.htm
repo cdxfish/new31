@@ -8,6 +8,10 @@
                     <td>{{ o.sn }}</td>
                 </tr>
                 <tr>
+                    <td>会员：</td>
+                    <td>{{ o.user.username }}</td>
+                </tr>
+                <tr>
                     <td>订单状态：</td>
                     <td><font color="red">{{ o.get_status_display }}</font></td>
                 </tr>
@@ -69,7 +73,7 @@
                     <td>备注：</td>
                     <td>{{ o.logcs.note }}</td>
                 </tr>
-            </table>    
+            </table>
             <h3>操作记录</h3>
             <table width="100%" class="mBottom10">
                 <tr>
@@ -81,7 +85,7 @@
                 <tr align="center">
                     <td>{{ i.user.last_name }}{{ i.user.first_name }}</td>
                     <td>{{ i.time|date:"Y-m-d H:i" }}</td>
-                    <td>{{ i.get_act_display }}</td>
+                    <td align="left">{{ i.get_act_display }}</td>
                 </tr>
 {% endfor %}
             </table>

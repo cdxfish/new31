@@ -2,5 +2,4 @@
 u"""季结"""
 
 class Main(object):
-    """docstring for Main"""
-    urls = ()
+    pass

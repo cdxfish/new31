@@ -23,7 +23,7 @@ def msgPushDr(func):
     @wraps(func)
     def __func(request, *args, **kwargs):
         Msg.objects.pushByPath(path=request.path, data={
-                'sn': kwargs['sn'], 
+                'sn': kwargs['sn'],
                 'from': u'%s%s' % (request.user.last_name, request.user.first_name)
             }, msg=u'%s' % func.__doc__)
 
@@ -37,7 +37,7 @@ def msgPushToRoleDr(*role):
         @wraps(func)
         def __func(request, *args, **kwargs):
             Msg.objects.pushToRole(*role, data={
-                    'sn': kwargs['sn'], 
+                    'sn': kwargs['sn'],
                     'from': u'%s%s' % (request.user.last_name, request.user.first_name)
                 }, msg=u'%s' % func.__doc__)
 
@@ -56,6 +56,6 @@ def ajaxErrMsg(msg):
                 return func(request, *args, **kwargs)
 
             except:
-                return HttpResponse(Msg.objects.dumps(msg=msg))
+                return HttpResponse(Msg.objects.dumps(msg=msg, typ='error'))
         return __func
     return _func

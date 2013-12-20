@@ -529,7 +529,7 @@ class OrdSub(object):
     # 支付流程后续处理
     @subMsg(u'无法处理后续支付流程。')
     def pay(self):
-        self.ord.fnc.cod.main(self.ord, self.request).sub()
+        self.ord.fnc.cod.main(self.ord, self.request).submit()
 
         return self
 
