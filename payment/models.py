@@ -24,7 +24,7 @@ class APIBase(object):
     u"""支付插件基本类"""
 
     urls = ()
-    config = ()
+    conf = ()
 
     def __init__(self, ord, request, *args, **kwargs):
         self.ord = ord
@@ -48,7 +48,7 @@ class APIBase(object):
 
         return self
 
-    def button(self):
+    def postUrl(self):
 
         return ''
 
@@ -71,7 +71,7 @@ class Pay(models.Model):
     def __init__(self, *args, **kwargs):
         super(Pay, self).__init__(*args, **kwargs)
 
-        self.main = type('Main', (getattr(self.api, self.cod).Main, APIBase,), {'conf': self._config()})
+        self.main = type('Main', (getattr(self.api, self.cod).Main, APIBase,), self._config())
 
     def __unicode__(self):
         return u"%s - %s [ %s ]" % (self.get_cod_display(), self.cod, self.onl)

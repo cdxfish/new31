@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib import messages
 from new31.func import rdrtBck
+from decorator import frmDr
 # Create your views here.
 
 def pays(request):
@@ -24,15 +25,18 @@ def editPay(request, id):
 
     return render_to_response('editpay.htm', locals(), context_instance=RequestContext(request))
 
+# @frmDr
 def subEdit(request):
     u"""支付方式编辑提交"""
     from models import Pay
+    from forms import PayFrm
     import json
+
     pay = Pay.objects.get(id=request.POST.get('id'))
     post = request.POST.dict()
     del post['id']
     del post['csrfmiddlewaretoken']
-    
+
     pay.config = json.dumps(post)
     pay.save()
 

@@ -130,6 +130,7 @@ def uViewOrd(request, sn):
 
     o = Ord.objects.get(sn=sn)
     o.pay = o.fnc.cod.main(o, request)
+    print o.fnc.cod.main(o, request).postUrl()
 
     return render_to_response('vieword.htm', locals(), context_instance=RequestContext(request))
 
@@ -161,8 +162,8 @@ def userEditFrm(request, u):
 
     u = User.objects.get(username=u)
     uFrm = NerUserFrm(initial={
-        'username': u.username, 
-        'first_name': u.first_name, 
+        'username': u.username,
+        'first_name': u.first_name,
         'last_name': u.last_name,
         'email': u.email
         })
@@ -212,10 +213,10 @@ class UserSrch(object):
 
         self.uList = User.objects.select_related().all()
         self.initial = {
-                        'k': request.GET.get('k', '').strip(), 
+                        'k': request.GET.get('k', '').strip(),
             }
 
-        
+
     def baseSearch(self):
         from models import BsInfo
         if re.match(ur'\d{2}\-\d{2}', self.initial['k']):
