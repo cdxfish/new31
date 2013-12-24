@@ -130,7 +130,6 @@ def uViewOrd(request, sn):
 
     o = Ord.objects.get(sn=sn)
     o.pay = o.fnc.cod.main(o, request)
-    print o.fnc.cod.main(o, request).postUrl()
 
     return render_to_response('vieword.htm', locals(), context_instance=RequestContext(request))
 

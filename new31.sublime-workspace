@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"_",
+				"_input_charset"
+			],
+			[
 				"pa",
 				"param"
 			],
@@ -39,46 +43,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "/D/wamp/www/1211170930/includes/modules/payment/alipay.php",
-			"settings":
-			{
-				"buffer_size": 5188,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "payment/api/alipay.py",
-			"settings":
-			{
-				"buffer_size": 2341,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "account/templates/vieword.htm",
-			"settings":
-			{
-				"buffer_size": 3402,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "payment/models.py",
-			"settings":
-			{
-				"buffer_size": 1839,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "account/views.py",
-			"settings":
-			{
-				"buffer_size": 6623,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -107,6 +71,16 @@
 	},
 	"file_history":
 	[
+		"/D/wamp/www/1211170930/includes/modules/payment/alipay.php",
+		"/F/django/new31/payment/api/alipay.py",
+		"/F/django/new31/payment/models.py",
+		"/F/django/new31/log/models.py",
+		"/F/django/new31/order/views.py",
+		"/F/django/new31/order/templates/orderview.htm",
+		"/F/django/new31/account/views.py",
+		"/D/Python27/Lib/site-packages/django/shortcuts/__init__.py",
+		"/D/wamp/www/1211170930/alipay_return_url.php",
+		"/F/django/new31/account/templates/vieword.htm",
 		"/D/Python27/Lib/site-packages/django/utils/http.py",
 		"/F/django/new31/payment/views.py",
 		"/D/Python27/Lib/site-packages/django/core/urlresolvers.py",
@@ -115,12 +89,9 @@
 		"/F/django/new31/payment/urls.py",
 		"/F/django/new31/new31/urls.py",
 		"/F/django/new31/new31/func.py",
-		"/F/django/new31/account/templates/vieword.htm",
-		"/F/django/new31/account/views.py",
 		"/F/django/new31/payment/decorator.py",
 		"/F/django/new31/message/decorator.py",
 		"/F/django/new31/new31/static/js/jquery.dialog.js",
-		"/F/django/new31/payment/api/alipay.py",
 		"/F/django/new31/payment/api/monthly.py",
 		"/F/django/new31/payment/api/payafter.py",
 		"/F/django/new31/payment/api/quarter.py",
@@ -129,16 +100,12 @@
 		"/F/django/new31/payment/api/icbctransfer.py",
 		"/F/django/new31/payment/api/coupons.py",
 		"/F/django/new31/payment/api/ccbtransfer.py",
-		"/F/django/new31/order/templates/orderview.htm",
 		"/F/django/new31/account/templates/newuser.htm",
 		"/F/django/new31/payment/api/points.py",
-		"/F/django/new31/payment/models.py",
 		"/F/django/new31/finance/decorator.py",
 		"/F/django/new31/account/models.py",
-		"/F/django/new31/log/models.py",
 		"/F/django/new31/order/decorator.py",
 		"/F/django/new31/finance/views.py",
-		"/F/django/new31/order/views.py",
 		"/F/django/new31/finance/models.py",
 		"/F/django/new31/finance/urls.py",
 		"/D/Sublime Text 3/Data/Packages/User/Preferences.sublime-settings",
@@ -163,6 +130,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"dic",
+			"redirect",
 			"print",
 			"resolve",
 			"ResolverMatch",
@@ -187,162 +156,8 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "/D/wamp/www/1211170930/includes/modules/payment/alipay.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5188,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3195,
-								3392
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1962.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "payment/api/alipay.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2341,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1933,
-								1933
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/Python/Python.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 459.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "account/templates/vieword.htm",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3402,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1015,
-								1015
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 306.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "payment/models.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1839,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1095,
-								1095
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 119.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "account/views.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6623,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3789,
-								3789
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1955.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],

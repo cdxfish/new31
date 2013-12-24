@@ -1,18 +1,28 @@
 #coding:utf-8
 u"""支付宝"""
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
+from django.contrib import messages, auth
+
+def notify_url(request):
+    u"""支付宝服务器异步通知页面路径"""
+
+    return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))
+
+def return_url(request):
+    u"""支付宝页面跳转同步通知页面路径"""
+    from payment.models import Pay
+    from order.models import Ord
+
+    get = request.GET.dict()
+
+    o = Ord.objects.get(sn=get['out_trade_no'])
+
+    messages.success(request, u'成功支付订单。')
+
+    return redirect('account:uViewOrd', sn=201335702574608)
 
 class Main(object):
-    def notify_url(request):
-        u"""支付宝服务器异步通知页面路径"""
-
-        return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))
-
-    def return_url(request):
-        u"""支付宝页面跳转同步通知页面路径"""
-
-        return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))
 
     urls = (
             (r'^notify_url\/$', notify_url),
@@ -36,9 +46,7 @@ class Main(object):
 
     # 前台根据此方法返回的url地址生成支付按钮
     def postUrl(self):
-        from django.utils.http import urlquote
-
-        param = self.join({
+        param = {
             'partner': self.partner,
             'seller_email': self.seller_email,
             '_input_charset': self._input_charset,
@@ -49,22 +57,31 @@ class Main(object):
             'subject': u'%s' % self.subject % self.ord.sn,
             'total_fee': self.ord.pro_set.all().total(),
             'payment_type': self.payment_type,
-        })
+        }
 
         return u'https://mapi.alipay.com/gateway.do?' + \
-         u'%s&sign=%s&sign_type=%s' % ( param, self.sign(param + self.key), self.sign_type)
+         u'%s&sign=%s&sign_type=%s' % ( self.urlencode(param), self.sign(param), self.sign_type)
 
-    def sign(self, s):
+    def sign(self, dic):
         import hashlib
+
+        s = u''
+        for i in sorted(dic.items(), key=lambda x:x[0]):
+            s += u'&%s=%s' % (i[0], i[1])
+
         m = hashlib.md5()
-        m.update(s.encode(self._input_charset))
+        m.update((s[1:] + self.key).encode(self._input_charset))
 
         return m.hexdigest()
 
-    def join(self, dic, reverse=False):
-        param = ''
-        print sorted(dic.items(), key=lambda x:x[0])
-        for i in sorted(dic.items(), key=lambda x:x[0], reverse=reverse):
-            param += '&%s=%s' % (i[0], i[1])
 
-        return param[1:]
+    def urlencode(self, dic):
+        import urllib
+
+        _dic = dic.copy()
+
+        for i in _dic:
+            if type(_dic[i]) in (str, unicode):
+                _dic[i] = _dic[i].encode(self._input_charset)
+
+        return urllib.urlencode(_dic)

@@ -5,13 +5,13 @@ from django.core.urlresolvers import resolve, reverse
 
 class logManager(models.Manager):
 
-    def saveLog(self, ord, request):
+    def saveLog(self, ord, request, act=''):
         log = OrdLog()
 
         log.ord = ord
         log.user = request.user
 
-        log.act = resolve(request.path).view_name
+        log.act = resolve(request.path).view_name if not act else act
 
         log.save()
 

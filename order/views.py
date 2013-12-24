@@ -40,6 +40,7 @@ def viewOrd(request, sn):
     from produce.models import Pro
 
     o = Ord.objects.get(sn=sn)
+    # o.pay = o.fnc.cod.main(o, request)
 
     return render_to_response('orderview.htm', locals(), context_instance=RequestContext(request))
 
