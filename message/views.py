@@ -13,10 +13,9 @@ def get(request):
     u"""消息推送"""
     from models import Msg
 
-
     return HttpResponse(Msg.objects.dumps(data=[
         dict({
-                'id':i.id, 
+                'id':i.id,
                 'time': '%s' % i.time.astimezone(UTC(8)).strftime('%Y-%m-%d %H:%M:%S'),
             }, **i.data() )
             for i in Msg.objects.get(request.user)

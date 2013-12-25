@@ -3,24 +3,52 @@ u"""支付宝"""
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.contrib import messages, auth
+from django.http import HttpResponse
+import json
 
 def notify_url(request):
     u"""支付宝服务器异步通知页面路径"""
+    from order.models import Ord
 
-    return render_to_response('shop.htm', locals(), context_instance=RequestContext(request))
+    sn = request.POST.get('out_trade_no', '')
+
+    try:
+        o = Ord.objects.get(sn=sn)
+        r = json.load(o.fnc.cod.main(o, request)._paid(request.POST))
+    except Exception, e:
+            return HttpResponse('false')
+    finally:
+        if r.typ == 'success':
+            o.logcs.note += '支付宝交易号: %s' % request.POST.get('trade_no')
+            o.logcs.save()
+
+            return HttpResponse('success')
+        elif r.typ == 'error':
+            return HttpResponse('false')
+
 
 def return_url(request):
     u"""支付宝页面跳转同步通知页面路径"""
-    from payment.models import Pay
     from order.models import Ord
 
-    get = request.GET.dict()
+    sn = request.GET.get('out_trade_no', '')
 
-    o = Ord.objects.get(sn=get['out_trade_no'])
+    try:
+        o = Ord.objects.get(sn=sn)
+        r = json.load(o.fnc.cod.main(o, request)._paid(request.GET))
+    except Exception, e:
+        messages.success(request, u'订单支付错误。')
+    finally:
+        if r.typ == 'success':
+            o.logcs.note += '支付宝交易号: %s' % request.GET.get('trade_no')
+            o.logcs.save()
 
-    messages.success(request, u'成功支付订单。')
+            messages.success(request, u'成功支付订单。')
+        elif r.typ == 'error':
+            messages.error(request, r.msg)
 
-    return redirect('account:uViewOrd', sn=201335702574608)
+    return redirect('account:uViewOrd', sn=sn)
+
 
 class Main(object):
 
@@ -59,8 +87,25 @@ class Main(object):
             'payment_type': self.payment_type,
         }
 
+
         return u'https://mapi.alipay.com/gateway.do?' + \
-         u'%s&sign=%s&sign_type=%s' % ( self.urlencode(param), self.sign(param), self.sign_type)
+            self.urlencode(dict(param, sign=self.sign(param), sign_type=self.sign_type))
+
+
+    def _paid(self, dic):
+        from finance.views import paidFnc
+
+        # 构造签名字典
+        param = dic.dict()
+        del param['sign']
+        del param['sign_type']
+
+        if dic.get('trade_status') in ['TRADE_FINISHED', 'TRADE_SUCCESS'] and self.sign(param) == dic.get('sign'):
+
+            return paidFnc(self.request, sn=self.ord.sn, s=1) #财务状态处理
+        else:
+            raise
+
 
     def sign(self, dic):
         import hashlib

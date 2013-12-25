@@ -4,19 +4,17 @@ from django.core.urlresolvers import resolve, reverse
 # Create your models here.
 
 class logManager(models.Manager):
-
     def saveLog(self, ord, request, act=''):
         log = OrdLog()
 
         log.ord = ord
         log.user = request.user
 
-        log.act = resolve(request.path).view_name if not act else act
+        log.act = resolve(request.path).view_name if not act else resolve(request.path).view_name + ' ' + act
 
         log.save()
 
 class AccountLog(models.Manager):
-
     def update(self, user, act, note):
         a = AccountLog()
 

@@ -6,7 +6,6 @@ from message.models import Msg
 from functools import wraps
 # Create your decorator here.
 
-
 # 支付状态操作装饰器
 def fncDetr(func):
     @wraps(func)
