@@ -17,7 +17,7 @@ def notify_url(request):
         r = json.load(o.fnc.cod.main(o, request)._paid(request.POST))
     except Exception, e:
             return HttpResponse('false')
-    finally:
+    else:
         if r.typ == 'success':
             o.logcs.note += '支付宝交易号: %s' % request.POST.get('trade_no')
             o.logcs.save()
@@ -38,7 +38,7 @@ def return_url(request):
         r = json.load(o.fnc.cod.main(o, request)._paid(request.GET))
     except Exception, e:
         messages.success(request, u'订单支付错误。')
-    finally:
+    else:
         if r.typ == 'success':
             o.logcs.note += '支付宝交易号: %s' % request.GET.get('trade_no')
             o.logcs.save()
