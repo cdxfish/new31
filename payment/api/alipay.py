@@ -1,5 +1,6 @@
 #coding:utf-8
 u"""支付宝"""
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.contrib import messages, auth
@@ -16,7 +17,7 @@ def notify_url(request):
         o = Ord.objects.get(sn=sn)
         r = json.load(o.fnc.cod.main(o, request)._paid(request.POST))
     except Exception, e:
-            return HttpResponse('false')
+            return HttpResponse('fail')
     else:
         if r.typ == 'success':
             o.logcs.note += '支付宝交易号: %s' % request.POST.get('trade_no')
@@ -24,9 +25,10 @@ def notify_url(request):
 
             return HttpResponse('success')
         elif r.typ == 'error':
-            return HttpResponse('false')
+            return HttpResponse('fail')
 
 
+@login_required
 def return_url(request):
     u"""支付宝页面跳转同步通知页面路径"""
     from order.models import Ord
@@ -102,7 +104,7 @@ class Main(object):
 
         if dic.get('trade_status') in ['TRADE_FINISHED', 'TRADE_SUCCESS'] and self.sign(param) == dic.get('sign'):
 
-            return paidFnc(self.request, sn=self.ord.sn, s=1) #财务状态处理
+            return paidFnc(self.request, sn=self.ord.sn, s=1).content #财务状态处理
         else:
             raise
 
