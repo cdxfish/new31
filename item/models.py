@@ -2,7 +2,21 @@
 from django.db import models
 # Create your models here.
 
+class itemQuerySet(models.query.QuerySet):
+    '''Use this class to define methods on queryset itself.'''
+    def __iter__(self):
+        for i in models.query.QuerySet.__iter__(self):
+            i.click += 1
+            i.save()
+
+        return models.query.QuerySet.__iter__(self)
+
+
 class itemManager(models.Manager):
+    '''Use this class to define methods just on Entry.objects.'''
+    def get_query_set(self):
+        return itemQuerySet(self.model)
+
     def getBySid(self, id):
 
         return self.select_related().get(itemspec__id=id, onl=True)
@@ -63,11 +77,11 @@ class itemSpecManager(models.Manager):
         return self.select_related().filter(item__id=id, item__onl=True, onl=True)
 
     def default(self):
- 
+
         return self.filter(onl=True)[0]
 
     def getTpl(self, id):
- 
+
         return ((i.id, i.spec.value) for i in  self.getByitemID(id))
 
 
@@ -106,15 +120,20 @@ class itemFeeManager(models.Manager):
 
 class Item(models.Model):
     from tag.models import Tag
-    
+
     name = models.CharField(u'商品名称', max_length=30, unique=True)
     sn = models.IntegerField(u'货号', unique=True)
-    addTime = models.DateTimeField(u'添加时间', auto_now=True, auto_now_add=True)
+    addTime = models.DateTimeField(u'添加时间', auto_now_add=True)
     onl = models.BooleanField(u'上架', default=False)
     show = models.BooleanField(u'商城可见', default=False)
     like = models.IntegerField(u'喜欢', default=0)
     click = models.IntegerField(u'点击', default=0)
     tag = models.ManyToManyField(Tag, verbose_name=u'标签', blank=True, null=True)
+
+    def clickk(self):
+        self.click += 1
+
+        return self.save()
 
     objects = itemManager()
 
@@ -133,7 +152,7 @@ class ItemDesc(models.Model):
 
     class Meta:
         ordering = ['item', 'desc']
-        unique_together=(('item', 'desc'),)     
+        unique_together=(('item', 'desc'),)
 
 
 class ItemSpec(models.Model):
@@ -150,7 +169,7 @@ class ItemSpec(models.Model):
 
     class Meta:
         ordering = ['item', 'spec']
-        unique_together=(("item","spec"),)           
+        unique_together=(("item","spec"),)
 
 
 class ItemFee(models.Model):
@@ -190,4 +209,4 @@ class ItemImg(models.Model):
 
     class Meta:
         ordering = ['item', 'img']
-        unique_together=(("img"),)  
+        unique_together=(("img"),)

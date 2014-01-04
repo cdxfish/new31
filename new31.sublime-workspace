@@ -4,6 +4,38 @@
 		"selected_items":
 		[
 			[
+				"cl",
+				"click"
+			],
+			[
+				"__",
+				"__iter__"
+			],
+			[
+				"ob",
+				"order_by"
+			],
+			[
+				"fu",
+				"function"
+			],
+			[
+				"tr",
+				"try	Try/Except/Else/Finally"
+			],
+			[
+				"re",
+				"request"
+			],
+			[
+				"t",
+				"try	Try/Except/Finally"
+			],
+			[
+				"try",
+				"try	Try/Except/Else"
+			],
+			[
 				"_",
 				"_input_charset"
 			],
@@ -14,10 +46,6 @@
 			[
 				"pan",
 				"payment"
-			],
-			[
-				"re",
-				"reverse"
 			],
 			[
 				"fro",
@@ -43,15 +71,59 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "item/models.py",
+			"settings":
+			{
+				"buffer_size": 5864,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "payment/api/alipay.py",
+			"settings":
+			{
+				"buffer_size": 3867,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "payment/api/points.py",
+			"settings":
+			{
+				"buffer_size": 900,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "order/views.py",
+			"settings":
+			{
+				"buffer_size": 13835,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "produce/models.py",
+			"settings":
+			{
+				"buffer_size": 3493,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 0.0,
+		"height": 392.0,
 		"selected_items":
 		[
+			[
+				"f",
+				"File: Revert→还原"
+			]
 		],
-		"width": 0.0
+		"width": 632.0
 	},
 	"console":
 	{
@@ -71,14 +143,37 @@
 	},
 	"file_history":
 	[
-		"/D/wamp/www/1211170930/includes/modules/payment/alipay.php",
+		"/F/django/new31/tag/templates/tag.htm",
+		"/F/django/new31/tag/views.py",
+		"/F/django/new31/item/models.py",
+		"/D/Python27/Lib/site-packages/django/db/models/query.py",
+		"/F/django/new31/item/decorator.py",
+		"/F/django/new31/produce/models.py",
+		"/F/django/new31/tag/decorator.py",
+		"/F/django/new31/tag/models.py",
+		"/F/django/new31/shop/templates/shop.htm",
+		"/F/django/new31/shop/static/shop/css/css.css",
+		"/F/django/new31/shop/views.py",
+		"/F/django/new31/shop/static/shop/images/1373625248513.jpg",
+		"/F/django/littlesnail/littesnail/views.py",
+		"/F/alipay-python/views.py",
+		"/D/Python27/Lib/site-packages/django/contrib/auth/decorators.py",
+		"/D/Python27/Lib/site-packages/django/shortcuts/__init__.py",
+		"/F/django/new31/logistics/static/logistics/js/map.configuration.js",
+		"/F/django/littlesnail/littesnail/wsgi.py",
+		"/F/django/littlesnail/littesnail/urls.py",
 		"/F/django/new31/payment/api/alipay.py",
+		"/F/django/new31/logistics/templates/baidumap.htm",
+		"/C/Documents and Settings/Administrator/桌面/wx_sample.php",
 		"/F/django/new31/payment/models.py",
+		"/F/django/new31/finance/views.py",
 		"/F/django/new31/log/models.py",
+		"/F/django/new31/finance/decorator.py",
+		"/F/django/new31/message/views.py",
+		"/D/wamp/www/1211170930/includes/modules/payment/alipay.php",
 		"/F/django/new31/order/views.py",
 		"/F/django/new31/order/templates/orderview.htm",
 		"/F/django/new31/account/views.py",
-		"/D/Python27/Lib/site-packages/django/shortcuts/__init__.py",
 		"/D/wamp/www/1211170930/alipay_return_url.php",
 		"/F/django/new31/account/templates/vieword.htm",
 		"/D/Python27/Lib/site-packages/django/utils/http.py",
@@ -102,10 +197,8 @@
 		"/F/django/new31/payment/api/ccbtransfer.py",
 		"/F/django/new31/account/templates/newuser.htm",
 		"/F/django/new31/payment/api/points.py",
-		"/F/django/new31/finance/decorator.py",
 		"/F/django/new31/account/models.py",
 		"/F/django/new31/order/decorator.py",
-		"/F/django/new31/finance/views.py",
 		"/F/django/new31/finance/models.py",
 		"/F/django/new31/finance/urls.py",
 		"/D/Sublime Text 3/Data/Packages/User/Preferences.sublime-settings",
@@ -130,6 +223,13 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"DateTimeField",
+			"itemonl",
+			"style=\"float:right\"",
+			"style=\"float:right;\"",
+			"style=\"\"",
+			"style=\"float:right;\"",
+			"style=\"\"",
 			"dic",
 			"redirect",
 			"print",
@@ -146,6 +246,10 @@
 		"regex": false,
 		"replace_history":
 		[
+			" style=\"float:right;\" /",
+			" /",
+			" style=\"float:right;\" /",
+			" /"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -156,8 +260,164 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "item/models.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5864,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3433,
+								3454
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1827.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "payment/api/alipay.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3867,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "payment/api/points.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 900,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								282,
+								282
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "order/views.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 13835,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								12706,
+								12706
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 8496.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "produce/models.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3493,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2989,
+								2989
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1700.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -167,7 +427,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 33.0
 	},
 	"layout":
 	{
@@ -195,7 +455,7 @@
 	"project": "new31.sublime-project",
 	"replace":
 	{
-		"height": 46.0
+		"height": 62.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -249,7 +509,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_width": 254.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
