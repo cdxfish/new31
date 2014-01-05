@@ -25,7 +25,7 @@ else:
     MYSQL_HOST_M = sae.const.MYSQL_HOST
     MYSQL_HOST_S = sae.const.MYSQL_HOST_S
     MYSQL_PORT = sae.const.MYSQL_PORT
-    
+
     # 修改上传时文件在内存中可以存放的最大size为10m
     FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760
 
@@ -125,9 +125,10 @@ SECRET_KEY = 'ytb#a#z=avwsbx@9)p*e_!r99b5k$@p0$38a36jid!cl6@05*k'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
+    # 'jinja2.jinja2_loader.Loader',
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-    'django.template.loaders.eggs.Loader',
+    # 'django.template.loaders.eggs.Loader',
 )
 
 ROOT_URLCONF = 'new31.urls'
@@ -178,6 +179,7 @@ djangoMidClass = [
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'jinja2.middleware.tagMiddleware',
 ]
 
 djangoTempContext = [
