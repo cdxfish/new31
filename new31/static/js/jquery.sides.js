@@ -28,28 +28,30 @@
                     'overflow': 'hidden',
                     'list-style': 'none'
                 }).show(),
-                //切换间隔时间
+                // 切换间隔时间
                 interv: 5000,
-                //切换速速
+                // 切换速速
                 speed: 500,
+                // 切换计时ID
+                t: 0,
                 // 滚动锚点
                 site: [],
                 // 滚动按钮
                 btns: [],
-                //焦点轮换图片容器
+                // 焦点轮换图片容器
                 warper: $('<div>').css({
                     'height': '100%',
                     'width': '100%',
                     'overflow': 'hidden'
                 }),
-                //控制焦点按钮容器
+                // 控制焦点按钮容器
                 num: $('<center>', {
                     'class': 'num'
                 }).css({
                     'position': 'relative',
                     'bottom': '20px'
                 }),
-                //控制焦点按钮
+                // 控制焦点按钮
                 button: function() {
                     var self = this;
                     return $('<span>').css({
@@ -77,8 +79,8 @@
                         var width = 0;
 
                         for (var i = 0; i < index; i++) {
-                            width  += self.site[i].width();
-                             };
+                            width += self.site[i].width();
+                        };
 
                         self.ul.animate({
                             "marginLeft": -width
