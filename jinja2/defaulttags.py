@@ -1,4 +1,4 @@
-﻿#coding:utf-8
+﻿# coding: UTF-8
 from exceptions import TemplateSyntaxError
 from ext import Extension
 from utils import Markup
@@ -390,20 +390,3 @@ class CsrfTokenExtension(Extension):
     def _render(self, csrf_token):
         from django.template.defaulttags import CsrfTokenNode
         return Markup(CsrfTokenNode().render({'csrf_token': csrf_token}))
-
-
-# nicer import names
-# load = LoadExtension
-# url = URLExtension
-# with_ = WithExtension
-# cache = CacheExtension
-# spaceless = SpacelessExtension
-# csrf_token = CsrfTokenExtension
-
-# register = Library()
-# register.tag(load)
-# register.tag(url)
-# register.tag(with_)
-# register.tag(cache)
-# register.tag(spaceless)
-# register.tag(csrf_token)

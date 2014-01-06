@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.contrib.auth.models import User
 from django.contrib import messages
 from new31.func import rdrtBck
@@ -54,7 +54,7 @@ def uInfoDr(func):
                 })
 
         if user.is_valid() and bsinfo.is_valid():
-            
+
             return func(request, *args, **kwargs)
         else:
             for i in user:
@@ -115,12 +115,17 @@ def checkOrdByUserDr(func):
     @wraps(func)
     def _func(request, *args, **kwargs):
         from order.models import Ord
-        o = Ord.objects.get(sn=kwargs['sn'])
-
-        if o.user != request.user:
-            messages.error(request, u'您无法查看当前订单。')
-
+        try:
+            o = Ord.objects.get(sn=kwargs['sn'])
+        except Exception, e:
+            # raise e
+            messages.error(request, u'订单不存在。')
             return rdrtBck(request)
         else:
-            return func(request, *args, **kwargs)
+            if o.user != request.user:
+                messages.error(request, u'您无法查看当前订单。')
+
+                return rdrtBck(request)
+            else:
+                return func(request, *args, **kwargs)
     return _func

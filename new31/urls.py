@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.conf.urls import patterns, url, include
 from django.conf import settings
 from new31.func import Patterns
@@ -22,7 +22,7 @@ urlpatterns = patterns('',
 urlpatterns += Patterns(settings.APPS.keys())
 
 if settings.DEBUG:
-    urlpatterns += patterns('', 
+    urlpatterns += patterns('',
         url(r'^media\/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
-        
+
     )

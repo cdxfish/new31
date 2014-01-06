@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: UTF-8
 """
 Using Jinja2 with Django 1.2
 Based on: http://djangosnippets.org/snippets/2063/
@@ -16,13 +16,13 @@ from Coffin (http://github.com/dcramer/coffin/blob/master/coffin/template/defaul
 Note for namespaced urls you have to use quotes eg:
   {% url account:login %} => {% url "account:login" %}
 """
-from django.template.loader import BaseLoader
-from django.template import TemplateDoesNotExist, Origin
+from django.core.exceptions import ImproperlyConfigured
+from django.utils.importlib import import_module
+from django.template import TemplateDoesNotExist, Origin, base, loader
 from django.core import urlresolvers
 from django.conf import settings
-from django.template import base
-import jinja2
-
+from django.utils import six
+import jinja2, os, sys
 
 class Template(jinja2.Template, base.Template):
     def __init__(self, *args, **kwarg):
@@ -39,12 +39,10 @@ class Template(jinja2.Template, base.Template):
             self.origin = Origin(self.filename)
             signals.template_rendered.send(sender=self, template=self, context=context)
 
-        print dir(self)
-
         return super(Template, self).render(context_dict)
 
 
-class Loader(BaseLoader):
+class Loader(loader.BaseLoader):
     """
     A file system loader for Jinja2.
 
@@ -52,9 +50,24 @@ class Loader(BaseLoader):
     """
     is_usable = True
 
+    if not six.PY3:
+        fs_encoding = sys.getfilesystemencoding() or sys.getdefaultencoding()
+    app_template_dirs = list(settings.TEMPLATE_DIRS)
+
+    for app in settings.INSTALLED_APPS:
+        try:
+            mod = import_module(app)
+        except ImportError as e:
+            raise ImproperlyConfigured('ImportError %s: %s' % (app, e.args[0]))
+        template_dir = os.path.join(os.path.dirname(mod.__file__), 'templates')
+        if os.path.isdir(template_dir):
+            if not six.PY3:
+                template_dir = template_dir.decode(fs_encoding)
+            app_template_dirs.append(template_dir)
+
     # Set up the jinja env and load any extensions you may have
     env = jinja2.Environment(
-        loader=jinja2.FileSystemLoader(settings.TEMPLATE_DIRS),
+        loader=jinja2.FileSystemLoader(tuple(app_template_dirs)),
         extensions=(
             'jinja2.defaulttags.URLExtension',
             'jinja2.defaulttags.CsrfTokenExtension',
@@ -68,6 +81,7 @@ class Loader(BaseLoader):
     env.globals['STATIC_URL'] = settings.STATIC_URL
 
     def load_template(self, template_name, template_dirs=None):
+
         try:
             template = self.env.get_template(template_name)
         except jinja2.TemplateNotFound:

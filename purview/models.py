@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.core.urlresolvers import reverse
 from django.db import models
 import re
@@ -39,7 +39,7 @@ class roleManager(models.Manager):
 
 
     def getAjaxAct(self, l, sn):
-        
+
         return tuple( ( i[0], i[1], i[2].replace(':',''), reverse(i[2], kwargs={'sn': sn, 's': i[0]}) ) for i in l )
 
 
@@ -60,7 +60,7 @@ class elementManager(models.Manager):
             for ii in i.role_set.all():
                 for iii in ii.user.all():
                     if not iii in users:
-                        users.append(iii) 
+                        users.append(iii)
 
         return users
 
@@ -68,7 +68,7 @@ class elementManager(models.Manager):
 class Element(models.Model):
     from django.conf import settings
     from new31.func import Patterns, resolves
-    
+
     paths = resolves(Patterns(settings.APPS.keys()))
     nPath = tuple(paths[0])
     pPath = tuple(paths[1])
@@ -81,7 +81,7 @@ class Element(models.Model):
     def __unicode__(self):
 
         return u"%s [ onl: %s ] - %s" % (self.get_path_display(), self.onl, self.path)
-        
+
     class Meta:
         ordering = ['-path']
 
@@ -93,7 +93,7 @@ class EleSub(models.Model):
     def __unicode__(self):
 
         return u"%s -> %s" % (self.path.get_path_display(), self.sub.get_path_display())
-        
+
     class Meta:
         ordering = ['-path']
 

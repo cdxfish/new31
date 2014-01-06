@@ -1,7 +1,7 @@
-#coding:utf-8
+# coding: UTF-8
 from django import template
 from django.core.urlresolvers import reverse
-register = template.Library()  
+register = template.Library()
 
 
 class oprerateTag(template.Node):
@@ -16,7 +16,7 @@ class oprerateTag(template.Node):
             for i in value.action:
                 s += '<a href="%s" class="button %s">%s</a>' % (reverse(i[2], kwargs={'sn': value.sn, 's': i[0]}), i[2].replace(':',''), i[1])
         else:
-            s += '&nbsp;' 
+            s += '&nbsp;'
 
         return s + '</span></td>'
 
@@ -24,7 +24,7 @@ class oprerateTag(template.Node):
 def forOprerate(parser, token):
     tag_name, text_name = token.split_contents() #分解标签传递的token字符串
 
-    value = parser.compile_filter(text_name)  
+    value = parser.compile_filter(text_name)
 
     return oprerateTag(value)
 
@@ -58,7 +58,7 @@ class statusTag(template.Node):
 def forStatus(parser, token):
     tag_name, text_name = token.split_contents() #分解标签传递的token字符串
 
-    value = parser.compile_filter(text_name)  
+    value = parser.compile_filter(text_name)
 
     return statusTag(value)
 
@@ -85,6 +85,6 @@ class proStatusTag(template.Node):
 def forStatus(parser, token):
     tag_name, text_name = token.split_contents() #分解标签传递的token字符串
 
-    value = parser.compile_filter(text_name)  
+    value = parser.compile_filter(text_name)
 
     return proStatusTag(value)

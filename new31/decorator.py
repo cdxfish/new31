@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse

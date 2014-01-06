@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
@@ -18,7 +18,7 @@ class ordManager(models.Manager):
 
     def saveOrd(self, obj, request):
         from views import OrdSess
-        
+
         o = OrdSess(request).sess
 
         if o['user']:
@@ -47,23 +47,23 @@ class ordManager(models.Manager):
 
 class Ord(models.Model):
     typs = (
-                (0, u'普销'), 
-                (1, u'普销(无积分)'), 
-                (2, u'活动'), 
-                (3, u'积分'), 
+                (0, u'普销'),
+                (1, u'普销(无积分)'),
+                (2, u'活动'),
+                (3, u'积分'),
             )
 
 
     _chcs = (
-                (0, u'新单', 'order:copyOrd'), 
-                (1, u'编辑', 'order:editOrd'), 
+                (0, u'新单', 'order:copyOrd'),
+                (1, u'编辑', 'order:editOrd'),
                 (2, u'确认', 'order:confirmOrd'),
                 (3, u'无效', 'order:nullOrd'),
                 (4, u'止单', 'order:stopOrd'),
             )
     chcs= tuple((i[0], i[1]) for i in _chcs)
 
-    act =   ( 
+    act =   (
                 (_chcs[0], _chcs[1], _chcs[2], _chcs[3], ),
                 (_chcs[0], _chcs[1], _chcs[2], _chcs[3], ),
                 (_chcs[0], _chcs[4], ),

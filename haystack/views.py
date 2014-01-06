@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 u"""haystack"""
 from __future__ import unicode_literals
 from django.conf import settings

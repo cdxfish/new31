@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 # Django settings for new31 project.
 import os
 
@@ -128,7 +128,7 @@ TEMPLATE_LOADERS = (
     # 'jinja2.jinja2_loader.Loader',
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-    # 'django.template.loaders.eggs.Loader',
+    'django.template.loaders.eggs.Loader',
 )
 
 ROOT_URLCONF = 'new31.urls'
@@ -213,14 +213,14 @@ for i,v in APPS.items():
     if v:
         djangoMidClass.append(u'%s.middleware.%s' % (i, v))
 
-if not 'SERVER_SOFTWARE' in os.environ:
-    djangoAPPS.append('debug_toolbar')
-    djangoMidClass.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+# if not 'SERVER_SOFTWARE' in os.environ:
+#     djangoAPPS.append('debug_toolbar')
+#     djangoMidClass.append('debug_toolbar.middleware.DebugToolbarMiddleware')
 
-    INTERNAL_IPS = ('127.0.0.1',)
-    DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False,
-}
+#     INTERNAL_IPS = ('127.0.0.1',)
+#     DEBUG_TOOLBAR_CONFIG = {
+#     'INTERCEPT_REDIRECTS': False,
+# }
 
 INSTALLED_APPS = tuple(djangoAPPS)
 

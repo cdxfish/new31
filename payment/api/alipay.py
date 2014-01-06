@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 u"""支付宝"""
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, redirect

@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.db import models
 from new31.func import frmtDate
 import datetime
@@ -8,7 +8,7 @@ class invProManager(models.Manager):
     def cOnl(self, sid):
         try:
             invpro = self.select_related().get(spec__id=sid, spec__onl=True)
-            
+
         except Exception, e:
             from item.models import ItemSpec
 
@@ -38,7 +38,7 @@ class invNumManager(models.Manager):
         for i in InvPro.objects.getAll():
 
             self.frMt(i.id, date)
-            
+
 
     def frMt(self, id, date):
         from produce.models import Pro
@@ -138,4 +138,4 @@ class InvNum(models.Model):
         return u'%s - [ date: %s ] [ num: %s ]' % (self.pro, self.date, self.num)
 
     class Meta:
-        unique_together=(('pro','date'),)     
+        unique_together=(('pro','date'),)

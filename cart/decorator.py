@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.contrib import messages
 from new31.func import rdrtBck
 from functools import wraps
@@ -15,7 +15,7 @@ def itemshow(func):
             ItemSpec.objects.get(id=kwargs['sid'], onl=True, show=True)
 
             return func(request, *args, **kwargs)
-            
+
         except Exception, e:
             messages.warning(request, u'当前商品已下架')
 
@@ -23,7 +23,7 @@ def itemshow(func):
 
     return _func
 
-       
+
 # 购物车检测用装饰器
 def checkCartDr(func):
     @wraps(func)

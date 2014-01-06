@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 u"""用户中心"""
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm

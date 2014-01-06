@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from new31.func import pPatterns
 from views import logcs, logcsView, baiduMap, logcsUnsent, logcsEdit, logcsShip, logcsRefused, logcsSign, logcsStop, logcsEditFrm, logcsSub, cDman, cAdv, cLogcs
 

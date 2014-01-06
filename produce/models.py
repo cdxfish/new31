@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.db import models
 from new31.func import frMtFee
 
@@ -13,7 +13,7 @@ class ProQuerySet(models.query.QuerySet):
             total += i.total()
 
         return frMtFee(total / 10)
-        
+
     def total(self):
         total = 0
 
@@ -99,7 +99,7 @@ class Pro(models.Model):
 
     chcs = tuple((i[0],i[1]) for i in _chcs)
 
-    act =   ( 
+    act =   (
                 (_chcs[1], ),
                 (_chcs[2], _chcs[3], ),
                 (_chcs[3], _chcs[4], ),

@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django import forms
 
 # Create your forms here.
@@ -19,9 +19,9 @@ class LogcsFrm(forms.ModelForm):
         widgets = {
             'address': forms.TextInput(attrs={'size': 70}),
             'tel': forms.TextInput(attrs={'size': 60}),
-            'note': forms.Textarea(attrs={'cols': 100, 'rows': 4}),  
-            'area': forms.Select(choices=Area.objects.getTpl()),  
-            'date': forms.DateInput(attrs={'class': 'date'}, format='%Y-%m-%d'),  
+            'note': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
+            'area': forms.Select(choices=Area.objects.getTpl()),
+            'date': forms.DateInput(attrs={'class': 'date'}, format='%Y-%m-%d'),
         }
 
 
