@@ -4,6 +4,54 @@
 		"selected_items":
 		[
 			[
+				"ty",
+				"try	Try/Except"
+			],
+			[
+				"ra",
+				"raise"
+			],
+			[
+				"tag",
+				"taglib_module"
+			],
+			[
+				"te",
+				"templates"
+			],
+			[
+				"t",
+				"template"
+			],
+			[
+				"cl",
+				"click"
+			],
+			[
+				"__",
+				"__iter__"
+			],
+			[
+				"ob",
+				"order_by"
+			],
+			[
+				"fu",
+				"function"
+			],
+			[
+				"tr",
+				"try	Try/Except/Else/Finally"
+			],
+			[
+				"re",
+				"request"
+			],
+			[
+				"try",
+				"try	Try/Except/Else"
+			],
+			[
 				"_",
 				"_input_charset"
 			],
@@ -14,10 +62,6 @@
 			[
 				"pan",
 				"payment"
-			],
-			[
-				"re",
-				"reverse"
 			],
 			[
 				"fro",
@@ -43,15 +87,47 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "/F/django/littlesnail/littesnail/views.py",
+			"settings":
+			{
+				"buffer_size": 4031,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "wechat/urls.py",
+			"settings":
+			{
+				"buffer_size": 138,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "wechat/views.py",
+			"settings":
+			{
+				"buffer_size": 687,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 0.0,
+		"height": 392.0,
 		"selected_items":
 		[
+			[
+				"f",
+				"Format Code"
+			],
+			[
+				"pci",
+				"Package Control: Install Package→安装程序包"
+			]
 		],
-		"width": 0.0
+		"width": 632.0
 	},
 	"console":
 	{
@@ -71,46 +147,134 @@
 	},
 	"file_history":
 	[
-		"/D/wamp/www/1211170930/includes/modules/payment/alipay.php",
-		"/F/django/new31/payment/api/alipay.py",
-		"/F/django/new31/payment/models.py",
-		"/F/django/new31/log/models.py",
-		"/F/django/new31/order/views.py",
-		"/F/django/new31/order/templates/orderview.htm",
+		"/F/django/new31/wechat/models.py",
+		"/F/django/new31/wechat/admin.py",
+		"/F/django/new31/wechat/__init__.py",
+		"/F/django/littlesnail/littesnail/views.py",
+		"/F/django/new31/account/decorator.py",
+		"/D/9-10.py",
+		"/D/account.txt",
+		"/C/Documents and Settings/Administrator/桌面/9-10.py",
+		"/D/Python27/Lib/site-packages/django/contrib/auth/forms.py",
+		"/F/The-Art-Of-Programming-by-July/ebook/code/python/chapter03.py",
+		"/F/django/new31/account/templates/login.htm",
 		"/F/django/new31/account/views.py",
-		"/D/Python27/Lib/site-packages/django/shortcuts/__init__.py",
-		"/D/wamp/www/1211170930/alipay_return_url.php",
-		"/F/django/new31/account/templates/vieword.htm",
-		"/D/Python27/Lib/site-packages/django/utils/http.py",
-		"/F/django/new31/payment/views.py",
-		"/D/Python27/Lib/site-packages/django/core/urlresolvers.py",
-		"/D/Python27/Lib/site-packages/django/conf/urls/__init__.py",
-		"/F/django/new31/payment/forms.py",
-		"/F/django/new31/payment/urls.py",
-		"/F/django/new31/new31/urls.py",
-		"/F/django/new31/new31/func.py",
-		"/F/django/new31/payment/decorator.py",
-		"/F/django/new31/message/decorator.py",
-		"/F/django/new31/new31/static/js/jquery.dialog.js",
-		"/F/django/new31/payment/api/monthly.py",
-		"/F/django/new31/payment/api/payafter.py",
-		"/F/django/new31/payment/api/quarter.py",
-		"/F/django/new31/payment/api/post.py",
+		"/D/Python27/Lib/site-packages/django/contrib/auth/__init__.py",
+		"/F/The-Art-Of-Programming-by-July/ebook/code/python/chapter02.py",
+		"/F/django/new31/new31/templates/shop.base.htm",
+		"/F/django/new31/new31/settings.py",
+		"/D/Python27/Lib/site-packages/django/utils/six.py",
+		"/F/django/new31/jinja2/jinja2_loader.py",
+		"/F/django/new31/account/templates/myord.htm",
+		"/F/The-Art-Of-Programming-by-July/ebook/code/go/chapter25.go",
+		"/F/django/new31/jinja2/defaulttags.py",
+		"/F/django/new31/jinja2/jinja2_tag.py",
+		"/D/Python27/Lib/site-packages/django/template/loaders/eggs.py",
+		"/D/Python27/Lib/site-packages/django/template/loaders/filesystem.py",
+		"/D/Python27/Lib/site-packages/django/template/loaders/app_directories.py",
+		"/F/django/new31/jinja2/loaders.py",
+		"/F/django/new31/shop/templates/shop.htm",
+		"/F/django/new31/jinja2/environment.py",
 		"/F/django/new31/payment/api/abctransfer.py",
-		"/F/django/new31/payment/api/icbctransfer.py",
-		"/F/django/new31/payment/api/coupons.py",
-		"/F/django/new31/payment/api/ccbtransfer.py",
-		"/F/django/new31/account/templates/newuser.htm",
-		"/F/django/new31/payment/api/points.py",
-		"/F/django/new31/finance/decorator.py",
-		"/F/django/new31/account/models.py",
+		"/F/django/new31/log/models.py",
+		"/F/django/new31/payment/api/alipay.py",
+		"/F/django/new31/payment/api/monthly.py",
+		"/F/django/new31/log/urls.py",
+		"/F/django/new31/log/views.py",
+		"/F/django/new31/logistics/__init__.py",
+		"/F/django/new31/logistics/admin.py",
+		"/F/django/new31/logistics/decorator.py",
+		"/F/django/new31/logistics/forms.py",
+		"/F/django/new31/logistics/middleware.py",
+		"/F/django/new31/logistics/models.py",
+		"/F/django/new31/logistics/urls.py",
+		"/F/django/new31/logistics/views.py",
+		"/F/django/new31/message/__init__.py",
+		"/F/django/new31/message/admin.py",
+		"/F/django/new31/message/decorator.py",
+		"/F/django/new31/message/models.py",
+		"/F/django/new31/message/urls.py",
+		"/F/django/new31/message/views.py",
+		"/F/django/new31/new31/__init__.py",
+		"/F/django/new31/new31/cls.py",
+		"/F/django/new31/new31/decorator.py",
+		"/F/django/new31/new31/func.py",
+		"/F/django/new31/new31/urls.py",
+		"/F/django/new31/new31/wsgi.py",
+		"/F/django/new31/office/__init__.py",
+		"/F/django/new31/office/forms.py",
+		"/F/django/new31/office/templatetags/__init__.py",
+		"/F/django/new31/office/templatetags/page.py",
+		"/F/django/new31/office/templatetags/tags.py",
+		"/F/django/new31/office/urls.py",
+		"/F/django/new31/office/views.py",
+		"/F/django/new31/order/__init__.py",
+		"/F/django/new31/order/admin.py",
 		"/F/django/new31/order/decorator.py",
-		"/F/django/new31/finance/views.py",
-		"/F/django/new31/finance/models.py",
-		"/F/django/new31/finance/urls.py",
-		"/D/Sublime Text 3/Data/Packages/User/Preferences.sublime-settings",
-		"/D/Sublime Text 3/Data/Packages/LiuFengQingYin/LiuFengQingYin",
-		"/D/Sublime Text 3/Data/Packages/Default/Preferences.sublime-settings"
+		"/F/django/new31/order/forms.py",
+		"/F/django/new31/order/middleware.py",
+		"/F/django/new31/order/models.py",
+		"/F/django/new31/order/urls.py",
+		"/F/django/new31/order/views.py",
+		"/F/django/new31/payment/__init__.py",
+		"/F/django/new31/payment/admin.py",
+		"/F/django/new31/payment/api/__init__.py",
+		"/F/django/new31/payment/api/ccbtransfer.py",
+		"/F/django/new31/payment/api/coupons.py",
+		"/F/django/new31/payment/api/icbctransfer.py",
+		"/F/django/new31/payment/api/payafter.py",
+		"/F/django/new31/payment/api/points.py",
+		"/F/django/new31/payment/api/post.py",
+		"/F/django/new31/payment/api/quarter.py",
+		"/F/django/new31/payment/decorator.py",
+		"/F/django/new31/payment/forms.py",
+		"/F/django/new31/payment/models.py",
+		"/F/django/new31/payment/urls.py",
+		"/F/django/new31/payment/views.py",
+		"/F/django/new31/print/__init__.py",
+		"/F/django/new31/print/admin.py",
+		"/F/django/new31/print/models.py",
+		"/F/django/new31/print/urls.py",
+		"/F/django/new31/print/views.py",
+		"/F/django/new31/produce/__init__.py",
+		"/F/django/new31/produce/admin.py",
+		"/F/django/new31/produce/decorator.py",
+		"/F/django/new31/produce/forms.py",
+		"/F/django/new31/produce/models.py",
+		"/F/django/new31/produce/urls.py",
+		"/F/django/new31/produce/views.py",
+		"/F/django/new31/purview/__init__.py",
+		"/F/django/new31/purview/admin.py",
+		"/F/django/new31/purview/middleware.py",
+		"/F/django/new31/purview/models.py",
+		"/F/django/new31/purview/urls.py",
+		"/F/django/new31/purview/views.py",
+		"/F/django/new31/shop/__init__.py",
+		"/F/django/new31/shop/urls.py",
+		"/F/django/new31/shop/views.py",
+		"/F/django/new31/signtime/__init__.py",
+		"/F/django/new31/signtime/admin.py",
+		"/F/django/new31/signtime/models.py",
+		"/F/django/new31/signtime/urls.py",
+		"/F/django/new31/signtime/views.py",
+		"/F/django/new31/spec/__init__.py",
+		"/F/django/new31/spec/admin.py",
+		"/F/django/new31/spec/models.py",
+		"/F/django/new31/spec/urls.py",
+		"/F/django/new31/spec/views.py",
+		"/F/django/new31/tag/__init__.py",
+		"/F/django/new31/tag/admin.py",
+		"/F/django/new31/tag/decorator.py",
+		"/F/django/new31/tag/models.py",
+		"/F/django/new31/tag/urls.py",
+		"/F/django/new31/tag/views.py",
+		"/F/django/new31/upload/__init__.py",
+		"/F/django/new31/upload/admin.py",
+		"/F/django/new31/upload/models.py",
+		"/F/django/new31/upload/urls.py",
+		"/F/django/new31/upload/views.py",
+		"/F/django/new31/jinja2/middleware.py",
+		"/F/django/new31/log/__init__.py"
 	],
 	"find":
 	{
@@ -121,6 +285,8 @@
 		"height": 90.0,
 		"where_history":
 		[
+			"F:\\django\\new31,D:\\Python27\\Lib\\site-packages\\django",
+			"F:\\django\\new31\\office\\templatetags,D:\\Python27\\Lib\\site-packages\\django",
 			"F:\\django\\new31",
 			""
 		]
@@ -130,6 +296,22 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"#coding:utf-8",
+			"nodelist",
+			"filesystem",
+			"import_library",
+			"add_to_builtins",
+			"jinja",
+			"Markup",
+			"BASE_URL",
+			"切换计时ID",
+			"DateTimeField",
+			"itemonl",
+			"style=\"float:right\"",
+			"style=\"float:right;\"",
+			"style=\"\"",
+			"style=\"float:right;\"",
+			"style=\"\"",
 			"dic",
 			"redirect",
 			"print",
@@ -146,6 +328,11 @@
 		"regex": false,
 		"replace_history":
 		[
+			"# coding: UTF-8",
+			" style=\"float:right;\" /",
+			" /",
+			" style=\"float:right;\" /",
+			" /"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -156,8 +343,97 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "/F/django/littlesnail/littesnail/views.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4031,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2699,
+								2699
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1445.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "wechat/urls.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 138,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								79,
+								79
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "wechat/views.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 687,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								687,
+								687
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -167,7 +443,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 33.0
 	},
 	"layout":
 	{
@@ -195,7 +471,7 @@
 	"project": "new31.sublime-project",
 	"replace":
 	{
-		"height": 46.0
+		"height": 62.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -249,7 +525,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_width": 254.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
