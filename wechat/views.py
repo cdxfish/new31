@@ -6,6 +6,12 @@ from django.http import HttpResponse
 import hashlib
 # Create your views here.
 
+def responseMsg(request):
+
+
+    return HttpResponse('responseMsg')
+
+
 def checkSignature(request):
     u"""微信接入验证"""
 
@@ -26,3 +32,22 @@ def checkSignature(request):
         return HttpResponse(echoStr)
     else:
         return HttpResponse(None)
+
+
+def wechatShowTag(request, tag):
+    u"""微信客户端标签页"""
+    from tag.views import TagSrch
+    from item.models import Item
+
+    tagsCls = TagSrch.tagsCls
+
+    # items = sort(TagSrch(request).show(tag))
+    items = TagSrch(request).show(tag)
+    items = Item.objects.getShowByTag(tag)
+
+    return render_to_response('wechattag.htm', locals(), context_instance=RequestContext(request))
+
+def queryOrd(request):
+    u"""微信客户端订单查询"""
+
+    return render_to_response('wechatqueryord.htm', locals(), context_instance=RequestContext(request))

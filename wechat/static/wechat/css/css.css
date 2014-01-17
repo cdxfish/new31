@@ -1,0 +1,903 @@
+/* CSS Document */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #4b3c37;
+}
+
+a:hover {
+    text-decoration: none;
+    border-bottom: thick solid #5B2900;
+}
+
+a.on {
+    border-bottom: thick solid #5B2900;
+}
+
+h3 {
+    line-height: 2;
+    padding-left: 5px;
+}
+
+h4 {
+    line-height: 1.5;
+    padding-left: 5px;
+}
+
+img {
+    border: 0;
+    float: left;
+}
+
+html {
+    cursor: url("/static/images/cursor.ico"), auto;
+    width: 98%;
+    margin: 0 auto;
+    min-height: 100%;
+}
+
+::selection {
+    background: #ff5f3e;
+    color: #fff
+}
+
+body {
+    width: 100%;
+    font-size: 12px;
+    color: #4b3c37;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #FFF;
+}
+
+ul, ol, dl {
+    list-style: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+table tr td {
+    height: 24px;
+    padding: 0 5px;
+    line-height: 2;
+}
+
+p {
+    line-height: 1.5;
+    padding-bottom: 10px;
+    text-indent: 2em;
+}
+
+input[type=text],input[type=password],textarea {
+    height: 16px;
+    padding: 3px;
+    border: 1px solid #CDCDCD;
+    border-radius: 2px;
+    background: #FFF;
+}
+
+*input {
+    height: 16px;
+    padding: 3px;
+    border: 1px solid #CDCDCD;
+    border-radius: 2px;
+    background: #FFF;
+}
+
+textarea {
+    height: 80px;
+    padding: 5px;
+    font-size: 12px;
+    line-height: 1.4em
+}
+
+input:focus,textarea:focus {
+    background: #FFF;
+    box-shadow: 1px 1px 3px #ccc inset;
+}
+
+.input {
+    border: 1px solid #cc9866;
+    padding: 3px;
+}
+
+.clear {
+    clear: both;
+    line-height: 0;
+    height: 0;
+    font-size: 0;
+}
+
+.sbtn {
+    height: 15px;
+    line-height: 15px;
+    padding: 0 8px;
+    font-size: 8px;
+}
+
+.btn {
+    height: 24px;
+    line-height: 24px;
+    padding: 0 24px;
+    font-size: 12px;
+}
+
+.bbtn {
+    height: 38px;
+    line-height: 38px;
+    padding: 0 48px;
+    font-size: 14px;
+}
+
+.bbbtn {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+}
+
+.btnbr, .btnbr:focus {
+    background-color: #5b2900;
+    border: 1px solid transparent;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.btnbr:hover {
+    color: #cf9764;
+    border: 1px solid transparent;
+}
+
+.btnbr:active {
+    box-shadow: 0 0 0 1px #FFFFFF inset;
+}
+
+.btn_disable, .bbtn_disable, .bbbtn_disable {
+    background-color: #cf9764;
+    border: 1px solid #cf9764;
+    opacity: 0.5;
+    color: #FFFFFF;
+    display: inline-block;
+}
+
+.fBold {
+    font-weight: bold
+}
+
+.font20 {
+    font-size: 20px
+}
+
+.font18 {
+    font-size: 18px
+}
+
+.font14 {
+    font-size: 14px
+}
+
+.bline {
+    border: solid #E5E5E5;
+    border-width: 0 0 1px 0;
+}
+
+.mtb5 {
+    margin: 5px 0;
+}
+
+.mtb25 {
+    margin: 25px 0;
+}
+
+.ml5 {
+    margin-left: 5px;
+}
+
+.ml40 {
+    margin-left: 40px;
+}
+
+.mlr10 {
+    margin: 0 10px;
+}
+
+.mlr5 {
+    margin: 0 5px;
+}
+
+.mb10 {
+    margin-bottom: 10px;
+}
+
+.mb30 {
+    margin-bottom: 30px;
+}
+
+.mt5 {
+    margin-top: 5px;
+}
+
+.mt10 {
+    margin-top: 10px;
+}
+
+.pl5 {
+    padding-left: 5px;
+}
+
+.pl10 {
+    padding-left: 10px;
+}
+
+.pl40 {
+    padding-left: 40px;
+}
+
+.pb10 {
+    padding-bottom: 10px;
+}
+
+.pb20 {
+    padding-bottom: 20px;
+}
+
+.pb25 {
+    padding-bottom: 25px;
+}
+
+
+.pt20 {
+    padding-top: 20px;
+}
+
+.ptb5 {
+    padding: 5px 0;
+}
+
+.ptb20 {
+    padding: 20px 0;
+}
+
+.ptb25 {
+    padding: 25px 0;
+}
+
+.mg5 {
+    margin: 5px;
+}
+
+.pd7 {
+    padding: 7px;
+}
+
+.lh26 {
+    line-height: 26px;
+}
+
+.fl {
+    float: left;
+}
+
+.w100 {
+    width: 100%;
+}
+
+.tdptd5 tr td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.tdpd5 tr td {
+    padding: 5px;
+}
+
+#tb {
+    width: 100%;
+}
+
+#tb #bar {
+    width: 100%;
+    padding: 10px 0;
+    line-height: 24px;
+}
+
+#tb #bar dt {
+    float: left;
+    font-size: 24px;
+    font-family: constantia;
+    font-weight: bold;
+}
+
+#tb #bar dd {
+    float: right;
+}
+
+#tb #bar dd a {
+    white-space: nowrap;
+    margin: 0 5px;
+}
+
+#main {
+    float: left;
+    width: 100%;
+}
+
+#main #top, #main #middle, #main #ft {
+    width: 100%;
+    float: left;
+}
+
+#main .mti {
+    width: 100%;
+    float: left;
+}
+
+#main .mti a {
+    color: #5b2900;
+    border: none;
+    text-decoration: none;
+    float: left;
+}
+
+#main .mti a:hover {
+    border: none;
+    text-decoration: none;
+}
+
+#main .mti dt {
+    color: #5b2900;
+    font-size: 30px;
+    float: left;
+}
+
+#main .mti dd {
+    width: 150px;
+    height: 86px;
+    position: relative;
+    float: right;
+    top: -10px;
+    background: url(/static/shop/images/13741335652678.jpg)
+}
+
+#main .menu {
+    width: 100%;
+    float: left;
+    margin-bottom: 20px;
+    background: url(/static/shop/images/menu.jpg) bottom repeat-x;
+    height: 30px;
+    line-height: 22px;
+    margin-top: 15px;
+}
+
+#main .menu li {
+    float: left;
+    padding-right: 20px;
+}
+
+#main .menu li a {
+    display: block;
+    width: 72px;
+    height: 30px;
+    float: left;
+    background: url(/static/shop/images/menu_no.jpg) no-repeat;
+    color: #cf9764;
+    padding-left: 20px;
+    border: 0;
+}
+
+#main .menu li a:hover, #main .menu li a.on {
+    background: url(/static/shop/images/menu_on.jpg) no-repeat;
+}
+
+#main #middle {
+    padding: 0 0 50px;
+}
+
+#main #middle .messagelist {
+    padding: 0 0 10px 0;
+    margin: 0;
+}
+
+#main #middle .messagelist li {
+    display: block;
+    padding: 4px 5px 4px 25px;
+    margin: 0 0 3px 0;
+    background: url(/static/images/icon_success.gif) 5px .3em no-repeat;
+}
+
+#main #middle .messagelist li.warning {
+    background-image: url(/static/images/icon_alert.gif);
+}
+
+#main #middle .messagelist li.error {
+    background-image: url(/static/images/icon_error.gif);
+}
+
+#main #middle #bner {
+    width: 100%;
+    height: 530px;
+    padding-bottom: 20px;
+    float: left;
+}
+
+#main #middle .lsv {
+    float: left;
+    padding-bottom: 15px;
+}
+
+#main #middle .lsv img {
+    padding: 2px;
+}
+
+#main #middle .more {
+    text-align: right;
+    padding: 0 5px 15px;
+}
+
+#main #middle #m {
+    float: left;
+    padding: 15px 0;
+}
+
+#main #middle #m li {
+    width: 218px;
+    height: 135px;
+    float: left;
+    padding: 1px;
+}
+
+#main #middle #plist {
+    float: left;
+}
+
+#main #middle #plist dl {
+    width: 886px;
+    float: left;
+    padding: 20px 0;
+    border-bottom: 1px solid #a59d9a;
+    color: #422819;
+}
+
+#main #middle #plist dl dt {
+    width: 200px;
+    height: 144px;
+    float: left;
+}
+
+#main #middle #plist dl dd.t {
+    width: 460px;
+    float: left;
+    line-height: 2;
+    font-size: 13px;
+    padding-left: 30px;
+    padding-right: 10px;
+}
+
+#main #middle #plist dl dd.n {
+    width: 80px;
+    float: right;
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#main #middle #plist dl dd.p {
+    width: 100px;
+    float: left;
+    text-align: center;
+}
+
+#main #middle #plist dl dd a {
+    font-size: 14px;
+    font-weight: bold;
+    color: #422819;
+}
+
+#main #middle #left {
+    width: 20%;
+    float: left;
+}
+
+*#main #middle #left {
+    width: 18%;
+}
+
+#main #middle #left #lm {
+    float: left;
+    font-size: 14px;
+    line-height: 2;
+}
+
+#main #middle #left #lm li {
+    width: 100%;
+    float: left;
+}
+
+#main #middle #right {
+    width: 80%;
+    float: right;
+}
+
+#main #middle #right #show {
+    float: left;
+}
+
+#main #middle #right #show {
+    _height: 415px;
+}
+
+#main #middle #right #show #news {
+    width: 670px;
+    float: left;
+    line-height: 2;
+}
+
+#main #middle #right #show #news dl {
+    width: 670px;
+    float: left;
+    padding: 10px 0;
+}
+
+#main #middle #right #show #news dl dt {
+    width: 670px;
+    float: left;
+}
+
+#main #middle #right #show #news dl dt a {
+    color: #5b2a01;
+}
+
+#main #middle #right #show #news dl dd {
+    width: 670px;
+    float: left;
+}
+
+#main #middle #right #show #m_od {
+    width: 670px;
+    float: left;
+    line-height: 30px;
+}
+
+#main #middle #right #show #m_od img {
+    float: none;
+}
+
+#main #middle #right #show #m_od table {
+    border-collapse: collapse;
+}
+
+#main #middle #right #show #m_od td {
+    border: 1px solid #a59d9b;
+    padding: 0 2px;
+}
+
+#main #middle #right #show #m_o {
+    width: 670px;
+    float: left;
+}
+
+#main #middle #right #show #m_o dl {
+    width: 160px;
+    float: left;
+    padding: 3px;
+}
+
+#main #middle #right #show #m_o dl dt {
+    width: 160px;
+    height: 86px;
+}
+
+#main #middle #right #show #m_o dl dd {
+    width: 160px;
+    float: left;
+    padding-top: 10px;
+}
+
+#main #middle #right #show img {
+    float: none;
+}
+
+#main #middle #right #show #m_i {
+    width: 100%;
+    float: left;
+    line-height: 30px;
+}
+
+#main #middle #right #show #m_i #result {
+    color: #F00;
+}
+
+#main #middle #right #show #ab {
+    width: 670px;
+    float: left;
+    line-height: 2;
+}
+
+#main #middle #right .ltb {
+    width: 335px;
+    float: left;
+    line-height: 35px;
+}
+
+#main #middle #pshow {
+    width: 886px;
+    float: left;
+    padding-bottom: 15px;
+}
+
+#main #middle #pshow #titbe {
+    width: 886px;
+    float: left;
+    font-size: 30px;
+    color: #7c3b00;
+}
+
+#main #middle #pshow #img {
+    width: 535px;
+    height: 385px;
+    float: left;
+}
+
+#main #middle #pshow #pr {
+    width: 270px;
+    float: right;
+}
+
+#main #middle #pshow #pr #ul {
+    width: 270px;
+    float: left;
+    line-height: 2;
+}
+
+#main #middle #pshow #pr #gm {
+    width: 270px;
+    float: left;
+    text-align: right;
+    padding: 10px 0;
+}
+
+#main #middle #pshow #pr #money {
+    font-size: 27px;
+    color: #5b2900;
+    float: left;
+    text-align: right;
+    width: 190px;
+}
+
+#main #middle #pshow #pr #btn {
+    width: 73px;
+    float: right;
+}
+
+#main #middle #pshow #pr #btn .btn_buy {
+    width: 73px;
+    height: 24px;
+    border: 0;
+    background: url(/static/shop/images/btn_buy.jpg) no-repeat;
+    margin-bottom: 5px;
+}
+
+#main #middle #pshow #pr .th {
+}
+
+#main #middle #sl {
+    width: 630px;
+    float: left;
+    line-height: 2;
+}
+
+#main #middle #sr {
+    width: 230px;
+    float: right;
+    line-height: 2;
+}
+
+#main #middle #sr #detail {
+    width: 230px;
+    float: left;
+    padding-bottom: 20px;
+}
+
+#main #middle #sr .info {
+    width: 230px;
+    float: left;
+    padding: 20px 0;
+    border-top: 1px solid #CCC;
+}
+
+#main #middle #sr .info .l {
+    width: 100px;
+    float: left;
+    background: #cc9866;
+    line-height: 20px;
+}
+
+#main #middle #sr .info .l dt {
+    background: #5a2900;
+}
+
+#main #middle #sr #cmd {
+    width: 230px;
+    float: left;
+}
+
+#main #middle #sr #cmd li {
+    width: 61px;
+    height: 61px;
+    float: left;
+    padding: 5px;
+}
+
+#main #ft {
+    width: 98%;
+    font-size: 14px;
+    padding-bottom: 5px;
+    position:absolute;
+    bottom:0px;
+    /*left: 0px;*/
+    margin: 0 auto;
+}
+
+#main #ft #foot {
+    padding: 10px 0;
+    line-height: 24px;
+}
+
+#main #ft #foot dt {
+    float: left;
+}
+
+#main #ft #foot dd {
+    float: right;
+}
+
+.paper {
+    width: 100%;
+    float: left;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.pinBox {
+    width: 100%;
+    float: left;
+}
+
+.viewDown {
+    background: url(/static/images/untitled.gif) no-repeat 330px 15px;
+    padding-left: 350px;
+    line-height: 40px
+}
+
+.pinBox li {
+    float: left
+}
+
+.pinBox li h2 a, .pinBox li h1 a {
+    color: #cf9764;
+}
+
+.pinBox li img {
+    *position: relative;
+    *float: left;
+    *display: block;
+    border-radius: 3px;
+}
+.pinBox .item, .pinBox .iitem {
+    border: 1px solid #cc9866;
+    padding: 2px;
+    border-radius: 3px;
+}
+
+.pinBox .styp2 {
+    width: 450px;
+    min-height: 450px;
+    *height: 450px
+}
+
+.pinBox .styp3 {
+    width: 100%;
+    min-height: 750px;
+    *height: 750px
+}
+
+.pinBox .pinSide2 {
+    width: 400px;
+    float: right;
+}
+
+.pinBox .pinSide2 .pinInfo {
+    float: left;
+}
+
+.pinBox .pinSide3 {
+    float: left;
+    margin-top: 4px;
+    min-height: 165px;
+    *height: 165px;
+}
+
+.pinBox .pinSide2, .pinBox .pinSide3 {
+    background: #FFFFFF;
+    padding: 15px;
+    border-radius: 3px;
+    border: 1px solid #cc9866;
+}
+
+.pinBox .pinSide3 .pinInfo {
+    float: right;
+}
+
+.pinBox .pinSide2 .pinDes, .pinBox .pinSide3 .pinDes {
+    width: 100%;
+    float: left;
+    color: #999;
+    padding: 5px 0 10px 0;
+    text-indent: 0;
+}
+
+.pinBox .pinSide3 .pinDes {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.pinBox .pinInfo {
+    color: #999;
+    width: 100%;
+    padding: 8px 0;
+    display: block;
+}
+
+.pinBox .pinInfo .addDate, .pinBox .pinInfo .loc,.pinBox .pinInfo .camera,.pinBox .pinInfo .pv,.pinBox .pinInfo .like {
+    background: url(/static/images/photoDes.png) no-repeat;
+    padding-left: 30px;
+    margin-bottom: 5px;
+    line-height: 18px;
+    width: 80%;
+}
+
+.pinBox .pinInfo .loc {
+    background-position: 0 -25px
+}
+
+.pinBox .pinInfo .camera {
+    background-position: 0 -87px
+}
+
+.pinBox .pinInfo .pv {
+    background-position: 0 -113px
+}
+
+.pinBox .pinInfo .like {
+    background-position: 0 -142px
+}
+
+.pinBox .tags {
+    width: 100%;
+    float: left;
+    display: block;
+    *height: 30px;
+}
+
+.pinBox .vote {
+    width: 100%;
+    float: left;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    margin-top: 20px
+}
+
+.pinBox .vote a {
+    margin-right: 10px
+}
+
+.pinBox .vote .linkCancel a {
+    margin: 0
+}

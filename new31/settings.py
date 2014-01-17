@@ -25,7 +25,7 @@ else:
     MYSQL_HOST_M = sae.const.MYSQL_HOST
     MYSQL_HOST_S = sae.const.MYSQL_HOST_S
     MYSQL_PORT = sae.const.MYSQL_PORT
-    
+
     # 修改上传时文件在内存中可以存放的最大size为10m
     FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760
 
@@ -167,6 +167,7 @@ APPS = {
     'print':'',
     'bom':'',
     'article':'',
+    'wechat':'',
     }
 
 

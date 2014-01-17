@@ -1,0 +1,45 @@
+{% extends "shop.base.htm" %}
+
+{% block title %}{{ tag }} {% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}tag/js/tag.configuration.js"></script>
+{% endblock %}
+
+{% block middle %}
+        <p class="viewDown">向下滚动浏览更多关于:　{{ tag }} 标签商品</p>
+        <ul class="pinBox">
+{% for i in items %}
+         <li class="w100 mb30 item">
+         <h1 class="w100 pb25 pl5">{{ forloop.counter|stringformat:"02i" }}. <a href="{% url 'tag:tagShow' i.name|urlencode %}">{{ i.name }}</a></h1>
+            <ul>
+                {% for ii in i.itemimg_set.getBImgs %}
+                <li class="w100 {% if not forloop.last %}mb30{% endif %}">
+                <img alt="{{ i.name }}" title="{{ i.name }}" data-src="{{ ii.img.url }}" class="styp{{ ii.typ }}" />
+                <div class="pinSide{{ ii.typ }}">
+                    <h2><a href="{% url 'tag:tagShow' i.name|urlencode %}">{{ i.name }}</a></h2>
+                    <p class="pinDes">{{ i.itemdesc_set.getAll.0.desc }}</p>
+                    <ul class="pinInfo">
+                        <li class="addDate">{{ i.addTime }}</li>
+                        <li class="pv">销量 {{ i.click }}</li>
+                        <li class="like">喜欢 <span class="count_like_{{ i.id }}">{{ i.like }}</span></li>
+                    </ul>
+                    <div class="tags">
+                        <ul class="fl">
+{% for iii in i.tag.getByRandom|slice:":9" %}
+                        <li class="mlr5 lh26"><a href="{% url 'tag:tagShow' iii.tag|urlencode %}">{{ iii.tag }}</a></li>
+{% endfor %}
+                        </ul>
+                    </div>
+                    <div class="vote">
+                        <a class="btn btnbr btnLike" href="{% url 'tag:itemLike' i.id %}">喜欢</a>
+                        <a class="btn btnbr btnBuy" href="{% url 'tag:getSpec' i.id %}">购买</a>
+                    </div>
+                </div>
+                </li>
+                {% endfor %}
+            </ul>
+            </li>
+{% endfor %}
+        </ul>
+{% endblock %}

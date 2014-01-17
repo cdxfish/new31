@@ -86,7 +86,11 @@ def resolves(patterns):
             else:
                 doc = '%s: ' % i.app_name
             if doc:
-                doc += re.sub(r'(\n|\t)', '', ii.callback.__doc__)
+                try:
+                    doc += re.sub(r'(\n|\t)', '', ii.callback.__doc__)
+                except Exception, e:
+                    # raise e
+                    doc += ii.name
             else:
                 doc += ii.name
             path[ii.typ] += [('%s:%s' % (i.app_name, ii.name), doc, ii.chcs)]
