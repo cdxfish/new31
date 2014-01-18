@@ -35,7 +35,7 @@ img {
 
 html {
     cursor: url("/static/images/cursor.ico"), auto;
-    width: 98%;
+    width: 92%;
     margin: 0 auto;
     min-height: 100%;
 }
@@ -293,6 +293,7 @@ input:focus,textarea:focus {
     padding-top: 5px;
     padding-bottom: 5px;
 }
+
 .tdpd5 tr td {
     padding: 5px;
 }
@@ -370,7 +371,6 @@ input:focus,textarea:focus {
     float: left;
     margin-bottom: 20px;
     background: url(/static/shop/images/menu.jpg) bottom repeat-x;
-    height: 30px;
     line-height: 22px;
     margin-top: 15px;
 }
@@ -735,13 +735,8 @@ input:focus,textarea:focus {
 }
 
 #main #ft {
-    width: 98%;
     font-size: 14px;
     padding-bottom: 5px;
-    position:absolute;
-    bottom:0px;
-    /*left: 0px;*/
-    margin: 0 auto;
 }
 
 #main #ft #foot {
@@ -795,46 +790,27 @@ input:focus,textarea:focus {
     border-radius: 3px;
 }
 
-.pinBox .styp2 {
-    width: 450px;
-    min-height: 450px;
-    *height: 450px
-}
-
-.pinBox .styp3 {
+.pinBox img {
     width: 100%;
-    min-height: 750px;
-    *height: 750px
+    height: 100%;
+    padding-bottom:5px;
 }
 
-.pinBox .pinSide2 {
-    width: 400px;
-    float: right;
-}
-
-.pinBox .pinSide2 .pinInfo {
-    float: left;
-}
-
-.pinBox .pinSide3 {
+.pinBox .pinSide {
     float: left;
     margin-top: 4px;
     min-height: 165px;
-    *height: 165px;
-}
-
-.pinBox .pinSide2, .pinBox .pinSide3 {
     background: #FFFFFF;
     padding: 15px;
     border-radius: 3px;
     border: 1px solid #cc9866;
 }
 
-.pinBox .pinSide3 .pinInfo {
+.pinBox .pinSide .pinInfo {
     float: right;
 }
 
-.pinBox .pinSide2 .pinDes, .pinBox .pinSide3 .pinDes {
+.pinBox .pinSide .pinDes {
     width: 100%;
     float: left;
     color: #999;
@@ -842,11 +818,10 @@ input:focus,textarea:focus {
     text-indent: 0;
 }
 
-.pinBox .pinSide3 .pinDes {
-    white-space: nowrap;
+/*.pinBox .pinSide .pinDes {
     overflow: hidden;
 }
-
+*/
 .pinBox .pinInfo {
     color: #999;
     width: 100%;

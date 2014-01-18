@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"padding-t",
+				"padding-bottom"
+			],
+			[
 				"mar",
 				"margin"
 			],
@@ -108,18 +112,18 @@
 	"buffers":
 	[
 		{
-			"file": "wechat/views.py",
+			"file": "wechat/urls.py",
 			"settings":
 			{
-				"buffer_size": 1289,
+				"buffer_size": 293,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "wechat/templates/wechatqueryord.htm",
+			"file": "wechat/templates/wechattag.htm",
 			"settings":
 			{
-				"buffer_size": 1503,
+				"buffer_size": 1740,
 				"line_ending": "Windows"
 			}
 		},
@@ -127,7 +131,15 @@
 			"file": "wechat/templates/wechat.base.htm",
 			"settings":
 			{
-				"buffer_size": 4652,
+				"buffer_size": 4653,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "item/models.py",
+			"settings":
+			{
+				"buffer_size": 5406,
 				"line_ending": "Windows"
 			}
 		},
@@ -135,15 +147,7 @@
 			"file": "wechat/static/wechat/css/css.css",
 			"settings":
 			{
-				"buffer_size": 12881,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "wechat/urls.py",
-			"settings":
-			{
-				"buffer_size": 293,
+				"buffer_size": 12465,
 				"line_ending": "Windows"
 			}
 		}
@@ -183,11 +187,16 @@
 	},
 	"file_history":
 	[
+		"/F/django/new31/wechat/urls.py",
+		"/F/django/new31/wechat/views.py",
+		"/F/django/new31/wechat/templates/wechatqueryord.htm",
+		"/F/django/new31/wechat/templates/wechat.base.htm",
+		"/F/django/new31/new31/settings.py",
+		"/F/django/django-xadmin/xadmin/util.py",
+		"/F/django/new31/wechat/static/wechat/css/css.css",
 		"/F/django/new31/shop/static/shop/css/css.css",
 		"/F/django/new31/shop/templates/shop.base.htm",
 		"/F/django/littlesnail/littesnail/views.py",
-		"/F/django/new31/wechat/urls.py",
-		"/F/django/new31/new31/settings.py",
 		"/F/django/new31/new31/func.py",
 		"/F/node/app.js",
 		"/F/django/new31/cart/static/cart/js/cart.configuration.js",
@@ -305,12 +314,7 @@
 		"/F/django/new31/spec/views.py",
 		"/F/django/new31/tag/__init__.py",
 		"/F/django/new31/tag/admin.py",
-		"/F/django/new31/tag/decorator.py",
-		"/F/django/new31/tag/models.py",
-		"/F/django/new31/tag/urls.py",
-		"/F/django/new31/tag/views.py",
-		"/F/django/new31/upload/__init__.py",
-		"/F/django/new31/upload/admin.py"
+		"/F/django/new31/tag/decorator.py"
 	],
 	"find":
 	{
@@ -382,146 +386,11 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "wechat/views.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1289,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1186,
-								1186
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/Python/Python.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 374.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "wechat/templates/wechatqueryord.htm",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1503,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								113,
-								113
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "wechat/templates/wechat.base.htm",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4652,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4630,
-								4630
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1301.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "wechat/static/wechat/css/css.css",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 12881,
-						"regions":
-						{
-							"bookmarks":
-							{
-								"flags": 144,
-								"icon": "bookmark",
-								"regions":
-								[
-									[
-										449,
-										449
-									]
-								],
-								"scope": "bookmarks"
-							}
-						},
-						"selection":
-						[
-							[
-								10419,
-								10419
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/CSS/CSS.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 12308.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
 					"file": "wechat/urls.py",
 					"semi_transient": false,
 					"settings":
@@ -533,18 +402,142 @@
 						"selection":
 						[
 							[
-								231,
-								244
+								170,
+								170
 							]
 						],
 						"settings":
 						{
-							"encoding_helper_encoding": "UTF-8",
+							"encoding_helper_encoding": "cp936",
 							"origin_encoding": "ASCII",
 							"syntax": "Packages/Python/Python.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "wechat/templates/wechattag.htm",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1740,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								290,
+								290
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 170.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "wechat/templates/wechat.base.htm",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4653,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2502,
+								2502
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 510.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "item/models.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5406,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1902,
+								1910
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1105.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "wechat/static/wechat/css/css.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12465,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								458,
+								458
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "cp936",
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 255.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
