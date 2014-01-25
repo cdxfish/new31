@@ -159,7 +159,25 @@
 	},
 	"file_history":
 	[
+		"/F/Django/new31/app_new31.sql",
+		"/F/Django/new31/new31.sql",
+		"/F/Django/new31/data.sql",
+		"/F/Desktop/news.sql",
+		"/F/Desktop/data.sql",
+		"/F/Desktop/201401252147.sql",
+		"/F/django/new31/purview/models.py",
+		"/F/django/new31/area/models.py",
+		"/F/django/new31/area/views.py",
+		"/F/django/new31/data.sql",
+		"/F/django/new31/new31/settings.py",
+		"/F/django/new31/area/admin.py",
+		"/F/django/new31/purview/admin.py",
+		"/F/django/new31/upload/views.py",
+		"/F/Desktop/new31.sql",
 		"/F/django/new31/20131015.sql",
+		"/F/Django/new31/config.yaml",
+		"/F/django/new31/201401250004.sql",
+		"/F/Desktop/new31 (1).sql",
 		"/F/django/new31/201401240029.sql",
 		"/F/quick3.py",
 		"/F/The-Art-Of-Programming-by-July/ebook/zh/01.0.md",
@@ -185,7 +203,6 @@
 		"/F/django/new31/wechat/urls.py",
 		"/F/django/new31/wechat/views.py",
 		"/F/django/new31/wechat/templates/wechatqueryord.htm",
-		"/F/django/new31/new31/settings.py",
 		"/F/django/django-xadmin/xadmin/util.py",
 		"/F/django/new31/shop/templates/shop.base.htm",
 		"/F/django/littlesnail/littesnail/views.py",
@@ -269,28 +286,11 @@
 		"/F/django/new31/payment/decorator.py",
 		"/F/django/new31/payment/forms.py",
 		"/F/django/new31/payment/models.py",
-		"/F/django/new31/payment/urls.py",
-		"/F/django/new31/payment/views.py",
-		"/F/django/new31/print/__init__.py",
-		"/F/django/new31/print/admin.py",
-		"/F/django/new31/print/models.py",
-		"/F/django/new31/print/urls.py",
-		"/F/django/new31/print/views.py",
-		"/F/django/new31/produce/__init__.py",
-		"/F/django/new31/produce/admin.py",
-		"/F/django/new31/produce/decorator.py",
-		"/F/django/new31/produce/forms.py",
-		"/F/django/new31/produce/models.py",
-		"/F/django/new31/produce/urls.py",
-		"/F/django/new31/produce/views.py",
-		"/F/django/new31/purview/__init__.py",
-		"/F/django/new31/purview/admin.py",
-		"/F/django/new31/purview/middleware.py",
-		"/F/django/new31/purview/models.py"
+		"/F/django/new31/payment/urls.py"
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -308,6 +308,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"InnoDB",
+			"app_new31-",
+			"sub_id",
+			"new31",
 			"ENGINE=MyISAM",
 			"886px",
 			"span",
@@ -347,6 +351,9 @@
 		"regex": false,
 		"replace_history":
 		[
+			"MyISAM",
+			"new31-",
+			"app_new31",
 			"ENGINE=InnoDB",
 			"# coding: UTF-8",
 			" style=\"float:right;\" /",

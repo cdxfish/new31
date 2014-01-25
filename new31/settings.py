@@ -9,7 +9,7 @@ DEBUG = False if 'SERVER_SOFTWARE' in os.environ else True
 
 if DEBUG:
     # local
-    MYSQL_DB = 'new31'
+    MYSQL_DB = 'app_new31'
     MYSQL_USER = 'root'
     MYSQL_PASS = '123456'
     MYSQL_HOST_M = 'localhost'
