@@ -160,6 +160,7 @@
 	"file_history":
 	[
 		"/F/Django/new31/app_new31.sql",
+		"/F/Django/new31/order/views.py",
 		"/F/Django/new31/new31.sql",
 		"/F/Django/new31/data.sql",
 		"/F/Desktop/news.sql",
@@ -285,8 +286,7 @@
 		"/F/django/new31/payment/api/quarter.py",
 		"/F/django/new31/payment/decorator.py",
 		"/F/django/new31/payment/forms.py",
-		"/F/django/new31/payment/models.py",
-		"/F/django/new31/payment/urls.py"
+		"/F/django/new31/payment/models.py"
 	],
 	"find":
 	{
@@ -308,6 +308,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"item",
 			"InnoDB",
 			"app_new31-",
 			"sub_id",
