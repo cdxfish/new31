@@ -42,7 +42,7 @@ def modifyPro(request, sn, s):
 
     return HttpResponse(Msg.objects.dumps(data={
                 'sn': sn,
-                'act': r.getAjaxAct(r.getActByUser(request.user.id, p.act[s]), sn),
+                'act': r.getAjaxAct(r.getActByUser(request.user, p.act[s]), sn),
                 '_act': r.getAjaxAct(p.act[ p.status ], sn),
                 's': _p.status,
                 'sStr': _p.get_status_display(),

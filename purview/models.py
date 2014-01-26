@@ -140,6 +140,7 @@ class Role(models.Model):
             (13, u'副经理'),
             (14, u'会计'),
             (15, u'出纳'),
+            (16, u'现场主管'),
         )
 
     role = models.SmallIntegerField(u'角色', choices=chcs, unique=True)

@@ -30,7 +30,7 @@ def uInfoDr(func):
         from forms import NerUserFrm, BsInfoFrm, PtsFrm, EditUserFrm
         post = request.POST.dict()
 
-        if post['u'] and post['u'] == post['username']:
+        if post.get('u') and post.get('u') == post['username']:
             Frm = EditUserFrm
         else:
             Frm = NerUserFrm

@@ -77,7 +77,7 @@ class Logcs(models.Model):
 
     _chcs = (
                 (0, u'未发', 'logistics:logcsUnsent'),
-                (1, u'编辑', 'logistics:logcsEdit'),
+                (1, u'改送', 'logistics:logcsEdit'),
                 (2, u'已发', 'logistics:logcsShip'),
                 (3, u'拒签', 'logistics:logcsRefused'),
                 (4, u'已签', 'logistics:logcsSign'),

@@ -112,7 +112,7 @@ def modifyLogcs(request, sn, s):
     return HttpResponse(
         Msg.objects.dumps(data={
                 'sn': sn,
-                'act': r.getAjaxAct(r.getActByUser(request.user.id, l.act[s]), sn),
+                'act': r.getAjaxAct(r.getActByUser(request.user, l.act[s]), sn),
                 '_act': r.getAjaxAct(l.act[ l.status ], sn),
                 's': _l.status,
                 'sStr': _l.get_status_display(),

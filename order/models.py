@@ -56,7 +56,7 @@ class Ord(models.Model):
 
     _chcs = (
                 (0, u'新单', 'order:copyOrd'),
-                (1, u'编辑', 'order:editOrd'),
+                (1, u'改单', 'order:editOrd'),
                 (2, u'确认', 'order:confirmOrd'),
                 (3, u'无效', 'order:nullOrd'),
                 (4, u'止单', 'order:stopOrd'),

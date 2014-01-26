@@ -123,7 +123,7 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 311.0,
+		"height": 35.0,
 		"selected_items":
 		[
 			[
@@ -131,12 +131,12 @@
 				"Package Control: Discover Packages→搜索程序包"
 			],
 			[
-				"f",
-				"Format Code"
-			],
-			[
 				"pci",
 				"Package Control: Install Package→安装程序包"
+			],
+			[
+				"f",
+				"File: Revert→还原"
 			]
 		],
 		"width": 632.0
@@ -159,30 +159,34 @@
 	},
 	"file_history":
 	[
-		"/F/Django/new31/app_new31.sql",
-		"/F/Django/new31/order/views.py",
-		"/F/Django/new31/new31.sql",
-		"/F/Django/new31/data.sql",
-		"/F/Desktop/news.sql",
-		"/F/Desktop/data.sql",
-		"/F/Desktop/201401252147.sql",
 		"/F/django/new31/purview/models.py",
-		"/F/django/new31/area/models.py",
-		"/F/django/new31/area/views.py",
-		"/F/django/new31/data.sql",
-		"/F/django/new31/new31/settings.py",
-		"/F/django/new31/area/admin.py",
-		"/F/django/new31/purview/admin.py",
-		"/F/django/new31/upload/views.py",
-		"/F/Desktop/new31.sql",
+		"/F/django/new31/logistics/templates/logistics.htm",
+		"/F/django/new31/finance/static/finance/js/fnc.configuration.js",
+		"/F/django/new31/finance/templates/financeui.htm",
+		"/F/django/new31/order/static/order/js/ord.configuration.js",
+		"/D/Sublime Text 3/Data/Packages/User/Default (Windows).sublime-keymap",
+		"/D/Sublime Text 3/Data/Packages/CodeFormatter/CodeFormatter.sublime-settings",
+		"/D/Sublime Text 3/Data/Packages/User/CodeFormatter.sublime-settings",
+		"/F/django/new31/office/static/office/js/base.js",
+		"/F/django/new31/logistics/static/logistics/js/logistics.configuration.js",
+		"/F/django/new31/finance/views.py",
+		"/F/django/new31/order/models.py",
+		"/F/django/new31/logistics/models.py",
+		"/F/django/new31/purview/views.py",
+		"/F/django/new31/office/templatetags/tags.py",
+		"/F/django/new31/logistics/views.py",
+		"/F/django/new31/order/views.py",
+		"/F/django/new31/produce/decorator.py",
+		"/F/django/new31/produce/models.py",
+		"/F/django/new31/produce/views.py",
+		"/F/django/new31/account/models.py",
+		"/F/django/new31/account/views.py",
+		"/F/django/new31/account/decorator.py",
+		"/D/Sublime Text 3/Data/Packages/User/Preferences.sublime-settings",
 		"/F/django/new31/20131015.sql",
-		"/F/Django/new31/config.yaml",
-		"/F/django/new31/201401250004.sql",
-		"/F/Desktop/new31 (1).sql",
 		"/F/django/new31/201401240029.sql",
 		"/F/quick3.py",
 		"/F/The-Art-Of-Programming-by-July/ebook/zh/01.0.md",
-		"/D/Sublime Text 3/Data/Packages/CodeFormatter/CodeFormatter.sublime-settings",
 		"/D/Sublime Text 3/Data/Packages/EncodingHelper/EncodingHelper.sublime-settings",
 		"/D/Sublime Text 3/Data/Packages/User/EncodingHelper.sublime-settings",
 		"/F/django/new31/shop/static/shop/css/css.css",
@@ -204,6 +208,7 @@
 		"/F/django/new31/wechat/urls.py",
 		"/F/django/new31/wechat/views.py",
 		"/F/django/new31/wechat/templates/wechatqueryord.htm",
+		"/F/django/new31/new31/settings.py",
 		"/F/django/django-xadmin/xadmin/util.py",
 		"/F/django/new31/shop/templates/shop.base.htm",
 		"/F/django/littlesnail/littesnail/views.py",
@@ -213,14 +218,12 @@
 		"/F/django/new31/wechat/models.py",
 		"/F/django/new31/wechat/admin.py",
 		"/F/django/new31/wechat/__init__.py",
-		"/F/django/new31/account/decorator.py",
 		"/D/9-10.py",
 		"/D/account.txt",
 		"/C/Documents and Settings/Administrator/桌面/9-10.py",
 		"/D/Python27/Lib/site-packages/django/contrib/auth/forms.py",
 		"/F/The-Art-Of-Programming-by-July/ebook/code/python/chapter03.py",
 		"/F/django/new31/account/templates/login.htm",
-		"/F/django/new31/account/views.py",
 		"/D/Python27/Lib/site-packages/django/contrib/auth/__init__.py",
 		"/F/The-Art-Of-Programming-by-July/ebook/code/python/chapter02.py",
 		"/D/Python27/Lib/site-packages/django/utils/six.py",
@@ -245,9 +248,7 @@
 		"/F/django/new31/logistics/decorator.py",
 		"/F/django/new31/logistics/forms.py",
 		"/F/django/new31/logistics/middleware.py",
-		"/F/django/new31/logistics/models.py",
 		"/F/django/new31/logistics/urls.py",
-		"/F/django/new31/logistics/views.py",
 		"/F/django/new31/message/__init__.py",
 		"/F/django/new31/message/admin.py",
 		"/F/django/new31/message/decorator.py",
@@ -263,7 +264,6 @@
 		"/F/django/new31/office/forms.py",
 		"/F/django/new31/office/templatetags/__init__.py",
 		"/F/django/new31/office/templatetags/page.py",
-		"/F/django/new31/office/templatetags/tags.py",
 		"/F/django/new31/office/urls.py",
 		"/F/django/new31/office/views.py",
 		"/F/django/new31/order/__init__.py",
@@ -271,9 +271,7 @@
 		"/F/django/new31/order/decorator.py",
 		"/F/django/new31/order/forms.py",
 		"/F/django/new31/order/middleware.py",
-		"/F/django/new31/order/models.py",
 		"/F/django/new31/order/urls.py",
-		"/F/django/new31/order/views.py",
 		"/F/django/new31/payment/__init__.py",
 		"/F/django/new31/payment/admin.py",
 		"/F/django/new31/payment/api/__init__.py",
@@ -286,11 +284,13 @@
 		"/F/django/new31/payment/api/quarter.py",
 		"/F/django/new31/payment/decorator.py",
 		"/F/django/new31/payment/forms.py",
-		"/F/django/new31/payment/models.py"
+		"/F/django/new31/payment/models.py",
+		"/F/django/new31/payment/urls.py",
+		"/F/django/new31/payment/views.py"
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 23.0
 	},
 	"find_in_files":
 	{
@@ -308,11 +308,6 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"item",
-			"InnoDB",
-			"app_new31-",
-			"sub_id",
-			"new31",
 			"ENGINE=MyISAM",
 			"886px",
 			"span",
@@ -352,9 +347,6 @@
 		"regex": false,
 		"replace_history":
 		[
-			"MyISAM",
-			"new31-",
-			"app_new31",
 			"ENGINE=InnoDB",
 			"# coding: UTF-8",
 			" style=\"float:right;\" /",
@@ -414,7 +406,7 @@
 	"project": "new31.sublime-project",
 	"replace":
 	{
-		"height": 62.0
+		"height": 42.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -468,7 +460,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 209.0,
+	"side_bar_width": 149.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
