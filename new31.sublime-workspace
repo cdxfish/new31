@@ -119,6 +119,22 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "new31/settings.py",
+			"settings":
+			{
+				"buffer_size": 8792,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "new31/urls.py",
+			"settings":
+			{
+				"buffer_size": 873,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -159,6 +175,11 @@
 	},
 	"file_history":
 	[
+		"/F/django/new31/new31/urls.py",
+		"/F/django/new31/log/models.py",
+		"/F/django/new31/finance/decorator.py",
+		"/F/django/new31/finance/views.py",
+		"/F/django/new31/payment/models.py",
 		"/F/django/new31/purview/models.py",
 		"/F/django/new31/logistics/templates/logistics.htm",
 		"/F/django/new31/finance/static/finance/js/fnc.configuration.js",
@@ -169,7 +190,6 @@
 		"/D/Sublime Text 3/Data/Packages/User/CodeFormatter.sublime-settings",
 		"/F/django/new31/office/static/office/js/base.js",
 		"/F/django/new31/logistics/static/logistics/js/logistics.configuration.js",
-		"/F/django/new31/finance/views.py",
 		"/F/django/new31/order/models.py",
 		"/F/django/new31/logistics/models.py",
 		"/F/django/new31/purview/views.py",
@@ -238,7 +258,6 @@
 		"/F/django/new31/jinja2/loaders.py",
 		"/F/django/new31/jinja2/environment.py",
 		"/F/django/new31/payment/api/abctransfer.py",
-		"/F/django/new31/log/models.py",
 		"/F/django/new31/payment/api/alipay.py",
 		"/F/django/new31/payment/api/monthly.py",
 		"/F/django/new31/log/urls.py",
@@ -258,7 +277,6 @@
 		"/F/django/new31/new31/__init__.py",
 		"/F/django/new31/new31/cls.py",
 		"/F/django/new31/new31/decorator.py",
-		"/F/django/new31/new31/urls.py",
 		"/F/django/new31/new31/wsgi.py",
 		"/F/django/new31/office/__init__.py",
 		"/F/django/new31/office/forms.py",
@@ -284,9 +302,7 @@
 		"/F/django/new31/payment/api/quarter.py",
 		"/F/django/new31/payment/decorator.py",
 		"/F/django/new31/payment/forms.py",
-		"/F/django/new31/payment/models.py",
-		"/F/django/new31/payment/urls.py",
-		"/F/django/new31/payment/views.py"
+		"/F/django/new31/payment/urls.py"
 	],
 	"find":
 	{
@@ -363,8 +379,73 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "new31/settings.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8792,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6413,
+								6413
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 2550.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "new31/urls.py",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 873,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								657,
+								657
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "cp936",
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],

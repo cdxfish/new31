@@ -63,19 +63,20 @@ def payFncDr(s):
             sn = int(kwargs['sn'])
             f = Fnc.objects.get(ord__sn=sn)
 
-            pt = f.ord.user.pts.pt
-            try:
-                getattr(f.cod.main(f.ord, request), s)()
-            except Exception, e:
-                return HttpResponse(Msg.objects.dumps(typ='error', msg=u'积分无法累积至帐户。'))
-            else:
-                from log.models import AccountLog
+            if f.ord.user:
+                try:
+                    pt = f.ord.user.pts.pt
+                    getattr(f.cod.main(f.ord, request), s)()
+                except Exception, e:
+                    return HttpResponse(Msg.objects.dumps(typ='error', msg=u'积分无法累积至帐户。'))
+                else:
+                    from log.models import AccountLog
 
-                note = u'订单流程: %d | 积分 %d > %d' % ( sn, pt, f.ord.user.pts.pt )
+                    note = u'订单流程: %d | 积分 %d > %d' % ( sn, pt, f.ord.user.pts.pt )
 
-                AccountLog.objects.update(f.ord.user, request.user, note)
+                    AccountLog.objects.update(f.ord.user, request.user, note)
 
-                return rf
+            return rf
 
         return __func
     return _func
