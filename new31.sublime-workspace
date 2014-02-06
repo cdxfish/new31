@@ -119,22 +119,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "new31/settings.py",
-			"settings":
-			{
-				"buffer_size": 8792,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "new31/urls.py",
-			"settings":
-			{
-				"buffer_size": 873,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -175,6 +159,12 @@
 	},
 	"file_history":
 	[
+		"/F/django/new31/log/views.py",
+		"/F/django/new31/office/views.py",
+		"/F/django/new31/account/models.py",
+		"/F/django/new31/account/forms.py",
+		"/C/Documents and Settings/Administrator/桌面/continent.json",
+		"/F/django/new31/new31/settings.py",
 		"/F/django/new31/new31/urls.py",
 		"/F/django/new31/log/models.py",
 		"/F/django/new31/finance/decorator.py",
@@ -199,7 +189,6 @@
 		"/F/django/new31/produce/decorator.py",
 		"/F/django/new31/produce/models.py",
 		"/F/django/new31/produce/views.py",
-		"/F/django/new31/account/models.py",
 		"/F/django/new31/account/views.py",
 		"/F/django/new31/account/decorator.py",
 		"/D/Sublime Text 3/Data/Packages/User/Preferences.sublime-settings",
@@ -228,7 +217,6 @@
 		"/F/django/new31/wechat/urls.py",
 		"/F/django/new31/wechat/views.py",
 		"/F/django/new31/wechat/templates/wechatqueryord.htm",
-		"/F/django/new31/new31/settings.py",
 		"/F/django/django-xadmin/xadmin/util.py",
 		"/F/django/new31/shop/templates/shop.base.htm",
 		"/F/django/littlesnail/littesnail/views.py",
@@ -261,7 +249,6 @@
 		"/F/django/new31/payment/api/alipay.py",
 		"/F/django/new31/payment/api/monthly.py",
 		"/F/django/new31/log/urls.py",
-		"/F/django/new31/log/views.py",
 		"/F/django/new31/logistics/__init__.py",
 		"/F/django/new31/logistics/admin.py",
 		"/F/django/new31/logistics/decorator.py",
@@ -283,7 +270,6 @@
 		"/F/django/new31/office/templatetags/__init__.py",
 		"/F/django/new31/office/templatetags/page.py",
 		"/F/django/new31/office/urls.py",
-		"/F/django/new31/office/views.py",
 		"/F/django/new31/order/__init__.py",
 		"/F/django/new31/order/admin.py",
 		"/F/django/new31/order/decorator.py",
@@ -300,9 +286,7 @@
 		"/F/django/new31/payment/api/points.py",
 		"/F/django/new31/payment/api/post.py",
 		"/F/django/new31/payment/api/quarter.py",
-		"/F/django/new31/payment/decorator.py",
-		"/F/django/new31/payment/forms.py",
-		"/F/django/new31/payment/urls.py"
+		"/F/django/new31/payment/decorator.py"
 	],
 	"find":
 	{
@@ -379,73 +363,8 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "new31/settings.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8792,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6413,
-								6413
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": -0.0,
-						"translation.y": 2550.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "new31/urls.py",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 873,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								657,
-								657
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "cp936",
-							"origin_encoding": "ASCII",
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
