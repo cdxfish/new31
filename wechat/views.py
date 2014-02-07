@@ -7,7 +7,7 @@ import hashlib
 # Create your views here.
 
 def responseMsg(request):
-
+    u"""微信消息入口"""
 
     return HttpResponse('responseMsg')
 
@@ -36,13 +36,8 @@ def checkSignature(request):
 
 def wechatShowTag(request, tag):
     u"""微信客户端标签页"""
-    from tag.views import TagSrch
     from item.models import Item
 
-    tagsCls = TagSrch.tagsCls
-
-    # items = sort(TagSrch(request).show(tag))
-    items = TagSrch(request).show(tag)
     items = Item.objects.getShowByTag(tag)
 
     return render_to_response('wechattag.htm', locals(), context_instance=RequestContext(request))
