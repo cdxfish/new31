@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.db import models
 from django.contrib.auth.models import User
 import json
@@ -13,7 +13,7 @@ class msgManager(models.Manager):
             'success': 'success',
             'info': 'info',
             'debug': 'debug',
-            
+
         }
 
     def read(self, *ids):

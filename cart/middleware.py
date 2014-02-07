@@ -1,7 +1,7 @@
-#coding:utf-8
+# coding: UTF-8
 
 class CartMiddleware:
-    
+
     def process_request(self, request):
         from views import CartSess
 

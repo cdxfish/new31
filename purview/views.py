@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 u"""权限"""
 from django.shortcuts import render_to_response, redirect
 from django.contrib import messages
@@ -60,11 +60,11 @@ class URLPurview:
 
         if self.request.domElement.view_name in self.purview: #进行权限页面对照,确认当前页面是否需要权限判定
             if self.request.user.is_authenticated() and self.request.user.is_staff:
-            
+
                 try:
                     #用户可进入的页面权限集
                     if not self.request.user.is_superuser and \
-                        not self.request.domElement.view_name in Role.objects.getPathByUser(self.request.user): 
+                        not self.request.domElement.view_name in Role.objects.getPathByUser(self.request.user):
                             return self.error()
 
                     #页面元素加持, 获得当前页面工具栏按钮

@@ -281,6 +281,10 @@ input:focus,textarea:focus {
     float: left;
 }
 
+.fr {
+    float: right;
+}
+
 .w100 {
     width: 100%;
 }
@@ -448,10 +452,20 @@ input:focus,textarea:focus {
 #main #middle .lsv {
     float: left;
     padding-bottom: 15px;
+    padding: 2px;
 }
 
-#main #middle .lsv img {
+#main #middle .lsv a {
+    float: left;
     padding: 2px;
+}
+
+#main #middle .lsv a.fr {
+    float: right;
+}
+
+#main #middle .lsv a:hover {
+    border: none;
 }
 
 #main #middle .more {
@@ -786,7 +800,7 @@ input:focus,textarea:focus {
 
 .viewDown {
     background: url(/static/images/untitled.gif) no-repeat 330px 15px;
-    padding-left: 350px;
+    padding-left: 320px;
     line-height: 40px
 }
 
@@ -823,7 +837,7 @@ input:focus,textarea:focus {
 }
 
 .pinBox .pinSide2 {
-    width: 400px;
+    width: 396px;
     float: right;
 }
 
@@ -898,6 +912,10 @@ input:focus,textarea:focus {
     float: left;
     display: block;
     *height: 30px;
+}
+
+*.pinBox .tags ul li a{
+    white-space:nowrap;
 }
 
 .pinBox .vote {

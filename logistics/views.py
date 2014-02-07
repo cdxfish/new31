@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 u"""物流"""
 from django.shortcuts import render_to_response, redirect
 from django.core.urlresolvers import reverse
@@ -77,7 +77,7 @@ def logcsSub(request):
     from models import Logcs
     from cart.views import CartSess
     from finance.views import FncSess
-    
+
     sn = OrdSess(request).sess['sn']
 
     logcs = Logcs.objects.get(ord=sn)
@@ -104,16 +104,16 @@ def modifyLogcs(request, sn, s):
 
     s = int(s)
     l = Logcs.objects.get(ord__sn=sn)
-    
+
     _l = Logcs.objects.cStatus(sn, s)
 
     r = Role.objects
 
     return HttpResponse(
         Msg.objects.dumps(data={
-                'sn': sn, 
-                'act': r.getAjaxAct(r.getActByUser(request.user.id, l.act[s]), sn), 
-                '_act': r.getAjaxAct(l.act[ l.status ], sn), 
+                'sn': sn,
+                'act': r.getAjaxAct(r.getActByUser(request.user, l.act[s]), sn),
+                '_act': r.getAjaxAct(l.act[ l.status ], sn),
                 's': _l.status,
                 'sStr': _l.get_status_display(),
                 'obj': 'logcs'
@@ -139,7 +139,7 @@ def logcsEdit(request, sn, s):
     FncSess(request).copy(sn)
 
     OrdSess(request).cpyOrd(sn)
-    
+
     return redirect('logistics:logcsEditFrm')
 
 @logcsDr(1)
@@ -169,7 +169,7 @@ def logcsStop(request, sn, s):
     # from order.models import Ord
     # from finance.models import Fnc
     from produce.models import Pro
-    
+
     # Logcs.objects.stop(sn)
     # Ord.objects.stop(sn)
     # Fnc.objects.stop(sn)
@@ -260,20 +260,20 @@ class LogcSess(BsSess):
             signID = SignTime.objects.default().id
         except:
             signID = 0
-        
+
         self.frmt = {
-                            'dlvr': dlvrID, 
-                            'consignee': u'', 
-                            'area': areaID, 
-                            'address': u'', 
-                            'tel': u'', 
-                            'date': u'%s' % datetime.date.today(), 
+                            'dlvr': dlvrID,
+                            'consignee': u'',
+                            'area': areaID,
+                            'address': u'',
+                            'tel': u'',
+                            'date': u'%s' % datetime.date.today(),
                             'time': signID,
                             'note': u'',
-                        } 
+                        }
 
         super(LogcSess, self).__init__(request)
-        
+
 
     def chkDate(self):
         date = time.strptime(self.sess['date'], u'%Y-%m-%d')
@@ -286,7 +286,7 @@ class LogcSess(BsSess):
 
 
     def getObj(self):
-        
+
         from deliver.models import Deliver
         from signtime.models import SignTime
         from area.models import Area
@@ -305,7 +305,7 @@ class LogcSess(BsSess):
         from signtime.models import SignTime
 
         oLogcs = Logcs.objects.get(ord__sn=sn)
- 
+
         areas = oLogcs.area.split(' - ')
 
         try:
@@ -332,7 +332,7 @@ class LogcSess(BsSess):
 
 from order.views import OrdSerch
 class LogcsSerch(OrdSerch):
-    """ 
+    """
         订单基本信息类
 
         存储于seesion数据的操作类
@@ -360,7 +360,7 @@ class LogcsSerch(OrdSerch):
 from purview.views import BsPur
 class LogcsPur(BsPur):
     """
-        首先获取当前角色可进行的订单操作权限. 
+        首先获取当前角色可进行的订单操作权限.
 
         其后获取订单的可选操作. 两者进行交集
 
@@ -374,7 +374,7 @@ class LogcsPur(BsPur):
 
     def beMixed(self):
         from forms import AdvFrm
-        
+
         for i in self.oList:
             if i.logcs.status < 2:
                 if 'logistics:cDman' in self.role or self.request.user.is_superuser:

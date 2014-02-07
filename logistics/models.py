@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.db import models
 from datetime import datetime
 # Create your models here.
@@ -77,11 +77,11 @@ class Logcs(models.Model):
 
     _chcs = (
                 (0, u'未发', 'logistics:logcsUnsent'),
-                (1, u'编辑', 'logistics:logcsEdit'),
-                (2, u'已发', 'logistics:logcsShip'), 
-                (3, u'拒签', 'logistics:logcsRefused'), 
-                (4, u'已签', 'logistics:logcsSign'), 
-                (5, u'止送', 'logistics:logcsStop'), 
+                (1, u'改送', 'logistics:logcsEdit'),
+                (2, u'已发', 'logistics:logcsShip'),
+                (3, u'拒签', 'logistics:logcsRefused'),
+                (4, u'已签', 'logistics:logcsSign'),
+                (5, u'止送', 'logistics:logcsStop'),
         )
     chcs= tuple((i[0],i[1]) for i in _chcs)
 
@@ -133,6 +133,6 @@ class Logcs(models.Model):
 
     def __unicode__(self):
         return u"%s - [ %s ][ %s  %s - %s ][ %s ][ %s ]" % ( self.ord, self.consignee, self.date, self.stime, self.etime, self.tel, self.dman )
-        
-    # class Meta: 
-        # verbose_name = u'订单物流信息' 
+
+    # class Meta:
+        # verbose_name = u'订单物流信息'

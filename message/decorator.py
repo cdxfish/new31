@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from functools import wraps
 from models import Msg
 from django.http import HttpResponse

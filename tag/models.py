@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.db import models
 
 # Create your models here.
@@ -17,12 +17,12 @@ class tagManager(models.Manager):
         return self.select_related().filter(onl=True)
 
     def getByRandom(self):
-        
+
         return self.select_related().filter(onl=True).order_by('?')
 
 
 class Tag(models.Model):
-    
+
     tag = models.CharField(u'标签', max_length=60, unique=True)
     onl = models.BooleanField(u'上线', default=True)
     objects = tagManager()

@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
@@ -26,7 +26,7 @@ def cart(request):
 
 @login_required
 def cnsgn(request):
-    u"""收货人信息"""    
+    u"""收货人信息"""
     from logistics.forms import logcsFrm
     from finance.forms import fncFrm
 
@@ -107,15 +107,15 @@ def cNum(request, mark, num):
 
 from new31.cls import BsSess
 class CartSess(BsSess):
-    """ 
+    """
         购物车相关
 
-        request.session['items'] 
+        request.session['items']
 
         用于存储购物车中商品信息
         其数据格式为:
         [
-            { 'mark':1, 'itemID':1, 'specID':1, 'num':1 }, 
+            { 'mark':1, 'itemID':1, 'specID':1, 'num':1 },
             { 'mark':2, 'itemID':2, 'specID':2, 'num':2 },
             .........
         ]
@@ -155,7 +155,7 @@ class CartSess(BsSess):
                 'num': 1,
         }
 
-        self.sess[i['mark']] = i 
+        self.sess[i['mark']] = i
 
         return self._set()
 
@@ -215,7 +215,7 @@ class CartSess(BsSess):
 
 
     def total(self):
- 
+
         return self.show()['total']
 
     def chngItem(self):
@@ -245,11 +245,11 @@ class CartSess(BsSess):
         return {
                 'mark': i['mark'],
                 'item': item,
-                'spec': spec, 
-                'fee': fee, 
-                'nfee': nfee, 
-                'num': i['num'], 
-                'dis': dis, 
+                'spec': spec,
+                'fee': fee,
+                'nfee': nfee,
+                'num': i['num'],
+                'dis': dis,
                 'total': frMtFee(nfee * int(i['num']))
             }
 
@@ -276,5 +276,5 @@ class CartSess(BsSess):
                                 'disID': Dis.objects.get(dis=i.dis).id,
                                 'num': i.num,
                     }
-        
+
         return self._set()

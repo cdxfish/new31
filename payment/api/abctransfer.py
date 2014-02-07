@@ -1,4 +1,4 @@
-#coding:utf-8
+﻿# coding: UTF-8
 u"""农行转账"""
 
 class Main(object):

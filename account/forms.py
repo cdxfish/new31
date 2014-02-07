@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 import re
@@ -48,8 +48,8 @@ class NerUserFrm(forms.ModelForm):
         username = self.cleaned_data['username']
 
         if not re.match(BsInfo.ure, username):
-
             raise forms.ValidationError(u'请填写正确的手机号码!')
+
         return username
 
     def clean_last_name(self):

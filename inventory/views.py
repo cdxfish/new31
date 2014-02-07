@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 u"""备货"""
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -93,7 +93,7 @@ class InvSrch(object):
 
     """
     def __init__(self, request):
-        
+
 
         self.request = request
         date = self.request.GET.get('s', '%s' % datetime.date.today())
@@ -111,7 +111,7 @@ class InvSrch(object):
 from purview.views import BsPur
 class InvPur(BsPur):
     """
-        首先获取当前角色可进行的订单操作权限. 
+        首先获取当前角色可进行的订单操作权限.
 
         其后获取订单的可选操作. 两者进行交集
 

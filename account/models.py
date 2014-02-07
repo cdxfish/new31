@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -109,7 +109,7 @@ class BsInfo(models.Model):
     sex = models.SmallIntegerField(u'性别', default=0, choices=sexs)
     typ = models.SmallIntegerField(u'类型', default=0, choices=typs)
 
-    ure = ur'[1][3|4|5|8][0-9]\d{8}'
+    ure = ur'[1][3|4|5|8][0-9]\d{8}$'
 
     objects = bsInfoManager()
 

@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.conf.urls import patterns, url, include
 from django.core.urlresolvers import reverse

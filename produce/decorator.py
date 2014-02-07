@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.contrib import messages
 from django.http import HttpResponse
 from new31.func import rdrtBck

@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.http import HttpResponse
 import json, datetime
 
@@ -34,9 +34,9 @@ class BsSess(object):
         self.sess = d
 
         return self
-        
+
     def _set(self):
-        
+
         return self.set(self.sess)
 
     def setByDict(self, d):

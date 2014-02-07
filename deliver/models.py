@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.db import models
 
 # Create your models here.
@@ -7,7 +7,7 @@ class dlvrManager(models.Manager):
     def getDlvrById(self, id = ''):
 
         return self.select_related().get(onl=True, id=id)
-        
+
     def default(self):
 
         return self.select_related().filter(onl=True)[0]

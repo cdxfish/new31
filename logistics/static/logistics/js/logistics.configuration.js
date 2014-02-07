@@ -1,9 +1,7 @@
 $(document).ready(function() {
     logcs.ad().dman();
 
-    b.act(function(data){
-
-    })
+    b.act(function(data){});
 
 });
 

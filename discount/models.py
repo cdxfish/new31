@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.db import models
 
 
@@ -21,7 +21,7 @@ class disManager(models.Manager):
 
         return self.select_related().get(itemfee__spec__id=id, itemfee__typ=0, onl=True)
 
-    
+
 class Dis(models.Model):
     chcs = (
             (1.0, u'原价'),

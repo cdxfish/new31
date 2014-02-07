@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 u"""生产"""
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
@@ -35,15 +35,15 @@ def modifyPro(request, sn, s):
     from purview.models import Role
 
     s = int(s)
-    
+
     r = Role.objects
     p = Pro.objects.get(id=sn)
     _p = Pro.objects.cStatus(sn, s)
 
     return HttpResponse(Msg.objects.dumps(data={
-                'sn': sn, 
-                'act': r.getAjaxAct(r.getActByUser(request.user.id, p.act[s]), sn), 
-                '_act': r.getAjaxAct(p.act[ p.status ], sn), 
+                'sn': sn,
+                'act': r.getAjaxAct(r.getActByUser(request.user, p.act[s]), sn),
+                '_act': r.getAjaxAct(p.act[ p.status ], sn),
                 's': _p.status,
                 'sStr': _p.get_status_display(),
                 'obj': 'pro'
@@ -54,43 +54,43 @@ def modifyPro(request, sn, s):
 @proDr
 @msgPushDr
 def nullPro(request, sn, s):
-    u"""生产状态修改-> 生产未产"""    
+    u"""生产状态修改-> 生产未产"""
 
     return modifyPro(request=request, sn=sn, s=s)
-   
+
 @proDr
 @msgPushDr
 @msgPushToRoleDr(-1, 11)
 def requirePro(request, sn, s):
-    u"""生产状态修改-> 生产产求"""    
+    u"""生产状态修改-> 生产产求"""
 
     return modifyPro(request=request, sn=sn, s=s)
-  
+
 @proDr
 @msgPushDr
 def duringPro(request, sn, s):
-    u"""生产状态修改-> 生产产中"""    
+    u"""生产状态修改-> 生产产中"""
 
     return modifyPro(request=request, sn=sn, s=s)
 
 @proDr
 @msgPushDr
 def refusePro(request, sn, s):
-    u"""生产状态修改-> 生产拒产"""    
+    u"""生产状态修改-> 生产拒产"""
 
     return modifyPro(request=request, sn=sn, s=s)
 
 @proDr
 @msgPushDr
 def readyPro(request, sn, s):
-    u"""生产状态修改-> 生产已产"""    
+    u"""生产状态修改-> 生产已产"""
 
     return modifyPro(request=request, sn=sn, s=s)
 
 
 from order.views import OrdSerch
 class ProSerch(OrdSerch):
-    """ 
+    """
         工厂订单搜索类
 
         继承于基本订单搜索类
@@ -129,7 +129,7 @@ class ProSerch(OrdSerch):
 from purview.views import BsPur
 class ProPur(BsPur):
     """
-        首先获取当前角色可进行的订单操作权限. 
+        首先获取当前角色可进行的订单操作权限.
 
         其后获取订单的可选操作. 两者进行交集.
 

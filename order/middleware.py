@@ -1,7 +1,7 @@
-#coding:utf-8
+# coding: UTF-8
 
 class OrdMiddleware:
-    
+
     def process_request(self, request):
         from views import OrdSess
 

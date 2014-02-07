@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 u"""订单"""
 from django.shortcuts import render_to_response, redirect
 from django.core.urlresolvers import reverse
@@ -23,11 +23,12 @@ import time, datetime, re
 def ords(request):
     u"""订单"""
     from forms import OrdSrchFrm
-    from logistics.views import KpChng
+    from logistics.views import LogcsPur, KpChng
 
     o = OrdSerch(request)
     oList = o.get()
     oList = OrdPur(oList, request).get()
+    oList = LogcsPur(oList, request).get()
     oList = KpChng(oList, request).get()
 
     form = OrdSrchFrm(initial=o.initial)

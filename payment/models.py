@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.db import models
 
 # Create your models here.
@@ -38,13 +38,15 @@ class APIBase(object):
 
     def paid(self):
         u"""订单支付"""
-        self.ord.user.pts.set(self.ord.pro_set.all().pts())
+        if self.ord.user:
+            self.ord.user.pts.set(self.ord.pro_set.all().pts())
 
         return self
 
     def reimburse(self):
         u"""订单退付"""
-        self.ord.user.pts.set(-self.ord.pro_set.all().pts())
+        if self.ord.user:
+            self.ord.user.pts.set(-self.ord.pro_set.all().pts())
 
         return self
 

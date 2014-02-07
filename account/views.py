@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 u"""用户中心"""
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -138,7 +138,7 @@ def newUserFrm(request):
     from forms import NerUserFrm, BsInfoFrm, PtsFrm
     uFrm = NerUserFrm()
     bsFrm = BsInfoFrm()
-    pFrm = PtsFrm(initial={'pt':1000})
+    pFrm = PtsFrm(initial={'pt':0})
 
     return render_to_response('newuser.htm', locals(), context_instance=RequestContext(request))
 

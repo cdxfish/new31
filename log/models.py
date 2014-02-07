@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 from django.db import models
 from django.core.urlresolvers import resolve, reverse
 # Create your models here.
@@ -39,7 +39,7 @@ class OrdLog(models.Model):
     objects = logManager()
 
     def __unicode__(self):
-        return u"%s - [ %s ][ %s ]" % ( self.ord, self.get_typ_display(), self.time )
+        return u"%s - [ %s ]" % ( self.ord, self.time )
 
     class Meta:
         unique_together=(("ord","time"),)

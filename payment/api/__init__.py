@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 import payafter
 import alipay
 import post

@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding: UTF-8
 # Django settings for new31 project.
 import os
 
@@ -9,7 +9,7 @@ DEBUG = False if 'SERVER_SOFTWARE' in os.environ else True
 
 if DEBUG:
     # local
-    MYSQL_DB = 'new31'
+    MYSQL_DB = 'app_new31'
     MYSQL_USER = 'root'
     MYSQL_PASS = '123456'
     MYSQL_HOST_M = 'localhost'
@@ -125,6 +125,7 @@ SECRET_KEY = 'ytb#a#z=avwsbx@9)p*e_!r99b5k$@p0$38a36jid!cl6@05*k'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
+    # 'jinja2.jinja2_loader.Loader',
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
     'django.template.loaders.eggs.Loader',
@@ -179,6 +180,7 @@ djangoMidClass = [
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'jinja2.middleware.tagMiddleware',
 ]
 
 djangoTempContext = [
@@ -212,14 +214,14 @@ for i,v in APPS.items():
     if v:
         djangoMidClass.append(u'%s.middleware.%s' % (i, v))
 
-if not 'SERVER_SOFTWARE' in os.environ:
-    djangoAPPS.append('debug_toolbar')
-    djangoMidClass.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+# if not 'SERVER_SOFTWARE' in os.environ:
+#     djangoAPPS.append('debug_toolbar')
+#     djangoMidClass.append('debug_toolbar.middleware.DebugToolbarMiddleware')
 
-    INTERNAL_IPS = ('127.0.0.1',)
-    DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False,
-}
+#     INTERNAL_IPS = ('127.0.0.1',)
+#     DEBUG_TOOLBAR_CONFIG = {
+#     'INTERCEPT_REDIRECTS': False,
+# }
 
 INSTALLED_APPS = tuple(djangoAPPS)
 
