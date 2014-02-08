@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{% block title %}{% if request.title %}{{ request.title }} {% endif %}{% endblock %} 31客 - 源自欧洲经典口味！</title>
+    <title>{% if request.title %}{{ request.title }} {% endif %}31客 - 源自欧洲经典口味！</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="Keywords" content="{% block keywords %}31客,31客蛋糕,蛋糕{% endblock %}" />
@@ -25,21 +25,9 @@
           <h1>Tel：4000-5927-31</h1>
         </div>
       </div>
-      <div id="container">
-        <div class="col-xs-12">.col-xs-12</div>
-        <div class="col-xs-12">.col-xs-12</div>
-        <div class="col-xs-12">.col-xs-12</div>
-        <div class="col-xs-12">.col-xs-12</div>
-        <div class="col-xs-12">.col-xs-12</div>
-        <div class="col-xs-12">.col-xs-12</div>
-        <div class="col-xs-12">.col-xs-12</div>
-        <div class="col-xs-12">.col-xs-12</div>
-        <div class="col-xs-12">.col-xs-12</div>
-        <div class="col-xs-12">.col-xs-12</div>
-        <div class="col-xs-12">.col-xs-12</div>
-        <div class="col-xs-12">.col-xs-12</div>
+      <div id="middle">
+{% block middle %}{% endblock %}
       </div>
-
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
