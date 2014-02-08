@@ -10,13 +10,9 @@
         <p class="viewDown">向下滚动浏览更多关于:　{{ tag }} 标签商品</p>
         <ul class="pinBox">
 {% for i in items %}
-         <li class="mb30 item">
-         <h1 class="pb25 pl5">{{ forloop.counter|stringformat:"02i" }}. <a href="{% url 'tag:tagShow' i.name|urlencode %}">{{ i.name }}</a></h1>
-            <ul class="fl">
-                {% for ii in i.itemimg_set.getBImgs %}
-                <li class="w100 {% if not forloop.last %}mb30{% endif %}">
-                <img alt="{{ i.name }}" title="{{ i.name }}" data-src="{{ ii.img.url }}" class="styp{{ ii.typ }}" />
-                <div class="pinSide{{ ii.typ }}">
+            <li class="w100 mb30">
+                <img alt="{{ i.name }}" title="{{ i.name }}" data-src="{{ i.itemimg_set.getBImg.img.url }}" class="styp2" />
+                <div class="pinSide2">
                     <h2><a href="{% url 'tag:tagShow' i.name|urlencode %}">{{ i.name }}</a></h2>
                     <p class="pinDes">{{ i.itemdesc_set.getAll.0.desc }}</p>
                     <ul class="pinInfo">
@@ -36,9 +32,6 @@
                         <a class="btn btnbr btnBuy" href="{% url 'tag:getSpec' i.id %}">购买</a>
                     </div>
                 </div>
-                </li>
-                {% endfor %}
-            </ul>
             </li>
 {% endfor %}
         </ul>

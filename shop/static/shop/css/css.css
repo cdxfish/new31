@@ -356,37 +356,51 @@ input:focus,textarea:focus {
 #main .mti {
     width: 100%;
     float: left;
-}
-
-#main .mti a {
-    color: #5b2900;
-    border: none;
-    text-decoration: none;
-    float: left;
-}
-
-#main .mti a:hover {
-    border: none;
-    text-decoration: none;
+    padding-top: 10px;
 }
 
 #main .mti dt {
-    color: #5b2900;
+    /*color: #5b2900;*/
     font-size: 30px;
     float: left;
-    padding-top: 50px;
 }
+
+#main #sl {
+    /*position: relative;*/
+    margin-top:-60px;
+    height: 0px;
+    float: right;
+    padding-right: 5px;
+}
+
+#main #sl #note {
+    text-align: right;
+    padding-right: 40px;
+    position: relative;
+    top:15px;
+}
+
+#main #sl #tel {
+    font-size: 30px;
+    font-family: constantia;
+    font-weight: bold;
+}
+
+
 
 #main .mti dd {
-    width: 150px;
-    height: 86px;
-    position: relative;
     float: right;
-    top: 45px;
-    background: url(/static/shop/images/13741335652678.jpg)
 }
 
-#main .menu {
+#main .mti dd a {
+    margin: 0 5px;
+}
+#main #nav{
+    float: left;
+    width: 100%;
+}
+
+#main #nav .menu {
     width: 100%;
     float: left;
     margin-bottom: 20px;
@@ -397,12 +411,12 @@ input:focus,textarea:focus {
     margin-top: 15px;
 }
 
-#main .menu li {
+#main #nav .menu li {
     float: left;
     padding-right: 20px;
 }
 
-#main .menu li a {
+#main #nav .menu li a {
     display: block;
     width: 72px;
     height: 30px;
@@ -412,8 +426,19 @@ input:focus,textarea:focus {
     padding-left: 20px;
     _border: 0;
 }
+/*#main .mti a {*/
+    /*color: #5b2900;*/
+    /*border: none;*/
+    /*text-decoration: none;*/
+    /*float: left;*/
+/*}*/
 
-#main .menu li a:hover, #main .menu li a.on {
+/*#main .mti a:hover {
+    border: none;
+    text-decoration: none;
+}*/
+
+#main #nav .menu li a:hover, #main #nav .menu li a.on {
     background: url(/static/shop/images/menu_on.jpg) no-repeat;
 }
 
@@ -825,8 +850,8 @@ input:focus,textarea:focus {
 }
 
 .pinBox .styp2 {
-    width: 450px;
-    min-height: 450px;
+    width: 600px;
+    height: 450px;
     *height: 450px
 }
 
@@ -837,7 +862,8 @@ input:focus,textarea:focus {
 }
 
 .pinBox .pinSide2 {
-    width: 396px;
+    width: 246px;
+    /*height: 450px;*/
     float: right;
 }
 
