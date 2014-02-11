@@ -4,6 +4,30 @@
 		"selected_items":
 		[
 			[
+				"mar",
+				"margin-bottom"
+			],
+			[
+				"pa",
+				"padding-right"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"fl",
+				"float"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"re",
+				"request"
+			],
+			[
 				"fon",
 				"font-size"
 			],
@@ -14,10 +38,6 @@
 			[
 				"padding-t",
 				"padding-bottom"
-			],
-			[
-				"mar",
-				"margin"
 			],
 			[
 				"f",
@@ -34,10 +54,6 @@
 			[
 				"try",
 				"try	Try/Except/Else"
-			],
-			[
-				"re",
-				"responseMsg"
 			],
 			[
 				"fun",
@@ -88,10 +104,6 @@
 				"_input_charset"
 			],
 			[
-				"pa",
-				"param"
-			],
-			[
 				"pan",
 				"payment"
 			],
@@ -123,9 +135,13 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 35.0,
+		"height": 392.0,
 		"selected_items":
 		[
+			[
+				"f",
+				"Format Code"
+			],
 			[
 				"Package Control: ",
 				"Package Control: Discover Packages→搜索程序包"
@@ -133,10 +149,6 @@
 			[
 				"pci",
 				"Package Control: Install Package→安装程序包"
-			],
-			[
-				"f",
-				"File: Revert→还原"
 			]
 		],
 		"width": 632.0
@@ -159,12 +171,54 @@
 	},
 	"file_history":
 	[
+		"/F/django/new31/new31/static/js/jquery.scrollLoading-min.js",
+		"/F/django/new31/shop/static/shop/css/css.css",
+		"/F/django/new31/shop/templates/shop.htm",
+		"/F/django/new31/new31/static/js/jquery.sides.js",
+		"/F/django/new31/shop/templates/shop.base.htm",
+		"/F/django/new31/tag/templates/tag.htm",
+		"/F/django/new31/item/models.py",
+		"/F/django/new31/tag/models.py",
+		"/F/django/new31/tag/views.py",
+		"/C/Documents and Settings/Administrator/桌面/jquery.scrollLoading.js",
+		"/F/django/new31/wechat/views.py",
+		"/F/django/new31/wechat/urls.py",
+		"/F/django/new31/wechat/static/wechat/css/css.css",
+		"/F/django/new31/wechat/templates/wechattag.htm",
+		"/F/django/new31/wechat/templates/wechat.base.htm",
+		"/F/django/new31/wechat/static/wechat/js/tag.configuration.js",
+		"/F/django/new31/wechat/decorator.py",
+		"/F/django/new31/wechat/__init__.py",
+		"/F/django/new31/wechat/templates/wechatqueryord.htm",
+		"/F/django/new31/new31/wsgi.py",
+		"/F/django/new31/report/templates/report.htm",
+		"/F/django/new31/report/templates/reportord.htm",
+		"/F/django/new31/new31.sublime-project",
+		"/C/Documents and Settings/Administrator/桌面/examples/line-ajax/index.htm",
+		"/F/django/new31/report/static/report/js/analytics.csv",
+		"/F/django/new31/report/views.py",
+		"/C/Documents and Settings/Administrator/桌面/analytics.csv",
+		"/C/Documents and Settings/Administrator/桌面/js/modules/data.js",
+		"/C/Documents and Settings/Administrator/桌面/js/themes/grid.js",
+		"/C/Documents and Settings/Administrator/桌面/examples/line-ajax/analytics.tsv",
+		"/F/django/new31/report/static/report/js/exporting.js",
+		"/F/django/new31/new31/settings.py",
+		"/F/django/new31/office/templates/office.base.htm",
+		"/C/Documents and Settings/Administrator/桌面/examples/pie-donut/index.htm",
+		"/F/django/new31/report/urls.py",
+		"/F/django/new31/report/admin.py",
+		"/F/django/new31/report/models.py",
+		"/F/django/new31/office/static/office/js/base.js",
+		"/F/django/new31/office/static/office/css/style.css",
+		"/F/delThumbs.bat",
+		"/F/django/new31/new31/templates/404.html",
+		"/F/django/new31/new31/templates/office.base.htm",
+		"/F/django/new31/office/templates/office.htm",
 		"/F/django/new31/log/views.py",
 		"/F/django/new31/office/views.py",
 		"/F/django/new31/account/models.py",
 		"/F/django/new31/account/forms.py",
 		"/C/Documents and Settings/Administrator/桌面/continent.json",
-		"/F/django/new31/new31/settings.py",
 		"/F/django/new31/new31/urls.py",
 		"/F/django/new31/log/models.py",
 		"/F/django/new31/finance/decorator.py",
@@ -178,7 +232,6 @@
 		"/D/Sublime Text 3/Data/Packages/User/Default (Windows).sublime-keymap",
 		"/D/Sublime Text 3/Data/Packages/CodeFormatter/CodeFormatter.sublime-settings",
 		"/D/Sublime Text 3/Data/Packages/User/CodeFormatter.sublime-settings",
-		"/F/django/new31/office/static/office/js/base.js",
 		"/F/django/new31/logistics/static/logistics/js/logistics.configuration.js",
 		"/F/django/new31/order/models.py",
 		"/F/django/new31/logistics/models.py",
@@ -198,34 +251,23 @@
 		"/F/The-Art-Of-Programming-by-July/ebook/zh/01.0.md",
 		"/D/Sublime Text 3/Data/Packages/EncodingHelper/EncodingHelper.sublime-settings",
 		"/D/Sublime Text 3/Data/Packages/User/EncodingHelper.sublime-settings",
-		"/F/django/new31/shop/static/shop/css/css.css",
 		"/F/django/new31/new31/templates/shop.base.htm",
 		"/F/django/new31/new31/static/css/styles.css",
 		"/F/django/new31/new31/static/css/bootstrap.css",
 		"/F/django/new31/new31/static/css/styles.less",
-		"/F/django/new31/shop/templates/shop.htm",
 		"/F/django/new31/new31/static/css/bootstrap-theme.css",
 		"/F/django/olton-Metro-UI-CSS-1c1a921/css/metro-bootstrap.css",
 		"/F/django/new31/new31/static/js/jquery.min.js",
 		"/F/django/olton-Metro-UI-CSS-1c1a921/min/metro-responsive.min.css",
-		"/F/django/new31/item/models.py",
 		"/F/django/olton-Metro-UI-CSS-1c1a921/compress/node_modules/node-minify/index.js",
 		"/F/django/olton-Metro-UI-CSS-1c1a921/min/metro.min.js",
-		"/F/django/new31/wechat/static/wechat/css/css.css",
-		"/F/django/new31/wechat/templates/wechattag.htm",
-		"/F/django/new31/wechat/templates/wechat.base.htm",
-		"/F/django/new31/wechat/urls.py",
-		"/F/django/new31/wechat/views.py",
-		"/F/django/new31/wechat/templates/wechatqueryord.htm",
 		"/F/django/django-xadmin/xadmin/util.py",
-		"/F/django/new31/shop/templates/shop.base.htm",
 		"/F/django/littlesnail/littesnail/views.py",
 		"/F/django/new31/new31/func.py",
 		"/F/node/app.js",
 		"/F/django/new31/cart/static/cart/js/cart.configuration.js",
 		"/F/django/new31/wechat/models.py",
 		"/F/django/new31/wechat/admin.py",
-		"/F/django/new31/wechat/__init__.py",
 		"/D/9-10.py",
 		"/D/account.txt",
 		"/C/Documents and Settings/Administrator/桌面/9-10.py",
@@ -256,41 +298,11 @@
 		"/F/django/new31/logistics/middleware.py",
 		"/F/django/new31/logistics/urls.py",
 		"/F/django/new31/message/__init__.py",
-		"/F/django/new31/message/admin.py",
-		"/F/django/new31/message/decorator.py",
-		"/F/django/new31/message/models.py",
-		"/F/django/new31/message/urls.py",
-		"/F/django/new31/message/views.py",
-		"/F/django/new31/new31/__init__.py",
-		"/F/django/new31/new31/cls.py",
-		"/F/django/new31/new31/decorator.py",
-		"/F/django/new31/new31/wsgi.py",
-		"/F/django/new31/office/__init__.py",
-		"/F/django/new31/office/forms.py",
-		"/F/django/new31/office/templatetags/__init__.py",
-		"/F/django/new31/office/templatetags/page.py",
-		"/F/django/new31/office/urls.py",
-		"/F/django/new31/order/__init__.py",
-		"/F/django/new31/order/admin.py",
-		"/F/django/new31/order/decorator.py",
-		"/F/django/new31/order/forms.py",
-		"/F/django/new31/order/middleware.py",
-		"/F/django/new31/order/urls.py",
-		"/F/django/new31/payment/__init__.py",
-		"/F/django/new31/payment/admin.py",
-		"/F/django/new31/payment/api/__init__.py",
-		"/F/django/new31/payment/api/ccbtransfer.py",
-		"/F/django/new31/payment/api/coupons.py",
-		"/F/django/new31/payment/api/icbctransfer.py",
-		"/F/django/new31/payment/api/payafter.py",
-		"/F/django/new31/payment/api/points.py",
-		"/F/django/new31/payment/api/post.py",
-		"/F/django/new31/payment/api/quarter.py",
-		"/F/django/new31/payment/decorator.py"
+		"/F/django/new31/message/admin.py"
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -308,6 +320,21 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"float",
+			"left",
+			"#main",
+			"//",
+			"data-src",
+			"span",
+			"dt",
+			"h2",
+			"tel",
+			"logo",
+			"\"><",
+			"col-xs-2",
+			"col-xs-12",
+			"col-md-1",
+			"import",
 			"ENGINE=MyISAM",
 			"886px",
 			"span",
@@ -347,6 +374,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"",
 			"ENGINE=InnoDB",
 			"# coding: UTF-8",
 			" style=\"float:right;\" /",
@@ -406,7 +434,7 @@
 	"project": "new31.sublime-project",
 	"replace":
 	{
-		"height": 42.0
+		"height": 62.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -414,6 +442,18 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"wechat/css",
+				"wechat\\static\\wechat\\css\\css.css"
+			],
+			[
+				"wechat/",
+				"wechat\\views.py"
+			],
+			[
+				"wechat",
+				"wechat\\templates\\wechat.base.htm"
+			],
 			[
 				"func",
 				"new31\\func.py"

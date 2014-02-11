@@ -1,21 +1,21 @@
 {% extends "shop.base.htm" %}
 
 {% block middle %}
-                <div id="bner">
-                    <ul>
-                        <li><a href="/" target="_blank"><img src="{{ STATIC_URL }}shop/images/13679842939718.jpg" /></a></li>
-                        <li><a href="/" target="_blank"><img src="{{ STATIC_URL }}shop/images/13743081412997.jpg" /></a></li>
-                        <li><a href="/" target="_blank"><img src="{{ STATIC_URL }}shop/images/13804380515243.jpg" /></a></li>
-                        <li><a href="/" target="_blank"><img src="{{ STATIC_URL }}shop/images/13743081906304.jpg" /></a></li>
-                    </ul>
-                </div>
+  <div id="bner">
+    <ul>
+      <li><a href="/" target="_blank"><img src="{{ STATIC_URL }}shop/images/13679842939718.jpg" /></a></li>
+      <li><a href="/" target="_blank"><img src="{{ STATIC_URL }}shop/images/13743081412997.jpg" /></a></li>
+      <li><a href="/" target="_blank"><img src="{{ STATIC_URL }}shop/images/13804380515243.jpg" /></a></li>
+      <li><a href="/" target="_blank"><img src="{{ STATIC_URL }}shop/images/13743081906304.jpg" /></a></li>
+    </ul>
+  </div>
 
 {% endblock %}
 
 {% block js %}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.sides.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.sides.js"></script>
 {% endblock %}
 
 {% block javascript %}
-            $('#bner ul').sides();
+  $('#bner ul').sides();
 {% endblock %}

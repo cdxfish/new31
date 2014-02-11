@@ -1,7 +1,7 @@
 /*
  *
  * sides 0.0 - jquery幻灯片插件
- * Version 0.0.1
+ * Version 0.0.2
  * @requires jQuery v1.8.3
  *
  * Copyright (c) 2013 leiddx
@@ -41,8 +41,9 @@
                 // 焦点轮换图片容器
                 warper: $('<div>').css({
                     'height': '100%',
-                    'width': '100%',
-                    'overflow': 'hidden'
+                    'width': $this.width(),
+                    'overflow': 'hidden',
+                    'float': 'left'
                 }),
                 // 控制焦点按钮容器
                 num: $('<center>', {
