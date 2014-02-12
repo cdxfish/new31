@@ -23,7 +23,7 @@
                 }
             }
             return {
-                ul: $this.clone().css({
+                ul: $this.css({
                     'height': '100%',
                     'overflow': 'hidden',
                     'list-style': 'none'
@@ -43,7 +43,8 @@
                     'height': '100%',
                     'width': $this.width(),
                     'overflow': 'hidden',
-                    'float': 'left'
+                    'float': 'left',
+                    'position':'relative'
                 }),
                 // 控制焦点按钮容器
                 num: $('<center>', {
@@ -120,7 +121,7 @@
 
                     self.btns[0].addClass('on').css(css.on);
 
-                    $this.after(self.warper.append(self.ul, self.num.append(self.btns))).hide();
+                    $this.after(self.num.append(self.btns)).wrap(self.warper);
 
                     self.ul.css({
                         'width': self.ul.width() * self.site.length

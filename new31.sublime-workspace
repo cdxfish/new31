@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"sc",
+				"scrollLoading"
+			],
+			[
 				"mar",
 				"margin-bottom"
 			],
@@ -131,6 +135,14 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "new31/static/js/jquery.scrollLoading.js",
+			"settings":
+			{
+				"buffer_size": 2481,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -171,16 +183,18 @@
 	},
 	"file_history":
 	[
-		"/F/django/new31/new31/static/js/jquery.scrollLoading-min.js",
-		"/F/django/new31/shop/static/shop/css/css.css",
-		"/F/django/new31/shop/templates/shop.htm",
-		"/F/django/new31/new31/static/js/jquery.sides.js",
 		"/F/django/new31/shop/templates/shop.base.htm",
+		"/F/django/new31/shop/static/shop/js/base.configuration.js",
+		"/F/django/new31/shop/static/shop/css/css.css",
 		"/F/django/new31/tag/templates/tag.htm",
+		"/F/django/new31/new31/static/js/jquery.sides.js",
+		"/C/Documents and Settings/Administrator/桌面/jquery.scrollLoading.js",
+		"/F/django/new31/new31/static/js/jquery.scrollLoading-min.js",
+		"/F/django/new31/tag/templates/tagadmin.htm",
+		"/F/django/new31/shop/templates/shop.htm",
 		"/F/django/new31/item/models.py",
 		"/F/django/new31/tag/models.py",
 		"/F/django/new31/tag/views.py",
-		"/C/Documents and Settings/Administrator/桌面/jquery.scrollLoading.js",
 		"/F/django/new31/wechat/views.py",
 		"/F/django/new31/wechat/urls.py",
 		"/F/django/new31/wechat/static/wechat/css/css.css",
@@ -296,9 +310,7 @@
 		"/F/django/new31/logistics/decorator.py",
 		"/F/django/new31/logistics/forms.py",
 		"/F/django/new31/logistics/middleware.py",
-		"/F/django/new31/logistics/urls.py",
-		"/F/django/new31/message/__init__.py",
-		"/F/django/new31/message/admin.py"
+		"/F/django/new31/logistics/urls.py"
 	],
 	"find":
 	{
@@ -391,8 +403,40 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "new31/static/js/jquery.scrollLoading.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2481,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								749,
+								749
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 75.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
