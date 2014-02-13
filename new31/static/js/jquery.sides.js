@@ -121,7 +121,7 @@
 
                     self.btns[0].addClass('on').css(css.on);
 
-                    $this.after(self.num.append(self.btns)).wrap(self.warper);
+                    $this.wrap(self.warper).after(self.num.append(self.btns));
 
                     self.ul.css({
                         'width': self.ul.width() * self.site.length

@@ -4,6 +4,34 @@
 		"selected_items":
 		[
 			[
+				"img",
+				"imgList"
+			],
+			[
+				"p",
+				"params"
+			],
+			[
+				"wa",
+				"wrapHeight"
+			],
+			[
+				"w",
+				"wrapHeight"
+			],
+			[
+				"sr",
+				"scroll"
+			],
+			[
+				"data",
+				"data-src"
+			],
+			[
+				"o",
+				"offset"
+			],
+			[
 				"sc",
 				"scrollLoading"
 			],
@@ -50,10 +78,6 @@
 			[
 				"min",
 				"min-height"
-			],
-			[
-				"w",
-				"width"
 			],
 			[
 				"try",
@@ -116,10 +140,6 @@
 				"form"
 			],
 			[
-				"p",
-				"param"
-			],
-			[
 				"si",
 				"sign_type"
 			],
@@ -139,8 +159,16 @@
 			"file": "new31/static/js/jquery.scrollLoading.js",
 			"settings":
 			{
-				"buffer_size": 2481,
+				"buffer_size": 3667,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "shop/templates/shop.base.htm",
+			"settings":
+			{
+				"buffer_size": 4260,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -183,11 +211,11 @@
 	},
 	"file_history":
 	[
+		"/F/django/new31/new31/static/js/jquery.sides.js",
 		"/F/django/new31/shop/templates/shop.base.htm",
 		"/F/django/new31/shop/static/shop/js/base.configuration.js",
 		"/F/django/new31/shop/static/shop/css/css.css",
 		"/F/django/new31/tag/templates/tag.htm",
-		"/F/django/new31/new31/static/js/jquery.sides.js",
 		"/C/Documents and Settings/Administrator/桌面/jquery.scrollLoading.js",
 		"/F/django/new31/new31/static/js/jquery.scrollLoading-min.js",
 		"/F/django/new31/tag/templates/tagadmin.htm",
@@ -412,15 +440,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2481,
+						"buffer_size": 3667,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								749,
-								749
+								3578,
+								3578
 							]
 						],
 						"settings":
@@ -431,10 +459,42 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 75.0,
+						"translation.y": 870.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "shop/templates/shop.base.htm",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4260,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1147,
+								1147
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
