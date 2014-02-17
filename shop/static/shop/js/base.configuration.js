@@ -1,14 +1,3 @@
-$(document).ready(function() {
-    $('.date').Zebra_DatePicker({
-        direction: true
-    }); //日期选择控件
-    $('select').jgdDropdown({
-        clsLIExpand: false
-        // selected: 'RS'
-    });
-    $("#middle").scrollLoading(); //异步加载图片
-});
-
 var b = {
 
     // 返回顶部按钮

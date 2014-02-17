@@ -4,20 +4,40 @@
 		"selected_items":
 		[
 			[
+				"w",
+				"wrap"
+			],
+			[
+				"sc",
+				"scrollTop"
+			],
+			[
+				"wa",
+				"wrap"
+			],
+			[
+				"load",
+				"loading"
+			],
+			[
+				"se",
+				"self"
+			],
+			[
+				"s",
+				"scroll"
+			],
+			[
+				"re",
+				"return"
+			],
+			[
 				"img",
 				"imgList"
 			],
 			[
 				"p",
 				"params"
-			],
-			[
-				"wa",
-				"wrapHeight"
-			],
-			[
-				"w",
-				"wrapHeight"
 			],
 			[
 				"sr",
@@ -30,10 +50,6 @@
 			[
 				"o",
 				"offset"
-			],
-			[
-				"sc",
-				"scrollLoading"
 			],
 			[
 				"mar",
@@ -54,10 +70,6 @@
 			[
 				"text",
 				"text-align"
-			],
-			[
-				"re",
-				"request"
 			],
 			[
 				"fon",
@@ -155,22 +167,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "new31/static/js/jquery.scrollLoading.js",
-			"settings":
-			{
-				"buffer_size": 3667,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "shop/templates/shop.base.htm",
-			"settings":
-			{
-				"buffer_size": 4260,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -211,15 +207,23 @@
 	},
 	"file_history":
 	[
-		"/F/django/new31/new31/static/js/jquery.sides.js",
 		"/F/django/new31/shop/templates/shop.base.htm",
-		"/F/django/new31/shop/static/shop/js/base.configuration.js",
-		"/F/django/new31/shop/static/shop/css/css.css",
+		"/F/django/new31/office/templates/office.base.htm",
+		"/F/django/new31/new31/static/js/jquery.sloadimg.js",
+		"/F/django/new31/new31/static/js/jquery.watermark.min.js",
+		"/F/django/new31/shop/templates/shop.htm",
+		"/F/django/new31/new31/static/js/jquery.zebra_datepicker.js",
+		"/C/Documents and Settings/Administrator/桌面/Zebra_Datepicker-master/public/javascript/zebra_datepicker.js",
 		"/F/django/new31/tag/templates/tag.htm",
+		"/F/django/new31/tag/static/tag/js/tag.configuration.js",
+		"/F/django/new31/shop/static/shop/js/base.configuration.js",
+		"/F/django/new31/new31/static/js/sides.js",
+		"/F/django/new31/new31/static/js/jquery.sides.js",
+		"/F/django/new31/new31/static/js/jquery.scrollLoading.js",
+		"/F/django/new31/shop/static/shop/css/css.css",
 		"/C/Documents and Settings/Administrator/桌面/jquery.scrollLoading.js",
 		"/F/django/new31/new31/static/js/jquery.scrollLoading-min.js",
 		"/F/django/new31/tag/templates/tagadmin.htm",
-		"/F/django/new31/shop/templates/shop.htm",
 		"/F/django/new31/item/models.py",
 		"/F/django/new31/tag/models.py",
 		"/F/django/new31/tag/views.py",
@@ -245,7 +249,6 @@
 		"/C/Documents and Settings/Administrator/桌面/examples/line-ajax/analytics.tsv",
 		"/F/django/new31/report/static/report/js/exporting.js",
 		"/F/django/new31/new31/settings.py",
-		"/F/django/new31/office/templates/office.base.htm",
 		"/C/Documents and Settings/Administrator/桌面/examples/pie-donut/index.htm",
 		"/F/django/new31/report/urls.py",
 		"/F/django/new31/report/admin.py",
@@ -331,14 +334,7 @@
 		"/F/django/new31/jinja2/environment.py",
 		"/F/django/new31/payment/api/abctransfer.py",
 		"/F/django/new31/payment/api/alipay.py",
-		"/F/django/new31/payment/api/monthly.py",
-		"/F/django/new31/log/urls.py",
-		"/F/django/new31/logistics/__init__.py",
-		"/F/django/new31/logistics/admin.py",
-		"/F/django/new31/logistics/decorator.py",
-		"/F/django/new31/logistics/forms.py",
-		"/F/django/new31/logistics/middleware.py",
-		"/F/django/new31/logistics/urls.py"
+		"/F/django/new31/payment/api/monthly.py"
 	],
 	"find":
 	{
@@ -360,6 +356,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"src",
+			"self",
 			"float",
 			"left",
 			"#main",
@@ -431,72 +429,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "new31/static/js/jquery.scrollLoading.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3667,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3578,
-								3578
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 870.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "shop/templates/shop.base.htm",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4260,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1147,
-								1147
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				}
 			]
 		}
 	],

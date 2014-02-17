@@ -11,24 +11,18 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.zebra_datepicker.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.debug.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.jgd.dropdown.min.css" />
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.zebra_datepicker.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.dialog.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.debug.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jgd.dropdown.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jgd.dropdown.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}office/js/base.js"></script>
     <script type="text/javascript">
         var csrf = "{% csrf_token %}";
         {% block javascript %}{% endblock %}
     </script>
     {% block js %}{% endblock %}
-<!--[if IE 6]>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/DD_belatedPNG.js"></script>
-    <script type="text/javascript">
-        DD_belatedPNG.fix('img, .logo');
-    </script>
-<![endif]-->
 </head>
 <body>
     <ul id="navMenu">
@@ -169,5 +163,11 @@
     <div id="footer">
       <p>版权所有 &copy; 2012-2013 leiddx，并保留所有权利。</p>
     </div>
+    <!--[if IE 6]>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/DD_belatedPNG.js"></script>
+        <script type="text/javascript">
+            DD_belatedPNG.fix('img, .logo');
+        </script>
+    <![endif]-->
 </body>
 </html>

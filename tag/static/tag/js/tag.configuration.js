@@ -1,22 +1,14 @@
-$(document).ready(function() {
-    t.buy().like();
-});
-
 t = {
     like: function() {
         $(document).on('click', '.btnLike', function() {
             $.dialog.ajax($(this).attr('href'), function(data) {
                 $.dialog.msg('衷心感谢您的喜欢！');
                 $('.count_like_' + data.data.id).text(data.data.like);
-
             });
-
             return false;
         });
-
         return this;
     },
-
     buy: function() {
         $(document).on('click', '.btnBuy', function() {
             $.dialog.ajax($(this).attr('href'), function(data) {
@@ -26,35 +18,21 @@ t = {
                         'class': 'tdpd5'
                     });
                     $.each(data.data, function(i, v) {
-                        table.append(
-                            $('<tr>').append(
-                                $('<td>').text(v.spec), 
-                                $('<td>').text('原价：' + v.fee), 
-                                $('<td>').text('现价：' + v.nfee), 
-                                $('<td>').append(
-                                    $('<a>', {
-                                    'href': '/cart/buy/' + v.id + '/',
-                                    'class': 'btn btnbr'
-                                }).text('购买')
-                                )
-                            )
-                        );
+                        table.append($('<tr>').append($('<td>').text(v.spec), $('<td>').text('原价：' + v.fee), $('<td>').text('现价：' + v.nfee), $('<td>').append($('<a>', {
+                            'href': '/cart/buy/' + v.id + '/',
+                            'class': 'btn btnbr'
+                        }).text('购买'))));
                     });
-
                     return $('<h3>').text('请选择规格').after(table);
-
                 });
             });
-
             return false;
         });
         return this;
     },
-
     // 微博分享
     weiboShare: function() {
         $('<div class="weiboShare"><a href="/weibo/" >微博分享</a></div>').appendTo($("body")).click(function() {
-
             $.dialog.bnMsg({
                 error: false,
                 data: {},
@@ -76,9 +54,7 @@ t = {
             }, {
                 width: 750
             });
-
             return false;
-
         });
         return this;
     }
