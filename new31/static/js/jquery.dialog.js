@@ -91,11 +91,13 @@
 
         center: function() {
             var windowHeight = $(window).outerHeight();
-            var windowouterWidth = $('body').outerWidth();
+            var windowouterWidth = $(window).outerWidth();
             var mOuterHeight = this.msgBox.outerHeight() + 100;
             var mOuterWidth = this.msgBox.outerWidth();
             var topPx = windowHeight < mOuterHeight ? 0 : (windowHeight - mOuterHeight) / 2;
             var leftPx = windowouterWidth < mOuterWidth ? 0 : (windowouterWidth - mOuterWidth) / 2;
+
+            console.log(mOuterWidth, windowouterWidth);
 
             this.msgBox.css({
                 top: topPx + $(window).scrollTop(),
