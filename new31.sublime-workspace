@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"le",
+				"leftPx"
+			],
+			[
+				"m",
+				"mOuterWidth"
+			],
+			[
 				"w",
 				"wrap"
 			],
@@ -207,15 +215,19 @@
 	},
 	"file_history":
 	[
-		"/F/django/new31/shop/templates/shop.base.htm",
 		"/F/django/new31/office/templates/office.base.htm",
+		"/F/django/new31/shop/templates/shop.base.htm",
+		"/F/django/new31/new31/static/css/jquery.jgd.dropdown.min.css",
+		"/F/django/new31/new31/static/js/jquery.jgd.dropdown.min.js",
+		"/F/django/new31/new31/static/js/jquery.dialog.js",
+		"/F/django/new31/tag/static/tag/js/tag.configuration.js",
+		"/F/django/new31/tag/templates/tag.htm",
+		"/F/django/new31/new31/static/js/jquery-1.83.0.min.js",
 		"/F/django/new31/new31/static/js/jquery.sloadimg.js",
 		"/F/django/new31/new31/static/js/jquery.watermark.min.js",
 		"/F/django/new31/shop/templates/shop.htm",
 		"/F/django/new31/new31/static/js/jquery.zebra_datepicker.js",
 		"/C/Documents and Settings/Administrator/桌面/Zebra_Datepicker-master/public/javascript/zebra_datepicker.js",
-		"/F/django/new31/tag/templates/tag.htm",
-		"/F/django/new31/tag/static/tag/js/tag.configuration.js",
 		"/F/django/new31/shop/static/shop/js/base.configuration.js",
 		"/F/django/new31/new31/static/js/sides.js",
 		"/F/django/new31/new31/static/js/jquery.sides.js",
@@ -330,11 +342,7 @@
 		"/D/Python27/Lib/site-packages/django/template/loaders/eggs.py",
 		"/D/Python27/Lib/site-packages/django/template/loaders/filesystem.py",
 		"/D/Python27/Lib/site-packages/django/template/loaders/app_directories.py",
-		"/F/django/new31/jinja2/loaders.py",
-		"/F/django/new31/jinja2/environment.py",
-		"/F/django/new31/payment/api/abctransfer.py",
-		"/F/django/new31/payment/api/alipay.py",
-		"/F/django/new31/payment/api/monthly.py"
+		"/F/django/new31/jinja2/loaders.py"
 	],
 	"find":
 	{
@@ -356,6 +364,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"<span class=",
 			"src",
 			"self",
 			"float",
