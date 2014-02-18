@@ -1,43 +1,79 @@
-{
+﻿{
 	"auto_complete":
 	{
 		"selected_items":
 		[
 			[
-				"pa",
-				"padding-left"
+				"w",
+				"wrap"
+			],
+			[
+				"sc",
+				"scrollTop"
+			],
+			[
+				"wa",
+				"wrap"
+			],
+			[
+				"load",
+				"loading"
+			],
+			[
+				"se",
+				"self"
+			],
+			[
+				"s",
+				"scroll"
 			],
 			[
 				"re",
-				"request"
+				"return"
 			],
 			[
-				"fon",
-				"font-size"
+				"img",
+				"imgList"
 			],
 			[
-				"co",
-				"color"
+				"p",
+				"params"
 			],
 			[
-				"padding-t",
-				"padding-bottom"
+				"sr",
+				"scroll"
+			],
+			[
+				"data",
+				"data-src"
+			],
+			[
+				"o",
+				"offset"
 			],
 			[
 				"mar",
-				"margin"
+				"margin-bottom"
 			],
 			[
-				"f",
+				"pa",
+				"padding-right"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"fl",
 				"float"
+			],
+			[
+				"text",
+				"text-align"
 			],
 			[
 				"min",
 				"min-height"
-			],
-			[
-				"w",
-				"width"
 			],
 			[
 				"try",
@@ -98,10 +134,6 @@
 			[
 				"fro",
 				"form"
-			],
-			[
-				"p",
-				"param"
 			],
 			[
 				"si",
@@ -208,14 +240,33 @@
 	"file_history":
 	[
 		"/F/django/new31/shop/templates/shop.base.htm",
-		"/F/django/new31/wechat/static/wechat/js/tag.configuration.js",
-		"/F/django/new31/wechat/static/wechat/css/css.css",
-		"/F/django/new31/wechat/decorator.py",
+		"/F/django/new31/office/templates/office.base.htm",
+		"/F/django/new31/new31/static/js/jquery.sloadimg.js",
+		"/F/django/new31/new31/static/js/jquery.watermark.min.js",
+		"/F/django/new31/shop/templates/shop.htm",
+		"/F/django/new31/new31/static/js/jquery.zebra_datepicker.js",
+		"/C/Documents and Settings/Administrator/桌面/Zebra_Datepicker-master/public/javascript/zebra_datepicker.js",
+		"/F/django/new31/tag/templates/tag.htm",
+		"/F/django/new31/tag/static/tag/js/tag.configuration.js",
+		"/F/django/new31/shop/static/shop/js/base.configuration.js",
+		"/F/django/new31/new31/static/js/sides.js",
+		"/F/django/new31/new31/static/js/jquery.sides.js",
+		"/F/django/new31/new31/static/js/jquery.scrollLoading.js",
+		"/F/django/new31/shop/static/shop/css/css.css",
+		"/C/Documents and Settings/Administrator/桌面/jquery.scrollLoading.js",
+		"/F/django/new31/new31/static/js/jquery.scrollLoading-min.js",
+		"/F/django/new31/tag/templates/tagadmin.htm",
+		"/F/django/new31/item/models.py",
+		"/F/django/new31/tag/models.py",
+		"/F/django/new31/tag/views.py",
 		"/F/django/new31/wechat/views.py",
 		"/F/django/new31/wechat/urls.py",
-		"/F/django/new31/wechat/__init__.py",
-		"/F/django/new31/wechat/templates/wechat.base.htm",
+		"/F/django/new31/wechat/static/wechat/css/css.css",
 		"/F/django/new31/wechat/templates/wechattag.htm",
+		"/F/django/new31/wechat/templates/wechat.base.htm",
+		"/F/django/new31/wechat/static/wechat/js/tag.configuration.js",
+		"/F/django/new31/wechat/decorator.py",
+		"/F/django/new31/wechat/__init__.py",
 		"/F/django/new31/wechat/templates/wechatqueryord.htm",
 		"/F/django/new31/new31/wsgi.py",
 		"/F/django/new31/report/templates/report.htm",
@@ -230,7 +281,6 @@
 		"/C/Documents and Settings/Administrator/桌面/examples/line-ajax/analytics.tsv",
 		"/F/django/new31/report/static/report/js/exporting.js",
 		"/F/django/new31/new31/settings.py",
-		"/F/django/new31/office/templates/office.base.htm",
 		"/C/Documents and Settings/Administrator/桌面/examples/pie-donut/index.htm",
 		"/F/django/new31/report/urls.py",
 		"/F/django/new31/report/admin.py",
@@ -278,17 +328,14 @@
 		"/F/The-Art-Of-Programming-by-July/ebook/zh/01.0.md",
 		"/D/Sublime Text 3/Data/Packages/EncodingHelper/EncodingHelper.sublime-settings",
 		"/D/Sublime Text 3/Data/Packages/User/EncodingHelper.sublime-settings",
-		"/F/django/new31/shop/static/shop/css/css.css",
 		"/F/django/new31/new31/templates/shop.base.htm",
 		"/F/django/new31/new31/static/css/styles.css",
 		"/F/django/new31/new31/static/css/bootstrap.css",
 		"/F/django/new31/new31/static/css/styles.less",
-		"/F/django/new31/shop/templates/shop.htm",
 		"/F/django/new31/new31/static/css/bootstrap-theme.css",
 		"/F/django/olton-Metro-UI-CSS-1c1a921/css/metro-bootstrap.css",
 		"/F/django/new31/new31/static/js/jquery.min.js",
 		"/F/django/olton-Metro-UI-CSS-1c1a921/min/metro-responsive.min.css",
-		"/F/django/new31/item/models.py",
 		"/F/django/olton-Metro-UI-CSS-1c1a921/compress/node_modules/node-minify/index.js",
 		"/F/django/olton-Metro-UI-CSS-1c1a921/min/metro.min.js",
 		"/F/django/django-xadmin/xadmin/util.py",
@@ -319,26 +366,10 @@
 		"/F/django/new31/jinja2/environment.py",
 		"/F/django/new31/payment/api/abctransfer.py",
 		"/F/django/new31/payment/api/alipay.py",
-		"/F/django/new31/payment/api/monthly.py",
-		"/F/django/new31/log/urls.py",
-		"/F/django/new31/logistics/__init__.py",
-		"/F/django/new31/logistics/admin.py",
-		"/F/django/new31/logistics/decorator.py",
-		"/F/django/new31/logistics/forms.py",
-		"/F/django/new31/logistics/middleware.py",
-		"/F/django/new31/logistics/urls.py",
-		"/F/django/new31/message/__init__.py",
-		"/F/django/new31/message/admin.py",
-		"/F/django/new31/message/decorator.py",
-		"/F/django/new31/message/models.py",
-		"/F/django/new31/message/urls.py",
-		"/F/django/new31/message/views.py",
-		"/F/django/new31/new31/__init__.py",
-		"/F/django/new31/new31/cls.py"
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -400,6 +431,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"",
 			"ENGINE=InnoDB",
 			"# coding: UTF-8",
 			" style=\"float:right;\" /",
@@ -667,7 +699,7 @@
 	"project": "new31.sublime-project",
 	"replace":
 	{
-		"height": 42.0
+		"height": 62.0
 	},
 	"save_all_on_build": true,
 	"select_file":
