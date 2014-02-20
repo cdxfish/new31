@@ -18,10 +18,6 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.debug.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jgd.dropdown.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}office/js/base.js"></script>
-    <script type="text/javascript">
-        var csrf = "{% csrf_token %}";
-        {% block javascript %}{% endblock %}
-    </script>
     {% block js %}{% endblock %}
 </head>
 <body>
@@ -169,5 +165,11 @@
             DD_belatedPNG.fix('img, .logo');
         </script>
     <![endif]-->
+    <script type="text/javascript">
+      var csrf = "{% csrf_token %}";
+      $(document).ready(function() {
+          {% block javascript %}{% endblock %}
+      });
+    </script>
 </body>
 </html>
