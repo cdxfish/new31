@@ -28,8 +28,7 @@
             'width': '100%',
             'height': '100%',
             'background': '#000',
-            'opacity': 0.45,
-            'overflow': 'hidden'
+            'opacity': 0.45
         }),
 
         msgBox: $('<div>').css({
@@ -67,9 +66,7 @@
             var self = this;
 
             $(document).ready(function() {
-                self.body.css({
-                    'height': $(document).height()
-                }).hide().append(self.maskLayer, self.msgBox).appendTo('body').on('click', '.close', function() {
+                self.body.hide().append(self.maskLayer, self.msgBox).appendTo('body').on('click', '.close', function() {
                     self.close();
                 });
             });
@@ -97,14 +94,13 @@
             var topPx = windowHeight < mOuterHeight ? 0 : (windowHeight - mOuterHeight) / 2;
             var leftPx = windowouterWidth < mOuterWidth ? 0 : (windowouterWidth - mOuterWidth) / 2;
 
-            console.log(mOuterWidth, windowouterWidth);
-
             this.msgBox.css({
                 top: topPx + $(window).scrollTop(),
                 left: leftPx
             });
             this.body.css({
-                    'height': $(document).height()
+                    'height': $('body').height(),
+                    'width':$(window).width()
                 });
 
             return this;
@@ -162,8 +158,6 @@
                 url: url,
                 dataType: 'json',
                 success: function(data) {
-                    self.close();
-
                     if (data.typ == 'error') {
                         self.msg(data.msg);
                     } else {

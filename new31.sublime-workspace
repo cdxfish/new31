@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"h",
+				"height"
+			],
+			[
 				"le",
 				"leftPx"
 			],
@@ -175,6 +179,30 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "item/models.py",
+			"settings":
+			{
+				"buffer_size": 5997,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "tag/views.py",
+			"settings":
+			{
+				"buffer_size": 1338,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cart/views.py",
+			"settings":
+			{
+				"buffer_size": 7114,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -215,6 +243,10 @@
 	},
 	"file_history":
 	[
+		"/F/django/new31/tag/views.py",
+		"/F/django/new31/account/templates/vieword.htm",
+		"/F/django/new31/cart/templates/cart.htm",
+		"/F/django/new31/new31/static/js/jquery.dialog.js",
 		"/F/django/new31/tag/templates/tag.htm",
 		"/F/django/new31/shop/static/shop/js/base.configuration.js",
 		"/F/django/new31/shop/templates/shop.base.htm",
@@ -234,7 +266,6 @@
 		"/F/django/new31/order/static/order/js/neweditorder.configuration.js",
 		"/F/django/new31/cart/templates/consignee.htm",
 		"/F/django/new31/order/templates/orderlist.htm",
-		"/F/django/new31/cart/templates/cart.htm",
 		"/F/django/new31/cart/static/cart/js/cart.configuration.js",
 		"/F/django/new31/logistics/static/logistics/js/consignee.configuration.js",
 		"/F/django/new31/shop/templates/shop.htm",
@@ -247,7 +278,6 @@
 		"/F/django/new31/new31/func.py",
 		"/F/django/new31/new31/static/css/jquery.jgd.dropdown.min.css",
 		"/F/django/new31/new31/static/js/jquery.jgd.dropdown.min.js",
-		"/F/django/new31/new31/static/js/jquery.dialog.js",
 		"/F/django/new31/tag/static/tag/js/tag.configuration.js",
 		"/F/django/new31/new31/static/js/jquery-1.83.0.min.js",
 		"/F/django/new31/new31/static/js/jquery.sloadimg.js",
@@ -263,7 +293,6 @@
 		"/F/django/new31/tag/templates/tagadmin.htm",
 		"/F/django/new31/item/models.py",
 		"/F/django/new31/tag/models.py",
-		"/F/django/new31/tag/views.py",
 		"/F/django/new31/wechat/views.py",
 		"/F/django/new31/wechat/urls.py",
 		"/F/django/new31/wechat/static/wechat/css/css.css",
@@ -341,8 +370,7 @@
 		"/F/django/littlesnail/littesnail/views.py",
 		"/F/node/app.js",
 		"/F/django/new31/wechat/models.py",
-		"/F/django/new31/wechat/admin.py",
-		"/D/9-10.py"
+		"/F/django/new31/wechat/admin.py"
 	],
 	"find":
 	{
@@ -353,6 +381,8 @@
 		"height": 90.0,
 		"where_history":
 		[
+			"F:\\django\\new31",
+			"F:\\django\\new31;",
 			"F:\\django\\new31,D:\\Python27\\Lib\\site-packages\\django",
 			"F:\\django\\new31\\office\\templatetags,D:\\Python27\\Lib\\site-packages\\django",
 			"F:\\django\\new31",
@@ -364,6 +394,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"nfee",
 			"<span class=",
 			"src",
 			"self",
@@ -438,8 +469,105 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "item/models.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5997,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5068,
+								5068
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2700.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "tag/views.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1338,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1268,
+								1268
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 450.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "cart/views.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7114,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4216,
+								4216
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2017.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
 			]
 		}
 	],

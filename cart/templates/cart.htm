@@ -1,4 +1,4 @@
-{% extends "shop.base.htm" %} 
+{% extends "shop.base.htm" %}
 
 {% block middle %}
 <form name="toCart" method="post" action="{% url 'cart:cart' %}">
@@ -44,7 +44,7 @@
     </table>
     <table width="100%" class="mtb25 tdptd5">
         <tr>
-            <td>是否额外购买生日套装（生日牌/冷烟花/蜡烛）？</td>
+            <td>是否额外购买生日套装（生日牌/蜡烛）？</td>
             <td>单价：3元/份</td>
             <td align="right"><a href="{% url 'cart:buy' 115 %}" class="btn btnbr">是的，我需要增加生日套装</a></td>
         </tr>
