@@ -19,18 +19,27 @@
     <![endif]-->
   </head>
     <body>
-      <div id="top">
+    <div class="container">
+      <header id="top" class="jumbotron subhead">
         <div class="jumbotron">
           <img src="{{ STATIC_URL }}images/logo.gif" alt="31kecake"  class="img-rounded"/>
           <h1>Tel：4000-5927-31</h1>
         </div>
-      </div>
+      </header>
       <div id="middle">
 {% block middle %}{% endblock %}
       </div>
+        <footer class="footer">
+        <p class="pull-right"><a href="#">返回顶部</a></p>
+        <p>网站地图</p>
+        <p>版权声明： <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+        </footer>
+    </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}js/less-1.5.0.min.js"></script>
+
   </body>
 </html>

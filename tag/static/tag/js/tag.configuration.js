@@ -18,7 +18,7 @@ t = {
                         'class': 'tdpd5'
                     });
                     $.each(data.data, function(i, v) {
-                        table.append($('<tr>').append($('<td>').text(v.spec), $('<td>').text('原价：' + v.fee), $('<td>').text('现价：' + v.nfee), $('<td>').append($('<a>', {
+                        table.append($('<tr>').append($('<td>').text(v.spec), $('<td>').text('原价：' + v.fee), $('<td>').text('会员价：' + v.nfee), $('<td>').append($('<a>', {
                             'href': '/cart/buy/' + v.id + '/',
                             'class': 'btn btnbr'
                         }).text('购买'))));

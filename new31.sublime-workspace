@@ -180,26 +180,10 @@
 	"buffers":
 	[
 		{
-			"file": "item/models.py",
+			"file": "wechat/static/wechat/css/css.css",
 			"settings":
 			{
-				"buffer_size": 5997,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "tag/views.py",
-			"settings":
-			{
-				"buffer_size": 1338,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "cart/views.py",
-			"settings":
-			{
-				"buffer_size": 7114,
+				"buffer_size": 137,
 				"line_ending": "Windows"
 			}
 		}
@@ -243,7 +227,12 @@
 	},
 	"file_history":
 	[
+		"/F/django/new31/wechat/templates/wechat.base.htm",
+		"/F/django/new31/wechat/templates/wechattag.htm",
+		"/F/django/new31/item/models.py",
 		"/F/django/new31/tag/views.py",
+		"/F/django/new31/cart/views.py",
+		"/F/django/new31/tag/static/tag/js/tag.configuration.js",
 		"/F/django/new31/account/templates/vieword.htm",
 		"/F/django/new31/cart/templates/cart.htm",
 		"/F/django/new31/new31/static/js/jquery.dialog.js",
@@ -278,7 +267,6 @@
 		"/F/django/new31/new31/func.py",
 		"/F/django/new31/new31/static/css/jquery.jgd.dropdown.min.css",
 		"/F/django/new31/new31/static/js/jquery.jgd.dropdown.min.js",
-		"/F/django/new31/tag/static/tag/js/tag.configuration.js",
 		"/F/django/new31/new31/static/js/jquery-1.83.0.min.js",
 		"/F/django/new31/new31/static/js/jquery.sloadimg.js",
 		"/F/django/new31/new31/static/js/jquery.watermark.min.js",
@@ -291,13 +279,10 @@
 		"/C/Documents and Settings/Administrator/桌面/jquery.scrollLoading.js",
 		"/F/django/new31/new31/static/js/jquery.scrollLoading-min.js",
 		"/F/django/new31/tag/templates/tagadmin.htm",
-		"/F/django/new31/item/models.py",
 		"/F/django/new31/tag/models.py",
 		"/F/django/new31/wechat/views.py",
 		"/F/django/new31/wechat/urls.py",
 		"/F/django/new31/wechat/static/wechat/css/css.css",
-		"/F/django/new31/wechat/templates/wechattag.htm",
-		"/F/django/new31/wechat/templates/wechat.base.htm",
 		"/F/django/new31/wechat/static/wechat/js/tag.configuration.js",
 		"/F/django/new31/wechat/decorator.py",
 		"/F/django/new31/wechat/__init__.py",
@@ -369,8 +354,7 @@
 		"/F/django/django-xadmin/xadmin/util.py",
 		"/F/django/littlesnail/littesnail/views.py",
 		"/F/node/app.js",
-		"/F/django/new31/wechat/models.py",
-		"/F/django/new31/wechat/admin.py"
+		"/F/django/new31/wechat/models.py"
 	],
 	"find":
 	{
@@ -469,103 +453,37 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "item/models.py",
-					"semi_transient": false,
+					"file": "wechat/static/wechat/css/css.css",
+					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 5997,
+						"buffer_size": 137,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5068,
-								5068
+								18,
+								18
 							]
 						],
 						"settings":
 						{
 							"encoding_helper_encoding": "UTF-8",
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/CSS/CSS.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 2700.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "tag/views.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1338,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1268,
-								1268
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": -0.0,
-						"translation.y": 450.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "cart/views.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7114,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4216,
-								4216
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2017.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
 					"type": "text"
 				}
 			]
