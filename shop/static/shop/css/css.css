@@ -4,49 +4,36 @@
     margin: 0;
     padding: 0;
 }
-a {
-    text-decoration: none;
-    color: #4b3c37;
-}
-a:hover {
-    text-decoration: none;
-    border-bottom: thick solid #5B2900;
-}
-a.on {
-    border-bottom: thick solid #5B2900;
-}
-h3 {
-    line-height: 2;
-    padding-left: 5px;
-}
-h4 {
-    line-height: 1.5;
-    padding-left: 5px;
-}
-img {
-    border: 0;
-    float: left;
-}
-html {
-    cursor: url("/static/images/cursor.ico"), auto
-}
+
 ::selection {
     background: #ff5f3e;
     color: #fff
 }
-body {
-    font-size: 12px;
+
+a {
+    text-decoration: none;
     color: #4b3c37;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #FFF;
+    white-space: nowrap;
 }
-ul, ol, dl {
+
+a:hover {
+    text-decoration: none;
+    border-bottom: thick solid #5B2900;
+}
+
+a.on {
+    border-bottom: thick solid #5B2900;
+}
+
+ul, ol, dl, menu {
     list-style: none;
 }
+
 table {
     border-collapse: collapse;
     border-spacing: 0
 }
+
 table tr td {
     height: 24px;
     padding: 0 5px;
@@ -71,16 +58,23 @@ input[type=text], input[type=password], textarea {
     border-radius: 2px;
     background: #FFF;
 }
+
 textarea {
     height: 80px;
     padding: 5px;
     font-size: 12px;
     line-height: 1.4em
 }
+
 input:focus, textarea:focus {
     background: #FFF;
     box-shadow: 1px 1px 3px #ccc inset;
 }
+
+_article, _aside, _details, _figcaption, _figure, _footer, _header, _hgroup, _menu, _nav, _section {
+    display: block;
+}
+
 .input {
     border: 1px solid #cc9866;
     padding: 3px;
@@ -237,77 +231,114 @@ input:focus, textarea:focus {
 .tdpd5 tr td {
     padding: 5px;
 }
+
 *html {
     /* 只有IE6支持 */
 
-background-image: url(about:blank);
-    /* 使用空背景 */
+    background-image: url(about:blank);
+        /* 使用空背景 */
 
-background-attachment: fixed;
+    background-attachment: fixed;
     /* 固定背景 */
 }
+
+html {
+    cursor: url("/static/images/cursor.ico"), auto
+}
+
 body {
-    width: 886px;
+    color: #4b3c37;
+    font-family: Arial, Helvetica, sans-serif;
     margin: 0 auto;
     background: #FFF;
-    padding: 0 58px;
 }
-#header, #middle, #ft, #nav {
+
+@media screen and (max-width: 768px) {
+    body{
+        font-size: 1.5em;
+        width: 95%;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    body{
+        font-size: 1.2em;
+        width: 90%;
+    }
+}
+
+@media screen and (min-width: 992px){
+    body{
+        font-size: 0.8em;
+        width: 886px;
+    }
+}
+
+header, #middle, footer, nav {
     width: 100%;
-    float: left;
 }
-#header {
-    padding-top: 10px;
+
+header {
+    padding-top: 1em;
 }
-#header dl dd {
+header menu {
     float: right;
 }
-#header dl a {
+header menu li {
+    float: left;
     margin: 0 5px;
 }
-#sl {
+
+aside#sl {
     margin-top: -60px;
     float: right;
     padding-right: 5px;
 }
-#sl #note {
+aside#sl #note {
     text-align: right;
     padding-right: 40px;
     position: relative;
     top: 15px;
 }
-#sl #tel {
+aside#sl #tel {
     font-size: 30px;
     font-family: 'constantia';
     font-weight: bold;
 }
-#nav .menu {
-    width: 100%;
-    float: left;
-    margin-bottom: 20px;
+
+nav {
     background: url(/static/shop/images/menu.jpg) bottom repeat-x;
-    height: 30px;
-    overflow: hidden;
-    line-height: 22px;
-    margin-top: 15px;
+    margin: 1.2em 0 1.7em 0;
+    height: 2.35em;
+
 }
-#nav .menu li {
+
+nav a {
     float: left;
-    padding-right: 20px;
-}
-#nav .menu li a {
-    display: block;
     width: 72px;
-    height: 30px;
-    float: left;
+    height: 100%;
     background: url(/static/shop/images/menu_no.jpg) no-repeat;
     color: #cf9764;
-    padding-left: 20px;
-    _border: 0;
+    padding: 0 20px;
+    line-height: 1.6;
 }
-#nav .menu li a:hover, #nav .menu li a.on {
+nav a:hover, nav a.on {
     background: url(/static/shop/images/menu_on.jpg) no-repeat;
+    border: none;
 }
+
+footer {
+    font-size: 1em;
+    padding-bottom: 1em;
+}
+
+footer menu {
+    float: left;
+}
+footer em {
+    float: right;
+}
+
 #middle {
     min-height: 550px;
     padding: 0 0 50px;
@@ -594,20 +625,7 @@ body {
     float: left;
     padding: 5px;
 }
-#ft {
-    font-size: 14px;
-    padding-bottom: 5px;
-}
-#ft #foot {
-    padding: 10px 0;
-    line-height: 24px;
-}
-#ft #foot dt {
-    float: left;
-}
-#ft #foot dd {
-    float: right;
-}
+
 .paper {
     width: 100%;
     float: left;
@@ -618,14 +636,12 @@ body {
     width: 100%;
     float: left;
 }
-
 .pinBox li {
     float: left
 }
 .pinBox li h2 a, .pinBox li h1 a {
     color: #cf9764;
 }
-
 .pinBox .styp, .pinBox .styp li, .pinBox .styp li img {
     width: 600px;
     height: 450px;
@@ -638,13 +654,11 @@ body {
     *display: block;
     border-radius: 3px;
 }
-
 .pinBox .item, .pinBox .iitem {
     border: 1px solid #cc9866;
     padding: 2px;
     border-radius: 3px;
 }
-
 .pinBox .pinSide {
     width: 246px;
     float: right;
@@ -652,14 +666,12 @@ body {
 .pinBox .pinSide .pinInfo {
     float: left;
 }
-
 .pinBox .pinSide {
     background: #FFFFFF;
     padding: 15px;
     border-radius: 3px;
     border: 1px solid #cc9866;
 }
-
 .pinBox .pinSide .pinDes {
     width: 100%;
     float: left;
@@ -667,7 +679,6 @@ body {
     padding: 5px 0 10px 0;
     text-indent: 0;
 }
-
 .pinBox .pinInfo {
     color: #999;
     width: 100%;
@@ -699,9 +710,9 @@ body {
     display: block;
     *height: 30px;
 }
-*.pinBox .tags ul li a {
+/**.pinBox .tags ul li a {
     white-space: nowrap;
-}
+}*/
 .pinBox .vote {
     width: 100%;
     float: left;
