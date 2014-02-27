@@ -4,8 +4,52 @@
 		"selected_items":
 		[
 			[
+				"padding",
+				"padding"
+			],
+			[
+				"pa",
+				"padding-bottom"
+			],
+			[
+				"n",
+				"nowrap"
+			],
+			[
+				"bl",
+				"inline-block"
+			],
+			[
+				"f",
+				"float"
+			],
+			[
+				"mar",
+				"margin"
+			],
+			[
+				"b",
+				"bottom"
+			],
+			[
+				"border-",
+				"border-bottom"
+			],
+			[
+				"in",
+				"inline-block"
+			],
+			[
 				"bo",
 				"border"
+			],
+			[
+				"di",
+				"display"
+			],
+			[
+				"li",
+				"line-height"
 			],
 			[
 				"h",
@@ -68,14 +112,6 @@
 				"offset"
 			],
 			[
-				"mar",
-				"margin-bottom"
-			],
-			[
-				"pa",
-				"padding-right"
-			],
-			[
 				"wi",
 				"width"
 			],
@@ -98,10 +134,6 @@
 			[
 				"padding-t",
 				"padding-bottom"
-			],
-			[
-				"f",
-				"float"
 			],
 			[
 				"min",
@@ -187,15 +219,7 @@
 			"file": "shop/static/shop/css/css.css",
 			"settings":
 			{
-				"buffer_size": 11815,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "cart/templates/cart.htm",
-			"settings":
-			{
-				"buffer_size": 3209,
+				"buffer_size": 12485,
 				"line_ending": "Windows"
 			}
 		},
@@ -203,7 +227,7 @@
 			"file": "shop/templates/shop.base.htm",
 			"settings":
 			{
-				"buffer_size": 4199,
+				"buffer_size": 4382,
 				"line_ending": "Windows"
 			}
 		},
@@ -255,23 +279,27 @@
 	},
 	"file_history":
 	[
+		"/F/django/new31/shop/templates/shop.base.htm",
+		"/F/django/new31/shop/static/shop/js/base.configuration.js",
+		"/C/Documents and Settings/Administrator/桌面/es5-shim-master/es5-sham.js",
+		"/F/django/new31/new31/static/js/es5-sham.min.js",
+		"/C/Documents and Settings/Administrator/桌面/es5-shim.min.js",
+		"/F/django/new31/shop/static/shop/css/css.less",
+		"/F/django/new31/shop/static/shop/css/css.css",
+		"/F/django/new31/cart/templates/cart.htm",
 		"/D/Sublime Text 3/Data/Packages/User/CodeFormatter.sublime-settings",
 		"/D/Sublime Text 3/Data/Packages/CodeFormatter/CodeFormatter.sublime-settings",
 		"/F/django/new31/jinja2/jinja2_loader.py",
-		"/F/django/new31/shop/static/shop/css/css.css",
 		"/F/django/new31/wechat/static/wechat/css/css.css",
 		"/F/django/new31/wechat/templates/wechat.base.htm",
-		"/F/django/new31/shop/templates/shop.base.htm",
 		"/F/django/new31/wechat/templates/wechattag.htm",
 		"/F/django/new31/item/models.py",
 		"/F/django/new31/tag/views.py",
 		"/F/django/new31/cart/views.py",
 		"/F/django/new31/tag/static/tag/js/tag.configuration.js",
 		"/F/django/new31/account/templates/vieword.htm",
-		"/F/django/new31/cart/templates/cart.htm",
 		"/F/django/new31/new31/static/js/jquery.dialog.js",
 		"/F/django/new31/tag/templates/tag.htm",
-		"/F/django/new31/shop/static/shop/js/base.configuration.js",
 		"/F/django/new31/office/static/office/js/base.js",
 		"/F/django/new31/office/templates/office.base.htm",
 		"/F/django/new31/order/static/order/js/ord.configuration.js",
@@ -378,11 +406,7 @@
 		"/F/django/new31/new31/static/js/jquery.min.js",
 		"/F/django/olton-Metro-UI-CSS-1c1a921/min/metro-responsive.min.css",
 		"/F/django/olton-Metro-UI-CSS-1c1a921/compress/node_modules/node-minify/index.js",
-		"/F/django/olton-Metro-UI-CSS-1c1a921/min/metro.min.js",
-		"/F/django/django-xadmin/xadmin/util.py",
-		"/F/django/littlesnail/littesnail/views.py",
-		"/F/node/app.js",
-		"/F/django/new31/wechat/models.py"
+		"/F/django/olton-Metro-UI-CSS-1c1a921/min/metro.min.js"
 	],
 	"find":
 	{
@@ -406,6 +430,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			";\n",
+			"<!",
 			"　　　　float",
 			"nfee",
 			"<span class=",
@@ -482,7 +508,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -491,7 +517,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 11815,
+						"buffer_size": 12485,
 						"regions":
 						{
 							"bookmarks":
@@ -501,16 +527,12 @@
 								"regions":
 								[
 									[
-										324,
-										324
+										242,
+										242
 									],
 									[
-										3404,
-										3404
-									],
-									[
-										3957,
-										3957
+										4740,
+										4740
 									]
 								],
 								"scope": "bookmarks"
@@ -519,8 +541,8 @@
 						"selection":
 						[
 							[
-								4475,
-								4475
+								4528,
+								4528
 							]
 						],
 						"settings":
@@ -532,59 +554,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 4350.0,
+						"translation.y": 4125.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "cart/templates/cart.htm",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3209,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2796,
-								2796
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 900.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
 					"file": "shop/templates/shop.base.htm",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4199,
+						"buffer_size": 4382,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2476,
-								2476
+								2856,
+								4364
 							]
 						],
 						"settings":
@@ -596,14 +586,14 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 375.0,
+						"translation.y": 735.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 2,
 					"file": "shop/templates/shop.htm",
 					"semi_transient": false,
 					"settings":
@@ -631,7 +621,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
