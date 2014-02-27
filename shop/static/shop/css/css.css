@@ -1,5 +1,19 @@
 /* CSS Document */
 
+*article,
+*aside,
+*details,
+*figcaption,
+*figure,
+*footer,
+*header,
+*hgroup,
+*menu,
+*nav,
+*section {
+    display: block;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -45,90 +59,85 @@ table {
 }
 
 table tr td {
-    height: 24px;
-    padding: 0 5px;
+    height: 1.5em;
+    padding: 0 0.3125em;
     line-height: 2;
 }
 
 input[type=text], input[type=password], textarea {
-    height: 16px;
-    padding: 3px;
-    border: 1px solid #CDCDCD;
-    border-radius: 2px;
+    height: 1em;
+    padding: 0.1875em;
+    border: 0.1em solid #CDCDCD;
+    border-radius: 0.125em;
     background: #FFF;
 }
 *input {
     height: 16px;
     padding: 3px;
-    border: 1px solid #CDCDCD;
-    border-radius: 2px;
+    border: 0.1em solid #CDCDCD;
+    border-radius: 0.125em;
     background: #FFF;
 }
 
 textarea {
-    height: 80px;
-    padding: 5px;
-    font-size: 12px;
-    line-height: 1.4em
+    height: 5em;
+    padding: 0.3125em;
+    font-size: 0.75em;
+    line-height: 1.4
 }
 
 input:focus, textarea:focus {
-    background: #FFF;
-    box-shadow: 1px 1px 3px #ccc inset;
-}
-
-_article, _aside, _details, _figcaption, _figure, _footer, _header, _hgroup, _menu, _nav, _section {
-    display: block;
+    box-shadow: 0 0 0 0.1em #FFFFFF inset;
 }
 
 .input {
-    border: 1px solid #cc9866;
-    padding: 3px;
-}
-.clear {
-    clear: both;
-    line-height: 0;
-    height: 0;
-    font-size: 0;
+    border: 0.1em solid #cc9866;
+    padding: 0.1875em;
 }
 .sbtn {
-    height: 15px;
-    line-height: 15px;
-    padding: 0 8px;
-    font-size: 8px;
+    height: 1.5em;
+    line-height:1.5;
+    padding: 0 1.5em;
+    font-size: 0.5em;
 }
 .btn {
-    height: 24px;
-    line-height: 24px;
-    padding: 0 24px;
-    font-size: 12px;
+    height: 2em;
+    line-height: 2;
+    padding: 0 2em;
+    font-size: 0.75em;
 }
 .bbtn {
-    height: 38px;
-    line-height: 38px;
-    padding: 0 48px;
-    font-size: 14px;
+    height: 2.5em;
+    line-height: 2.5;
+    padding: 0 3em;
+    font-size: 1em;
 }
 .bbbtn {
     width: 100%;
-    height: 50px;
-    line-height: 50px;
-    font-size: 16px;
+    height: 3.5em;
+    line-height: 3.5em;
+    font-size: 1.25em;
 }
-.btnbr, .btnbr:focus {
+
+.btnbr {
     background-color: #5b2900;
     border: 1px solid transparent;
     color: #FFFFFF;
     cursor: pointer;
     display: inline-block;
+    &:focus {
+    }
+    &:hover {
+        color: #cf9764;
+        border: 1px solid transparent;
+    }
+    &:active {
+        box-shadow: 0 0 0 1px #FFFFFF inset;
+    }
+
 }
-.btnbr:hover {
-    color: #cf9764;
-    border: 1px solid transparent;
-}
-.btnbr:active {
-    box-shadow: 0 0 0 1px #FFFFFF inset;
-}
+
+
 .btn_disable, .bbtn_disable, .bbbtn_disable {
     background-color: #cf9764;
     border: 1px solid #cf9764;
@@ -136,117 +145,7 @@ _article, _aside, _details, _figcaption, _figure, _footer, _header, _hgroup, _me
     color: #FFFFFF;
     display: inline-block;
 }
-.fBold {
-    font-weight: bold
-}
-.font20 {
-    font-size: 20px
-}
-.font18 {
-    font-size: 18px
-}
-.font14 {
-    font-size: 14px
-}
-.bline {
-    border: solid #E5E5E5;
-    border-width: 0 0 1px 0;
-}
-.mtb5 {
-    margin: 5px 0;
-}
-.mtb25 {
-    margin: 25px 0;
-}
-.ml5 {
-    margin-left: 5px;
-}
-.ml40 {
-    margin-left: 40px;
-}
-.mlr10 {
-    margin: 0 10px;
-}
-.mlr5 {
-    margin: 0 5px;
-}
-.mb10 {
-    margin-bottom: 10px;
-}
-.mb30 {
-    margin-bottom: 30px;
-}
-.mt5 {
-    margin-top: 5px;
-}
-.mt10 {
-    margin-top: 10px;
-}
-.pl5 {
-    padding-left: 5px;
-}
-.pl10 {
-    padding-left: 10px;
-}
-.pl40 {
-    padding-left: 40px;
-}
-.pb10 {
-    padding-bottom: 10px;
-}
-.pb20 {
-    padding-bottom: 20px;
-}
-.pb25 {
-    padding-bottom: 25px;
-}
-.pt20 {
-    padding-top: 20px;
-}
-.ptb5 {
-    padding: 5px 0;
-}
-.ptb20 {
-    padding: 20px 0;
-}
-.ptb25 {
-    padding: 25px 0;
-}
-.mg5 {
-    margin: 5px;
-}
-.pd7 {
-    padding: 7px;
-}
-.lh26 {
-    line-height: 26px;
-}
-.fl {
-    float: left;
-}
-.fr {
-    float: right;
-}
-.w100 {
-    width: 100%;
-}
-.tdptd5 tr td {
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-.tdpd5 tr td {
-    padding: 5px;
-}
 
-*html {
-    /* 只有IE6支持 */
-
-    background-image: url(about:blank);
-        /* 使用空背景 */
-
-    background-attachment: fixed;
-    /* 固定背景 */
-}
 
 html {
     width: 100%;
@@ -257,17 +156,15 @@ body {
     color: #4b3c37;
     font-family: Arial, Helvetica, sans-serif;
     background: #FFF;
-}
 
-@media screen and (max-width: 479px) {
-    body{
+    @media screen and (max-width: 479px) {
         margin: 0.625em;
         header {
             menu {
                 width: 100%;
                 padding-bottom: 0.5em;
             }
-            aside#sl {
+            aside {
                 width: 100%;
                 float: left;
             }
@@ -276,121 +173,262 @@ body {
             width: 10%;
         }
     }
-}
 
-@media screen and (min-width: 480px) and (max-width: 991px) {
-    body{
+    @media screen and (min-width: 480px) and (max-width: 909px) {
         margin: 0.625em;
         header {
-            aside#sl {
+            aside {
                 float: right;
-                /*margin: 5.8em -8.8em 0;*/
+                margin: 5.8em -8.8em 0;
             }
         }
         nav a {
             width: 5em;
         }
     }
-}
 
 
-@media screen and (min-width: 992px){
-    body{
+    @media screen and (min-width: 910px){
         width: 55.375em;
         margin: 0.625em auto;
         header {
-            aside#sl {
+            aside {
                 float: right;
-                /*margin: 5.8em -8.8em 0;*/
+                margin: 5.8em -8.8em 0;
             }
         }
         nav a {
             width: 6em;
         }
     }
+
+    header {
+        width: 100%;
+        display: inline-block;
+        menu {
+            float: right;
+            li {
+                float: left;
+                margin: 0 0.4em;
+            }
+        }
+        a {
+            &#logo {
+                float: left;
+                border: none;
+            }
+        }
+
+        aside {
+
+            small {
+                position: relative;
+                top: 1em;
+                left: 10.5em;
+            }
+            em {
+                display: block;
+                font-size: 1.875em;
+                font-family: 'constantia';
+                font-weight: bold;
+                white-space: nowrap;
+            }
+        }
+
+    }
+
+    nav {
+        width: 100%;
+        display: inline-block;
+        background: url(/static/shop/images/menu.jpg) bottom repeat-x;
+        margin: 1em 0 1.5em 0;
+        line-height: 0.5;
+
+        a {
+            float: left;
+            background: url(/static/shop/images/menu_no.jpg) no-repeat;
+            color: #cf9764;
+            height: 2.5em;
+            padding: 0 1.25em;
+            line-height: 1.6;
+            &:hover {
+                border: none !important;
+                background: url(/static/shop/images/menu_on.jpg) no-repeat;
+            }
+        }
+
+    }
+
+    footer {
+        width: 100%;
+        display: inline-block;
+        menu {
+            float: left;
+        }
+        em {
+            float: right;
+        }
+    }
+
+    #middle {
+        width: 100%;
+        display: inline-block;
+        min-height: 55em;
+        padding-bottom: 2em;
+        .messagelist {
+            padding-bottom: 1em;
+            li {
+                font-size: 0.75em;
+                padding: 0.25em 0.25em 0.25em 2em;
+                margin-bottom: 0.25em;
+                background: url(/static/images/icon_success.gif) 5px .3em no-repeat;
+                border-bottom: 0.1em solid #E5E5E5;
+                &.warning {
+                    background-image: url(/static/images/icon_alert.gif);
+                }
+                &.error {
+                    background-image: url(/static/images/icon_error.gif);
+                }
+            }
+        }
+
+        ol#pinBox {
+            width: 100%;
+            float: left;
+
+            .item {
+                width: 100%;
+                float: left;
+                margin-bottom: 1em;
+
+                @media screen and (max-width: 629px) {
+                    .styp{
+                        width: 100%;
+                        margin-bottom: 0.375em;
+                    }
+                    .side{
+                        float: left;
+                        width: 96%;
+                    }
+                }
+                @media screen and (min-width: 630px) and (max-width: 819px) {
+                    .styp{
+                        width: 37.5em;
+                        float: left;
+                        margin-bottom: 0.375em;
+                        margin-left: auto;
+                        margin-right: auto;
+                    }
+                    .side{
+                        width: 36.375em;
+                        float: left;
+                        margin-left: auto;
+                        margin-right: auto;
+                    }
+                }
+                @media screen and (min-width: 820px) and (max-width: 985px) {
+                    .styp{
+                        float: left;
+                        width: 37.5em;
+                    }
+                    .side{
+                        float: right;
+                        width: 21%;
+                    }
+                }
+                @media screen and (min-width: 886px) and (max-width: 909px) {
+                    .styp{
+                        float: left;
+                        width: 37.5em;
+                    }
+                    .side{
+                        float: right;
+                        width: 27%;
+                    }
+                }
+                @media screen and (min-width: 910px){
+                    .styp{
+                        float: left;
+                        width: 37.5em;
+                    }
+                    .side{
+                        float: right;
+                        width: 29.5%;
+                    }
+                }
+
+                .styp {
+                    height: 28.125em;
+                }
+
+                .side {
+                    background: #FFFFFF;
+                    padding: 0.5em;
+                    border-radius: 0.25em;
+                    border: 0.1em solid #cc9866;
+                    h2 {
+                        a {
+                            color: #cf9764;
+                        }
+                    }
+                    p {
+                        width: 100%;
+                        color: #999;
+                    }
+                    dl {
+                        float: left;
+                        color: #999;
+                        width: 100%;
+                        padding: 0.5em 0;
+                        display: block;
+                        dd {
+                            background: url(/static/images/photoDes.png) no-repeat;
+                            padding-left: 2em;
+                            margin-bottom: 0.5em;
+                            line-height: 1.5em;
+                            font-size: 0.75em;
+                        }
+                        .pv {
+                            background-position: 0 -113px;
+                        }
+                        .like {
+                            background-position: 0 -142px
+                        }
+                    }
+
+                    ins {
+                        width: 100%;
+                        float: left;
+                        line-height: 1.5;
+                        text-decoration: none;
+                        a {
+
+                            margin: 0 0.3125em;
+                        }
+                    }
+                    .button {
+                        width: 100%;
+                        float: left;
+                        position: relative;
+                        left: 0;
+                        bottom: 0;
+                        margin-top: 1.5em;
+                         a {
+                            margin: 0.5em;
+                        }
+                    }
+
+
+                }
+            }
+
+
+        }
+    }
+
 }
 
-header, #middle, footer, nav {
-    width: 100%;
-    display: inline-block;
-}
 
-header menu {
-    float: right;
-}
-header menu li {
-    float: left;
-    margin: 0 0.4em;
-}
-header a#logo, header a#logo:hover {
-    float: left;
-    border: none;
-}
-
-
-aside#sl #note {
-    font-size: 0.75em;
-    padding-right: 3.2em;
-    position: relative;
-    top: 1em;
-    left: 12em;
-}
-
-aside#sl #tel {
-    font-size: 1.875em;
-    font-family: 'constantia';
-    font-weight: bold;
-    white-space: nowrap;
-}
-
-nav {
-    background: url(/static/shop/images/menu.jpg) bottom repeat-x;
-    margin: 1em 0 1.5em 0;
-    line-height: 0.5;
-}
-
-nav a {
-    float: left;
-    height: 100%;
-    background: url(/static/shop/images/menu_no.jpg) no-repeat;
-    color: #cf9764;
-    height: 2.5em;
-    padding: 0 1.25em;
-    line-height: 1.6;
-}
-
-nav a:hover, nav a.on {
-    border: none;
-    background: url(/static/shop/images/menu_on.jpg) no-repeat;
-}
-
-footer menu {
-    float: left;
-}
-footer em {
-    float: right;
-}
-
-#middle {
-    min-height: 550px;
-    padding: 0 0 50px;
-}
-#middle .messagelist {
-    padding: 0 0 10px 0;
-    margin: 0;
-}
-#middle .messagelist li {
-    display: block;
-    padding: 4px 5px 4px 25px;
-    margin: 0 0 3px 0;
-    background: url(/static/images/icon_success.gif) 5px .3em no-repeat;
-}
-#middle .messagelist li.warning {
-    background-image: url(/static/images/icon_alert.gif);
-}
-#middle .messagelist li.error {
-    background-image: url(/static/images/icon_error.gif);
-}
 #middle #bner {
     width: 100%;
     height: 530px;
@@ -663,99 +701,4 @@ footer em {
     float: left;
     text-align: center;
     padding: 10px 0;
-}
-.pinBox {
-    width: 100%;
-    float: left;
-}
-.pinBox li {
-    float: left
-}
-.pinBox li h2 a, .pinBox li h1 a {
-    color: #cf9764;
-}
-.pinBox .styp, .pinBox .styp li, .pinBox .styp li img {
-    width: 600px;
-    height: 450px;
-    *height: 450px;
-    float: left;
-}
-.pinBox .styp li img {
-    *position: relative;
-    *float: left;
-    *display: block;
-    border-radius: 3px;
-}
-.pinBox .item, .pinBox .iitem {
-    border: 1px solid #cc9866;
-    padding: 2px;
-    border-radius: 3px;
-}
-.pinBox .pinSide {
-    width: 246px;
-    float: right;
-}
-.pinBox .pinSide .pinInfo {
-    float: left;
-}
-.pinBox .pinSide {
-    background: #FFFFFF;
-    padding: 15px;
-    border-radius: 3px;
-    border: 1px solid #cc9866;
-}
-.pinBox .pinSide .pinDes {
-    width: 100%;
-    float: left;
-    color: #999;
-    padding: 5px 0 10px 0;
-    text-indent: 0;
-}
-.pinBox .pinInfo {
-    color: #999;
-    width: 100%;
-    padding: 8px 0;
-    display: block;
-}
-.pinBox .pinInfo .addDate, .pinBox .pinInfo .loc, .pinBox .pinInfo .camera, .pinBox .pinInfo .pv, .pinBox .pinInfo .like {
-    background: url(/static/images/photoDes.png) no-repeat;
-    padding-left: 30px;
-    margin-bottom: 5px;
-    line-height: 18px;
-    width: 80%;
-}
-.pinBox .pinInfo .loc {
-    background-position: 0 -25px
-}
-.pinBox .pinInfo .camera {
-    background-position: 0 -87px
-}
-.pinBox .pinInfo .pv {
-    background-position: 0 -113px
-}
-.pinBox .pinInfo .like {
-    background-position: 0 -142px
-}
-.pinBox .tags {
-    width: 100%;
-    float: left;
-    display: block;
-    *height: 30px;
-}
-/**.pinBox .tags ul li a {
-    white-space: nowrap;
-}*/
-.pinBox .vote {
-    width: 100%;
-    float: left;
-    position: relative;
-    left: 0;
-    bottom: 0;
-    margin-top: 20px
-}
-.pinBox .vote a {
-    margin-right: 10px
-}
-.pinBox .vote .linkCancel a {
-    margin: 0
 }

@@ -45,17 +45,17 @@
 {% endif %}
       </menu>
       <a href="{% url 'shop:shop' %}" title="首页" id="logo"><img src="{{ STATIC_URL }}images/logo.gif" alt="31客" /></a>
-      <aside id="sl">
-        <div id="note">我就爱吃</div>
-        <div id="tel">Tel: 4000-5927-31</div>
+      <aside>
+        <small>我就爱吃</small>
+        <em>Tel: 4000-5927-31</em>
       </aside>
     </header>
     <nav>
-        <a href="{% url 'shop:shop' %}">首页</a>
-        <a href="{% url 'tag:tagShow' 'cake' %}">蛋糕</a>
-        <a href="{% url 'tag:tagShow' 'cookie' %}">曲奇</a>
-        <a href="{% url 'tag:tagShow' 'chocolate' %}">巧克力</a>
-        <a href="{% url 'tag:tagShow' 'pie' %}">派</a>
+      <a href="{% url 'shop:shop' %}">首页</a>
+      <a href="{% url 'tag:tagShow' 'cake' %}">蛋糕</a>
+      <a href="{% url 'tag:tagShow' 'cookie' %}">曲奇</a>
+      <a href="{% url 'tag:tagShow' 'chocolate' %}">巧克力</a>
+      <a href="{% url 'tag:tagShow' 'pie' %}">派</a>
     </nav>
     <div id="middle">
 {% if messages %}

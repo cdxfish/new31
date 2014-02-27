@@ -22,8 +22,9 @@
                     // 'background-position': '-19px -83px'
                 }
             }
+
             return {
-                ul: $this.css({
+                ul: $('ul', $this).css({
                     'height': '100%',
                     'overflow': 'hidden',
                     'list-style': 'none'
@@ -41,31 +42,29 @@
                 // 焦点轮换图片容器
                 warper: $('<div>').css({
                     'height': '100%',
-                    'width': $this.width(),
+                    'width': '100%',
                     'overflow': 'hidden',
-                    'float': 'left',
-                    'position':'relative'
+                    'float': 'left'
                 }),
                 // 控制焦点按钮容器
                 num: $('<center>', {
                     'class': 'num'
                 }).css({
                     'position': 'relative',
-                    'bottom': '20px'
+                    'bottom': '1.5em'
                 }),
                 // 控制焦点按钮
                 button: function() {
                     var self = this;
                     return $('<span>').css({
                         'display': 'inline-block',
-                        // 'background': 'url(/static/shop/images/imgPlayer.png) no-repeat -19px -83px',
                         'background-color': '#8d8d8d',
-                        'margin': '0px 2px',
+                        'margin': '0px 0.2em',
                         'overflow': 'hidden',
-                        'width': '12px',
-                        'height': '12px',
+                        'width': '0.75em',
+                        'height': '0.75em',
                         'cursor': 'pointer',
-                        'border-radius': '20px'
+                        'border-radius': '1.5em'
                     }).hover(function() {
                         $(this).css(css.on);
                         self.stop();
@@ -121,11 +120,14 @@
 
                     self.btns[0].addClass('on').css(css.on);
 
-                    $this.wrap(self.warper).after(self.num.append(self.btns));
-
                     self.ul.css({
                         'width': self.ul.width() * self.site.length
-                    })
+                    }).wrap(self.warper).after(self.num.append(self.btns));
+                    $('img', $this).css({
+                            height: $this.height(),
+                            width: $this.width()
+                    });
+
 
                     return this.start();
                 }

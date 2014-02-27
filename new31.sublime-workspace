@@ -4,124 +4,28 @@
 		"selected_items":
 		[
 			[
-				"padding",
-				"padding"
+				"wa",
+				"wrap"
 			],
 			[
-				"pa",
-				"padding-bottom"
-			],
-			[
-				"n",
-				"nowrap"
-			],
-			[
-				"bl",
-				"inline-block"
+				"ul",
+				"ulWidth"
 			],
 			[
 				"f",
 				"float"
 			],
 			[
-				"mar",
-				"margin"
-			],
-			[
-				"b",
-				"bottom"
-			],
-			[
-				"border-",
-				"border-bottom"
-			],
-			[
-				"in",
-				"inline-block"
-			],
-			[
-				"bo",
-				"border"
-			],
-			[
-				"di",
-				"display"
-			],
-			[
 				"li",
 				"line-height"
 			],
 			[
-				"h",
-				"height"
-			],
-			[
-				"le",
-				"leftPx"
-			],
-			[
-				"m",
-				"mOuterWidth"
-			],
-			[
-				"w",
-				"wrap"
-			],
-			[
-				"sc",
-				"scrollTop"
-			],
-			[
-				"wa",
-				"wrap"
-			],
-			[
-				"load",
-				"loading"
-			],
-			[
-				"se",
-				"self"
-			],
-			[
-				"s",
-				"scroll"
-			],
-			[
-				"re",
-				"return"
-			],
-			[
-				"img",
-				"imgList"
-			],
-			[
-				"p",
-				"params"
-			],
-			[
-				"sr",
-				"scroll"
-			],
-			[
-				"data",
-				"data-src"
+				"btn",
+				"btnbr"
 			],
 			[
 				"o",
-				"offset"
-			],
-			[
-				"wi",
-				"width"
-			],
-			[
-				"fl",
-				"float"
-			],
-			[
-				"text",
-				"text-align"
+				"overflow"
 			],
 			[
 				"fon",
@@ -136,12 +40,24 @@
 				"padding-bottom"
 			],
 			[
+				"mar",
+				"margin"
+			],
+			[
 				"min",
 				"min-height"
 			],
 			[
+				"w",
+				"width"
+			],
+			[
 				"try",
 				"try	Try/Except/Else"
+			],
+			[
+				"re",
+				"responseMsg"
 			],
 			[
 				"fun",
@@ -192,12 +108,20 @@
 				"_input_charset"
 			],
 			[
+				"pa",
+				"param"
+			],
+			[
 				"pan",
 				"payment"
 			],
 			[
 				"fro",
 				"form"
+			],
+			[
+				"p",
+				"param"
 			],
 			[
 				"si",
@@ -219,23 +143,26 @@
 			"file": "shop/static/shop/css/css.css",
 			"settings":
 			{
-				"buffer_size": 12485,
+				"buffer_size": 14247,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "shop/templates/shop.base.htm",
+			"contents": "/*\n *\n * sides 0.0 - jquery幻灯片插件\n * Version 0.0.2\n * @requires jQuery v1.8.3\n *\n * Copyright (c) 2013 leiddx\n * 自用.\n *\n */\n(function($) {\n    $.fn.extend({\n        sides: function() {\n            var $this = $(this);\n            var css = {\n                on: {\n                    'background-color': '#ca3c5b'\n                    // 'background-position': '1px -83px'\n                },\n                off: {\n                    'background-color': '#8d8d8d'\n                    // 'background-position': '-19px -83px'\n                }\n            }\n\n            return {\n                ul: $('ul', $this).css({\n                    'height': '100%',\n                    'overflow': 'hidden',\n                    'list-style': 'none'\n                }).show(),\n                // 切换间隔时间\n                interv: 5000,\n                // 切换速速\n                speed: 500,\n                // 切换计时ID\n                t: 0,\n                // 滚动锚点\n                site: [],\n                // 滚动按钮\n                btns: [],\n                // 焦点轮换图片容器\n                warper: $('<div>').css({\n                    'height': '100%',\n                    'width': '100%',\n                    'overflow': 'hidden',\n                    'float': 'left'\n                }),\n                // 控制焦点按钮容器\n                num: $('<center>', {\n                    'class': 'num'\n                }).css({\n                    'position': 'relative',\n                    'bottom': '1.5em'\n                }),\n                // 控制焦点按钮\n                button: function() {\n                    var self = this;\n                    return $('<span>').css({\n                        'display': 'inline-block',\n                        'background-color': '#8d8d8d',\n                        'margin': '0px 0.2em',\n                        'overflow': 'hidden',\n                        'width': '0.75em',\n                        'height': '0.75em',\n                        'cursor': 'pointer',\n                        'border-radius': '1.5em'\n                    }).hover(function() {\n                        $(this).css(css.on);\n                        self.stop();\n                    }, function() {\n                        if (!$(this).hasClass('on')) {\n                            $(this).css(css.off);\n                        }\n                        self.start();\n                    }).click(function() {\n                        $(this).addClass('on').css(css.on).siblings().removeClass('on').css(css.off);\n                        // 不要问我为什么不用index, 都是傻逼ie6\n                        var index = $(this).prevAll('span').length;\n                        var width = 0;\n\n                        for (var i = 0; i < index; i++) {\n                            width += self.site[i].width();\n                        };\n\n                        self.ul.animate({\n                            \"marginLeft\": -width\n                        }, self.speed);\n                    });\n                },\n                start: function() {\n                    var self = this;\n                    this.t = setInterval(function() {\n                        self.roll()\n                    }, this.interv)\n                },\n                stop: function() {\n                    if (this.t) {\n                        clearInterval(this.t);\n                    }\n                },\n                roll: function() {\n                    // 不要问我为什么不用index, 都是傻逼ie6\n                    var i = this.num.find('.on').prevAll('span').length + 1;\n\n                    this.btns[(i == this.site.length) ? 0 : i].click();\n\n                    return this;\n                },\n                ready: function() {\n                    var self = this;\n                    self.ul.find('*').css({\n                        'float': 'left'\n                    });\n\n                    self.ul.find('li').each(function(i) {\n                        self.site.push($(this));\n                        self.btns.push(self.button());\n                    });\n\n                    self.btns[0].addClass('on').css(css.on);\n\n                    self.ul.css({\n                        'width': self.ul.width() * self.site.length\n                    }).wrap(self.warper).after(self.num.append(self.btns));\n                    \n                    $('img', $this).css({\n                            height: $this.height(),\n                            width: $this.width()\n                    });\n\n\n                    return this.start();\n                }\n            }.ready();\n        }\n    });\n\n\n})(jQuery);",
+			"file": "/F/django/new31/new31/static/js/jquery.sides.js",
+			"file_size": 4810,
+			"file_write_time": 130379983165738889,
 			"settings":
 			{
-				"buffer_size": 4382,
+				"buffer_size": 4539,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "shop/templates/shop.htm",
+			"file": "/F/django/new31/tag/templates/tag.htm",
 			"settings":
 			{
-				"buffer_size": 742,
+				"buffer_size": 1507,
 				"line_ending": "Windows"
 			}
 		}
@@ -248,7 +175,7 @@
 		[
 			[
 				"f",
-				"Format Code"
+				"File: Revert→还原"
 			],
 			[
 				"Package Control: ",
@@ -279,134 +206,134 @@
 	},
 	"file_history":
 	[
-		"/F/django/new31/shop/templates/shop.base.htm",
-		"/F/django/new31/shop/static/shop/js/base.configuration.js",
-		"/C/Documents and Settings/Administrator/桌面/es5-shim-master/es5-sham.js",
-		"/F/django/new31/new31/static/js/es5-sham.min.js",
-		"/C/Documents and Settings/Administrator/桌面/es5-shim.min.js",
-		"/F/django/new31/shop/static/shop/css/css.less",
-		"/F/django/new31/shop/static/shop/css/css.css",
-		"/F/django/new31/cart/templates/cart.htm",
-		"/D/Sublime Text 3/Data/Packages/User/CodeFormatter.sublime-settings",
-		"/D/Sublime Text 3/Data/Packages/CodeFormatter/CodeFormatter.sublime-settings",
-		"/F/django/new31/jinja2/jinja2_loader.py",
-		"/F/django/new31/wechat/static/wechat/css/css.css",
-		"/F/django/new31/wechat/templates/wechat.base.htm",
-		"/F/django/new31/wechat/templates/wechattag.htm",
-		"/F/django/new31/item/models.py",
-		"/F/django/new31/tag/views.py",
-		"/F/django/new31/cart/views.py",
-		"/F/django/new31/tag/static/tag/js/tag.configuration.js",
-		"/F/django/new31/account/templates/vieword.htm",
-		"/F/django/new31/new31/static/js/jquery.dialog.js",
-		"/F/django/new31/tag/templates/tag.htm",
-		"/F/django/new31/office/static/office/js/base.js",
-		"/F/django/new31/office/templates/office.base.htm",
-		"/F/django/new31/order/static/order/js/ord.configuration.js",
-		"/F/django/new31/office/static/office/js/item.js",
-		"/F/django/new31/.gitignore",
-		"/F/django/new31/jinja2/sandbox.py",
-		"/F/django/new31/finance/static/finance/js/fnc.configuration.js",
-		"/F/django/new31/order/templates/orderneworedit.htm",
-		"/F/django/new31/logistics/templates/logcsedit.htm",
-		"/F/django/new31/logistics/templates/logistics.htm",
-		"/F/django/new31/logistics/static/logistics/js/logistics.configuration.js",
-		"/F/django/new31/finance/templates/financeui.htm",
-		"/F/django/new31/order/static/order/js/neweditorder.configuration.js",
-		"/F/django/new31/cart/templates/consignee.htm",
-		"/F/django/new31/order/templates/orderlist.htm",
-		"/F/django/new31/cart/static/cart/js/cart.configuration.js",
-		"/F/django/new31/logistics/static/logistics/js/consignee.configuration.js",
-		"/F/django/new31/shop/templates/shop.htm",
-		"/F/django/new31/whoosh/codec/base.py",
-		"/F/django/new31/logistics/templates/baidumap.htm",
-		"/F/django/new31/jinja2/bccache.py",
-		"/F/django/new31/log/__init__.py",
-		"/F/django/new31/jinja2/loaders.py",
-		"/F/django/new31/jinja2/lexer.py",
-		"/F/django/new31/new31/func.py",
-		"/F/django/new31/new31/static/css/jquery.jgd.dropdown.min.css",
-		"/F/django/new31/new31/static/js/jquery.jgd.dropdown.min.js",
-		"/F/django/new31/new31/static/js/jquery-1.83.0.min.js",
-		"/F/django/new31/new31/static/js/jquery.sloadimg.js",
-		"/F/django/new31/new31/static/js/jquery.watermark.min.js",
-		"/F/django/new31/new31/static/js/jquery.zebra_datepicker.js",
-		"/C/Documents and Settings/Administrator/桌面/Zebra_Datepicker-master/public/javascript/zebra_datepicker.js",
-		"/F/django/new31/new31/static/js/sides.js",
 		"/F/django/new31/new31/static/js/jquery.sides.js",
-		"/F/django/new31/new31/static/js/jquery.scrollLoading.js",
-		"/C/Documents and Settings/Administrator/桌面/jquery.scrollLoading.js",
-		"/F/django/new31/new31/static/js/jquery.scrollLoading-min.js",
-		"/F/django/new31/tag/templates/tagadmin.htm",
-		"/F/django/new31/tag/models.py",
-		"/F/django/new31/wechat/views.py",
-		"/F/django/new31/wechat/urls.py",
-		"/F/django/new31/wechat/static/wechat/js/tag.configuration.js",
-		"/F/django/new31/wechat/decorator.py",
-		"/F/django/new31/wechat/__init__.py",
-		"/F/django/new31/wechat/templates/wechatqueryord.htm",
-		"/F/django/new31/new31/wsgi.py",
-		"/F/django/new31/report/templates/report.htm",
-		"/F/django/new31/report/templates/reportord.htm",
-		"/F/django/new31/new31.sublime-project",
-		"/C/Documents and Settings/Administrator/桌面/examples/line-ajax/index.htm",
-		"/F/django/new31/report/static/report/js/analytics.csv",
-		"/F/django/new31/report/views.py",
-		"/C/Documents and Settings/Administrator/桌面/analytics.csv",
-		"/C/Documents and Settings/Administrator/桌面/js/modules/data.js",
-		"/C/Documents and Settings/Administrator/桌面/js/themes/grid.js",
-		"/C/Documents and Settings/Administrator/桌面/examples/line-ajax/analytics.tsv",
-		"/F/django/new31/report/static/report/js/exporting.js",
-		"/F/django/new31/new31/settings.py",
-		"/C/Documents and Settings/Administrator/桌面/examples/pie-donut/index.htm",
-		"/F/django/new31/report/urls.py",
-		"/F/django/new31/report/admin.py",
-		"/F/django/new31/report/models.py",
-		"/F/django/new31/office/static/office/css/style.css",
-		"/F/delThumbs.bat",
-		"/F/django/new31/new31/templates/404.html",
-		"/F/django/new31/new31/templates/office.base.htm",
-		"/F/django/new31/office/templates/office.htm",
-		"/F/django/new31/log/views.py",
-		"/F/django/new31/office/views.py",
-		"/F/django/new31/account/models.py",
-		"/F/django/new31/account/forms.py",
-		"/C/Documents and Settings/Administrator/桌面/continent.json",
-		"/F/django/new31/new31/urls.py",
-		"/F/django/new31/log/models.py",
-		"/F/django/new31/finance/decorator.py",
-		"/F/django/new31/finance/views.py",
-		"/F/django/new31/payment/models.py",
+		"/F/django/new31/shop/templates/shop.base.htm",
+		"/F/Django/new31/app_new31.sql",
+		"/F/Django/new31/order/views.py",
+		"/F/Django/new31/new31.sql",
+		"/F/Django/new31/data.sql",
+		"/F/Desktop/news.sql",
+		"/F/Desktop/data.sql",
+		"/F/Desktop/201401252147.sql",
 		"/F/django/new31/purview/models.py",
-		"/D/Sublime Text 3/Data/Packages/User/Default (Windows).sublime-keymap",
-		"/F/django/new31/order/models.py",
-		"/F/django/new31/logistics/models.py",
-		"/F/django/new31/purview/views.py",
-		"/F/django/new31/office/templatetags/tags.py",
-		"/F/django/new31/logistics/views.py",
-		"/F/django/new31/order/views.py",
-		"/F/django/new31/produce/decorator.py",
-		"/F/django/new31/produce/models.py",
-		"/F/django/new31/produce/views.py",
-		"/F/django/new31/account/views.py",
-		"/F/django/new31/account/decorator.py",
-		"/D/Sublime Text 3/Data/Packages/User/Preferences.sublime-settings",
+		"/F/django/new31/area/models.py",
+		"/F/django/new31/area/views.py",
+		"/F/django/new31/data.sql",
+		"/F/django/new31/new31/settings.py",
+		"/F/django/new31/area/admin.py",
+		"/F/django/new31/purview/admin.py",
+		"/F/django/new31/upload/views.py",
+		"/F/Desktop/new31.sql",
 		"/F/django/new31/20131015.sql",
+		"/F/Django/new31/config.yaml",
+		"/F/django/new31/201401250004.sql",
+		"/F/Desktop/new31 (1).sql",
 		"/F/django/new31/201401240029.sql",
 		"/F/quick3.py",
 		"/F/The-Art-Of-Programming-by-July/ebook/zh/01.0.md",
+		"/D/Sublime Text 3/Data/Packages/CodeFormatter/CodeFormatter.sublime-settings",
 		"/D/Sublime Text 3/Data/Packages/EncodingHelper/EncodingHelper.sublime-settings",
 		"/D/Sublime Text 3/Data/Packages/User/EncodingHelper.sublime-settings",
+		"/F/django/new31/shop/static/shop/css/css.css",
 		"/F/django/new31/new31/templates/shop.base.htm",
 		"/F/django/new31/new31/static/css/styles.css",
 		"/F/django/new31/new31/static/css/bootstrap.css",
 		"/F/django/new31/new31/static/css/styles.less",
+		"/F/django/new31/shop/templates/shop.htm",
 		"/F/django/new31/new31/static/css/bootstrap-theme.css",
 		"/F/django/olton-Metro-UI-CSS-1c1a921/css/metro-bootstrap.css",
 		"/F/django/new31/new31/static/js/jquery.min.js",
 		"/F/django/olton-Metro-UI-CSS-1c1a921/min/metro-responsive.min.css",
+		"/F/django/new31/item/models.py",
 		"/F/django/olton-Metro-UI-CSS-1c1a921/compress/node_modules/node-minify/index.js",
-		"/F/django/olton-Metro-UI-CSS-1c1a921/min/metro.min.js"
+		"/F/django/olton-Metro-UI-CSS-1c1a921/min/metro.min.js",
+		"/F/django/new31/wechat/static/wechat/css/css.css",
+		"/F/django/new31/wechat/templates/wechattag.htm",
+		"/F/django/new31/wechat/templates/wechat.base.htm",
+		"/F/django/new31/wechat/urls.py",
+		"/F/django/new31/wechat/views.py",
+		"/F/django/new31/wechat/templates/wechatqueryord.htm",
+		"/F/django/django-xadmin/xadmin/util.py",
+		"/F/django/littlesnail/littesnail/views.py",
+		"/F/django/new31/new31/func.py",
+		"/F/node/app.js",
+		"/F/django/new31/cart/static/cart/js/cart.configuration.js",
+		"/F/django/new31/wechat/models.py",
+		"/F/django/new31/wechat/admin.py",
+		"/F/django/new31/wechat/__init__.py",
+		"/F/django/new31/account/decorator.py",
+		"/D/9-10.py",
+		"/D/account.txt",
+		"/C/Documents and Settings/Administrator/桌面/9-10.py",
+		"/D/Python27/Lib/site-packages/django/contrib/auth/forms.py",
+		"/F/The-Art-Of-Programming-by-July/ebook/code/python/chapter03.py",
+		"/F/django/new31/account/templates/login.htm",
+		"/F/django/new31/account/views.py",
+		"/D/Python27/Lib/site-packages/django/contrib/auth/__init__.py",
+		"/F/The-Art-Of-Programming-by-July/ebook/code/python/chapter02.py",
+		"/D/Python27/Lib/site-packages/django/utils/six.py",
+		"/F/django/new31/jinja2/jinja2_loader.py",
+		"/F/django/new31/account/templates/myord.htm",
+		"/F/The-Art-Of-Programming-by-July/ebook/code/go/chapter25.go",
+		"/F/django/new31/jinja2/defaulttags.py",
+		"/F/django/new31/jinja2/jinja2_tag.py",
+		"/D/Python27/Lib/site-packages/django/template/loaders/eggs.py",
+		"/D/Python27/Lib/site-packages/django/template/loaders/filesystem.py",
+		"/D/Python27/Lib/site-packages/django/template/loaders/app_directories.py",
+		"/F/django/new31/jinja2/loaders.py",
+		"/F/django/new31/jinja2/environment.py",
+		"/F/django/new31/payment/api/abctransfer.py",
+		"/F/django/new31/log/models.py",
+		"/F/django/new31/payment/api/alipay.py",
+		"/F/django/new31/payment/api/monthly.py",
+		"/F/django/new31/log/urls.py",
+		"/F/django/new31/log/views.py",
+		"/F/django/new31/logistics/__init__.py",
+		"/F/django/new31/logistics/admin.py",
+		"/F/django/new31/logistics/decorator.py",
+		"/F/django/new31/logistics/forms.py",
+		"/F/django/new31/logistics/middleware.py",
+		"/F/django/new31/logistics/models.py",
+		"/F/django/new31/logistics/urls.py",
+		"/F/django/new31/logistics/views.py",
+		"/F/django/new31/message/__init__.py",
+		"/F/django/new31/message/admin.py",
+		"/F/django/new31/message/decorator.py",
+		"/F/django/new31/message/models.py",
+		"/F/django/new31/message/urls.py",
+		"/F/django/new31/message/views.py",
+		"/F/django/new31/new31/__init__.py",
+		"/F/django/new31/new31/cls.py",
+		"/F/django/new31/new31/decorator.py",
+		"/F/django/new31/new31/urls.py",
+		"/F/django/new31/new31/wsgi.py",
+		"/F/django/new31/office/__init__.py",
+		"/F/django/new31/office/forms.py",
+		"/F/django/new31/office/templatetags/__init__.py",
+		"/F/django/new31/office/templatetags/page.py",
+		"/F/django/new31/office/templatetags/tags.py",
+		"/F/django/new31/office/urls.py",
+		"/F/django/new31/office/views.py",
+		"/F/django/new31/order/__init__.py",
+		"/F/django/new31/order/admin.py",
+		"/F/django/new31/order/decorator.py",
+		"/F/django/new31/order/forms.py",
+		"/F/django/new31/order/middleware.py",
+		"/F/django/new31/order/models.py",
+		"/F/django/new31/order/urls.py",
+		"/F/django/new31/order/views.py",
+		"/F/django/new31/payment/__init__.py",
+		"/F/django/new31/payment/admin.py",
+		"/F/django/new31/payment/api/__init__.py",
+		"/F/django/new31/payment/api/ccbtransfer.py",
+		"/F/django/new31/payment/api/coupons.py",
+		"/F/django/new31/payment/api/icbctransfer.py",
+		"/F/django/new31/payment/api/payafter.py",
+		"/F/django/new31/payment/api/points.py",
+		"/F/django/new31/payment/api/post.py",
+		"/F/django/new31/payment/api/quarter.py",
+		"/F/django/new31/payment/decorator.py",
+		"/F/django/new31/payment/forms.py"
 	],
 	"find":
 	{
@@ -417,8 +344,6 @@
 		"height": 90.0,
 		"where_history":
 		[
-			"F:\\django\\new31",
-			"F:\\django\\new31;",
 			"F:\\django\\new31,D:\\Python27\\Lib\\site-packages\\django",
 			"F:\\django\\new31\\office\\templatetags,D:\\Python27\\Lib\\site-packages\\django",
 			"F:\\django\\new31",
@@ -430,28 +355,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			";\n",
-			"<!",
-			"　　　　float",
-			"nfee",
-			"<span class=",
-			"src",
-			"self",
-			"float",
-			"left",
-			"#main",
-			"//",
-			"data-src",
-			"span",
-			"dt",
-			"h2",
-			"tel",
-			"logo",
-			"\"><",
-			"col-xs-2",
-			"col-xs-12",
-			"col-md-1",
-			"import",
+			"\n*",
+			"item",
+			"InnoDB",
+			"app_new31-",
+			"sub_id",
+			"new31",
 			"ENGINE=MyISAM",
 			"886px",
 			"span",
@@ -491,7 +400,9 @@
 		"regex": false,
 		"replace_history":
 		[
-			"",
+			"MyISAM",
+			"new31-",
+			"app_new31",
 			"ENGINE=InnoDB",
 			"# coding: UTF-8",
 			" style=\"float:right;\" /",
@@ -508,7 +419,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -517,7 +428,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12485,
+						"buffer_size": 14247,
 						"regions":
 						{
 							"bookmarks":
@@ -527,12 +438,12 @@
 								"regions":
 								[
 									[
-										242,
-										242
+										9646,
+										9646
 									],
 									[
-										4740,
-										4740
+										14247,
+										14247
 									]
 								],
 								"scope": "bookmarks"
@@ -541,78 +452,75 @@
 						"selection":
 						[
 							[
-								4528,
-								4528
+								5812,
+								5812
+							]
+						],
+						"settings":
+						{
+							"encoding_helper_encoding": "UTF-8",
+							"syntax": "Packages/CSS/CSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 4122.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/F/django/new31/new31/static/js/jquery.sides.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4539,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4256,
+								4256
 							]
 						],
 						"settings":
 						{
 							"encoding_helper_encoding": "UTF-8",
 							"origin_encoding": "UTF-8",
-							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 4125.0,
+						"translation.y": 980.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "shop/templates/shop.base.htm",
+					"buffer": 2,
+					"file": "/F/django/new31/tag/templates/tag.htm",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4382,
+						"buffer_size": 1507,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2856,
-								4364
+								595,
+								595
 							]
 						],
 						"settings":
 						{
 							"encoding_helper_encoding": "UTF-8",
 							"origin_encoding": "UTF-8",
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 735.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "shop/templates/shop.htm",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 742,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								564,
-								564
-							]
-						],
-						"settings":
-						{
-							"encoding_helper_encoding": "UTF-8",
-							"origin_encoding": "ASCII",
 							"syntax": "Packages/HTML/HTML.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
@@ -621,7 +529,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -674,34 +582,6 @@
 		"selected_items":
 		[
 			[
-				".js",
-				"office\\static\\office\\js\\item.js"
-			],
-			[
-				"base.js",
-				"office\\static\\office\\js\\base.js"
-			],
-			[
-				"lo.js",
-				"logistics\\static\\logistics\\js\\logistics.configuration.js"
-			],
-			[
-				"fnc",
-				"finance\\static\\finance\\js\\fnc.configuration.js"
-			],
-			[
-				"wechat/css",
-				"wechat\\static\\wechat\\css\\css.css"
-			],
-			[
-				"wechat/",
-				"wechat\\views.py"
-			],
-			[
-				"wechat",
-				"wechat\\templates\\wechat.base.htm"
-			],
-			[
 				"func",
 				"new31\\func.py"
 			],
@@ -747,7 +627,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 149.0,
+	"side_bar_width": 209.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

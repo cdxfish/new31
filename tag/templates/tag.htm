@@ -8,37 +8,37 @@
 {% endblock %}
 
 {% block middle %}
-  <ul class="pinBox">
+  <ol id="pinBox">
 {% for i in items %}
-    <li class="w100 mb30">
-      <ul class="styp">
+    <li class="item">
+      <div class="styp">
+        <ul>
 {% for ii in i.itemimg_set.getBImgs %}
-        <li><img alt="{{ i.name }}" title="{{ i.name }}" data-src="{{ ii.img.url }}" /></li>
+          <li><img alt="{{ i.name }}" title="{{ i.name }}" data-src="{{ ii.img.url }}" /></li>
 {% endfor %}
-      </ul>
-      <div class="pinSide">
-        <h2><a href="{% url 'tag:tagShow' i.name|urlencode %}">{{ i.name }}</a></h2>
-        <p class="pinDes">{{ i.itemdesc_set.getAll.0.desc }}</p>
-        <ul class="pinInfo">
-          <li class="addDate">{{ i.addTime }}</li>
-          <li class="pv">销量 {{ i.click }}</li>
-          <li class="like">喜欢 <span class="count_like_{{ i.id }}">{{ i.like }}</span></li>
         </ul>
-        <div class="tags">
-          <ul class="fl">
+      </div>
+      <div class="side">
+        <h2><a href="{% url 'tag:tagShow' i.name|urlencode %}">{{ i.name }}</a></h2>
+        <p>{{ i.itemdesc_set.getAll.0.desc }}</p>
+        <dl class="pinInfo">
+          <dd>{{ i.addTime }}</dd>
+          <dd class="pv">销量 {{ i.click }}</dd>
+          <dd class="like">喜欢 <span class="count_like_{{ i.id }}">{{ i.like }}</span></dd>
+        </dl>
+        <ins>
 {% for iii in i.tag.getByRandom|slice:":9" %}
-            <li class="mlr5 lh26"><a href="{% url 'tag:tagShow' iii.tag|urlencode %}">{{ iii.tag }}</a></li>
+            <a href="{% url 'tag:tagShow' iii.tag|urlencode %}">{{ iii.tag }}</a>
 {% endfor %}
-          </ul>
-        </div>
-        <div class="vote">
+        </ins>
+        <div class="button">
           <a class="btn btnbr btnLike" href="{% url 'tag:itemLike' i.id %}">喜欢</a>
           <a class="btn btnbr btnBuy" href="{% url 'tag:getSpec' i.id %}">购买</a>
         </div>
       </div>
     </li>
 {% endfor %}
-  </ul>
+  </ol>
 {% endblock %}
 
 {% block javascript %}
