@@ -149,6 +149,7 @@ input:focus, textarea:focus {
 
 html {
     width: 100%;
+    min-height: 100%;
     cursor: url("/static/images/cursor.ico"), auto
 }
 
@@ -273,7 +274,7 @@ body {
     #middle {
         width: 100%;
         display: inline-block;
-        min-height: 55em;
+        min-height: 25em;
         padding-bottom: 2em;
         .messagelist {
             padding-bottom: 1em;
