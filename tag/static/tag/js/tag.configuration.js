@@ -16,14 +16,14 @@ t = {
                     var table = $('<table>', {
                         'width': '100%',
                         'class': 'tdpd5'
-                    });
+                    }).append($('<th>').text('规格'), $('<th>').text('原价'), $('<th>').text('会员价'));
                     $.each(data.data, function(i, v) {
-                        table.append($('<tr>').append($('<td>').text(v.spec), $('<td>').text('原价：' + v.fee), $('<td>').text('会员价：' + v.nfee), $('<td>').append($('<a>', {
+                        table.append($('<tr>').append($('<td>').text(v.spec), $('<td>').text(v.fee), $('<td>').text(v.nfee), $('<td>').append($('<a>', {
                             'href': '/cart/buy/' + v.id + '/',
                             'class': 'btn btnbr'
                         }).text('购买'))));
                     });
-                    return $('<h3>').text('请选择规格').after(table);
+                    return table;
                 });
             });
             return false;
