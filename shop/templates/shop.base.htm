@@ -7,10 +7,15 @@
     <meta name="Keywords" content="{% block keywords %}31客,31客蛋糕,蛋糕{% endblock %}" />
     <meta name="Description" content="{% block description %}蛋糕电子商务{% endblock %}" />
     <link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet/less" href="{{ STATIC_URL }}shop/css/css.css" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.zebra_datepicker.css" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.debug.css" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.jgd.dropdown.min.css" />
+<!--[if lt IE 9]>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}shop/css/css.css" />
+<![endif]-->
+<!--[if !IE]><!-->
+    <link rel="stylesheet/less" href="{{ STATIC_URL }}shop/css/css.less" />
+<!--<![endif]-->
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.zebra_datepicker.css" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.debug.css" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.jgd.dropdown.min.css" />
 <!--[if lt IE 9]>
     <script type="text/javascript" src="{{ STATIC_URL }}js/css3-mediaqueries.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/es5-shim.min.js"></script>
@@ -96,7 +101,6 @@
 
 
             $("#middle").sloadimg().loadnow(); //异步加载图片
-            // alert($(window).width());
         });
     </script>
   </body>
