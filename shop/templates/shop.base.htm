@@ -62,7 +62,7 @@
       <a href="{% url 'tag:tagShow' 'chocolate' %}">巧克力</a>
       <a href="{% url 'tag:tagShow' 'pie' %}">派</a>
     </nav>
-    <div id="middle">
+    <section>
 {% if messages %}
       <ul class="messagelist">
 {% for i in messages %}
@@ -71,11 +71,11 @@
       </ul>
 {% endif %}
 {% block middle %}{% endblock %}
-    </div>
+    </section>
     <footer>
-      <menu>
-        <li><a href="{% url 'article:about' %}">关于31客</a></li>
-      </menu>
+      <address>
+        <a href="{% url 'article:about' %}">关于31客</a>
+      </address>
       <em>Tel：0771-5676920 0771-5676753</em>
     </footer>
   <!--[if IE 6]>

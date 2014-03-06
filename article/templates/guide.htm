@@ -1,12 +1,10 @@
-{% extends "shop.base.htm" %} 
+{% extends "shop.base.htm" %}
 {% block middle %}
-        <div id="left">
-            <ul id="lm">
-                <li><a href="{% url 'article:about' %}">关于31客</a></li>
-                <li><a href="{% url 'article:ex' %}">关于K金</a></li>
-                <li><a href="{% url 'article:guide' %}" class="on">订购指南</a></li>
-            </ul>
-        </div>
+        <menu id="sidebar">
+            <li><a href="{% url 'article:about' %}">关于31客</a></li>
+            <li><a href="{% url 'article:ex' %}">关于K金</a></li>
+            <li><a href="{% url 'article:guide' %}" class="on">订购指南</a></li>
+        </menu>
         <div id="right">
   <h3>订购须知</h3>
   <p>31客现在提供三种产品：<b>蛋糕</b>、<b>法式曲奇</b>、<b>巧克力</b>。所有产品现仅限于市区内订购，并由31客专业配送服务人员免费送货上门。</p>

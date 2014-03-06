@@ -27,7 +27,7 @@ b = {
 
             // return false
         });
-        return this
+        return this;
     },
 
     nav: function() {

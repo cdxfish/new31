@@ -14,15 +14,15 @@ aeog = {
                 msg: ''
             }, function(data) {
                 return $('<h3>').append($('<input>', {
-                    type: 'text',
-                    name: 'keyword',
-                    id: 'keyword'
+                    'type': 'text',
+                    'name': 'keyword',
+                    'id': 'keyword'
                 }), $('<input>', {
-                    type: 'button',
-                    name: 'search',
-                    id: 'goodsSearch',
-                    class: 'button',
-                    value: '搜索'
+                    'type': 'button',
+                    'name': 'search',
+                    'id': 'goodsSearch',
+                    'class': 'button',
+                    'value': '搜索'
                 }));
             });
         });
@@ -37,42 +37,42 @@ aeog = {
             $.dialog.ajax('/order/item/?k=' + $('#keyword').val(), function(data) {
                 $.dialog.popup(data, function(data) {
                     var table = $('<table>', {
-                        width: '100%',
-                        cellpadding: 3,
-                        cellpadding: 1,
-                        id: 'searchGoodslist'
+                        'width': '100%',
+                        'cellpadding': 3,
+                        'cellpadding': 1,
+                        'id': 'searchGoodslist'
                     }).append(
                     $('<tr>').append($('<th>', {
-                        width: '20px'
+                        'width': '20px'
                     }).text(''), $('<th>').text('商品名称'), $('<th>', {
-                        width: '90px'
+                        'width': '90px'
                     }).text('货号')));
 
                     $.each(data.data, function(i, v) {
                         table.append(
                         $('<tr>').append(
                         $('<td>', {
-                            align: 'center'
+                            'align': 'center'
                         }).append(
                         $('<input>', {
-                            type: 'checkbox',
-                            name: 'i',
-                            value: v.id,
-                            class: 'oddbox'
+                            'type': 'checkbox',
+                            'name': 'i',
+                            'value': v.id,
+                            'class': 'oddbox'
                         })), $('<td>').text(v.name), $('<td>', {
-                            align: 'center'
+                            'align': 'center'
                         }).text(v.sn)));
                     });
 
                     var center = $('<center>').append($('<input>', {
-                        type: 'submit',
-                        class: 'button',
-                        value: '加入订单'
+                        'type': 'submit',
+                        'class': 'button',
+                        'value': '加入订单'
                     }), csrf);
 
                     return $('<form>', {
-                        action: '/order/additem/',
-                        method: 'POST'
+                        'action': '/order/additem/',
+                        'method': 'POST'
                     }).append(table, center);
                 })
             });

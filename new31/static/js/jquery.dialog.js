@@ -8,7 +8,6 @@
  * 自用.
  *
  */
-
 (function($) {
     $.dialog = {
         body: $('<div>', {
@@ -22,7 +21,6 @@
             'left': '0px',
             'top': '0px'
         }),
-
         maskLayer: $('<div>').css({
             'filter': 'alpha(opacity=75)',
             'width': '100%',
@@ -30,7 +28,6 @@
             'background': '#000',
             'opacity': 0.45
         }),
-
         msgBox: $('<div>').css({
             'border-radius': '1px',
             'background': '#FFF',
@@ -39,53 +36,38 @@
             'position': 'absolute',
             'color': '#000'
         }),
-
         interval: [],
-
         clear: function() {
             for (i in this.interval) {
-                clearTimeout(this.interval[i])
+                clearTimeout(this.interval[i]);
             }
-
             this.interval = [];
-
             return this;
         },
-
         close: function(t) {
             var self = this.clear();
-
             self.body.hide(10, function() {
                 self.msgBox.html('');
             });
-
             return this;
         },
-
         ready: function() {
             var self = this;
-
             $(document).ready(function() {
                 self.body.hide().append(self.maskLayer, self.msgBox).appendTo('body').on('click', '.close', function() {
                     self.close();
                 });
             });
-
             return this;
         },
-
         show: function(element) {
             var self = this;
-
             self.body.show(10, function() {
                 self.msgBox.empty().append(element);
-
                 return self.center();
             });
-
             return this;
         },
-
         center: function() {
             var windowHeight = $(window).outerHeight();
             var windowouterWidth = $(window).outerWidth();
@@ -93,19 +75,16 @@
             var mOuterWidth = this.msgBox.outerWidth();
             var topPx = windowHeight < mOuterHeight ? 0 : (windowHeight - mOuterHeight) / 2;
             var leftPx = windowouterWidth < mOuterWidth ? 0 : (windowouterWidth - mOuterWidth) / 2;
-
             this.msgBox.css({
                 top: topPx + $(window).scrollTop(),
                 left: leftPx
             });
             this.body.css({
-                    'height': $('body').height(),
-                    'width':$(window).width()
-                });
-
+                'height': $('body').height(),
+                'width': $(window).width()
+            });
             return this;
         },
-
         loading: function(element) {
             var element = element ? element : 'loading....';
             return this.show($('<span>').css({
@@ -114,16 +93,13 @@
                 'background': 'url(/static/images/loading_s.gif) no-repeat'
             }).append(element));
         },
-
         msg: function(element) {
             var self = this.show(element).clear();
             self.interval.push(setTimeout(function() {
-                self.close()
+                self.close();
             }, 1500));
-
             return this;
         },
-
         popup: function(data, func) {
             var a = $('<a>', {
                 href: 'javascript:void(0);'
@@ -138,21 +114,16 @@
                 'padding': 5,
                 'clear': 'both'
             }).append(func(data));
-
             var h = $('<div>').css({
                 'width': '100%',
                 'height': 20,
                 'color': '#000',
                 'float': 'left'
             }).append(a).after(box);
-
             return this.show(h);
         },
-
         ajax: function(url, func, type) {
             var self = this;
-            var func = func ? func : function(){};
-
             $.ajax({
                 type: type ? type : "GET",
                 url: url,
@@ -161,7 +132,7 @@
                     if (data.typ == 'error') {
                         self.msg(data.msg);
                     } else {
-                        return func(data);
+                        return func ? func(data) : self.close();
                     }
                 },
                 error: function() {
@@ -171,10 +142,7 @@
                     self.loading('努力加载中，请稍候。');
                 }
             });
-
             return this;
         }
-
     }.ready();
-
 })(jQuery);

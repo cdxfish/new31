@@ -1,12 +1,10 @@
-{% extends "shop.base.htm" %} 
+{% extends "shop.base.htm" %}
 {% block middle %}
-        <div id="left">
-            <ul id="lm">
-                <li><a href="{% url 'article:about' %}">关于31客</a></li>
-                <li><a href="{% url 'article:ex' %}" class="on">关于K金</a></li>
-                <li><a href="{% url 'article:guide' %}">订购指南</a></li>
-            </ul>
-        </div>
+        <menu id="sidebar">
+            <li><a href="{% url 'article:about' %}">关于31客</a></li>
+            <li><a href="{% url 'article:ex' %}" class="on">关于K金</a></li>
+            <li><a href="{% url 'article:guide' %}">订购指南</a></li>
+        </menu>
         <div id="right">
           <h3>尊敬的31客会员：</h3>
           <p>自2012年1月1日起，K金累积累活动已全面开启。 公司将在今后推出更多增值服务，敬请留意关注。K金兑换在节日期间（圣诞节、春节、情人节、中秋节等）以及节日前一天和法定假日的前一天不参与兑换。感谢您的理解与支持。</p>

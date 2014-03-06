@@ -201,7 +201,7 @@ class ItemFee(models.Model):
         unique_together=(("spec", "typ"),)
 
 class ItemImg(models.Model):
-    chcs = ((0, u'188*188'), (1, u'379*188'), (2, u'***450'), (3, u'***960'),)
+    chcs = ((0, u'188*188'), (1, u'379*188'), (2, u'***450'), (3, u'***960'), (4, u'600*450'),)
     item = models.ForeignKey(Item, verbose_name=u'商品')
     img = models.ImageField(u'图片', upload_to='images')
     typ = models.SmallIntegerField(u'类型', default=0, choices=chcs)

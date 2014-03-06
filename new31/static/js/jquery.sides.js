@@ -124,11 +124,11 @@
                         'width': self.ul.width() * self.site.length
                     }).wrap(self.warper).after(self.num.append(self.btns));
                     $('img', $this).css({
-                            // height: $this.height(),
-                            // width: $this.width()
+                            'height':'auto !important',
+                            'width':'auto !important',
                             'max-width':'100%',
-                            'height':'auto',
-                            'width':'auto'
+                            height: $this.height(),
+                            width: $this.width()
                     });
 
 

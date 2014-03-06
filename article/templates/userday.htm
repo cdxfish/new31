@@ -1,7 +1,13 @@
 {% extends "shop.base.htm" %}
 
 {% block middle %}
-                <div id="right">
+    <menu id="sidebar">
+        <li><a href="{% url 'article:about' %}">关于31客</a></li>
+        <li><a href="{% url 'article:ex' %}">关于K金</a></li>
+        <li><a href="{% url 'article:guide' %}">订购指南</a></li>
+        <li><a href="{% url 'article:guide' %}" class="on">31客会员日</a></li>
+    </menu>
+                <div id="content">
                     <div id="show">
     <h2>31客会员日来了！！</h2>
     <p>为答谢31客会员一直以来对31客的支持，31客从2012年8月份开始，逢31日推出《31客会员特惠日主题活动》。在会员特惠日购买31客指定款蛋糕，将享受8.8折特别优惠。</p>
