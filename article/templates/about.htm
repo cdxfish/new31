@@ -1,11 +1,6 @@
-{% extends "shop.base.htm" %}
+{% extends "article.base.htm" %}
 
-{% block middle %}
-        <menu id="sidebar">
-            <li><a href="{% url 'article:about' %}" class="on">关于31客</a></li>
-            <li><a href="{% url 'article:ex' %}">关于K金</a></li>
-            <li><a href="{% url 'article:guide' %}">订购指南</a></li>
-        </menu>
+{% block article %}
         <article>
             <h3>做最好的提拉米苏</h3>
             <p>提拉米苏的故事,相信许多人都听过，它最早起源于意大利。</p>

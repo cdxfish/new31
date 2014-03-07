@@ -62,19 +62,19 @@
       <a href="{% url 'tag:tagShow' 'chocolate' %}">巧克力</a>
       <a href="{% url 'tag:tagShow' 'pie' %}">派</a>
     </nav>
-    <section>
 {% if messages %}
-      <ul class="messagelist">
+    <ul class="messagelist">
 {% for i in messages %}
-        <li class="{{ i.tags }} bline">{{ i|striptags }}</li>
+      <li class="{{ i.tags }} bline">{{ i|striptags }}</li>
 {% endfor %}
-      </ul>
+    </ul>
 {% endif %}
-{% block middle %}{% endblock %}
+    <section>
+{% block section %}{% endblock %}
     </section>
     <footer>
       <address>
-        <a href="{% url 'article:about' %}">关于31客</a>
+        <a href="{% url 'article:article' 'about' %}">关于31客</a>
       </address>
       <em>Tel：0771-5676920 0771-5676753</em>
     </footer>
@@ -100,7 +100,7 @@
             {% block javascript %}{% endblock %}
 
 
-            $("#middle").sloadimg().loadnow(); //异步加载图片
+            $('section').sloadimg().loadnow(); //异步加载图片
         });
     </script>
   </body>

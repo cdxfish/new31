@@ -25,3 +25,12 @@ def pub(request):
     u"""大客户"""
 
     return render_to_response('pub.htm', locals(), context_instance=RequestContext(request))
+
+def article(request, tag):
+    u"""文章页"""
+    from models import Article
+
+    alists = Article.objects.values('tag', 'title')
+    article = Article.objects.get(tag=tag)
+
+    return render_to_response('article.htm', locals(), context_instance=RequestContext(request))

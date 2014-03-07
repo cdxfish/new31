@@ -1,6 +1,6 @@
 {% extends "shop.base.htm" %}
 
-{% block middle %}
+{% block section %}
         <div id="left">
             <ul id="lm">
                 <li><a href="{% url 'account:myOrd' %}">我的订单</a></li>
@@ -18,7 +18,7 @@
                     <tr>
                         <td align="right">积分：</td>
                         <td>{{ user.pts.pt }}</td>
-                    </tr>                    
+                    </tr>
                     <tr>
                         <td align="right">{{ frm.sex.label }}：</td>
                         <td>{{ frm.sex }}</td>

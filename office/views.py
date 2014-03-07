@@ -18,9 +18,9 @@ def office(request):
     today = datetime.date.today()
     oneDay = datetime.timedelta(days=1)
 
-    s = '%s' % today
-    e = '%s' % (today + oneDay)
-    y = '%s' % (today - oneDay)
+    s = today
+    e = today + oneDay
+    y = today - oneDay
     area = request.user.attribution_set.getAreaName()
 
     o = Ord.objects.filter(logcs__area__in=area, ordlog__act__in=['order:submitOrd', 'order:editOrd', 'cart:submit']).distinct().order_by('status', '-sn')

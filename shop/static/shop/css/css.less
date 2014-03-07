@@ -37,7 +37,7 @@ a {
 p {
     font-size: 0.75em;
     line-height: 1.5;
-    padding-bottom: 10px;
+    padding-bottom: 0.25em;
     text-indent: 2em;
 }
 
@@ -270,6 +270,23 @@ body {
         }
     }
 
+    .messagelist {
+        padding-bottom: 1em;
+        li {
+            font-size: 0.75em;
+            padding: 0.25em 0.25em 0.25em 2em;
+            margin-bottom: 0.25em;
+            background: url(/static/images/icon_success.gif) 5px .3em no-repeat;
+            border-bottom: 0.1em solid #E5E5E5;
+            &.warning {
+                background-image: url(/static/images/icon_alert.gif);
+            }
+            &.error {
+                background-image: url(/static/images/icon_error.gif);
+            }
+        }
+    }
+
     section {
         height:auto !important;
         height: 200px;
@@ -278,23 +295,6 @@ body {
         min-height: 30em;
         padding-bottom: 2em;
         font-size: 0.75em;
-
-        .messagelist {
-            padding-bottom: 1em;
-            li {
-                font-size: 0.75em;
-                padding: 0.25em 0.25em 0.25em 2em;
-                margin-bottom: 0.25em;
-                background: url(/static/images/icon_success.gif) 5px .3em no-repeat;
-                border-bottom: 0.1em solid #E5E5E5;
-                &.warning {
-                    background-image: url(/static/images/icon_alert.gif);
-                }
-                &.error {
-                    background-image: url(/static/images/icon_error.gif);
-                }
-            }
-        }
 
         ol#pinBox {
             width: 100%;
@@ -436,6 +436,7 @@ body {
             width: 20%;
             float: left;
             font-size: 0.875em;
+            padding-bottom: 2em;
             li {
                 padding: 0 2em 0 0.5em;
                 a {
@@ -446,6 +447,15 @@ body {
         #content {
             width: 80%;
             float: right;
+        }
+        article {
+            width: 80%;
+            float: right;
+
+            h3 {
+                text-indent: 1.7em;
+                line-height: 2em;
+            }
         }
 
     }

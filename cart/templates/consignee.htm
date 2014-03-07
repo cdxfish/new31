@@ -1,10 +1,10 @@
 {% extends "shop.base.htm" %}
 
-{% block middle %}
+{% block section %}
     <h3>收货人信息</h3>
     <p>（请填写详细收货地址及准确的最佳送货时间，以便更快捷将您订购的蛋糕送达！）</p>
     <form action="{% url 'cart:checkout' %}" method="POST" name="checkout" id="checkout">
-        <table width="100%" id="fnc" class="tdptd5">                        
+        <table width="100%" id="fnc" class="tdptd5">
             <tr>
                 <td align="right" width="100px">{{ fnc.pay.label }}：</td>
                 <td>{{ fnc.pay }}</td>

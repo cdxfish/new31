@@ -61,8 +61,8 @@
                         'background-color': '#8d8d8d',
                         'margin': '0px 0.2em',
                         'overflow': 'hidden',
-                        'width': '0.75em',
-                        'height': '0.75em',
+                        'width': '0.875em',
+                        'height': '0.875em',
                         'cursor': 'pointer',
                         'border-radius': '1.5em'
                     }).hover(function() {

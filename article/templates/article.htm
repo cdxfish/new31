@@ -1,0 +1,12 @@
+{% extends "shop.base.htm" %}
+
+{% block section %}
+        <menu id="sidebar">
+{% for i in alists %}
+            <li><a href="{% url 'article:article' i.tag %}" {% ifequal i.tag tag %}class="on"{% endifequal %}>{{ i.title }}</a></li>
+{% endfor %}
+        </menu>
+        <article>
+        {{ article.content|safe }}
+        </article>
+{% endblock %}

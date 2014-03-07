@@ -1,0 +1,12 @@
+{% extends "shop.base.htm" %}
+
+{% block section %}
+        <article>
+        <menu id="sidebar">
+            <li><a href="{% url 'article:about' %}" class="on">关于31客</a></li>
+            <li><a href="{% url 'article:ex' %}">关于K金</a></li>
+            <li><a href="{% url 'article:guide' %}">订购指南</a></li>
+        </menu>
+        {% block article %}{% endblock %}
+        </article>
+{% endblock %}
