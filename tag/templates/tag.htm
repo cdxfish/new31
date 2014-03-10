@@ -10,32 +10,32 @@
 {% block section %}
   <ol id="pinBox">
 {% for i in items %}
-    <li class="item">
+    <li itemscope itemid="{{ i.sn }}" class="item">
       <div class="styp">
         <ul>
 {% for ii in i.itemimg_set.getBImgs %}
-          <li><img alt="{{ i.name }}" title="{{ i.name }}" data-src="{{ ii.img.url }}" /></li>
+          <li><img alt="{{ i.name }}" title="{{ i.name }}" data-src="{{ ii.img.url }}" /><span itemprop="image" style="display:none;">{{ ii.img.url }}</span></li>
 {% endfor %}
         </ul>
       </div>
-      <div class="side">
-        <h2><a href="{% url 'tag:tagShow' i.name|urlencode %}">{{ i.name }}</a></h2>
-        <p>{{ i.itemdesc_set.getAll.0.desc }}</p>
-        <dl class="pinInfo">
-          <dd>{{ i.addTime }}</dd>
-          <dd class="pv">销量 {{ i.click }}</dd>
-          <dd class="like">喜欢 <span class="count_like_{{ i.id }}">{{ i.like }}</span></dd>
-        </dl>
-        <ins>
+      <section class="side">
+        <h2 itemprop="name"><a href="{% url 'tag:tagShow' i.name|urlencode %}" itemprop="url">{{ i.name }}</a></h2>
+        <p itemprop="description">{{ i.itemdesc_set.getAll.0.desc }}</p>
+        <aside class="pinInfo">
+          <div><time itemprop="pubdate" datetime="{{ i.addTime|date:'Y-m-d H:i' }}">{{ i.addTime }}</time></div>
+          <div itemprop="sales" class="sales">销量 {{ i.click }}</div>
+          <div itemprop="like" class="like">喜欢 <span class="count_like_{{ i.id }}">{{ i.like }}</span></div>
+        </aside>
+        <nav>
 {% for iii in i.tag.getByRandom|slice:":9" %}
-            <a href="{% url 'tag:tagShow' iii.tag|urlencode %}">{{ iii.tag }}</a>
+            <a href="{% url 'tag:tagShow' iii.tag|urlencode %}" itemprop="tagurl"><span itemprop="tag">{{ iii.tag }}</span></a>
 {% endfor %}
-        </ins>
+        </nav>
         <div class="button">
           <a class="btn btnbr btnLike" href="{% url 'tag:itemLike' i.id %}">喜欢</a>
           <a class="btn btnbr btnBuy" href="{% url 'tag:getSpec' i.id %}">购买</a>
         </div>
-      </div>
+      </section>
     </li>
 {% endfor %}
   </ol>

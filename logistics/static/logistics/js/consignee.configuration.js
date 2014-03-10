@@ -40,37 +40,37 @@ c = {
 
         function() {
 
-            var message = "";
+            var message = [];
 
             if ($('#id_dlvr').val() == 0) {
-                message += '请选择配送方式!<br />';
+                message.push($('<p></p>').text('请选择配送方式!'));
             }
             if (!$('#id_consignee').val()) {
-                message += '请填写收货人姓名!<br />';
+                message.push($('<p></p>').text('请填写收货人姓名!'));
             }
 
             if (!$('#id_area').val()) {
-                message += '请选择区域!<br />';
+                message.push($('<p></p>').text('请选择区域!'));
             }
 
             if (!$('#id_address').val()) {
-                message += '请填写详细地址!<br />';
+                message.push($('<p></p>').text('请填写详细地址!'));
             }
 
             if ($('#id_tel').val() == c.telText || !$('#id_tel').val()) {
-                message += '请填写联系电话!<br />';
+                message.push($('<p></p>').text('请填写联系电话!'));
             }
 
 
             if (!$('#id_date').val()) {
-                message += '请填写最佳送货日期!<br />';
+                message.push($('<p></p>').text('请填写最佳送货日期!'));
             }
 
             if (!$('#id_time').val()) {
-                message += '请填写最佳送货时间!<br />';
+                message.push($('<p></p>').text('请填写最佳送货时间!'));
             }
 
-            if ( !! message) {
+            if (message.length) {
                 $.dialog.msg(message);
 
                 return false;

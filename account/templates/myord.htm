@@ -2,14 +2,12 @@
 
 
 {% block section %}
-        <div id="left">
-            <ul id="lm">
-                <li><a href="{% url 'account:myOrd' %}" class="on">我的订单</a></li>
-                <li><a href="{% url 'account:settings' %}">个人信息</a></li>
-                <li><a href="{% url 'account:changepwd' %}">修改密码</a></li>
-            </ul>
-        </div>
-        <div id="right">
+        <menu>
+            <li><a href="{% url 'account:myOrd' %}" class="on">我的订单</a></li>
+            <li><a href="{% url 'account:settings' %}">个人信息</a></li>
+            <li><a href="{% url 'account:changepwd' %}">修改密码</a></li>
+        </menu>
+        <section>
             <table width="100%">
                 <tr align="center">
                     <th>订单号</th>
@@ -30,5 +28,5 @@
                 </tr>
 {% endfor %}
             </table>
-        </div>
+        </section>
 {% endblock %}

@@ -1,55 +1,51 @@
 {% extends "shop.base.htm" %}
 
 {% block section %}
-        <div id="right">
-            <div class="ltb">
-                <form action="{% url 'account:login' %}" method="POST">
-                {% csrf_token %}
-                <table cellpadding="0" cellspacing="0" width="335" class="tdptd5">
-                    <tr>
-                        <td colspan="2">用户登录</td>
-                    </tr>
+        <section>
+            <form action="{% url 'account:login' %}" method="POST" class="fl">
+            <table cellpadding="0" cellspacing="0" width="335">
+                <tr>
+                    <td colspan="2">用户登录</td>
+                </tr>
 {% for i in frm %}
-                    <tr>
-                        <td align="right">{{ i.label }}：</td>
-                        <td>{{ i }}</td>
-                    </tr>
+                <tr>
+                    <td align="right">{{ i.label }}：</td>
+                    <td>{{ i }}</td>
+                </tr>
 {% endfor %}
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>
-                            <input type="submit" value="登录" class="btn btnbr"/>
-                            <input type="hidden" name="next" value="{{ next }}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><a href="{% url 'account:changepwd' %}">找回密码</a></td>
-                    </tr>
-                </table>
-                </form>
-            </div>
-            <div class="ltb">
-                <form action="{% url 'account:quicklyREG' %}" method="POST" onSubmit="return chekreg(this)">
-                {% csrf_token %}
-                <table cellpadding="0" cellspacing="0" width="335" class="tdptd5">
-                    <tr>
-                        <td colspan="2">用户注册</td>
-                    </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        {% csrf_token %}
+                        <input type="submit" value="登录" class="btn btnbr"/>
+                        <input type="hidden" name="next" value="{{ next }}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><a href="{% url 'account:changepwd' %}">找回密码</a></td>
+                </tr>
+            </table>
+            </form>
+            <form action="{% url 'account:quicklyREG' %}" method="POST" onSubmit="return chekreg(this)" class="fl">
+            {% csrf_token %}
+            <table cellpadding="0" cellspacing="0" width="335">
+                <tr>
+                    <td colspan="2">用户注册</td>
+                </tr>
 {% for i in nfrm %}
-                    <tr>
-                        <td align="right">{{ i.label }}：</td>
-                        <td>{{ i }}</td>
-                    </tr>
+                <tr>
+                    <td align="right">{{ i.label }}：</td>
+                    <td>{{ i }}</td>
+                </tr>
 {% endfor %}
-                    <tr>
-                        <td align="right"></td>
-                        <td>
-                            <input type="submit" value="注册" class="btn btnbr"/>
-                        </td>
-                    </tr>
-                </table>
-                </form>
-            </div>
-        </div>
+                <tr>
+                    <td align="right"></td>
+                    <td>
+                        <input type="submit" value="注册" class="btn btnbr"/>
+                    </td>
+                </tr>
+            </table>
+            </form>
+        </section>
 {% endblock %}

@@ -214,14 +214,14 @@ for i,v in APPS.items():
     if v:
         djangoMidClass.append(u'%s.middleware.%s' % (i, v))
 
-if not 'SERVER_SOFTWARE' in os.environ:
-    djangoAPPS.append('debug_toolbar')
-    djangoMidClass.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+# if not 'SERVER_SOFTWARE' in os.environ:
+#     djangoAPPS.append('debug_toolbar')
+#     djangoMidClass.append('debug_toolbar.middleware.DebugToolbarMiddleware')
 
-    INTERNAL_IPS = ('127.0.0.1',)
-    DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False,
-}
+#     INTERNAL_IPS = ('127.0.0.1',)
+#     DEBUG_TOOLBAR_CONFIG = {
+#     'INTERCEPT_REDIRECTS': False,
+# }
 
 INSTALLED_APPS = tuple(djangoAPPS)
 

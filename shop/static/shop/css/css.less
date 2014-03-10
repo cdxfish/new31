@@ -48,6 +48,8 @@ ul, ol, dl, menu {
 img {
     border: none;
     vertical-align:text-bottom;
+    width: 100%;
+    height: 100%;
 }
 
 table {
@@ -56,13 +58,12 @@ table {
 }
 
 table tr td {
-    height: 1.5em;
-    padding: 0 0.3125em;
+    padding: 0.3125em;
     line-height: 2;
 }
 
 input[type=text], input[type=password], textarea {
-    height: 1em;
+    height: 1.425em;
     padding: 0.1875em;
     border: 0.1em solid #CDCDCD;
     border-radius: 0.125em;
@@ -135,7 +136,6 @@ input:focus, textarea:focus {
 
 }
 
-
 .btn_disable, .bbtn_disable, .bbbtn_disable {
     background-color: #cf9764;
     border: 1px solid #cf9764;
@@ -144,6 +144,17 @@ input:focus, textarea:focus {
     display: inline-block;
 }
 
+.bline {
+    border: solid #E5E5E5;
+    border-width: 0 0 1px 0;
+}
+
+.mtb2 {
+    margin: 2em 0;
+}
+.font15 {
+    font-size: 1.5em;
+}
 
 html {
     width: 100%;
@@ -168,7 +179,7 @@ body {
                 float: left;
             }
         }
-        nav a {
+        &>nav a {
             width: 10%;
         }
     }
@@ -182,7 +193,7 @@ body {
                 clear: right;
             }
         }
-        nav a {
+        &>nav a {
             width: 5em;
         }
     }
@@ -198,12 +209,12 @@ body {
                 clear: right;
             }
         }
-        nav a {
+        &>nav a {
             width: 6em;
         }
     }
 
-    header {
+    &>header {
         width: 100%;
         display: inline-block;
         menu {
@@ -237,7 +248,7 @@ body {
 
     }
 
-    nav {
+    &>nav {
         width: 100%;
         display: inline-block;
         background: url(/static/shop/images/menu.jpg) bottom repeat-x;
@@ -259,7 +270,7 @@ body {
 
     }
 
-    footer {
+    &>footer {
         width: 100%;
         display: inline-block;
         address {
@@ -287,7 +298,7 @@ body {
         }
     }
 
-    section {
+    &>section {
         height:auto !important;
         height: 200px;
         width: 100%;
@@ -370,6 +381,7 @@ body {
                     border-radius: 0.25em;
                     border: 0.1em solid #cc9866;
                     h2 {
+                        padding-bottom: 0.25em;
                         a {
                             color: #cf9764;
                         }
@@ -378,20 +390,20 @@ body {
                         width: 100%;
                         color: #999;
                     }
-                    dl {
+                    .pinInfo {
                         float: left;
                         color: #999;
                         width: 100%;
                         padding: 0.5em 0;
                         display: block;
-                        dd {
+                        div {
                             background: url(/static/images/photoDes.png) no-repeat;
                             padding-left: 2em;
                             margin-bottom: 0.5em;
                             line-height: 1.5em;
                             font-size: 0.75em;
                         }
-                        .pv {
+                        .sales {
                             background-position: 0 -113px;
                         }
                         .like {
@@ -399,10 +411,10 @@ body {
                         }
                     }
 
-                    ins {
+                    nav {
                         width: 100%;
                         float: left;
-                        line-height: 1.5;
+                        line-height: 1.8;
                         text-decoration: none;
                         a {
 
@@ -432,7 +444,7 @@ body {
             padding-bottom: 20px;
             float: left;
         }
-        #sidebar {
+        &>menu {
             width: 20%;
             float: left;
             font-size: 0.875em;
@@ -444,14 +456,14 @@ body {
                 }
             }
         }
-        #content {
+        &>section, &>article {
             width: 80%;
             float: right;
         }
-        article {
-            width: 80%;
-            float: right;
 
+        &>section {
+        }
+        &>article {
             h3 {
                 text-indent: 1.7em;
                 line-height: 2em;
@@ -460,258 +472,4 @@ body {
 
     }
 
-}
-
-
-#middle .lsv {
-    float: left;
-    padding-bottom: 15px;
-    padding: 2px;
-}
-#middle .lsv a {
-    float: left;
-    padding: 2px;
-}
-#middle .lsv a.fr {
-    float: right;
-}
-#middle .lsv a:hover {
-    border: none;
-}
-#middle .more {
-    text-align: right;
-    padding: 0 5px 15px;
-}
-#middle #m {
-    float: left;
-    padding: 15px 0;
-}
-#middle #m li {
-    width: 218px;
-    height: 135px;
-    float: left;
-    padding: 1px;
-}
-#middle #plist {
-    float: left;
-}
-#middle #plist dl {
-    width: 886px;
-    float: left;
-    padding: 20px 0;
-    border-bottom: 1px solid #a59d9a;
-    color: #422819;
-}
-#middle #plist dl dt {
-    width: 200px;
-    height: 144px;
-    float: left;
-}
-#middle #plist dl dd.t {
-    width: 460px;
-    float: left;
-    line-height: 2;
-    font-size: 13px;
-    padding-left: 30px;
-    padding-right: 10px;
-}
-#middle #plist dl dd.n {
-    width: 80px;
-    float: right;
-    font-size: 50px;
-    font-weight: bold;
-    text-align: center;
-}
-#middle #plist dl dd.p {
-    width: 100px;
-    float: left;
-    text-align: center;
-}
-#middle #plist dl dd a {
-    font-size: 14px;
-    font-weight: bold;
-    color: #422819;
-}
-
-#middle #right {
-    width: 80%;
-    float: right;
-}
-#middle #right #show {
-    width: 670px;
-    float: left;
-}
-#middle #right #show {
-    _height: 415px;
-}
-#middle #right #show #news {
-    width: 670px;
-    float: left;
-    line-height: 2;
-}
-#middle #right #show #news dl {
-    width: 670px;
-    float: left;
-    padding: 10px 0;
-}
-#middle #right #show #news dl dt {
-    width: 670px;
-    float: left;
-}
-#middle #right #show #news dl dt a {
-    color: #5b2a01;
-}
-#middle #right #show #news dl dd {
-    width: 670px;
-    float: left;
-}
-#middle #right #show #m_od {
-    width: 670px;
-    float: left;
-    line-height: 30px;
-}
-#middle #right #show #m_od img {
-    float: none;
-}
-#middle #right #show #m_od table {
-    border-collapse: collapse;
-}
-#middle #right #show #m_od td {
-    border: 1px solid #a59d9b;
-    padding: 0 2px;
-}
-#middle #right #show #m_o {
-    width: 670px;
-    float: left;
-}
-#middle #right #show #m_o dl {
-    width: 160px;
-    float: left;
-    padding: 3px;
-}
-#middle #right #show #m_o dl dt {
-    width: 160px;
-    height: 86px;
-}
-#middle #right #show #m_o dl dd {
-    width: 160px;
-    float: left;
-    padding-top: 10px;
-}
-#middle #right #show img {
-    float: none;
-}
-#middle #right #show #m_i {
-    width: 670px;
-    float: left;
-    line-height: 30px;
-}
-#middle #right #show #m_i #result {
-    color: #F00;
-}
-#middle #right #show #ab {
-    width: 670px;
-    float: left;
-    line-height: 2;
-}
-#middle #right .ltb {
-    width: 335px;
-    float: left;
-    line-height: 35px;
-}
-#middle #pshow {
-    width: 886px;
-    float: left;
-    padding-bottom: 15px;
-}
-#middle #pshow #titbe {
-    width: 886px;
-    float: left;
-    font-size: 30px;
-    color: #7c3b00;
-}
-#middle #pshow #img {
-    width: 535px;
-    height: 385px;
-    float: left;
-}
-#middle #pshow #pr {
-    width: 270px;
-    float: right;
-}
-#middle #pshow #pr #ul {
-    width: 270px;
-    float: left;
-    line-height: 2;
-}
-#middle #pshow #pr #gm {
-    width: 270px;
-    float: left;
-    text-align: right;
-    padding: 10px 0;
-}
-#middle #pshow #pr #money {
-    font-size: 27px;
-    color: #5b2900;
-    float: left;
-    text-align: right;
-    width: 190px;
-}
-#middle #pshow #pr #btn {
-    width: 73px;
-    float: right;
-}
-#middle #pshow #pr #btn .btn_buy {
-    width: 73px;
-    height: 24px;
-    border: 0;
-    background: url(/static/shop/images/btn_buy.jpg) no-repeat;
-    margin-bottom: 5px;
-}
-#middle #pshow #pr .th {} #middle #sl {
-    width: 630px;
-    float: left;
-    line-height: 2;
-}
-#middle #sr {
-    width: 230px;
-    float: right;
-    line-height: 2;
-}
-#middle #sr #detail {
-    width: 230px;
-    float: left;
-    padding-bottom: 20px;
-}
-#middle #sr .info {
-    width: 230px;
-    float: left;
-    padding: 20px 0;
-    border-top: 1px solid #CCC;
-}
-#middle #sr .info .l {
-    width: 100px;
-    float: left;
-    background: #cc9866;
-    line-height: 20px;
-}
-#middle #sr .info .l dt {
-    background: #5a2900;
-}
-#middle #sr #cmd {
-    width: 230px;
-    float: left;
-}
-#middle #sr #cmd li {
-    width: 61px;
-    height: 61px;
-    float: left;
-    padding: 5px;
-}
-
-.paper {
-    width: 100%;
-    float: left;
-    text-align: center;
-    padding: 10px 0;
 }

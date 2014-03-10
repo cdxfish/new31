@@ -1,19 +1,17 @@
 {% extends "shop.base.htm" %}
 
 {% block section %}
-        <div id="left">
-            <ul id="lm">
-                <li><a href="{% url 'account:myOrd' %}">我的订单</a></li>
-                <li><a href="{% url 'account:settings' %}" class="on">个人信息</a></li>
-                <li><a href="{% url 'account:changepwd' %}">修改密码</a></li>
-            </ul>
-        </div>
-        <div class="right">
+        <menu>
+            <li><a href="{% url 'account:myOrd' %}">我的订单</a></li>
+            <li><a href="{% url 'account:settings' %}" class="on">个人信息</a></li>
+            <li><a href="{% url 'account:changepwd' %}">修改密码</a></li>
+        </menu>
+        <section>
             <form action="{% url 'account:saveSet' %}" method="post">
-                {% csrf_token %}
-                <table cellpadding="0" cellspacing="0" width="335" class="tdptd5">
+                <table>
                     <tr>
-                        <td colspan="2">个人信息</td>
+                        <td>个人信息</td>
+                        <td>&nbsp;</td>
                     </tr>
                     <tr>
                         <td align="right">积分：</td>
@@ -34,10 +32,11 @@
                     <tr>
                         <td>&nbsp;</td>
                         <td>
+                            {% csrf_token %}
                             <input type="submit" value="保存" class="btn btnbr"/>
                         </td>
                     </tr>
                 </table>
             </form>
-        </div>
+        </section>
 {% endblock %}
