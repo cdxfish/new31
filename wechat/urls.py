@@ -7,6 +7,6 @@ urlpatterns = pPatterns(
     (r'^$', responseMsg, 2),
     (r'^query\/$', queryOrd, 2),
     (r'^tag\/$', randomShow, 2),
-    (r'^(?P<tag>.*)\/$', tagShow, 2),
+    (r'^tag\/(?P<tag>.*)\/$', tagShow, 2),
     (r'^signature\/$', checkSignature, 2)
 )

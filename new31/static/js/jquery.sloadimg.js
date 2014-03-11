@@ -1,11 +1,14 @@
 /*
  *
  * sloadimg 1.0 - jquery异步滚动加载图片插件
- * Version 0.0.1
- * @requires jQuery v1.11.0
+ * Version 1.1.1
+ * @requires jQuery v1.8.3
  *
  * Copyright (c) 2013 leiddx
  * 自用.
+ *
+ * 增加对img标签点击强制加载图片
+ *
  *
  */
 (function($) {
@@ -30,6 +33,11 @@
                     var $this = $(this);
                     $this.src = $this.attr(conf.src);
                     var i = seg($this.offset().top); !! p[i] ? p[i].push($this) : p[i] = [$this];
+                }).click(function(){
+                    var $this = $(this);
+                    if(!$this.attr('src')){
+                        $this.attr('src', $this.attr(conf.src));
+                    }
                 });
                 return p
             };
