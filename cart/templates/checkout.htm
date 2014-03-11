@@ -3,8 +3,8 @@
 
 {% block section %}
     <form action="{% url 'cart:submit' %}" method="post" name="to_checkout" id="toCheckout">
-         <h3>订单状态</h3>
-        <table width="100%" class="mb10">
+        <h3>订单状态</h3>
+        <table width="100%" class="mb2">
             <tr>
                 <td width="100px">付款方式：</td>
                 <td><strong>{{ fInfo.pay.get_cod_display }}</strong></td>
@@ -15,7 +15,7 @@
             </tr>
         </table>
         <h3>商品列表</h3>
-        <table width="100%" class="mb10">
+        <table width="100%" class="mb2">
             <tr>
                 <th>商品名称</th>
                 <th>规格</th>
@@ -41,12 +41,12 @@
             </tr>
 {% endif %}
             <tr class="bline">
-                <td align="right" colspan="5"><span class="fBold font18">总计: <span class="total">{{ cart.total|floatformat:2 }}</span></span></td>
+                <td align="right" colspan="5"><b class="font15">总计: <span class="total">{{ cart.total|floatformat:2 }}</span></b></td>
                 <td>&nbsp;</td>
             </tr>
         </table>
         <h3>赠送</h3>
-        <table width="100%" class="mb10">
+        <table width="100%" class="mb2">
             <tr>
                 <th>商品名称</th>
                 <th>规格</th>
@@ -59,12 +59,12 @@
                 <td colspan="10">无</td>
             </tr>
             <tr class="bline">
-                <td colspan="5" align="right"><span class="fBold font18">总计: 0.00</span></td>
+                <td colspan="5" align="right"><b class="font15">总计: 0.00</b></td>
                 <td>&nbsp;</td>
             </tr>
         </table>
         <h3>收货人信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'cart:cnsgn' %}" class="sbtn btnbr">修改</a></h3>
-        <table width="100%" class="mb10">
+        <table width="100%" class="mb2">
             <tr>
                 <td width="100px">收货人姓名：</td>
                 <td>{{ cInfo.consignee }}</td>

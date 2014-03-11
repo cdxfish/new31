@@ -80,7 +80,7 @@
                 left: leftPx
             });
             this.body.css({
-                'height': $('body').height(),
+                'height': $(document).height(),
                 'width': $(window).width()
             });
             return this;
@@ -90,7 +90,8 @@
             return this.show($('<span>').css({
                 // 'width': 'auto',
                 'padding-left': '22px',
-                'background': 'url(/static/images/loading_s.gif) no-repeat'
+                'background': 'url(/static/images/loading_s.gif) no-repeat',
+                'font-size': '12px'
             }).append(element));
         },
         msg: function(element) {

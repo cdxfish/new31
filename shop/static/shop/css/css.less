@@ -37,8 +37,6 @@ a {
 p {
     font-size: 0.75em;
     line-height: 1.5;
-    padding-bottom: 0.25em;
-    text-indent: 2em;
 }
 
 ul, ol, dl, menu {
@@ -64,7 +62,7 @@ table tr td {
 
 input[type=text], input[type=password], textarea {
     height: 1.425em;
-    padding: 0.1875em;
+    padding: 0.1875em 0.45em;
     border: 0.1em solid #CDCDCD;
     border-radius: 0.125em;
     background: #FFF;
@@ -144,6 +142,10 @@ input:focus, textarea:focus {
     display: inline-block;
 }
 
+.fl {
+    float: left;
+}
+
 .bline {
     border: solid #E5E5E5;
     border-width: 0 0 1px 0;
@@ -152,6 +154,10 @@ input:focus, textarea:focus {
 .mtb2 {
     margin: 2em 0;
 }
+.mb2 {
+    margin-bottom: 2em;
+}
+
 .font15 {
     font-size: 1.5em;
 }
@@ -306,6 +312,11 @@ body {
         min-height: 30em;
         padding-bottom: 2em;
         font-size: 0.75em;
+
+        p {
+            text-indent: 2em;
+            padding-bottom: 0.25em;
+        }
 
         ol#pinBox {
             width: 100%;
