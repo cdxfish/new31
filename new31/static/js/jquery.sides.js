@@ -118,7 +118,7 @@
                         self.btns.push(self.button());
                     });
 
-                    self.btns[0].addClass('on').css(css.on);
+                    self.btns.length && self.btns[0].addClass('on').css(css.on);
 
                     self.ul.css({
                         'width': self.ul.width() * self.site.length

@@ -289,7 +289,7 @@ body {
         padding-bottom: 2em;
         font-size: 0.75em;
 
-        p {
+        &>p {
             text-indent: 2em;
             padding-bottom: 0.25em;
         }
@@ -308,19 +308,31 @@ body {
                 float: left;
                 margin-bottom: 1em;
 
-                @media screen and (max-width: 819px) {
+                @media screen and (max-width: 629px) {
                     .styp{
                         width: 100%;
                         margin-bottom: 0.375em;
                     }
+
+                }
+                @media screen and (min-width: 630px) and (max-width: 819px) {
+                    .styp{
+                        width: 50em;
+                        margin-bottom: 0.375em;
+                        margin-left: auto;
+                        margin-right: auto;
+                    }
                     .side{
-                        float: left;
+                        width: 48.834em;
+                        margin-left: auto;
+                        margin-right: auto;
                     }
                 }
+
                 @media screen and (min-width: 820px) and (max-width: 985px) {
                     .styp{
                         float: left;
-                        width: 37.5em;
+                        width: 50em;
                     }
                     .side{
                         float: right;
@@ -330,7 +342,7 @@ body {
                 @media screen and (min-width: 886px) and (max-width: 909px) {
                     .styp{
                         float: left;
-                        width: 37.5em;
+                        width: 50em;
                     }
                     .side{
                         float: right;
@@ -340,7 +352,7 @@ body {
                 @media screen and (min-width: 910px){
                     .styp{
                         float: left;
-                        width: 37.5em;
+                        width: 50em;
                     }
                     .side{
                         float: right;
@@ -349,7 +361,7 @@ body {
                 }
 
                 .styp {
-                    height: 28.125em;
+                    height: 37.5em;
                 }
 
                 .side {
@@ -366,13 +378,12 @@ body {
                     p {
                         width: 100%;
                         color: #999;
+                        text-indent: 2em;
                     }
                     .pinInfo {
-                        float: left;
                         color: #999;
                         width: 100%;
                         padding: 0.5em 0;
-                        display: block;
                         div {
                             background: url(/static/images/photoDes.png) no-repeat;
                             padding-left: 2em;
@@ -390,7 +401,6 @@ body {
 
                     nav {
                         width: 100%;
-                        float: left;
                         line-height: 1.8;
                         text-decoration: none;
                         a {
@@ -400,10 +410,6 @@ body {
                     }
                     .button {
                         width: 100%;
-                        float: left;
-                        position: relative;
-                        left: 0;
-                        bottom: 0;
                         margin-top: 1.5em;
                          a {
                             margin: 0.5em;
@@ -422,7 +428,7 @@ body {
             float: left;
         }
         &>menu {
-            width: 20%;
+            width: 15%;
             float: left;
             font-size: 0.875em;
             padding-bottom: 2em;
@@ -434,7 +440,7 @@ body {
             }
         }
         &>section, &>article {
-            width: 80%;
+            width: 85%;
             float: right;
         }
 
@@ -442,7 +448,7 @@ body {
         }
         &>article {
             h3 {
-                text-indent: 1.7em;
+                /*text-indent: 1.7em;*/
                 line-height: 2em;
             }
         }
@@ -748,7 +754,7 @@ body {
             float: left;
         }
         menu {
-            width: 20%;
+            width: 15%;
             float: left;
             font-size: 0.875em;
             padding-bottom: 2em;
@@ -760,7 +766,7 @@ body {
             }
         }
         section, article {
-            width: 80%;
+            width: 85%;
             float: right;
         }
         section {

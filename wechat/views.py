@@ -36,13 +36,13 @@ def checkSignature(request):
 
 def wechatShowTag(request, tag):
     u"""微信客户端标签页"""
-    from item.models import Item
+    from tag.views import tagShow
 
-    items = Item.objects.getShowByTag(tag)
 
-    return render_to_response('wechattag.htm', locals(), context_instance=RequestContext(request))
+    return tagShow(request=request, tag=tag)
 
 def queryOrd(request):
     u"""微信客户端订单查询"""
+    from order.views import queryOrd
 
-    return render_to_response('wechatqueryord.htm', locals(), context_instance=RequestContext(request))
+    return queryOrd(request)

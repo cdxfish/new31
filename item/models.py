@@ -100,7 +100,7 @@ class itemImgManager(models.Manager):
 
     def getBImg(self):
 
-        return self.select_related().filter((models.Q(typ=2)), onl=True, item__onl=True).order_by('?')[0]
+        return self.select_related().filter((models.Q(typ=4)), onl=True, item__onl=True).order_by('?')[0]
 
     def getShowBImgs(self):
 
