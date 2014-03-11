@@ -32,7 +32,7 @@
     {% block js %}{% endblock %}
   </head>
   <body>
-    <header>
+    <header id="mh">
       <menu>
 {% if user.is_staff %}
         <li><a href="{% url 'office:office' %}" target="_blank">管理中心</a></li>
@@ -55,7 +55,7 @@
         <em>Tel: 4000-5927-31</em>
       </aside>
     </header>
-    <nav>
+    <nav id="mn">
       <a href="{% url 'shop:shop' %}">首页</a>
       <a href="{% url 'tag:tagShow' 'cake' %}">蛋糕</a>
       <a href="{% url 'tag:tagShow' 'cookie' %}">曲奇</a>
@@ -69,10 +69,10 @@
 {% endfor %}
     </ul>
 {% endif %}
-    <section>
+    <section id="ms">
 {% block section %}{% endblock %}
     </section>
-    <footer>
+    <footer id="mf">
       <address>
         <a href="{% url 'article:article' 'about' %}">关于31客</a>
       </address>
