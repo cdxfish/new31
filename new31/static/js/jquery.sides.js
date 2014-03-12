@@ -22,11 +22,10 @@
                     // 'background-position': '-19px -83px'
                 }
             }
-
             return {
                 ul: $('ul', $this).css({
+                    'float': 'left',
                     'height': '100%',
-                    'overflow': 'hidden',
                     'list-style': 'none'
                 }).show(),
                 // 切换间隔时间
@@ -78,11 +77,13 @@
                         // 不要问我为什么不用index, 都是傻逼ie6
                         var index = $(this).prevAll('span').length;
                         var width = 0;
-
                         for (var i = 0; i < index; i++) {
                             width += self.site[i].width();
                         };
-
+                        var w = self.site[index].width() - $this.width();
+                        if (w > 0) {
+                            width += w / 2;
+                        }
                         self.ul.animate({
                             "marginLeft": -width
                         }, self.speed);
@@ -92,7 +93,7 @@
                     var self = this;
                     this.t = setInterval(function() {
                         self.roll()
-                    }, this.interv)
+                    }, this.interv);
                 },
                 stop: function() {
                     if (this.t) {
@@ -102,41 +103,28 @@
                 roll: function() {
                     // 不要问我为什么不用index, 都是傻逼ie6
                     var i = this.num.find('.on').prevAll('span').length + 1;
-
                     this.btns[(i == this.site.length) ? 0 : i].click();
-
                     return this;
                 },
                 ready: function() {
                     var self = this;
-                    self.ul.find('*').css({
+                    self.ul.find('li').css({
                         'float': 'left'
-                    });
-
-                    self.ul.find('li').each(function(i) {
+                    }).each(function(i) {
                         self.site.push($(this));
                         self.btns.push(self.button());
                     });
-
                     self.btns.length && self.btns[0].addClass('on').css(css.on);
-
                     self.ul.css({
-                        'width': self.ul.width() * self.site.length
+                        'width': $this.width() * self.site.length
                     }).wrap(self.warper).after(self.num.append(self.btns));
-                    $('img', $this).css({
-                            'height':'auto !important',
-                            'width':'auto !important',
-                            'max-width':'100%',
-                            height: $this.height(),
-                            width: $this.width()
-                    });
-
-
+                    // $('img', $this).css({
+                    //     width: 'auto',
+                    //     height: 'auto'
+                    // });
                     return this.start();
                 }
             }.ready();
         }
     });
-
-
 })(jQuery);
