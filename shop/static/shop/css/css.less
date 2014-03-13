@@ -10,7 +10,7 @@
 }
 
 a {
-    font-size: 0.75em;
+    font-size: 0.75rem;
     color: #4b3c37;
     white-space: nowrap;
     text-decoration: none;
@@ -20,7 +20,7 @@ a {
 }
 
 p {
-    font-size: 0.75em;
+    font-size: 0.75rem;
     line-height: 1.5;
 }
 
@@ -39,56 +39,56 @@ table {
 }
 
 table tr td {
-    padding: 0.3125em;
+    padding: 0.3125rem;
     line-height: 2;
 }
 
 input[type=text], input[type=password], textarea {
-    height: 1.425em;
-    padding: 0.1875em 0.45em;
-    border: 0.1em solid #CDCDCD;
-    border-radius: 0.125em;
+    height: 1.425rem;
+    padding: 0.1875rem 0.45rem;
+    border: 0.1rem solid #CDCDCD;
+    border-radius: 0.125rem;
     background: #FFF;
 }
 
 textarea {
-    height: 5em;
-    padding: 0.3125em;
-    font-size: 0.75em;
+    height: 5rem;
+    padding: 0.3125rem;
+    font-size: 0.75rem;
     line-height: 1.4
 }
 
 input:focus, textarea:focus {
-    box-shadow: 0 0 0 0.1em #FFFFFF inset;
+    box-shadow: 0 0 0 0.1rem #FFFFFF inset;
 }
 
 .input {
-    border: 0.1em solid #cc9866;
-    padding: 0.1875em;
+    border: 0.1rem solid #cc9866;
+    padding: 0.1875rem;
 }
 .sbtn {
-    height: 1.5em;
+    height: 1rem;
     line-height:1.5;
-    padding: 0 1.5em;
-    font-size: 0.5em;
+    padding: 0 1.5rem;
+    font-size: 0.5rem;
 }
 .btn {
-    height: 2em;
+    height: 1.5rem;
     line-height: 2;
-    padding: 0 2em;
-    font-size: 0.75em;
+    padding: 0 2rem;
+    font-size: 0.75rem;
 }
 .bbtn {
-    height: 2.5em;
+    height: 2rem;
     line-height: 2.5;
-    padding: 0 3em;
-    font-size: 1em;
+    padding: 0 3rem;
+    font-size: 1rem;
 }
 .bbbtn {
     width: 100%;
-    height: 3.5em;
-    line-height: 3.5em;
-    font-size: 1.25em;
+    height: 3rem;
+    line-height: 3.5rem;
+    font-size: 1.25rem;
 }
 
 .btnbr {
@@ -128,14 +128,14 @@ input:focus, textarea:focus {
 }
 
 .mtb2 {
-    margin: 2em 0;
+    margin: 2rem 0;
 }
 .mb2 {
-    margin-bottom: 2em;
+    margin-bottom: 2rem;
 }
 
 .font15 {
-    font-size: 1.5em;
+    font-size: 1.5rem;
 }
 
 html {
@@ -143,6 +143,7 @@ html {
     min-height: 100%;
     cursor: url("/static/images/cursor.ico"), auto
 }
+@rem15: 1.5rem;
 
 body {
     color: #4b3c37;
@@ -150,11 +151,11 @@ body {
     background: #FFF;
 
     @media screen and (max-width: 479px) {
-        margin: 0.625em;
+        margin: 0.625rem;
         header {
             menu {
                 width: 100%;
-                padding-bottom: 0.5em;
+                padding-bottom: 0.5rem;
             }
             aside {
                 width: 100%;
@@ -164,11 +165,11 @@ body {
     }
 
     @media screen and (min-width: 480px) and (max-width: 909px) {
-        margin: 0.625em;
+        margin: 0.625rem;
         header {
             aside {
                 float: right;
-                margin: 4.5em 1em 0 0;
+                margin: 4.3rem 1rem 0 0;
                 clear: right;
             }
         }
@@ -176,25 +177,25 @@ body {
 
 
     @media screen and (min-width: 910px){
-        width: 55.375em;
-        margin: 0.625em auto;
+        width: 55.375rem;
+        margin: 0.625rem auto;
         header {
             aside {
                 float: right;
-                margin: 4.5em 1em 0 0;
+                margin: 4.3rem 1rem 0 0;
                 clear: right;
             }
         }
     }
 
     .messagelist {
-        padding-bottom: 1em;
+        padding-bottom: 1rem;
         li {
-            font-size: 0.75em;
-            padding: 0.25em 0.25em 0.25em 2em;
-            margin-bottom: 0.25em;
-            background: url(/static/images/icon_success.gif) 5px .3em no-repeat;
-            border-bottom: 0.1em solid #E5E5E5;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.25rem 0.25rem 2rem;
+            margin-bottom: 0.25rem;
+            background: url(/static/images/icon_success.gif) 5px .3rem no-repeat;
+            border-bottom: 0.1rem solid #E5E5E5;
             &.warning {
                 background-image: url(/static/images/icon_alert.gif);
             }
@@ -204,14 +205,14 @@ body {
         }
     }
 
-    &>header {
+    >header {
         width: 100%;
         display: inline-block;
         menu {
             float: right;
             li {
                 float: left;
-                margin: 0 0.4em;
+                margin: 0 0.4rem;
             }
         }
         a {
@@ -224,12 +225,12 @@ body {
         aside {
             small {
                 position: relative;
-                top: 1em;
-                left: 10.5em;
+                top: 1rem;
+                left: 9.5rem;
             }
             em {
                 display: block;
-                font-size: 1.875em;
+                font-size: 2rem;
                 font-family: 'constantia';
                 font-weight: bold;
                 white-space: nowrap;
@@ -238,20 +239,20 @@ body {
 
     }
 
-    &>nav {
+    >nav {
         width: 100%;
         display: inline-block;
         background: url(/static/shop/images/menu.jpg) bottom repeat-x;
-        margin: 0.75em 0 1.5em 0;
-        line-height: 0.5;
+        margin: 0.5rem 0 1rem 0;
+        /*line-height: 0.5;*/
 
         a {
             float: left;
             background: url(/static/shop/images/menu_no.jpg) no-repeat;
             color: #cf9764;
-            height: 2.5em;
-            padding-left: 1.6em;
-            padding-right: 0.5em;
+            height: 1.9rem;
+            padding-left: 1.5rem;
+            padding-right: 0.5rem;
             line-height: 1.6;
             &:hover {
                 border: none !important;
@@ -268,20 +269,20 @@ body {
 
         @media screen and (min-width: 480px) and (max-width: 909px) {
             a {
-                width: 5em;
+                width: 3.5rem;
             }
         }
 
 
         @media screen and (min-width: 910px){
             a {
-                width: 6em;
+                width: 5.5rem;
             }
         }
 
     }
 
-    &>footer {
+    >footer {
         width: 100%;
         display: inline-block;
         address {
@@ -292,21 +293,19 @@ body {
         }
     }
 
-    &>section {
-        height:auto !important;
-        height: 200px;
+    >section {
         width: 100%;
         display: inline-block;
-        min-height: 30em;
-        padding-bottom: 2em;
-        font-size: 0.75em;
+        min-height: 24rem;
+        padding-bottom: 2rem;
+        font-size: 0.75rem;
 
-        &>p {
-            text-indent: 2em;
-            padding-bottom: 0.25em;
+        >p {
+            text-indent: @rem15;
+            padding-bottom: 0.25rem;
         }
 
-        img {
+        >img {
             width: 100%;
             height: 100%;
         }
@@ -318,24 +317,25 @@ body {
             .item {
                 width: 100%;
                 float: left;
-                margin-bottom: 1em;
+                margin-bottom: 1rem;
+                @rem375: 37.5rem;
 
                 @media screen and (max-width: 629px) {
                     .styp{
                         width: 100%;
-                        margin-bottom: 0.375em;
+                        margin-bottom: 0.375rem;
                     }
 
                 }
                 @media screen and (min-width: 630px) and (max-width: 819px) {
                     .styp{
-                        width: 50em;
-                        margin-bottom: 0.375em;
+                        width: @rem375;
+                        margin-bottom: 0.375rem;
                         margin-left: auto;
                         margin-right: auto;
                     }
                     .side{
-                        width: 48.834em;
+                        width: 36.375rem;
                         margin-left: auto;
                         margin-right: auto;
                     }
@@ -344,7 +344,7 @@ body {
                 @media screen and (min-width: 820px) and (max-width: 985px) {
                     .styp{
                         float: left;
-                        width: 50em;
+                        width: @rem375;
                     }
                     .side{
                         float: right;
@@ -354,7 +354,7 @@ body {
                 @media screen and (min-width: 886px) and (max-width: 909px) {
                     .styp{
                         float: left;
-                        width: 50em;
+                        width: @rem375;
                     }
                     .side{
                         float: right;
@@ -364,7 +364,7 @@ body {
                 @media screen and (min-width: 910px){
                     .styp{
                         float: left;
-                        width: 50em;
+                        width: @rem375;
                     }
                     .side{
                         float: right;
@@ -373,36 +373,36 @@ body {
                 }
 
                 .styp {
-                    height: 37.5em;
+                    height: 28.125rem;
                 }
 
                 .side {
                     background: #FFFFFF;
-                    padding: 0.5em;
-                    border-radius: 0.25em;
-                    border: 0.1em solid #cc9866;
+                    padding: 0.5rem;
+                    border-radius: 0.25rem;
+                    border: 0.1rem solid #cc9866;
                     h2 {
-                        padding-bottom: 0.25em;
+                        padding-bottom: 0.25rem;
                         a {
+                            font-size: 1rem;
                             color: #cf9764;
                         }
                     }
                     p {
                         width: 100%;
                         color: #999;
-                        text-indent: 2em;
+                        text-indent: @rem15;
                     }
                     .pinInfo {
                         color: #999;
                         width: 100%;
-                        padding: 0.5em 0;
+                        padding: 0.5rem 0;
                         div {
                             background: url(/static/images/photoDes.png) no-repeat;
-                            padding-left: 2em;
-                            margin-bottom: 0.5em;
-                            margin-left: 0.5em;
-                            line-height: 1.5em;
-                            font-size: 0.75em;
+                            padding-left: 1.5rem;
+                            margin-left: 0.5rem;
+                            line-height: 1.1rem;
+                            font-size: 0.75rem;
                         }
                         .sales {
                             background-position: 0 -113px;
@@ -418,14 +418,14 @@ body {
                         text-decoration: none;
                         a {
 
-                            margin: 0 0.3125em;
+                            margin: 0 0.3125rem;
                         }
                     }
                     .button {
                         width: 100%;
-                        margin-top: 1.5em;
+                        margin-top: 1.5rem;
                          a {
-                            margin: 0.5em;
+                            margin: 0.5rem;
                         }
                     }
 
@@ -440,19 +440,19 @@ body {
             padding-bottom: 20px;
             float: left;
         }
-        &>menu {
+        >menu {
             width: 15%;
             float: left;
-            font-size: 0.875em;
-            padding-bottom: 2em;
+            font-size: 0.875rem;
+            padding-bottom: 2rem;
             li {
-                padding: 0 2em 0 0.5em;
+                padding: 0 2rem 0 0.5rem;
                 a {
                     line-height: 2;
                 }
             }
         }
-        &>section, &>article {
+        >section, >article {
             @media screen and (max-width: 629px) {
                 width: 100%;
                 text-align: -webkit-center;
@@ -463,347 +463,22 @@ body {
                 float: right;
                 form {
                     float: left;
-                    padding: 0 2em;
+                    padding: 0 2rem;
                 }
             }
         }
 
-        &>section {
+        >section {
 
         }
-        &>article {
+        >article {
             h3 {
-                text-indent: 1.7em;
-                line-height: 2em;
+                text-indent: @rem15;
+                line-height: 2rem;
             }
             p {
-                text-indent: 2em;
+                text-indent: @rem15;
             }
         }
     }
 }
-
-/**body {
-    color: #4b3c37;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #FFF;
-
-    article,
-    aside,
-    details,
-    figcaption,
-    figure,
-    footer,
-    header,
-    hgroup,
-    menu,
-    nav,
-    section {
-        display: block;
-    }
-
-    input {
-        height: 16px;
-        padding: 3px;
-        border: 0.1em solid #CDCDCD;
-        border-radius: 0.125em;
-        background: #FFF;
-    }
-
-    @media screen and (max-width: 479px) {
-        margin: 0.625em;
-        header {
-            menu {
-                width: 100%;
-                padding-bottom: 0.5em;
-            }
-            aside {
-                width: 100%;
-                float: left;
-            }
-        }
-        #mn a{
-            width: 10%;
-        }
-    }
-
-    @media screen and (min-width: 480px) and (max-width: 909px) {
-        margin: 0.625em;
-        header {
-            aside {
-                float: right;
-                margin: 4.5em 1em 0 0;
-                clear: right;
-            }
-        }
-        #mn a{
-            width: 5em;
-        }
-    }
-
-
-    @media screen and (min-width: 910px){
-        width: 55.375em;
-        margin: 0.625em auto;
-        header {
-            aside {
-                float: right;
-                margin: 4.5em 1em 0 0;
-                clear: right;
-            }
-        }
-        #mn a {
-            width: 6em;
-        }
-
-    }
-
-    .messagelist {
-        padding-bottom: 1em;
-        li {
-            font-size: 0.75em;
-            padding: 0.25em 0.25em 0.25em 2em;
-            margin-bottom: 0.25em;
-            background: url(/static/images/icon_success.gif) 5px .3em no-repeat;
-            border-bottom: 0.1em solid #E5E5E5;
-            &.warning {
-                background-image: url(/static/images/icon_alert.gif);
-            }
-            &.error {
-                background-image: url(/static/images/icon_error.gif);
-            }
-        }
-    }
-
-    #mh {
-        width: 100%;
-        display: inline-block;
-        menu {
-            float: right;
-            li {
-                float: left;
-                margin: 0 0.4em;
-            }
-        }
-        a {
-            &#logo {
-                float: left;
-                border: none;
-            }
-        }
-
-        aside {
-            small {
-                position: relative;
-                top: 1em;
-                left: 10.5em;
-            }
-            em {
-                display: block;
-                font-size: 1.875em;
-                font-family: 'constantia';
-                font-weight: bold;
-                white-space: nowrap;
-            }
-        }
-
-    }
-
-    #mn {
-        width: 100%;
-        display: inline-block;
-        background: url(/static/shop/images/menu.jpg) bottom repeat-x;
-        margin: 0.75em 0 1.5em 0;
-        line-height: 0.5;
-
-        a {
-            float: left;
-            background: url(/static/shop/images/menu_no.jpg) no-repeat;
-            color: #cf9764;
-            height: 2.5em;
-            padding-left: 1.6em;
-            line-height: 1.6;
-            &:hover {
-                border: none !important;
-                background: url(/static/shop/images/menu_on.jpg) no-repeat;
-            }
-        }
-
-    }
-
-    #mf {
-        width: 100%;
-        display: inline-block;
-        address {
-            float: left;
-        }
-        em {
-            float: right;
-        }
-    }
-
-    #ms {
-        height:auto !important;
-        height: 200px;
-        width: 100%;
-        display: inline-block;
-        min-height: 30em;
-        padding-bottom: 2em;
-        font-size: 0.75em;
-
-        p {
-            text-indent: 2em;
-            padding-bottom: 0.25em;
-        }
-
-        img {
-            width: 100%;
-        }
-
-        ol#pinBox {
-            width: 100%;
-            float: left;
-
-            .item {
-                width: 100%;
-                float: left;
-                margin-bottom: 1em;
-
-                @media screen and (max-width: 819px) {
-                    .styp{
-                        width: 100%;
-                        margin-bottom: 0.375em;
-                    }
-                    .side{
-                        float: left;
-                    }
-                }
-                @media screen and (min-width: 820px) and (max-width: 985px) {
-                    .styp{
-                        float: left;
-                        width: 37.5em;
-                    }
-                    .side{
-                        float: right;
-                        width: 21%;
-                    }
-                }
-                @media screen and (min-width: 886px) and (max-width: 909px) {
-                    .styp{
-                        float: left;
-                        width: 37.5em;
-                    }
-                    .side{
-                        float: right;
-                        width: 27%;
-                    }
-                }
-                @media screen and (min-width: 910px){
-                    .styp{
-                        float: left;
-                        width: 37.5em;
-                    }
-                    .side{
-                        float: right;
-                        width: 29.5%;
-                    }
-                }
-
-                .styp {
-                    height: 28.125em;
-                }
-
-                .side {
-                    background: #FFFFFF;
-                    padding: 0.5em;
-                    border-radius: 0.25em;
-                    border: 0.1em solid #cc9866;
-                    h2 {
-                        padding-bottom: 0.25em;
-                        a {
-                            color: #cf9764;
-                        }
-                    }
-                    p {
-                        width: 100%;
-                        color: #999;
-                    }
-                    .pinInfo {
-                        float: left;
-                        color: #999;
-                        width: 100%;
-                        padding: 0.5em 0;
-                        display: block;
-                        div {
-                            background: url(/static/images/photoDes.png) no-repeat;
-                            padding-left: 2em;
-                            margin-bottom: 0.5em;
-                            line-height: 1.5em;
-                            font-size: 0.75em;
-                        }
-                        .sales {
-                            background-position: 0 -113px;
-                        }
-                        .like {
-                            background-position: 0 -142px
-                        }
-                    }
-
-                    nav {
-                        width: 100%;
-                        float: left;
-                        line-height: 1.8;
-                        text-decoration: none;
-                        a {
-
-                            margin: 0 0.3125em;
-                        }
-                    }
-                    .button {
-                        width: 100%;
-                        float: left;
-                        position: relative;
-                        left: 0;
-                        bottom: 0;
-                        margin-top: 1.5em;
-                         a {
-                            margin: 0.5em;
-                        }
-                    }
-
-
-                }
-            }
-        }
-        #bner {
-            width: 100%;
-            height: 530px;
-            padding-bottom: 20px;
-            float: left;
-        }
-        menu {
-            width: 15%;
-            float: left;
-            font-size: 0.875em;
-            padding-bottom: 2em;
-            li {
-                padding: 0 2em 0 0.5em;
-                a {
-                    line-height: 2;
-                }
-            }
-        }
-        section, article {
-            width: 85%;
-            float: right;
-        }
-        section {
-        }
-        article {
-            h3 {
-                text-indent: 1.7em;
-                line-height: 2em;
-            }
-        }
-    }
-}*/

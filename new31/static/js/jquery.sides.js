@@ -83,6 +83,14 @@
                         var w = self.site[index].width() - $this.width();
                         if (w > 0) {
                             width += w / 2;
+
+                            var uw = 0;
+                            for (var i in self.site){
+                                uw += self.site[i].width();
+                            }
+                            self.ul.css({
+                                'min-width': uw
+                            });
                         }
                         self.ul.animate({
                             "marginLeft": -width
@@ -91,6 +99,7 @@
                 },
                 start: function() {
                     var self = this;
+
                     this.t = setInterval(function() {
                         self.roll()
                     }, this.interv);
@@ -102,26 +111,29 @@
                 },
                 roll: function() {
                     // 不要问我为什么不用index, 都是傻逼ie6
-                    var i = this.num.find('.on').prevAll('span').length + 1;
+                    var on = this.num.find('.on');
+
+                    var i =  on.length ? on.prevAll('span').length + 1 : 0;
+
                     this.btns[(i == this.site.length) ? 0 : i].click();
                     return this;
                 },
                 ready: function() {
                     var self = this;
                     self.ul.find('li').css({
-                        'float': 'left'
+                        'float': 'left',
+                        'height': '100%'
                     }).each(function(i) {
                         self.site.push($(this));
                         self.btns.push(self.button());
                     });
-                    self.btns.length && self.btns[0].addClass('on').css(css.on);
+
                     self.ul.css({
-                        'width': $this.width() * self.site.length
+                        'min-width': $this.width() * self.site.length * 2
                     }).wrap(self.warper).after(self.num.append(self.btns));
-                    // $('img', $this).css({
-                    //     width: 'auto',
-                    //     height: 'auto'
-                    // });
+
+                    self.roll();
+
                     return this.start();
                 }
             }.ready();
