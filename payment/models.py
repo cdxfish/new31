@@ -79,4 +79,4 @@ class Pay(models.Model):
         return u"%s - %s [ %s ]" % (self.get_cod_display(), self.cod, self.onl)
 
     class Meta:
-        verbose_name = u'支付方式'
+        verbose_name_plural = u'支付方式'

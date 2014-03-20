@@ -22,7 +22,7 @@ class ProQuerySet(models.query.QuerySet):
 
         return total
 
-class proManager(models.Manager):
+class ProManager(models.Manager):
     '''Use this class to define methods just on Entry.objects.'''
     def get_query_set(self):
         return ProQuerySet(self.model)
@@ -119,7 +119,7 @@ class Pro(models.Model):
     dis = models.FloatField(u'折扣', default=1.0, choices=Dis.chcs)
     status = models.SmallIntegerField(u'生产状态', default=0, editable=False, choices=chcs)
 
-    objects = proManager()
+    objects = ProManager()
 
     def total(self):
         from new31.func import frMtFee
@@ -132,3 +132,5 @@ class Pro(models.Model):
 
     class Meta:
         ordering = ['sn']
+        verbose_name_plural = u'产品'
+        # app_label = 'order'

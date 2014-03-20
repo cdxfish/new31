@@ -20,4 +20,5 @@ class Image(models.Model):
 
     class Meta:
         ordering = ['sort']
-        unique_together=(("img"),)
+        unique_together=(('img'),)
+        verbose_name_plural = u'图片'

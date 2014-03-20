@@ -96,4 +96,4 @@ class Msg(models.Model):
 
     class Meta:
         ordering = ['time']
-        # verbose_name = u'消息推送'
+        verbose_name_plural = u'消息推送'

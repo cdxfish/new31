@@ -10,19 +10,19 @@ class Main(object):
         u"""订单提交"""
         from django.contrib import messages
 
-        oPt = self.ord.pro_set.all().total()
-        pt = self.ord.user.pts.pt
-
         try:
+            oPt = self.ord.pro_set.all().total()
+            pt = self.ord.user.pts.pt
             self.ord.user.pts.set(-oPt)
         except Exception, e:
-            messages.success(self.request, u'积分不足，无法支付。')
+            messages.success(self.request, u'会员帐号不存在或积分不足，无法支付。')
             raise e
         else:
             messages.success(self.request, u'用户积分已扣除')
 
             note = u'订单流程: %d | 积分 %d > %d' % ( self.ord.sn, pt, self.ord.user.pts.pt )
             self.ord.user.userlog.update(self.ord.user, self.request.user, note)
+            # self.ord.fnc.cPay()
 
         return self
 

@@ -88,4 +88,4 @@ class Ord(models.Model):
 
     class Meta:
         ordering = ['-sn']
-        # verbose_name = u'订单基本信息'
+        verbose_name_plural = u'订单'

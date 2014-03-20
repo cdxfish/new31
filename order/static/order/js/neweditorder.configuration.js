@@ -90,6 +90,7 @@ aeog = {
                 $('#nfee' + data.data.mark).text(data.data.nfee);
                 $('#st' + data.data.mark).text(data.data.st);
                 $('#total').text(data.data.total);
+                return $.dialog.close();
             });
 
         });

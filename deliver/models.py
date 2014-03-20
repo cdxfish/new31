@@ -30,5 +30,5 @@ class Deliver(models.Model):
     def __unicode__(self):
         return u"%s - %s" % (self.get_cod_display(), self.onl)
 
-    # class Meta:
-        # verbose_name = u'支付方式'
+    class Meta:
+        verbose_name_plural = u'物流方式'

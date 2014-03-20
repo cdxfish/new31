@@ -144,6 +144,10 @@ class Item(models.Model):
     def __unicode__(self):
         return u"%s - %s [ onl: %s ] [ show: %s ]" % (self.name, self.sn, self.onl, self.show)
 
+    class Meta:
+        verbose_name_plural = u'商品信息'
+
+
 
 class ItemDesc(models.Model):
     item = models.ForeignKey(Item, verbose_name=u'商品')
@@ -157,6 +161,7 @@ class ItemDesc(models.Model):
     class Meta:
         ordering = ['item', 'desc']
         unique_together=(('item', 'desc'),)
+        verbose_name_plural = u'商品描述'
 
 
 class ItemSpec(models.Model):
@@ -174,6 +179,8 @@ class ItemSpec(models.Model):
     class Meta:
         ordering = ['item', 'spec']
         unique_together=(("item","spec"),)
+        verbose_name_plural = u'商品规格'
+
 
 
 class ItemFee(models.Model):
@@ -199,6 +206,8 @@ class ItemFee(models.Model):
     class Meta:
         ordering = ['spec__item','fee']
         unique_together=(("spec", "typ"),)
+        verbose_name_plural = u'商品价格'
+
 
 class ItemImg(models.Model):
     chcs = ((0, u'188*188'), (1, u'379*188'), (2, u'***450'), (3, u'***960'), (4, u'600*450'),)
@@ -214,3 +223,4 @@ class ItemImg(models.Model):
     class Meta:
         ordering = ['item', 'img']
         unique_together=(("img"),)
+        verbose_name_plural = u'商品图片'

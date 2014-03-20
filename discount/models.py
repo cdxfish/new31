@@ -64,3 +64,4 @@ class Dis(models.Model):
 
     class Meta:
         ordering = ['-dis']
+        verbose_name_plural = u'折扣'

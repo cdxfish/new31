@@ -165,6 +165,9 @@ class BsInfo(models.Model):
 
         return self
 
+    class Meta:
+        verbose_name_plural = u'会员信息'
+
 class Pts(models.Model):
     user = models.OneToOneField(User, verbose_name=u'用户')
     pt = models.IntegerField(u'积分', default=0)
@@ -178,3 +181,6 @@ class Pts(models.Model):
 
     def __unicode__(self):
         return u"%s [ 积分:%s ]" % (self.user, self.pt)
+
+    class Meta:
+        verbose_name_plural = u'积分'

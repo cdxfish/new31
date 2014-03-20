@@ -11,3 +11,4 @@ class Spec(models.Model):
 
     class Meta:
         ordering = ['value']
+        verbose_name_plural = u'规格'

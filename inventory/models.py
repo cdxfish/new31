@@ -126,6 +126,10 @@ class InvPro(models.Model):
     def __unicode__(self):
         return u"%s - %s" % (self.spec, self.get_onl_display())
 
+    class Meta:
+        verbose_name_plural = u'备货清单'
+
+
 class InvNum(models.Model):
 
     pro = models.ForeignKey(InvPro, verbose_name=u'备货清单')
@@ -139,3 +143,4 @@ class InvNum(models.Model):
 
     class Meta:
         unique_together=(('pro','date'),)
+        verbose_name_plural = u'备货量'

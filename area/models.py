@@ -46,6 +46,10 @@ class Area(models.Model):
     def __unicode__(self):
         return u"%s [ onl: %s]" % (self.get_name_display(), self.onl)
 
+    class Meta:
+        verbose_name_plural = u'地区'
+
+
 class Attribution(models.Model):
     user = models.ForeignKey(User, verbose_name=u'用户')
     area = models.ForeignKey(Area, verbose_name=u'地区')
@@ -58,3 +62,4 @@ class Attribution(models.Model):
     class Meta:
         ordering = ['user']
         unique_together=(('user', 'area'),)
+        verbose_name_plural = u'归属地'

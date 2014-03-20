@@ -32,3 +32,4 @@ class Tag(models.Model):
 
     class Meta:
         ordering = ['tag']
+        verbose_name_plural = u'标签'

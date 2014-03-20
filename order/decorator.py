@@ -64,7 +64,7 @@ def subDr(func):
             return func(request, *args, **kwargs)
         except Exception, e:
 
-            raise e # 如需debug这取消此注释
+            # raise e # 如需debug这取消此注释
             return rdrtBck(request)
 
     return _func

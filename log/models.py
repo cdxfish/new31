@@ -43,7 +43,7 @@ class OrdLog(models.Model):
 
     class Meta:
         unique_together=(("ord","time"),)
-        # verbose_name = u'订单日志'
+        verbose_name_plural = u'订单日志'
         # 记录类似于下单时间.付款时间.发货时间等
 
 

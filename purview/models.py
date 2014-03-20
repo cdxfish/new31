@@ -84,6 +84,8 @@ class Element(models.Model):
 
     class Meta:
         ordering = ['-path']
+        verbose_name_plural = u'页面'
+        # app_label = 'auth'
 
 
 class EleSub(models.Model):
@@ -96,6 +98,8 @@ class EleSub(models.Model):
 
     class Meta:
         ordering = ['-path']
+        verbose_name_plural = u'从属'
+        # app_label = 'auth'
 
 
 class Privilege(models.Model):
@@ -118,6 +122,10 @@ class Privilege(models.Model):
 
     def __unicode__(self):
         return u"%s [ onl: %s ]" % (self.get_name_display(), self.onl)
+
+    class Meta:
+        verbose_name_plural = u'权限集'
+        # app_label = 'auth'
 
 
 class Role(models.Model):
@@ -152,3 +160,7 @@ class Role(models.Model):
 
     def __unicode__(self):
         return u"%s [ onl:%s ]" % (self.get_role_display(), self.onl)
+
+    class Meta:
+        verbose_name_plural = u'角色'
+        # app_label = 'auth'

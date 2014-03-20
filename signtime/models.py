@@ -29,3 +29,6 @@ class SignTime(models.Model):
 
     def __unicode__(self):
         return u"%s - %s [ onl: %s ]" % (self.start, self.end, self.onl)
+
+    class Meta:
+        verbose_name_plural = u'物流时间'

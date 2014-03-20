@@ -75,6 +75,8 @@ def userLogDr(func):
         from log.models import AccountLog
         try:
             u = User.objects.get(username=request.POST.get('u'))
+            pts = u.pts
+            bsinfo = u.bsinfo
 
             rObj = func(request, *args, **kwargs)
 
@@ -86,11 +88,11 @@ def userLogDr(func):
             edit += '[%s %s > %s] ' % (u'姓氏', u.last_name, _u.last_name)
             edit += '[%s %s > %s] ' % (u'名字', u.first_name, _u.first_name)
             edit += '[%s %s > %s] ' % (u'电子邮件地址', u.email, _u.email)
-            edit += '[%s %s > %s] ' % (u'性别', u.bsinfo.get_sex_display(), _u.bsinfo.get_sex_display())
-            edit += '[%s %s > %s] ' % (u'月', u.bsinfo.get_mon_display(), _u.bsinfo.get_mon_display())
-            edit += '[%s %s > %s] ' % (u'日', u.bsinfo.get_day_display(), _u.bsinfo.get_day_display())
-            edit += '[%s %s > %s] ' % (u'类型', u.bsinfo.get_typ_display(), _u.bsinfo.get_typ_display())
-            edit += '[%s %s > %s] ' % (u'积分', u.pts.pt, _u.pts.pt)
+            edit += '[%s %s > %s] ' % (u'性别', bsinfo.get_sex_display(), _u.bsinfo.get_sex_display())
+            edit += '[%s %s > %s] ' % (u'月', bsinfo.get_mon_display(), _u.bsinfo.get_mon_display())
+            edit += '[%s %s > %s] ' % (u'日', bsinfo.get_day_display(), _u.bsinfo.get_day_display())
+            edit += '[%s %s > %s] ' % (u'类型', bsinfo.get_typ_display(), _u.bsinfo.get_typ_display())
+            edit += '[%s %s > %s] ' % (u'积分', pts.pt, _u.pts.pt)
 
             a = AccountLog()
             a.user = _u

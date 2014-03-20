@@ -2,8 +2,20 @@
 from django.db import models
 
 # Create your models here.
+class FncQuerySet(models.query.QuerySet):
+    '''Use this class to define methods on queryset itself.'''
+    def cPay(self):
+        for i in self:
+            i.cStatus()
+
+        return self
+
 
 class fncManager(models.Manager):
+    '''Use this class to define methods just on Entry.objects.'''
+    def get_query_set(self):
+        return FncQuerySet(self.model)
+
     def getActTuple(self, i):
 
         return tuple([ i[0] for i in Fnc.act[i]])
@@ -25,7 +37,7 @@ class fncManager(models.Manager):
 
         return self
 
-    def cStatus(self, sn , s):
+    def cStatus(self, sn, s):
         fnc = self.get(ord=sn)
 
         fnc.status = s
@@ -71,10 +83,17 @@ class Fnc(models.Model):
     cod = models.ForeignKey(Pay, verbose_name=u'支付方式')
     status = models.SmallIntegerField(u'支付状态', default=0, choices=chcs)
 
+    def cPay(self):
+        self.status = 1
+
+        self.save()
+        return self
+
     objects = fncManager()
 
     def __unicode__(self):
         return u"%s - %s [ %s ]" % ( self.ord, self.cod.get_cod_display(), self.get_status_display() )
 
-    # class Meta:
-        # verbose_name = u'订单支付'
+    class Meta:
+        verbose_name_plural = u'财务'
+        # app_label = 'order'

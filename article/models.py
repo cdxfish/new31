@@ -14,4 +14,4 @@ class Article(models.Model):
         return u"%s - %s [ onl: %s ]" % (self.title, self.tag, self.onl)
 
     class Meta:
-        verbose_name = u'文章'
+        verbose_name_plural = u'文章'
