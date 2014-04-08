@@ -289,6 +289,33 @@ body {
         }
         em {
             float: right;
+
+            a {
+                margin-left: 1rem;
+
+                &.ico_wx{
+
+                    width:28px;
+                    height: 30px;
+                    background:url(/static/images/ico_wx.gif) no-repeat 0 0;
+
+                    &:hover {
+                        .ico {display:block;}
+                        .img-wx {display:block;}
+                    }
+                    .img-wx {
+                        display:none;
+                        position:absolute;
+                        top:-189px;
+                        left:-61px;
+                        width:144px;
+                        height:183px;
+                        background:url(/static/images/2wm_wx.png) no-repeat 0 0;
+                        z-index:54;
+                    }
+                }
+                .ico {display:none; position:absolute; top:-7px; left:7px; width:9px; height:9px; background:url(/static/images/ico_2wm.png) no-repeat 0 0; z-index:55;}
+            }
         }
     }
 

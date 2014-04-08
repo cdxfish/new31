@@ -22,8 +22,7 @@ def tagShow(request, tag):
     u"""标签"""
     from item.models import Item
 
-    items = Item.objects.getShowByTag(tag)
-
+    items = Item.objects.getShowByTag(tag).order_by('-itemweight__wh', 'sn')
 
     return render_to_response('tag.htm', locals(), context_instance=RequestContext(request))
 

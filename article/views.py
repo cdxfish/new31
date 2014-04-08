@@ -2,6 +2,7 @@
 u"""关于"""
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.http import Http404
 
 # Create your views here.
 
@@ -12,8 +13,7 @@ def article(request, tag):
     alists = Article.objects.values('tag', 'title')
     try:
         article = Article.objects.get(tag=tag)
-    except Exception, e:
-        # raise e
-        pass
+        return render_to_response('article.htm', locals(), context_instance=RequestContext(request))
 
-    return render_to_response('article.htm', locals(), context_instance=RequestContext(request))
+    except Exception, e:
+        raise Http404

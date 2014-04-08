@@ -2,7 +2,7 @@ t = {
     like: function() {
         $(document).on('click', '.btnLike', function() {
             $.dialog.ajax($(this).attr('href'), function(data) {
-                $.dialog.msg('衷心感谢您的喜欢！');
+                $.dialog.msg($('<p></p>').text('识货！'));
                 $('.count_like_' + data.data.id).text(data.data.like);
             });
             return false;

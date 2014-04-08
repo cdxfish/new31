@@ -1,5 +1,9 @@
 {% extends "shop.base.htm" %}
 
+{% if article.title %}
+{% block title %}{{ article.title }}{% endblock %}
+{% endif %}
+
 {% block section %}
         <menu id="sidebar">
 {% for i in alists %}

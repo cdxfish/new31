@@ -1,11 +1,13 @@
 /*
  *
- * sides 0.0 - jquery幻灯片插件
- * Version 0.0.2
+ * sides 0.1 - jquery幻灯片插件
+ * Version 0.1.2
  * @requires jQuery v1.8.3
  *
  * Copyright (c) 2013 leiddx
  * 自用.
+ *
+ * 修正无图片情况下roll方法失效bug
  *
  */
 (function($) {
@@ -115,7 +117,10 @@
 
                     var i =  on.length ? on.prevAll('span').length + 1 : 0;
 
-                    this.btns[(i == this.site.length) ? 0 : i].click();
+                    if (this.btns.length){
+                        this.btns[(i == this.site.length) ? 0 : i].click();
+
+                    }
                     return this;
                 },
                 ready: function() {

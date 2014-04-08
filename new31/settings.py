@@ -169,6 +169,7 @@ APPS = {
     'bom':'',
     'article':'',
     'wechat':'',
+    'weight':'',
     }
 
 

@@ -24,7 +24,7 @@
         <aside class="pinInfo">
           <div><time itemprop="pubdate" datetime="{{ i.addTime|date:'Y-m-d H:i' }}">{{ i.addTime }}</time></div>
           <div itemprop="sales" class="sales">销量 {{ i.click }}</div>
-          <div itemprop="like" class="like">喜欢 <span class="count_like_{{ i.id }}">{{ i.like }}</span></div>
+          <div itemprop="like" class="like">赞 <span class="count_like_{{ i.id }}">{{ i.like }}</span></div>
         </aside>
         <nav>
 {% for iii in i.tag.getByRandom|slice:":9" %}
@@ -32,7 +32,7 @@
 {% endfor %}
         </nav>
         <div class="button">
-          <a class="btn btnbr btnLike" href="{% url 'tag:itemLike' i.id %}">喜欢</a>
+          <a class="btn btnbr btnLike" href="{% url 'tag:itemLike' i.id %}">赞</a>
           <a class="btn btnbr btnBuy" href="{% url 'tag:getSpec' i.id %}">购买</a>
         </div>
       </section>
