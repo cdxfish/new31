@@ -13,7 +13,7 @@
     <li itemscope itemid="{{ i.sn }}" class="item">
       <div class="styp">
         <ul>
-{% for ii in i.itemimg_set.getBImgs %}
+{% for ii in i.itemimg_set.getBImg %}
           <li><img alt="{{ i.name }}" title="{{ i.name }}" data-src="{{ ii.img.url }}" /><span itemprop="image" style="display:none;">{{ ii.img.url }}</span></li>
 {% endfor %}
         </ul>
