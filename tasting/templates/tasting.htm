@@ -1,0 +1,50 @@
+{% extends "shop.base.htm" %}
+
+{% block section %}
+<section>
+<form action="{% url 'tasting:tastsave' %}" method="POST" name="checkout" id="checkout">
+        <table width="100%" id="tasting">
+            <tr>
+                <td align="right" width="100px">{{ frm.company.label }}：</td>
+                <td>{{ frm.company }}</td>
+            </tr>
+            <tr>
+                <td align="right">{{ frm.address.label }}：</td>
+                <td>{{ frm.address }}</td>
+            </tr>
+            <tr>
+                <td align="right">{{ frm.department.label }}：</td>
+                <td>{{ frm.department }}</td>
+            </tr>
+            <tr>
+                <td align="right">{{ frm.contact.label }}：</td>
+                <td>{{ frm.contact }}</td>
+            </tr>
+            <tr>
+                <td align="right">{{ frm.tel.label }}：</td>
+                <td>{{ frm.tel }}</td>
+            </tr>
+            <tr>
+                <td align="right">{{ frm.time.label }}：</td>
+                <td>{{ frm.time }}</td>
+            </tr>
+            <tr>
+                <td align="right">{{ frm.scale.label }}：</td>
+                <td>{{ frm.scale }}</td>
+            </tr>
+        </table>
+        <center>
+            {% csrf_token %}
+            <input type="submit" name="submit" value="提交申请" class="btn btnbr" />
+        </center>
+    </form>
+</section>
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.sides.js"></script>
+{% endblock %}
+
+{% block javascript %}
+  $('#bner').sides();
+{% endblock %}

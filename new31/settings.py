@@ -170,6 +170,7 @@ APPS = {
     'article':'',
     'wechat':'',
     'weight':'',
+    'tasting':'',
     }
 
 
