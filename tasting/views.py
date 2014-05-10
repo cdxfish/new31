@@ -6,6 +6,15 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+def apply(request):
+    u"""试吃"""
+    from models import Apply
+
+    applys = Apply.objects.all()
+
+    return render_to_response('apply.htm', locals(), context_instance=RequestContext(request))
+
+
 # @login_required
 def tasting(request):
     u"""试吃申请"""
