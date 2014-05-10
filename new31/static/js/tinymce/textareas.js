@@ -1,4 +1,5 @@
-tinyMCE.init({
-    mode : "textareas",
-    theme : "modern"
+tinymce.init({
+    selector: 'textarea',
+    plugins: "image",
+    image_advtab: true
 });

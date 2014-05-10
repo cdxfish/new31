@@ -96,7 +96,7 @@ class itemImgManager(models.Manager):
 
     def getBImgs(self):
 
-        return self.select_related().filter((models.Q(typ=2) | models.Q(typ=3)), onl=True, item__onl=True).order_by('?')
+        return self.select_related().filter(models.Q(typ=4), onl=True, item__onl=True).order_by('?')
 
     def getBImg(self):
 
