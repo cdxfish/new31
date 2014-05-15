@@ -1,5 +1,8 @@
 tinymce.init({
     selector: 'textarea',
-    plugins: "image",
-    image_advtab: true
+    plugins: 'image link',
+    image_advtab: true,
+    language:'zh_CN',
+    remove_script_host: true
+
 });

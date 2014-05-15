@@ -342,13 +342,12 @@ class OrdSerch(object):
 
 
     def baseSearch(self):
+        self.oList = self.oList.filter(logcs__area__in=self.request.user.attribution_set.getAreaName())
+
         if re.match(ur'\d{4}\-\d{2}\-\d{2}', self.initial['k']):
             self.oList = self.oList.filter(logcs__date=self.initial['k'])
         else:
-
             self.oList = self.oList.filter(
-                    logcs__area__in=self.request.user.attribution_set.getAreaName()
-                ).filter(
                     Q(sn__contains=self.initial['k']) |
                     Q(user__username__contains=self.initial['k']) |
                     Q(logcs__consignee__contains=self.initial['k']) |

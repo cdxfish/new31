@@ -12,12 +12,7 @@ import random
 # APP For Shop UI
 def shop(request, *args):
     u"""商城首页"""
-    from tag.models import Tag
     from upload.models import Image
-
-    items = ItemPin(10).getItems(sort)
-
-    tags = Tag.objects.getByRandom()[:8]
 
     ad = Image.objects.getAll()
 
