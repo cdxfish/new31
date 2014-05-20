@@ -5,14 +5,24 @@
           <tr>
             <th>公司名称</th>
             <th>公司地址</th>
-            <th>部门</th>
+            <th>公司部门</th>
             <th>申请人</th>
-            <th>联系电话</th>
-            <th>公司人数</th>
-            <th>申请填写时间</th>
-            <th>试吃申请状态</th>
-            <th>市场专员</th>
-            <th width="50px">操作</th>
+            <th>联系电话 | 办公电话</th>
+            <th width="8%">时间安排</th>
+            <th width="8%">公司规模</th>
+            <th width="8%">申请时间</th>
           </tr>
+{% for i in applys %}
+          <tr align="center">
+              <td>{{ i.company }}</td>
+              <td>[ {{ i.area }} ] {{ i.address }}</td>
+              <td>{{ i.department }}</td>
+              <td>{{ i.applicant }}</td>
+              <td>{{ i.tel }} | {{ i.phone }}</td>
+              <td>{{ i.get_time_display }}</td>
+              <td>{{ i.get_scale_display }}</td>
+              <td>{{ i.addtime|date:"Y-m-d" }}</td>
+          </tr>
+{% endfor %}
         </table>
 {% endblock %}

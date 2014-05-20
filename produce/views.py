@@ -52,14 +52,14 @@ def modifyPro(request, sn, s):
     )
 
 @proDr
-@msgPushDr
+# @msgPushDr
 def nullPro(request, sn, s):
     u"""生产状态修改-> 生产未产"""
 
     return modifyPro(request=request, sn=sn, s=s)
 
 @proDr
-@msgPushDr
+# @msgPushDr
 @msgPushToRoleDr(-1, 11)
 def requirePro(request, sn, s):
     u"""生产状态修改-> 生产产求"""
@@ -67,21 +67,21 @@ def requirePro(request, sn, s):
     return modifyPro(request=request, sn=sn, s=s)
 
 @proDr
-@msgPushDr
+# @msgPushDr
 def duringPro(request, sn, s):
     u"""生产状态修改-> 生产产中"""
 
     return modifyPro(request=request, sn=sn, s=s)
 
 @proDr
-@msgPushDr
+# @msgPushDr
 def refusePro(request, sn, s):
     u"""生产状态修改-> 生产拒产"""
 
     return modifyPro(request=request, sn=sn, s=s)
 
 @proDr
-@msgPushDr
+# @msgPushDr
 def readyPro(request, sn, s):
     u"""生产状态修改-> 生产已产"""
 

@@ -161,7 +161,7 @@ def logcsSign(request, sn, s):
     return modifyLogcs(request=request, sn=sn, s=s)
 
 @logcsDr(1)
-@msgPushDr
+# @msgPushDr
 @msgPushToRoleDr(7, 8, 9, 10, 12, 13)
 def logcsStop(request, sn, s):
     u"""物流状态修改-> 物流止送"""

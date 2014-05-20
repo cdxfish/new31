@@ -139,21 +139,21 @@ def editOrd(request, sn, s):
     return redirect('order:editOrdFrm')
 
 @ordDr(1)
-@msgPushToRoleDr(2)
+# @msgPushToRoleDr(2)
 def confirmOrd(request, sn, s):
     u"""订单状态修改-> 订单确认"""
 
     return modifyOrd(request=request, sn=sn, s=s)
 
 @ordDr(1)
-@msgPushDr
+# @msgPushDr
 def nullOrd(request, sn, s):
     u"""订单状态修改-> 订单无效"""
 
     return modifyOrd(request=request, sn=sn, s=s)
 
 @ordDr(1)
-@msgPushToRoleDr(2)
+# @msgPushToRoleDr(2)
 def stopOrd(request, sn, s):
     u"""订单状态修改-> 订单止单"""
 
