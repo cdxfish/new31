@@ -108,7 +108,8 @@ class Build(models.Model):
         )
 
     build = models.SmallIntegerField(u'厂房', default=0, choices=chcs)
-    area = models.ForeignKey(Area, verbose_name=u'供货区域')
+    area = models.ManyToManyField(Area, verbose_name=u'供货区域')
+    # area = models.ForeignKey(Area, verbose_name=u'供货区域')
     onl = models.BooleanField(u'上线', default=True)
 
     def __unicode__(self):
@@ -138,7 +139,7 @@ class InvPro(models.Model):
         )
 
     spec = models.OneToOneField(ItemSpec, verbose_name=u'商品规格')
-    # build = models.ForeignKey(Build, verbose_name=u'厂房')
+    build = models.ForeignKey(Build, verbose_name=u'厂房')
     onl = models.BooleanField(u'备货', default=False, choices=chcs)
 
     objects = invProManager()
@@ -166,14 +167,14 @@ class InvNum(models.Model):
         verbose_name_plural = u'备货量'
 
 
-class InvBuild(models.Model):
+# class InvBuild(models.Model):
 
-    build = models.ForeignKey(Build, verbose_name=u'厂房')
-    inv = models.ForeignKey(InvPro, verbose_name=u'备货清单')
+#     build = models.ForeignKey(Build, verbose_name=u'厂房')
+#     inv = models.ForeignKey(InvPro, verbose_name=u'备货清单')
 
 
-    def __unicode__(self):
-        return u'%s - [ inv: %s ]' % (self.build, self.inv)
+#     def __unicode__(self):
+#         return u'%s - [ inv: %s ]' % (self.build, self.inv)
 
-    class Meta:
-        verbose_name_plural = u'厂房备货量'
+#     class Meta:
+#         verbose_name_plural = u'厂房备货量'
