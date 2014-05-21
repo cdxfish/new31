@@ -14,21 +14,52 @@
           <tr>
             <th>名称</th>
             <th>规格</th>
+            <th>厂房</th>
             <th>预 | 库 | 总</th>
             <th>数量</th>
             <th>操作</th>
           </tr>
 {% for i in pro %}
-          <tr align="center" class="tr_border_top_black">
+          <tr align="center" class="tr_border_top_rare">
             <td>{{ i.name }}</td>
-            <td>&nbsp;</td>
+            <!-- <td>&nbsp;</td> -->
+            <!-- <td><span class="wow_item_1">{{ i.adv }}</span> | <span class="wow_item_8">{{ i.count }}</span> | <span class="wow_item_0">{{ i.num }}</span></td> -->
+            <td colspan="5">&nbsp;</td>
+          </tr>
+          <tr align="center" class="tr_border_top_black">
+            <td colspan="2">&nbsp;</td>
+            <td>南宁</td>
             <td><span class="wow_item_1">{{ i.adv }}</span> | <span class="wow_item_8">{{ i.count }}</span> | <span class="wow_item_0">{{ i.num }}</span></td>
             <td colspan="2">&nbsp;</td>
           </tr>
+
 {% for ii in i.invnum %}
           <tr align="center">
             <td>&nbsp;</td>
             <td>{{ ii.spec.spec.value }}</td>
+            <td>&nbsp;</td>
+            <td><span class="wow_item_1">{{ ii.invnum.adv }}</span> | <span class="wow_item_8">{{ ii.invnum.count }}</span> | <span class="wow_item_0">{{ ii.invnum.num }}</span></td>
+            <td>{% if ii.action %}<input ytpe="text" name="n{{ ii.invnum.id }}" value="1" size="1" />{% else %}&nbsp;{% endif %}</td>
+            <td nowrap="nowrap" align="center">
+{% for iii in ii.action  %}
+            <a href="{% url iii.2 ii.invnum.id 1 %}" class="button act">{{ iii.1 }}</a>
+{% endfor %}
+            </td>
+          </tr>
+{% endfor %}
+          </tr>
+          <tr align="center" class="tr_border_top_black">
+            <td colspan="2">&nbsp;</td>
+            <td>长沙</td>
+            <td><span class="wow_item_1">{{ i.adv }}</span> | <span class="wow_item_8">{{ i.count }}</span> | <span class="wow_item_0">{{ i.num }}</span></td>
+            <td colspan="2">&nbsp;</td>
+          </tr>
+
+{% for ii in i.invnum %}
+          <tr align="center">
+            <td>&nbsp;</td>
+            <td>{{ ii.spec.spec.value }}</td>
+            <td>&nbsp;</td>
             <td><span class="wow_item_1">{{ ii.invnum.adv }}</span> | <span class="wow_item_8">{{ ii.invnum.count }}</span> | <span class="wow_item_0">{{ ii.invnum.num }}</span></td>
             <td>{% if ii.action %}<input ytpe="text" name="n{{ ii.invnum.id }}" value="1" size="1" />{% else %}&nbsp;{% endif %}</td>
             <td nowrap="nowrap" align="center">

@@ -4,7 +4,7 @@ from new31.func import frMtFee
 
 # Create your models here.
 class ProQuerySet(models.query.QuerySet):
-    '''Use this class to define methods on queryset itself.'''
+    '''Use this class to define methods on queryset it self.'''
 
     def pts(self):
         total = 0
