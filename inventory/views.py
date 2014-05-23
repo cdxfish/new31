@@ -2,8 +2,11 @@
 u"""备货"""
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.http import HttpResponse
 from new31.func import rdrtBck
 from new31.decorator import rdrtBckDr
+from message.models import Msg
+from message.decorator import ajaxErrMsg
 import datetime
 # Create your views here.
 
@@ -50,19 +53,28 @@ def sort(pro):
 def stockInv(request):
     u"""备货清单"""
     from item.models import Item
+    from models import Build, InvPro
 
     items = Item.objects.getAll()
+    build = Build.objects.getAll()
+
+    for i in items:
+        i.build = [{ 'build': ii, 'invpro': [ InvPro.objects.getOnl(iii.id, ii.id) for iii in i.itemspec_set.all() ]  } for ii in build]
 
     return render_to_response('inventorylist.htm', locals(), context_instance=RequestContext(request))
 
-@rdrtBckDr(u'该规格已下架')
+@ajaxErrMsg('该规格已下架')
 def cOnlInv(request, sn):
     u"""备货选择"""
     from models import InvPro
 
-    InvPro.objects.cOnl(sid=sn)
+    invpro = InvPro.objects.cOnl(sid=sn)
 
-    return rdrtBck(request)
+    return HttpResponse(Msg.objects.dumps(data={
+                'onl': invpro.onl
+            }
+        )
+    )
 
 def defaultInv(request, s):
     u"""备货格式化"""

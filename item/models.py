@@ -4,12 +4,13 @@ from django.db import models
 
 class itemQuerySet(models.query.QuerySet):
     '''Use this class to define methods on queryset itself.'''
-    def __iter__(self):
-        for i in models.query.QuerySet.__iter__(self):
-            i.click += 1
-            i.save()
+    # def __iter__(self):
+    #     for i in models.query.QuerySet.__iter__(self):
+    #         i.click += 1
+    #         i.save()
 
-        return models.query.QuerySet.__iter__(self)
+    #     return models.query.QuerySet.__iter__(self)
+    pass
 
 
 class itemManager(models.Manager):

@@ -7,6 +7,7 @@ class Apply(models.Model):
     chcs = (
             (0, u'上午'),
             (1, u'下午'),
+            (2, u'中午'),
         )
 
     _chcs = (

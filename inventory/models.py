@@ -5,25 +5,35 @@ from area.models import Area
 import datetime
 
 # Create your models here.
-class invProManager(models.Manager):
-    def cOnl(self, sid):
-        try:
-            invpro = self.select_related().get(spec__id=sid, spec__onl=True)
-
-        except Exception, e:
-            from item.models import ItemSpec
-
-            invpro = InvPro()
-            invpro.spec = ItemSpec.objects.get(id=sid)
-            invpro.save()
-
-        invpro.onl = False if invpro.onl else True
-        invpro.save()
+class buildManager(models.Manager):
 
     def getAll(self):
 
         return self.select_related().filter(onl=True)
 
+class invProManager(models.Manager):
+    def cOnl(self, sid):
+        invpro = self.get(id=sid)
+        invpro.onl = False if invpro.onl else True
+        invpro.save()
+
+        return invpro
+
+    def getOnl(self, sid, bid):
+        try:
+            return self.get(spec__id=sid, build__id=bid)
+        except Exception, e:
+            raise e
+            from item.models import ItemSpec
+
+            invpro = InvPro()
+            invpro.spec = ItemSpec.objects.get(id=sid)
+            invpro.build = Build.objects.get(id=bid)
+            invpro.save()
+            return invpro
+    def getAll(self):
+
+        return self.select_related().filter(onl=True)
 
 class invNumManager(models.Manager):
     def default(self, date=''):
@@ -112,8 +122,10 @@ class Build(models.Model):
     # area = models.ForeignKey(Area, verbose_name=u'供货区域')
     onl = models.BooleanField(u'上线', default=True)
 
+    objects = buildManager()
+
     def __unicode__(self):
-        return u'%s - [ onl: %s ]' % (self.build, self.onl)
+        return u'%s - [ onl: %s ]' % (self.get_build_display(), self.onl)
 
     class Meta:
         verbose_name_plural = u'厂房'
@@ -138,16 +150,22 @@ class InvPro(models.Model):
                 (_typ[0], _typ[1], ),
         )
 
-    spec = models.OneToOneField(ItemSpec, verbose_name=u'商品规格')
+    spec = models.ForeignKey(ItemSpec, verbose_name=u'商品规格')
     build = models.ForeignKey(Build, verbose_name=u'厂房')
     onl = models.BooleanField(u'备货', default=False, choices=chcs)
+
+    def _onl(self):
+
+
+        return self.onl
 
     objects = invProManager()
 
     def __unicode__(self):
-        return u"%s - %s" % (self.spec, self.get_onl_display())
+        return u"%s - %s [ %s ]" % (self.spec, self.build.get_build_display(), self.get_onl_display())
 
     class Meta:
+        unique_together=(('spec','build'),)
         verbose_name_plural = u'备货清单'
 
 
@@ -165,16 +183,3 @@ class InvNum(models.Model):
     class Meta:
         unique_together=(('pro','date'),)
         verbose_name_plural = u'备货量'
-
-
-# class InvBuild(models.Model):
-
-#     build = models.ForeignKey(Build, verbose_name=u'厂房')
-#     inv = models.ForeignKey(InvPro, verbose_name=u'备货清单')
-
-
-#     def __unicode__(self):
-#         return u'%s - [ inv: %s ]' % (self.build, self.inv)
-
-#     class Meta:
-#         verbose_name_plural = u'厂房备货量'
