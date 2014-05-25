@@ -76,7 +76,35 @@
       <address>
         <a href="{% url 'article:article' 'about' %}">关于31客</a>
       </address>
-      <em><a href="{% url 'article:article' 'contact' %}"><img src="{{ STATIC_URL }}images/ico_tel.png"></a><a href="{% url 'article:article' 'contact' %}"><img src="{{ STATIC_URL }}images/qq_logo.png"><a href="{% url 'article:article' 'contact' %}"><img src="{{ STATIC_URL }}images/weixin_logo.png"></a><a href="{% url 'article:article' 'contact' %}"><img src="{{ STATIC_URL }}images/weibo_logo.png"></a></em>
+      <em>
+      <ul>
+        <li><a href="{% url 'tasting:tasting'  %}" title="免费品尝"><img src="{{ STATIC_URL }}images/f0f5.png"></a></li>
+        <li>
+          <a href="{% url 'article:article' 'contact' %}" title="客服电话"><img src="{{ STATIC_URL }}images/ico_tel.png" title="客服电话"></a>
+          <div class="dico tel">
+            <span class="ico">
+              <em>0771 - 5676920 ( 南宁 )</em>
+              <em>0771 - 5676753 ( 南宁 )</em>
+              <em>0771 - 89708031 ( 长沙 )</em>
+              <span class="ico_2wm"></span>
+            </span>
+          </div>
+        </li>
+        <li>
+          <a href="{% url 'article:article' 'contact' %}" title="QQ客服" class="qq"><img src="{{ STATIC_URL }}images/qq_logo.png" title="QQ客服"></a>
+           <div class="dico qq">
+            <span class="ico">
+                <em><a href="http://wpa.qq.com/msgrd?V=3&amp;uin=672592854&amp;site=31客&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:672592854:4" height="16" border="0" alt="QQ" /> 672592854</a></em>
+                <em><a href="http://wpa.qq.com/msgrd?V=3&amp;uin=2310857615&amp;site=31客&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:2310857615:4" height="16" border="0" alt="QQ" /> 2310857615</a></em>
+                <em><a href="http://wpa.qq.com/msgrd?V=3&amp;uin=2605043362&amp;site=31客&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:2605043362:4" height="16" border="0" alt="QQ" /> 2605043362</a></em>
+              <span class="ico_2wm"></span>
+            </span>
+          </div>
+        </li>
+        <li><a href="{% url 'article:article' 'contact' %}" title="微信"><img src="{{ STATIC_URL }}images/weixin_logo.png" title="微信"><span class="img-wx"></span><span class="ico_2wm"></span></a></li>
+        <li><a href="{% url 'article:article' 'contact' %}" title="微博"><img src="{{ STATIC_URL }}images/weibo_logo.png" title="微博"></a></li>
+      </ul>
+      </em>
     </footer>
   <!--[if IE 6]>
       <script type="text/javascript" src="{{ STATIC_URL }}js/DD_belatedPNG.js"></script>
@@ -96,6 +124,7 @@
                 clsLIExpand: false
                 // selected: 'RS'
             });
+            $('#mf em li').hover(function(){$(this).find('.dico').show()},function(){$(this).find('.dico').hide()})
 
             {% block javascript %}{% endblock %}
 

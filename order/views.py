@@ -139,21 +139,21 @@ def editOrd(request, sn, s):
     return redirect('order:editOrdFrm')
 
 @ordDr(1)
-@msgPushToRoleDr(2)
+# @msgPushToRoleDr(2)
 def confirmOrd(request, sn, s):
     u"""订单状态修改-> 订单确认"""
 
     return modifyOrd(request=request, sn=sn, s=s)
 
 @ordDr(1)
-@msgPushDr
+# @msgPushDr
 def nullOrd(request, sn, s):
     u"""订单状态修改-> 订单无效"""
 
     return modifyOrd(request=request, sn=sn, s=s)
 
 @ordDr(1)
-@msgPushToRoleDr(2)
+# @msgPushToRoleDr(2)
 def stopOrd(request, sn, s):
     u"""订单状态修改-> 订单止单"""
 
@@ -342,13 +342,12 @@ class OrdSerch(object):
 
 
     def baseSearch(self):
+        self.oList = self.oList.filter(logcs__area__in=self.request.user.attribution_set.getAreaName())
+
         if re.match(ur'\d{4}\-\d{2}\-\d{2}', self.initial['k']):
             self.oList = self.oList.filter(logcs__date=self.initial['k'])
         else:
-
             self.oList = self.oList.filter(
-                    logcs__area__in=self.request.user.attribution_set.getAreaName()
-                ).filter(
                     Q(sn__contains=self.initial['k']) |
                     Q(user__username__contains=self.initial['k']) |
                     Q(logcs__consignee__contains=self.initial['k']) |

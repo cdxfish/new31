@@ -26,7 +26,7 @@
             }
             return {
                 ul: $('ul', $this).css({
-                    'float': 'left',
+                    // 'float': 'left',
                     'height': '100%',
                     'list-style': 'none'
                 }).show(),

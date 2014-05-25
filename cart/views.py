@@ -1,4 +1,5 @@
 # coding: UTF-8
+u"""购物车"""
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.core.urlresolvers import reverse

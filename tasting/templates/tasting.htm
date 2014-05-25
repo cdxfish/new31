@@ -1,0 +1,37 @@
+{% extends "shop.base.htm" %}
+
+{% block section %}
+<section>
+<p>如果您所在的公司：<p>
+<p> 1、未曾参与过31客的免费品尝活动；</p>
+<p> 2、办公区地处长沙市二环区以内;</p>
+<p> 3、参与品尝的人数在10人以上；</p>
+<p> 4、提供用于品尝的独立区域；</p>
+<p> 5、有时间为您提供品尝和讲解服务；</p>
+<p> 6、可协助31客工作人员，办理31客会员；</p>
+<p>&nbsp;</p>
+
+<form action="{% url 'tasting:tastsave' %}" method="POST" name="checkout" id="checkout">
+        <table width="100%" id="tasting">
+         {% for i in frm %}
+             <tr>
+                <td align="right" width="100px">{{ i.label }}：</td>
+                <td>{{ i }}</td>
+            </tr>
+         {% endfor %}
+        </table>
+        <center>
+            {% csrf_token %}
+            <input type="submit" name="submit" value="提交申请" class="btn btnbr" />
+        </center>
+    </form>
+</section>
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.sides.js"></script>
+{% endblock %}
+
+{% block javascript %}
+  $('#bner').sides();
+{% endblock %}

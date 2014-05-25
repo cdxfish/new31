@@ -3,10 +3,9 @@
 {% block section %}
   <header id="bner">
     <ul>
-      <li><a href="/" target="_blank"><img data-src="{{ STATIC_URL }}shop/images/13679842939718.jpg" /></a></li>
-      <li><a href="/" target="_blank"><img data-src="{{ STATIC_URL }}shop/images/13743081412997.jpg" /></a></li>
-      <li><a href="/" target="_blank"><img data-src="{{ STATIC_URL }}shop/images/13804380515243.jpg" /></a></li>
-      <li><a href="/" target="_blank"><img data-src="{{ STATIC_URL }}shop/images/13743081906304.jpg" /></a></li>
+{% for i in ad %}
+      <li><a href="{{ i.url }}" target="_blank"><img data-src="{{ i.img.url }}" /></a></li>
+{% endfor %}
     </ul>
   </header>
 {% endblock %}

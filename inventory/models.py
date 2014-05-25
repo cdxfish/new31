@@ -1,6 +1,7 @@
 # coding: UTF-8
 from django.db import models
 from new31.func import frmtDate
+from area.models import Area
 import datetime
 
 # Create your models here.
@@ -99,6 +100,25 @@ class invNumManager(models.Manager):
         inv.save()
 
 
+class Build(models.Model):
+
+    chcs = (
+            (0, u'南宁'),
+            (1, u'长沙'),
+        )
+
+    build = models.SmallIntegerField(u'厂房', default=0, choices=chcs)
+    area = models.ManyToManyField(Area, verbose_name=u'供货区域')
+    # area = models.ForeignKey(Area, verbose_name=u'供货区域')
+    onl = models.BooleanField(u'上线', default=True)
+
+    def __unicode__(self):
+        return u'%s - [ onl: %s ]' % (self.build, self.onl)
+
+    class Meta:
+        verbose_name_plural = u'厂房'
+
+
 class InvPro(models.Model):
     from item.models import ItemSpec
 
@@ -119,6 +139,7 @@ class InvPro(models.Model):
         )
 
     spec = models.OneToOneField(ItemSpec, verbose_name=u'商品规格')
+    build = models.ForeignKey(Build, verbose_name=u'厂房')
     onl = models.BooleanField(u'备货', default=False, choices=chcs)
 
     objects = invProManager()
@@ -144,3 +165,16 @@ class InvNum(models.Model):
     class Meta:
         unique_together=(('pro','date'),)
         verbose_name_plural = u'备货量'
+
+
+# class InvBuild(models.Model):
+
+#     build = models.ForeignKey(Build, verbose_name=u'厂房')
+#     inv = models.ForeignKey(InvPro, verbose_name=u'备货清单')
+
+
+#     def __unicode__(self):
+#         return u'%s - [ inv: %s ]' % (self.build, self.inv)
+
+#     class Meta:
+#         verbose_name_plural = u'厂房备货量'
