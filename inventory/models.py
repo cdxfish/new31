@@ -5,11 +5,6 @@ from area.models import Area
 import datetime
 
 # Create your models here.
-class buildManager(models.Manager):
-
-    def getAll(self):
-
-        return self.select_related().filter(onl=True)
 
 class invProManager(models.Manager):
     def cOnl(self, sid):
@@ -19,18 +14,19 @@ class invProManager(models.Manager):
 
         return invpro
 
-    def getOnl(self, sid, bid):
-        try:
-            return self.get(spec__id=sid, build__id=bid)
-        except Exception, e:
-            raise e
-            from item.models import ItemSpec
+    # def getPro(self, sid, bid):
+    #     try:
+    #         return self.get(spec__id=sid, build__id=bid)
+    #     except Exception, e:
+    #         # raise e
+    #         from item.models import ItemSpec
 
-            invpro = InvPro()
-            invpro.spec = ItemSpec.objects.get(id=sid)
-            invpro.build = Build.objects.get(id=bid)
-            invpro.save()
-            return invpro
+    #         invpro = InvPro()
+    #         invpro.spec = ItemSpec.objects.get(id=sid)
+    #         # invpro.build = Build.objects.get(id=bid)
+    #         invpro.save()
+    #         return invpro
+
     def getAll(self):
 
         return self.select_related().filter(onl=True)
@@ -75,6 +71,8 @@ class invNumManager(models.Manager):
 
     def getAll(self, date):
         from produce.models import Pro
+        from area.models import Area
+
         if date:
             date = frmtDate(date)
         else:
@@ -83,7 +81,9 @@ class invNumManager(models.Manager):
         pros = InvPro.objects.getAll()
 
         for i in pros:
-            adv = sum([v['num'] for v in Pro.objects.filter(sn=i.spec.item.sn, spec=i.spec.spec.value, ord__logcs__date=date, ord__status=2).values('num')])
+
+            adv = sum([v['num'] for v in Pro.objects.filter(sn=i.spec.item.sn, spec=i.spec.spec.value, ord__logcs__date=date, ord__status=2, \
+                ord__logcs__area__in=Area.objects.filter(build__pro__id=i.id).values('name')).values('num')])
             try:
                 invnum = i.invnum_set.get(date=date)
             except Exception, e:
@@ -110,25 +110,50 @@ class invNumManager(models.Manager):
         inv.save()
 
 
-class Build(models.Model):
+class buildManager(models.Manager):
 
-    chcs = (
-            (0, u'南宁'),
-            (1, u'长沙'),
-        )
+    def getAll(self):
 
-    build = models.SmallIntegerField(u'厂房', default=0, choices=chcs)
-    area = models.ManyToManyField(Area, verbose_name=u'供货区域')
-    # area = models.ForeignKey(Area, verbose_name=u'供货区域')
-    onl = models.BooleanField(u'上线', default=True)
+        return self.select_related().filter(onl=True)
 
-    objects = buildManager()
 
-    def __unicode__(self):
-        return u'%s - [ onl: %s ]' % (self.get_build_display(), self.onl)
+    def cPro(self, bid, sid):
 
-    class Meta:
-        verbose_name_plural = u'厂房'
+        ipro = InvPro.objects.get(spec__id=sid)
+        try:
+            build = self.get(id=bid, pro__spec__id=sid)
+
+            build.pro.remove(ipro)
+
+            return False
+
+        except Exception, e:
+            # raise e
+            build = self.get(id=bid)
+
+            build.pro.add(ipro)
+
+            return True
+
+
+
+    def addPro(self, sid):
+
+        return
+
+    def rePro(self, sid):
+
+        return
+
+    def hasPro(self, bid, sid):
+
+        try:
+            self.get(id=bid, pro__spec__id=sid)
+
+            return True
+        except Exception, e:
+            # raise e
+            return False
 
 
 class InvPro(models.Model):
@@ -150,8 +175,7 @@ class InvPro(models.Model):
                 (_typ[0], _typ[1], ),
         )
 
-    spec = models.ForeignKey(ItemSpec, verbose_name=u'商品规格')
-    build = models.ForeignKey(Build, verbose_name=u'厂房')
+    spec = models.OneToOneField(ItemSpec, verbose_name=u'商品规格')
     onl = models.BooleanField(u'备货', default=False, choices=chcs)
 
     def _onl(self):
@@ -162,10 +186,9 @@ class InvPro(models.Model):
     objects = invProManager()
 
     def __unicode__(self):
-        return u"%s - %s [ %s ]" % (self.spec, self.build.get_build_display(), self.get_onl_display())
+        return u"%s - [ %s ]" % (self.spec,  self.get_onl_display())
 
     class Meta:
-        unique_together=(('spec','build'),)
         verbose_name_plural = u'备货清单'
 
 
@@ -183,3 +206,25 @@ class InvNum(models.Model):
     class Meta:
         unique_together=(('pro','date'),)
         verbose_name_plural = u'备货量'
+
+
+class Build(models.Model):
+
+    chcs = (
+            (0, u'南宁'),
+            (1, u'长沙'),
+        )
+
+    name = models.SmallIntegerField(u'厂房', default=0, choices=chcs)
+    area = models.ManyToManyField(Area, verbose_name=u'供货区域')
+    pro = models.ManyToManyField(InvPro, verbose_name=u'供货清单')
+    onl = models.BooleanField(u'上线', default=True)
+
+    objects = buildManager()
+
+    def __unicode__(self):
+        return u'%s - [ onl: %s ]' % (self.get_name_display(), self.onl)
+
+    class Meta:
+        verbose_name_plural = u'厂房'
+

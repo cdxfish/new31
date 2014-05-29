@@ -2,36 +2,33 @@
 
 {% block section %}
 <section>
-<p>如果您所在的公司：<p>
-<p> 1、未曾参与过31客的免费品尝活动；</p>
-<p> 2、办公区地处长沙市二环区以内;</p>
-<p> 3、参与品尝的人数在10人以上；</p>
-<p> 4、提供用于品尝的独立区域；</p>
-<p> 5、有时间为您提供品尝和讲解服务；</p>
-<p> 6、可协助31客工作人员，办理31客会员；</p>
-<p>&nbsp;</p>
-
-<form action="{% url 'tasting:tastsave' %}" method="POST" name="checkout" id="checkout">
-        <table width="100%" id="tasting">
-         {% for i in frm %}
-             <tr>
-                <td align="right" width="100px">{{ i.label }}：</td>
-                <td>{{ i }}</td>
-            </tr>
-         {% endfor %}
-        </table>
-        <center>
-            {% csrf_token %}
-            <input type="submit" name="submit" value="提交申请" class="btn btnbr" />
-        </center>
-    </form>
+  <p style="width:100%;float: left;">尊敬的客户，您好！感谢您参与31客的免费品尝活动！</p>
+  <p style="width:100%;float: left;">&nbsp;</p>
+  <p style="width:100%;float: left;">请您仔细阅读以下活动规则，并按活动要求填写申请，祝您品尝愉快！</p>
+  <p style="width:100%;float: left;">&nbsp;</p>
+  <p style="width:100%;float: left;">如果您所在的公司：<br />
+    1、未曾参与过31客的免费品尝活动且参与人数在10人以上；<br />
+    2、可提供用于免费品尝活动的独立区域;<br />
+    3、可提供时间让31客工作人员为您提供品尝及讲解服务；<br />
+    4、可协助31客工作人员免费办理31客会员；<br />
+    5、申请公司办公地址在长沙市2环以内；<br />
+    6、如您公司有采购需求、福利标准，请您协助我们的市场专员进行了解。 <br /></p>
+  <p style="width:100%;float: left;">&nbsp;</p>
+  <form action="{% url 'tasting:tastsave' %}" method="POST" name="checkout" id="checkout">
+      <table width="100%" id="tasting">
+       {% for i in frm %}
+           <tr>
+              <td align="right" width="100px">{{ i.label }}：</td>
+              <td>{{ i }}</td>
+          </tr>
+       {% endfor %}
+      </table>
+      <center>
+          {% csrf_token %}
+          <input type="submit" name="submit" value="提交申请" class="btn btnbr" />
+      </center>
+  </form>
+  <p style="width:100%;float: left;">&nbsp;</p>
+  <p style="width:100%;float: left;"> 提示：您的品尝申请，31客工作人员筛选后，会在5个工作日内与您取得联系.如有查询及疑问，请致电0731-89708031。</p>
 </section>
-{% endblock %}
-
-{% block js %}
-  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.sides.js"></script>
-{% endblock %}
-
-{% block javascript %}
-  $('#bner').sides();
 {% endblock %}

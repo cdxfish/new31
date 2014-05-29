@@ -28,7 +28,7 @@ def login(request):
 
         elif request.method == 'POST':
             username = request.POST.get('username')
-            password = request.POST.get('password')
+            password = request.POST.get('password', request.POST.get('password1'))
             next = request.POST.get('next', 'account:myOrd')
 
             user = auth.authenticate(username=username, password=password)
@@ -49,11 +49,24 @@ def login(request):
 @postDr
 def quicklyREG(request):
     u"""快速注册"""
+    from models import BsInfo, Pts
     form = QuicklyNewUserFrm(request.POST)
     if form.is_valid():
         new_user = form.save()
 
-        return redirect('account:settings')
+        b = BsInfo()
+        b.user = new_user
+        b.save()
+
+        p = Pts()
+        p.user = new_user
+        p.save()
+
+
+
+        messages.success(request, u'注册成功')
+
+        return login(request)
     else:
         for i in form:
             if i.errors:

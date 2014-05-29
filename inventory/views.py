@@ -13,6 +13,8 @@ import datetime
 def inventory(request):
     u"""备货"""
     from forms import InvSrchFrm
+    from models import Build
+
 
     p = InvSrch(request)
     form = InvSrchFrm(initial=p.initial)
@@ -29,7 +31,54 @@ def sort(pro):
     u"""排序"""
     _pro = {}
 
+    build = Build.objects.all()
+
+    # [{
+    #     'proname1': {
+    #         'area1': {
+    #             'pro': [],
+    #             'adv': 0,
+    #             'invnum': 0,
+    #             'num': 0,
+    #             'count': 0,
+    #         },
+    #         'areab': {
+    #             'pro': [],
+    #             'adv': 0,
+    #             'invnum': 0,
+    #             'num': 0,
+    #             'count': 0,
+    #         },
+    #     },
+    #     'proname2':
+    #         'area1': {
+    #             'pro': [],
+    #             'adv': 0,
+    #             'invnum': 0,
+    #             'num': 0,
+    #             'count': 0,
+    #         },
+    #         'areab': {
+    #             'pro': [],
+    #             'adv': 0,
+    #             'invnum': 0,
+    #             'num': 0,
+    #             'count': 0,
+    #         },
+
+    # }]
+
     for i in pro:
+        # name = i.spec.item.name
+        # if not hasattr(_pro, name):
+        #     _pro[name] = {}
+        # for ii in i.build.all():
+        #     if not hasattr(_pro[name], ii.area.name):
+        #         _pro[name] = {}
+
+
+        # _pro[name] =
+
 
         sn = i.spec.item.sn
         try:
@@ -58,20 +107,18 @@ def stockInv(request):
     items = Item.objects.getAll()
     build = Build.objects.getAll()
 
-    for i in items:
-        i.build = [{ 'build': ii, 'invpro': [ InvPro.objects.getOnl(iii.id, ii.id) for iii in i.itemspec_set.all() ]  } for ii in build]
+    for i in build:
+        i.items = [{ 'name': ii.name, 'spec': [ {'id': spec.id, 'value': spec.spec.value, 'onl': Build.objects.hasPro(i.id, spec.id) } for spec in ii.itemspec_set.all() ]  } for ii in items]
 
     return render_to_response('inventorylist.htm', locals(), context_instance=RequestContext(request))
 
 @ajaxErrMsg('该规格已下架')
-def cOnlInv(request, sn):
+def cOnlInv(request, sid, bid):
     u"""备货选择"""
-    from models import InvPro
-
-    invpro = InvPro.objects.cOnl(sid=sn)
+    from models import Build
 
     return HttpResponse(Msg.objects.dumps(data={
-                'onl': invpro.onl
+                'onl': not Build.objects.cPro(bid=bid, sid=sid)
             }
         )
     )
@@ -84,17 +131,17 @@ def defaultInv(request, s):
 
     return rdrtBck(request)
 
-def minusInv(request, sn, num):
+def minusInv(request, sid, num):
     u"""备货减"""
     from models import InvNum
-    InvNum.objects.minus(sn, int(num))
+    InvNum.objects.minus(sid, int(num))
 
     return rdrtBck(request)
 
-def plusInv(request, sn, num):
+def plusInv(request, sid, num):
     u"""备货加"""
     from models import InvNum
-    InvNum.objects.plus(sn, int(num))
+    InvNum.objects.plus(sid, int(num))
 
     return rdrtBck(request)
 

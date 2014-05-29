@@ -306,10 +306,8 @@ class LogcSess(BsSess):
 
         oLogcs = Logcs.objects.get(ord__sn=sn)
 
-        areas = oLogcs.area.split(' - ')
-
         try:
-            area = Area.objects.get(name=areas[1]).id
+            area = Area.objects.get(name=oLogcs).id
         except Exception, e:
             area = Area.objects.default().id
 
