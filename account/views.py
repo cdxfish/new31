@@ -10,7 +10,7 @@ from django.template import RequestContext
 from django.db.models import Q
 from new31.func import rdrtBck
 from new31.decorator import postDr
-from forms import QuicklyNewUserFrm
+from forms import QuicklyNewUserFrm, _BsInfoFrm
 from decorator import uInfoDr, checkUserDr, userLogDr, checkOrdByUserDr
 import re
 # Create your views here.
@@ -21,6 +21,7 @@ def login(request):
     if not request.user.is_authenticated():
         if request.method == 'GET':
             nfrm = UserCreationForm()
+            bthFrm = _BsInfoFrm()
             frm = AuthenticationForm(request)
             next = request.GET.get('next', 'account:myOrd')
 
@@ -51,26 +52,32 @@ def quicklyREG(request):
     u"""快速注册"""
     from models import BsInfo, Pts
     form = QuicklyNewUserFrm(request.POST)
-    if form.is_valid():
+    _form = _BsInfoFrm(request.POST)
+    if form.is_valid() and _form.is_valid():
         new_user = form.save()
 
         b = BsInfo()
         b.user = new_user
+        b.mon = request.POST.get('mon')
+        b.day = request.POST.get('day')
         b.save()
 
         p = Pts()
         p.user = new_user
         p.save()
 
-
-
         messages.success(request, u'注册成功')
 
         return login(request)
     else:
-        for i in form:
-            if i.errors:
-                messages.error(request, u'%s - %s' % (i.label, i.errors))
+        def f(_f):
+            for i in _f:
+                if i.errors:
+                    messages.error(request, u'%s - %s' % (i.label, i.errors))
+
+        f(form)
+        f(_form)
+
         return redirect('account:login')
 
 def logout(request):

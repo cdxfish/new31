@@ -68,6 +68,11 @@ def sort(pro):
 
     # }]
 
+    # for b in build:
+    #     for i in pro:
+
+
+
     for i in pro:
         # name = i.spec.item.name
         # if not hasattr(_pro, name):

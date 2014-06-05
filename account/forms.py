@@ -13,18 +13,49 @@ def bsInfoFrm(request):
             })
 
 
+class _BsInfoFrm(forms.ModelForm):
+
+    class Meta:
+        from models import BsInfo
+
+        model = BsInfo
+        fields = ('mon', 'day',)
+        widgets = {
+            'mon': forms.Select(choices=BsInfo.mons, attrs={'class': 'mon' }),
+            'day': forms.Select(choices=BsInfo.days, attrs={'class': 'day' }),
+        }
+
+    def clean_mon(self):
+        mon = self.cleaned_data['mon']
+
+        print '=' * 20
+        print mon
+
+        if not mon:
+            raise forms.ValidationError(u'请填写正确的生月!')
+
+        return mon
+
+    def clean_day(self):
+        day = self.cleaned_data['day']
+
+        if not day:
+            raise forms.ValidationError(u'请填写正确的生日!')
+
+        return day
+
 class BsInfoFrm(forms.ModelForm):
 
     class Meta:
         from models import BsInfo
 
         model = BsInfo
-        fields = ('sex', 'mon', 'day', 'typ',)
+        fields = ('sex', 'typ', 'mon', 'day',)
         widgets = {
             'sex': forms.Select(choices=BsInfo.sexs, attrs={'class': 'sex' }),
+            'typ': forms.Select(choices=BsInfo.typs, attrs={'class': 'typ' }),
             'mon': forms.Select(choices=BsInfo.mons, attrs={'class': 'mon' }),
             'day': forms.Select(choices=BsInfo.days, attrs={'class': 'day' }),
-            'typ': forms.Select(choices=BsInfo.typs, attrs={'class': 'typ' }),
         }
 
 class PtsFrm(forms.ModelForm):
