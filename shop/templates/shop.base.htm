@@ -7,12 +7,7 @@
     <meta name="Keywords" content="{% block keywords %}31客,31客蛋糕,蛋糕{% endblock %}" />
     <meta name="Description" content="{% block description %}蛋糕电子商务{% endblock %}" />
     <link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico" type="image/x-icon" />
-<!--[if lt IE 8]>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}shop/css/css.css" />
-<![endif]-->
-<!--[if gte IE 9]><!-->
-    <link rel="stylesheet/less" href="{{ STATIC_URL }}shop/css/css.less" />
-<!--<![endif]-->
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.zebra_datepicker.css" />
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.debug.css" />
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.jgd.dropdown.min.css" />
@@ -81,25 +76,25 @@
         <li><a href="{% url 'tasting:tasting'  %}" title="免费品尝"><img src="{{ STATIC_URL }}images/f0f5.png"></a></li>
         <li>
           <a href="{% url 'article:article' 'contact' %}" title="客服电话"><img src="{{ STATIC_URL }}images/ico_tel.png" title="客服电话"></a>
-          <div class="dico tel">
+<!--           <div class="dico tel">
             <span class="ico">
               <em>0771 - 5676920 ( 南宁 )</em>
               <em>0771 - 5676753 ( 南宁 )</em>
               <em>0731 - 89708031 ( 长沙 )</em>
               <span class="ico_2wm"></span>
             </span>
-          </div>
+          </div> -->
         </li>
         <li>
           <a href="{% url 'article:article' 'contact' %}" title="QQ客服" class="qq"><img src="{{ STATIC_URL }}images/qq_logo.png" title="QQ客服"></a>
-           <div class="dico qq">
+<!--            <div class="dico qq">
             <span class="ico">
                 <em><a href="http://wpa.qq.com/msgrd?V=3&amp;uin=672592854&amp;site=31客&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:672592854:4" height="16" border="0" alt="QQ" /> 672592854</a></em>
                 <em><a href="http://wpa.qq.com/msgrd?V=3&amp;uin=2310857615&amp;site=31客&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:2310857615:4" height="16" border="0" alt="QQ" /> 2310857615</a></em>
                 <em><a href="http://wpa.qq.com/msgrd?V=3&amp;uin=2605043362&amp;site=31客&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:2605043362:4" height="16" border="0" alt="QQ" /> 2605043362</a></em>
               <span class="ico_2wm"></span>
             </span>
-          </div>
+          </div> -->
         </li>
         <li><a href="{% url 'article:article' 'contact' %}" title="微信"><img src="{{ STATIC_URL }}images/weixin_logo.png" title="微信"><span class="img-wx"></span><span class="ico_2wm"></span></a></li>
         <li><a href="{% url 'article:article' 'contact' %}" title="微博"><img src="{{ STATIC_URL }}images/weibo_logo.png" title="微博"></a></li>

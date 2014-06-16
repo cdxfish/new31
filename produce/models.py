@@ -4,7 +4,7 @@ from new31.func import frMtFee
 
 # Create your models here.
 class ProQuerySet(models.query.QuerySet):
-    '''Use this class to define methods on queryset it self.'''
+    '''Use this class to define methods on queryset itself.'''
 
     def pts(self):
         total = 0
@@ -125,12 +125,13 @@ class Pro(models.Model):
         from new31.func import frMtFee
 
         return frMtFee(self.nfee * self.num)
+        # return self.nfee * self.num
 
     def __unicode__(self):
-        return u"%s - %s [ %s ]" % ( self.name, self.spec, self.status)
+        return u"[%s]%s - %s [ %s ]" % ( self.ord.sn, self.name, self.spec, self.get_status_display())
 
 
     class Meta:
-        ordering = ['sn']
+        ordering = ['-ord__sn', 'sn']
         verbose_name_plural = u'产品'
         # app_label = 'order'

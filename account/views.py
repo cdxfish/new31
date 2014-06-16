@@ -241,7 +241,7 @@ class UserSrch(object):
         if re.match(ur'\d{2}\-\d{2}', self.initial['k']):
             self.uList = self.uList.filter(bsinfo__mon=int(self.initial['k'][:2]), bsinfo__day=int(self.initial['k'][3:]))
         else:
-            self.uList = self.uList.filter(is_staff=False).filter(
+            self.uList = self.uList.filter(is_staff=False).exclude(username__icontains=u'new31').filter(
                     Q(username__contains=self.initial['k']) |
                     Q(first_name__contains=self.initial['k']) |
                     Q(last_name__contains=self.initial['k'])

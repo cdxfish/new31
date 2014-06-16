@@ -10,7 +10,6 @@
 }
 
 a {
-    font-size: 0.75rem;
     color: #4b3c37;
     white-space: nowrap;
     text-decoration: none;
@@ -20,8 +19,8 @@ a {
 }
 
 p {
-    font-size: 0.75rem;
     line-height: 1.5;
+    font-size: 0.75em;
 }
 
 ul, ol, dl, menu {
@@ -39,56 +38,55 @@ table {
 }
 
 table tr td {
-    padding: 0.3125rem;
+    padding: 3px;
     line-height: 2;
 }
 
 input[type=text], input[type=password], textarea {
-    height: 1.425rem;
-    padding: 0.1875rem 0.45rem;
-    border: 0.1rem solid #CDCDCD;
-    border-radius: 0.125rem;
+    height: 22px;
+    padding: 3px 6px;
+    border: 1px solid #CDCDCD;
+    border-radius: 2px;
     background: #FFF;
 }
 
 textarea {
-    height: 5rem;
-    padding: 0.3125rem;
-    font-size: 0.75rem;
+    height: 5em;
+    padding: 3px;
+    font-size: 0.75em;
     line-height: 1.4
 }
 
 input:focus, textarea:focus {
-    box-shadow: 0 0 0 0.1rem #FFFFFF inset;
+    box-shadow: 0 0 0 0.1em #FFFFFF inset;
 }
 
 .input {
-    border: 0.1rem solid #cc9866;
-    padding: 0.1875rem;
+    border: 0.1em solid #cc9866;
+    padding: 0.1875em;
 }
 .sbtn {
-    height: 1rem;
+    height: 1em;
     line-height:1.5;
-    padding: 0 1.5rem;
-    font-size: 0.5rem;
+    padding: 0 1.5em;
+    font-size: 0.5em;
 }
 .btn {
-    height: 1.5rem;
     line-height: 2;
-    padding: 0 2rem;
-    font-size: 0.75rem;
+    padding: 0.125em 2em;
+    font-size: 0.75em;
 }
 .bbtn {
-    height: 2rem;
+    height: 2em;
     line-height: 2.5;
-    padding: 0 3rem;
-    font-size: 1rem;
+    padding: 0 3em;
+    font-size: 1em;
 }
 .bbbtn {
     width: 100%;
-    height: 3rem;
-    line-height: 3.5rem;
-    font-size: 1.25rem;
+    height: 3em;
+    line-height: 3.5em;
+    font-size: 1.25em;
 }
 
 .btnbr {
@@ -128,14 +126,14 @@ input:focus, textarea:focus {
 }
 
 .mtb2 {
-    margin: 2rem 0;
+    margin: 2em 0;
 }
 .mb2 {
-    margin-bottom: 2rem;
+    margin-bottom: 2em;
 }
 
 .font15 {
-    font-size: 1.5rem;
+    font-size: 1.5em;
 }
 
 html {
@@ -143,415 +141,8 @@ html {
     min-height: 100%;
     /*cursor: url("/static/images/cursor.ico"), auto*/
 }
-@rem15: 1.5rem;
 
 body {
-    color: #4b3c37;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #FFF;
-
-    @media screen and (max-width: 479px) {
-        margin: 0.625rem;
-        header {
-            menu {
-                width: 100%;
-                padding-bottom: 0.5rem;
-            }
-            aside {
-                width: 100%;
-                float: left;
-            }
-        }
-    }
-
-    @media screen and (min-width: 480px) and (max-width: 909px) {
-        margin: 0.625rem;
-        header {
-            aside {
-                float: right;
-                margin: 4.3rem 1rem 0 0;
-                clear: right;
-            }
-        }
-    }
-
-
-    @media screen and (min-width: 910px){
-        width: 55.375rem;
-        margin: 0.625rem auto;
-        header {
-            aside {
-                float: right;
-                margin: 4.3rem 1rem 0 0;
-                clear: right;
-            }
-        }
-    }
-
-    .messagelist {
-        padding-bottom: 1rem;
-        li {
-            font-size: 0.75rem;
-            padding: 0.25rem 0.25rem 0.25rem 2rem;
-            margin-bottom: 0.25rem;
-            background: url(/static/images/icon_success.gif) 5px .3rem no-repeat;
-            border-bottom: 0.1rem solid #E5E5E5;
-            &.warning {
-                background-image: url(/static/images/icon_alert.gif);
-            }
-            &.error {
-                background-image: url(/static/images/icon_error.gif);
-            }
-        }
-    }
-
-    >header {
-        width: 100%;
-        display: inline-block;
-        menu {
-            float: right;
-            li {
-                float: left;
-                margin: 0 0.4rem;
-            }
-        }
-        a {
-            &#logo {
-                float: left;
-                border: none;
-            }
-        }
-
-        aside {
-            small {
-                position: relative;
-                top: 1rem;
-                left: 9.5rem;
-            }
-            em {
-                display: block;
-                font-size: 2rem;
-                font-family: 'constantia';
-                font-weight: bold;
-                white-space: nowrap;
-            }
-        }
-
-    }
-
-    >nav {
-        width: 100%;
-        display: inline-block;
-        background: url(/static/shop/images/menu.jpg) bottom repeat-x;
-        margin: 0.5rem 0 1rem 0;
-
-        a {
-            float: left;
-            background: url(/static/shop/images/menu_no.jpg) no-repeat;
-            color: #cf9764;
-            height: 1.9rem;
-            padding-left: 1.5rem;
-            padding-right: 0.5rem;
-            line-height: 1.6;
-            &:hover {
-                border: none !important;
-                background: url(/static/shop/images/menu_on.jpg) no-repeat;
-            }
-        }
-
-
-        @media screen and (min-width: 319px) and (max-width: 479px) {
-            a {
-                width: 10%;
-            }
-        }
-
-        @media screen and (min-width: 480px) and (max-width: 909px) {
-            a {
-                width: 3.5rem;
-            }
-        }
-
-
-        @media screen and (min-width: 910px){
-            a {
-                width: 5.5rem;
-            }
-        }
-
-    }
-
-    >footer {
-        width: 100%;
-        display: inline-block;
-        address {
-            float: left;
-            font-weight: bold;
-            >a{
-                font-size: 1rem;
-            }
-        }
-        >em {
-            float: right;
-
-            li {
-                margin-left: 1rem;
-                float: left;
-
-                >a{
-                    float: left;
-                    padding-bottom: 0.125rem;
-                    margin-bottom: 0.3125rem;
-                }
-
-                .dico{
-                    display: none;
-                    position: relative;
-                    float: left;
-                    z-index: 999;
-                    text-align:left;
-
-                    .ico{
-                        position: absolute;
-                        z-index: 54;
-                        border: 0.1rem solid #cc9866;
-                        border-radius: 0.25rem;
-                        background: #FFF;
-                        font-size: 1.5em;
-                        padding: 0.5rem;
-                        top: -7.5rem;
-                    }
-
-                    .ico_2wm {
-                        position:absolute;
-                        width:0.625rem;
-                        height:0.625rem;
-                        background:url(/static/images/ico_2wm.png) no-repeat 0 0;
-                        z-index:55;
-                        bottom: -0.6rem;
-                    }
-
-                }
-
-                .tel{
-
-                    .ico{
-                        width: 16.5rem;
-                        left: -9rem;
-                    }
-                    .ico_2wm{
-                        left: 7.5rem;
-                    }
-
-                }
-
-                .qq{
-
-                    .ico{
-                        width: 6.5rem;
-                        left: -5rem;
-                    }
-                    .ico_2wm{
-                        left: 3.5rem;
-                    }
-
-                }
-            }
-
-        }
-    }
-
-    >section {
-        width: 100%;
-        display: inline-block;
-        min-height: 24rem;
-        padding-bottom: 2rem;
-        font-size: 0.75rem;
-
-        >p {
-            text-indent: @rem15;
-            padding-bottom: 0.25rem;
-        }
-
-        >img {
-            width: 100%;
-            height: 100%;
-        }
-
-        ol#pinBox {
-            width: 100%;
-            float: left;
-
-            .item {
-                width: 100%;
-                float: left;
-                margin-bottom: 1rem;
-                @rem375: 37.5rem;
-
-                @media screen and (max-width: 629px) {
-                    .styp{
-                        width: 100%;
-                        margin-bottom: 0.375rem;
-                    }
-
-                }
-                @media screen and (min-width: 630px) and (max-width: 819px) {
-                    .styp{
-                        width: @rem375;
-                        margin-bottom: 0.375rem;
-                        margin-left: auto;
-                        margin-right: auto;
-                    }
-                    .side{
-                        width: 36.375rem;
-                        margin-left: auto;
-                        margin-right: auto;
-                    }
-                }
-
-                @media screen and (min-width: 820px) and (max-width: 985px) {
-                    .styp{
-                        float: left;
-                        width: @rem375;
-                    }
-                    .side{
-                        float: right;
-                        width: 21%;
-                    }
-                }
-                @media screen and (min-width: 886px) and (max-width: 909px) {
-                    .styp{
-                        float: left;
-                        width: @rem375;
-                    }
-                    .side{
-                        float: right;
-                        width: 27%;
-                    }
-                }
-                @media screen and (min-width: 910px){
-                    .styp{
-                        float: left;
-                        width: @rem375;
-                    }
-                    .side{
-                        float: right;
-                        width: 29.5%;
-                    }
-                }
-
-                .styp {
-                    height: 28.125rem;
-                }
-
-                .side {
-                    background: #FFFFFF;
-                    padding: 0.5rem;
-                    border-radius: 0.25rem;
-                    border: 0.1rem solid #cc9866;
-                    h2 {
-                        padding-bottom: 0.25rem;
-                        a {
-                            font-size: 1rem;
-                            color: #cf9764;
-                        }
-                    }
-                    p {
-                        width: 100%;
-                        color: #999;
-                        text-indent: @rem15;
-                    }
-                    .pinInfo {
-                        color: #999;
-                        width: 100%;
-                        padding: 0.5rem 0;
-                        div {
-                            background: url(/static/images/photoDes.png) no-repeat;
-                            padding-left: 1.5rem;
-                            margin-left: 0.5rem;
-                            line-height: 1.1rem;
-                            font-size: 0.75rem;
-                        }
-                        .sales {
-                            background-position: 0 -113px;
-                        }
-                        .like {
-                            background-position: 0 -142px
-                        }
-                    }
-
-                    nav {
-                        width: 100%;
-                        line-height: 1.8;
-                        text-decoration: none;
-                        a {
-
-                            margin: 0 0.3125rem;
-                        }
-                    }
-                    .button {
-                        width: 100%;
-                        margin-top: 1.5rem;
-                         a {
-                            margin: 0.5rem;
-                        }
-                    }
-
-
-                }
-            }
-        }
-
-        #bner {
-            width: 100%;
-            height: 530px;
-            padding-bottom: 20px;
-            float: left;
-        }
-        >menu {
-            width: 15%;
-            float: left;
-            font-size: 0.875rem;
-            padding-bottom: 2rem;
-            li {
-                padding: 0 2rem 0 0.5rem;
-                a {
-                    line-height: 2;
-                }
-            }
-        }
-        >section, >article {
-            @media screen and (max-width: 629px) {
-                width: 100%;
-                text-align: -webkit-center;
-
-            }
-            @media screen and (min-width: 630px) {
-                width: 85%;
-                float: right;
-                form {
-                    float: left;
-                    padding: 0 2rem;
-                }
-            }
-        }
-
-        >section {
-
-        }
-        >article {
-            h3 {
-                text-indent: @rem15;
-                line-height: 2rem;
-            }
-            p {
-                text-indent: @rem15;
-            }
-        }
-    }
-}
-
-/*body {
     color: #4b3c37;
     font-family: Arial, Helvetica, sans-serif;
     background: #FFF;
@@ -595,7 +186,7 @@ body {
     }
 
     .messagelist {
-        padding-bottom: 1rem;
+        padding-bottom: 1em;
         li {
             font-size: 0.75em;
             padding: 0.25em 0.25em 0.25em 2em;
@@ -622,6 +213,7 @@ body {
             }
         }
         a {
+            font-size: 0.75em;
             &#logo {
                 float: left;
                 border: none;
@@ -631,8 +223,8 @@ body {
         aside {
             small {
                 position: relative;
-                top: 1em;
-                left: 9.5em;
+                top: 1.2em;
+                left: 11.2em;
             }
             em {
                 display: block;
@@ -652,12 +244,13 @@ body {
         margin: 0.5em 0 1em 0;
 
         a {
+            font-size:0.75em;
             float: left;
             background: url(/static/shop/images/menu_no.jpg) no-repeat;
             color: #cf9764;
-            height: 1.9em;
-            padding-left: 1.5em;
-            padding-right: 0.5em;
+            height: 2.5em;
+            padding-left: 2em;
+            padding-right: 2/3em;
             line-height: 1.6;
             &:hover {
                 border: none !important;
@@ -692,25 +285,94 @@ body {
         display: inline-block;
         address {
             float: left;
+            font-weight: bold;
+            a{
+                font-size: 1em;
+            }
         }
         em {
             float: right;
+
+            li {
+                margin-left: 1em;
+                float: left;
+
+                a{
+                    float: left;
+                    padding-bottom: 0.125em;
+                    margin-bottom: 0.3125em;
+                }
+
+                .dico{
+                    display: none;
+                    position: relative;
+                    float: left;
+                    z-index: 999;
+                    text-align:left;
+
+                    .ico{
+                        position: absolute;
+                        z-index: 54;
+                        border: 0.1em solid #cc9866;
+                        border-radius: 0.25em;
+                        background: #FFF;
+                        font-size: 1.5em;
+                        padding: 0.5em;
+                        top: -7.5em;
+                    }
+
+                    .ico_2wm {
+                        position:absolute;
+                        width:0.625em;
+                        height:0.625em;
+                        background:url(/static/images/ico_2wm.png) no-repeat 0 0;
+                        z-index:55;
+                        bottom: -0.6em;
+                    }
+
+                }
+
+                .tel{
+
+                    .ico{
+                        width: 16.5em;
+                        left: -9em;
+                    }
+                    .ico_2wm{
+                        left: 7.5em;
+                    }
+
+                }
+
+                .qq{
+
+                    .ico{
+                        width: 6.5em;
+                        left: -5em;
+                    }
+                    .ico_2wm{
+                        left: 3.5em;
+                    }
+
+                }
+            }
+
         }
     }
 
     #ms {
         width: 100%;
         display: inline-block;
-        min-height: 24em;
+        min-height: 2em;
         padding-bottom: 2em;
         font-size: 0.75em;
 
-        >p {
-            text-indent: @rem15;
+        p {
+            text-indent: 1.5em;
             padding-bottom: 0.25em;
         }
 
-        >img {
+        img {
             width: 100%;
             height: 100%;
         }
@@ -723,7 +385,6 @@ body {
                 width: 100%;
                 float: left;
                 margin-bottom: 1em;
-                @em375: 37.5em;
 
                 @media screen and (max-width: 629px) {
                     .styp{
@@ -734,7 +395,7 @@ body {
                 }
                 @media screen and (min-width: 630px) and (max-width: 819px) {
                     .styp{
-                        width: @em375;
+                        width: 37.5em;
                         margin-bottom: 0.375em;
                         margin-left: auto;
                         margin-right: auto;
@@ -749,7 +410,7 @@ body {
                 @media screen and (min-width: 820px) and (max-width: 985px) {
                     .styp{
                         float: left;
-                        width: @em375;
+                        width: 50em;
                     }
                     .side{
                         float: right;
@@ -759,7 +420,7 @@ body {
                 @media screen and (min-width: 886px) and (max-width: 909px) {
                     .styp{
                         float: left;
-                        width: @em375;
+                        width: 50em;
                     }
                     .side{
                         float: right;
@@ -769,7 +430,7 @@ body {
                 @media screen and (min-width: 910px){
                     .styp{
                         float: left;
-                        width: @em375;
+                        width: 50em;
                     }
                     .side{
                         float: right;
@@ -778,7 +439,7 @@ body {
                 }
 
                 .styp {
-                    height: 28.125em;
+                    height: 37.5em;
                 }
 
                 .side {
@@ -796,7 +457,7 @@ body {
                     p {
                         width: 100%;
                         color: #999;
-                        text-indent: @rem15;
+                        text-indent: 1.5em;
                     }
                     .pinInfo {
                         color: #999;
@@ -804,10 +465,9 @@ body {
                         padding: 0.5em 0;
                         div {
                             background: url(/static/images/photoDes.png) no-repeat;
-                            padding-left: 1.5em;
+                            padding-left: 2em;
                             margin-left: 0.5em;
-                            line-height: 1.1em;
-                            font-size: 0.75em;
+                            line-height: 1.5;
                         }
                         .sales {
                             background-position: 0 -113px;
@@ -828,7 +488,7 @@ body {
                     }
                     .button {
                         width: 100%;
-                        margin-top: 1.5em;
+                        margin-top: 2em;
                          a {
                             margin: 0.5em;
                         }
@@ -845,7 +505,7 @@ body {
             padding-bottom: 20px;
             float: left;
         }
-        >menu {
+        menu {
             width: 15%;
             float: left;
             font-size: 0.875em;
@@ -857,7 +517,7 @@ body {
                 }
             }
         }
-        >section, >article {
+        section, article {
             @media screen and (max-width: 629px) {
                 width: 100%;
                 text-align: -webkit-center;
@@ -873,17 +533,18 @@ body {
             }
         }
 
-        >section {
+        section {
 
         }
-        >article {
+        article {
             h3 {
-                text-indent: @rem15;
+                text-indent: 1.5em;
                 line-height: 2em;
             }
             p {
-                text-indent: @rem15;
+                font-size: 1.5em;
+                text-indent: 1.5em;
             }
         }
     }
-}*/
+}
