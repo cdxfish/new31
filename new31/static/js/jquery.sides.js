@@ -50,6 +50,7 @@
                 warper: $('<div>').css({
                     'height': '100%',
                     'width': '100%',
+                    'position': 'relative',
                     'overflow': 'hidden'
                     // 'float': 'left'
                 }),
@@ -86,6 +87,7 @@
                     }).click(function() {
                         var $_this = $(this);
                         $_this.addClass('on').css(css.on).siblings().removeClass('on').css(css.off);
+
                         // 不要问我为什么不用index, 都是傻逼ie6
                         var index = $_this.prevAll('span').length;
 
