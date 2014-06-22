@@ -109,7 +109,6 @@ class invNumManager(models.Manager):
 
         inv.save()
 
-
 class buildManager(models.Manager):
 
     def getAll(self):
@@ -176,6 +175,7 @@ class InvPro(models.Model):
         )
 
     spec = models.OneToOneField(ItemSpec, verbose_name=u'商品规格')
+    build = models.ForeignKey(Build, verbose_name=u'厂房')
     onl = models.BooleanField(u'备货', default=False, choices=chcs)
 
     def _onl(self):
@@ -207,7 +207,6 @@ class InvNum(models.Model):
         unique_together=(('pro','date'),)
         verbose_name_plural = u'备货量'
 
-
 class Build(models.Model):
 
     chcs = (
@@ -227,4 +226,3 @@ class Build(models.Model):
 
     class Meta:
         verbose_name_plural = u'厂房'
-
