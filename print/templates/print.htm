@@ -1,76 +1,82 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="Keywords" content="{$keywords}" />
-  <meta name="Description" content="{$description}" />
-  <title>打印订单 - 订单编号: {{ o.sn }}</title>
-  <link rel="shortcut icon" href="favicon.ico" />
-  <script type="text/javascript" src="{{ STATIC_URL }}print/js/print.configuration.js"></script>
-  <style type="text/css">
-    body,td { font-size:14px; }
-  </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="Keywords" content="{$keywords}" />
+    <meta name="Description" content="{$description}" />
+    <title>打印订单 - 订单编号: {{ o.sn }}</title>
+    <link rel="shortcut icon" href="favicon.ico" />
+    <script type="text/javascript" src="{{ STATIC_URL }}print/js/print.configuration.js"></script>
+    <style type="text/css">
+    body, td {
+        font-size:14px;
+    }
+    </style>
 </head>
+
 <body style="margin-top:0px">
-<h3 align="center" style="margin:0px">31客订单</h3>
-<table width="100%" >
-    <tr>
-        <td width="75px" nowrap="nowrap">收货人：</td>
-        <td nowrap="nowrap">{{ o.logcs.consignee }}</td>
-        <td align="right" width="10%" nowrap="nowrap">SN: {{ o.sn }}</td>
-    </tr>
-    <tr>
-        <td>电话：</td>
-        <td colspan="10" nowrap="nowrap">{{ o.logcs.tel }}</td>
-    </tr>
-    <tr>
-        <td>收货地址：</td>
-        <td colspan="10" nowrap="nowrap">{{ o.logcs.address }}</td>
-    </tr>
-</table>
-<table width="100%" border="1" style="border: #000 1px bold; border-collapse: collapse;">
-                <tr>
-                    <th bgcolor="#cccccc">商品名称</th>
-                    <th bgcolor="#cccccc">规格</th>
-                    <th bgcolor="#cccccc">原价</th>
-                    <th bgcolor="#cccccc">折扣</th>
-                    <th bgcolor="#cccccc">现价</th>
-                    <th bgcolor="#cccccc">数量</th>
-                    <th bgcolor="#cccccc">小计</th>
-                </tr>
-{% for i in o.pro_set.all %}
-                <tr class="bLine" align="center">
-                    <td>{{ i.name }}</td>
-                    <td>{{ i.spec }}</td>
-                    <td>{{ i.fee|floatformat:2 }}</td>
-                    <td>{{ i.get_dis_display }}</td>
-                    <td>{{ i.nfee|floatformat:2 }}</td>
-                    <td>{{ i.num }}</td>
-                    <td>{{ i.total|floatformat:2 }}</td>
-                </tr>
-{% endfor %}
-                <tr>
-                    <td colspan="6" align="right"><span >总计: {{ o.pro_set.all.total|floatformat:2 }}</span>&nbsp;&nbsp;[ {{ o.get_typ_display }} ]</td>
-                    <td align="center">{{ o.fnc.cod.get_cod_display }} | {{ o.fnc.get_status_display }}</td>
-                </tr>
-            </table>
-<table width="100%">
-  <tr>
-      <td width="350px" nowrap="nowrap">31客蛋糕（www.31kecake.com）</td>
-      <td nowrap="nowrap">订购电话: 4000-592731</td>
-      <td nowrap="nowrap">投诉电话: 0771-5676753（南宁）｜ 0731-89708031（长沙）</td>
-  </tr>
-  <tr>
-      <td colspan="10">{{ o.logcs.note }}</td>
-  </tr>
-  <tr>
-      <td colspan="10">&nbsp;</td>
-  </tr>
-  <tr>
-    <td nowrap="nowrap">收货时间:{{ o.logcs.date|date:'Y-m-d' }} | {{ o.logcs.stime|date:'H:i' }} - {{ o.logcs.etime|date:'H:i' }}</td>
-    <td nowrap="nowrap">配送人员:{% if i.logcs.dman %}{{ i.logcs.dman.last_name }}{{ i.logcs.dman.first_name }}{% endif %}</td>
-    <td nowrap="nowrap">客户签收:</td>
-  </tr>
-</table>
+    <h3 align="center" style="margin:0px">31客订单</h3>
+    <table width="100%">
+        <tr>
+            <td width="75px" nowrap="nowrap">收货人：</td>
+            <td nowrap="nowrap">{{ o.logcs.consignee }}</td>
+            <td align="right" width="10%" nowrap="nowrap">SN: {{ o.sn }}</td>
+        </tr>
+        <tr>
+            <td>电话：</td>
+            <td colspan="10" nowrap="nowrap">{{ o.logcs.tel }}</td>
+        </tr>
+        <tr>
+            <td>收货地址：</td>
+            <td colspan="10" nowrap="nowrap">{{ o.logcs.address }}</td>
+        </tr>
+    </table>
+    <table width="100%" border="1" style="border: #000 1px bold; border-collapse: collapse;">
+        <tr>
+            <th bgcolor="#cccccc">商品名称</th>
+            <th bgcolor="#cccccc">规格</th>
+            <th bgcolor="#cccccc">原价</th>
+            <th bgcolor="#cccccc">折扣</th>
+            <th bgcolor="#cccccc">现价</th>
+            <th bgcolor="#cccccc">数量</th>
+            <th bgcolor="#cccccc">小计</th>
+        </tr>
+        {% for i in o.pro_set.all %}
+        <tr class="bLine" align="center">
+            <td>{{ i.name }}</td>
+            <td>{{ i.spec }}</td>
+            <td>{{ i.fee|floatformat:2 }}</td>
+            <td>{{ i.get_dis_display }}</td>
+            <td>{{ i.nfee|floatformat:2 }}</td>
+            <td>{{ i.num }}</td>
+            <td>{{ i.total|floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="6" align="right">
+                <span>总计: {{ o.pro_set.all.total|floatformat:2 }}</span>&nbsp;&nbsp;[ {{ o.get_typ_display }} ]</td>
+            <td align="center">{{ o.fnc.cod.get_cod_display }} | {{ o.fnc.get_status_display }}</td>
+        </tr>
+    </table>
+    <table width="100%">
+        <tr>
+            <td width="350px" nowrap="nowrap">31客蛋糕（www.31kecake.com）</td>
+            <td nowrap="nowrap">订购电话: 4000-592731</td>
+            <td nowrap="nowrap">投诉电话: 0771-5676753（南宁）｜ 0731-89708031（长沙）</td>
+        </tr>
+        <tr>
+            <td colspan="10">{{ o.logcs.note }}</td>
+        </tr>
+        <tr>
+            <td colspan="10">&nbsp;</td>
+        </tr>
+        <tr>
+            <td nowrap="nowrap">收货时间:{{ o.logcs.date|date:'Y-m-d' }} | {{ o.logcs.stime|date:'H:i' }} - {{ o.logcs.etime|date:'H:i' }}</td>
+            <td nowrap="nowrap">配送人员:{% if i.logcs.dman %}{{ i.logcs.dman.last_name }}{{ i.logcs.dman.first_name }}{% endif %}</td>
+            <td nowrap="nowrap">客户签收:</td>
+        </tr>
+    </table>
 </body>
+
 </html>

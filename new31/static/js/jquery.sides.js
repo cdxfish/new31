@@ -85,20 +85,22 @@
                         }
                         self.start();
                     }).click(function() {
+                        self.setWith();
+
+
                         var $_this = $(this);
                         $_this.addClass('on').css(css.on).siblings().removeClass('on').css(css.off);
 
+
                         // 不要问我为什么不用index, 都是傻逼ie6
                         var index = $_this.prevAll('span').length;
-
                         var seg = self.site[index].seg;
 
                         if (!index && self.odd + 2 == self.site.length) {
                             seg = self.site[self.odd + 1].seg;
-
                         }
-                        var w = (self.site[index].width() - $this.width()) / 2;
 
+                        var w = (self.site[index].width() - $this.width()) / 2;
                         seg += w > 0 ? w : 0;
 
                         self.ul.animate({
@@ -108,13 +110,28 @@
                                 'left': -self.site[index].seg - w
                             });
                         });
-
                         self.odd = index;
                     });
                 },
+                setWith: function() {
+                    var width = 0;
+
+                    this.ul.find('li').each(function(i) {
+                        var $_this = $(this);
+                        $_this.seg = width;
+
+                        width += $_this.width();
+                    });
+
+                    this.ul.css({
+                        'width': width
+                    })
+
+                    return this;
+                },
+
                 start: function() {
                     var self = this;
-
                     this.t = setInterval(function() {
                         self.roll()
                     }, this.interv);
@@ -125,45 +142,49 @@
                     }
                 },
                 roll: function() {
-
                     this.btns.length && this.btns[(this.odd == this.btns.length - 1) ? 0 : this.odd + 1].click();
-
                     return this;
                 },
+
                 ready: function() {
+
                     var self = this;
-                    self.ul.append(self.ul.find('li:first').clone()).wrap(self.warper);
+                    $(window).load(function() {
 
-                    var width = 0;
-                    self.ul.find('li').css({
-                        'float': 'left',
-                        'height': '100%'
-                    }).hover(function() {
-                        self.stop();
-                    }, function() {
-                        self.start();
-                    }).each(function(i) {
-                        var $_this = $(this);
-                        $_this.seg = width;
+                        self.ul.append(self.ul.find('li:first').clone()).wrap(self.warper);
+                        var width = 0;
+                        self.ul.find('li').css({
+                            'float': 'left',
+                            'height': '100%'
+                        }).hover(function() {
+                            self.stop();
+                        }, function() {
+                            self.start();
+                        }).find('img').css({
+                            'border': 0
+                        }).each(function(i) {
+                            var $_this = $(this);
+                            $_this.seg = width;
 
-                        width += $(this).width();
+                            width += $_this.width();
 
-                        self.site.push($_this);
-                        self.btns.push(self.button());
+                            self.site.push($_this);
+                            self.btns.push(self.button());
+                        });
+
+                        self.ul.css({
+                            'width': width
+                        }).find('a').css({
+                            'display': 'block',
+                            'border': 'none'
+                        });
+
+                        // 弹出最后按钮
+                        self.btns.pop();
+
+                        $this.append(self.num.append(self.btns));
+                        self.btns[0].click();
                     });
-
-                    self.ul.css({
-                        'width': width
-                    }).find('img').css({
-                        'border': 0
-                    });
-
-                    // 弹出最后按钮
-                    self.btns.pop();
-
-                    $this.append(self.num.append(self.btns));
-
-                    self.btns[0].click();
 
                     return this.start();
                 }

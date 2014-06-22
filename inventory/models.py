@@ -175,7 +175,6 @@ class InvPro(models.Model):
         )
 
     spec = models.OneToOneField(ItemSpec, verbose_name=u'商品规格')
-    build = models.ForeignKey(Build, verbose_name=u'厂房')
     onl = models.BooleanField(u'备货', default=False, choices=chcs)
 
     def _onl(self):

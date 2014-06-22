@@ -1,47 +1,39 @@
-/* CSS Document */
 * {
     margin: 0;
     padding: 0;
 }
-
 ::selection {
     background: #ff5f3e;
     color: #fff
 }
-
 a {
     color: #4b3c37;
     white-space: nowrap;
     text-decoration: none;
+    display: inline-block;
+    border-bottom: thick solid #FFF;
     &:hover, &.on {
         border-bottom: thick solid #5B2900;
     }
 }
-
 p {
     line-height: 1.5;
-    font-size: 0.75em;
 }
-
 ul, ol, dl, menu {
     list-style: none;
 }
-
 img {
     border: none;
     vertical-align:text-bottom;
 }
-
 table {
     border-collapse: collapse;
     border-spacing: 0
 }
-
 table tr td {
     padding: 3px;
     line-height: 2;
 }
-
 input[type=text], input[type=password], textarea {
     height: 22px;
     padding: 3px 6px;
@@ -49,18 +41,15 @@ input[type=text], input[type=password], textarea {
     border-radius: 2px;
     background: #FFF;
 }
-
 textarea {
     height: 5em;
     padding: 3px;
     font-size: 0.75em;
     line-height: 1.4
 }
-
 input:focus, textarea:focus {
     box-shadow: 0 0 0 0.1em #FFFFFF inset;
 }
-
 .input {
     border: 0.1em solid #cc9866;
     padding: 0.1875em;
@@ -88,14 +77,12 @@ input:focus, textarea:focus {
     line-height: 3.5em;
     font-size: 1.25em;
 }
-
 .btnbr {
     background-color: #5b2900;
     border: 1px solid transparent;
     color: #FFFFFF;
     cursor: pointer;
     display: inline-block;
-
     &:focus {
     }
     &:hover {
@@ -105,9 +92,7 @@ input:focus, textarea:focus {
     &:active {
         box-shadow: 0 0 0 1px #FFFFFF inset;
     }
-
 }
-
 .btn_disable, .bbtn_disable, .bbbtn_disable {
     background-color: #cf9764;
     border: 1px solid #cf9764;
@@ -115,38 +100,30 @@ input:focus, textarea:focus {
     color: #FFFFFF;
     display: inline-block;
 }
-
 .fl {
     float: left;
 }
-
 .bline {
     border: solid #E5E5E5;
     border-width: 0 0 1px 0;
 }
-
 .mtb2 {
     margin: 2em 0;
 }
 .mb2 {
     margin-bottom: 2em;
 }
-
 .font15 {
     font-size: 1.5em;
 }
-
 html {
     width: 100%;
     min-height: 100%;
     /*cursor: url("/static/images/cursor.ico"), auto*/
 }
-
 body {
     color: #4b3c37;
-    font-family: Arial, Helvetica, sans-serif;
     background: #FFF;
-
     @media screen and (max-width: 479px) {
         margin: 0.625em;
         #mh {
@@ -160,7 +137,6 @@ body {
             }
         }
     }
-
     @media screen and (min-width: 480px) and (max-width: 909px) {
         margin: 0.625em;
         #mh {
@@ -171,9 +147,7 @@ body {
             }
         }
     }
-
-
-    @media screen and (min-width: 910px){
+    @media screen and (min-width: 910px) {
         width: 55.375em;
         margin: 0.625em auto;
         #mh {
@@ -184,7 +158,6 @@ body {
             }
         }
     }
-
     .messagelist {
         padding-bottom: 1em;
         li {
@@ -201,7 +174,6 @@ body {
             }
         }
     }
-
     #mh {
         width: 100%;
         display: inline-block;
@@ -219,7 +191,6 @@ body {
                 border: none;
             }
         }
-
         aside {
             small {
                 position: relative;
@@ -229,20 +200,17 @@ body {
             em {
                 display: block;
                 font-size: 2em;
-                font-family: 'constantia';
+                font-family:'constantia';
                 font-weight: bold;
                 white-space: nowrap;
             }
         }
-
     }
-
     #mn {
         width: 100%;
         display: inline-block;
         background: url(/static/shop/images/menu.jpg) bottom repeat-x;
         margin: 0.5em 0 1em 0;
-
         a {
             font-size:0.75em;
             float: left;
@@ -252,65 +220,55 @@ body {
             padding-left: 2em;
             padding-right: 2/3em;
             line-height: 1.6;
+            border: none;
             &:hover {
                 border: none !important;
                 background: url(/static/shop/images/menu_on.jpg) no-repeat;
             }
         }
-
-
         @media screen and (min-width: 319px) and (max-width: 479px) {
             a {
                 width: 10%;
             }
         }
-
         @media screen and (min-width: 480px) and (max-width: 909px) {
             a {
                 width: 3.5em;
             }
         }
-
-
-        @media screen and (min-width: 910px){
+        @media screen and (min-width: 910px) {
             a {
                 width: 5.5em;
             }
         }
-
     }
-
     #mf {
         width: 100%;
         display: inline-block;
         address {
             float: left;
             font-weight: bold;
-            a{
+            a {
                 font-size: 1em;
             }
         }
         em {
             float: right;
-
             li {
                 margin-left: 1em;
                 float: left;
-
-                a{
+                a {
                     float: left;
                     padding-bottom: 0.125em;
                     margin-bottom: 0.3125em;
                 }
-
-                .dico{
+                .dico {
                     display: none;
                     position: relative;
                     float: left;
                     z-index: 999;
                     text-align:left;
-
-                    .ico{
+                    .ico {
                         position: absolute;
                         z-index: 54;
                         border: 0.1em solid #cc9866;
@@ -320,7 +278,6 @@ body {
                         padding: 0.5em;
                         top: -7.5em;
                     }
-
                     .ico_2wm {
                         position:absolute;
                         width:0.625em;
@@ -329,119 +286,101 @@ body {
                         z-index:55;
                         bottom: -0.6em;
                     }
-
                 }
-
-                .tel{
-
-                    .ico{
+                .tel {
+                    .ico {
                         width: 16.5em;
                         left: -9em;
                     }
-                    .ico_2wm{
+                    .ico_2wm {
                         left: 7.5em;
                     }
-
                 }
-
-                .qq{
-
-                    .ico{
+                .qq {
+                    .ico {
                         width: 6.5em;
                         left: -5em;
                     }
-                    .ico_2wm{
+                    .ico_2wm {
                         left: 3.5em;
                     }
-
                 }
             }
-
         }
     }
-
     #ms {
         width: 100%;
         display: inline-block;
         min-height: 2em;
         padding-bottom: 2em;
-        font-size: 0.75em;
-
         p {
-            text-indent: 1.5em;
+            /*text-indent: 1.5em;*/
             padding-bottom: 0.25em;
         }
-
-        img {
-            width: 100%;
-            height: 100%;
-        }
-
         ol#pinBox {
             width: 100%;
             float: left;
-
             .item {
                 width: 100%;
                 float: left;
                 margin-bottom: 1em;
-
                 @media screen and (max-width: 629px) {
-                    .styp{
+                    .styp {
                         width: 100%;
                         margin-bottom: 0.375em;
                     }
-
+                    .side {
+                        width: auto;
+                    }
                 }
                 @media screen and (min-width: 630px) and (max-width: 819px) {
-                    .styp{
+                    .styp {
                         width: 37.5em;
                         margin-bottom: 0.375em;
                         margin-left: auto;
                         margin-right: auto;
                     }
-                    .side{
+                    .side {
                         width: 36.375em;
                         margin-left: auto;
                         margin-right: auto;
+                        float: none;
                     }
                 }
-
                 @media screen and (min-width: 820px) and (max-width: 985px) {
-                    .styp{
+                    .styp {
                         float: left;
                         width: 50em;
                     }
-                    .side{
+                    .side {
                         float: right;
                         width: 21%;
                     }
                 }
                 @media screen and (min-width: 886px) and (max-width: 909px) {
-                    .styp{
+                    .styp {
                         float: left;
                         width: 50em;
                     }
-                    .side{
+                    .side {
                         float: right;
                         width: 27%;
                     }
                 }
-                @media screen and (min-width: 910px){
-                    .styp{
+                @media screen and (min-width: 910px) {
+                    .styp {
                         float: left;
                         width: 50em;
                     }
-                    .side{
+                    .side {
                         float: right;
                         width: 29.5%;
                     }
                 }
-
                 .styp {
                     height: 37.5em;
+                    overflow: hidden;
                 }
-
                 .side {
                     background: #FFFFFF;
                     padding: 0.5em;
@@ -476,74 +415,83 @@ body {
                             background-position: 0 -142px
                         }
                     }
-
                     nav {
                         width: 100%;
                         line-height: 1.8;
                         text-decoration: none;
                         a {
-
                             margin: 0 0.3125em;
                         }
                     }
                     .button {
                         width: 100%;
                         margin-top: 2em;
-                         a {
+                        a {
                             margin: 0.5em;
                         }
                     }
-
-
                 }
             }
         }
-
         #bner {
             width: 100%;
             height: 530px;
-            padding-bottom: 20px;
+            overflow: hidden;
             float: left;
         }
         menu {
             width: 15%;
-            float: left;
-            font-size: 0.875em;
-            padding-bottom: 2em;
+            /*float: left;*/
+            font-size: 0.75em;
+            padding-bottom: 1em;
             li {
-                padding: 0 2em 0 0.5em;
+                padding-left: 0.5em;
                 a {
-                    line-height: 2;
+                    padding: 0.5em;
                 }
             }
-        }
-        section, article {
             @media screen and (max-width: 629px) {
-                width: 100%;
-                text-align: -webkit-center;
-
+                width:100%;
+                /*font-size:2em;*/
+                /*font-weight: bold;*/
             }
             @media screen and (min-width: 630px) {
+                float: left;
+            }
+        }
+        article {
+            @media screen and (max-width: 479px) {
+                font-size: 2.5em;
+                p {
+                    width: auto;
+                    img {
+                        width: 100%;
+                    }
+                }
+            }
+            @media screen and (min-width: 480px) and (max-width: 909px) {
+                font-size: 2em;
+                p {
+                    width: auto;
+                    img {
+                        width: 100%;
+                    }
+                }
+            }
+            @media screen and (min-width: 910px) {
                 width: 85%;
                 float: right;
                 form {
-                    float: left;
+                    /*float: left;*/
                     padding: 0 2em;
                 }
             }
-        }
-
-        section {
-
-        }
-        article {
             h3 {
-                text-indent: 1.5em;
                 line-height: 2em;
             }
             p {
-                font-size: 1.5em;
-                text-indent: 1.5em;
+                font-size: 0.75em;
+                text-indent: 2em;
             }
         }
     }

@@ -1,19 +1,15 @@
-{% extends "shop.base.htm" %}
-
-{% block section %}
-  <header id="bner">
+{% extends "shop.base.htm" %} {% block section %}
+<header id="bner">
     <ul>
-{% for i in ad %}
-      <li><a href="{{ i.url }}" target="_blank"><img data-src="{{ i.img.url }}" /></a></li>
-{% endfor %}
+        {% for i in ad %}
+        <li>
+            <a href="{{ i.url }}" target="_blank">
+                <img src="{{ i.img.url }}" />
+            </a>
+        </li>
+        {% endfor %}
     </ul>
-  </header>
-{% endblock %}
-
-{% block js %}
-  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.sides.js"></script>
-{% endblock %}
-
-{% block javascript %}
-  $('#bner').sides();
-{% endblock %}
+</header>
+{% endblock %} {% block js %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.sides.js"></script>
+{% endblock %} {% block javascript %} $('#bner').sides(); {% endblock %}
