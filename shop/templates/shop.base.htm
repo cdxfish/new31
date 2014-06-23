@@ -43,8 +43,6 @@
             <li><a href="{% url 'admin:index' %}" target="_blank">站点管理</a>
             </li>
             {% endif %}
-            <li><a href="{% url 'order:queryOrd' %}">订单查询</a>
-            </li>
             <li><a href="{% url 'cart:cart' %}">购物车</a>
             </li>
             {% if user.is_authenticated %}

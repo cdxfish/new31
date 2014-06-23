@@ -1,17 +1,19 @@
-{% extends "shop.base.htm" %}
-
-
-{% block section %}
+{% extends "shop.base.htm" %} {% block section %}
+<section>
     <form action="{% url 'cart:submit' %}" method="post" name="to_checkout" id="toCheckout">
         <h3>订单状态</h3>
         <table width="100%" class="mb2">
             <tr>
                 <td width="100px">付款方式：</td>
-                <td><strong>{{ fInfo.pay.get_cod_display }}</strong></td>
+                <td>
+                    <strong>{{ fInfo.pay.get_cod_display }}</strong>
+                </td>
             </tr>
             <tr>
                 <td>配送方式：</td>
-                <td><strong>{{ cInfo.dlvr.get_cod_display }}</strong></td>
+                <td>
+                    <strong>{{ cInfo.dlvr.get_cod_display }}</strong>
+                </td>
             </tr>
         </table>
         <h3>商品列表</h3>
@@ -24,24 +26,25 @@
                 <th wdith="40px">数量</th>
                 <th width="10%">小计</th>
             </tr>
-{% if cart.items %}
-{% for i in cart.items %}
+            {% if cart.items %} {% for i in cart.items %}
             <tr align="center">
                 <td>{{ i.item.name }}</td>
                 <td>{{ i.spec.spec.value }}</td>
                 <td>{{ i.fee|floatformat:2 }} | {{ i.nfee|floatformat:2 }}</td>
                 <td>{{ i.dis.get_dis_display }}</td>
                 <td>{{ i.num }}</td>
-                <td><span class="st{{ i.v }}">{{ i.total|floatformat:2 }}</span></td>
+                <td>
+                    <span class="st{{ i.v }}">{{ i.total|floatformat:2 }}</span>
+                </td>
             </tr>
-{% endfor %}
-{% else %}
+            {% endfor %} {% else %}
             <tr align="center">
                 <td colspan="10">无</td>
             </tr>
-{% endif %}
+            {% endif %}
             <tr class="bline">
-                <td align="right" colspan="5"><b class="font15">总计: <span class="total">{{ cart.total|floatformat:2 }}</span></b></td>
+                <td align="right" colspan="5"><b class="font15">总计: <span class="total">{{ cart.total|floatformat:2 }}</span></b>
+                </td>
                 <td>&nbsp;</td>
             </tr>
         </table>
@@ -59,11 +62,13 @@
                 <td colspan="10">无</td>
             </tr>
             <tr class="bline">
-                <td colspan="5" align="right"><b class="font15">总计: 0.00</b></td>
+                <td colspan="5" align="right"><b class="font15">总计: 0.00</b>
+                </td>
                 <td>&nbsp;</td>
             </tr>
         </table>
-        <h3>收货人信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'cart:cnsgn' %}" class="sbtn btnbr">修改</a></h3>
+        <h3>收货人信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'cart:cnsgn' %}" class="sbtn btnbr">修改</a>
+        </h3>
         <table width="100%" class="mb2">
             <tr>
                 <td width="100px">收货人姓名：</td>
@@ -91,4 +96,5 @@
             <input type="submit" class="btn btnbr" value="确认订单" />
         </center>
     </form>
+</section>
 {% endblock %}

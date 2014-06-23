@@ -19,7 +19,7 @@ class LogcsFrm(forms.ModelForm):
         widgets = {
             'address': forms.TextInput(attrs={'size': 70}),
             'tel': forms.TextInput(attrs={'size': 60}),
-            'note': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
+            'note': forms.Textarea(attrs={'cols': 80, 'rows': 4}),
             'area': forms.Select(choices=Area.objects.getTpl()),
             'date': forms.DateInput(attrs={'class': 'date'}, format='%Y-%m-%d'),
         }
