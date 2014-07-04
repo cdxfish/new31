@@ -197,9 +197,10 @@ class ItemFee(models.Model):
 
     def nfee(self):
         from new31.func import frMtFee
-        from decimal import Decimal
+        # from decimal import Decimal
 
-        return frMtFee(self.fee * Decimal(self.dis.dis))
+        # return frMtFee(self.fee * Decimal(self.dis.dis))
+        return frMtFee(self.fee * self.dis.dis)
 
     def __unicode__(self):
         return u"%s - %s [ %s ] [ %s ]" % (self.spec, self.fee, self.dis, self.get_typ_display())

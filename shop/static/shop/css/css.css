@@ -109,7 +109,16 @@ textarea:focus {
   display: inline-block;
 }
 .fl {
-  float: left;
+  float: left !important;
+}
+.fn {
+  float: none !important;
+}
+.p0 {
+  padding: 0 !important;
+}
+.m0 {
+  margin: 0 !important;
 }
 .bline {
   border: solid #E5E5E5;

@@ -125,7 +125,6 @@ class Pro(models.Model):
         from new31.func import frMtFee
 
         return frMtFee(self.nfee * self.num)
-        # return self.nfee * self.num
 
     def __unicode__(self):
         return u"[%s]%s - %s [ %s ]" % ( self.ord.sn, self.name, self.spec, self.get_status_display())
