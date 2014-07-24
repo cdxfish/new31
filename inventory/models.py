@@ -6,6 +6,23 @@ import datetime
 
 # Create your models here.
 
+class buildManager(models.Manager):
+
+    def getAll(self):
+
+        return self.select_related().filter(onl=True)
+
+
+
+
+    def addPro(self, sid):
+
+        return
+
+    def rePro(self, sid):
+
+        return
+
 class invProManager(models.Manager):
     def cOnl(self, sid):
         invpro = self.get(id=sid)
@@ -30,6 +47,42 @@ class invProManager(models.Manager):
     def getAll(self):
 
         return self.select_related().filter(onl=True)
+
+    def hasPro(self, bid, sid):
+
+        try:
+            pro = self.get(build__id=bid, spec__id=sid)
+
+            return pro.onl
+
+        except Exception, e:
+            # raise e
+            return False
+
+    def cPro(self, bid, sid):
+
+        try:
+            pro = self.get(build__id=bid, spec__id=sid)
+
+
+            pro.onl = False if pro.onl else True
+            pro.save()
+
+            return pro.onl
+
+        except Exception, e:
+            from item.models import ItemSpec
+            # raise e
+
+            pro = InvPro()
+            pro.build = Build.objects.get(id=bid)
+            pro.spec = ItemSpec.objects.get(id=sid)
+            pro.onl = True
+
+            pro.save()
+
+            return True
+
 
 class invNumManager(models.Manager):
     def default(self, date=''):
@@ -109,50 +162,24 @@ class invNumManager(models.Manager):
 
         inv.save()
 
-class buildManager(models.Manager):
+class Build(models.Model):
 
-    def getAll(self):
+    chcs = (
+            (0, u'南宁'),
+            (1, u'长沙'),
+        )
 
-        return self.select_related().filter(onl=True)
+    name = models.SmallIntegerField(u'厂房', default=0, choices=chcs)
+    area = models.ManyToManyField(Area, verbose_name=u'供货区域')
+    onl = models.BooleanField(u'上线', default=True)
 
+    objects = buildManager()
 
-    def cPro(self, bid, sid):
+    def __unicode__(self):
+        return u'%s - [ onl: %s ]' % (self.get_name_display(), self.onl)
 
-        ipro = InvPro.objects.get(spec__id=sid)
-        try:
-            build = self.get(id=bid, pro__spec__id=sid)
-
-            build.pro.remove(ipro)
-
-            return False
-
-        except Exception, e:
-            # raise e
-            build = self.get(id=bid)
-
-            build.pro.add(ipro)
-
-            return True
-
-
-
-    def addPro(self, sid):
-
-        return
-
-    def rePro(self, sid):
-
-        return
-
-    def hasPro(self, bid, sid):
-
-        try:
-            self.get(id=bid, pro__spec__id=sid)
-
-            return True
-        except Exception, e:
-            # raise e
-            return False
+    class Meta:
+        verbose_name_plural = u'厂房'
 
 
 class InvPro(models.Model):
@@ -163,18 +190,8 @@ class InvPro(models.Model):
             (True, u'已备'),
         )
 
-    _typ = (
-            (0, u'减', 'inventory:minusInv'),
-            (1, u'加', 'inventory:plusInv'),
-        )
-
-    typ= tuple((i[0],i[1]) for i in _typ)
-    act =   (
-                (_typ[0], _typ[1], ),
-                (_typ[0], _typ[1], ),
-        )
-
-    spec = models.OneToOneField(ItemSpec, verbose_name=u'商品规格')
+    spec = models.ForeignKey(ItemSpec, verbose_name=u'商品规格')
+    build = models.ForeignKey(Build, verbose_name=u'厂房')
     onl = models.BooleanField(u'备货', default=False, choices=chcs)
 
     def _onl(self):
@@ -185,13 +202,23 @@ class InvPro(models.Model):
     objects = invProManager()
 
     def __unicode__(self):
-        return u"%s - [ %s ]" % (self.spec,  self.get_onl_display())
+        return u"%s - [ %s ][ %s ]" % (self.spec,  self.get_onl_display(), self.build.get_name_display())
 
     class Meta:
         verbose_name_plural = u'备货清单'
 
 
 class InvNum(models.Model):
+    _typ = (
+            (0, u'减', 'inventory:minusInv'),
+            (1, u'加', 'inventory:plusInv'),
+        )
+
+    typ= tuple((i[0],i[1]) for i in _typ)
+    act =   (
+                (_typ[0], _typ[1], ),
+                (_typ[0], _typ[1], ),
+        )
 
     pro = models.ForeignKey(InvPro, verbose_name=u'备货清单')
     date = models.DateField(u'收货日期')
@@ -205,23 +232,3 @@ class InvNum(models.Model):
     class Meta:
         unique_together=(('pro','date'),)
         verbose_name_plural = u'备货量'
-
-class Build(models.Model):
-
-    chcs = (
-            (0, u'南宁'),
-            (1, u'长沙'),
-        )
-
-    name = models.SmallIntegerField(u'厂房', default=0, choices=chcs)
-    area = models.ManyToManyField(Area, verbose_name=u'供货区域')
-    pro = models.ManyToManyField(InvPro, verbose_name=u'供货清单')
-    onl = models.BooleanField(u'上线', default=True)
-
-    objects = buildManager()
-
-    def __unicode__(self):
-        return u'%s - [ onl: %s ]' % (self.get_name_display(), self.onl)
-
-    class Meta:
-        verbose_name_plural = u'厂房'

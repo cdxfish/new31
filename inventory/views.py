@@ -29,6 +29,8 @@ def inventory(request):
 
 def sort(pro):
     u"""排序"""
+    from models import Build
+
     _pro = {}
 
     build = Build.objects.all()
@@ -113,17 +115,17 @@ def stockInv(request):
     build = Build.objects.getAll()
 
     for i in build:
-        i.items = [{ 'name': ii.name, 'spec': [ {'id': spec.id, 'value': spec.spec.value, 'onl': Build.objects.hasPro(i.id, spec.id) } for spec in ii.itemspec_set.all() ]  } for ii in items]
+        i.items = [{ 'name': ii.name, 'spec': [ {'id': spec.id, 'value': spec.spec.value, 'onl': InvPro.objects.hasPro(i.id, spec.id) } for spec in ii.itemspec_set.all() ]  } for ii in items]
 
     return render_to_response('inventorylist.htm', locals(), context_instance=RequestContext(request))
 
-@ajaxErrMsg('该规格已下架')
+# @ajaxErrMsg('该规格已下架')
 def cOnlInv(request, sid, bid):
     u"""备货选择"""
-    from models import Build
+    from models import InvPro
 
     return HttpResponse(Msg.objects.dumps(data={
-                'onl': not Build.objects.cPro(bid=bid, sid=sid)
+                'onl': not InvPro.objects.cPro(bid=bid, sid=sid)
             }
         )
     )
@@ -181,11 +183,11 @@ class InvPur(BsPur):
 
     """
     def __init__(self, oList, request):
-        from models import InvPro
+        from models import InvNum
 
         super(InvPur, self).__init__(oList, request)
 
-        self.action = InvPro.act
+        self.action = InvNum.act
 
 
     def beMixed(self):
