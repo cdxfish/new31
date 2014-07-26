@@ -27,18 +27,18 @@
           </tr>
 {% regroup b.list by pro.spec.item.name as list %}
 {% for i in list %}
-          <tr align="center" class="tr_border_top_black">
+          <tr align="center" class="tr_border_top_black item" data-id="{{ forloop.counter0 }}">
             <td>&nbsp;</td>
             <td>{{ i.grouper }}</td>
             <td>&nbsp;</td>
-            <td><span class="wow_item_1">0</span> | <span class="wow_item_8">0</span> | <span class="wow_item_0">0</span></td>
+            <td><span class="wow_item_1 item-adv">0</span> | <span class="wow_item_8 item-count">0</span> | <span class="wow_item_0 item-num">0</span></td>
             <td colspan="2">&nbsp;</td>
           </tr>
 {% for ii in i.list %}
-          <tr align="center">
+          <tr align="center" class="spec" data-id="{{ forloop.parentloop.counter0 }}" data-adv="{{ ii.adv|default:0 }}" data-count="{{ ii.count|default:0 }}" data-num="{{ ii.num|default:0 }}">
             <td colspan="2">&nbsp;</td>
             <td>{{ ii.pro.spec.spec.value }}</td>
-            <td><span class="wow_item_1 y{{ ii.id }}">{{ ii.adv|default:0 }}</span> | <span class="wow_item_8 s{{ ii.id }}">{{ ii.num|default:0 }}</span> | <span class="wow_item_0 c{{ ii.id }}">{{ ii.count|default:0 }}</span></td>
+            <td><span class="wow_item_1 a{{ ii.id }}">{{ ii.adv|default:0 }}</span> | <span class="wow_item_8 c{{ ii.id }}">{{ ii.count|default:0 }}</span> | <span class="wow_item_0 s{{ ii.id }}">{{ ii.num|default:0 }}</span></td>
             <td><input ytpe="text" name="n17335" value="1" size="1" /></td>
             <td nowrap="nowrap" align="center">
 
