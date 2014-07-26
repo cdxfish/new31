@@ -87,7 +87,6 @@ class Pro(models.Model):
     from order.models import Ord
     from discount.models import Dis
 
-
     _chcs = (
                 (0, u'未产', 'produce:nullPro'),
                 (1, u'产求', 'produce:requirePro'),

@@ -21,90 +21,10 @@ def inventory(request):
 
     a = form.initial
 
-    pro = p.get()
-    pro = InvPur(pro, request).get()
-    pro = sort(pro)
+    invnum = p.get()
+    invnum = InvPur(invnum, request).get()
 
     return render_to_response('inventoryui.htm', locals(), context_instance=RequestContext(request))
-
-def sort(pro):
-    u"""排序"""
-    from models import Build
-
-    _pro = {}
-
-    build = Build.objects.all()
-
-    # [{
-    #     'proname1': {
-    #         'area1': {
-    #             'pro': [],
-    #             'adv': 0,
-    #             'invnum': 0,
-    #             'num': 0,
-    #             'count': 0,
-    #         },
-    #         'areab': {
-    #             'pro': [],
-    #             'adv': 0,
-    #             'invnum': 0,
-    #             'num': 0,
-    #             'count': 0,
-    #         },
-    #     },
-    #     'proname2':
-    #         'area1': {
-    #             'pro': [],
-    #             'adv': 0,
-    #             'invnum': 0,
-    #             'num': 0,
-    #             'count': 0,
-    #         },
-    #         'areab': {
-    #             'pro': [],
-    #             'adv': 0,
-    #             'invnum': 0,
-    #             'num': 0,
-    #             'count': 0,
-    #         },
-
-    # }]
-
-    # for b in build:
-    #     for i in pro:
-
-
-
-    for i in pro:
-        # name = i.spec.item.name
-        # if not hasattr(_pro, name):
-        #     _pro[name] = {}
-        # for ii in i.build.all():
-        #     if not hasattr(_pro[name], ii.area.name):
-        #         _pro[name] = {}
-
-
-        # _pro[name] =
-
-
-        sn = i.spec.item.sn
-        try:
-            _pro[sn]['invnum'].append(i)
-            _pro[sn]['adv'] += i.invnum.adv
-            _pro[sn]['num'] += i.invnum.num
-            _pro[sn]['count'] += i.invnum.count
-
-        except Exception, e:
-            _pro[sn] = {
-                    'name': i.spec.item.name,
-                    'invnum': [i, ],
-                    'adv': i.invnum.adv,
-                    'num': i.invnum.num,
-                    'count': i.invnum.count,
-                }
-
-    return [v for i,v in _pro.items()]
-
 
 def stockInv(request):
     u"""备货清单"""
@@ -119,7 +39,7 @@ def stockInv(request):
 
     return render_to_response('inventorylist.htm', locals(), context_instance=RequestContext(request))
 
-# @ajaxErrMsg('该规格已下架')
+@ajaxErrMsg('该规格已下架')
 def cOnlInv(request, sid, bid):
     u"""备货选择"""
     from models import InvPro
@@ -138,19 +58,30 @@ def defaultInv(request, s):
 
     return rdrtBck(request)
 
+
+def retMsg(inv):
+
+    return HttpResponse(Msg.objects.dumps(data={
+                'id': inv.id,
+                'num': inv.num,
+                'adv': inv.adv,
+                'count': inv.count,
+                'date': u'%s' % inv.date,
+            }
+        )
+    )
+
 def minusInv(request, sid, num):
     u"""备货减"""
     from models import InvNum
-    InvNum.objects.minus(sid, int(num))
 
-    return rdrtBck(request)
+    return retMsg(InvNum.objects.minus(sid, int(num)))
 
 def plusInv(request, sid, num):
     u"""备货加"""
     from models import InvNum
-    InvNum.objects.plus(sid, int(num))
 
-    return rdrtBck(request)
+    return retMsg(InvNum.objects.plus(sid, int(num)))
 
 
 class InvSrch(object):
@@ -170,7 +101,7 @@ class InvSrch(object):
     def get(self):
         from models import InvNum
 
-        return InvNum.objects.getAll(self.initial['s'])
+        return InvNum.objects.getAll(self.initial['s']).filter(pro__build__area__name__in=[ i.area.name for i in self.request.user.attribution_set.all()]).distinct()
 
 
 # 订单列表权限加持
@@ -197,7 +128,7 @@ class InvPur(BsPur):
             if not hasattr(i,'action'):
                 i.action = []
 
-            for ii in self.action[i.onl]:
+            for ii in self.action:
                 try:
                     if ii[2] in self.role:
                         i.action.append(ii)

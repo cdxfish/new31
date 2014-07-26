@@ -12,9 +12,6 @@ class buildManager(models.Manager):
 
         return self.select_related().filter(onl=True)
 
-
-
-
     def addPro(self, sid):
 
         return
@@ -31,18 +28,6 @@ class invProManager(models.Manager):
 
         return invpro
 
-    # def getPro(self, sid, bid):
-    #     try:
-    #         return self.get(spec__id=sid, build__id=bid)
-    #     except Exception, e:
-    #         # raise e
-    #         from item.models import ItemSpec
-
-    #         invpro = InvPro()
-    #         invpro.spec = ItemSpec.objects.get(id=sid)
-    #         # invpro.build = Build.objects.get(id=bid)
-    #         invpro.save()
-    #         return invpro
 
     def getAll(self):
 
@@ -97,29 +82,27 @@ class invNumManager(models.Manager):
 
         for i in InvPro.objects.getAll():
 
-            self.frMt(i.id, date)
+            self.frMt(i, date)
 
-
-    def frMt(self, id, date):
+    def frMt(self, pro, date):
         from produce.models import Pro
 
-        t = date - datetime.timedelta(days=1)
+        inum = InvNum()
+        inum.pro = pro
+        inum.date = date
 
-        pro = InvPro.objects.get(id=id)
-
-        adv = Pro.objects.filter(sn=pro.spec.item.sn, spec=pro.spec.spec.value, ord__logcs__date=t).values('num')
         try:
-            num = self.get(pro__spec__item__sn=pro.spec.item.sn, pro__spec__spec__value=pro.spec.spec.value, date=t).num
+            t = date - datetime.timedelta(days=1)
+
+            _inum = self.get(pro=pro, date=t)
+            inum.num = _inum.num - _inum.adv
         except Exception, e:
-            num = 0
+            # raise e
+            inum.num = 0
 
-        iNum = InvNum()
-        iNum.pro = pro
-        iNum.date = date
-        iNum.num = num - sum([v['num'] for v in adv])
-        iNum.save()
+        inum.save()
 
-        return iNum
+        return inum
 
 
     def getAll(self, date):
@@ -131,36 +114,26 @@ class invNumManager(models.Manager):
         else:
             date = datetime.date.today()
 
-        pros = InvPro.objects.getAll()
 
-        for i in pros:
-
-            adv = sum([v['num'] for v in Pro.objects.filter(sn=i.spec.item.sn, spec=i.spec.spec.value, ord__logcs__date=date, ord__status=2, \
-                ord__logcs__area__in=Area.objects.filter(build__pro__id=i.id).values('name')).values('num')])
-            try:
-                invnum = i.invnum_set.get(date=date)
-            except Exception, e:
-                invnum = self.frMt(i.id, date)
-            invnum.adv = adv
-            invnum.count = invnum.num - adv
-
-            i.invnum = invnum
-
-        return pros
+        return self.select_related().filter(pro__onl=True, date=date)
 
     def minus(self, sn, num=1):
-
         inv = self.get(id=sn)
         inv.num -= num
+        inv.count -= num
 
         inv.save()
+
+        return inv
 
     def plus(self, sn, num=1):
-
-        inv = self.get(id= sn)
+        inv = self.get(id=sn)
         inv.num += num
+        inv.count += num
 
         inv.save()
+
+        return inv
 
 class Build(models.Model):
 
@@ -170,7 +143,7 @@ class Build(models.Model):
         )
 
     name = models.SmallIntegerField(u'厂房', default=0, choices=chcs)
-    area = models.ManyToManyField(Area, verbose_name=u'供货区域')
+    area = models.ManyToManyField(Area, verbose_name=u'供货区域', blank=True, null=True)
     onl = models.BooleanField(u'上线', default=True)
 
     objects = buildManager()
@@ -214,15 +187,32 @@ class InvNum(models.Model):
             (1, u'加', 'inventory:plusInv'),
         )
 
-    typ= tuple((i[0],i[1]) for i in _typ)
-    act =   (
-                (_typ[0], _typ[1], ),
-                (_typ[0], _typ[1], ),
-        )
+    typ = tuple((i[0],i[1]) for i in _typ)
+    act = (_typ[0], _typ[1], )
 
     pro = models.ForeignKey(InvPro, verbose_name=u'备货清单')
     date = models.DateField(u'收货日期')
     num = models.SmallIntegerField(u'数量', default=0)
+
+    def __init__(self, *arg, **kwarg):
+        from produce.models import Pro
+        from order.models import Ord
+        super(InvNum, self).__init__(*arg, **kwarg)
+
+        try:
+            adv = Pro.objects.filter(
+                    ord__status=Ord.chcs[2][0],
+                    ord__logcs__date=self.date,
+                    ord__logcs__area__in=[ i.get_name_display() for i in self.pro.build.area.all()],
+                    spec=self.pro.spec.spec.value,
+                    name=self.pro.spec.item.name
+                ).aggregate(models.Sum('num'))['num__sum']
+        except Exception, e:
+            # raise e
+            adv = 0
+
+        self.adv = adv if adv else 0
+        self.count = self.num - self.adv
 
     objects = invNumManager()
 
@@ -232,3 +222,4 @@ class InvNum(models.Model):
     class Meta:
         unique_together=(('pro','date'),)
         verbose_name_plural = u'备货量'
+        ordering = ['pro__build', 'pro__spec',]

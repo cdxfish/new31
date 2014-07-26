@@ -19,80 +19,40 @@
             <th>数量</th>
             <th>操作</th>
           </tr>
+{% regroup invnum by pro.build.get_name_display as build %}
 {% for b in build %}
           <tr align="center" class="tr_border_top_rare">
-            <td>{{ b.get_name_display }}</td>
+            <td>{{ b.grouper }}</td>
             <td colspan="5">&nbsp;</td>
           </tr>
+{% regroup b.list by pro.spec.item.name as list %}
+{% for i in list %}
           <tr align="center" class="tr_border_top_black">
             <td>&nbsp;</td>
-            <td>奶酪芒果派</td>
+            <td>{{ i.grouper }}</td>
             <td>&nbsp;</td>
-            <td><span class="wow_item_1">0</span> | <span class="wow_item_8">4</span> | <span class="wow_item_0">4</span></td>
+            <td><span class="wow_item_1">0</span> | <span class="wow_item_8">0</span> | <span class="wow_item_0">0</span></td>
             <td colspan="2">&nbsp;</td>
           </tr>
-
+{% for ii in i.list %}
           <tr align="center">
             <td colspan="2">&nbsp;</td>
-            <td>1.5磅：≈ π * (1/2 * 19 (cm))^2</td>
-            <td><span class="wow_item_1">0</span> | <span class="wow_item_8">3</span> | <span class="wow_item_0">3</span></td>
+            <td>{{ ii.pro.spec.spec.value }}</td>
+            <td><span class="wow_item_1 y{{ ii.id }}">{{ ii.adv|default:0 }}</span> | <span class="wow_item_8 s{{ ii.id }}">{{ ii.num|default:0 }}</span> | <span class="wow_item_0 c{{ ii.id }}">{{ ii.count|default:0 }}</span></td>
             <td><input ytpe="text" name="n17335" value="1" size="1" /></td>
             <td nowrap="nowrap" align="center">
 
-            <a href="/inventory/minus/17335/1/" class="button act">减</a>
-
-            <a href="/inventory/plus/17335/1/" class="button act">加</a>
-
-            </td>
-          </tr>
-          <tr align="center">
-            <td colspan="2">&nbsp;</td>
-            <td>2.5磅：≈ π * (1/2 * 23 (cm))^2</td>
-            <td><span class="wow_item_1">0</span> | <span class="wow_item_8">1</span> | <span class="wow_item_0">1</span></td>
-            <td><input ytpe="text" name="n17336" value="1" size="1" /></td>
-            <td nowrap="nowrap" align="center">
-
-            <a href="/inventory/minus/17336/1/" class="button act">减</a>
-
-            <a href="/inventory/plus/17336/1/" class="button act">加</a>
-
-            </td>
-          </tr>
-
-
-{% endfor %}
-{% for i in pro %}
-          <tr align="center" class="tr_border_top_rare">
-            <td>{{ i.name }}</td>
-            <!-- <td>&nbsp;</td> -->
-            <!-- <td><span class="wow_item_1">{{ i.adv }}</span> | <span class="wow_item_8">{{ i.count }}</span> | <span class="wow_item_0">{{ i.num }}</span></td> -->
-            <td colspan="5">&nbsp;</td>
-          </tr>
-{% regroup i by build as newsList %}
-{% for n in newsList %}
-          <tr align="center" class="tr_border_top_black">
-            <td>&nbsp;</td>
-            <td>南宁</td>
-            <td>&nbsp;</td>
-            <td><span class="wow_item_1">{{ i.adv }}</span> | <span class="wow_item_8">{{ i.count }}</span> | <span class="wow_item_0">{{ i.num }}</span></td>
-            <td colspan="2">&nbsp;</td>
-          </tr>
-<!-- {% for ii in i.invnum %}
-          <tr align="center">
-            <td colspan="2">&nbsp;</td>
-            <td>{{ ii.spec.spec.value }}</td>
-            <td><span class="wow_item_1">{{ ii.invnum.adv }}</span> | <span class="wow_item_8">{{ ii.invnum.count }}</span> | <span class="wow_item_0">{{ ii.invnum.num }}</span></td>
-            <td>{% if ii.action %}<input ytpe="text" name="n{{ ii.invnum.id }}" value="1" size="1" />{% else %}&nbsp;{% endif %}</td>
-            <td nowrap="nowrap" align="center">
-{% for iii in ii.action  %}
-            <a href="{% url iii.2 ii.invnum.id 1 %}" class="button act">{{ iii.1 }}</a>
+{% for a in ii.action %}
+            <a href="{% url a.2 ii.id 1 %}" class="button act">{{ a.1 }}</a>
 {% endfor %}
             </td>
           </tr>
-{% endfor %} -->
+{% endfor %}
 
 {% endfor %}
+
 {% endfor %}
+
           <tr>
             <td align="center"><a href="{% url 'inventory:defaultInv' form.initial.s %}" class="button">备货格式化</a></td>
             <td colspan="5">&nbsp;</td>
