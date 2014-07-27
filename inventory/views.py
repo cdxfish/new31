@@ -2,6 +2,7 @@
 u"""备货"""
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.shortcuts import redirect
 from django.http import HttpResponse
 from new31.func import rdrtBck
 from new31.decorator import rdrtBckDr
@@ -22,6 +23,9 @@ def inventory(request):
     a = form.initial
 
     invnum = p.get()
+    if not invnum:
+        return redirect('inventory:defaultInv', s=a['s'])
+
     invnum = InvPur(invnum, request).get()
 
     return render_to_response('inventoryui.htm', locals(), context_instance=RequestContext(request))

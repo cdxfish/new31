@@ -175,7 +175,7 @@ class ItemSpec(models.Model):
     objects = itemSpecManager()
 
     def __unicode__(self):
-        return u"%s - %s" % (self.item.name, self.spec)
+        return u"%s - %s[ onl:%s ][ show:%s ]" % (self.item.name, self.spec, self.onl, self.show)
 
     class Meta:
         ordering = ['item', 'spec']
