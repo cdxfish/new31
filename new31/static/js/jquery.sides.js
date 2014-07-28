@@ -149,42 +149,40 @@
                 ready: function() {
 
                     var self = this;
-                    $(window).load(function() {
 
-                        self.ul.append(self.ul.find('li:first').clone()).wrap(self.warper);
-                        var width = 0;
-                        self.ul.find('li').css({
-                            'float': 'left',
-                            'height': '100%'
-                        }).hover(function() {
-                            self.stop();
-                        }, function() {
-                            self.start();
-                        }).find('img').css({
-                            'border': 0
-                        }).each(function(i) {
-                            var $_this = $(this);
-                            $_this.seg = width;
+                    self.ul.append(self.ul.find('li:first').clone()).wrap(self.warper);
+                    var width = 0;
+                    self.ul.find('li').css({
+                        'float': 'left',
+                        'height': '100%'
+                    }).hover(function() {
+                        self.stop();
+                    }, function() {
+                        self.start();
+                    }).find('img').css({
+                        'border': 0
+                    }).each(function(i) {
+                        var $_this = $(this);
+                        $_this.seg = width;
 
-                            width += $_this.width();
+                        width += $_this.width();
 
-                            self.site.push($_this);
-                            self.btns.push(self.button());
-                        });
-
-                        self.ul.css({
-                            'width': width
-                        }).find('a').css({
-                            'display': 'block',
-                            'border': 'none'
-                        });
-
-                        // 弹出最后按钮
-                        self.btns.pop();
-
-                        $this.append(self.num.append(self.btns));
-                        self.btns[0].click();
+                        self.site.push($_this);
+                        self.btns.push(self.button());
                     });
+
+                    self.ul.css({
+                        'width': width
+                    }).find('a').css({
+                        'display': 'block',
+                        'border': 'none'
+                    });
+
+                    // 弹出最后按钮
+                    self.btns.pop();
+
+                    $this.append(self.num.append(self.btns));
+                    self.btns[0].click();
 
                     return this.start();
                 }
