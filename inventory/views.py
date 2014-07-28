@@ -8,6 +8,7 @@ from new31.func import rdrtBck
 from new31.decorator import rdrtBckDr
 from message.models import Msg
 from message.decorator import ajaxErrMsg
+from decorator import invNumDr
 import datetime
 # Create your views here.
 
@@ -23,8 +24,6 @@ def inventory(request):
     a = form.initial
 
     invnum = p.get()
-    if not invnum:
-        return redirect('inventory:defaultInv', s=a['s'])
 
     invnum = InvPur(invnum, request).get()
 
@@ -36,7 +35,7 @@ def stockInv(request):
     from models import Build, InvPro
 
     items = Item.objects.getAll()
-    build = Build.objects.getAll()
+    build = Build.objects.getByUser(request.user)
 
     for i in build:
         i.items = [{ 'name': ii.name, 'spec': [ {'id': spec.id, 'value': spec.spec.value, 'onl': InvPro.objects.hasPro(i.id, spec.id) } for spec in ii.itemspec_set.all() ]  } for ii in items]
@@ -58,7 +57,7 @@ def defaultInv(request, s):
     u"""备货格式化"""
     from models import InvNum, InvPro
 
-    InvNum.objects.default(s)
+    InvNum.objects.default(request.user, s)
 
     return rdrtBck(request)
 
@@ -75,12 +74,17 @@ def retMsg(inv):
         )
     )
 
+@ajaxErrMsg('无法修改库存量')
+@invNumDr
 def minusInv(request, sid, num):
     u"""备货减"""
     from models import InvNum
 
     return retMsg(InvNum.objects.minus(sid, int(num)))
 
+
+@ajaxErrMsg('无法修改库存量')
+@invNumDr
 def plusInv(request, sid, num):
     u"""备货加"""
     from models import InvNum

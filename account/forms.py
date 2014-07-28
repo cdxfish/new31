@@ -28,9 +28,6 @@ class _BsInfoFrm(forms.ModelForm):
     def clean_mon(self):
         mon = self.cleaned_data['mon']
 
-        print '=' * 20
-        print mon
-
         if not mon:
             raise forms.ValidationError(u'请填写正确的生月!')
 

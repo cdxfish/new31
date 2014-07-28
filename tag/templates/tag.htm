@@ -1,49 +1,46 @@
-{% extends "shop.base.htm" %}
-
-{% block title %}{{ tag }} {% endblock %}
-
-{% block js %}
+{% extends "shop.base.htm" %} {% block title %}{{ tag }} {% endblock %} {% block js %}
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.sides.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}tag/js/tag.configuration.js"></script>
-{% endblock %}
-
-{% block section %}
-  <ol id="pinBox">
-{% for i in items %}
+{% endblock %} {% block section %}
+<ol id="pinBox">
+    {% for i in items %}
     <li itemscope itemid="{{ i.sn }}" class="item">
-      <div class="styp">
-        <ul>
-{% for ii in i.itemimg_set.getBImgs %}
-          <li><img alt="{{ i.name }}" title="{{ i.name }}" data-src="{{ ii.img.url }}" /><span itemprop="image" style="display:none;">{{ ii.img.url }}</span></li>
-{% endfor %}
-        </ul>
-      </div>
-      <section class="side">
-        <h2 itemprop="name"><a href="{% url 'tag:tagShow' i.name|urlencode %}" itemprop="url">{{ i.name }}</a></h2>
-        <p itemprop="description">{{ i.itemdesc_set.getAll.0.desc }}</p>
-        <aside class="pinInfo">
-          <div><time itemprop="pubdate" datetime="{{ i.addTime|date:'Y-m-d H:i' }}">{{ i.addTime }}</time></div>
-          <div itemprop="sales" class="sales">销量 {{ i.click }}</div>
-          <div itemprop="like" class="like">赞 <span class="count_like_{{ i.id }}">{{ i.like }}</span></div>
-        </aside>
-        <nav>
-{% for iii in i.tag.getByRandom|slice:":9" %}
-            <a href="{% url 'tag:tagShow' iii.tag|urlencode %}" itemprop="tagurl"><span itemprop="tag">{{ iii.tag }}</span></a>
-{% endfor %}
-        </nav>
-        <div class="button">
-          <a class="btn btnbr btnLike" href="{% url 'tag:itemLike' i.id %}">赞</a>
-          <a class="btn btnbr btnBuy" href="{% url 'tag:getSpec' i.id %}">售价</a>
+        <div class="styp">
+            <ul>
+                {% for ii in i.itemimg_set.getBImgs %}
+                <li>
+                    <img alt="{{ i.name }}" title="{{ i.name }}" data-src="{{ ii.img.url }}" width="600" height="450" />
+                    <span itemprop="image" style="display:none;">{{ ii.img.url }}</span>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
-      </section>
+        <section class="side">
+            <h2 itemprop="name"><a href="{% url 'tag:tagShow' i.name|urlencode %}" itemprop="url">{{ i.name }}</a>
+            </h2>
+            <p itemprop="description">{{ i.itemdesc_set.getAll.0.desc }}</p>
+            <aside class="pinInfo">
+                <div>
+                    <time itemprop="pubdate" datetime="{{ i.addTime|date:'Y-m-d H:i' }}">{{ i.addTime }}</time>
+                </div>
+                <div itemprop="sales" class="sales">销量 {{ i.click }}</div>
+                <div itemprop="like" class="like">赞
+                    <span class="count_like_{{ i.id }}">{{ i.like }}</span>
+                </div>
+            </aside>
+            <nav>
+                {% for iii in i.tag.getByRandom|slice:":9" %}
+                <a href="{% url 'tag:tagShow' iii.tag|urlencode %}" itemprop="tagurl">
+                    <span itemprop="tag">{{ iii.tag }}</span>
+                </a>
+                {% endfor %}
+            </nav>
+            <div class="button">
+                <a class="btn btnbr btnLike" href="{% url 'tag:itemLike' i.id %}">赞</a>
+                <a class="btn btnbr btnBuy" href="{% url 'tag:getSpec' i.id %}">售价</a>
+            </div>
+        </section>
     </li>
-{% endfor %}
-  </ol>
-{% endblock %}
-
-{% block javascript %}
-    t.buy().like();
-    $('.styp').each(function() {
-        $(this).sides()
-    });
-{% endblock %}
+    {% endfor %}
+</ol>
+{% endblock %} {% block javascript %} t.buy().like(); $('.styp').each(function() { $(this).sides() }); {% endblock %}

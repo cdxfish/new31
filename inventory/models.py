@@ -20,6 +20,10 @@ class buildManager(models.Manager):
 
         return
 
+    def getByUser(self, user):
+
+        return self.getAll().filter(area__name__in=user.attribution_set.getAreaList()).distinct()
+
 class invProManager(models.Manager):
     def cOnl(self, sid):
         invpro = self.get(id=sid)
@@ -70,7 +74,7 @@ class invProManager(models.Manager):
 
 
 class invNumManager(models.Manager):
-    def default(self, date=''):
+    def default(self, user, date):
         if date:
             date = frmtDate(date)
         else:
@@ -80,7 +84,7 @@ class invNumManager(models.Manager):
 
         self.filter(date=date).delete()
 
-        for i in InvPro.objects.getAll():
+        for i in InvPro.objects.getAll().filter(build__area__name__in=user.attribution_set.getAreaList()).distinct():
 
             self.frMt(i, date)
 
