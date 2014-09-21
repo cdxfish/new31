@@ -1,15 +1,28 @@
 {% extends "shop.base.htm" %} {% block section %}
 <header id="bner">
-    <ul>
-        {% for i in ad %}
-        <li>
-            <a href="{{ i.url }}" target="_blank">
-                <img data-src="{{ i.img.url }}" width="886" height="530" />
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
+    <div id="slides" class="slides">
+{% for i in ad %}
+        <a href="{{ i.url }}"><img src="{{ STATIC_URL }}shop/images/loading.gif" data-src="{{ i.img.url }}"></a>
+{% endfor %}
+    </div>
 </header>
-{% endblock %} {% block js %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.sides.js"></script>
-{% endblock %} {% block javascript %} $('#bner').sides(); {% endblock %}
+
+
+{% endblock %} 
+
+{% block js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.slides.min.js"></script>
+{% endblock %} 
+
+{% block javascript %} 
+      $('#slides').slidesjs({
+        width: 886,
+        height: 530,
+        play: {
+          active: true,
+          auto: true,
+          interval: 4000,
+          swap: true
+        }
+      });
+{% endblock %}

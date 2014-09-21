@@ -99,7 +99,8 @@ class invNumManager(models.Manager):
             t = date - datetime.timedelta(days=1)
 
             _inum = self.get(pro=pro, date=t)
-            inum.num = _inum.num - _inum.adv
+
+            inum.num = _inum.count
         except Exception, e:
             # raise e
             inum.num = 0

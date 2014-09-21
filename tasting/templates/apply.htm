@@ -1,6 +1,12 @@
 {% extends "office.base.htm" %}
 
+{% block js %}
+<script type="text/javascript" src="{{ STATIC_URL }}tasting/js/tast.configuration.js"></script>
+{% endblock %}
+
 {% block content %}
+      {% include 'search.htm' %}
+      {% load tags %}
         <table cellpadding="3" cellspacing="1" width="100%">
           <tr>
             <th>公司名称</th>
@@ -8,12 +14,12 @@
             <th>公司部门</th>
             <th>申请人</th>
             <th>联系电话 | 办公电话</th>
-            <th width="8%">时间安排</th>
-            <th width="8%">公司规模</th>
-            <th width="8%">申请时间</th>
+            <th>时间安排</th>
+            <th>公司规模</th>
+            <th>申请时间</th>
           </tr>
 {% for i in applys %}
-          <tr align="center">
+          <tr align="center" class="tr_border_top_black">
               <td>{{ i.company }}</td>
               <td>[ {{ i.area }} ] {{ i.address }}</td>
               <td>{{ i.department }}</td>
@@ -23,6 +29,14 @@
               <td>{{ i.get_scale_display }}</td>
               <td>{{ i.addtime|date:"Y-m-d" }}</td>
           </tr>
+          <tr align="center">
+              <td colspan="5" align="left"><a href="{% url 'tasting:note' i.discuss.id %}" class="button note" data-id="{{ i.discuss.id }}">备注</a> | <span class="ntext">{{ i.discuss.note }}</span></td>
+              <td>{{ i.discuss.user.last_name }}{{ i.discuss.user.first_name }}</td>
+              <td nowrap="nowrap" align="center"><span class="status"><span class="status_{{ i.discuss.status }}" id="tast{{ i.discuss.id }}">{{ i.discuss.get_status_display }}</span></td>
+              {% oprt i %}
+          </tr>
 {% endfor %}
+          {% load page %}
+          {% page applys request form %}
         </table>
 {% endblock %}
