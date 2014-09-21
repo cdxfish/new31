@@ -55,6 +55,7 @@ class Dis(models.Model):
             (0.0, u'赠送'),
         )
     dis = models.FloatField(u'折扣', default=1.0, choices=chcs)
+    dis = models.DecimalField(u'折扣', default=1.0, choices=chcs, max_digits=10, decimal_places=2)
     onl = models.BooleanField(u'上架', default=False)
 
     objects = disManager()

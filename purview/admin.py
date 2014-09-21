@@ -10,6 +10,7 @@ class privilegeAdmin(admin.ModelAdmin):
 
 class roleAdmin(admin.ModelAdmin):
     filter_horizontal = ('user', 'privilege',)
+    raw_id_fields = ('user',)
 
 
 admin.site.register(Element)

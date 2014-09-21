@@ -1,6 +1,5 @@
-{% extends "shop.base.htm" %}
-
-{% block section %}
+{% extends "shop.base.htm" %} {% block section %}
+<section>
     <strong>收货人信息</strong>
     <p>（请填写详细收货地址及准确的最佳送货时间，以便更快捷将您订购的蛋糕送达！）</p>
     <form action="{% url 'cart:checkout' %}" method="POST" name="checkout" id="checkout">
@@ -35,14 +34,14 @@
                 <td align="right">{{ cnsgn.date.label }}：</td>
                 <td>{{ cnsgn.date }}</td>
             </tr>
-        <tr>
-            <td align="right">{{ cnsgn.time.label }}：</td>
-            <td>{{ cnsgn.time }}</td>
-        </tr>
-        <tr>
-            <td align="right" valign="top">{{ cnsgn.note.label }}：</td>
-            <td>{{ cnsgn.note }}</td>
-        </tr>
+            <tr>
+                <td align="right">{{ cnsgn.time.label }}：</td>
+                <td>{{ cnsgn.time }}</td>
+            </tr>
+            <tr>
+                <td align="right" valign="top">{{ cnsgn.note.label }}：</td>
+                <td>{{ cnsgn.note }}</td>
+            </tr>
         </table>
         <center>
             {% csrf_token %}
@@ -53,12 +52,12 @@
     <strong>小提示：</strong>
     <p>蓝圈内为免费配送范围，超出免费配送范围须加收10元，收费配送范围为红圈以内蓝圈以外。</p>
     <p>&nbsp;</p>
-    <img src="{{ STATIC_URL }}images/delivery_areas.jpg" />
+    <img src="{{ STATIC_URL }}images/nn.jpg" />
     <p>&nbsp;</p>
-{% endblock %}
-
-
-{% block js %}
-    <script type="text/javascript" src="{{ STATIC_URL }}logistics/js/consignee.configuration.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}finance/js/fnc.configuration.js"></script>
+    <img src="{{ STATIC_URL }}images/cs.jpg" />
+    <p>&nbsp;</p>
+</section>
+{% endblock %} {% block js %}
+<script type="text/javascript" src="{{ STATIC_URL }}logistics/js/consignee.configuration.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}finance/js/fnc.configuration.js"></script>
 {% endblock %}

@@ -3,10 +3,21 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
+class DiscussManager(models.Manager):
+    def cStatus(self, sn , s):
+        o = self.get(id=sn)
+
+        o.status = s
+
+        o.save()
+
+        return o
+
 class Apply(models.Model):
     chcs = (
             (0, u'上午'),
             (1, u'下午'),
+            (2, u'中午'),
         )
 
     _chcs = (
@@ -33,7 +44,7 @@ class Apply(models.Model):
         return u"%s - %s" % (self.company, self.addtime)
 
     class Meta:
-        ordering = ['addtime']
+        ordering = ['-addtime']
         verbose_name_plural = u'试吃申请'
 
 
@@ -54,19 +65,27 @@ class ApplyArea(models.Model):
 
 class Discuss(models.Model):
     _chcs = (
-                (0, u'未谈', 'tasting:copyOrd'),
-                (1, u'接洽', 'tasting:editOrd'),
-                (2, u'拒谈', 'tasting:confirmOrd'),
-                # (3, u'无效', 'tasting:nullOrd'),
-                # (4, u'止单', 'tasting:stopOrd'),
+                (0, u'未谈', 'tasting:notDis'),
+                (1, u'接洽', 'tasting:acceptDis'),
+                (2, u'拒谈', 'tasting:refuseDis'),
+                (3, u'完成', 'tasting:doneDis'),
             )
     chcs= tuple((i[0], i[1]) for i in _chcs)
+
+    act =   (
+                (_chcs[1], ),
+                (_chcs[2], _chcs[3], ),
+                (_chcs[0], ),
+                (),
+            )
 
 
     app = models.OneToOneField(Apply, verbose_name=u'试吃申请')
     user = models.ForeignKey(User, verbose_name=u'管理员', blank=True, null=True)
     status = models.SmallIntegerField(u'洽谈状态', default=0, choices=chcs)
     note = models.CharField(u'备注', max_length=60)
+
+    objects = DiscussManager()
 
 
     def __unicode__(self):

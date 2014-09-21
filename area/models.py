@@ -17,10 +17,16 @@ class AreaManager(models.Manager):
 
         return tuple((i.id, '%s' % i.get_name_display()) for i in self.filter(onl=True) )
 
+
 class AttributionManager(models.Manager):
     def getAreaName(self):
 
         return [ i.area.get_name_display() for i in self.all()]
+
+    def getAreaList(self):
+
+        return [ i.area.name for i in self.filter(user=self.instance).distinct()]
+
 
 class Area(models.Model):
     chcs = (

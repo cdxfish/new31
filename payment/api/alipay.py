@@ -15,16 +15,16 @@ def notify_url(request):
 
     try:
         o = Ord.objects.get(sn=sn)
-        r = json.load(o.fnc.cod.main(o, request)._paid(request.POST))
+        r = json.loads(o.fnc.cod.main(o, request)._paid(request.POST))
     except Exception, e:
             return HttpResponse('fail')
     else:
-        if r.typ == 'success':
-            o.logcs.note += '支付宝交易号: %s' % request.POST.get('trade_no')
+        if r['typ'] == 'success':
+            o.logcs.note += u'支付宝交易号: %s' % request.POST.get('trade_no')
             o.logcs.save()
 
             return HttpResponse('success')
-        elif r.typ == 'error':
+        elif r['typ'] == 'error':
             return HttpResponse('fail')
 
 
@@ -37,17 +37,18 @@ def return_url(request):
 
     try:
         o = Ord.objects.get(sn=sn)
-        r = json.load(o.fnc.cod.main(o, request)._paid(request.GET))
+        r = json.loads(o.fnc.cod.main(o, request)._paid(request.GET))
     except Exception, e:
+        # raise e
         messages.success(request, u'订单支付错误。')
     else:
-        if r.typ == 'success':
-            o.logcs.note += '支付宝交易号: %s' % request.GET.get('trade_no')
+        if r['typ'] == 'success':
+            o.logcs.note += u'支付宝交易号: %s' % request.GET.get('trade_no')
             o.logcs.save()
 
             messages.success(request, u'成功支付订单。')
-        elif r.typ == 'error':
-            messages.error(request, r.msg)
+        elif r['typ'] == 'error':
+            messages.error(request, r['msg'])
 
     return redirect('account:uViewOrd', sn=sn)
 

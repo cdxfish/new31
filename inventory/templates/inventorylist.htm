@@ -3,34 +3,48 @@
 {% block content %}
       <table cellpadding="3" cellspacing="1" width="100%">
           <tr>
+            <th>厂房</th>
             <th>名称</th>
             <th>规格</th>
-            <th>厂房</th>
             <th>操作</th>
           </tr>
-{% for i in items %}
+{% for b in build %}
           <tr align="center" class="tr_border_top_rare">
-            <td>{{ i.name }}</td>
+            <td>{{ b.get_name_display }}</td>
             <td colspan="3">&nbsp;</td>
           </tr>
-{% for ii in i.itemspec_set.all %}
+{% for i in b.items %}
           <tr align="center" class="tr_border_top_black">
             <td>&nbsp;</td>
-            <td>{{ ii.spec.value }}</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td>{{ i.name }}</td>
+            <td colspan="2">&nbsp;</td>
           </tr>
+{% for spec in i.spec %}
           <tr align="center">
             <td colspan="2">&nbsp;</td>
-            <td>南宁</td>
-            <td><a href="{% url 'inventory:cOnlInv' ii.id %}"><img src="{{ STATIC_URL }}images/{% if ii.invpro.onl %}yes{% else %}no{% endif %}.gif" /></a></td>
+            <td>{{ spec.value }}</td>
+            <td><a href="{% url 'inventory:cOnlInv' spec.id b.id %}" class="cpro"><img src="{{ STATIC_URL }}images/{% if spec.onl %}yes{% else %}no{% endif %}.gif" /></a></td>
           </tr>
-          <tr align="center">
-            <td colspan="2">&nbsp;</td>
-            <td>长沙</td>
-            <td><a href="{% url 'inventory:cOnlInv' ii.id %}"><img src="{{ STATIC_URL }}images/{% if ii.invpro.onl %}yes{% else %}no{% endif %}.gif" /></a></td>
-          </tr>
+{% endfor %}
 {% endfor %}
 {% endfor %}
       </table>
+{% endblock %}
+
+{% block javascript %}
+$('.cpro').on('click', '', function(){
+  var $this = $(this);
+  $.dialog.ajax($(this).attr('href'), function(data){
+    var img = $this.find('img');
+    if(data.data.onl){
+      img.attr('src', '{{ STATIC_URL }}images/no.gif');
+    }else{
+      img.attr('src', '{{ STATIC_URL }}images/yes.gif');
+    }
+
+    $.dialog.close();
+  });
+  return false;
+});
+
 {% endblock %}

@@ -306,12 +306,12 @@ class LogcSess(BsSess):
 
         oLogcs = Logcs.objects.get(ord__sn=sn)
 
-        areas = oLogcs.area.split(' - ')
-
         try:
-            area = Area.objects.get(name=areas[1]).id
+            for i in Area.chcs:
+                if oLogcs.area in i:
+                    area = Area.objects.get(name=i[0])
         except Exception, e:
-            area = Area.objects.default().id
+            area = Area.objects.default()
 
         try:
             time = SignTime.objects.get(start=oLogcs.stime, end=oLogcs.etime).id
@@ -319,7 +319,7 @@ class LogcSess(BsSess):
             time = SignTime.objects.default().id
 
         self.sess['consignee'] = u'%s' % oLogcs.consignee
-        self.sess['area'] = area
+        self.sess['area'] = area.id
         self.sess['address'] = u'%s' % oLogcs.address
         self.sess['tel'] = oLogcs.tel
         self.sess['date'] = u'%s' % oLogcs.date

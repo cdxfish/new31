@@ -4,12 +4,13 @@ from django.db import models
 
 class itemQuerySet(models.query.QuerySet):
     '''Use this class to define methods on queryset itself.'''
-    def __iter__(self):
-        for i in models.query.QuerySet.__iter__(self):
-            i.click += 1
-            i.save()
+    # def __iter__(self):
+    #     for i in models.query.QuerySet.__iter__(self):
+    #         i.click += 1
+    #         i.save()
 
-        return models.query.QuerySet.__iter__(self)
+    #     return models.query.QuerySet.__iter__(self)
+    pass
 
 
 class itemManager(models.Manager):
@@ -174,7 +175,7 @@ class ItemSpec(models.Model):
     objects = itemSpecManager()
 
     def __unicode__(self):
-        return u"%s - %s" % (self.item.name, self.spec)
+        return u"%s - %s[ onl:%s ][ show:%s ]" % (self.item.name, self.spec, self.onl, self.show)
 
     class Meta:
         ordering = ['item', 'spec']
@@ -196,9 +197,10 @@ class ItemFee(models.Model):
 
     def nfee(self):
         from new31.func import frMtFee
-        from decimal import Decimal
+        # from decimal import Decimal
 
-        return frMtFee(self.fee * Decimal(self.dis.dis))
+        # return frMtFee(self.fee * Decimal(self.dis.dis))
+        return frMtFee(self.fee * self.dis.dis)
 
     def __unicode__(self):
         return u"%s - %s [ %s ] [ %s ]" % (self.spec, self.fee, self.dis, self.get_typ_display())

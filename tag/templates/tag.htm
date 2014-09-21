@@ -14,7 +14,7 @@
       <div class="styp">
         <ul>
 {% for ii in i.itemimg_set.getBImgs %}
-          <li><img alt="{{ i.name }}" title="{{ i.name }}" data-src="{{ ii.img.url }}" /><span itemprop="image" style="display:none;">{{ ii.img.url }}</span></li>
+          <li><img alt="{{ i.name }}" title="{{ i.name }}" src="{{ STATIC_URL }}shop/images/web_loading.gif" data-src="{{ ii.img.url }}" width="600" height="450" /><span itemprop="image" style="display:none;">{{ ii.img.url }}</span></li>
 {% endfor %}
         </ul>
       </div>
@@ -33,7 +33,7 @@
         </nav>
         <div class="button">
           <a class="btn btnbr btnLike" href="{% url 'tag:itemLike' i.id %}">赞</a>
-          <a class="btn btnbr btnBuy" href="{% url 'tag:getSpec' i.id %}">购买</a>
+          <a class="btn btnbr btnBuy" href="{% url 'tag:getSpec' i.id %}">售价</a>
         </div>
       </section>
     </li>

@@ -87,7 +87,6 @@ class Pro(models.Model):
     from order.models import Ord
     from discount.models import Dis
 
-
     _chcs = (
                 (0, u'未产', 'produce:nullPro'),
                 (1, u'产求', 'produce:requirePro'),
@@ -127,10 +126,10 @@ class Pro(models.Model):
         return frMtFee(self.nfee * self.num)
 
     def __unicode__(self):
-        return u"%s - %s [ %s ]" % ( self.name, self.spec, self.status)
+        return u"[%s]%s - %s [ %s ]" % ( self.ord.sn, self.name, self.spec, self.get_status_display())
 
 
     class Meta:
-        ordering = ['sn']
+        ordering = ['-ord__sn', 'sn']
         verbose_name_plural = u'产品'
         # app_label = 'order'

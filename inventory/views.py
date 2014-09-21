@@ -2,89 +2,94 @@
 u"""备货"""
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.shortcuts import redirect
+from django.http import HttpResponse
 from new31.func import rdrtBck
 from new31.decorator import rdrtBckDr
+from message.models import Msg
+from message.decorator import ajaxErrMsg
+from decorator import invNumDr
 import datetime
 # Create your views here.
 
 def inventory(request):
     u"""备货"""
     from forms import InvSrchFrm
+    from models import Build
+
 
     p = InvSrch(request)
     form = InvSrchFrm(initial=p.initial)
 
     a = form.initial
 
-    pro = p.get()
-    pro = InvPur(pro, request).get()
-    pro = sort(pro)
+    invnum = p.get()
+
+    invnum = InvPur(invnum, request).get()
 
     return render_to_response('inventoryui.htm', locals(), context_instance=RequestContext(request))
-
-def sort(pro):
-    u"""排序"""
-    _pro = {}
-
-    for i in pro:
-
-        sn = i.spec.item.sn
-        try:
-            _pro[sn]['invnum'].append(i)
-            _pro[sn]['adv'] += i.invnum.adv
-            _pro[sn]['num'] += i.invnum.num
-            _pro[sn]['count'] += i.invnum.count
-
-        except Exception, e:
-            _pro[sn] = {
-                    'name': i.spec.item.name,
-                    'invnum': [i, ],
-                    'adv': i.invnum.adv,
-                    'num': i.invnum.num,
-                    'count': i.invnum.count,
-                }
-
-    return [v for i,v in _pro.items()]
-
 
 def stockInv(request):
     u"""备货清单"""
     from item.models import Item
+    from models import Build, InvPro
 
     items = Item.objects.getAll()
+    build = Build.objects.getByUser(request.user)
+
+    for i in build:
+        i.items = [{ 'name': ii.name, 'spec': [ {'id': spec.id, 'value': spec.spec.value, 'onl': InvPro.objects.hasPro(i.id, spec.id) } for spec in ii.itemspec_set.all() ]  } for ii in items]
 
     return render_to_response('inventorylist.htm', locals(), context_instance=RequestContext(request))
 
-@rdrtBckDr(u'该规格已下架')
-def cOnlInv(request, sn):
+@ajaxErrMsg('该规格已下架')
+def cOnlInv(request, sid, bid):
     u"""备货选择"""
     from models import InvPro
 
-    InvPro.objects.cOnl(sid=sn)
-
-    return rdrtBck(request)
+    return HttpResponse(Msg.objects.dumps(data={
+                'onl': not InvPro.objects.cPro(bid=bid, sid=sid)
+            }
+        )
+    )
 
 def defaultInv(request, s):
     u"""备货格式化"""
     from models import InvNum, InvPro
 
-    InvNum.objects.default(s)
+    InvNum.objects.default(request.user, s)
 
     return rdrtBck(request)
 
-def minusInv(request, sn, num):
+
+def retMsg(inv):
+
+    return HttpResponse(Msg.objects.dumps(data={
+                'id': inv.id,
+                'num': inv.num,
+                'adv': inv.adv,
+                'count': inv.count,
+                'date': u'%s' % inv.date,
+            }
+        )
+    )
+
+@ajaxErrMsg('无法修改库存量')
+@invNumDr
+def minusInv(request, sid, num):
     u"""备货减"""
     from models import InvNum
-    InvNum.objects.minus(sn, int(num))
 
-    return rdrtBck(request)
+    return retMsg(InvNum.objects.minus(sid, int(num)))
 
-def plusInv(request, sn, num):
+
+@ajaxErrMsg('无法修改库存量')
+@invNumDr
+def plusInv(request, sid, num):
     u"""备货加"""
     from models import InvNum
-    InvNum.objects.plus(sn, int(num))
 
-    return rdrtBck(request)
+    return retMsg(InvNum.objects.plus(sid, int(num)))
 
 
 class InvSrch(object):
@@ -104,7 +109,7 @@ class InvSrch(object):
     def get(self):
         from models import InvNum
 
-        return InvNum.objects.getAll(self.initial['s'])
+        return InvNum.objects.getAll(self.initial['s']).filter(pro__build__area__name__in=[ i.area.name for i in self.request.user.attribution_set.all()]).distinct()
 
 
 # 订单列表权限加持
@@ -117,11 +122,11 @@ class InvPur(BsPur):
 
     """
     def __init__(self, oList, request):
-        from models import InvPro
+        from models import InvNum
 
         super(InvPur, self).__init__(oList, request)
 
-        self.action = InvPro.act
+        self.action = InvNum.act
 
 
     def beMixed(self):
@@ -131,7 +136,7 @@ class InvPur(BsPur):
             if not hasattr(i,'action'):
                 i.action = []
 
-            for ii in self.action[i.onl]:
+            for ii in self.action:
                 try:
                     if ii[2] in self.role:
                         i.action.append(ii)

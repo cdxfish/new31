@@ -38,7 +38,6 @@ else:
 
     ALLOWED_HOSTS = ['*']
 
-
 # DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
@@ -205,7 +204,7 @@ djangoAPPS = [
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-    'south',
+    # 'south',
     # 'haystack',
 ]
 

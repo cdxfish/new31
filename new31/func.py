@@ -5,14 +5,17 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 import math, random, datetime, re, importlib
+from decimal import Decimal
 
 
 # 格式化价格,舍弃小数位
 def frMtFee(fee):
-    return math.floor(fee)
+    return Decimal(math.floor(fee))
+    # return fee
 
 def keFrmt(fee):
-    return fee and math.floor(fee / 100) * 100 + 50 if fee % 100 < 50 else math.ceil(fee / 100) * 100
+
+    return fee and Decimal(math.floor(fee / 100) * 100 + 50 if fee % 100 < 50 else math.ceil(fee / 100) * 100)
 
 # 重定向至前一页
 def rdrtBck(request):

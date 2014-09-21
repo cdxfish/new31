@@ -1,28 +1,109 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% if request.title %}{{ request.title }} {% endif %}{% endblock %} 31客 - 源自欧洲经典口味！</title>
     <meta name="Keywords" content="{% block keywords %}31客,31客蛋糕,蛋糕{% endblock %}" />
     <meta name="Description" content="{% block description %}蛋糕电子商务{% endblock %}" />
     <link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico" type="image/x-icon" />
-<!--[if lt IE 8]>
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}shop/css/css.css" />
-<![endif]-->
-<!--[if gte IE 9]><!-->
-    <link rel="stylesheet/less" href="{{ STATIC_URL }}shop/css/css.less" />
-<!--<![endif]-->
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.zebra_datepicker.css" />
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.debug.css" />
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.jgd.dropdown.min.css" />
 <!--[if IE]>
     <script type="text/javascript" src="{{ STATIC_URL }}js/css3-mediaqueries.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/es5-shim.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/html5.js"></script>
 <![endif]-->
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}shop/css/css.css" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.zebra_datepicker.css" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.debug.css" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.jgd.dropdown.min.css" />
+</head>
+
+<body>
+    <header id="mh">
+        <menu>
+            {% if user.is_staff %}
+            <li><a href="{% url 'office:office' %}" target="_blank">管理中心</a>
+            </li>
+            {% endif %} {% if user.is_superuser %}
+            <li><a href="{% url 'admin:index' %}" target="_blank">站点管理</a>
+            </li>
+            {% endif %}
+            <li><a href="{% url 'cart:cart' %}">购物车</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'account:myOrd' %}">我的订单（ {{ user.newOrd|default:0 }} ）</a>
+            </li>
+            <li><a href="{% url 'account:logout' %}">登出</a>
+            </li>
+            {% else %}
+            <li><a href="{% url 'account:login' %}">登录</a>
+            </li>
+            {% endif %}
+        </menu>
+        <a href="{% url 'shop:shop' %}" title="首页" id="logo">
+            <img src="{{ STATIC_URL }}images/logo.gif" alt="31客" />
+        </a>
+        <aside>
+            <small>我就爱吃</small>
+            <em>Tel: 4000-5927-31</em>
+        </aside>
+    </header>
+    <nav id="mn">
+        <a href="{% url 'shop:shop' %}">首页</a>
+        <a href="{% url 'tag:tagShow' 'cake' %}">蛋糕</a>
+        <a href="{% url 'tag:tagShow' 'cookie' %}">曲奇</a>
+        <a href="{% url 'tag:tagShow' 'chocolate' %}">巧克力</a>
+        <a href="{% url 'tag:tagShow' 'pie' %}">派</a>
+    </nav>
+    {% if messages %}
+    <ul class="messagelist">
+        {% for i in messages %}
+        <li class="{{ i.tags }} bline">{{ i|striptags }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <section id="ms">
+        {% block section %}{% endblock %}
+    </section>
+    <footer id="mf">
+        <address>
+            <a href="{% url 'article:article' 'about' %}">关于31客</a>
+        </address>
+        <em>
+            <ul>
+                <li>
+                    <a href="{% url 'tasting:tasting'  %}" title="免费品尝">
+                        <img src="{{ STATIC_URL }}images/f0f5.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'article:article' 'contact' %}" title="客服电话">
+                        <img src="{{ STATIC_URL }}images/ico_tel.png" title="客服电话">
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'article:article' 'contact' %}" title="QQ客服" class="qq">
+                        <img src="{{ STATIC_URL }}images/qq_logo.png" title="QQ客服">
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'article:article' 'contact' %}" title="微信">
+                        <img src="{{ STATIC_URL }}images/weixin_logo.png" title="微信">
+                        <span class="img-wx"></span>
+                        <span class="ico_2wm"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'article:article' 'contact' %}" title="微博">
+                        <img src="{{ STATIC_URL }}images/weibo_logo.png" title="微博">
+                    </a>
+                </li>
+            </ul>
+        </em>
+    </footer>
+
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.8.3.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/less-1.5.0.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.sloadimg.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.zebra_datepicker.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.dialog.js"></script>
@@ -30,106 +111,30 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jgd.dropdown.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}shop/js/base.configuration.js"></script>
     {% block js %}{% endblock %}
-  </head>
-  <body>
-    <header id="mh">
-      <menu>
-{% if user.is_staff %}
-        <li><a href="{% url 'office:office' %}" target="_blank">管理中心</a></li>
-{% endif %}
-{% if user.is_superuser %}
-        <li><a href="{% url 'admin:index' %}" target="_blank">站点管理</a></li>
-{% endif %}
-        <li><a href="{% url 'order:queryOrd' %}">订单查询</a></li>
-        <li><a href="{% url 'cart:cart' %}">购物车</a></li>
-{% if user.is_authenticated %}
-        <li><a href="{% url 'account:myOrd' %}">我的订单（ {{ user.newOrd|default:0 }} ）</a></li>
-        <li><a href="{% url 'account:logout' %}">登出</a></li>
-{% else %}
-        <li><a href="{% url 'account:login' %}">登录</a></li>
-{% endif %}
-      </menu>
-      <a href="{% url 'shop:shop' %}" title="首页" id="logo"><img src="{{ STATIC_URL }}images/logo.gif" alt="31客" /></a>
-      <aside>
-        <small>我就爱吃</small>
-        <em>Tel: 4000-5927-31</em>
-      </aside>
-    </header>
-    <nav id="mn">
-      <a href="{% url 'shop:shop' %}">首页</a>
-      <a href="{% url 'tag:tagShow' 'cake' %}">蛋糕</a>
-      <a href="{% url 'tag:tagShow' 'cookie' %}">曲奇</a>
-      <a href="{% url 'tag:tagShow' 'chocolate' %}">巧克力</a>
-      <a href="{% url 'tag:tagShow' 'pie' %}">派</a>
-    </nav>
-{% if messages %}
-    <ul class="messagelist">
-{% for i in messages %}
-      <li class="{{ i.tags }} bline">{{ i|striptags }}</li>
-{% endfor %}
-    </ul>
-{% endif %}
-    <section id="ms">
-{% block section %}{% endblock %}
-    </section>
-    <footer id="mf">
-      <address>
-        <a href="{% url 'article:article' 'about' %}">关于31客</a>
-      </address>
-      <em>
-      <ul>
-        <li><a href="{% url 'tasting:tasting'  %}" title="免费品尝"><img src="{{ STATIC_URL }}images/f0f5.png"></a></li>
-        <li>
-          <a href="{% url 'article:article' 'contact' %}" title="客服电话"><img src="{{ STATIC_URL }}images/ico_tel.png" title="客服电话"></a>
-          <div class="dico tel">
-            <span class="ico">
-              <em>0771 - 5676920 ( 南宁 )</em>
-              <em>0771 - 5676753 ( 南宁 )</em>
-              <em>0771 - 89708031 ( 长沙 )</em>
-              <span class="ico_2wm"></span>
-            </span>
-          </div>
-        </li>
-        <li>
-          <a href="{% url 'article:article' 'contact' %}" title="QQ客服" class="qq"><img src="{{ STATIC_URL }}images/qq_logo.png" title="QQ客服"></a>
-           <div class="dico qq">
-            <span class="ico">
-                <em><a href="http://wpa.qq.com/msgrd?V=3&amp;uin=672592854&amp;site=31客&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:672592854:4" height="16" border="0" alt="QQ" /> 672592854</a></em>
-                <em><a href="http://wpa.qq.com/msgrd?V=3&amp;uin=2310857615&amp;site=31客&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:2310857615:4" height="16" border="0" alt="QQ" /> 2310857615</a></em>
-                <em><a href="http://wpa.qq.com/msgrd?V=3&amp;uin=2605043362&amp;site=31客&amp;menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:2605043362:4" height="16" border="0" alt="QQ" /> 2605043362</a></em>
-              <span class="ico_2wm"></span>
-            </span>
-          </div>
-        </li>
-        <li><a href="{% url 'article:article' 'contact' %}" title="微信"><img src="{{ STATIC_URL }}images/weixin_logo.png" title="微信"><span class="img-wx"></span><span class="ico_2wm"></span></a></li>
-        <li><a href="{% url 'article:article' 'contact' %}" title="微博"><img src="{{ STATIC_URL }}images/weibo_logo.png" title="微博"></a></li>
-      </ul>
-      </em>
-    </footer>
-  <!--[if IE 6]>
-      <script type="text/javascript" src="{{ STATIC_URL }}js/DD_belatedPNG.js"></script>
-      <script type="text/javascript">
-          $(document).ready(function() {
-             DD_belatedPNG.fix('img, .jgd-dropdown dt, #bner .num span');
-          });
-      </script>
-  <![endif]-->
+
     <script type="text/javascript">
-        var csrf = "{% csrf_token %}";
+    var csrf = "{% csrf_token %}";
+    $(document).ready(function() {
+        $('.date').Zebra_DatePicker({
+            direction: true
+        }); //日期选择控件
+        $('select').jgdDropdown({
+            clsLIExpand: false
+            // selected: 'RS'
+        });
+        {% block javascript %} {% endblock %}
+
+        $('section').sloadimg().loadnow(); //异步加载图片
+    });
+    </script>
+<!--[if IE 6]>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/DD_belatedPNG.js"></script>
+    <script type="text/javascript">
         $(document).ready(function() {
-            $('.date').Zebra_DatePicker({
-                direction: true
-            }); //日期选择控件
-            $('select').jgdDropdown({
-                clsLIExpand: false
-                // selected: 'RS'
-            });
-            $('#mf em li').hover(function(){$(this).find('.dico').show()},function(){$(this).find('.dico').hide()})
-
-            {% block javascript %}{% endblock %}
-
-            $('section').sloadimg().loadnow(); //异步加载图片
+            DD_belatedPNG.fix('img, .jgd-dropdown dt, #bner .num span');
         });
     </script>
-  </body>
+<![endif]-->
+</body>
+
 </html>

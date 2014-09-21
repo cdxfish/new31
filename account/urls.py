@@ -15,6 +15,6 @@ urlpatterns = pPatterns(
     (r'^member\/$', member, 3),
     (r'^new\/$', newUserFrm, 3),
     (r'^register\/$', register, 3),
-    (r'^edit\/(?P<u>[1][3|4|5|8][0-9]\d{8})\/$', userEditFrm, 3),
+    (r'^edit\/(?P<u>[1][3|4|5|7|8][0-9]\d{8})\/$', userEditFrm, 3),
     (r'^edit\/$', userEdit, 3)
 )
