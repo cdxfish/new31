@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    i.act().count();
+    i.act().count().default();
 });
 
 i = {
@@ -50,5 +50,39 @@ i = {
         ele.find('.item-count').text(count);
         ele.find('.item-num').text(num);
 
+    },
+    default: function() {
+        $('#default').click(function() {
+            var date = $('#id_s').val();
+            $.dialog.ajax('/inventory/sbuild/', function(data) {
+                $.dialog.popup(data, function(data) {
+                    var table = $('<table>', {
+                        'width': '100%',
+                        'cellpadding': 3,
+                        'cellpadding': 1
+                    });
+
+                    $.each(data.data, function(i, v) {
+                        table.append(
+                            $('<tr>').append(
+                                $('<td>', {
+                                    'align': 'center'
+                                }).append(
+                                    $('<a>', {
+                                        'href': '/inventory/default/' + date + '/?b=' + v.id,
+                                        'class': 'button'
+                                    }).text(v.name)
+                                )
+                            )
+                        );
+                    });
+                 return table;
+
+                });
+            });
+            return false;
+        });
+
+        return this;
     }
 }

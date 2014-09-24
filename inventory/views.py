@@ -42,6 +42,12 @@ def stockInv(request):
 
     return render_to_response('inventorylist.htm', locals(), context_instance=RequestContext(request))
 
+def sBuild(request):
+    u"""厂房归属查询"""
+    from models import Build
+
+    return HttpResponse(Msg.objects.dumps(data=[{'id': i.id, 'name': i.get_name_display()} for i in Build.objects.getByUser(request.user)]))
+
 @ajaxErrMsg('该规格已下架')
 def cOnlInv(request, sid, bid):
     u"""备货选择"""
@@ -57,7 +63,13 @@ def defaultInv(request, s):
     u"""备货格式化"""
     from models import InvNum, InvPro
 
-    InvNum.objects.default(request.user, s)
+    b = request.GET.get('b', '')
+
+    if b:
+        InvNum.objects.default(request.user, s, b)
+
+    else:
+        messages.error(self.request, u'请选择需要格式化的厂房。')
 
     return rdrtBck(request)
 

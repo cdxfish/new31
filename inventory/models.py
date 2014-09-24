@@ -24,6 +24,7 @@ class buildManager(models.Manager):
 
         return self.getAll().filter(area__name__in=user.attribution_set.getAreaList()).distinct()
 
+
 class invProManager(models.Manager):
     def cOnl(self, sid):
         invpro = self.get(id=sid)
@@ -74,7 +75,7 @@ class invProManager(models.Manager):
 
 
 class invNumManager(models.Manager):
-    def default(self, user, date):
+    def default(self, user, date, b):
         if date:
             date = frmtDate(date)
         else:
@@ -82,9 +83,9 @@ class invNumManager(models.Manager):
 
         t = date - datetime.timedelta(days=1)
 
-        self.filter(date=date).delete()
+        self.filter(date=date, pro__build=b).delete()
 
-        for i in InvPro.objects.getAll().filter(build__area__name__in=user.attribution_set.getAreaList()).distinct():
+        for i in InvPro.objects.getAll().filter(build=b):
 
             self.frMt(i, date)
 
