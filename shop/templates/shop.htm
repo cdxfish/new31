@@ -1,28 +1,837 @@
-{% extends "shop.base.htm" %} {% block section %}
-<header id="bner">
-    <div id="slides" class="slides">
-{% for i in ad %}
-        <a href="{{ i.url }}"><img src="{{ STATIC_URL }}shop/images/loading.gif" data-src="{{ i.img.url }}"></a>
-{% endfor %}
+<!DOCTYPE html>
+<html lang="zh-CN" slick-uniqueid="4">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="ecstore.b2c">
+    <title>{% block title %}{% if request.title %}{{ request.title }} {% endif %}{% endblock %} 31客 - 源自欧洲经典口味！</title>
+
+    <meta name="keywords" content="生日蛋糕，巧克力蛋糕，芝士，乳酪蛋糕，慕斯蛋糕，鲜奶蛋糕，商务蛋糕，婚庆蛋糕，提供健康、高品质蛋糕产品,已在南宁、长沙两大城市开通服务，在线预订，配送到家，支持货到付款，电话:400592731">
+    <meta name="description" content="31cake，只做新鲜的方形蛋糕。现已来到更多城市。在世界范围，研究蛋糕食材内涵，创造高价值单品。保留31款经典口味，把蛋糕由生日延至日常。">
+    <script type="text/javascript" async="" src="{{ STATIC_URL }}shop/js/lang.js"></script>
+    <script src="{{ STATIC_URL }}shop/js/moo.min.js"></script>
+    <script src="{{ STATIC_URL }}shop/js/ui.min.js"></script>
+
+
+    <link href="{{ STATIC_URL }}shop/css/typical.css" rel="stylesheet" media="screen, projection">
+    <link href="{{ STATIC_URL }}shop/css/basic.min.css" rel="stylesheet" media="screen, projection">
+    <link href="{{ STATIC_URL }}shop/css/stylecake.css" rel="stylesheet">
+
+    <script>
+    var Shop = {
+        "url": {
+            "shipping": "\/cart-shipping.html",
+            "total": "\/cart-total.html",
+            "region": "\/tools-selRegion.html",
+            "payment": "\/cart-payment.html",
+            "purchase_shipping": "\/cart-purchase_shipping.html",
+            "purchase_def_addr": "\/cart-purchase_def_addr.html",
+            "purchase_payment": "\/cart-purchase_payment.html",
+            "get_default_info": "\/cart-get_default_info.html",
+            "diff": "\/product-diff.html",
+            "fav_url": "\/member-ajax_fav.html",
+            "datepicker": "\/app\/site\/statics\/js_mini",
+            "placeholder": "\/app\/b2c\/statics\/images\/imglazyload.gif"
+        },
+        "base_url": "\/"
+    };
+    </script>
+
+    <script src="{{ STATIC_URL }}shop/js/shop.min.js"></script>
+</head>
+
+<body style="background: none;">
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.8.3.min.js"></script>
+
+    <script type="text/javascript" src="{{ STATIC_URL }}shop/js/design.js"></script>
+
+
+
+    <div class="headwrap">
+        <div class="inner-wrap clearfix">
+            <div class="shoplogo">
+                <div class="logo">
+                    <a href="/">
+                        <img src="{{ STATIC_URL }}images/logo.gif" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="city">
+                <div class="base-city">
+                    <div class="sendTo">配送至</div>
+                    <h2 class="">
+                        <a href="http://www.21cake.com/#">
+                            <span id="show_city_panel">南宁</span>
+                        </a>
+                    </h2>
+
+                    <div id="city_panel" class="city_panel" style="">
+                        <ul class="citylist clearfix">
+                            <li>
+                                <a href="javascript:void(0);" sale_city="{&quot;id&quot;:&quot;1&quot;,&quot;name&quot;:&quot;\u4e0a\u6d77&quot;,&quot;region_id&quot;:&quot;22&quot;}">南宁</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" sale_city="{&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;\u5317\u4eac&quot;,&quot;region_id&quot;:&quot;2&quot;}">长沙</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <script>
+                function Json_to_String(O) {
+                    var S = [];
+                    var J = "";
+                    if (Object.prototype.toString.apply(O) === '[object Array]') {
+                        for (var i = 0; i < O.length; i++)
+                            S.push(O2String(O[i]));
+                        J = '[' + S.join(',') + ']';
+                    } else if (Object.prototype.toString.apply(O) === '[object Date]') {
+                        J = "new Date(" + O.getTime() + ")";
+                    } else if (Object.prototype.toString.apply(O) === '[object RegExp]' || Object.prototype.toString.apply(O) === '[object Function]') {
+                        J = O.toString();
+                    } else if (Object.prototype.toString.apply(O) === '[object Object]') {
+                        for (var i in O) {
+                            O[i] = typeof(O[i]) == 'string' ? '"' + O[i] + '"' : (typeof(O[i]) === 'object' ? O2String(O[i]) : O[i]);
+                            S.push('"' + i.toString() + '":' + O[i].toString());
+                        }
+                        J = '{' + S.join(',') + '}';
+                    }
+                    return J;
+                };
+
+
+                window.addEvent('domready', function() {
+                    $$('#city_panel ul a').addEvent('click', function() {
+                        var self = this;
+                        /*
+                        try{
+                            var sale_city = JSON.parse(self.get('sale_city'));
+                        }catch(e){
+                            var sale_city = eval("("+self.get('sale_city')+")");
+                        }
+                        */
+                        sale_city = $j.parseJSON(self.get('sale_city'));
+                        sale_city.first = "ok";
+                        try {
+                            sale_city = JSON.stringify(sale_city);
+                        } catch (e) {
+                            sale_city = Json_to_String(sale_city);
+                        }
+                        Dialog.confirm('切换城市您的购物车将被清空!', function(e) {
+                            if (e) {
+                                Cookie.dispose('sale_city');
+                                Cookie.write('sale_city', encodeURIComponent(sale_city), {
+                                    duration: 365,
+                                    domain: '.21cake.com'
+                                });
+                                // 清空购物车
+                                new Request({
+                                    url: '/cart-remove.html',
+                                    onSuccess: function() {
+                                        window.location.reload();
+                                    }
+                                }).send();
+                            }
+                        });
+                    });
+                    // 选择销售城市
+                    if (Cookie.read('sale_city')) {
+                        var sale_city = JSON.decode(decodeURIComponent(Cookie.read('sale_city')));
+                        $('show_city_panel').set('html', LANG_city[sale_city.region_id])
+                    } else {
+                        new Request.JSON({
+                            url: " /product-getSaleList.html",
+                            onComplete: function(person, text) {
+                                if (Cookie.read('sale_city')) {
+                                    var sale_city = JSON.decode(decodeURIComponent(Cookie.read('sale_city')));
+                                    $('show_city_panel').set('html', LANG_city[sale_city.region_id])
+                                }
+                            }
+                        }).send();
+                    }
+                });
+                </script>
+            </div>
+            <div class="topright">
+                <div>
+                    <ul class="site-nav clearfix">
+                        <li>
+                            <div id="login_159" class="small-signin">
+
+                                <a href="{% url 'account:login' %}">登录</a> |
+                                <a href="{% url 'account:login' %}">注册</a>
+                            </div>
+                            <div id="member_159" class="small-member" style="display: none;">
+                                您好，
+                                <span id="uname_159"></span>！
+                                <a href="http://www.21cake.com/passport-logout.html">退出</a>
+                            </div>
+                            <script>
+                            var name = Cookie.read('UNAME') || '';
+                            if (name) {
+                                $("uname_159").innerHTML = name;
+                                $("member_159").setStyle('display', '');
+                                $("login_159").setStyle('display', 'none');
+                            } else {
+                                $("login_159").setStyle('display', '');
+                                $("member_159").setStyle('display', 'none');
+                            }
+
+                            /*英文版代码*/
+                            var site_lang = Cookie.read('site_lang');
+                            if (site_lang == "en_US") {
+                                var stylecake_en = document.createElement('link');
+                                stylecake_en.rel = "stylesheet";
+                                stylecake_en.href = "/themes/21cake/images/stylecake_en.css";
+                                var head = document.getElementsByTagName('head')[0];
+                                head.appendChild(stylecake_en);
+                            }
+                            </script>
+                        </li>
+                        <li class="topmemlist">
+                            <h2><a href="{% url 'account:myOrd' %}">我的31客</a>
+                            </h2>
+                            <ul class="con">
+                                <li><a href="{% url 'account:myOrd' %}">我的订单</a>
+                                </li>
+                                <li><a href="{% url 'account:settings' %}">我的积分</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="mycart">
+                            <div class="minicart" id="minicart_161">
+
+                                <span class="minicart-text">
+                                    <a href="{% url 'cart:cart' %}" class="btn btn-tocart">
+                                        <i class="icon">&gt;</i>
+
+                                        <b class="op-cart-number">0</b>
+
+                                    </a>
+                                </span>
+
+                            </div>
+                            <script>
+                            window.addEvent('domready', function() {
+                                updateCartInfo();
+
+
+                            });
+                            </script>
+                        </li>
+                        <!--li class="phone"></li>
+                    <li class="China"></li-->
+                        <li class="phone">
+                            <a href="javascript:void(0)" class="ico_wx">
+                                <img src="{{ STATIC_URL }}shop/images/ico_wx.jpg" alt="">
+                                <div>
+                                    <span>扫描21cake方形
+                                        <br>微信二维码</span>
+                                </div>
+                                <span class="icotop"></span>
+                            </a>
+                        </li>
+                        <li class="China">
+                            <a href="http://weibo.com/" class="ico_xl">
+                                <img src="{{ STATIC_URL }}shop/images/ico_xl.jpg" alt="">
+                                <div>
+                                    <span>关注官方微博：21cake</span>
+                                </div>
+                                <span class="icotop"></span>
+                            </a>
+                        </li>
+                        <li id="lang_li" class="site_lang" style="height:30px;"></li>
+                    </ul>
+                </div>
+                <div style="clear:both;"></div>
+                <div class="menu">
+                    <div class="menu">
+                        <ul class="clearfix">
+                            <li class="nav-item active">
+                                <a href="/">首页</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="/">蛋糕名录</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="{% url 'tasting:tasting'  %}" title="免费品尝">免费品尝</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="{% url 'article:article' 'about' %}">品牌故事</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</header>
 
-
-{% endblock %} 
-
-{% block js %}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.slides.min.js"></script>
-{% endblock %} 
-
-{% block javascript %} 
-      $('#slides').slidesjs({
-        width: 886,
-        height: 530,
-        play: {
-          active: true,
-          auto: true,
-          interval: 4000,
-          swap: true
+    <div class="ind-banner clearfix" style="position:relative; z-index:2;">
+        <script type="text/javascript">
+        function getId(obj) {
+            return document.getElementById(obj);
         }
-      });
-{% endblock %}
+        window.onload = function() {
+            setTimeout("slideUp();", 5000);
+        }
+
+        function slideUp() {
+            if (getId("abc").offsetHeight > 0) {
+                if (getId("abc").offsetHeight < 5) {
+                    getId("abc").style.height = "0px";
+                } else {
+                    getId("abc").style.height = getId("abc").offsetHeight - 5 + "px";
+                }
+                setTimeout("slideUp();", 10);
+            }
+        }
+        </script>
+        <div style="position:absolute; top:88px; z-index:10000; width:100%; background:url(http://www.21cake.com/public/images/a9/dd/18/a7d4b6484b19dcdc145ba68d146aadca.jpg?1412734884#w) center top no-repeat;">
+            <div id="abc" style="overflow: hidden; margin: 0px auto; width: 1200px; height: 0px; background: url(http://www.21cake.com/public/images/a9/dd/18/a7d4b6484b19dcdc145ba68d146aadca.jpg?1412734884#w) 50% 0% no-repeat;">
+                <span style=" float:right; background:red; display:inline-block; width:35px; height:35px; opacity:0; cursor:pointer; filter:alpha(opacity=0)" onclick="slideUp();">关闭</span>
+                <a href="http://www.21cake.com/article--i-20.html" style="display:block; width:100%; height:800px;">&nbsp;</a>
+            </div>
+        </div>
+
+        <div class="inpic-tab">
+
+
+            <div class="main-slide">
+
+
+                <div class="prev" style="display: none;">prev</div>
+                <div class="next" style="display: none;">next</div>
+
+                <ul class="slide-list switchable-content">
+                    <li class="slide-item" style="display: none;">
+                        <a href="/">
+                            <img src="{{ STATIC_URL }}shop/images/17cdd4250d1a2e35827fdf07e9c96b26.jpg" title="">
+                        </a>
+                    </li>
+                    <li class="slide-item" style="display: none;">
+                        <a href="/">
+                            <img src="{{ STATIC_URL }}shop/images/d83fe05c0cdf1b3db533b2b67ecdc18e.jpg" title="">
+                        </a>
+                    </li>
+                    <li class="slide-item" style="display: block;">
+                        <a href="/">
+                            <img src="{{ STATIC_URL }}shop/images/31b49f5eb40dc7a5a6ae0d0c34adf6b1.jpg" title="">
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="slide-triggers switchable-triggerBox">
+                    <span class="trigger-item">1</span>
+                    <span class="trigger-item">2</span>
+                    <span class="trigger-item active">3</span>
+                </div>
+            </div>
+
+        </div>
+        <script type="text/javascript">
+        var t = setTimeout("visualShow()", 3000);
+        var tnum = 0;
+        $j(".slide-item").hide();
+        $j(".slide-item").eq(0).show();
+        $j(".trigger-item").eq(0).addClass("active");
+
+        $j(document).ready(function() {
+            $j(".trigger-item").each(function(index) {
+                $j(".trigger-item").eq(index).mouseenter(function() {
+                    t = clearTimeout(t);
+                    tnum = index;
+                    setDesign();
+                });
+            });
+            $j(".trigger-item").mouseleave(function() {
+                t = setTimeout("visualShow()", 3000);
+            });
+            $j(".main-slide .prev").click(function() {
+                if (tnum > 0) {
+                    tnum--;
+                } else {
+                    tnum = $j(".trigger-item").length - 1;
+                }
+                setDesign();
+            });
+            $j(".main-slide .next").click(function() {
+                if (tnum < $j(".trigger-item").length - 1) {
+                    tnum++;
+                } else {
+                    tnum = 0;
+                }
+                setDesign();
+            });
+            $j(".inpic-tab").mouseenter(function() {
+                $j(".main-slide .prev,.main-slide .next").show();
+            });
+            $j(".inpic-tab").mouseleave(function() {
+                $j(".main-slide .prev,.main-slide .next").hide();
+            });
+            $j(".main-slide .prev,.main-slide .next").hover(function() {
+                t = clearTimeout(t);
+            }, function() {
+                t = setTimeout("visualShow()", 3000);
+            });
+        });
+
+        function visualShow() {
+            if (tnum < $j(".trigger-item").length - 1) {
+                tnum++;
+            } else {
+                tnum = 0;
+            }
+            setDesign();
+            t = setTimeout("visualShow()", 5000);
+        }
+
+        function setDesign() {
+            $j(".slide-item").stop(false, true).fadeOut(1000);
+            $j(".slide-item").eq(tnum).stop(true, true).fadeIn(1000);
+            $j(".trigger-item").removeClass("active");
+            $j(".trigger-item").eq(tnum).addClass("active");
+        }
+        </script>
+    </div>
+    <div class="indexgoods clearfix" style="z-index:1;">
+        <div class="title-banner">
+            <div class="banner">
+                <a href="/">
+                    <span class="title">Black Forest
+                        <br>黑森林</span>
+                    <img src="{{ STATIC_URL }}shop/images/c379f93a2dd67af4b07d2abf3c91d585.jpg" alt="">
+                </a>
+            </div>
+        </div>
+
+        <div class="title-banner">
+            <div class="banner">
+                <a href="/">
+                    <span class="title">Cappuccino
+                        <br>卡布其諾</span>
+                    <img src="{{ STATIC_URL }}shop/images/461c693dcee4492213f6e3f7756b361c.jpg" alt="">
+                </a>
+            </div>
+        </div>
+
+        <div class="title-banner">
+            <div class="banner">
+                <a href="/">
+                    <span class="title">Crumble
+                        <br>克魯兹</span>
+                    <img src="{{ STATIC_URL }}shop/images/956692d9b012c74aa419f4eef14f05cc.jpg" alt="">
+                </a>
+            </div>
+        </div>
+
+        <div class="title-banner">
+            <div class="banner">
+                <a href="/">
+                    <span class="title">Black and White Chocolate Mousse
+                        <br>黑白巧克力慕斯</span>
+                    <img src="{{ STATIC_URL }}shop/images/fe47317c8763a3d366d48aaff1808c80.jpg" alt="">
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div id="footer" class="page-footer">
+        <div class="inner-wrap">
+            <div class="theme-footer">
+                <div class="footerleft">
+                    订购专线：400 5927 31 | 客服电话: 0771-5676753 (南宁) | 0771-5676920 (南宁) | 0731-89708031 (长沙)
+                    <br>Copyright© 31ke官网商城 2007-2014, 版权所有 <a href="http://www.miibeian.gov.cn/" target="_blank">桂ICP备12002164号</a>
+                </div>
+                <div id="tempHidden_en" class="footerright">
+                    <a href="{% url 'article:article' 'contact' %}" title="联系我们">联系我们</a>
+                    <a href="{% url 'article:article' 'guide' %}" title="订购帮助">订购帮助</a>
+                    <a href="{% url 'article:article' 'guide' %}" title="企业合作">企业合作</a>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div>
+            <script>
+            var Shop = window['Shop'] || {
+                "url": {
+                    "region": "\/tools-selRegion.html",
+                    "placeholder": "\/app\/b2c\/statics\/images\/imglazyload.gif"
+                }
+            };
+            window.addEvent('domready', function() {
+                var __time_out = 1000;
+                if (Shop.set != undefined && Shop.set.refer_timeout) __time_out = Shop.set.refer_timeout;
+                var ReferObj = {};
+                Object.append(ReferObj, {
+                    serverTime: 1413238354,
+                    init: function() {
+                        var FIRST_REFER = Memory.get('first_refer');
+                        var NOW_REFER = Memory.get('now_refer');
+                        var nowDate = this.time = this.serverTime * 1000;
+                        if (!window.location.href.test('#r-') && !document.referrer || document.referrer.test(document.domain)) return;
+                        if (window.location.href.test('#r-')) Memory.clean('n');
+                        if (!FIRST_REFER) {
+
+                            if (NOW_REFER) {
+                                Memory.set('first_refer', NOW_REFER, this.getTimeOut(JSON.decode(NOW_REFER).DATE));
+                            } else {
+                                this.setRefer('first_refer', __time_out);
+                            }
+                        }
+                        this.setRefer('now_refer', __time_out);
+                        this.createGUID();
+                    },
+                    getUid: function() {
+                        var lf = window.location.href,
+                            pos = lf.indexOf('#r-');
+                        return pos != -1 ? lf.substr(pos + 4) : '';
+                    },
+                    getRefer: function() {
+                        return document.referrer ? document.referrer : '';
+                    },
+                    setRefer: function(referName, timeout) {
+                        var uid = this.getUid(),
+                            referrer = this.getRefer();
+                        var data = {
+                            'ID': uid,
+                            'REFER': referrer,
+                            'DATE': this.time
+                        };
+
+                        if ('now_refer' == referName) {
+                            var refer = JSON.decode(Memory.get('first_refer'));
+                            if (uid != '' && refer && refer.ID == '') {
+                                var fdata = {
+                                    'ID': uid,
+                                    'REFER': refer.REFER,
+                                    'DATE': refer.DATE
+                                };
+                                Memory.set('first_refer', JSON.encode(fdata), this.getTimeOut(refer.DATE));
+                            } else if (uid == '') {
+                                Object.append(data, {
+                                    'ID': refer.ID
+                                });
+                            }
+                        }
+                        Memory.set(referName, JSON.encode(data), __time_out || 15);
+                    },
+                    getTimeOut: function(nowDate) {
+                        var timeout = nowDate + __time_out * 24 * 3600 * 1000;
+                        var date = new Date(timeout);
+                        return date;
+                    },
+                    createGUID: function() {
+                        var GUID = (function() {
+                            var S4 = function() {
+                                return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+                            };
+                            return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4()).toUpperCase();
+                        })();
+                        Memory.set('n', GUID, 3650);
+                    }
+                });
+                ReferObj.init();
+            });
+
+
+            miniCart = {
+                'show': function(target) {
+                    target = $(target);
+                    if (!target) return;
+
+                    if (this.dialog) {
+                        this.hide();
+                    }
+
+                    var options = {
+                            body: 'popup-body',
+                            header: 'popup-header',
+                            close: 'popup-btn-close',
+                            content: 'popup-content',
+                            title: '正在加入购物车',
+                            main: '<div class="loading" style="height:109px; text-align:center;">loading...</div><span class="icoimg"></span> '
+                        },
+                        dialog = this.dialog = new Element('div#mini_cart_dialog.popup-container.mini-cart-dialog', {
+                            'html': $('popup_template').get('html').substitute(options),
+                            styles: {
+                                display: 'block',
+                                zIndex: maxZindex('div', 1)
+                            }
+                        }).inject(document.body);
+
+                    this.title = dialog.getElement('.popup-header h2');
+                    this.close = dialog.getElements('.popup-btn-close');
+                    this.content = dialog.getElement('.popup-content');
+                    this.dialog.addEvent('click:relay(.popup-btn-close)', this.hide.bind(this));
+
+                    var setSize = this.setSize = function() {
+                        if (!dialog.isDisplayed()) return;
+                        dialog.setStyles({
+                            top: target.getPosition().y + target.getSize().y - 199,
+                            left: target.getPosition().x.limit(0, window.getSize().x - dialog.getSize().x) + window.getScroll().x - 72
+                        });
+                    };
+
+                    setSize();
+                    window.addEvent('resize', setSize);
+                },
+                'hide': function() {
+                    try {
+                        this.dialog.destroy();
+                        window.removeEvent('resize', this.setSize);
+                    } catch (e) {}
+                },
+                'load': function(options) {
+                    options = options || {};
+                    options = Object.merge({
+                        method: 'post',
+                        onRequest: function() {
+                            miniCart.show(options.target);
+                        },
+                        onSuccess: function(re) {
+                            if (re) {
+                                this.title.innerHTML = '提醒';
+                                this.content.innerHTML = re;
+                            }
+
+                            updateCartInfo();
+
+                            if (document.getElement('.minicart_box') && document.getElement('.minicart_box').get('show_gallery')) {
+                                document.getElement('.minicart_box').fireEvent('_show'); //迷你购物车
+                            }
+                            options.callback && options.callback(re);
+                        }.bind(this),
+                        onFailure: function(xhr) {
+                            this.title.innerHTML = '提醒';
+                            this.content.innerHTML = '<div class="minicart-error"><p align="center">加入购物车失败。<br />可能库存不足或提交信息不完整。</p></div>';
+                        }.bind(this)
+                    }, options || {});
+                    if (!options.url) return false;
+
+                    new Request(options).send(options.data ? options.data.toQueryString() + '&mini_cart=true' : 'mini_cart=true');
+                },
+                init: function(target, url, data) {
+                    var linktocart;
+                    if (typeOf(target) == 'element') linktocart = target.getElements('[target=_dialog_minicart]');
+                    else if (typeOf(target) == 'elements') linktocart = target;
+                    else linktocart = $$('a[target=_dialog_minicart], button[target=_dialog_minicart]');
+                    if (linktocart.length) {
+                        linktocart.addEvent('click', function(e) {
+                            e.preventDefault();
+                            miniCart.load({
+                                url: url || this.href,
+                                data: data || this.getParent('.goods-item') || this.getParent('li'),
+                                target: this
+                            });
+                        });
+                    }
+                }
+            };
+
+            formToCart = function(container, target) {
+                container = $(container || document.body);
+                target = target || '.action-addtocart';
+                if (!container) return;
+
+                var formtocart = container.getElement('form[target=_dialog_minicart]') || container.getFirst().getParent('form[target=_dialog_minicart]');
+                if (formtocart) {
+                    formtocart.addEvent('submit', function(e) {
+                        e.stop();
+                        target = this.getElement(target) || this.getElement('*[type=submit]');
+                        miniCart.load({
+                            url: this.action,
+                            method: this.method,
+                            data: this,
+                            target: target,
+                            callback: function() {
+                                target.removeClass('disabled');
+                            }.bind(this)
+                        });
+                    });
+                };
+            }
+
+            window.addEvent('domready', function() {
+                miniCart.init();
+                formToCart();
+            });
+            </script>
+
+            <script id="popup_template" type="text/template">
+                <div class="{body}">
+                    <div class="{header} clearfix">
+                        <h2>{title}</h2>
+                        <span>
+                            <button type="button" title="关闭" class="{close}" hidefocus><i>×</i>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="{content} clearfix">{main}</div>
+                </div>
+            </script>
+            <script id="message_template" type="text/template">
+                <div class="{body} clearfix">
+                    <div class="icon">{icon}</div>
+                    <div class="{content}">{main}</div>
+                </div>
+            </script>
+            <script id="dropmenu_template" type="text/template">
+                <div class="{body}">
+                    <div class="{content} clearfix">{main}</div>
+                </div>
+            </script>
+
+        </div>
+    </div>
+
+    <img id="jcps" style="visibility:hidden">
+    <script type="text/javascript">
+    function getMapping() {
+        if (getCookie('xid')) {
+            var xid = getCookie('xid');
+        } else {
+            var xid = getXid();
+        }
+        var mappingIframe = '<iframe style="width:1px;height:1px;position:fixed;_position:absolute;left:0px;top:0px;margin:0px;padding:0px;z-index:2147483648" src="http://cms.gtags.net/w?a=90&xid=' + xid + '"></iframe>';
+        $j('#footer').after(mappingIframe);
+    }
+
+    function getXid() {
+        var data = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+        var result = "";
+        for (var i = 0; i < 20; i++) {
+            var r = Math.floor(Math.random() * 62);
+            result += data[r];
+        }
+        setCookie('xid', result, 30 * 24 * 3600 * 1000);
+        return result;
+    }
+
+    function getPathname() {
+        var pathname = window.location.pathname;
+        if (pathname.indexOf("index.php") > 0) {
+            var pathname = pathname.replace("index.php", "");
+        }
+        var pathname = pathname.replace("/", "");
+        var menu = pathname.split('-', 1);
+        //console.log(menu[0]);
+        return menu[0];
+    }
+
+    function sendJcps() {
+        $j.post('/index.php/openapi/jcps/index', function(data) {
+            //console.log(data);
+        });
+    }
+
+    function getPid() {
+        var pathname = window.location.pathname;
+        if (pathname.indexOf("index.php") > 0) {
+            var pathname = pathname.replace("index.php", "");
+        }
+        var pathname = pathname.replace("/", "");
+        var pathname = pathname.split(".", 1);
+        var menu = pathname[0].split('-');
+        //console.log(menu);
+        if (menu[1]) {
+            return menu[1];
+        } else {
+            return null;
+        }
+
+    }
+
+    function setCookie(name, value, t) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() + t);
+        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";";
+    }
+
+    function getCookie(name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg))
+            return (arr[2]);
+        else
+            return null;
+    }
+
+    function delCookie(name) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 10000);
+        var cval = getCookie(name);
+        if (cval != null)
+            document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString() + ";";
+    }
+
+    function request(paras) {
+        var reg = new RegExp("(^|&)" + paras + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg); //匹配目标参数
+        if (r != null) return unescape(r[2]);
+        return null; //返回参数值
+    }
+
+    function setPid() {
+        var pid = getPid();
+        if (pid == false || isNaN(pid)) return false;
+        var pids = getCookie('pidx');
+        if (pids) {
+            if (pids.indexOf(pid) < 0) {
+                pids = pid + "P" + pids;
+            }
+        } else {
+            pids = pid;
+        }
+        setCookie('pidx', pids, 30 * 24 * 60 * 60 * 1000);
+    }
+
+    function setPur(is_pur) {
+        if (is_pur == '') return false;
+        var pur = getCookie('is_pur');
+        if (pur == 0 || pur == undefined) {
+            setCookie('is_pur', is_pur, 30 * 24 * 60 * 60 * 1000);
+        }
+    }
+
+    var $j = jQuery.noConflict();
+    var txtPlaceholder;
+    $j(document).ready(function($) {
+        getMapping();
+        var menu = getPathname();
+        var campaign = request('utm_campaign');
+        if (campaign != null) {
+            setCookie('campaign', campaign, 30 * 24 * 60 * 60 * 1000);
+        }
+        if (menu == '') {
+            sendJcps();
+        } else if (menu == 'product') {
+            setPid();
+            sendJcps();
+        } else if (menu == 'paycenter') {
+            if (getPid()) {
+                var orderid = getPid();
+                var campaign = getCookie('campaign');
+                //console.log(campaign);
+                if (campaign == 'JZ') {
+                    if (!isNaN(orderid)) {
+                        var price = $j('b.price').html();
+                        price = price.replace("￥", "");
+                        var url = "http://ut.gtags.net/imp/conv?a=90&c=e7f603ac0044cd27747d467b8383e36f&type=5&info=" + orderid + "%2C" + price + "&r=" + new Date().getTime();
+                        $j("#jcps").attr("src", url);
+                        setPur(1);
+                    }
+                }
+            }
+        } else {
+            sendJcps();
+        }
+    });
+    </script>
+
+
+</body>
+
+</html>
